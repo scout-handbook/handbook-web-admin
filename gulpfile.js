@@ -177,6 +177,11 @@ gulp.task('build:font', function() {
 		.pipe(gulp.dest('dist/'));
 });
 
+gulp.task('build:png', function() {
+	return gulp.src('src/png/*')
+		.pipe(gulp.dest('dist/'));
+});
+
 gulp.task('lint', gulp.series('eslint', 'stylelint'));
 
-gulp.task('build', gulp.parallel('build:html', 'build:css', 'build:js', 'build:php', 'build:txt', 'build:font'));
+gulp.task('build', gulp.parallel('build:html', 'build:css', 'build:js', 'build:php', 'build:txt', 'build:font', 'build:png'));
