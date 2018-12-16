@@ -28,7 +28,7 @@ gulp.task('eslint', function() {
 });
 
 gulp.task('stylelint', function() {
-	return gulp.src(['**/*.css', '!node_modules/**', '!API/**', '!dist/**', '!src/shared/fontello?(-ie7).css'])
+	return gulp.src(['**/*.css', '!node_modules/**', '!API/**', '!dist/**', '!src/shared/fontello?.css'])
 		.pipe(stylelint({
 			failAfterError: true,
 			reporters: [
@@ -40,18 +40,13 @@ gulp.task('stylelint', function() {
 gulp.task('npm-check-updates', shell.task(['npm outdated'], {ignoreErrors: true}));
 
 gulp.task('build:html', function() {
-	function bundle(name, sources) {
-		return gulp.src(sources)
-			.pipe(sourcemaps.init())
-			.pipe(concat(name + '.min.html'))
-			//.pipe(gulp.dest('dist/'));
-			.pipe(htmlmin({collapseWhitespace: true}))
-			.pipe(sourcemaps.write('./'))
-			.pipe(gulp.dest('dist/'));
-	}
-	return bundle('admin', [
-		'src/html/index.html'
-	]);
+	return gulp.src('src/html/index.html')
+		.pipe(sourcemaps.init())
+		.pipe(concat('index.html'))
+		//.pipe(gulp.dest('dist/'));
+		.pipe(htmlmin({collapseWhitespace: true}))
+		.pipe(sourcemaps.write('./'))
+		.pipe(gulp.dest('dist/'));
 });
 
 gulp.task('build:js', function() {
