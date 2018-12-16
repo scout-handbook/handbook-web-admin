@@ -172,4 +172,11 @@ gulp.task('build:txt', function() {
 		.pipe(gulp.dest('dist/'));
 });
 
-gulp.task('build', gulp.parallel('build:html', 'build:css', 'build:js', 'build:php', 'build:txt'));
+gulp.task('build:font', function() {
+	return gulp.src('src/font/*')
+		.pipe(gulp.dest('dist/'));
+});
+
+gulp.task('lint', gulp.series('eslint', 'stylelint'));
+
+gulp.task('build', gulp.parallel('build:html', 'build:css', 'build:js', 'build:php', 'build:txt', 'build:font'));
