@@ -40,9 +40,8 @@ gulp.task('stylelint', function() {
 gulp.task('npm-check-updates', shell.task(['npm outdated'], {ignoreErrors: true}));
 
 gulp.task('build:html', function() {
-	return gulp.src('src/html/index.html')
+	return gulp.src('src/html/*')
 		.pipe(sourcemaps.init())
-		.pipe(concat('index.html'))
 		//.pipe(gulp.dest('dist/'));
 		.pipe(htmlmin({collapseWhitespace: true}))
 		.pipe(sourcemaps.write('./'))
@@ -138,6 +137,9 @@ gulp.task('build:css', function() {
 			.pipe(gulp.dest('dist/'));
 	}
 	return merge(
+		bundle('error', [
+			'src/css/error.css'
+		]),
 		bundle('admin-pushed', [
 			'src/css/button.css',
 			'src/css/dialog.css',
