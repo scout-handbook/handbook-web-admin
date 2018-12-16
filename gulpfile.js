@@ -182,6 +182,11 @@ gulp.task('build:png', function() {
 		.pipe(gulp.dest('dist/'));
 });
 
+gulp.task('build:deps', function() {
+	return gulp.src(['node_modules/simplemde/dist/simplemde.min.css', 'node_modules/simplemde/dist/simplemde.min.js', 'node_modules/showdown/dist/showdown.min.js', 'node_modules/xss/dist/xss.min.js'])
+		.pipe(gulp.dest('dist/'));
+});
+
 gulp.task('lint', gulp.series('eslint', 'stylelint'));
 
-gulp.task('build', gulp.parallel('build:html', 'build:css', 'build:js', 'build:php', 'build:txt', 'build:font', 'build:png'));
+gulp.task('build', gulp.parallel('build:html', 'build:css', 'build:js', 'build:php', 'build:txt', 'build:font', 'build:png', 'build:deps'));
