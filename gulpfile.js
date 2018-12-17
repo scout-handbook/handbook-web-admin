@@ -176,7 +176,7 @@ gulp.task('build:txt', function() {
 
 gulp.task('build:font', function() {
 	return gulp.src('src/font/*')
-		.pipe(gulp.dest('dist/font'));
+		.pipe(gulp.dest('dist/font/'));
 });
 
 gulp.task('build:png', function() {
