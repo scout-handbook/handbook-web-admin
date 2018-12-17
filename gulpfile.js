@@ -21,14 +21,14 @@ var pkg = require('./package.json');
 var minify = composer(uglify, console);
 
 gulp.task('eslint', function() {
-	return gulp.src(['**/*.js', '!node_modules/**', '!API/**', '!dist/**'])
+	return gulp.src(['**/*.js', '!node_modules/**', '!dist/**'])
 		.pipe(eslint())
 		.pipe(eslint.format())
 		.pipe(eslint.failAfterError());
 });
 
 gulp.task('stylelint', function() {
-	return gulp.src(['**/*.css', '!node_modules/**', '!API/**', '!dist/**', '!src/shared/fontello?.css'])
+	return gulp.src(['**/*.css', '!node_modules/**', '!dist/**', '!src/css/fontello.css'])
 		.pipe(stylelint({
 			failAfterError: true,
 			reporters: [
