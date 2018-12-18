@@ -10,7 +10,7 @@ function refreshPreviewSetup()
 {
 	if(window.Worker)
 	{
-		worker = new Worker("/admin-worker.min.js");
+		worker = new Worker("admin-worker.min.js");
 		worker.onmessage = function(payload)
 		{
 			document.getElementById(payload.data.id).innerHTML = payload.data.body;
