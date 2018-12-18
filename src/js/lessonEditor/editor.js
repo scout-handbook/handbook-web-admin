@@ -49,7 +49,7 @@ function showLessonEditor(name, body, saveActionQueue, id, discardActionQueue, r
 	document.getElementById("closeImageSelector").onclick = toggleImageSelector;
 	document.getElementById("imageSelectorAdd").onclick = function() {addImage(true);};
 
-	editor = new SimpleMDE({
+	editor = new EasyMDE({
 		autoDownloadFontAwesome: false,
 		autofocus: true,
 		element: document.getElementById("editor").firstchild,
@@ -62,39 +62,39 @@ function showLessonEditor(name, body, saveActionQueue, id, discardActionQueue, r
 		tabSize: 4,
 		toolbar: [{
 				name: "bold",
-				action: SimpleMDE.toggleBold,
+				action: EasyMDE.toggleBold,
 				className: "icon-bold",
 				title: "Tučné"
 			},
 			{
 				name: "italic",
-				action: SimpleMDE.toggleItalic,
+				action: EasyMDE.toggleItalic,
 				className: "icon-italic",
 				title: "Kurzíva"
 			},
 			{
 				name: "heading",
-				action: SimpleMDE.toggleHeadingSmaller,
+				action: EasyMDE.toggleHeadingSmaller,
 				className: "icon-header",
 				title: "Nadpis"
 			},
 			"|",
 			{
 				name: "unordered-list",
-				action: SimpleMDE.toggleUnorderedList,
+				action: EasyMDE.toggleUnorderedList,
 				className: "icon-list-bullet",
 				title: "Seznam s odrážkami"
 			},
 			{
 				name: "ordered-list",
-				action: SimpleMDE.toggleOrderedList,
+				action: EasyMDE.toggleOrderedList,
 				className: "icon-list-numbered",
 				title: "Číslovaný seznam"
 			},
 			"|",
 			{
 				name: "link",
-				action: SimpleMDE.drawLink,
+				action: EasyMDE.drawLink,
 				className: "icon-link",
 				title: "Vložit odkaz"
 			},
@@ -106,7 +106,7 @@ function showLessonEditor(name, body, saveActionQueue, id, discardActionQueue, r
 			},
 			{
 				name: "table",
-				action: SimpleMDE.drawTable,
+				action: EasyMDE.drawTable,
 				className: "icon-table",
 				title: "Vložit tabulku"
 			}

@@ -182,7 +182,7 @@ gulp.task('build:png', function() {
 });
 
 gulp.task('build:deps', function() {
-	return gulp.src(['node_modules/simplemde/dist/simplemde.min.css', 'node_modules/simplemde/dist/simplemde.min.js', 'node_modules/showdown/dist/showdown.min.js', 'node_modules/xss/dist/xss.min.js'])
+	return gulp.src(['node_modules/easymde/dist/easymde.min.css', 'node_modules/easymde/dist/easymde.min.js', 'node_modules/showdown/dist/showdown.min.js', 'node_modules/xss/dist/xss.min.js'])
 		.pipe(gulp.dest('dist/'));
 });
 

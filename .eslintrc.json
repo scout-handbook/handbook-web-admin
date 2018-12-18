@@ -87,7 +87,7 @@
 		"sidePanelClose": false,
 		"sidePanelDoubleOpen": false,
 		"sidePanelOpen": false,
-		"SimpleMDE": false,
+		"EasyMDE": false,
 		"showdown": false,
 		"showCompetenceListView": false,
 		"showCompetenceSubview": false,

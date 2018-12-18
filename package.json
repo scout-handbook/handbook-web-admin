@@ -20,8 +20,8 @@
     "url": "git+https://gitlab.com/skaut-handbook/handbook-web-admin.git"
   },
   "dependencies": {
+    "easymde": "^2.4.2",
     "showdown": "^1.9.0",
-    "simplemde": "^1.11.2",
     "xss": "^1.0.3"
   },
   "devDependencies": {
