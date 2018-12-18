@@ -29,7 +29,7 @@ if(isset($loginState['status']))
 					}
 					if(strtolower(substr($header, 0, 22)) === "http/1.1 404 not found")
 					{
-						header('Location: ' . $CONFIG->baseuri . '/error/404.html');
+						header('Location: ' . $CONFIG->baseuri . '/404.html');
 						die();
 					}
 				}
