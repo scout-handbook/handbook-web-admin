@@ -6,9 +6,9 @@ var converter;
 function main()
 {
 	self.onmessage = process;
-	importScripts('/showdown.min.js');
-	importScripts('/xss.min.js');
-	importScripts('/admin-worker-deps.min.js');
+	importScripts('showdown.min.js');
+	importScripts('xss.min.js');
+	importScripts('admin-worker-deps.min.js');
 	converter = new showdown.Converter({extensions: ["OdyMarkdown"]});
 	converter.setOption("noHeaderId", "true");
 	converter.setOption("tables", "true");
