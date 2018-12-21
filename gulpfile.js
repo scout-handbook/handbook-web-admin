@@ -20,8 +20,6 @@ var autoprefixer = require('autoprefixer');
 var inject = require('gulp-inject-string');
 var htmlmin = require('gulp-htmlmin');
 
-var pkg = require('./package.json');
-
 var minify = composer(uglify, console);
 
 function getConfig() {
@@ -72,7 +70,7 @@ gulp.task('build:js', function() {
 		if(addConfig) {
 			ret = ret.pipe(inject.prepend('"use strict";\nvar CONFIG = JSON.parse(\'' + JSON.stringify(getConfig()) + '\');\n'))
 		}
-		return ret.pipe(inject.replace('\\"\\"\\/\\*INJECTED\\-VERSION\\*\\/', '"' + pkg.version + '"'))
+		return ret
 			//.pipe(gulp.dest('dist/'));
 			.pipe(minify({ie8: true}))
 			.pipe(sourcemaps.write('./'))
