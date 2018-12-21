@@ -3,6 +3,7 @@
 		"--accent-color": "#6534ad",
 		"--background-darker": "#fafafa",
 		"--border-color": "#bfbfbf",
+		"--button-border": "#0078e7",
 		"--nav-width": "300px",
 		"--non-accented-link-color": "#364149",
 		"--table-border": "#ddd"
