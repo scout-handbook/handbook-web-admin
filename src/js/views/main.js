@@ -16,7 +16,7 @@ function showMainView(noHistory)
 	html += "<div class=\"topBarTab\" id=\"groupManager\">Uživatelské skupiny</div>";
 	html += "</div>";
 	html += "<div id=\"mainPageContainer\"><div id=\"mainPage\">";
-	html += "<h1>OdyMateriály - ";
+	html += "<h1>" + CONFIG["site-name"] + " - ";
 	if(mainPageTab === "competences")
 	{
 		html += "Kompetence";
