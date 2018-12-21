@@ -4,9 +4,7 @@
 
 var defaultName = "Nová lekce";
 
-var defaultBody;
-configEvent.addCallback(function() {
-defaultBody = "# Velký nadpis\n\
+var defaultBody = "# Velký nadpis\n\
 \n\
 ## Menší nadpis\n\
 \n\
@@ -72,4 +70,4 @@ udělat takové ty vytečkované řádky (tady 5 řádků). Pokud chci udělat m
 \n\
 !linky[teckovane, pocet = strana]\n\
 \n\
-Na webu se toto vůbec nezobrazí, ale v PDF ano.";});
+Na webu se toto vůbec nezobrazí, ale v PDF ano.";
