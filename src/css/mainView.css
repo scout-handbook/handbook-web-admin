@@ -80,7 +80,7 @@ h3.mainPage,
 }
 
 #userAvatar {
-	border: 5px solid #e0e0e0;
+	border: var(--avatar-border);
 	border-radius: 50%;
 	float: left;
 	height: 60px;
