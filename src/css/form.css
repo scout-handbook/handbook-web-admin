@@ -42,7 +42,7 @@
 .formText:focus,
 .formSelect:focus {
 	background-color: #f5f5f5;
-	border-color: #6534ad;
+	border-color: var(--accent-color);
 	outline: none;
 }
 
@@ -69,12 +69,12 @@
 
 .formCustom:hover {
 	background-color: #f5f5f5;
-	border-color: #6534ad;
+	border-color: var(--accent-color);
 }
 
 input:checked + .formCustom {
 	background-color: #f5f5f5;
-	border-color: #6534ad;
+	border-color: var(--accent-color);
 }
 
 .formRadio {
@@ -92,11 +92,11 @@ input:checked + .formCustom {
 }
 
 .formRadio:hover::before {
-	background-color: #6534ad;
+	background-color: var(--accent-color);
 }
 
 input:checked + .formRadio::before {
-	background-color: #6534ad;
+	background-color: var(--accent-color);
 }
 
 .formCheckbox {
@@ -116,11 +116,11 @@ input:checked + .formRadio::before {
 }
 
 .formCheckbox:hover::before {
-	border-color: #6534ad;
+	border-color: var(--accent-color);
 }
 
 input:checked + .formCheckbox::before {
-	border-color: #6534ad;
+	border-color: var(--accent-color);
 }
 
 .formFile input {
