@@ -38,10 +38,13 @@
     "gulp-stylelint": "^8.0.0",
     "gulp-uglify": "^3.0.1",
     "merge-stream": "^1.0.1",
+    "nested-object-assign": "^1.0.3",
+    "postcss-custom-properties": "^8.0.9",
     "stylelint": "^9.9.0",
     "stylelint-config-standard": "^18.2.0",
     "stylelint-no-unsupported-browser-features": "^3.0.2",
-    "uglify-js": "^3.4.9"
+    "uglify-js": "^3.4.9",
+    "yargs": "^12.0.5"
   },
   "browserslist": [
     "cover 95%",
