@@ -81,7 +81,6 @@ gulp.task('build:js', function() {
 			'src/js/tools/request.js',
 			'src/js/views/main.js',
 			'src/js/AfterLoadEvent.js',
-			'src/js/config.js',
 			'src/js/history.js',
 			'src/js/main.js',
 			'src/js/metadata.js'
