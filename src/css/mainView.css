@@ -21,7 +21,7 @@ h3.mainPage,
 }
 
 #topBar {
-	background-color: #fafafa;
+	background-color: var(--background-darker);
 	border-bottom: 1px solid #bfbfbf;
 	height: 80px;
 }

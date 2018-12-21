@@ -30,7 +30,7 @@
 }
 
 .formSelect {
-	background-color: #fafafa;
+	background-color: var(--background-darker);
 	border: 1px solid #bfbfbf;
 	border-radius: 3px;
 	font-family: "Open Sans", sans-serif;
@@ -51,7 +51,7 @@
 }
 
 .formCustom {
-	background-color: #fafafa;
+	background-color: var(--background-darker);
 	border: 1px solid #bfbfbf;
 	cursor: pointer;
 	display: inline-block;

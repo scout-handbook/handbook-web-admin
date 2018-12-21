@@ -36,7 +36,7 @@
 
 #spinner {
 	animation: spin 2s linear infinite;
-	border: 16px solid #fafafa;
+	border: 16px solid var(--background-darker);
 	border-radius: 50%;
 	border-top: 16px solid #6534ad;
 	display: none;
