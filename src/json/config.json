@@ -2,6 +2,7 @@
 	"custom-properties": {
 		"--background-darker": "#fafafa",
 		"--border-color": "#bfbfbf",
-		"--accent-color": "#6534ad"
+		"--accent-color": "#6534ad",
+		"--nav-width": "300px"
 	}
 }
