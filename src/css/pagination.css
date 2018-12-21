@@ -16,7 +16,7 @@
 
 .paginationButton:hover,
 .activePaginationButton {
-	background-color: #f5f5f5;
+	background-color: var(--background-darkest);
 	border-color: var(--accent-color);
 	color: var(--accent-color);
 }
