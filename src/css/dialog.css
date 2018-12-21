@@ -38,7 +38,7 @@
 	animation: spin 2s linear infinite;
 	border: 16px solid var(--background-darker);
 	border-radius: 50%;
-	border-top: 16px solid #6534ad;
+	border-top: 16px solid var(--accent-color);
 	display: none;
 	height: 120px;
 	left: 50%;
