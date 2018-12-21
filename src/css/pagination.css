@@ -4,7 +4,7 @@
 }
 
 .paginationButton {
-	background-color: #fafafa;
+	background-color: var(--background-darker);
 	border: 1px solid #bfbfbf;
 	border-radius: 3px;
 	cursor: pointer;
