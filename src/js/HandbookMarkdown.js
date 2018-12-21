@@ -1,7 +1,7 @@
 "use strict";
 
 // Showdown extensions definitions
-var OdyMarkdown = function()
+var HandbookMarkdown = function()
 {
 	var responsiveTablesBegin = {
 		type: "output",
@@ -35,7 +35,7 @@ var OdyMarkdown = function()
 }
 
 //Register extensions
-showdown.extension("OdyMarkdown", OdyMarkdown);
+showdown.extension("HandbookMarkdown", HandbookMarkdown);
 
 // Generic command processing functions
 function filterCommand(text, commandName, command)

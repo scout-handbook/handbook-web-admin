@@ -93,7 +93,7 @@ gulp.task('build:js', function() {
 			'src/js/lessonEditor/previewWorker.js',
 		]),
 		bundle('admin-worker-deps', [
-			'src/js/OdyMarkdown.js',
+			'src/js/HandbookMarkdown.js',
 			'src/js/xssOptions.js'
 		]),
 		bundle('admin', [
