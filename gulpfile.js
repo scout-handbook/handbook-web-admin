@@ -1,6 +1,10 @@
 "use strict";
 /* eslint-env node */
 
+var yargs = require('yargs');
+var fs = require("fs")
+var nestedObjectAssign = require('nested-object-assign');
+
 var gulp = require('gulp');
 var eslint = require('gulp-eslint');
 var uglify = require('uglify-js');
@@ -11,6 +15,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var concat = require('gulp-concat');
 var cleanCSS = require('gulp-clean-css');
 var postcss = require('gulp-postcss');
+var postcssCustomProperties = require('postcss-custom-properties');
 var autoprefixer = require('autoprefixer');
 var inject = require('gulp-inject-string');
 var htmlmin = require('gulp-htmlmin');
@@ -18,6 +23,15 @@ var htmlmin = require('gulp-htmlmin');
 var pkg = require('./package.json');
 
 var minify = composer(uglify, console);
+
+function getConfig() {
+	var config = JSON.parse(fs.readFileSync("src/json/config.json", "utf8"));
+	var overrideLocation = yargs.string('config').argv.config
+	if(overrideLocation) {
+		config = nestedObjectAssign(config, JSON.parse(fs.readFileSync(overrideLocation, "utf8")));
+	}
+	return config;
+}
 
 gulp.task('eslint', function() {
 	return gulp.src(['**/*.js', '!node_modules/**', '!dist/**'])
@@ -46,11 +60,14 @@ gulp.task('build:html', function() {
 });
 
 gulp.task('build:js', function() {
-	function bundle(name, sources) {
-		return gulp.src(sources)
+	function bundle(name, sources, addConfig) {
+		var ret = gulp.src(sources)
 			.pipe(sourcemaps.init())
-			.pipe(concat(name + '.min.js'))
-			.pipe(inject.replace('\\"\\"\\/\\*INJECTED\\-VERSION\\*\\/', '"' + pkg.version + '"'))
+			.pipe(concat(name + '.min.js'));
+		if(addConfig) {
+			ret = ret.pipe(inject.prepend('"use strict";\nvar CONFIG = JSON.parse(\'' + JSON.stringify(getConfig()) + '\');\n'))
+		}
+		return ret.pipe(inject.replace('\\"\\"\\/\\*INJECTED\\-VERSION\\*\\/', '"' + pkg.version + '"'))
 			//.pipe(gulp.dest('dist/'));
 			.pipe(minify({ie8: true}))
 			.pipe(sourcemaps.write('./'))
@@ -68,7 +85,7 @@ gulp.task('build:js', function() {
 			'src/js/history.js',
 			'src/js/main.js',
 			'src/js/metadata.js'
-		]),
+		], true),
 		bundle('admin-worker', [
 			'src/js/lessonEditor/previewWorker.js',
 		]),
@@ -127,7 +144,7 @@ gulp.task('build:css', function() {
 		return gulp.src(sources)
 			.pipe(sourcemaps.init())
 			.pipe(concat(name + '.min.css'))
-			.pipe(postcss([autoprefixer()]))
+			.pipe(postcss([postcssCustomProperties({importFrom: getConfig(), preserve: false}), autoprefixer()]))
 			//.pipe(gulp.dest('dist/'));
 			.pipe(cleanCSS({compatibility: 'ie8'}))
 			.pipe(sourcemaps.write('./'))
