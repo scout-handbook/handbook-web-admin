@@ -76,7 +76,7 @@ h3.mainPage,
 	border-right: 1px solid var(--border-color);
 	display: inline-block;
 	height: 80px;
-	width: 300px;
+	width: var(--nav-width);
 }
 
 #userAvatar {
