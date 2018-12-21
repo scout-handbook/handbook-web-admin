@@ -27,7 +27,7 @@ function refreshPreviewSetup()
 	}
 	else
 	{
-		converter = new showdown.Converter({extensions: ["OdyMarkdown"]});
+		converter = new showdown.Converter({extensions: ["HandbookMarkdown"]});
 		converter.setOption("noHeaderId", "true");
 		converter.setOption("tables", "true");
 		converter.setOption("smoothLivePreview", "true");
