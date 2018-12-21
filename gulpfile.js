@@ -51,7 +51,12 @@ gulp.task('stylelint', function() {
 });
 
 gulp.task('build:html', function() {
-	return gulp.src('src/html/*')
+	return gulp.src([
+		'src/html/403.html',
+		'src/html/404.html',
+		'src/html/500.html',
+		'src/html/index.html'
+	])
 		.pipe(sourcemaps.init())
 		//.pipe(gulp.dest('dist/'));
 		.pipe(htmlmin({collapseWhitespace: true}))
@@ -178,32 +183,57 @@ gulp.task('build:css', function() {
 });
 
 gulp.task('build:php', function() {
-	return gulp.src('src/php/*')
+	return gulp.src([
+		'src/php/lesson.php'
+	])
 		.pipe(gulp.dest('dist/'));
 });
 
 gulp.task('build:txt', function() {
-	return gulp.src('src/txt/*')
+	return gulp.src([
+		'src/txt/htaccess.txt'
+	])
 		.pipe(gulp.dest('dist/'));
 });
 
 gulp.task('build:font', function() {
-	return gulp.src('src/font/*')
+	return gulp.src([
+		'src/font/fontello.eot',
+		'src/font/fontello.svg',
+		'src/font/fontello.ttf',
+		'src/font/fontello.woff',
+		'src/font/fontello.woff2'
+	])
 		.pipe(gulp.dest('dist/font/'));
 });
 
 gulp.task('build:png', function() {
-	return gulp.src('src/png/*')
+	return gulp.src([
+		'src/png/avatar.png'
+	])
 		.pipe(gulp.dest('dist/'));
 });
 
 gulp.task('build:deps', function() {
-	return gulp.src(['node_modules/easymde/dist/easymde.min.css', 'node_modules/easymde/dist/easymde.min.js', 'node_modules/showdown/dist/showdown.min.js', 'node_modules/xss/dist/xss.min.js'])
+	return gulp.src([
+		'node_modules/easymde/dist/easymde.min.css',
+		'node_modules/easymde/dist/easymde.min.js',
+		'node_modules/showdown/dist/showdown.min.js',
+		'node_modules/xss/dist/xss.min.js'
+	])
 		.pipe(gulp.dest('dist/'));
 });
 
 gulp.task('build:icon', function() {
-	return gulp.src('src/icon/*')
+	return gulp.src([
+		'src/icon/apple-touch-icon.png',
+		'src/icon/browserconfig.xml',
+		'src/icon/favicon-16x16.png',
+		'src/icon/favicon-32x32.png',
+		'src/icon/favicon.ico',
+		'src/icon/mstile-150x150.png',
+		'src/icon/safari-pinned-tab.svg',
+	])
 		.pipe(gulp.dest('dist/'));
 });
 
