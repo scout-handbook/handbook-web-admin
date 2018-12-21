@@ -1,6 +1,6 @@
 #sidePanel {
 	background: white;
-	border-left: solid 1px #bfbfbf;
+	border-left: solid 1px var(--border-color);
 	bottom: 0;
 	overflow-x: hidden;
 	overflow-y: auto;

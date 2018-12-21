@@ -1,5 +1,6 @@
 {
 	"custom-properties": {
-		"--background-darker": "#fafafa"
+		"--background-darker": "#fafafa",
+		"--border-color": "#bfbfbf"
 	}
 }

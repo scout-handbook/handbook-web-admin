@@ -15,7 +15,7 @@
 }
 
 .formText {
-	border: 1px solid #bfbfbf;
+	border: 1px solid var(--border-color);
 	border-radius: 3px;
 	font-family: "Open Sans", sans-serif;
 	padding: 5px 10px;
@@ -31,7 +31,7 @@
 
 .formSelect {
 	background-color: var(--background-darker);
-	border: 1px solid #bfbfbf;
+	border: 1px solid var(--border-color);
 	border-radius: 3px;
 	font-family: "Open Sans", sans-serif;
 	font-size: 1em;
@@ -52,7 +52,7 @@
 
 .formCustom {
 	background-color: var(--background-darker);
-	border: 1px solid #bfbfbf;
+	border: 1px solid var(--border-color);
 	cursor: pointer;
 	display: inline-block;
 	height: 15px;
@@ -82,7 +82,7 @@ input:checked + .formCustom {
 }
 
 .formRadio::before {
-	background-color: #bfbfbf;
+	background-color: var(--border-color);
 	border-radius: 4px;
 	height: 7px;
 	margin-left: 4px;
@@ -104,7 +104,7 @@ input:checked + .formRadio::before {
 }
 
 .formCheckbox::before {
-	border: 3px solid #bfbfbf;
+	border: 3px solid var(--border-color);
 	border-right: none;
 	border-top: none;
 	height: 4px;
