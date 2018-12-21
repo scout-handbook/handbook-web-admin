@@ -41,7 +41,7 @@
 
 .formText:focus,
 .formSelect:focus {
-	background-color: #f5f5f5;
+	background-color: var(--background-darkest);
 	border-color: var(--accent-color);
 	outline: none;
 }
@@ -68,12 +68,12 @@
 }
 
 .formCustom:hover {
-	background-color: #f5f5f5;
+	background-color: var(--background-darkest);
 	border-color: var(--accent-color);
 }
 
 input:checked + .formCustom {
-	background-color: #f5f5f5;
+	background-color: var(--background-darkest);
 	border-color: var(--accent-color);
 }
 
