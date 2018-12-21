@@ -1,5 +1,5 @@
 body {
-	color: #222;
+	color: var(--background);
 	font-family: "Open Sans", sans-serif;
 	font-feature-settings: "liga" 1; /* stylelint-disable-line plugin/no-unsupported-browser-features */
 	font-kerning: normal; /* stylelint-disable-line plugin/no-unsupported-browser-features */
