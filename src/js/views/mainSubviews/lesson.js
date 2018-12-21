@@ -10,7 +10,7 @@ function showLessonSubview(noHistory)
 		nodes[l].className = "topBarTab";
 	}
 	document.getElementById("lessonManager").className += " activeTopBarTab";
-	var html = "<h1>OdyMateriály - Lekce</h1>";
+	var html = "<h1>" + CONFIG["site-name"] + " - Lekce</h1>";
 	if(LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser")
 	{
 		html += "<div class=\"button greenButton\" id=\"addField\"><i class=\"icon-plus\"></i>Přidat oblast</div>";

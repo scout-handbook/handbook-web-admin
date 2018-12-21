@@ -10,7 +10,7 @@ function showCompetenceSubview(noHistory)
 		nodes[l].className = "topBarTab";
 	}
 	document.getElementById("competenceManager").className += " activeTopBarTab";
-	var html = "<h1>OdyMateriály - Kompetence</h1>";
+	var html = "<h1>" + CONFIG["site-name"] + " - Kompetence</h1>";
 	if(LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser")
 	{
 		html += "<div class=\"button greenButton\" id=\"addCompetence\"><i class=\"icon-plus\"></i>Přidat</div><br>";
