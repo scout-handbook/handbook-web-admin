@@ -23,8 +23,8 @@
 }
 
 #sidePanelOverlay {
-	background-color: #999;
-	background-color: rgba(0, 0, 0, 0.4); /* stylelint-disable-line plugin/no-unsupported-browser-features */
+	background-color: var(--overlay-fallback-color);
+	background-color: var(--overlay-color);
 	display: none;
 	height: 100%;
 	position: fixed;
