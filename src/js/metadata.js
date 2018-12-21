@@ -10,7 +10,7 @@ var LOGINSTATE = [];
 
 function metadataSetup()
 {
-	configEvent.addCallback(refreshMetadata);
+	refreshMetadata();
 }
 
 function refreshMetadata()
