@@ -25,33 +25,33 @@
 }
 
 .greenButton {
-	background-color: #1cb841;
+	background-color: var(--button-accent-green);
 }
 
 .greenButton:hover {
-	border-color: #1cb841;
+	border-color: var(--button-accent-green);
 }
 
 .cyanButton {
-	background-color: #42b8dd;
+	background-color: var(--button-accent-cyan);
 }
 
 .cyanButton:hover {
-	border-color: #42b8dd;
+	border-color: var(--button-accent-cyan);
 }
 
 .yellowButton {
-	background-color: #df7514;
+	background-color: var(--button-accent-yellow);
 }
 
 .yellowButton:hover {
-	border-color: #df7514;
+	border-color: var(--button-accent-yellow);
 }
 
 .redButton {
-	background-color: #ca3c3c;
+	background-color: var(--button-accent-red);
 }
 
 .redButton:hover {
-	border-color: #ca3c3c;
+	border-color: var(--button-accent-red);
 }
