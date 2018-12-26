@@ -31,7 +31,7 @@ function refreshMetadata()
 			window.location.replace(CONFIG.apiuri + "/login?return-uri=" + encodeURIComponent(window.location));
 		}, "RoleException": function()
 		{
-			window.location.replace(CONFIG.baseuri);
+			window.location.replace(CONFIG['frontend-uri']);
 		}};
 	request(CONFIG.apiuri + "/group", "GET", undefined, function(response)
 		{
@@ -49,7 +49,7 @@ function refreshMetadata()
 				}
 				else
 				{
-					window.location.replace(CONFIG.baseuri);
+					window.location.replace(CONFIG['frontend-uri']);
 				}
 			}
 			else if(response.status === 401)
