@@ -49,12 +49,17 @@ gulp.task('stylelint', function() {
 });
 
 gulp.task('build:html', function() {
-	return gulp.src([
-		'src/html/403.html',
-		'src/html/404.html',
-		'src/html/500.html',
-		'src/html/index.html'
-	])
+	return merge(
+		gulp.src([
+			'src/html/403.html',
+			'src/html/404.html',
+			'src/html/500.html'
+		]),
+		gulp.src([
+			'src/html/index.html'
+		])
+		.pipe(inject.replace('<!--ADMIN-URI-->', getConfig()['admin-uri']))
+	)
 		.pipe(sourcemaps.init())
 		.pipe(inject.replace('<!--SITE-NAME-->', getConfig()['site-name']))
 		//.pipe(gulp.dest('dist/'));

@@ -79,7 +79,7 @@ function renderLessonListLesson(lesson, secondLevel)
 	{
 		html += "<div class=\"button redButton deleteLesson\" data-id=\"" + lesson.id + "\"><i class=\"icon-trash-empty\"></i>Smazat</div>";
 	}
-	html += "<a href=\"" + CONFIG.baseuri + "/admin/lesson/" + lesson.id + "\" target=\"_blank\" class=\"button exportLesson\"><i class=\"icon-file-pdf\"></i>PDF</a>";
+	html += "<a href=\"" + CONFIG['admin-uri'] + "/lesson/" + lesson.id + "\" target=\"_blank\" class=\"button exportLesson\"><i class=\"icon-file-pdf\"></i>PDF</a>";
 	html += "<br><span class=\"mainPage" + secondLevel + "\">Kompetence: ";
 	if(lesson.competences.length > 0)
 	{

@@ -1,5 +1,6 @@
 {
+	"admin-uri": "https://handbook.example/admin",
 	"apiuri": "https://handbook.example/API/v0.9",
-	"baseuri": "https://handbook.example",
+	"frontend-uri": "https://handbook.example",
 	"site-name": "Skaut handbook"
 }
