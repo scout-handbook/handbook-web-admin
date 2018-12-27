@@ -223,6 +223,7 @@ gulp.task('build:deps', function() {
 		'node_modules/easymde/dist/easymde.min.css',
 		'node_modules/easymde/dist/easymde.min.js',
 		'node_modules/showdown/dist/showdown.min.js',
+		'node_modules/showdown/dist/showdown.min.js.map',
 		'node_modules/xss/dist/xss.min.js'
 	])
 		.pipe(gulp.dest('dist/'));
