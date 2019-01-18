@@ -19,6 +19,7 @@ var postcssCustomProperties = require('postcss-custom-properties');
 var autoprefixer = require('autoprefixer');
 var inject = require('gulp-inject-string');
 var htmlmin = require('gulp-htmlmin');
+var ts = require("gulp-typescript");
 
 var minify = composer(uglify, console);
 
@@ -82,6 +83,21 @@ gulp.task('build:js', function() {
 			.pipe(sourcemaps.write('./'))
 			.pipe(gulp.dest('dist/'));
 	}
+	function tsBundle(name, addConfig) {
+		var tsProject = ts.createProject("tsconfig/" + name + ".json");
+		var ret = tsProject.src()
+			.pipe(sourcemaps.init())
+			.pipe(tsProject())
+			.pipe(concat(name + '.min.js'));
+		if(addConfig) {
+			ret = ret.pipe(inject.prepend('"use strict";\nvar CONFIG = JSON.parse(\'' + JSON.stringify(getConfig()) + '\');\n'))
+		}
+		return ret
+			//.pipe(gulp.dest('dist/'));
+			.pipe(minify({ie8: true}))
+			.pipe(sourcemaps.write('./'))
+			.pipe(gulp.dest('dist/'));
+	}
 	return merge(
 		bundle('admin-pushed', [
 			'src/js/lessonEditor/refreshPreview.js',
@@ -94,9 +110,7 @@ gulp.task('build:js', function() {
 			'src/js/main.js',
 			'src/js/metadata.js'
 		], true),
-		bundle('admin-worker', [
-			'src/js/lessonEditor/previewWorker.js',
-		]),
+		tsBundle('admin-worker'),
 		bundle('admin-worker-deps', [
 			'src/js/HandbookMarkdown.js',
 			'src/js/xssOptions.js'

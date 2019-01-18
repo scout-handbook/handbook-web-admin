@@ -5,7 +5,7 @@ var converter;
 
 function main()
 {
-	self.onmessage = process;
+	(self as DedicatedWorkerGlobalScope).onmessage = process;
 	importScripts('showdown.min.js');
 	importScripts('xss.min.js');
 	importScripts('admin-worker-deps.min.js');
