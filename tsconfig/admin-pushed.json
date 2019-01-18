@@ -1,0 +1,18 @@
+{
+  "extends": "../tsconfig.json",
+  "files": [
+    "../src/d.ts/admin-pushed.d.ts",
+    "../src/ts/interfaces/Converter.ts",
+    "../src/ts/interfaces/Showdown.ts",
+    "../src/ts/interfaces/XSSOptions.ts",
+    "../src/ts/lessonEditor/refreshPreview.ts",
+    "../src/ts/tools/ActionQueue.ts",
+    "../src/ts/tools/refreshLogin.ts",
+    "../src/ts/tools/request.ts",
+    "../src/ts/views/main.ts",
+    "../src/ts/AfterLoadEvent.ts",
+    "../src/ts/history.ts",
+    "../src/ts/main.ts",
+    "../src/ts/metadata.ts"
+  ]
+}

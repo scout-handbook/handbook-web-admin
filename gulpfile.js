@@ -99,17 +99,7 @@ gulp.task('build:js', function() {
 			.pipe(gulp.dest('dist/'));
 	}
 	return merge(
-		bundle('admin-pushed', [
-			'src/js/lessonEditor/refreshPreview.js',
-			'src/js/tools/ActionQueue.js',
-			'src/js/tools/refreshLogin.js',
-			'src/js/tools/request.js',
-			'src/js/views/main.js',
-			'src/js/AfterLoadEvent.js',
-			'src/js/history.js',
-			'src/js/main.js',
-			'src/js/metadata.js'
-		], true),
+		tsBundle('admin-pushed', true),
 		tsBundle('admin-worker'),
 		bundle('admin-worker-deps', [
 			'src/js/HandbookMarkdown.js',

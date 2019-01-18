@@ -50,7 +50,7 @@ function renderMainView(noHistory)
 {
 	if(LOGINSTATE.avatar)
 	{
-		document.getElementById("userAvatar").src = "data:image/png;base64," + LOGINSTATE.avatar;
+		(document.getElementById("userAvatar") as HTMLImageElement).src = "data:image/png;base64," + LOGINSTATE.avatar;
 	}
 	document.getElementById("userName").innerHTML = LOGINSTATE.name;
 

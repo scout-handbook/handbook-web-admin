@@ -27,14 +27,14 @@ function deserializeAction(action)
 	return new Action(action.url, action.method, function()
 		{
 			return action.payload;
-		}, eval('(' + action.callback + ')'));
+		}, eval('(' + action.callback + ')'), undefined);
 }
 
 function ActionQueueSetup()
 {
 	if(window.sessionStorage && sessionStorage.getItem("ActionQueue"))
 	{
-		var aq = new ActionQueue(JSON.parse(sessionStorage.getItem("ActionQueue")).map(deserializeAction));
+		var aq = new ActionQueue(JSON.parse(sessionStorage.getItem("ActionQueue")).map(deserializeAction), false);
 		ActionQueueRetry = true;
 		sessionStorage.clear();
 		aq.dispatch();
@@ -46,7 +46,7 @@ function ActionQueue(actions, retry)
 	this.actions = typeof actions !== 'undefined' ? actions : [];
 	ActionQueueRetry = typeof retry !== 'undefined' ? retry : false;
 	var queue = this;
-	
+
 	this.fillID = function(id)
 		{
 			for(var i = 0; i < queue.actions.length; i++)
@@ -68,7 +68,7 @@ function ActionQueue(actions, retry)
 					}
 					if(ActionQueueRetry)
 					{
-						showMainView();
+						showMainView(false);
 					}
 					else
 					{
