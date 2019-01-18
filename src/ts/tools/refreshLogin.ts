@@ -7,7 +7,7 @@ function refreshLogin(forceRelogin, afterAction)
 	var parts = allCookies.split("; skautis_timeout=");
 	if(parts.length === 2)
 	{
-		var timeout = parts.pop().split(";").shift();
+		var timeout = parseInt(parts.pop().split(";").shift());
 		if((timeout - Math.round(new Date().getTime() / 1000)) < 1500)
 		{
 			var exceptionHandler = {"AuthenticationException": function()

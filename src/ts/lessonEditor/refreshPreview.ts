@@ -8,7 +8,7 @@ var queue;
 
 function refreshPreviewSetup()
 {
-	if(window.Worker)
+	if(Worker)
 	{
 		worker = new Worker(CONFIG['admin-uri'] + "/admin-worker.min.js");
 		worker.onmessage = function(payload)
@@ -37,7 +37,7 @@ function refreshPreviewSetup()
 function refreshPreview(name, markdown, id)
 {
 	var payload = {"id": id, "body": "# " + name + "\n" + markdown};
-	if(window.Worker)
+	if(Worker)
 	{
 		if(running)
 		{

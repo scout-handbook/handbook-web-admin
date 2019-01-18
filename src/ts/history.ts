@@ -6,22 +6,22 @@ function historySetup()
 	window.onpopstate = popback;
 	if(window.location.pathname.substring(7))
 	{
-		window.mainPageTab = window.location.pathname.substring(7);
+		mainPageTab = window.location.pathname.substring(7);
 	}
-	showMainView();
+	showMainView(false);
 }
 
 function popback()
 {
 	if(history.state)
 	{
-		if(window.sidePanelState)
+		if(sidePanelState)
 		{
 			sidePanelClose();
 		}
 		else if(history.state.id)
 		{
-			if(window.imageSelectorOpen)
+			if(imageSelectorOpen)
 			{
 				prepareImageSelector();
 			}
@@ -35,12 +35,12 @@ function popback()
 		}
 		else if(history.state.page)
 		{
-			window.mainPageTab = history.state.page;
+			mainPageTab = history.state.page;
 			showMainView(true)
 		}
 		else
 		{
-			showMainView();
+			showMainView(false);
 		}
 	}
 }

@@ -6,7 +6,7 @@ var metadataEvent;
 var FIELDS = [];
 var COMPETENCES = [];
 var GROUPS = []
-var LOGINSTATE = [];
+var LOGINSTATE = {avatar: undefined, name: undefined};
 
 function metadataSetup()
 {
@@ -20,15 +20,15 @@ function refreshMetadata()
 		{
 			FIELDS = response;
 			metadataEvent.trigger();
-		});
+		}, undefined);
 	request(CONFIG.apiuri + "/competence", "GET", undefined, function(response)
 		{
 			COMPETENCES = response;
 			metadataEvent.trigger();
-		});
+		}, undefined);
 	var groupExceptionHandler = {"AuthenticationException": function()
 		{
-			window.location.replace(CONFIG.apiuri + "/login?return-uri=" + encodeURIComponent(window.location));
+			window.location.href = CONFIG.apiuri + "/login?return-uri=" + encodeURIComponent(window.location.href);
 		}, "RoleException": function()
 		{
 			window.location.replace(CONFIG['frontend-uri']);
@@ -54,7 +54,7 @@ function refreshMetadata()
 			}
 			else if(response.status === 401)
 			{
-				window.location.replace(CONFIG.apiuri + "/login?return-uri=" + encodeURIComponent(window.location));
+				window.location.href = CONFIG.apiuri + "/login?return-uri=" + encodeURIComponent(window.location.href);
 			}
 			else
 			{
