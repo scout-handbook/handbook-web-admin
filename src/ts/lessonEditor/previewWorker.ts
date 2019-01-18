@@ -1,7 +1,7 @@
 "use strict";
 /* eslint-env worker */
 
-var converter;
+var converter: Converter;
 
 function main()
 {
@@ -15,7 +15,7 @@ function main()
 	converter.setOption("smoothLivePreview", "true");
 }
 
-function process(payload)
+function process(payload: MessageEvent)
 {
 	var html = filterXSS(converter.makeHtml(payload.data.body), xssOptions());
 	postMessage({"id": payload.data.id, "body": html});
