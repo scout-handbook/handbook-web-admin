@@ -1,36 +1,42 @@
 "use strict";
 /* exported AfterLoadEvent */
 
-function AfterLoadEvent(threshold)
-{
-	this.triggered = false;
-	this.threshold = threshold;
-	this.count = 0;
-	this.callbacks = [];
+class AfterLoadEvent {
+	private triggered: boolean;
+	private threshold: number;
+	private count: number;
+	private callbacks: Array<(...args: Array<string>) => void>;
 
-	var ALE = this;
-	this.addCallback = function(callback)
+	public constructor(threshold: number)
+	{
+		this.triggered = false;
+		this.threshold = threshold;
+		this.count = 0;
+		this.callbacks = [];
+	}
+
+	public addCallback(callback: (...args: Array<string>) => void): void
 		{
-			ALE.callbacks.push(callback);
-			if(ALE.triggered)
+			this.callbacks.push(callback);
+			if(this.triggered)
 			{
 				callback();
 			}
-		};
-	this.trigger = function()
+		}
+	public trigger(...args: Array<string>): void
 		{
-			ALE.count++;
-			ALE.retrigger.apply(ALE, arguments);
-		};
-	this.retrigger = function()
+			this.count++;
+			this.retrigger.apply(this, args);
+		}
+	public retrigger(...args: Array<string>): void
 		{
-			if(ALE.count >= ALE.threshold)
+			if(this.count >= this.threshold)
 			{
-				ALE.triggered = true;
-				for(var i = 0; i < ALE.callbacks.length; i++)
+				this.triggered = true;
+				for(var i = 0; i < this.callbacks.length; i++)
 				{
-					ALE.callbacks[i].apply(null, arguments);
+					this.callbacks[i].apply(null, args);
 				}
 			}
-		};
+		}
 }

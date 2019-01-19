@@ -2,11 +2,11 @@
 /* global FIELDS:true, COMPETENCES:true, GROUPS:true, LOGINSTATE:true, metadataEvent:true */
 /* exported FIELDS, COMPETENCES, GROUPS, LOGINSTATE, metadataSetup */
 
-var metadataEvent;
+var metadataEvent: AfterLoadEvent;
 var FIELDS = [];
 var COMPETENCES = [];
-var GROUPS = []
-var LOGINSTATE = {avatar: undefined, name: undefined};
+var GROUPS = [];
+var LOGINSTATE: Loginstate = {avatar: "", name: ""};
 
 function metadataSetup()
 {
@@ -16,14 +16,14 @@ function metadataSetup()
 function refreshMetadata()
 {
 	metadataEvent = new AfterLoadEvent(4);
-	request(CONFIG.apiuri + "/lesson?override-group=true", "GET", undefined, function(response)
+	request(CONFIG.apiuri + "/lesson?override-group=true", "GET", {}, function(response)
 		{
-			FIELDS = response;
+			FIELDS = response as unknown as Array<Field>;
 			metadataEvent.trigger();
 		}, undefined);
-	request(CONFIG.apiuri + "/competence", "GET", undefined, function(response)
+	request(CONFIG.apiuri + "/competence", "GET", {}, function(response)
 		{
-			COMPETENCES = response;
+			COMPETENCES = response as unknown as Array<Competence>;
 			metadataEvent.trigger();
 		}, undefined);
 	var groupExceptionHandler = {"AuthenticationException": function()
@@ -33,18 +33,18 @@ function refreshMetadata()
 		{
 			window.location.replace(CONFIG['frontend-uri']);
 		}};
-	request(CONFIG.apiuri + "/group", "GET", undefined, function(response)
+	request(CONFIG.apiuri + "/group", "GET", {}, function(response)
 		{
-			GROUPS = response;
+			GROUPS = response as unknown as Array<Group>;
 			metadataEvent.trigger();
 		}, groupExceptionHandler);
 	rawRequest(CONFIG.apiuri + "/account", "GET", undefined, function(response)
 		{
 			if(response.status === 200)
 			{
-				if(["editor", "administrator", "superuser"].indexOf(response.response.role) > -1)
+				if(["editor", "administrator", "superuser"].indexOf(response.response!.role) > -1)
 				{
-					LOGINSTATE = response.response;
+					LOGINSTATE = response.response as unknown as Loginstate;
 					metadataEvent.trigger();
 				}
 				else

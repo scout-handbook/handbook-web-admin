@@ -1,6 +1,6 @@
 "use strict";
 
-function main()
+function main(): void
 {
 	refreshPreviewSetup();
 	metadataSetup();

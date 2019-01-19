@@ -1,10 +1,10 @@
 "use strict";
 /* exported refreshPreviewSetup, refreshPreview */
 
-var converter;
-var worker;
+var converter: Converter|undefined;
+var worker: Worker|undefined;
 var running = false;
-var queue;
+var queue: WorkerPayload|undefined;
 
 function refreshPreviewSetup()
 {
@@ -13,10 +13,10 @@ function refreshPreviewSetup()
 		worker = new Worker(CONFIG['admin-uri'] + "/admin-worker.min.js");
 		worker.onmessage = function(payload)
 		{
-			document.getElementById(payload.data.id).innerHTML = payload.data.body;
+			document.getElementById(payload.data.id)!.innerHTML = payload.data.body;
 			if(queue)
 			{
-				worker.postMessage(queue);
+				worker!.postMessage(queue);
 				queue = undefined;
 			}
 			else
@@ -34,7 +34,7 @@ function refreshPreviewSetup()
 	}
 }
 
-function refreshPreview(name, markdown, id)
+function refreshPreview(name: string, markdown: string, id: string)
 {
 	var payload = {"id": id, "body": "# " + name + "\n" + markdown};
 	if(Worker)
@@ -46,14 +46,14 @@ function refreshPreview(name, markdown, id)
 		else
 		{
 			running = true;
-			worker.postMessage(payload);
+			worker!.postMessage(payload);
 		}
 	}
 	else
 	{
 		var html = "<h1>" + name + "</h1>";
-		html += filterXSS(converter.makeHtml(payload.body), xssOptions());
-		document.getElementById(payload.id).innerHTML = html;
+		html += filterXSS(converter!.makeHtml(payload.body), xssOptions());
+		document.getElementById(payload.id)!.innerHTML = html;
 	}
 }
 
