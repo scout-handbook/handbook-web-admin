@@ -1,4 +1,5 @@
 "use strict";
+/* global imageSelectorOpen:true */
 
 var imageSelectorOpen = false;
 

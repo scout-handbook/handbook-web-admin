@@ -11,7 +11,7 @@ class Action
 	public callback: (response: RequestResponse) => void;
 	public exceptionHandler: ExceptionHandler;
 
-	constructor(url: string, method: string, payloadBuilder: () => Payload = function(){return{};}, callback: (response: RequestResponse) => void = function(){}, exceptionHandler: ExceptionHandler = {})
+	public constructor(url: string, method: string, payloadBuilder: () => Payload = function(): Payload {return{};}, callback: (response: RequestResponse) => void = function(): void {}, exceptionHandler: ExceptionHandler = {})
 	{
 		this.url = url;
 		this.method = method;
@@ -20,26 +20,26 @@ class Action
 		this.exceptionHandler = exceptionHandler;
 	}
 
-	fillID(id: string)
+	public fillID(id: string): void
 		{
 			this.url = this.url.replace("{id}", encodeURIComponent(id));
-		};
+		}
 }
 
-function serializeAction(action: Action)
+function serializeAction(action: Action): SerializedAction
 {
 	return {"url": action.url, "method": action.method, "payload": action.payloadBuilder(), "callback": action.callback.toString()};
 }
 
-function deserializeAction(action: SerializedAction)
+function deserializeAction(action: SerializedAction): Action
 {
-	return new Action(action.url, action.method, function()
+	return new Action(action.url, action.method, function(): Payload
 		{
 			return action.payload;
 		}, eval('(' + action.callback + ')'), undefined);
 }
 
-function ActionQueueSetup()
+function ActionQueueSetup(): void
 {
 	if(window.sessionStorage && sessionStorage.getItem("ActionQueue"))
 	{
@@ -53,24 +53,40 @@ function ActionQueueSetup()
 class ActionQueue {
 	private actions: Array<Action>;
 
-	constructor(actions: Array<Action> = [], retry: boolean = false)
+	public constructor(actions: Array<Action> = [], retry = false)
 	{
 		this.actions = actions;
 		ActionQueueRetry = retry;
 	}
 
-	fillID(id: string)
+	/* tslint:disable:no-unused-variable */
+	public fillID(id: string): void
 		{
 			for(var i = 0; i < this.actions.length; i++)
 			{
 				this.actions[i].fillID(id);
 			}
-		};
+		}
 
-	addDefaultCallback()
+	public dispatch(background: boolean): void
+		{
+			this.pop(true, background);
+		}
+	public defaultDispatch(background: boolean): void
+		{
+			this.addDefaultCallback();
+			this.dispatch(background);
+		}
+	public closeDispatch(): void
+		{
+			sidePanelClose();
+			this.defaultDispatch(false);
+		}
+
+	private addDefaultCallback(): void
 		{
 			var origCallback = this.actions[this.actions.length - 1].callback;
-			this.actions[this.actions.length - 1].callback = function(response)
+			this.actions[this.actions.length - 1].callback = function(response): void
 				{
 					dialog("Akce byla úspěšná.", "OK");
 					refreshMetadata();
@@ -87,9 +103,9 @@ class ActionQueue {
 						history.back();
 					}
 				};
-		};
+		}
 
-	pop(propagate: boolean, background: boolean)
+	private pop(propagate: boolean, background: boolean): void
 		{
 			if(this.actions.length <= 1)
 			{
@@ -101,7 +117,7 @@ class ActionQueue {
 			}
 			this.actions[0].exceptionHandler["AuthenticationException"] = this.authException;
 			var that = this;
-			request(this.actions[0].url, this.actions[0].method, this.actions[0].payloadBuilder(), function(response)
+			request(this.actions[0].url, this.actions[0].method, this.actions[0].payloadBuilder(), function(response): void
 				{
 					that.actions[0].callback(response);
 					that.actions.shift();
@@ -110,24 +126,9 @@ class ActionQueue {
 						that.pop(true, background);
 					}
 				}, this.actions[0].exceptionHandler);
-		};
+		}
 
-	dispatch(background: boolean)
-		{
-			this.pop(true, background);
-		};
-	defaultDispatch(background: boolean)
-		{
-			this.addDefaultCallback();
-			this.dispatch(background);
-		};
-	closeDispatch()
-		{
-			sidePanelClose();
-			this.defaultDispatch(false);
-		};
-
-	authException()
+	private authException(): void
 		{
 			if(!ActionQueueRetry && window.sessionStorage)
 			{

@@ -8,37 +8,37 @@ var COMPETENCES = [];
 var GROUPS = [];
 var LOGINSTATE: Loginstate = {avatar: "", name: ""};
 
-function metadataSetup()
+function metadataSetup(): void
 {
 	refreshMetadata();
 }
 
-function refreshMetadata()
+function refreshMetadata(): void
 {
 	metadataEvent = new AfterLoadEvent(4);
-	request(CONFIG.apiuri + "/lesson?override-group=true", "GET", {}, function(response)
+	request(CONFIG.apiuri + "/lesson?override-group=true", "GET", {}, function(response): void
 		{
 			FIELDS = response as unknown as Array<Field>;
 			metadataEvent.trigger();
 		}, undefined);
-	request(CONFIG.apiuri + "/competence", "GET", {}, function(response)
+	request(CONFIG.apiuri + "/competence", "GET", {}, function(response): void
 		{
 			COMPETENCES = response as unknown as Array<Competence>;
 			metadataEvent.trigger();
 		}, undefined);
-	var groupExceptionHandler = {"AuthenticationException": function()
+	var groupExceptionHandler = {"AuthenticationException": function(): void
 		{
 			window.location.href = CONFIG.apiuri + "/login?return-uri=" + encodeURIComponent(window.location.href);
-		}, "RoleException": function()
+		}, "RoleException": function(): void
 		{
 			window.location.replace(CONFIG['frontend-uri']);
 		}};
-	request(CONFIG.apiuri + "/group", "GET", {}, function(response)
+	request(CONFIG.apiuri + "/group", "GET", {}, function(response): void
 		{
 			GROUPS = response as unknown as Array<Group>;
 			metadataEvent.trigger();
 		}, groupExceptionHandler);
-	rawRequest(CONFIG.apiuri + "/account", "GET", undefined, function(response)
+	rawRequest(CONFIG.apiuri + "/account", "GET", undefined, function(response): void
 		{
 			if(response.status === 200)
 			{
