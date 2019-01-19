@@ -10,18 +10,17 @@ var authFailHandler = {"AuthenticationException": function()
 		dialog("Proběhlo automatické odhlášení. Přihlašte se prosím a zkuste to znovu.", "OK");
 	}};
 
-function request(url, method, payload, callback, exceptionHandler)
+function request(url: string, method: string, payload: Payload, callback: (response: RequestResponse) => void, exceptionHandler: ExceptionHandler = {})
 {
-	exceptionHandler = typeof exceptionHandler !== 'undefined' ? exceptionHandler : {};
 	rawRequest(url, method, payload, function(response)
 		{
 			if(Math.floor(response.status / 100) === 2)
 			{
-				callback(response.response);
+				callback(response.response!);
 			}
-			else if(exceptionHandler.hasOwnProperty(response.type))
+			else if(exceptionHandler.hasOwnProperty(response.type!))
 			{
-				exceptionHandler[response.type](response);
+				exceptionHandler[response.type!]!(response);
 			}
 			else
 			{
@@ -30,9 +29,8 @@ function request(url, method, payload, callback, exceptionHandler)
 		});
 }
 
-function rawRequest(url, method, payload, callback)
+function rawRequest(url: string, method: string, payload: Payload = {}, callback: (response: APIResponse) => void)
 {
-	payload = typeof payload !== 'undefined' ? payload : {};
 	var xhr = new XMLHttpRequest();
 	xhr.onreadystatechange = function()
 		{
@@ -68,11 +66,11 @@ function rawRequest(url, method, payload, callback)
 	}
 	else
 	{
-		xhr.send(payload);
+		xhr.send(payload as unknown as string);
 	}
 }
 
-function requestQueryBuilder(payload)
+function requestQueryBuilder(payload: Payload)
 {
 	var query = "";
 	var first = true;

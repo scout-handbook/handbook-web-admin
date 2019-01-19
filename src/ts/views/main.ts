@@ -3,7 +3,7 @@
 
 var mainPageTab = "lessons";
 
-function showMainView(noHistory)
+function showMainView(noHistory: boolean): void
 {
 	var html = "<div id=\"sidePanel\"></div><div id=\"sidePanelOverlay\"></div>";
 	html += "<div id=\"topBar\"><div id=\"userAccount\"><img id=\"userAvatar\" alt=\"Account avatar\" src=\"" + CONFIG['admin-uri'] + "/avatar.png\">";
@@ -46,19 +46,19 @@ function showMainView(noHistory)
 		});
 }
 
-function renderMainView(noHistory)
+function renderMainView(noHistory: boolean)
 {
 	if(LOGINSTATE.avatar)
 	{
 		(document.getElementById("userAvatar") as HTMLImageElement).src = "data:image/png;base64," + LOGINSTATE.avatar;
 	}
-	document.getElementById("userName").innerHTML = LOGINSTATE.name;
+	document.getElementById("userName")!.innerHTML = LOGINSTATE.name;
 
-	document.getElementById("lessonManager").onclick = function() {showLessonSubview()};
-	document.getElementById("competenceManager").onclick = function() {showCompetenceSubview()};
-	document.getElementById("imageManager").onclick = function() {showImageSubview()};
-	document.getElementById("userManager").onclick = function() {showUserSubview()};
-	document.getElementById("groupManager").onclick = function() {showGroupSubview()};
+	document.getElementById("lessonManager")!.onclick = function() {showLessonSubview()};
+	document.getElementById("competenceManager")!.onclick = function() {showCompetenceSubview()};
+	document.getElementById("imageManager")!.onclick = function() {showImageSubview()};
+	document.getElementById("userManager")!.onclick = function() {showUserSubview()};
+	document.getElementById("groupManager")!.onclick = function() {showGroupSubview()};
 
 	if(mainPageTab === "competences")
 	{

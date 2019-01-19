@@ -3,26 +3,35 @@
 
 var ActionQueueRetry = false;
 
-function Action(url, method, payloadBuilder, callback, exceptionHandler)
+class Action
 {
-	this.url = url;
-	this.method = method;
-	this.payloadBuilder = typeof payloadBuilder !== 'undefined' ? payloadBuilder : function(){return {};};
-	this.callback = typeof callback !== 'undefined' ? callback : function(){};
-	this.exceptionHandler = typeof exceptionHandler !== 'undefined' ? exceptionHandler : {};
+	public url: string;
+	public method: string;
+	public payloadBuilder: () => Payload;
+	public callback: (response: RequestResponse) => void;
+	public exceptionHandler: ExceptionHandler;
 
-	this.fillID = function(id)
+	constructor(url: string, method: string, payloadBuilder: () => Payload = function(){return{};}, callback: (response: RequestResponse) => void = function(){}, exceptionHandler: ExceptionHandler = {})
+	{
+		this.url = url;
+		this.method = method;
+		this.payloadBuilder = payloadBuilder;
+		this.callback = callback;
+		this.exceptionHandler = exceptionHandler;
+	}
+
+	fillID(id: string)
 		{
 			this.url = this.url.replace("{id}", encodeURIComponent(id));
 		};
 }
 
-function serializeAction(action)
+function serializeAction(action: Action)
 {
 	return {"url": action.url, "method": action.method, "payload": action.payloadBuilder(), "callback": action.callback.toString()};
 }
 
-function deserializeAction(action)
+function deserializeAction(action: SerializedAction)
 {
 	return new Action(action.url, action.method, function()
 		{
@@ -34,31 +43,34 @@ function ActionQueueSetup()
 {
 	if(window.sessionStorage && sessionStorage.getItem("ActionQueue"))
 	{
-		var aq = new ActionQueue(JSON.parse(sessionStorage.getItem("ActionQueue")).map(deserializeAction), false);
+		var aq = new ActionQueue(JSON.parse(sessionStorage.getItem("ActionQueue")!).map(deserializeAction), false);
 		ActionQueueRetry = true;
 		sessionStorage.clear();
-		aq.dispatch();
+		aq.dispatch(false);
 	}
 }
 
-function ActionQueue(actions, retry)
-{
-	this.actions = typeof actions !== 'undefined' ? actions : [];
-	ActionQueueRetry = typeof retry !== 'undefined' ? retry : false;
-	var queue = this;
+class ActionQueue {
+	private actions: Array<Action>;
 
-	this.fillID = function(id)
+	constructor(actions: Array<Action> = [], retry: boolean = false)
+	{
+		this.actions = actions;
+		ActionQueueRetry = retry;
+	}
+
+	fillID(id: string)
 		{
-			for(var i = 0; i < queue.actions.length; i++)
+			for(var i = 0; i < this.actions.length; i++)
 			{
-				queue.actions[i].fillID(id);
+				this.actions[i].fillID(id);
 			}
 		};
 
-	this.addDefaultCallback = function()
+	addDefaultCallback()
 		{
-			var origCallback = queue.actions[queue.actions.length - 1].callback;
-			queue.actions[queue.actions.length - 1].callback = function(response)
+			var origCallback = this.actions[this.actions.length - 1].callback;
+			this.actions[this.actions.length - 1].callback = function(response)
 				{
 					dialog("Akce byla úspěšná.", "OK");
 					refreshMetadata();
@@ -77,9 +89,9 @@ function ActionQueue(actions, retry)
 				};
 		};
 
-	this.pop = function(propagate, background)
+	pop(propagate: boolean, background: boolean)
 		{
-			if(queue.actions.length <= 1)
+			if(this.actions.length <= 1)
 			{
 				propagate = false;
 			}
@@ -87,38 +99,39 @@ function ActionQueue(actions, retry)
 			{
 				spinner();
 			}
-			queue.actions[0].exceptionHandler["AuthenticationException"] = queue.authException;
-			request(queue.actions[0].url, queue.actions[0].method, queue.actions[0].payloadBuilder(), function(response)
+			this.actions[0].exceptionHandler["AuthenticationException"] = this.authException;
+			var that = this;
+			request(this.actions[0].url, this.actions[0].method, this.actions[0].payloadBuilder(), function(response)
 				{
-					queue.actions[0].callback(response);
-					queue.actions.shift();
+					that.actions[0].callback(response);
+					that.actions.shift();
 					if(propagate)
 					{
-						queue.pop(true, background);
+						that.pop(true, background);
 					}
-				}, queue.actions[0].exceptionHandler);
+				}, this.actions[0].exceptionHandler);
 		};
 
-	this.dispatch = function(background)
+	dispatch(background: boolean)
 		{
-			queue.pop(true, background);
+			this.pop(true, background);
 		};
-	this.defaultDispatch = function(background)
+	defaultDispatch(background: boolean)
 		{
-			queue.addDefaultCallback();
-			queue.dispatch(background);
+			this.addDefaultCallback();
+			this.dispatch(background);
 		};
-	this.closeDispatch = function()
+	closeDispatch()
 		{
 			sidePanelClose();
-			queue.defaultDispatch();
+			this.defaultDispatch(false);
 		};
 
-	this.authException = function()
+	authException()
 		{
 			if(!ActionQueueRetry && window.sessionStorage)
 			{
-				sessionStorage.setItem("ActionQueue", JSON.stringify(queue.actions.map(serializeAction)));
+				sessionStorage.setItem("ActionQueue", JSON.stringify(this.actions.map(serializeAction)));
 				window.location.replace(CONFIG.apiuri + "/login?return-uri=/admin/" + mainPageTab);
 			}
 			else
