@@ -3,7 +3,7 @@
 
 var roleChanged = false;
 
-function changeUserRoleOnClick(event)
+function changeUserRoleOnClick(event: MouseEvent)
 {
 	roleChanged = false;
 	sidePanelOpen();
@@ -27,19 +27,19 @@ function changeUserRoleOnClick(event)
 		html += "<div class=\"roleHelp\"><i class=\"icon-info-circled\"></i><span class=\"roleHelpName\">Administrátor</span> - Instruktor, mající všechna práva editora. Navíc může i mazat lekce a přidávat, upravovat a mazat oblasti a kompetence. Administrátor může navíc přidělovat a odebírat práva editorů.</div>";
 		html += "<div class=\"roleHelp\"><i class=\"icon-info-circled\"></i><span class=\"roleHelpName\">Superuser</span> - Uživatel-polobůh.</div>";
 	}
-	document.getElementById("sidePanel").innerHTML = html;
+	document.getElementById("sidePanel")!.innerHTML = html;
 
-	(document.getElementById("roleSelect") as HTMLSelectElement).options.namedItem(getAttribute(event, "role")).selected = true;
+	(document.getElementById("roleSelect") as HTMLSelectElement).options.namedItem(getAttribute(event, "role"))!.selected = true;
 
-	document.getElementById("sidePanelCancel").onclick = function()
+	document.getElementById("sidePanelCancel")!.onclick = function()
 		{
 			history.back();
 		};
 
 	var aq = new ActionQueue([new Action(CONFIG.apiuri + "/user/" + encodeURIComponent(getAttribute(event, "id")) + "/role", "PUT", changeUserRolePayloadBuilder)]);
-	document.getElementById("changeUserRoleSave").onclick = aq.closeDispatch;
+	document.getElementById("changeUserRoleSave")!.onclick = aq.closeDispatch;
 
-	document.getElementById("roleSelect").onchange = function()
+	document.getElementById("roleSelect")!.onchange = function()
 		{
 			roleChanged = true;
 		};

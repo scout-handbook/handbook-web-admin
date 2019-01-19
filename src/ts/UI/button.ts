@@ -1,12 +1,12 @@
 "use strict";
 /* exported getAttribute */
 
-function getAttribute(event, attribute)
+function getAttribute(event: MouseEvent, attribute: string): string
 {
-	var el = event.target;
+	var el = event.target as HTMLElement;
 	while(!el.dataset.hasOwnProperty(attribute))
 	{
-		el = el.parentElement;
+		el = el.parentElement!;
 	}
-	return el.dataset[attribute];
+	return el.dataset[attribute]!;
 }

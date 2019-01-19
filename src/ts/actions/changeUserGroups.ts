@@ -3,7 +3,7 @@
 
 var groupsChanged = false;
 
-function changeUserGroupsOnClick(event)
+function changeUserGroupsOnClick(event: MouseEvent)
 {
 	groupsChanged = false;
 	sidePanelOpen();
@@ -32,17 +32,17 @@ function changeUserGroupsOnClick(event)
 	}
 	html += "</form>";
 	html += "<div class=\"groupHelp\"><i class=\"icon-info-circled\"></i> Každého uživatele lze zařadit do několika skupin (nebo i žádné). Podle toho poté tento uživatel bude moct zobrazit pouze lekce, které byly těmto skupiným zveřejněny. Lekce ve skupině \"<span class=\"publicGroup\">" + publicName + "</span>\" uvidí všichni uživatelé bez ohledu na jejich skupiny. </div>";
-	document.getElementById("sidePanel").innerHTML = html;
+	document.getElementById("sidePanel")!.innerHTML = html;
 
-	document.getElementById("sidePanelCancel").onclick = function()
+	document.getElementById("sidePanelCancel")!.onclick = function()
 		{
 			history.back();
 		};
 
 	var aq = new ActionQueue([new Action(CONFIG.apiuri + "/user/" + encodeURIComponent(getAttribute(event, "id")) + "/group", "PUT", changeUserPayloadBuilder)]);
-	document.getElementById("changeUserGroupsSave").onclick = aq.closeDispatch;
+	document.getElementById("changeUserGroupsSave")!.onclick = aq.closeDispatch;
 
-	var nodes = document.getElementById("sidePanelForm").getElementsByTagName("input");
+	var nodes = document.getElementById("sidePanelForm")!.getElementsByTagName("input");
 	for(var k = 0; k < nodes.length; k++)
 	{
 		nodes[k].onchange = userGroupsOnclick;

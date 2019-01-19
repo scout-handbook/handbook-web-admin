@@ -3,7 +3,7 @@
 
 var lessonCompetencesChanged = false;
 
-function changeLessonCompetencesOnClick(id, actionQueue)
+function changeLessonCompetencesOnClick(id: string, actionQueue: ActionQueue)
 {
 	lessonCompetencesChanged = false;
 	var html = "<div class=\"button yellowButton\" id=\"cancelEditorAction\"><i class=\"icon-cancel\"></i>Zrušit</div>";
@@ -21,15 +21,15 @@ function changeLessonCompetencesOnClick(id, actionQueue)
 		html += "<span class=\"competenceNumber\">" + COMPETENCES[i].number + ":</span> " + COMPETENCES[i].name + "</div>";
 	}
 	html += "</form>";
-	document.getElementById("sidePanel").innerHTML = html;
+	document.getElementById("sidePanel")!.innerHTML = html;
 
-	document.getElementById("cancelEditorAction").onclick = function()
+	document.getElementById("cancelEditorAction")!.onclick = function()
 		{
 			lessonSettings(id, actionQueue, true);
 		};
-	document.getElementById("changeLessonCompetencesSave").onclick = function() {changeLessonCompetencesSave(id, actionQueue);};
+	document.getElementById("changeLessonCompetencesSave")!.onclick = function() {changeLessonCompetencesSave(id, actionQueue);};
 
-	var nodes = document.getElementById("sidePanelForm").getElementsByTagName("input");
+	var nodes = document.getElementById("sidePanelForm")!.getElementsByTagName("input");
 	for(var j = 0; j < nodes.length; j++)
 	{
 		nodes[j].onchange = lessonCompetenceOnclick;
@@ -43,13 +43,13 @@ function lessonCompetenceOnclick()
 	lessonCompetencesChanged = true;
 }
 
-function changeLessonCompetencesSave(id, actionQueue)
+function changeLessonCompetencesSave(id: string, actionQueue: ActionQueue)
 {
 	if(lessonCompetencesChanged)
 	{
 		id = typeof id !== 'undefined' ? id : "{id}";
 		var competences = parseBoolForm();
-		var encodedCompetences = [];
+		var encodedCompetences: Array<string> = [];
 		for(var i = 0; i < competences.length; i++)
 		{
 			encodedCompetences.push(encodeURIComponent(competences[i]));

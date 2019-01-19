@@ -11,15 +11,15 @@ function addCompetence()
 	html += "<input type=\"text\" class=\"formText\" id=\"competenceName\" value=\"Nová kompetence\" autocomplete=\"off\"><br>";
 	html += "<textarea rows=\"5\" class=\"formText\" id=\"competenceDescription\" autocomplete=\"off\">Popis nové kompetence</textarea>";
 	html += "</form>";
-	document.getElementById("sidePanel").innerHTML = html;
+	document.getElementById("sidePanel")!.innerHTML = html;
 
-	document.getElementById("sidePanelCancel").onclick = function()
+	document.getElementById("sidePanelCancel")!.onclick = function()
 		{
 			history.back();
 		};
 
 	var aq = new ActionQueue([new Action(CONFIG.apiuri + "/competence", "POST", addCompetencePayloadBuilder)]);
-	document.getElementById("addCompetenceSave").onclick = aq.closeDispatch;
+	document.getElementById("addCompetenceSave")!.onclick = aq.closeDispatch;
 
 	history.pushState({"sidePanel": "open"}, "title", "/admin/competences");
 	refreshLogin();

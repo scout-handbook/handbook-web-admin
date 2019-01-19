@@ -1,7 +1,7 @@
 "use strict";
 /* exported lessonSettings */
 
-function lessonSettings(id, actionQueue, noHistory)
+function lessonSettings(id: string, actionQueue: ActionQueue, noHistory: boolean)
 {
 	sidePanelOpen();
 	var html = "<div class=\"button yellowButton\" id=\"sidePanelCancel\"><i class=\"icon-right-open\"></i>Zavřít</div>";
@@ -9,17 +9,17 @@ function lessonSettings(id, actionQueue, noHistory)
 	html += renderField();
 	html += renderCompetences();
 	html += prerenderGroups();
-	document.getElementById("sidePanel").innerHTML = html;
+	document.getElementById("sidePanel")!.innerHTML = html;
 	lessonSettingsCacheEvent.addCallback(renderGroups);
 
-	document.getElementById("sidePanelCancel").onclick = function()
+	document.getElementById("sidePanelCancel")!.onclick = function()
 		{
 			history.back();
 		};
-	document.getElementById("lessonHistoryOpen").onclick = function() {lessonHistoryOpen(id, actionQueue);};
-	document.getElementById("changeField").onclick = function() {changeLessonFieldOnClick(id, actionQueue);};
-	document.getElementById("changeCompetences").onclick = function() {changeLessonCompetencesOnClick(id, actionQueue);};
-	document.getElementById("changeGroups").onclick = function() {changeLessonGroupsOnClick(id, actionQueue);};
+	document.getElementById("lessonHistoryOpen")!.onclick = function() {lessonHistoryOpen(id, actionQueue);};
+	document.getElementById("changeField")!.onclick = function() {changeLessonFieldOnClick(id, actionQueue);};
+	document.getElementById("changeCompetences")!.onclick = function() {changeLessonCompetencesOnClick(id, actionQueue);};
+	document.getElementById("changeGroups")!.onclick = function() {changeLessonGroupsOnClick(id, actionQueue);};
 	if(!noHistory)
 	{
 		history.pushState({"sidePanel": "open"}, "title", "/admin/lessons");
@@ -72,7 +72,7 @@ function prerenderGroups()
 
 function renderGroups()
 {
-	document.getElementById("changeGroups").style.display = "inline-block";
+	document.getElementById("changeGroups")!.style.display = "inline-block";
 	var html = "";
 	for(var i = 0; i < GROUPS.length; i++)
 	{
@@ -88,5 +88,5 @@ function renderGroups()
 			}
 		}
 	}
-	document.getElementById("settingsGroupList").innerHTML = html;
+	document.getElementById("settingsGroupList")!.innerHTML = html;
 }

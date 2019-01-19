@@ -1,7 +1,7 @@
 "use strict";
 /* exported showImageSubview */
 
-function showImageSubview(noHistory)
+function showImageSubview(noHistory: boolean)
 {
 	mainPageTab = "images";
 	var nodes = document.getElementsByClassName("topBarTab");
@@ -9,13 +9,13 @@ function showImageSubview(noHistory)
 	{
 		nodes[i].className = "topBarTab";
 	}
-	document.getElementById("imageManager").className += " activeTopBarTab";
+	document.getElementById("imageManager")!.className += " activeTopBarTab";
 	var html = "<h1>" + CONFIG["site-name"] + " - Obrázky</h1>";
 	html += "<div class=\"button greenButton\" id=\"addImage\"><i class=\"icon-plus\"></i>Nahrát</div>";
 	html += "<div id=\"imageList\"></div>";
-	document.getElementById("mainPage").innerHTML = html;
+	document.getElementById("mainPage")!.innerHTML = html;
 
-	document.getElementById("addImage").onclick = addImage;
+	document.getElementById("addImage")!.onclick = function() {addImage(false);};
 	downloadImageList(1, 15);
 	if(!noHistory)
 	{
@@ -23,17 +23,17 @@ function showImageSubview(noHistory)
 	}
 }
 
-function downloadImageList(page, perPage)
+function downloadImageList(page: number, perPage: number)
 {
-	document.getElementById("imageList").innerHTML = "<div id=\"embeddedSpinner\"></div>";
-	request(CONFIG.apiuri + "/image", "GET", undefined, function(response)
+	document.getElementById("imageList")!.innerHTML = "<div id=\"embeddedSpinner\"></div>";
+	request(CONFIG.apiuri + "/image", "GET", undefined, function(response: RequestResponse)
 		{
-			showImageList(response, page, perPage);
+			showImageList(response as unknown as Array<string>, page, perPage);
 		}, reAuthHandler);
 	refreshLogin(true);
 }
 
-function showImageList(list, page, perPage)
+function showImageList(list: Array<string>, page: number, perPage: number)
 {
 	if(mainPageTab !== "images")
 	{
@@ -46,9 +46,9 @@ function showImageList(list, page, perPage)
 		html += "<div class=\"thumbnailContainer\"><div class=\"buttonContainer\"><img src=\"" + CONFIG.apiuri + "/image/" + list[i] + "?quality=thumbnail\" class=\"thumbnailImage\" data-id=\"" + list[i] + "\"><div class=\"button redButton deleteImage\" data-id=\"" + list[i] + "\"><i class=\"icon-trash-empty\"></i>Smazat</div></div></div>";
 	}
 	html += renderPagination(Math.ceil(list.length / perPage), page);
-	document.getElementById("imageList").innerHTML = html;
+	document.getElementById("imageList")!.innerHTML = html;
 
-	var	ImageNodes = document.getElementById("imageList").getElementsByTagName("img");
+	var	ImageNodes = document.getElementById("imageList")!.getElementsByTagName("img");
 	for(var j = 0; j < ImageNodes.length; j++)
 	{
 		ImageNodes[j].onclick = showImagePreview;
@@ -63,23 +63,23 @@ function showImageList(list, page, perPage)
 	{
 		(paginationNodes[l] as HTMLElement).onclick = function(event)
 			{
-				downloadImageList(parseInt((event.target as HTMLElement).dataset.page, 10), perPage);
+				downloadImageList(parseInt((event.target as HTMLElement).dataset.page!, 10), perPage);
 			};
 	}
 }
 
-function showImagePreview(event)
+function showImagePreview(event: MouseEvent)
 {
-	var overlay = document.getElementById("overlay");
+	var overlay = document.getElementById("overlay")!;
 	overlay.style.display = "inline";
 	overlay.style.cursor = "pointer";
-	var html = "<img src=\"" + CONFIG.apiuri + "/image/" + event.target.dataset.id + "\" class=\"previewImage\">";
+	var html = "<img src=\"" + CONFIG.apiuri + "/image/" + (event.target as HTMLElement).dataset.id + "\" class=\"previewImage\">";
 	overlay.innerHTML = html;
 	overlay.onclick = function()
 		{
 			overlay.style.display = "none";
 			overlay.style.cursor = "auto";
 			overlay.innerHTML = "";
-			overlay.onclick = undefined;
+			overlay.onclick = null;
 		};
 }

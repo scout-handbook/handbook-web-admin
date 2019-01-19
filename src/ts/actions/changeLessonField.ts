@@ -3,7 +3,7 @@
 
 var lessonFieldChanged = false;
 
-function changeLessonFieldOnClick(id, actionQueue)
+function changeLessonFieldOnClick(id: string, actionQueue: ActionQueue)
 {
 	lessonFieldChanged = false;
 	var html = "<div class=\"button yellowButton\" id=\"cancelEditorAction\"><i class=\"icon-cancel\"></i>Zrušit</div>";
@@ -41,15 +41,15 @@ function changeLessonFieldOnClick(id, actionQueue)
 		html += "</div>";
 	}
 	html += "</form>";
-	document.getElementById("sidePanel").innerHTML = html;
+	document.getElementById("sidePanel")!.innerHTML = html;
 
-	document.getElementById("cancelEditorAction").onclick = function()
+	document.getElementById("cancelEditorAction")!.onclick = function()
 		{
 			lessonSettings(id, actionQueue, true);
 		};
-	document.getElementById("changeLessonFieldSave").onclick = function() {changeLessonFieldSave(id, actionQueue);};
+	document.getElementById("changeLessonFieldSave")!.onclick = function() {changeLessonFieldSave(id, actionQueue);};
 
-	var nodes = document.getElementById("sidePanelForm").getElementsByTagName("input");
+	var nodes = document.getElementById("sidePanelForm")!.getElementsByTagName("input");
 	for(var k = 0; k < nodes.length; k++)
 	{
 		nodes[k].onchange = lessonFieldOnclick;
@@ -63,7 +63,7 @@ function lessonFieldOnclick()
 	lessonFieldChanged = true;
 }
 
-function changeLessonFieldSave(id, actionQueue)
+function changeLessonFieldSave(id: string, actionQueue: ActionQueue)
 {
 	if(lessonFieldChanged)
 	{

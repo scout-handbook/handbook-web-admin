@@ -1,7 +1,7 @@
 "use strict";
 /* exported showGroupSubview */
 
-function showGroupSubview(noHistory)
+function showGroupSubview(noHistory: boolean)
 {
 	mainPageTab = "groups";
 	var nodes = document.getElementsByClassName("topBarTab");
@@ -9,19 +9,19 @@ function showGroupSubview(noHistory)
 	{
 		nodes[l].className = "topBarTab";
 	}
-	document.getElementById("groupManager").className += " activeTopBarTab";
+	document.getElementById("groupManager")!.className += " activeTopBarTab";
 	var html = "<h1>" + CONFIG["site-name"] + " - Uživatelské skupiny</h1>";
 	if(LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser")
 	{
 		html += "<div class=\"button greenButton\" id=\"addGroup\"><i class=\"icon-plus\"></i>Přidat</div>";
 	}
 	html += renderGroupList()
-	document.getElementById("mainPage").innerHTML = html;
-	document.getElementById("mainPageContainer").scrollTop = 0;
+	document.getElementById("mainPage")!.innerHTML = html;
+	document.getElementById("mainPageContainer")!.scrollTop = 0;
 
 	if(LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser")
 	{
-		document.getElementById("addGroup").onclick = addGroup;
+		document.getElementById("addGroup")!.onclick = addGroup;
 	}
 
 	addOnClicks("changeGroup", changeGroupOnClick);

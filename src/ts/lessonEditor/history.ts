@@ -1,25 +1,25 @@
 "use strict";
 /* exported lessonHistoryOpen */
 
-function lessonHistoryOpen(id, actionQueue)
+function lessonHistoryOpen(id: string, actionQueue: ActionQueue)
 {
 	sidePanelDoubleOpen();
 	var html = "<div id=\"lessonHistoryList\"><div class=\"button yellowButton\" id=\"cancelEditorAction\"><i class=\"icon-cancel\"></i>Zrušit</div><span id=\"lessonHistoryListHeader\"></span><h3 class=\"sidePanelTitle\">Historie lekce</h3><div id=\"lessonHistoryForm\"><div id=\"embeddedSpinner\"></div></div></div><div id=\"lessonHistoryPreview\"></div>";
-	document.getElementById("sidePanel").innerHTML = html;
+	document.getElementById("sidePanel")!.innerHTML = html;
 
-	document.getElementById("cancelEditorAction").onclick = function()
+	document.getElementById("cancelEditorAction")!.onclick = function()
 		{
 			lessonSettings(id, actionQueue, true);
 		};
 
-	request(CONFIG.apiuri + "/lesson/" + id + "/history", "GET", undefined, function(response)
+	request(CONFIG.apiuri + "/lesson/" + id + "/history", "GET", undefined, function(response: RequestResponse)
 		{
-			lessonHistoryListRender(id, actionQueue, response);
+			lessonHistoryListRender(id, actionQueue, response as unknown as Array<LessonVersion>);
 		}, authFailHandler);
 	lessonHistoryPreviewShowCurrent();
 }
 
-function lessonHistoryListRender(id, actionQueue, list)
+function lessonHistoryListRender(id: string, actionQueue: ActionQueue, list: Array<LessonVersion>)
 {
 	var html = "<form id=\"sidePanelForm\">";
 	outer:
@@ -39,9 +39,9 @@ function lessonHistoryListRender(id, actionQueue, list)
 		html += "<div class=\"formRow\"><label class=\"formSwitch\"><input type=\"radio\" name=\"version\" data-name=\"" + list[k].name + "\" data-version=\"" + list[k].version + "\"><span class=\"formCustom formRadio\"></span></label><span class=\"lessonHistoryVersion\">" + list[k].name + "</span> — " + parseVersion(list[k].version) + "</div>";
 	}
 	html += "</form>";
-	document.getElementById("lessonHistoryForm").innerHTML = html;
+	document.getElementById("lessonHistoryForm")!.innerHTML = html;
 
-	var nodes = document.getElementById("sidePanelForm").getElementsByTagName("input");
+	var nodes = document.getElementById("sidePanelForm")!.getElementsByTagName("input");
 	nodes[0].onchange = function() {lessonHistoryPreviewShowCurrent();};
 	if(nodes.length > 1)
 	{
@@ -54,34 +54,34 @@ function lessonHistoryListRender(id, actionQueue, list)
 
 function lessonHistoryPreviewShowCurrent()
 {
-	document.getElementById("lessonHistoryPreview").innerHTML = "<div id=\"embeddedSpinner\"></div>";
+	document.getElementById("lessonHistoryPreview")!.innerHTML = "<div id=\"embeddedSpinner\"></div>";
 	refreshPreview((document.getElementById("name") as HTMLInputElement).value, editor.value(), "lessonHistoryPreview");
 
-	document.getElementById("lessonHistoryListHeader").innerHTML = "";
+	document.getElementById("lessonHistoryListHeader")!.innerHTML = "";
 
 	refreshLogin();
 }
 
-function lessonHistoryPreviewShowVersion(id, actionQueue, event)
+function lessonHistoryPreviewShowVersion(id: string, actionQueue: ActionQueue, event: Event)
 {
-	document.getElementById("lessonHistoryPreview").innerHTML = "<div id=\"embeddedSpinner\"></div>";
-	request(CONFIG.apiuri + "/lesson/" + id + "/history/" + event.target.dataset.version, "GET", undefined, function(response)
+	document.getElementById("lessonHistoryPreview")!.innerHTML = "<div id=\"embeddedSpinner\"></div>";
+	request(CONFIG.apiuri + "/lesson/" + id + "/history/" + (event.target as HTMLElement).dataset.version, "GET", undefined, function(response: RequestResponse)
 		{
-			lessonHistoryPreviewRenderVersion(id, event.target.dataset.name, response, actionQueue);
+			lessonHistoryPreviewRenderVersion(id, (event.target as HTMLElement).dataset.name!, response as unknown as string, actionQueue);
 		}, authFailHandler);
 
-	document.getElementById("lessonHistoryListHeader").innerHTML = "";
+	document.getElementById("lessonHistoryListHeader")!.innerHTML = "";
 
 	refreshLogin();
 }
 
-function lessonHistoryPreviewRenderVersion(id, name, body, actionQueue)
+function lessonHistoryPreviewRenderVersion(id: string, name: string, body: string, actionQueue: ActionQueue)
 {
 	refreshPreview(name, body, "lessonHistoryPreview");
 	var html = "<div class=\"button greenButton\" id=\"lessonHistoryRevert\"><i class=\"icon-history\"></i>Obnovit</div>";
-	document.getElementById("lessonHistoryListHeader").innerHTML = html;
+	document.getElementById("lessonHistoryListHeader")!.innerHTML = html;
 
-	document.getElementById("lessonHistoryRevert").onclick = function()
+	document.getElementById("lessonHistoryRevert")!.onclick = function()
 		{
 			(document.getElementById("name") as HTMLInputElement).value = name;
 			editor.value(body);

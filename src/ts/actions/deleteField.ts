@@ -1,7 +1,7 @@
 "use strict";
 /* exported deleteFieldOnClick */
 
-function deleteFieldOnClick(event)
+function deleteFieldOnClick(event: MouseEvent)
 {
 	var name = "";
 	var id = getAttribute(event, "id");

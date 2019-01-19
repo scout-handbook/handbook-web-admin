@@ -1,14 +1,14 @@
 "use strict";
 /* exported importGroupOnClick */
 
-var participantEvent;
+var participantEvent: AfterLoadEvent;
 var addEvent;
 var groupEvent;
 
-var participants;
-var users;
+var participants: Array<Participant>;
+var users: Array<User>;
 
-function importGroupOnClick(event)
+function importGroupOnClick(event: MouseEvent)
 {
 	sidePanelOpen();
 	var html = "<div class=\"button yellowButton\" id=\"sidePanelCancel\"><i class=\"icon-cancel\"></i>Zrušit</div>";
@@ -22,21 +22,21 @@ function importGroupOnClick(event)
 		}
 	}
 	html += "<div id=\"importList\"><div id=\"embeddedSpinner\"></div></div>";
-	document.getElementById("sidePanel").innerHTML = html;
-	document.getElementById("sidePanelCancel").onclick = function()
+	document.getElementById("sidePanel")!.innerHTML = html;
+	document.getElementById("sidePanelCancel")!.onclick = function()
 		{
 			history.back();
 		};
-	request(CONFIG.apiuri + "/event", "GET", undefined, function(response)
+	request(CONFIG.apiuri + "/event", "GET", undefined, function(response: RequestResponse)
 		{
-			importGroupSelectEventRender(getAttribute(event, "id"), response);
+			importGroupSelectEventRender(getAttribute(event, "id"), response as unknown as Array<Event>);
 		}, reAuthHandler);
 
 	history.pushState({"sidePanel": "open"}, "title", "/admin/groups");
 	refreshLogin();
 }
 
-function importGroupSelectEventRender(id, events)
+function importGroupSelectEventRender(id: string, events: Array<Event>)
 {
 	if(events.length === 0)
 	{
@@ -52,34 +52,34 @@ function importGroupSelectEventRender(id, events)
 		html += "<div class=\"formRow\"><label class=\"formSwitch\"><input type=\"radio\" name=\"field\" data-id=\"" + events[i].id + "\"><span class=\"formCustom formRadio\"></span></label>" + events[i].name + "</div>";
 	}
 	html += "</form>";
-	document.getElementById("importList").innerHTML = html;
-	document.getElementById("importGroupNext").onclick = function() {importGroupSelectParticipants(id)};
+	document.getElementById("importList")!.innerHTML = html;
+	document.getElementById("importGroupNext")!.onclick = function() {importGroupSelectParticipants(id)};
 }
 
-function importGroupSelectParticipants(id)
+function importGroupSelectParticipants(id: string)
 {
 	var eventId = parseBoolForm()[0];
 	if(eventId)
 	{
 		var html = "<div id=\"embeddedSpinner\"></div>";
-		document.getElementById("importList").innerHTML = html;
+		document.getElementById("importList")!.innerHTML = html;
 		participantEvent = new AfterLoadEvent(2);
 		participantEvent.addCallback(importGroupSelectParticipantsRender);
-		request(CONFIG.apiuri + "/event/" + eventId + "/participant", "GET", undefined, function(response)
+		request(CONFIG.apiuri + "/event/" + eventId + "/participant", "GET", undefined, function(response: RequestResponse)
 			{
-				participants = response;
+				participants = response as unknown as Array<Participant>;
 				participantEvent.trigger(id);
 			}, reAuthHandler);
-		request(CONFIG.apiuri + "/user", "GET", {"page": 1, "per-page": 1000, "group": id}, function(response)
+		request(CONFIG.apiuri + "/user", "GET", {"page": 1, "per-page": 1000, "group": id}, function(response: RequestResponse)
 			{
-				users = response.users;
+				users = response.users as Array<User>;
 				participantEvent.trigger(id);
 			}, reAuthHandler);
-		document.getElementById("importGroupNext").onclick = function(){};
+		document.getElementById("importGroupNext")!.onclick = function(){};
 	}
 }
 
-function importGroupSelectParticipantsRender(id)
+function importGroupSelectParticipantsRender(id: string)
 {
 	var newparticipants = setdiff(participants, users);
 	if(newparticipants.length === 0)
@@ -96,20 +96,20 @@ function importGroupSelectParticipantsRender(id)
 		html += "<div class=\"formRow\"><label class=\"formSwitch\"><input type=\"checkbox\" data-id=\"" + newparticipants[i].id + "\" data-name=\"" + newparticipants[i].name + "\"><span class=\"formCustom formCheckbox\"></span></label>" + newparticipants[i].name + "</div>";
 	}
 	html += "</form>";
-	document.getElementById("importList").innerHTML = html;
-	document.getElementById("importGroupNext").innerHTML = "<i class=\"icon-floppy\"></i>Uložit";
-	document.getElementById("importGroupNext").onclick = function() {importGroupSave(id)};
+	document.getElementById("importList")!.innerHTML = html;
+	document.getElementById("importGroupNext")!.innerHTML = "<i class=\"icon-floppy\"></i>Uložit";
+	document.getElementById("importGroupNext")!.onclick = function() {importGroupSave(id)};
 }
 
-function importGroupSave(id)
+function importGroupSave(id: string)
 {
-	var participants = [];
-	var nodes = document.getElementById("sidePanelForm").getElementsByTagName("input");
+	var participants: Array<Participant> = [];
+	var nodes = document.getElementById("sidePanelForm")!.getElementsByTagName("input");
 	for(var i = 0; i < nodes.length; i++)
 	{
 		if(nodes[i].checked)
 		{
-			participants.push({"id": nodes[i].dataset.id, "name": nodes[i].dataset.name})
+			participants.push({"id": parseInt(nodes[i].dataset.id!), "name": nodes[i].dataset.name!})
 		}
 	}
 
@@ -119,7 +119,7 @@ function importGroupSave(id)
 	}
 
 	var html = "<div id=\"embeddedSpinner\"></div>";
-	document.getElementById("importList").innerHTML = html;
+	document.getElementById("importList")!.innerHTML = html;
 
 	addEvent = new AfterLoadEvent(participants.length);
 	for(var j = 0; j < participants.length; j++)
@@ -150,7 +150,7 @@ function importGroupSave(id)
 	spinner();
 }
 
-function setdiff(a, b)
+function setdiff(a: Array<Participant>, b: Array<User>)
 {
 	var bArr = b.map(function(x) {
 		return x.id;

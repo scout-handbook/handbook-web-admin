@@ -10,15 +10,15 @@ function addField()
 	html += "<legend for=\"fieldName\">Název:</legend>";
 	html += "<input type=\"text\" class=\"formText formName\" id=\"fieldName\" value=\"Nová oblast\" autocomplete=\"off\">";
 	html += "</form>";
-	document.getElementById("sidePanel").innerHTML = html;
+	document.getElementById("sidePanel")!.innerHTML = html;
 
-	document.getElementById("sidePanelCancel").onclick = function()
+	document.getElementById("sidePanelCancel")!.onclick = function()
 		{
 			history.back();
 		};
 
 	var aq = new ActionQueue([new Action(CONFIG.apiuri + "/field", "POST", addFiledPayloadBuilder)]);
-	document.getElementById("addFieldSave").onclick = aq.closeDispatch;
+	document.getElementById("addFieldSave")!.onclick = aq.closeDispatch;
 
 	history.pushState({"sidePanel": "open"}, "title", "/admin/lessons");
 	refreshLogin();

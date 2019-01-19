@@ -51,7 +51,7 @@ function ActionQueueSetup(): void
 }
 
 class ActionQueue {
-	private actions: Array<Action>;
+	public actions: Array<Action>;
 
 	public constructor(actions: Array<Action> = [], retry = false)
 	{

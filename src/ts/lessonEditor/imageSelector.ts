@@ -5,14 +5,14 @@ var imageSelectorOpen = false;
 
 function prepareImageSelector(page = 1 , perPage = 15)
 {
-	request(CONFIG.apiuri + "/image", "GET", undefined, function(response)
+	request(CONFIG.apiuri + "/image", "GET", undefined, function(response: RequestResponse)
 		{
-			renderImageSelector(response, page, perPage);
+			renderImageSelector(response as unknown as Array<string>, page, perPage);
 		}, reAuthHandler);
 	refreshLogin();
 }
 
-function renderImageSelector(list, page, perPage)
+function renderImageSelector(list: Array<string>, page: number, perPage: number)
 {
 	if(!document.getElementById("imageWrapper"))
 	{
@@ -55,9 +55,9 @@ function renderImageSelector(list, page, perPage)
 		}
 		html += "</div>";
 	}
-	document.getElementById("imageWrapper").innerHTML = html;
+	document.getElementById("imageWrapper")!.innerHTML = html;
 
-	var	imageNodes = document.getElementById("imageWrapper").getElementsByTagName("img");
+	var	imageNodes = document.getElementById("imageWrapper")!.getElementsByTagName("img");
 	for(var k = 0; k < imageNodes.length; k++)
 	{
 		imageNodes[k].onclick = insertImage;
@@ -67,7 +67,7 @@ function renderImageSelector(list, page, perPage)
 	{
 		(buttonNodes[l] as HTMLElement).onclick = function(event)
 			{
-				prepareImageSelector(parseInt((event.target as HTMLElement).dataset.page, 10), perPage);
+				prepareImageSelector(parseInt((event.target as HTMLElement).dataset.page!, 10), perPage);
 			};
 	}
 }
@@ -76,19 +76,19 @@ function toggleImageSelector()
 {
 	if(imageSelectorOpen)
 	{
-		document.getElementById("imageSelector").style.top = "-100%";
+		document.getElementById("imageSelector")!.style.top = "-100%";
 	}
 	else
 	{
-		document.getElementById("imageSelector").style.top = "-76px";
+		document.getElementById("imageSelector")!.style.top = "-76px";
 	}
 	imageSelectorOpen = !imageSelectorOpen;
 	refreshLogin();
 }
 
-function insertImage(event)
+function insertImage(event: MouseEvent)
 {
-	var markdown = "![Text po najetí kurzorem](" + CONFIG.apiuri + "/image/" + event.target.dataset.id + ")"
+	var markdown = "![Text po najetí kurzorem](" + CONFIG.apiuri + "/image/" + (event.target as HTMLElement).dataset.id + ")"
 	var doc = editor.codemirror.getDoc();
 	doc.replaceRange(markdown, doc.getCursor());
 	toggleImageSelector();
