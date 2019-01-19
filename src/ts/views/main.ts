@@ -1,7 +1,7 @@
 "use strict";
 /* exported showMainView */
 
-var mainPageTab = "lessons";
+var mainPageTab: MainPageTab = "lessons";
 
 function showMainView(noHistory: boolean): void
 {
@@ -40,13 +40,13 @@ function showMainView(noHistory: boolean): void
 	html += "</h1><div id=\"embeddedSpinner\"></div></div></div>";
 	document.getElementsByTagName("main")[0].innerHTML = html;
 	document.getElementsByTagName("main")[0].scrollTop = 0;
-	metadataEvent.addCallback(function()
+	metadataEvent.addCallback(function(): void
 		{
 			renderMainView(noHistory);
 		});
 }
 
-function renderMainView(noHistory: boolean)
+function renderMainView(noHistory: boolean): void
 {
 	if(LOGINSTATE.avatar)
 	{
@@ -54,11 +54,11 @@ function renderMainView(noHistory: boolean)
 	}
 	document.getElementById("userName")!.innerHTML = LOGINSTATE.name;
 
-	document.getElementById("lessonManager")!.onclick = function() {showLessonSubview()};
-	document.getElementById("competenceManager")!.onclick = function() {showCompetenceSubview()};
-	document.getElementById("imageManager")!.onclick = function() {showImageSubview()};
-	document.getElementById("userManager")!.onclick = function() {showUserSubview()};
-	document.getElementById("groupManager")!.onclick = function() {showGroupSubview()};
+	document.getElementById("lessonManager")!.onclick = function(): void {showLessonSubview(false)};
+	document.getElementById("competenceManager")!.onclick = function(): void {showCompetenceSubview(false)};
+	document.getElementById("imageManager")!.onclick = function(): void {showImageSubview(false)};
+	document.getElementById("userManager")!.onclick = function(): void {showUserSubview(false)};
+	document.getElementById("groupManager")!.onclick = function(): void {showGroupSubview(false)};
 
 	if(mainPageTab === "competences")
 	{

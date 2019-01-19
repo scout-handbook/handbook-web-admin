@@ -6,12 +6,12 @@ var worker: Worker|undefined;
 var running = false;
 var queue: WorkerPayload|undefined;
 
-function refreshPreviewSetup()
+function refreshPreviewSetup(): void
 {
 	if(Worker)
 	{
 		worker = new Worker(CONFIG['admin-uri'] + "/admin-worker.min.js");
-		worker.onmessage = function(payload)
+		worker.onmessage = function(payload): void
 		{
 			document.getElementById(payload.data.id)!.innerHTML = payload.data.body;
 			if(queue)
@@ -34,7 +34,7 @@ function refreshPreviewSetup()
 	}
 }
 
-function refreshPreview(name: string, markdown: string, id: string)
+function refreshPreview(name: string, markdown: string, id: string): void
 {
 	var payload = {"id": id, "body": "# " + name + "\n" + markdown};
 	if(Worker)

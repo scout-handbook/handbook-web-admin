@@ -1,5 +1,5 @@
 "use strict";
 
 interface Payload {
-	readonly [key: string]: string
+	readonly [key: string]: string;
 }

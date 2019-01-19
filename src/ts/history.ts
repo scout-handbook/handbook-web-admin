@@ -1,17 +1,18 @@
 "use strict";
+/* global mainPageTab:true */
 /* exported historySetup */
 
-function historySetup()
+function historySetup(): void
 {
 	window.onpopstate = popback;
 	if(window.location.pathname.substring(7))
 	{
-		mainPageTab = window.location.pathname.substring(7);
+		mainPageTab = window.location.pathname.substring(7) as MainPageTab;
 	}
 	showMainView(false);
 }
 
-function popback()
+function popback(): void
 {
 	if(history.state)
 	{
@@ -27,7 +28,7 @@ function popback()
 			}
 			else
 			{
-				metadataEvent.addCallback(function()
+				metadataEvent.addCallback(function(): void
 					{
 						showLessonEditView(history.state.id, true);
 					});

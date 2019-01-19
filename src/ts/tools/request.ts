@@ -1,18 +1,18 @@
 "use strict";
 /* exported reAuthHandler, authFailHandler, request */
 
-var reAuthHandler = {"AuthenticationException": function()
+var reAuthHandler = {"AuthenticationException": function(): void
 	{
 		window.location.replace(CONFIG.apiuri + "/login");
 	}};
-var authFailHandler = {"AuthenticationException": function()
+var authFailHandler = {"AuthenticationException": function(): void
 	{
 		dialog("Proběhlo automatické odhlášení. Přihlašte se prosím a zkuste to znovu.", "OK");
 	}};
 
-function request(url: string, method: string, payload: Payload, callback: (response: RequestResponse) => void, exceptionHandler: ExceptionHandler = {})
+function request(url: string, method: string, payload: Payload, callback: (response: RequestResponse) => void, exceptionHandler: ExceptionHandler = {}): void
 {
-	rawRequest(url, method, payload, function(response)
+	rawRequest(url, method, payload, function(response): void
 		{
 			if(Math.floor(response.status / 100) === 2)
 			{
@@ -29,10 +29,10 @@ function request(url: string, method: string, payload: Payload, callback: (respo
 		});
 }
 
-function rawRequest(url: string, method: string, payload: Payload = {}, callback: (response: APIResponse) => void)
+function rawRequest(url: string, method: string, payload: Payload = {}, callback: (response: APIResponse) => void): void
 {
 	var xhr = new XMLHttpRequest();
-	xhr.onreadystatechange = function()
+	xhr.onreadystatechange = function(): void
 		{
 			if(this.readyState === 4)
 			{
@@ -70,7 +70,7 @@ function rawRequest(url: string, method: string, payload: Payload = {}, callback
 	}
 }
 
-function requestQueryBuilder(payload: Payload)
+function requestQueryBuilder(payload: Payload): string
 {
 	var query = "";
 	var first = true;
