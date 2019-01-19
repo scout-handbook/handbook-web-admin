@@ -3,7 +3,7 @@
 
 var competenceChanged = false;
 
-function changeCompetenceOnClick(event)
+function changeCompetenceOnClick(event: MouseEvent)
 {
 	competenceChanged = false;
 	sidePanelOpen();
@@ -21,23 +21,23 @@ function changeCompetenceOnClick(event)
 		}
 	}
 	html += "</form>";
-	document.getElementById("sidePanel").innerHTML = html;
+	document.getElementById("sidePanel")!.innerHTML = html;
 
-	document.getElementById("sidePanelCancel").onclick = function()
+	document.getElementById("sidePanelCancel")!.onclick = function()
 		{
 			history.back();
 		};
 
 	var aq = new ActionQueue([new Action(CONFIG.apiuri + "/competence/" + encodeURIComponent(getAttribute(event, "id")), "PUT", changeCompetencePayloadBuilder)]);
-	document.getElementById("changeCompetenceSave").onclick = aq.closeDispatch;
+	document.getElementById("changeCompetenceSave")!.onclick = aq.closeDispatch;
 
-	function addOnChange(id)
+	function addOnChange(id: string)
 	{
-		document.getElementById(id).oninput = function()
+		document.getElementById(id)!.oninput = function()
 			{
 				competenceChanged = true;
 			};
-		document.getElementById(id).onchange = function()
+		document.getElementById(id)!.onchange = function()
 			{
 				competenceChanged = true;
 			};

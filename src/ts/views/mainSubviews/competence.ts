@@ -1,7 +1,7 @@
 "use strict";
 /* exported showCompetenceSubview */
 
-function showCompetenceSubview(noHistory)
+function showCompetenceSubview(noHistory: boolean)
 {
 	mainPageTab = "competences";
 	var nodes = document.getElementsByClassName("topBarTab");
@@ -9,19 +9,19 @@ function showCompetenceSubview(noHistory)
 	{
 		nodes[l].className = "topBarTab";
 	}
-	document.getElementById("competenceManager").className += " activeTopBarTab";
+	document.getElementById("competenceManager")!.className += " activeTopBarTab";
 	var html = "<h1>" + CONFIG["site-name"] + " - Kompetence</h1>";
 	if(LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser")
 	{
 		html += "<div class=\"button greenButton\" id=\"addCompetence\"><i class=\"icon-plus\"></i>Přidat</div><br>";
 	}
 	html += renderCompetenceList()
-	document.getElementById("mainPage").innerHTML = html;
-	document.getElementById("mainPageContainer").scrollTop = 0;
+	document.getElementById("mainPage")!.innerHTML = html;
+	document.getElementById("mainPageContainer")!.scrollTop = 0;
 
 	if(LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser")
 	{
-		document.getElementById("addCompetence").onclick = addCompetence;
+		document.getElementById("addCompetence")!.onclick = addCompetence;
 	}
 
 	addOnClicks("changeCompetence", changeCompetenceOnClick);

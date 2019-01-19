@@ -10,15 +10,15 @@ function addGroup()
 	html += "<legend for=\"fieldName\">Název:</legend>";
 	html += "<input type=\"text\" class=\"formText\" id=\"groupName\" value=\"Nová skupina\" autocomplete=\"off\"><br>";
 	html += "</form>";
-	document.getElementById("sidePanel").innerHTML = html;
+	document.getElementById("sidePanel")!.innerHTML = html;
 
-	document.getElementById("sidePanelCancel").onclick = function()
+	document.getElementById("sidePanelCancel")!.onclick = function()
 		{
 			history.back();
 		};
 
 	var aq = new ActionQueue([new Action(CONFIG.apiuri + "/group", "POST", addGroupPayloadBuilder)]);
-	document.getElementById("addGroupSave").onclick = aq.closeDispatch;
+	document.getElementById("addGroupSave")!.onclick = aq.closeDispatch;
 
 	history.pushState({"sidePanel": "open"}, "title", "/admin/groups");
 	refreshLogin();

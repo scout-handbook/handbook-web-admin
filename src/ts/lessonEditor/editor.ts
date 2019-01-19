@@ -2,12 +2,12 @@
 /* global editor:true, lessonSettingsCacheEvent:true */
 /* exported showLessonEditor */
 
-var changed;
-var lessonSettingsCache: LessonSettingsCache = {competences: undefined, field: undefined, groups: undefined};
-var lessonSettingsCacheEvent;
-var editor;
+var changed: boolean;
+var lessonSettingsCache: LessonSettingsCache;
+var lessonSettingsCacheEvent: AfterLoadEvent;
+var editor: EasyMDE;
 
-function showLessonEditor(name, body, saveActionQueue, id, discardActionQueue = new ActionQueue(), refreshAction = function() {})
+function showLessonEditor(name: string, body: string, saveActionQueue: ActionQueue, id: string, discardActionQueue = new ActionQueue(), refreshAction = function() {})
 {
 	populateEditorCache(id);
 	changed = false;
@@ -43,16 +43,16 @@ function showLessonEditor(name, body, saveActionQueue, id, discardActionQueue = 
 	document.getElementsByTagName("main")[0].innerHTML = html;
 	refreshPreview(name, body, "preview-inner");
 
-	document.getElementById("discard").onclick = function() {editorDiscard(discardActionQueue);};
-	document.getElementById("save").onclick = function() {saveActionQueue.defaultDispatch();}; // TODO: Check if editing, then if no change, do nothing
-	document.getElementById("lessonSettings").onclick = function() {lessonSettings(id, saveActionQueue, false);};
-	document.getElementById("closeImageSelector").onclick = toggleImageSelector;
-	document.getElementById("imageSelectorAdd").onclick = function() {addImage(true);};
+	document.getElementById("discard")!.onclick = function() {editorDiscard(discardActionQueue);};
+	document.getElementById("save")!.onclick = function() {saveActionQueue.defaultDispatch(false);}; // TODO: Check if editing, then if no change, do nothing
+	document.getElementById("lessonSettings")!.onclick = function() {lessonSettings(id, saveActionQueue, false);};
+	document.getElementById("closeImageSelector")!.onclick = toggleImageSelector;
+	document.getElementById("imageSelectorAdd")!.onclick = function() {addImage(true);};
 
 	editor = new EasyMDE({
 		autoDownloadFontAwesome: false,
 		autofocus: true,
-		element: document.getElementById("editor").firstChild,
+		element: document.getElementById("editor")!.firstChild,
 		indentWithTabs: false,
 		parsingConfig: {
 			allowAtxHeaderWithoutSpace: true
@@ -116,20 +116,20 @@ function showLessonEditor(name, body, saveActionQueue, id, discardActionQueue = 
 	editor.codemirror.getDoc().clearHistory();
 	editor.codemirror.on("change", function() {editorOnChange(refreshAction);});
 
-	document.getElementById("name").oninput = function() {editorOnChange(refreshAction);};
-	document.getElementById("name").onchange = function() {editorOnChange(refreshAction);};
+	document.getElementById("name")!.oninput = function() {editorOnChange(refreshAction);};
+	document.getElementById("name")!.onchange = function() {editorOnChange(refreshAction);};
 
 	prepareImageSelector();
 }
 
-function editorOnChange(afterAction)
+function editorOnChange(afterAction: () => void)
 {
 	changed = true;
 	refreshPreview((document.getElementById("name") as HTMLInputElement).value, editor.value(), "preview-inner");
 	refreshLogin(false, afterAction);
 }
 
-function editorDiscard(actionQueue)
+function editorDiscard(actionQueue: ActionQueue)
 {
 	if(!changed)
 	{
@@ -145,13 +145,13 @@ function editorDiscard(actionQueue)
 	refreshLogin();
 }
 
-function editorDiscardNow(actionQueue)
+function editorDiscardNow(actionQueue: ActionQueue)
 {
 	history.back();
 	actionQueue.dispatch(true);
 }
 
-function populateEditorCache(id)
+function populateEditorCache(id: string)
 {
 	lessonSettingsCacheEvent = new AfterLoadEvent(1);
 	if(!id)
@@ -162,7 +162,7 @@ function populateEditorCache(id)
 		lessonSettingsCacheEvent.trigger();
 		return;
 	}
-	request(CONFIG.apiuri + "/lesson/" + id + "/group", "GET", undefined, function(response)
+	request(CONFIG.apiuri + "/lesson/" + id + "/group", "GET", undefined, function(response: RequestResponse)
 		{
 			lessonSettingsCache["groups"] = response;
 			lessonSettingsCacheEvent.trigger();

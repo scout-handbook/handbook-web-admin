@@ -8,21 +8,21 @@ function restoreLesson()
 	html += "<div class=\"button greenButton\" id=\"restoreLessonNext\"><i class=\"icon-fast-fw\"></i>Pokračovat</div>";
 	html += "<h3 class=\"sidePanelTitle\">Obnovit smazanou lekci</h3>";
 	html += "<div id=\"restoreLessonList\"><div id=\"embeddedSpinner\"></div></div>";
-	document.getElementById("sidePanel").innerHTML = html;
-	document.getElementById("sidePanelCancel").onclick = function()
+	document.getElementById("sidePanel")!.innerHTML = html;
+	document.getElementById("sidePanelCancel")!.onclick = function()
 		{
 			history.back();
 		};
-	request(CONFIG.apiuri + "/deleted-lesson", "GET", undefined, function(response)
+	request(CONFIG.apiuri + "/deleted-lesson", "GET", undefined, function(response: RequestResponse)
 		{
-			restoreLessonRenderLessonList(response);
+			restoreLessonRenderLessonList(response as unknown as Array<DeletedLesson>);
 		}, reAuthHandler);
 
 	history.pushState({"sidePanel": "open"}, "title", "/admin/lessons");
 	refreshLogin();
 }
 
-function restoreLessonRenderLessonList(list)
+function restoreLessonRenderLessonList(list: Array<DeletedLesson>)
 {
 	if(list.length === 0)
 	{
@@ -38,8 +38,8 @@ function restoreLessonRenderLessonList(list)
 		html += "<div class=\"formRow\"><label class=\"formSwitch\"><input type=\"radio\" name=\"lesson\" data-id=\"" + list[i].id + "\"><span class=\"formCustom formRadio\"></span></label>" + list[i].name + "</div>";
 	}
 	html += "</form>";
-	document.getElementById("restoreLessonList").innerHTML = html;
-	document.getElementById("restoreLessonNext").onclick = restoreLessonSelectVersion;
+	document.getElementById("restoreLessonList")!.innerHTML = html;
+	document.getElementById("restoreLessonNext")!.onclick = restoreLessonSelectVersion;
 }
 
 function restoreLessonSelectVersion()
@@ -48,16 +48,16 @@ function restoreLessonSelectVersion()
 	if(lessonId)
 	{
 		var html = "<div id=\"embeddedSpinner\"></div>";
-		document.getElementById("restoreLessonList").innerHTML = html;
-		request(CONFIG.apiuri + "/deleted-lesson/" + lessonId + "/history", "GET", undefined, function(response)
+		document.getElementById("restoreLessonList")!.innerHTML = html;
+		request(CONFIG.apiuri + "/deleted-lesson/" + lessonId + "/history", "GET", undefined, function(response: RequestResponse)
 			{
-				restoreLessonRenderVersionList(lessonId, response);
+				restoreLessonRenderVersionList(lessonId, response as unknown as Array<LessonVersion>);
 			}, reAuthHandler);
-		document.getElementById("restoreLessonNext").onclick = function(){};
+		document.getElementById("restoreLessonNext")!.onclick = function(){};
 	}
 }
 
-function restoreLessonRenderVersionList(id, list)
+function restoreLessonRenderVersionList(id: string, list: Array<LessonVersion>)
 {
 	sidePanelDoubleOpen();
 	var html = "<div id=\"restoreLessonVersionList\"><div class=\"button yellowButton\" id=\"sidePanelCancel\"><i class=\"icon-cancel\"></i>Zrušit</div><span id=\"restoreLessonListHeader\"></span><h3 class=\"sidePanelTitle\">Obnovit smazanou lekci</h3>";
@@ -68,40 +68,40 @@ function restoreLessonRenderVersionList(id, list)
 	}
 	html += "</form>"
 	html += "</div><div id=\"restoreLessonPreview\"></div>";
-	document.getElementById("sidePanel").innerHTML = html;
+	document.getElementById("sidePanel")!.innerHTML = html;
 
-	document.getElementById("sidePanelCancel").onclick = function()
+	document.getElementById("sidePanelCancel")!.onclick = function()
 		{
 			sidePanelOpen();
 			history.back();
 		};
-	var nodes = document.getElementById("sidePanelForm").getElementsByTagName("input");
+	var nodes = document.getElementById("sidePanelForm")!.getElementsByTagName("input");
 	for(var j = 0; j < nodes.length; j++)
 	{
 		nodes[j].onchange = function(event) {restoreLessonShowVersion(id, event);};
 	}
 }
 
-function restoreLessonShowVersion(id, event)
+function restoreLessonShowVersion(id: string, event: Event)
 {
-	var version = event.target.dataset.version;
-	var name = event.target.dataset.name;
-	document.getElementById("restoreLessonPreview").innerHTML = "<div id=\"embeddedSpinner\"></div>";
-	request(CONFIG.apiuri + "/deleted-lesson/" + id + "/history/" + version, "GET", undefined, function(response)
+	var version = (event.target as HTMLElement).dataset.version;
+	var name = (event.target as HTMLElement).dataset.name!;
+	document.getElementById("restoreLessonPreview")!.innerHTML = "<div id=\"embeddedSpinner\"></div>";
+	request(CONFIG.apiuri + "/deleted-lesson/" + id + "/history/" + version, "GET", undefined, function(response: RequestResponse)
 		{
-			restoreLessonRenderVersion(name, response);
+			restoreLessonRenderVersion(name, response as unknown as string);
 		}, authFailHandler);
-	document.getElementById("restoreLessonListHeader").innerHTML = "";
+	document.getElementById("restoreLessonListHeader")!.innerHTML = "";
 
 	refreshLogin();
 }
 
-function restoreLessonRenderVersion(name, body)
+function restoreLessonRenderVersion(name: string, body: string)
 {
 	refreshPreview(name, body, "restoreLessonPreview");
 	var html = "<div class=\"button greenButton\" id=\"restoreLessonEdit\"><i class=\"icon-history\"></i>Obnovit</div>";
-	document.getElementById("restoreLessonListHeader").innerHTML = html;
-	document.getElementById("restoreLessonEdit").onclick = function()
+	document.getElementById("restoreLessonListHeader")!.innerHTML = html;
+	document.getElementById("restoreLessonEdit")!.onclick = function()
 		{
 			sidePanelOpen();
 			history.back();

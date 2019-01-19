@@ -1,7 +1,7 @@
 "use strict";
 /* exported deleteCompetenceOnClick */
 
-function deleteCompetenceOnClick(event)
+function deleteCompetenceOnClick(event: MouseEvent)
 {
 	var number = "";
 	var name = "";

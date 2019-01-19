@@ -1,15 +1,15 @@
 "use strict";
 /* exported dialog */
 
-var confirmCallbackWrapped;
+var confirmCallbackWrapped: () => void;
 
-function dialog(mainText, confirmText, confirmCallback?, dismissText?, dismissCallback?)
+function dialog(mainText: string, confirmText: string, confirmCallback?: () => void, dismissText?: string, dismissCallback?: () => void)
 {
 	dismissSpinner();
-	document.getElementById("overlay").style.display = "inline";
-	document.getElementById("dialog").style.display = "block";
-	document.getElementById("dialogText").innerHTML = mainText;
-	document.getElementById("confirmText").innerHTML = "<i class=\"icon-ok\"></i>" + confirmText;
+	document.getElementById("overlay")!.style.display = "inline";
+	document.getElementById("dialog")!.style.display = "block";
+	document.getElementById("dialogText")!.innerHTML = mainText;
+	document.getElementById("confirmText")!.innerHTML = "<i class=\"icon-ok\"></i>" + confirmText;
 	if(confirmCallback)
 	{
 		confirmCallbackWrapped = function()
@@ -22,11 +22,11 @@ function dialog(mainText, confirmText, confirmCallback?, dismissText?, dismissCa
 	{
 		confirmCallbackWrapped = dismissDialog;
 	}
-	document.getElementById("confirmText").onclick = confirmCallbackWrapped;
+	document.getElementById("confirmText")!.onclick = confirmCallbackWrapped;
 	if(dismissText)
 	{
-		document.getElementById("dismissText").style.display = "inline";
-		document.getElementById("dismissText").innerHTML = "<i class=\"icon-cancel\"></i>" + dismissText;
+		document.getElementById("dismissText")!.style.display = "inline";
+		document.getElementById("dismissText")!.innerHTML = "<i class=\"icon-cancel\"></i>" + dismissText;
 		var dismissCallbackWrapped;
 		if(dismissCallback)
 		{
@@ -40,7 +40,7 @@ function dialog(mainText, confirmText, confirmCallback?, dismissText?, dismissCa
 		{
 			dismissCallbackWrapped = dismissDialog;
 		}
-		document.getElementById("dismissText").onclick = dismissCallbackWrapped;
+		document.getElementById("dismissText")!.onclick = dismissCallbackWrapped;
 	}
 	else
 	{
@@ -48,7 +48,7 @@ function dialog(mainText, confirmText, confirmCallback?, dismissText?, dismissCa
 	}
 }
 
-function keyPressDialog(event)
+function keyPressDialog(event: KeyboardEvent)
 {
 	if(event.keyCode === 13)
 	{
@@ -58,8 +58,8 @@ function keyPressDialog(event)
 
 function dismissDialog()
 {
-	document.getElementById("overlay").style.display = "none";
-	document.getElementById("dialog").style.display = "none";
-	document.getElementById("dismissText").style.display = "none";
+	document.getElementById("overlay")!.style.display = "none";
+	document.getElementById("dialog")!.style.display = "none";
+	document.getElementById("dismissText")!.style.display = "none";
 	document.removeEventListener('keypress', keyPressDialog);
 }

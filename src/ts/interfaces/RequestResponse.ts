@@ -1,5 +1,5 @@
 "use strict";
 
 interface RequestResponse {
-	readonly [key: string]: string;
+	readonly [key: string]: string|object;
 }

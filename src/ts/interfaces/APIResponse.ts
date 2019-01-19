@@ -5,4 +5,5 @@ interface APIResponse {
 	response?: RequestResponse;
 	type?: string;
 	message?: string;
+	holder?: string;
 }

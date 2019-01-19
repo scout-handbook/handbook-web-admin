@@ -1,7 +1,7 @@
 "use strict";
 /* exported renderPagination */
 
-function renderPagination(total, current)
+function renderPagination(total: number, current: number)
 {
 	if(total < 2)
 	{

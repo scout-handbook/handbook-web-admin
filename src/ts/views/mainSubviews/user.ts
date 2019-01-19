@@ -1,7 +1,7 @@
 "use strict";
 /* exported showUserSubview */
 
-function showUserSubview(noHistory)
+function showUserSubview(noHistory: boolean)
 {
 	mainPageTab = "users";
 	var nodes = document.getElementsByClassName("topBarTab");
@@ -9,9 +9,9 @@ function showUserSubview(noHistory)
 	{
 		nodes[l].className = "topBarTab";
 	}
-	document.getElementById("userManager").className += " activeTopBarTab";
+	document.getElementById("userManager")!.className += " activeTopBarTab";
 	var html = "<h1>" + CONFIG["site-name"] + " - Uživatelé</h1><div id=\"userList\"></div>";
-	document.getElementById("mainPage").innerHTML = html;
+	document.getElementById("mainPage")!.innerHTML = html;
 
 	downloadUserList();
 	if(!noHistory)
@@ -20,26 +20,26 @@ function showUserSubview(noHistory)
 	}
 }
 
-function downloadUserList(searchName = "", page = 1, perPage = 25, role = "all", group = "00000000-0000-0000-0000-000000000000")
+function downloadUserList(searchName = "", page = 1, perPage = 25, role: Role = "all", group = "00000000-0000-0000-0000-000000000000")
 {
-	document.getElementById("userList").innerHTML = "<div id=\"embeddedSpinner\"></div>";
-	var payload = {"name": searchName, "page": page, "per-page": perPage}
+	document.getElementById("userList")!.innerHTML = "<div id=\"embeddedSpinner\"></div>";
+	var payload: UserSearchQuery = {"name": searchName, "page": page, "per-page": perPage}
 	if(role !== "all")
 	{
-		payload["role"] = role;
+		payload.role = role;
 	}
 	if(group !== "00000000-0000-0000-0000-000000000000")
 	{
-		payload["group"] = group;
+		payload.group = group;
 	}
-	request(CONFIG.apiuri + "/user", "GET", payload, function(response)
+	request(CONFIG.apiuri + "/user", "GET", payload, function(response: RequestResponse)
 		{
-			showUserList(response, searchName, page, perPage, role, group);
+			showUserList(response as unknown as UserListResponse, searchName, page, perPage, role, group);
 		}, reAuthHandler);
 	refreshLogin(true);
 }
 
-function showUserList(list, searchName, page, perPage, role, group)
+function showUserList(list: UserListResponse, searchName: string, page: number, perPage: number, role: Role, group: string)
 {
 	if(mainPageTab !== "users")
 	{
@@ -63,7 +63,7 @@ function showUserList(list, searchName, page, perPage, role, group)
 	}
 	html += "</table>";
 	html += renderPagination(Math.ceil(list.count / perPage), page);
-	document.getElementById("userList").innerHTML = html;
+	document.getElementById("userList")!.innerHTML = html;
 
 	(document.getElementById("userSearchBox") as HTMLInputElement).value = searchName;
 	if(LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser")
@@ -72,22 +72,22 @@ function showUserList(list, searchName, page, perPage, role, group)
 	}
 	(document.getElementById("groupSearchFilter") as HTMLSelectElement).value = group;
 
-	document.getElementById("userSearchForm").onsubmit = function()
+	document.getElementById("userSearchForm")!.onsubmit = function()
 		{
 			var roleSel = document.getElementById("roleSearchFilter") as HTMLSelectElement;
 			var groupSel = document.getElementById("groupSearchFilter") as HTMLSelectElement;
-			var newRole = "all";
+			var newRole: Role = "all";
 			if(roleSel)
 			{
-				newRole = roleSel.options[roleSel.selectedIndex].value;
+				newRole = roleSel.options[roleSel.selectedIndex].value as Role;
 			}
 			downloadUserList((document.getElementById("userSearchBox") as HTMLInputElement).value, 1, perPage, newRole, groupSel.options[groupSel.selectedIndex].value);
 			return false;
 		}
-	document.getElementById("userSearchButton").onclick = document.getElementById("userSearchForm").onsubmit;
+	document.getElementById("userSearchButton")!.onclick = document.getElementById("userSearchForm")!.onsubmit;
 	if(searchName || role !== "all" || group !== "00000000-0000-0000-0000-000000000000")
 		{
-			document.getElementById("userSearchCancel").onclick = function()
+			document.getElementById("userSearchCancel")!.onclick = function()
 				{
 					downloadUserList(undefined, 1, perPage);
 				};
@@ -99,12 +99,12 @@ function showUserList(list, searchName, page, perPage, role, group)
 			{
 				var roleSel = document.getElementById("roleSearchFilter") as HTMLSelectElement;
 				var groupSel = document.getElementById("groupSearchFilter") as HTMLSelectElement;
-				var newRole = "all";
+				var newRole: Role = "all";
 				if(roleSel)
 				{
-					newRole = roleSel.options[roleSel.selectedIndex].value;
+					newRole = roleSel.options[roleSel.selectedIndex].value as Role;
 				}
-				downloadUserList(searchName, parseInt((event.target as HTMLElement).dataset.page, 10), perPage, newRole, groupSel.options[groupSel.selectedIndex].value);
+				downloadUserList(searchName, parseInt((event.target as HTMLElement).dataset.page!, 10), perPage, newRole, groupSel.options[groupSel.selectedIndex].value);
 			};
 	}
 
@@ -146,7 +146,7 @@ function renderGroupSelector()
 	return html;
 }
 
-function renderUserRow(user)
+function renderUserRow(user: User)
 {
 	var html = "<tr><td>" + user.name + "</td><td>";
 	switch(user.role)

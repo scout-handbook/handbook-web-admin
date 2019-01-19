@@ -1,7 +1,7 @@
 "use strict";
 /* exported showLessonSubview */
 
-function showLessonSubview(noHistory)
+function showLessonSubview(noHistory: boolean)
 {
 	mainPageTab = "lessons";
 	var nodes = document.getElementsByClassName("topBarTab");
@@ -9,7 +9,7 @@ function showLessonSubview(noHistory)
 	{
 		nodes[l].className = "topBarTab";
 	}
-	document.getElementById("lessonManager").className += " activeTopBarTab";
+	document.getElementById("lessonManager")!.className += " activeTopBarTab";
 	var html = "<h1>" + CONFIG["site-name"] + " - Lekce</h1>";
 	if(LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser")
 	{
@@ -21,17 +21,17 @@ function showLessonSubview(noHistory)
 		html += "<div class=\"button\" id=\"restoreLesson\"><i class=\"icon-history\"></i>Smazané lekce</div>";
 	}
 	html += renderLessonList();
-	document.getElementById("mainPage").innerHTML = html;
-	document.getElementById("mainPageContainer").scrollTop = 0;
+	document.getElementById("mainPage")!.innerHTML = html;
+	document.getElementById("mainPageContainer")!.scrollTop = 0;
 
 	if(LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser")
 	{
-		document.getElementById("addField").onclick = addField;
+		document.getElementById("addField")!.onclick = addField;
 	}
-	document.getElementById("addLesson").onclick = function() {showLessonAddView();};
+	document.getElementById("addLesson")!.onclick = function() {showLessonAddView();};
 	if(LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser")
 	{
-		document.getElementById("restoreLesson").onclick = restoreLesson;
+		document.getElementById("restoreLesson")!.onclick = restoreLesson;
 	}
 
 	addOnClicks("changeField", changeFieldOnClick);
@@ -71,7 +71,7 @@ function renderLessonList()
 	return html;
 }
 
-function renderLessonListLesson(lesson, secondLevel)
+function renderLessonListLesson(lesson: Lesson, secondLevel: string)
 {
 	var html = "<br><h3 class=\"mainPage" + secondLevel + "\">" + lesson.name + "</h3>";
 	html += "<div class=\"button cyanButton changeLesson\" data-id=\"" + lesson.id + "\"><i class=\"icon-pencil\"></i>Upravit</div>";
@@ -101,7 +101,7 @@ function renderLessonListLesson(lesson, secondLevel)
 	return html;
 }
 
-function changeLessonOnClick(event)
+function changeLessonOnClick(event: MouseEvent)
 {
 	showLessonEditView(getAttribute(event, "id"), false);
 	return false;

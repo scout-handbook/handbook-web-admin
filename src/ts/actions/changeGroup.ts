@@ -3,7 +3,7 @@
 
 var groupChanged = false;
 
-function changeGroupOnClick(event)
+function changeGroupOnClick(event: MouseEvent)
 {
 	groupChanged = false;
 	sidePanelOpen();
@@ -20,21 +20,21 @@ function changeGroupOnClick(event)
 		}
 	}
 	html += "</form>";
-	document.getElementById("sidePanel").innerHTML = html;
+	document.getElementById("sidePanel")!.innerHTML = html;
 
-	document.getElementById("sidePanelCancel").onclick = function()
+	document.getElementById("sidePanelCancel")!.onclick = function()
 		{
 			history.back();
 		};
 
 	var aq = new ActionQueue([new Action(CONFIG.apiuri + "/group/" + encodeURIComponent(getAttribute(event, "id")), "PUT", changeGrouPayloadBuilder)]);
-	document.getElementById("changeGroupSave").onclick = aq.closeDispatch;
+	document.getElementById("changeGroupSave")!.onclick = aq.closeDispatch;
 
-	document.getElementById("groupName").oninput = function()
+	document.getElementById("groupName")!.oninput = function()
 		{
 			groupChanged = true;
 		};
-	document.getElementById("groupName").onchange = function()
+	document.getElementById("groupName")!.onchange = function()
 		{
 			groupChanged = true;
 		};

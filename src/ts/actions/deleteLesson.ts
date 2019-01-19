@@ -1,21 +1,21 @@
 "use strict";
 /* exported deleteLessonOnClick */
 
-function deleteLessonOnClick(event)
+function deleteLessonOnClick(event: MouseEvent)
 {
 	var id = getAttribute(event, "id");
 	spinner();
 	var exceptionHandler = reAuthHandler;
-	exceptionHandler["LockedException"] = function(response)
+	exceptionHandler["LockedException"] = function(response: RequestResponse)
 		{
-			dialog("Nelze smazat lekci, protože ji právě upravuje " + response.response.holder + ".", "OK");
+			dialog("Nelze smazat lekci, protože ji právě upravuje " + (response.response as any).holder + ".", "OK");
 		};
 	request(CONFIG.apiuri + "/mutex/" + encodeURIComponent(id), "POST", undefined, function()
 		{
 			deleteLessonDialog(id);
 		}, exceptionHandler);
 }
-function deleteLessonDialog(id)
+function deleteLessonDialog(id: string)
 {
 	var name = "";
 	outer:

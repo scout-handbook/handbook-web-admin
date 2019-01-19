@@ -42,7 +42,7 @@ function refreshMetadata(): void
 		{
 			if(response.status === 200)
 			{
-				if(["editor", "administrator", "superuser"].indexOf(response.response!.role) > -1)
+				if(["editor", "administrator", "superuser"].indexOf(response.response!.role as string) > -1)
 				{
 					LOGINSTATE = response.response as unknown as Loginstate;
 					metadataEvent.trigger();

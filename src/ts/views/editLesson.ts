@@ -3,11 +3,11 @@
 
 var imageSelectorOpen = false;
 
-function showLessonEditView(id, noHistory)
+function showLessonEditView(id: string, noHistory: boolean)
 {
 	spinner();
 	var exceptionHandler = reAuthHandler;
-	exceptionHandler["LockedException"] = function(response)
+	exceptionHandler["LockedException"] = function(response: APIResponse)
 		{
 			dialog("Nelze upravovat lekci, protože ji právě upravuje " + response.holder + ".", "OK");
 		};
@@ -17,18 +17,18 @@ function showLessonEditView(id, noHistory)
 		}, exceptionHandler);
 }
 
-function getLessonEditView(id, noHistory)
+function getLessonEditView(id: string, noHistory: boolean)
 {
-	request(CONFIG.apiuri + "/lesson/" + encodeURIComponent(id), "GET", undefined, function(response)
+	request(CONFIG.apiuri + "/lesson/" + encodeURIComponent(id), "GET", undefined, function(response: RequestResponse)
 		{
 			metadataEvent.addCallback(function()
 				{
-					renderLessonEditView(id, response, noHistory);
+					renderLessonEditView(id, response as unknown as string, noHistory);
 				});
 		}, reAuthHandler);
 }
 
-function renderLessonEditView(id, markdown, noHistory)
+function renderLessonEditView(id: string, markdown: string, noHistory: boolean)
 {
 	dismissSpinner();
 	var lesson = getLessonById(id);
@@ -47,7 +47,7 @@ function renderLessonEditView(id, markdown, noHistory)
 			dismissSpinner();
 		}, discardExceptionHandler)]);
 	showLessonEditor(lesson.name, markdown, saveActionQueue, id, discardActionQueue, function() {lessonEditMutexExtend(id);});
-	document.getElementById("save").dataset.id = id;
+	document.getElementById("save")!.dataset.id = id;
 
 	window.onbeforeunload = function() {sendBeacon(id);};
 }
@@ -57,14 +57,14 @@ function saveLessonPayloadBuilder()
 	return {"name": encodeURIComponent((document.getElementById("name") as HTMLInputElement).value), "body": encodeURIComponent(editor.value())};
 }
 
-function lessonEditMutexExtend(id)
+function lessonEditMutexExtend(id: string)
 {
 	var exceptionHandler = {"NotFoundException": function(){}};
 	var actionQueue = new ActionQueue([new Action(CONFIG.apiuri + "/mutex/" + encodeURIComponent(id) , "PUT", undefined, undefined, exceptionHandler)]);
 	actionQueue.dispatch(true);
 }
 
-function sendBeacon(id)
+function sendBeacon(id: string)
 {
 	if(navigator.sendBeacon)
 	{
@@ -74,5 +74,5 @@ function sendBeacon(id)
 
 function removeBeacon()
 {
-	window.onbeforeunload = undefined;
+	window.onbeforeunload = null;
 }

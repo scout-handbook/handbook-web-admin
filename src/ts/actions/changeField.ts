@@ -3,7 +3,7 @@
 
 var fieldChanged = false;
 
-function changeFieldOnClick(event)
+function changeFieldOnClick(event: MouseEvent)
 {
 	fieldChanged = false;
 	sidePanelOpen();
@@ -20,21 +20,21 @@ function changeFieldOnClick(event)
 		}
 	}
 	html += "</form>";
-	document.getElementById("sidePanel").innerHTML = html;
+	document.getElementById("sidePanel")!.innerHTML = html;
 
-	document.getElementById("sidePanelCancel").onclick = function()
+	document.getElementById("sidePanelCancel")!.onclick = function()
 		{
 			history.back();
 		};
 
 	var aq = new ActionQueue([new Action(CONFIG.apiuri + "/field/" + encodeURIComponent(getAttribute(event, "id")), "PUT", changeFieldPayloadBuilder)]);
-	document.getElementById("changeFieldSave").onclick = aq.closeDispatch;
+	document.getElementById("changeFieldSave")!.onclick = aq.closeDispatch;
 
-	document.getElementById("fieldName").oninput = function()
+	document.getElementById("fieldName")!.oninput = function()
 		{
 			fieldChanged = true;
 		};
-	document.getElementById("fieldName").onchange = function()
+	document.getElementById("fieldName")!.onchange = function()
 		{
 			fieldChanged = true;
 		};

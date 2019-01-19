@@ -3,7 +3,7 @@
 
 var lessonGroupsChanged = false;
 
-function changeLessonGroupsOnClick(id, actionQueue)
+function changeLessonGroupsOnClick(id: string, actionQueue: ActionQueue)
 {
 	lessonGroupsChanged = false;
 	var html = "<div class=\"button yellowButton\" id=\"cancelEditorAction\"><i class=\"icon-cancel\"></i>Zrušit</div>";
@@ -31,15 +31,15 @@ function changeLessonGroupsOnClick(id, actionQueue)
 	}
 	html += "</form>";
 	html += "<div class=\"groupHelp\"><i class=\"icon-info-circled\"></i> U každé lekce lze zvolit, kteří uživatelé ji budou moct zobrazit (resp. které skupiny uživatelů). Pokud není vybrána žádná skupiny, nebude lekce pro běžné uživatele vůbec přístupná (pouze v administraci). Pokud je vybrána skupina \"<span class=\"publicGroup\">" + publicName + "</span>\", bude lekce přístupná všem uživatelům (i nepřihlášeným návštěvníkům webu) bez ohledu na skupiny.</div>";
-	document.getElementById("sidePanel").innerHTML = html;
+	document.getElementById("sidePanel")!.innerHTML = html;
 
-	document.getElementById("cancelEditorAction").onclick = function()
+	document.getElementById("cancelEditorAction")!.onclick = function()
 		{
 			lessonSettings(id, actionQueue, true);
 		};
-	document.getElementById("changeLessonGroupsSave").onclick = function() {changeLessonGroupsSave(id, actionQueue);};
+	document.getElementById("changeLessonGroupsSave")!.onclick = function() {changeLessonGroupsSave(id, actionQueue);};
 
-	var nodes = document.getElementById("sidePanelForm").getElementsByTagName("input");
+	var nodes = document.getElementById("sidePanelForm")!.getElementsByTagName("input");
 	for(var k = 0; k < nodes.length; k++)
 	{
 		nodes[k].onchange = lessonGroupsOnclick;
@@ -53,13 +53,13 @@ function lessonGroupsOnclick()
 	lessonGroupsChanged = true;
 }
 
-function changeLessonGroupsSave(id, actionQueue)
+function changeLessonGroupsSave(id: string, actionQueue: ActionQueue)
 {
 	if(lessonGroupsChanged)
 	{
 		id = typeof id !== 'undefined' ? id : "{id}";
 		var groups = parseBoolForm();
-		var encodedGroups = [];
+		var encodedGroups: Array<string> = [];
 		for(var i = 0; i < groups.length; i++)
 		{
 			encodedGroups.push(encodeURIComponent(groups[i]));

@@ -1,7 +1,7 @@
 "use strict";
 /* exported deleteGroupOnClick */
 
-function deleteGroupOnClick(event)
+function deleteGroupOnClick(event: MouseEvent)
 {
 	var name = "";
 	for(var i = 0; i < GROUPS.length; i++)
