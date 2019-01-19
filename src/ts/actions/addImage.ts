@@ -42,10 +42,10 @@ function changeLabel(event)
 
 function addImageSave()
 {
-	if(document.getElementById("addImageFile").value !== "")
+	if((document.getElementById("addImageFile") as HTMLInputElement).value !== "")
 	{
 		var formData = new FormData()
-		formData.append("image", document.getElementById("addImageFile").files[0])
+		formData.append("image", (document.getElementById("addImageFile") as HTMLInputElement).files[0])
 		sidePanelClose();
 		spinner();
 		request(CONFIG.apiuri + "/image", "POST", formData, function()

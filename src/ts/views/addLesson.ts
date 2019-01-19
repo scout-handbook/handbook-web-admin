@@ -1,7 +1,7 @@
 "use strict";
 /* exported addLessonInFieldOnClick */
 
-function showLessonAddView(field)
+function showLessonAddView(field?)
 {
 	history.pushState({}, "title", "/admin/lessons");
 
@@ -11,12 +11,12 @@ function showLessonAddView(field)
 		aq.actions.push(new Action(CONFIG.apiuri + "/lesson/{id}/field", "PUT", function() {return {"field": encodeURIComponent(field)};}))
 	}
 	aq.actions[0].callback = function(response) {aq.fillID(response)}
-	showLessonEditor(defaultName, defaultBody, aq);
+	showLessonEditor(defaultName, defaultBody, aq, null);
 }
 
 function addLessonPayloadBuilder()
 {
-	return {"name": encodeURIComponent(document.getElementById("name").value), "body": encodeURIComponent(editor.value())};
+	return {"name": encodeURIComponent((document.getElementById("name") as HTMLInputElement).value), "body": encodeURIComponent(editor.value())};
 }
 
 function addLessonInFieldOnClick(event)

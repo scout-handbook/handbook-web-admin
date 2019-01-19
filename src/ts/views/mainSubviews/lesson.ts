@@ -3,7 +3,7 @@
 
 function showLessonSubview(noHistory)
 {
-	window.mainPageTab = "lessons";
+	mainPageTab = "lessons";
 	var nodes = document.getElementsByClassName("topBarTab");
 	for(var l = 0; l < nodes.length; l++)
 	{
@@ -103,6 +103,6 @@ function renderLessonListLesson(lesson, secondLevel)
 
 function changeLessonOnClick(event)
 {
-	showLessonEditView(getAttribute(event, "id"));
+	showLessonEditView(getAttribute(event, "id"), false);
 	return false;
 }

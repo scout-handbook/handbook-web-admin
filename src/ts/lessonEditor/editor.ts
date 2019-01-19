@@ -3,11 +3,11 @@
 /* exported showLessonEditor */
 
 var changed;
-var lessonSettingsCache = {};
+var lessonSettingsCache: LessonSettingsCache = {competences: undefined, field: undefined, groups: undefined};
 var lessonSettingsCacheEvent;
 var editor;
 
-function showLessonEditor(name, body, saveActionQueue, id, discardActionQueue, refreshAction)
+function showLessonEditor(name, body, saveActionQueue, id, discardActionQueue = new ActionQueue(), refreshAction = function() {})
 {
 	populateEditorCache(id);
 	changed = false;
@@ -45,14 +45,14 @@ function showLessonEditor(name, body, saveActionQueue, id, discardActionQueue, r
 
 	document.getElementById("discard").onclick = function() {editorDiscard(discardActionQueue);};
 	document.getElementById("save").onclick = function() {saveActionQueue.defaultDispatch();}; // TODO: Check if editing, then if no change, do nothing
-	document.getElementById("lessonSettings").onclick = function() {lessonSettings(id, saveActionQueue);};
+	document.getElementById("lessonSettings").onclick = function() {lessonSettings(id, saveActionQueue, false);};
 	document.getElementById("closeImageSelector").onclick = toggleImageSelector;
 	document.getElementById("imageSelectorAdd").onclick = function() {addImage(true);};
 
 	editor = new EasyMDE({
 		autoDownloadFontAwesome: false,
 		autofocus: true,
-		element: document.getElementById("editor").firstchild,
+		element: document.getElementById("editor").firstChild,
 		indentWithTabs: false,
 		parsingConfig: {
 			allowAtxHeaderWithoutSpace: true
@@ -125,7 +125,7 @@ function showLessonEditor(name, body, saveActionQueue, id, discardActionQueue, r
 function editorOnChange(afterAction)
 {
 	changed = true;
-	refreshPreview(document.getElementById("name").value, editor.value(), "preview-inner");
+	refreshPreview((document.getElementById("name") as HTMLInputElement).value, editor.value(), "preview-inner");
 	refreshLogin(false, afterAction);
 }
 
@@ -148,10 +148,7 @@ function editorDiscard(actionQueue)
 function editorDiscardNow(actionQueue)
 {
 	history.back();
-	if(actionQueue)
-	{
-		actionQueue.dispatch(true);
-	}
+	actionQueue.dispatch(true);
 }
 
 function populateEditorCache(id)

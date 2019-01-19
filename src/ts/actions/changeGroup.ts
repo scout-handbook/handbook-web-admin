@@ -45,5 +45,5 @@ function changeGroupOnClick(event)
 
 function changeGrouPayloadBuilder()
 {
-	return {"name": encodeURIComponent(document.getElementById("groupName").value)};
+	return {"name": encodeURIComponent((document.getElementById("groupName") as HTMLInputElement).value)};
 }

@@ -3,7 +3,7 @@
 
 function showImageSubview(noHistory)
 {
-	window.mainPageTab = "images";
+	mainPageTab = "images";
 	var nodes = document.getElementsByClassName("topBarTab");
 	for(var i = 0; i < nodes.length; i++)
 	{
@@ -16,7 +16,7 @@ function showImageSubview(noHistory)
 	document.getElementById("mainPage").innerHTML = html;
 
 	document.getElementById("addImage").onclick = addImage;
-	downloadImageList();
+	downloadImageList(1, 15);
 	if(!noHistory)
 	{
 		history.pushState({"page": "images"}, "title", "/admin/images");
@@ -26,14 +26,6 @@ function showImageSubview(noHistory)
 function downloadImageList(page, perPage)
 {
 	document.getElementById("imageList").innerHTML = "<div id=\"embeddedSpinner\"></div>";
-	if(!page)
-	{
-		page = 1;
-	}
-	if(!perPage)
-	{
-		perPage = 15;
-	}
 	request(CONFIG.apiuri + "/image", "GET", undefined, function(response)
 		{
 			showImageList(response, page, perPage);
@@ -56,22 +48,22 @@ function showImageList(list, page, perPage)
 	html += renderPagination(Math.ceil(list.length / perPage), page);
 	document.getElementById("imageList").innerHTML = html;
 
-	var	nodes = document.getElementById("imageList").getElementsByTagName("img");
-	for(var j = 0; j < nodes.length; j++)
+	var	ImageNodes = document.getElementById("imageList").getElementsByTagName("img");
+	for(var j = 0; j < ImageNodes.length; j++)
 	{
-		nodes[j].onclick = showImagePreview;
+		ImageNodes[j].onclick = showImagePreview;
 	}
-	nodes = document.getElementsByClassName("deleteImage");
-	for(var k = 0; k < nodes.length; k++)
+	var deleteNodes = document.getElementsByClassName("deleteImage");
+	for(var k = 0; k < deleteNodes.length; k++)
 	{
-		nodes[k].onclick = deleteImageOnClick;
+		(deleteNodes[k] as HTMLElement).onclick = deleteImageOnClick;
 	}
-	nodes = document.getElementsByClassName("paginationButton");
-	for(var l = 0; l < nodes.length; l++)
+	var paginationNodes = document.getElementsByClassName("paginationButton");
+	for(var l = 0; l < paginationNodes.length; l++)
 	{
-		nodes[l].onclick = function(event)
+		(paginationNodes[l] as HTMLElement).onclick = function(event)
 			{
-				downloadImageList(parseInt(event.target.dataset.page, 10), perPage);
+				downloadImageList(parseInt((event.target as HTMLElement).dataset.page, 10), perPage);
 			};
 	}
 }
