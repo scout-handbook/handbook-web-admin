@@ -26,5 +26,5 @@ function addField()
 
 function addFiledPayloadBuilder()
 {
-	return {"name": encodeURIComponent(document.getElementById("fieldName").value)};
+	return {"name": encodeURIComponent((document.getElementById("fieldName") as HTMLInputElement).value)};
 }

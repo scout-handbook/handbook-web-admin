@@ -52,5 +52,5 @@ function changeCompetenceOnClick(event)
 
 function changeCompetencePayloadBuilder()
 {
-	return {"number": encodeURIComponent(document.getElementById("competenceNumber").value), "name": encodeURIComponent(document.getElementById("competenceName").value), "description": encodeURIComponent(document.getElementById("competenceDescription").value)};
+	return {"number": encodeURIComponent((document.getElementById("competenceNumber") as HTMLInputElement).value), "name": encodeURIComponent((document.getElementById("competenceName") as HTMLInputElement).value), "description": encodeURIComponent((document.getElementById("competenceDescription") as HTMLInputElement).value)};
 }

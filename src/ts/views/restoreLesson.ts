@@ -5,12 +5,12 @@ function showLessonRestoreView(name, body)
 {
 	var aq = new ActionQueue([new Action(CONFIG.apiuri + "/lesson", "POST", restoreLessonPayloadBuilder)])
 	aq.actions[0].callback = function(response) {aq.fillID(response)}
-	showLessonEditor(name, body, aq);
+	showLessonEditor(name, body, aq, null);
 
 	history.pushState({}, "title", "/admin/lessons");
 }
 
 function restoreLessonPayloadBuilder()
 {
-	return {"name": encodeURIComponent(document.getElementById("name").value), "body": encodeURIComponent(editor.value())};
+	return {"name": encodeURIComponent((document.getElementById("name") as HTMLInputElement).value), "body": encodeURIComponent(editor.value())};
 }

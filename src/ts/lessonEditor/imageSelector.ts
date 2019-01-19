@@ -3,16 +3,8 @@
 
 var imageSelectorOpen = false;
 
-function prepareImageSelector(page, perPage)
+function prepareImageSelector(page = 1 , perPage = 15)
 {
-	if(!page)
-	{
-		page = 1;
-	}
-	if(!perPage)
-	{
-		perPage = 15;
-	}
 	request(CONFIG.apiuri + "/image", "GET", undefined, function(response)
 		{
 			renderImageSelector(response, page, perPage);
@@ -65,17 +57,17 @@ function renderImageSelector(list, page, perPage)
 	}
 	document.getElementById("imageWrapper").innerHTML = html;
 
-	var	nodes = document.getElementById("imageWrapper").getElementsByTagName("img");
-	for(var k = 0; k < nodes.length; k++)
+	var	imageNodes = document.getElementById("imageWrapper").getElementsByTagName("img");
+	for(var k = 0; k < imageNodes.length; k++)
 	{
-		nodes[k].onclick = insertImage;
+		imageNodes[k].onclick = insertImage;
 	}
-	nodes = document.getElementsByClassName("paginationButton");
-	for(var l = 0; l < nodes.length; l++)
+	var buttonNodes = document.getElementsByClassName("paginationButton");
+	for(var l = 0; l < buttonNodes.length; l++)
 	{
-		nodes[l].onclick = function(event)
+		(buttonNodes[l] as HTMLElement).onclick = function(event)
 			{
-				prepareImageSelector(parseInt(event.target.dataset.page, 10), perPage);
+				prepareImageSelector(parseInt((event.target as HTMLElement).dataset.page, 10), perPage);
 			};
 	}
 }

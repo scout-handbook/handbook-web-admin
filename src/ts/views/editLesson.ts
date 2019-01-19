@@ -54,7 +54,7 @@ function renderLessonEditView(id, markdown, noHistory)
 
 function saveLessonPayloadBuilder()
 {
-	return {"name": encodeURIComponent(document.getElementById("name").value), "body": encodeURIComponent(editor.value())};
+	return {"name": encodeURIComponent((document.getElementById("name") as HTMLInputElement).value), "body": encodeURIComponent(editor.value())};
 }
 
 function lessonEditMutexExtend(id)

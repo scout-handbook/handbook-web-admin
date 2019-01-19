@@ -3,7 +3,7 @@
 
 function showGroupSubview(noHistory)
 {
-	window.mainPageTab = "groups";
+	mainPageTab = "groups";
 	var nodes = document.getElementsByClassName("topBarTab");
 	for(var l = 0; l < nodes.length; l++)
 	{

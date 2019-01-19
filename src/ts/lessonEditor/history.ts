@@ -55,7 +55,7 @@ function lessonHistoryListRender(id, actionQueue, list)
 function lessonHistoryPreviewShowCurrent()
 {
 	document.getElementById("lessonHistoryPreview").innerHTML = "<div id=\"embeddedSpinner\"></div>";
-	refreshPreview(document.getElementById("name").value, editor.value(), "lessonHistoryPreview");
+	refreshPreview((document.getElementById("name") as HTMLInputElement).value, editor.value(), "lessonHistoryPreview");
 
 	document.getElementById("lessonHistoryListHeader").innerHTML = "";
 
@@ -83,8 +83,8 @@ function lessonHistoryPreviewRenderVersion(id, name, body, actionQueue)
 
 	document.getElementById("lessonHistoryRevert").onclick = function()
 		{
-			document.getElementById("name").value = name;
+			(document.getElementById("name") as HTMLInputElement).value = name;
 			editor.value(body);
-			lessonSettings(id, body, actionQueue, true);
+			lessonSettings(id, actionQueue, true);
 		};
 }

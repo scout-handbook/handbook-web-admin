@@ -29,7 +29,7 @@ function changeUserRoleOnClick(event)
 	}
 	document.getElementById("sidePanel").innerHTML = html;
 
-	document.getElementById("roleSelect").options.namedItem(getAttribute(event, "role")).selected = 'selected';
+	(document.getElementById("roleSelect") as HTMLSelectElement).options.namedItem(getAttribute(event, "role")).selected = true;
 
 	document.getElementById("sidePanelCancel").onclick = function()
 		{
@@ -50,6 +50,6 @@ function changeUserRoleOnClick(event)
 
 function changeUserRolePayloadBuilder()
 {
-	var sel = document.getElementById("roleSelect");
+	var sel = document.getElementById("roleSelect") as HTMLSelectElement;
 	return {"role": encodeURIComponent(sel.options[sel.selectedIndex].value)};
 }

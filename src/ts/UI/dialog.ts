@@ -3,7 +3,7 @@
 
 var confirmCallbackWrapped;
 
-function dialog(mainText, confirmText, confirmCallback, dismissText, dismissCallback)
+function dialog(mainText, confirmText, confirmCallback?, dismissText?, dismissCallback?)
 {
 	dismissSpinner();
 	document.getElementById("overlay").style.display = "inline";

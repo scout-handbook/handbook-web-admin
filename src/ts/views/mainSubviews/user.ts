@@ -3,7 +3,7 @@
 
 function showUserSubview(noHistory)
 {
-	window.mainPageTab = "users";
+	mainPageTab = "users";
 	var nodes = document.getElementsByClassName("topBarTab");
 	for(var l = 0; l < nodes.length; l++)
 	{
@@ -20,29 +20,9 @@ function showUserSubview(noHistory)
 	}
 }
 
-function downloadUserList(searchName, page, perPage, role, group)
+function downloadUserList(searchName = "", page = 1, perPage = 25, role = "all", group = "00000000-0000-0000-0000-000000000000")
 {
 	document.getElementById("userList").innerHTML = "<div id=\"embeddedSpinner\"></div>";
-	if(!searchName)
-	{
-		searchName = "";
-	}
-	if(!page)
-	{
-		page = 1;
-	}
-	if(!perPage)
-	{
-		perPage = 25;
-	}
-	if(!role)
-	{
-		role = "all";
-	}
-	if(!group)
-	{
-		group = "00000000-0000-0000-0000-000000000000";
-	}
 	var payload = {"name": searchName, "page": page, "per-page": perPage}
 	if(role !== "all")
 	{
@@ -85,23 +65,23 @@ function showUserList(list, searchName, page, perPage, role, group)
 	html += renderPagination(Math.ceil(list.count / perPage), page);
 	document.getElementById("userList").innerHTML = html;
 
-	document.getElementById("userSearchBox").value = searchName;
+	(document.getElementById("userSearchBox") as HTMLInputElement).value = searchName;
 	if(LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser")
 	{
-		document.getElementById("roleSearchFilter").value = role;
+		(document.getElementById("roleSearchFilter") as HTMLSelectElement).value = role;
 	}
-	document.getElementById("groupSearchFilter").value = group;
+	(document.getElementById("groupSearchFilter") as HTMLSelectElement).value = group;
 
 	document.getElementById("userSearchForm").onsubmit = function()
 		{
-			var roleSel = document.getElementById("roleSearchFilter");
-			var groupSel = document.getElementById("groupSearchFilter");
+			var roleSel = document.getElementById("roleSearchFilter") as HTMLSelectElement;
+			var groupSel = document.getElementById("groupSearchFilter") as HTMLSelectElement;
 			var newRole = "all";
 			if(roleSel)
 			{
 				newRole = roleSel.options[roleSel.selectedIndex].value;
 			}
-			downloadUserList(document.getElementById("userSearchBox").value, 1, perPage, newRole, groupSel.options[groupSel.selectedIndex].value);
+			downloadUserList((document.getElementById("userSearchBox") as HTMLInputElement).value, 1, perPage, newRole, groupSel.options[groupSel.selectedIndex].value);
 			return false;
 		}
 	document.getElementById("userSearchButton").onclick = document.getElementById("userSearchForm").onsubmit;
@@ -115,16 +95,16 @@ function showUserList(list, searchName, page, perPage, role, group)
 	var nodes = document.getElementsByClassName("paginationButton");
 	for(var l = 0; l < nodes.length; l++)
 	{
-		nodes[l].onclick = function(event)
+		(nodes[l] as HTMLElement).onclick = function(event)
 			{
-				var roleSel = document.getElementById("roleSearchFilter");
-				var groupSel = document.getElementById("groupSearchFilter");
+				var roleSel = document.getElementById("roleSearchFilter") as HTMLSelectElement;
+				var groupSel = document.getElementById("groupSearchFilter") as HTMLSelectElement;
 				var newRole = "all";
 				if(roleSel)
 				{
 					newRole = roleSel.options[roleSel.selectedIndex].value;
 				}
-				downloadUserList(searchName, parseInt(event.target.dataset.page, 10), perPage, newRole, groupSel.options[groupSel.selectedIndex].value);
+				downloadUserList(searchName, parseInt((event.target as HTMLElement).dataset.page, 10), perPage, newRole, groupSel.options[groupSel.selectedIndex].value);
 			};
 	}
 

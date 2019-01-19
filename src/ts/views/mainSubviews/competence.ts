@@ -3,7 +3,7 @@
 
 function showCompetenceSubview(noHistory)
 {
-	window.mainPageTab = "competences";
+	mainPageTab = "competences";
 	var nodes = document.getElementsByClassName("topBarTab");
 	for(var l = 0; l < nodes.length; l++)
 	{
