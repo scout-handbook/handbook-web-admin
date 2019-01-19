@@ -1,7 +1,7 @@
 "use strict";
 /* exported getLessonById */
 
-function getLessonById(id: string)
+function getLessonById(id: string): Lesson|null
 {
 	for(var i = 0; i < FIELDS.length; i++)
 	{
@@ -13,5 +13,5 @@ function getLessonById(id: string)
 			}
 		}
 	}
-	return undefined;
+	return null;
 }

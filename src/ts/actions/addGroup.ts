@@ -1,7 +1,7 @@
 "use strict";
 /* exported addGroup */
 
-function addGroup()
+function addGroup(): void
 {
 	sidePanelOpen();
 	var html = "<div class=\"button yellowButton\" id=\"sidePanelCancel\"><i class=\"icon-cancel\"></i>Zrušit</div>";
@@ -12,7 +12,7 @@ function addGroup()
 	html += "</form>";
 	document.getElementById("sidePanel")!.innerHTML = html;
 
-	document.getElementById("sidePanelCancel")!.onclick = function()
+	document.getElementById("sidePanelCancel")!.onclick = function(): void
 		{
 			history.back();
 		};
@@ -24,7 +24,7 @@ function addGroup()
 	refreshLogin();
 }
 
-function addGroupPayloadBuilder()
+function addGroupPayloadBuilder(): Payload
 {
 	return {"name": encodeURIComponent((document.getElementById("groupName") as HTMLInputElement).value)};
 }

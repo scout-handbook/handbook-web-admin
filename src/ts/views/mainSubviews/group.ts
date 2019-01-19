@@ -1,7 +1,8 @@
 "use strict";
+/* global mainPageTab:true */
 /* exported showGroupSubview */
 
-function showGroupSubview(noHistory: boolean)
+function showGroupSubview(noHistory: boolean): void
 {
 	mainPageTab = "groups";
 	var nodes = document.getElementsByClassName("topBarTab");
@@ -34,7 +35,7 @@ function showGroupSubview(noHistory: boolean)
 	refreshLogin(true);
 }
 
-function renderGroupList()
+function renderGroupList(): string
 {
 	var html = "";
 	for(var i = 0; i < GROUPS.length; i++)

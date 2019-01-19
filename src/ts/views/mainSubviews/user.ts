@@ -1,7 +1,8 @@
 "use strict";
+/* global mainPageTab:true */
 /* exported showUserSubview */
 
-function showUserSubview(noHistory: boolean)
+function showUserSubview(noHistory: boolean): void
 {
 	mainPageTab = "users";
 	var nodes = document.getElementsByClassName("topBarTab");
@@ -20,7 +21,7 @@ function showUserSubview(noHistory: boolean)
 	}
 }
 
-function downloadUserList(searchName = "", page = 1, perPage = 25, role: Role = "all", group = "00000000-0000-0000-0000-000000000000")
+function downloadUserList(searchName = "", page = 1, perPage = 25, role: Role = "all", group = "00000000-0000-0000-0000-000000000000"): void
 {
 	document.getElementById("userList")!.innerHTML = "<div id=\"embeddedSpinner\"></div>";
 	var payload: UserSearchQuery = {"name": searchName, "page": page, "per-page": perPage}
@@ -32,14 +33,14 @@ function downloadUserList(searchName = "", page = 1, perPage = 25, role: Role = 
 	{
 		payload.group = group;
 	}
-	request(CONFIG.apiuri + "/user", "GET", payload, function(response: RequestResponse)
+	request(CONFIG.apiuri + "/user", "GET", payload, function(response: RequestResponse): void
 		{
 			showUserList(response as unknown as UserListResponse, searchName, page, perPage, role, group);
 		}, reAuthHandler);
 	refreshLogin(true);
 }
 
-function showUserList(list: UserListResponse, searchName: string, page: number, perPage: number, role: Role, group: string)
+function showUserList(list: UserListResponse, searchName: string, page: number, perPage: number, role: Role, group: string): void
 {
 	if(mainPageTab !== "users")
 	{
@@ -72,7 +73,7 @@ function showUserList(list: UserListResponse, searchName: string, page: number, 
 	}
 	(document.getElementById("groupSearchFilter") as HTMLSelectElement).value = group;
 
-	document.getElementById("userSearchForm")!.onsubmit = function()
+	document.getElementById("userSearchForm")!.onsubmit = function(): boolean
 		{
 			var roleSel = document.getElementById("roleSearchFilter") as HTMLSelectElement;
 			var groupSel = document.getElementById("groupSearchFilter") as HTMLSelectElement;
@@ -87,7 +88,7 @@ function showUserList(list: UserListResponse, searchName: string, page: number, 
 	document.getElementById("userSearchButton")!.onclick = document.getElementById("userSearchForm")!.onsubmit;
 	if(searchName || role !== "all" || group !== "00000000-0000-0000-0000-000000000000")
 		{
-			document.getElementById("userSearchCancel")!.onclick = function()
+			document.getElementById("userSearchCancel")!.onclick = function(): void
 				{
 					downloadUserList(undefined, 1, perPage);
 				};
@@ -95,7 +96,7 @@ function showUserList(list: UserListResponse, searchName: string, page: number, 
 	var nodes = document.getElementsByClassName("paginationButton");
 	for(var l = 0; l < nodes.length; l++)
 	{
-		(nodes[l] as HTMLElement).onclick = function(event)
+		(nodes[l] as HTMLElement).onclick = function(event): void
 			{
 				var roleSel = document.getElementById("roleSearchFilter") as HTMLSelectElement;
 				var groupSel = document.getElementById("groupSearchFilter") as HTMLSelectElement;
@@ -112,7 +113,7 @@ function showUserList(list: UserListResponse, searchName: string, page: number, 
 	addOnClicks("changeUserGroups", changeUserGroupsOnClick);
 }
 
-function renderRoleSelector()
+function renderRoleSelector(): string
 {
 	var html = "";
 	if(LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser")
@@ -131,7 +132,7 @@ function renderRoleSelector()
 	return html;
 }
 
-function renderGroupSelector()
+function renderGroupSelector(): string
 {
 	var html = "<select class=\"formSelect\" id=\"groupSearchFilter\">";
 	html += "<option id=\"00000000-0000-0000-0000-000000000000\" value=\"00000000-0000-0000-0000-000000000000\" class=\"selectFilterSpecial\">Všechny skupiny</option>";
@@ -146,7 +147,7 @@ function renderGroupSelector()
 	return html;
 }
 
-function renderUserRow(user: User)
+function renderUserRow(user: User): string
 {
 	var html = "<tr><td>" + user.name + "</td><td>";
 	switch(user.role)

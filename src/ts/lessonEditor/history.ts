@@ -1,25 +1,25 @@
 "use strict";
 /* exported lessonHistoryOpen */
 
-function lessonHistoryOpen(id: string, actionQueue: ActionQueue)
+function lessonHistoryOpen(id: string, actionQueue: ActionQueue): void
 {
 	sidePanelDoubleOpen();
 	var html = "<div id=\"lessonHistoryList\"><div class=\"button yellowButton\" id=\"cancelEditorAction\"><i class=\"icon-cancel\"></i>Zrušit</div><span id=\"lessonHistoryListHeader\"></span><h3 class=\"sidePanelTitle\">Historie lekce</h3><div id=\"lessonHistoryForm\"><div id=\"embeddedSpinner\"></div></div></div><div id=\"lessonHistoryPreview\"></div>";
 	document.getElementById("sidePanel")!.innerHTML = html;
 
-	document.getElementById("cancelEditorAction")!.onclick = function()
+	document.getElementById("cancelEditorAction")!.onclick = function(): void
 		{
 			lessonSettings(id, actionQueue, true);
 		};
 
-	request(CONFIG.apiuri + "/lesson/" + id + "/history", "GET", undefined, function(response: RequestResponse)
+	request(CONFIG.apiuri + "/lesson/" + id + "/history", "GET", undefined, function(response: RequestResponse): void
 		{
 			lessonHistoryListRender(id, actionQueue, response as unknown as Array<LessonVersion>);
 		}, authFailHandler);
 	lessonHistoryPreviewShowCurrent();
 }
 
-function lessonHistoryListRender(id: string, actionQueue: ActionQueue, list: Array<LessonVersion>)
+function lessonHistoryListRender(id: string, actionQueue: ActionQueue, list: Array<LessonVersion>): void
 {
 	var html = "<form id=\"sidePanelForm\">";
 	outer:
@@ -42,17 +42,17 @@ function lessonHistoryListRender(id: string, actionQueue: ActionQueue, list: Arr
 	document.getElementById("lessonHistoryForm")!.innerHTML = html;
 
 	var nodes = document.getElementById("sidePanelForm")!.getElementsByTagName("input");
-	nodes[0].onchange = function() {lessonHistoryPreviewShowCurrent();};
+	nodes[0].onchange = function(): void {lessonHistoryPreviewShowCurrent();};
 	if(nodes.length > 1)
 	{
 		for(var l = 1; l < nodes.length; l++)
 		{
-			nodes[l].onchange = function(event) {lessonHistoryPreviewShowVersion(id, actionQueue, event);};
+			nodes[l].onchange = function(event): void {lessonHistoryPreviewShowVersion(id, actionQueue, event);};
 		}
 	}
 }
 
-function lessonHistoryPreviewShowCurrent()
+function lessonHistoryPreviewShowCurrent(): void
 {
 	document.getElementById("lessonHistoryPreview")!.innerHTML = "<div id=\"embeddedSpinner\"></div>";
 	refreshPreview((document.getElementById("name") as HTMLInputElement).value, editor.value(), "lessonHistoryPreview");
@@ -62,10 +62,10 @@ function lessonHistoryPreviewShowCurrent()
 	refreshLogin();
 }
 
-function lessonHistoryPreviewShowVersion(id: string, actionQueue: ActionQueue, event: Event)
+function lessonHistoryPreviewShowVersion(id: string, actionQueue: ActionQueue, event: Event): void
 {
 	document.getElementById("lessonHistoryPreview")!.innerHTML = "<div id=\"embeddedSpinner\"></div>";
-	request(CONFIG.apiuri + "/lesson/" + id + "/history/" + (event.target as HTMLElement).dataset.version, "GET", undefined, function(response: RequestResponse)
+	request(CONFIG.apiuri + "/lesson/" + id + "/history/" + (event.target as HTMLElement).dataset.version, "GET", undefined, function(response: RequestResponse): void
 		{
 			lessonHistoryPreviewRenderVersion(id, (event.target as HTMLElement).dataset.name!, response as unknown as string, actionQueue);
 		}, authFailHandler);
@@ -75,13 +75,13 @@ function lessonHistoryPreviewShowVersion(id: string, actionQueue: ActionQueue, e
 	refreshLogin();
 }
 
-function lessonHistoryPreviewRenderVersion(id: string, name: string, body: string, actionQueue: ActionQueue)
+function lessonHistoryPreviewRenderVersion(id: string, name: string, body: string, actionQueue: ActionQueue): void
 {
 	refreshPreview(name, body, "lessonHistoryPreview");
 	var html = "<div class=\"button greenButton\" id=\"lessonHistoryRevert\"><i class=\"icon-history\"></i>Obnovit</div>";
 	document.getElementById("lessonHistoryListHeader")!.innerHTML = html;
 
-	document.getElementById("lessonHistoryRevert")!.onclick = function()
+	document.getElementById("lessonHistoryRevert")!.onclick = function(): void
 		{
 			(document.getElementById("name") as HTMLInputElement).value = name;
 			editor.value(body);

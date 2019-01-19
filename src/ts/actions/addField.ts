@@ -1,7 +1,7 @@
 "use strict";
 /* exported addField */
 
-function addField()
+function addField(): void
 {
 	sidePanelOpen();
 	var html = "<div class=\"button yellowButton\" id=\"sidePanelCancel\"><i class=\"icon-cancel\"></i>Zrušit</div>";
@@ -12,7 +12,7 @@ function addField()
 	html += "</form>";
 	document.getElementById("sidePanel")!.innerHTML = html;
 
-	document.getElementById("sidePanelCancel")!.onclick = function()
+	document.getElementById("sidePanelCancel")!.onclick = function(): void
 		{
 			history.back();
 		};
@@ -24,7 +24,7 @@ function addField()
 	refreshLogin();
 }
 
-function addFiledPayloadBuilder()
+function addFiledPayloadBuilder(): Payload
 {
 	return {"name": encodeURIComponent((document.getElementById("fieldName") as HTMLInputElement).value)};
 }

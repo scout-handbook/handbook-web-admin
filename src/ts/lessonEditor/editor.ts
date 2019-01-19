@@ -7,7 +7,7 @@ var lessonSettingsCache: LessonSettingsCache;
 var lessonSettingsCacheEvent: AfterLoadEvent;
 var editor: EasyMDE;
 
-function showLessonEditor(name: string, body: string, saveActionQueue: ActionQueue, id: string, discardActionQueue = new ActionQueue(), refreshAction = function() {})
+function showLessonEditor(name: string, body: string, saveActionQueue: ActionQueue, id: string, discardActionQueue = new ActionQueue(), refreshAction = function(): void {}): void
 {
 	populateEditorCache(id);
 	changed = false;
@@ -43,11 +43,11 @@ function showLessonEditor(name: string, body: string, saveActionQueue: ActionQue
 	document.getElementsByTagName("main")[0].innerHTML = html;
 	refreshPreview(name, body, "preview-inner");
 
-	document.getElementById("discard")!.onclick = function() {editorDiscard(discardActionQueue);};
-	document.getElementById("save")!.onclick = function() {saveActionQueue.defaultDispatch(false);}; // TODO: Check if editing, then if no change, do nothing
-	document.getElementById("lessonSettings")!.onclick = function() {lessonSettings(id, saveActionQueue, false);};
+	document.getElementById("discard")!.onclick = function(): void {editorDiscard(discardActionQueue);};
+	document.getElementById("save")!.onclick = function(): void {saveActionQueue.defaultDispatch(false);}; // TODO: Check if editing, then if no change, do nothing
+	document.getElementById("lessonSettings")!.onclick = function(): void {lessonSettings(id, saveActionQueue, false);};
 	document.getElementById("closeImageSelector")!.onclick = toggleImageSelector;
-	document.getElementById("imageSelectorAdd")!.onclick = function() {addImage(true);};
+	document.getElementById("imageSelectorAdd")!.onclick = function(): void {addImage(true);};
 
 	editor = new EasyMDE({
 		autoDownloadFontAwesome: false,
@@ -114,22 +114,22 @@ function showLessonEditor(name: string, body: string, saveActionQueue: ActionQue
 	});
 	editor.value(body);
 	editor.codemirror.getDoc().clearHistory();
-	editor.codemirror.on("change", function() {editorOnChange(refreshAction);});
+	editor.codemirror.on("change", function(): void {editorOnChange(refreshAction);});
 
-	document.getElementById("name")!.oninput = function() {editorOnChange(refreshAction);};
-	document.getElementById("name")!.onchange = function() {editorOnChange(refreshAction);};
+	document.getElementById("name")!.oninput = function(): void {editorOnChange(refreshAction);};
+	document.getElementById("name")!.onchange = function(): void {editorOnChange(refreshAction);};
 
 	prepareImageSelector();
 }
 
-function editorOnChange(afterAction: () => void)
+function editorOnChange(afterAction: () => void): void
 {
 	changed = true;
 	refreshPreview((document.getElementById("name") as HTMLInputElement).value, editor.value(), "preview-inner");
 	refreshLogin(false, afterAction);
 }
 
-function editorDiscard(actionQueue: ActionQueue)
+function editorDiscard(actionQueue: ActionQueue): void
 {
 	if(!changed)
 	{
@@ -137,7 +137,7 @@ function editorDiscard(actionQueue: ActionQueue)
 	}
 	else
 	{
-		dialog("Opravdu si přejete zahodit všechny změny?", "Ano", function()
+		dialog("Opravdu si přejete zahodit všechny změny?", "Ano", function(): void
 			{
 				editorDiscardNow(actionQueue);
 			}, "Ne");
@@ -145,26 +145,26 @@ function editorDiscard(actionQueue: ActionQueue)
 	refreshLogin();
 }
 
-function editorDiscardNow(actionQueue: ActionQueue)
+function editorDiscardNow(actionQueue: ActionQueue): void
 {
 	history.back();
 	actionQueue.dispatch(true);
 }
 
-function populateEditorCache(id: string)
+function populateEditorCache(id: string): void
 {
 	lessonSettingsCacheEvent = new AfterLoadEvent(1);
 	if(!id)
 	{
-		lessonSettingsCache["field"] = undefined;
+		lessonSettingsCache["field"] = "";
 		lessonSettingsCache["competences"] = [];
 		lessonSettingsCache["groups"] = [];
 		lessonSettingsCacheEvent.trigger();
 		return;
 	}
-	request(CONFIG.apiuri + "/lesson/" + id + "/group", "GET", undefined, function(response: RequestResponse)
+	request(CONFIG.apiuri + "/lesson/" + id + "/group", "GET", undefined, function(response: RequestResponse): void
 		{
-			lessonSettingsCache["groups"] = response;
+			lessonSettingsCache["groups"] = response as unknown as Array<string>;
 			lessonSettingsCacheEvent.trigger();
 		}, reAuthHandler);
 	outer:
@@ -180,7 +180,7 @@ function populateEditorCache(id: string)
 				}
 				else
 				{
-					lessonSettingsCache["field"] = undefined;
+					lessonSettingsCache["field"] = "";
 				}
 				lessonSettingsCache["competences"] = FIELDS[i].lessons[j].competences;
 				break outer;

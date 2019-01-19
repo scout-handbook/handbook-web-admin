@@ -1,7 +1,7 @@
 "use strict";
 /* exported lessonSettings */
 
-function lessonSettings(id: string, actionQueue: ActionQueue, noHistory: boolean)
+function lessonSettings(id: string, actionQueue: ActionQueue, noHistory: boolean): void
 {
 	sidePanelOpen();
 	var html = "<div class=\"button yellowButton\" id=\"sidePanelCancel\"><i class=\"icon-right-open\"></i>Zavřít</div>";
@@ -12,14 +12,14 @@ function lessonSettings(id: string, actionQueue: ActionQueue, noHistory: boolean
 	document.getElementById("sidePanel")!.innerHTML = html;
 	lessonSettingsCacheEvent.addCallback(renderGroups);
 
-	document.getElementById("sidePanelCancel")!.onclick = function()
+	document.getElementById("sidePanelCancel")!.onclick = function(): void
 		{
 			history.back();
 		};
-	document.getElementById("lessonHistoryOpen")!.onclick = function() {lessonHistoryOpen(id, actionQueue);};
-	document.getElementById("changeField")!.onclick = function() {changeLessonFieldOnClick(id, actionQueue);};
-	document.getElementById("changeCompetences")!.onclick = function() {changeLessonCompetencesOnClick(id, actionQueue);};
-	document.getElementById("changeGroups")!.onclick = function() {changeLessonGroupsOnClick(id, actionQueue);};
+	document.getElementById("lessonHistoryOpen")!.onclick = function(): void {lessonHistoryOpen(id, actionQueue);};
+	document.getElementById("changeField")!.onclick = function(): void {changeLessonFieldOnClick(id, actionQueue);};
+	document.getElementById("changeCompetences")!.onclick = function(): void {changeLessonCompetencesOnClick(id, actionQueue);};
+	document.getElementById("changeGroups")!.onclick = function(): void {changeLessonGroupsOnClick(id, actionQueue);};
 	if(!noHistory)
 	{
 		history.pushState({"sidePanel": "open"}, "title", "/admin/lessons");
@@ -27,7 +27,7 @@ function lessonSettings(id: string, actionQueue: ActionQueue, noHistory: boolean
 	refreshLogin();
 }
 
-function renderField()
+function renderField(): string
 {
 	var html = "<br><h3 class=\"sidePanelTitle noNewline\">Oblast</h3>"
 	html += "<div class=\"button cyanButton\" id=\"changeField\"><i class=\"icon-pencil\"></i>Upravit</div><br>";
@@ -49,7 +49,7 @@ function renderField()
 	return html;
 }
 
-function renderCompetences()
+function renderCompetences(): string
 {
 	var html = "<br><h3 class=\"sidePanelTitle noNewline\">Kompetence</h3>"
 	html += "<div class=\"button cyanButton\" id=\"changeCompetences\"><i class=\"icon-pencil\"></i>Upravit</div>";
@@ -63,14 +63,14 @@ function renderCompetences()
 	return html;
 }
 
-function prerenderGroups()
+function prerenderGroups(): string
 {
 	var html = "<br><h3 class=\"sidePanelTitle noNewline\">Skupiny</h3>"
 	html += "<div class=\"button cyanButton\" id=\"changeGroups\"><i class=\"icon-pencil\"></i>Upravit</div><br><div id=\"settingsGroupList\"><div id=\"embeddedSpinner\"></div></div>";
 	return html;
 }
 
-function renderGroups()
+function renderGroups(): void
 {
 	document.getElementById("changeGroups")!.style.display = "inline-block";
 	var html = "";

@@ -1,7 +1,8 @@
 "use strict";
+/* global mainPageTab:true */
 /* exported showCompetenceSubview */
 
-function showCompetenceSubview(noHistory: boolean)
+function showCompetenceSubview(noHistory: boolean): void
 {
 	mainPageTab = "competences";
 	var nodes = document.getElementsByClassName("topBarTab");
@@ -33,7 +34,7 @@ function showCompetenceSubview(noHistory: boolean)
 	refreshLogin(true);
 }
 
-function renderCompetenceList()
+function renderCompetenceList(): string
 {
 	var html = "";
 	for(var i = 0; i < COMPETENCES.length; i++)

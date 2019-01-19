@@ -1,7 +1,8 @@
 "use strict";
+/* global mainPageTab:true */
 /* exported showImageSubview */
 
-function showImageSubview(noHistory: boolean)
+function showImageSubview(noHistory: boolean): void
 {
 	mainPageTab = "images";
 	var nodes = document.getElementsByClassName("topBarTab");
@@ -15,7 +16,7 @@ function showImageSubview(noHistory: boolean)
 	html += "<div id=\"imageList\"></div>";
 	document.getElementById("mainPage")!.innerHTML = html;
 
-	document.getElementById("addImage")!.onclick = function() {addImage(false);};
+	document.getElementById("addImage")!.onclick = function(): void {addImage(false);};
 	downloadImageList(1, 15);
 	if(!noHistory)
 	{
@@ -23,17 +24,17 @@ function showImageSubview(noHistory: boolean)
 	}
 }
 
-function downloadImageList(page: number, perPage: number)
+function downloadImageList(page: number, perPage: number): void
 {
 	document.getElementById("imageList")!.innerHTML = "<div id=\"embeddedSpinner\"></div>";
-	request(CONFIG.apiuri + "/image", "GET", undefined, function(response: RequestResponse)
+	request(CONFIG.apiuri + "/image", "GET", undefined, function(response: RequestResponse): void
 		{
 			showImageList(response as unknown as Array<string>, page, perPage);
 		}, reAuthHandler);
 	refreshLogin(true);
 }
 
-function showImageList(list: Array<string>, page: number, perPage: number)
+function showImageList(list: Array<string>, page: number, perPage: number): void
 {
 	if(mainPageTab !== "images")
 	{
@@ -61,21 +62,21 @@ function showImageList(list: Array<string>, page: number, perPage: number)
 	var paginationNodes = document.getElementsByClassName("paginationButton");
 	for(var l = 0; l < paginationNodes.length; l++)
 	{
-		(paginationNodes[l] as HTMLElement).onclick = function(event)
+		(paginationNodes[l] as HTMLElement).onclick = function(event): void
 			{
 				downloadImageList(parseInt((event.target as HTMLElement).dataset.page!, 10), perPage);
 			};
 	}
 }
 
-function showImagePreview(event: MouseEvent)
+function showImagePreview(event: MouseEvent): void
 {
 	var overlay = document.getElementById("overlay")!;
 	overlay.style.display = "inline";
 	overlay.style.cursor = "pointer";
 	var html = "<img src=\"" + CONFIG.apiuri + "/image/" + (event.target as HTMLElement).dataset.id + "\" class=\"previewImage\">";
 	overlay.innerHTML = html;
-	overlay.onclick = function()
+	overlay.onclick = function(): void
 		{
 			overlay.style.display = "none";
 			overlay.style.cursor = "auto";

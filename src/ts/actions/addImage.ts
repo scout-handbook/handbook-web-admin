@@ -1,7 +1,7 @@
 "use strict";
 /* exported addImage */
 
-function addImage(inEditor: boolean)
+function addImage(inEditor: boolean): void
 {
 	sidePanelOpen();
 	var html = "<div class=\"button yellowButton\" id=\"sidePanelCancel\"><i class=\"icon-cancel\"></i>Zrušit</div>";
@@ -13,7 +13,7 @@ function addImage(inEditor: boolean)
 	html += "</div></form>";
 	document.getElementById("sidePanel")!.innerHTML = html;
 
-	document.getElementById("sidePanelCancel")!.onclick = function()
+	document.getElementById("sidePanelCancel")!.onclick = function(): void
 		{
 			history.back();
 		};
@@ -32,7 +32,7 @@ function addImage(inEditor: boolean)
 	refreshLogin();
 }
 
-function changeLabel(event: Event)
+function changeLabel(event: Event): void
 {
 	var element = event.target as HTMLInputElement;
 	if(element.files)
@@ -41,7 +41,7 @@ function changeLabel(event: Event)
 	}
 }
 
-function addImageSave()
+function addImageSave(): void
 {
 	if((document.getElementById("addImageFile") as HTMLInputElement).value !== "")
 	{
@@ -49,7 +49,7 @@ function addImageSave()
 		formData.append("image", (document.getElementById("addImageFile") as HTMLInputElement).files![0])
 		sidePanelClose();
 		spinner();
-		request(CONFIG.apiuri + "/image", "POST", formData, function()
+		request(CONFIG.apiuri + "/image", "POST", formData, function(): void
 			{
 				dialog("Akce byla úspěšná.", "OK");
 				refreshMetadata();
