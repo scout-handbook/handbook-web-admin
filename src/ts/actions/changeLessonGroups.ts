@@ -3,7 +3,7 @@
 
 var lessonGroupsChanged = false;
 
-function changeLessonGroupsOnClick(id: string, actionQueue: ActionQueue)
+function changeLessonGroupsOnClick(id: string, actionQueue: ActionQueue): void
 {
 	lessonGroupsChanged = false;
 	var html = "<div class=\"button yellowButton\" id=\"cancelEditorAction\"><i class=\"icon-cancel\"></i>Zrušit</div>";
@@ -33,11 +33,11 @@ function changeLessonGroupsOnClick(id: string, actionQueue: ActionQueue)
 	html += "<div class=\"groupHelp\"><i class=\"icon-info-circled\"></i> U každé lekce lze zvolit, kteří uživatelé ji budou moct zobrazit (resp. které skupiny uživatelů). Pokud není vybrána žádná skupiny, nebude lekce pro běžné uživatele vůbec přístupná (pouze v administraci). Pokud je vybrána skupina \"<span class=\"publicGroup\">" + publicName + "</span>\", bude lekce přístupná všem uživatelům (i nepřihlášeným návštěvníkům webu) bez ohledu na skupiny.</div>";
 	document.getElementById("sidePanel")!.innerHTML = html;
 
-	document.getElementById("cancelEditorAction")!.onclick = function()
+	document.getElementById("cancelEditorAction")!.onclick = function(): void
 		{
 			lessonSettings(id, actionQueue, true);
 		};
-	document.getElementById("changeLessonGroupsSave")!.onclick = function() {changeLessonGroupsSave(id, actionQueue);};
+	document.getElementById("changeLessonGroupsSave")!.onclick = function(): void {changeLessonGroupsSave(id, actionQueue);};
 
 	var nodes = document.getElementById("sidePanelForm")!.getElementsByTagName("input");
 	for(var k = 0; k < nodes.length; k++)
@@ -48,12 +48,12 @@ function changeLessonGroupsOnClick(id: string, actionQueue: ActionQueue)
 	refreshLogin();
 }
 
-function lessonGroupsOnclick()
+function lessonGroupsOnclick(): void
 {
 	lessonGroupsChanged = true;
 }
 
-function changeLessonGroupsSave(id: string, actionQueue: ActionQueue)
+function changeLessonGroupsSave(id: string, actionQueue: ActionQueue): void
 {
 	if(lessonGroupsChanged)
 	{
@@ -64,7 +64,7 @@ function changeLessonGroupsSave(id: string, actionQueue: ActionQueue)
 		{
 			encodedGroups.push(encodeURIComponent(groups[i]));
 		}
-		actionQueue.actions.push(new Action(CONFIG.apiuri + "/lesson/" + id + "/group", "PUT", function () {return {"group": encodedGroups};}));
+		actionQueue.actions.push(new Action(CONFIG.apiuri + "/lesson/" + id + "/group", "PUT", function (): Payload {return {"group": encodedGroups};}));
 		lessonSettingsCache.groups = groups;
 		lessonSettings(id, actionQueue, true);
 	}

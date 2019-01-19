@@ -3,7 +3,7 @@
 
 var fieldChanged = false;
 
-function changeFieldOnClick(event: MouseEvent)
+function changeFieldOnClick(event: MouseEvent): void
 {
 	fieldChanged = false;
 	sidePanelOpen();
@@ -22,7 +22,7 @@ function changeFieldOnClick(event: MouseEvent)
 	html += "</form>";
 	document.getElementById("sidePanel")!.innerHTML = html;
 
-	document.getElementById("sidePanelCancel")!.onclick = function()
+	document.getElementById("sidePanelCancel")!.onclick = function(): void
 		{
 			history.back();
 		};
@@ -30,11 +30,11 @@ function changeFieldOnClick(event: MouseEvent)
 	var aq = new ActionQueue([new Action(CONFIG.apiuri + "/field/" + encodeURIComponent(getAttribute(event, "id")), "PUT", changeFieldPayloadBuilder)]);
 	document.getElementById("changeFieldSave")!.onclick = aq.closeDispatch;
 
-	document.getElementById("fieldName")!.oninput = function()
+	document.getElementById("fieldName")!.oninput = function(): void
 		{
 			fieldChanged = true;
 		};
-	document.getElementById("fieldName")!.onchange = function()
+	document.getElementById("fieldName")!.onchange = function(): void
 		{
 			fieldChanged = true;
 		};
@@ -43,7 +43,7 @@ function changeFieldOnClick(event: MouseEvent)
 	refreshLogin();
 }
 
-function changeFieldPayloadBuilder()
+function changeFieldPayloadBuilder(): Payload
 {
 	return {"name": encodeURIComponent((document.getElementById("fieldName") as HTMLInputElement).value)};
 }

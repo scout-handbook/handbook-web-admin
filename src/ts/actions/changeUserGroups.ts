@@ -3,7 +3,7 @@
 
 var groupsChanged = false;
 
-function changeUserGroupsOnClick(event: MouseEvent)
+function changeUserGroupsOnClick(event: MouseEvent): void
 {
 	groupsChanged = false;
 	sidePanelOpen();
@@ -34,7 +34,7 @@ function changeUserGroupsOnClick(event: MouseEvent)
 	html += "<div class=\"groupHelp\"><i class=\"icon-info-circled\"></i> Každého uživatele lze zařadit do několika skupin (nebo i žádné). Podle toho poté tento uživatel bude moct zobrazit pouze lekce, které byly těmto skupiným zveřejněny. Lekce ve skupině \"<span class=\"publicGroup\">" + publicName + "</span>\" uvidí všichni uživatelé bez ohledu na jejich skupiny. </div>";
 	document.getElementById("sidePanel")!.innerHTML = html;
 
-	document.getElementById("sidePanelCancel")!.onclick = function()
+	document.getElementById("sidePanelCancel")!.onclick = function(): void
 		{
 			history.back();
 		};
@@ -52,12 +52,12 @@ function changeUserGroupsOnClick(event: MouseEvent)
 	refreshLogin();
 }
 
-function userGroupsOnclick()
+function userGroupsOnclick(): void
 {
 	groupsChanged = true;
 }
 
-function changeUserPayloadBuilder()
+function changeUserPayloadBuilder(): Payload
 {
 	var groups = parseBoolForm();
 	var encodedGroups = [];

@@ -1,7 +1,8 @@
 "use strict";
+/* global mainPageTab:true */
 /* exported showLessonSubview */
 
-function showLessonSubview(noHistory: boolean)
+function showLessonSubview(noHistory: boolean): void
 {
 	mainPageTab = "lessons";
 	var nodes = document.getElementsByClassName("topBarTab");
@@ -28,7 +29,7 @@ function showLessonSubview(noHistory: boolean)
 	{
 		document.getElementById("addField")!.onclick = addField;
 	}
-	document.getElementById("addLesson")!.onclick = function() {showLessonAddView();};
+	document.getElementById("addLesson")!.onclick = function(): void {showLessonAddView();};
 	if(LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser")
 	{
 		document.getElementById("restoreLesson")!.onclick = restoreLesson;
@@ -46,7 +47,7 @@ function showLessonSubview(noHistory: boolean)
 	refreshLogin(true);
 }
 
-function renderLessonList()
+function renderLessonList(): string
 {
 	var html = "";
 	for(var i = 0; i < FIELDS.length; i++)
@@ -71,7 +72,7 @@ function renderLessonList()
 	return html;
 }
 
-function renderLessonListLesson(lesson: Lesson, secondLevel: string)
+function renderLessonListLesson(lesson: Lesson, secondLevel: string): string
 {
 	var html = "<br><h3 class=\"mainPage" + secondLevel + "\">" + lesson.name + "</h3>";
 	html += "<div class=\"button cyanButton changeLesson\" data-id=\"" + lesson.id + "\"><i class=\"icon-pencil\"></i>Upravit</div>";
@@ -101,7 +102,7 @@ function renderLessonListLesson(lesson: Lesson, secondLevel: string)
 	return html;
 }
 
-function changeLessonOnClick(event: MouseEvent)
+function changeLessonOnClick(event: MouseEvent): boolean
 {
 	showLessonEditView(getAttribute(event, "id"), false);
 	return false;

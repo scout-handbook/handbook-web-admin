@@ -3,16 +3,16 @@
 
 var imageSelectorOpen = false;
 
-function prepareImageSelector(page = 1 , perPage = 15)
+function prepareImageSelector(page = 1 , perPage = 15): void
 {
-	request(CONFIG.apiuri + "/image", "GET", undefined, function(response: RequestResponse)
+	request(CONFIG.apiuri + "/image", "GET", undefined, function(response: RequestResponse): void
 		{
 			renderImageSelector(response as unknown as Array<string>, page, perPage);
 		}, reAuthHandler);
 	refreshLogin();
 }
 
-function renderImageSelector(list: Array<string>, page: number, perPage: number)
+function renderImageSelector(list: Array<string>, page: number, perPage: number): void
 {
 	if(!document.getElementById("imageWrapper"))
 	{
@@ -65,14 +65,14 @@ function renderImageSelector(list: Array<string>, page: number, perPage: number)
 	var buttonNodes = document.getElementsByClassName("paginationButton");
 	for(var l = 0; l < buttonNodes.length; l++)
 	{
-		(buttonNodes[l] as HTMLElement).onclick = function(event)
+		(buttonNodes[l] as HTMLElement).onclick = function(event): void
 			{
 				prepareImageSelector(parseInt((event.target as HTMLElement).dataset.page!, 10), perPage);
 			};
 	}
 }
 
-function toggleImageSelector()
+function toggleImageSelector(): void
 {
 	if(imageSelectorOpen)
 	{
@@ -86,7 +86,7 @@ function toggleImageSelector()
 	refreshLogin();
 }
 
-function insertImage(event: MouseEvent)
+function insertImage(event: MouseEvent): void
 {
 	var markdown = "![Text po najetí kurzorem](" + CONFIG.apiuri + "/image/" + (event.target as HTMLElement).dataset.id + ")"
 	var doc = editor.codemirror.getDoc();

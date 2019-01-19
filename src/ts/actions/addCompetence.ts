@@ -1,7 +1,7 @@
 "use strict";
 /* exported addCompetence */
 
-function addCompetence()
+function addCompetence(): void
 {
 	sidePanelOpen();
 	var html = "<div class=\"button yellowButton\" id=\"sidePanelCancel\"><i class=\"icon-cancel\"></i>Zrušit</div>";
@@ -13,7 +13,7 @@ function addCompetence()
 	html += "</form>";
 	document.getElementById("sidePanel")!.innerHTML = html;
 
-	document.getElementById("sidePanelCancel")!.onclick = function()
+	document.getElementById("sidePanelCancel")!.onclick = function(): void
 		{
 			history.back();
 		};
@@ -25,7 +25,7 @@ function addCompetence()
 	refreshLogin();
 }
 
-function addCompetencePayloadBuilder()
+function addCompetencePayloadBuilder(): Payload
 {
 	return {"number": encodeURIComponent((document.getElementById("competenceNumber") as HTMLInputElement).value), "name": encodeURIComponent((document.getElementById("competenceName") as HTMLInputElement).value), "description": encodeURIComponent((document.getElementById("competenceDescription") as HTMLInputElement).value)};
 }

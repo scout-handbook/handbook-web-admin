@@ -4,7 +4,7 @@
 
 var sidePanelState = false;
 
-function sidePanelOpen()
+function sidePanelOpen(): void
 {
 	var sidePanel = document.getElementById("sidePanel")!;
 	var overlay = document.getElementById("sidePanelOverlay")!;
@@ -14,13 +14,13 @@ function sidePanelOpen()
 	sidePanelState = true;
 }
 
-function sidePanelDoubleOpen()
+function sidePanelDoubleOpen(): void
 {
 	var sidePanel = document.getElementById("sidePanel")!;
 	sidePanel.style.width = "939px";
 }
 
-function sidePanelClose()
+function sidePanelClose(): void
 {
 	var sidePanel = document.getElementById("sidePanel")!;
 	var overlay = document.getElementById("sidePanelOverlay")!;

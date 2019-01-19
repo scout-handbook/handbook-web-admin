@@ -3,7 +3,7 @@
 
 var groupChanged = false;
 
-function changeGroupOnClick(event: MouseEvent)
+function changeGroupOnClick(event: MouseEvent): void
 {
 	groupChanged = false;
 	sidePanelOpen();
@@ -22,7 +22,7 @@ function changeGroupOnClick(event: MouseEvent)
 	html += "</form>";
 	document.getElementById("sidePanel")!.innerHTML = html;
 
-	document.getElementById("sidePanelCancel")!.onclick = function()
+	document.getElementById("sidePanelCancel")!.onclick = function(): void
 		{
 			history.back();
 		};
@@ -30,11 +30,11 @@ function changeGroupOnClick(event: MouseEvent)
 	var aq = new ActionQueue([new Action(CONFIG.apiuri + "/group/" + encodeURIComponent(getAttribute(event, "id")), "PUT", changeGrouPayloadBuilder)]);
 	document.getElementById("changeGroupSave")!.onclick = aq.closeDispatch;
 
-	document.getElementById("groupName")!.oninput = function()
+	document.getElementById("groupName")!.oninput = function(): void
 		{
 			groupChanged = true;
 		};
-	document.getElementById("groupName")!.onchange = function()
+	document.getElementById("groupName")!.onchange = function(): void
 		{
 			groupChanged = true;
 		};
@@ -43,7 +43,7 @@ function changeGroupOnClick(event: MouseEvent)
 	refreshLogin();
 }
 
-function changeGrouPayloadBuilder()
+function changeGrouPayloadBuilder(): Payload
 {
 	return {"name": encodeURIComponent((document.getElementById("groupName") as HTMLInputElement).value)};
 }

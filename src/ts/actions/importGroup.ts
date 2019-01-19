@@ -8,7 +8,7 @@ var groupEvent;
 var participants: Array<Participant>;
 var users: Array<User>;
 
-function importGroupOnClick(event: MouseEvent)
+function importGroupOnClick(event: MouseEvent): void
 {
 	sidePanelOpen();
 	var html = "<div class=\"button yellowButton\" id=\"sidePanelCancel\"><i class=\"icon-cancel\"></i>Zrušit</div>";
@@ -23,11 +23,11 @@ function importGroupOnClick(event: MouseEvent)
 	}
 	html += "<div id=\"importList\"><div id=\"embeddedSpinner\"></div></div>";
 	document.getElementById("sidePanel")!.innerHTML = html;
-	document.getElementById("sidePanelCancel")!.onclick = function()
+	document.getElementById("sidePanelCancel")!.onclick = function(): void
 		{
 			history.back();
 		};
-	request(CONFIG.apiuri + "/event", "GET", undefined, function(response: RequestResponse)
+	request(CONFIG.apiuri + "/event", "GET", undefined, function(response: RequestResponse): void
 		{
 			importGroupSelectEventRender(getAttribute(event, "id"), response as unknown as Array<Event>);
 		}, reAuthHandler);
@@ -36,7 +36,7 @@ function importGroupOnClick(event: MouseEvent)
 	refreshLogin();
 }
 
-function importGroupSelectEventRender(id: string, events: Array<Event>)
+function importGroupSelectEventRender(id: string, events: Array<Event>): void
 {
 	if(events.length === 0)
 	{
@@ -53,10 +53,10 @@ function importGroupSelectEventRender(id: string, events: Array<Event>)
 	}
 	html += "</form>";
 	document.getElementById("importList")!.innerHTML = html;
-	document.getElementById("importGroupNext")!.onclick = function() {importGroupSelectParticipants(id)};
+	document.getElementById("importGroupNext")!.onclick = function(): void {importGroupSelectParticipants(id)};
 }
 
-function importGroupSelectParticipants(id: string)
+function importGroupSelectParticipants(id: string): void
 {
 	var eventId = parseBoolForm()[0];
 	if(eventId)
@@ -65,21 +65,21 @@ function importGroupSelectParticipants(id: string)
 		document.getElementById("importList")!.innerHTML = html;
 		participantEvent = new AfterLoadEvent(2);
 		participantEvent.addCallback(importGroupSelectParticipantsRender);
-		request(CONFIG.apiuri + "/event/" + eventId + "/participant", "GET", undefined, function(response: RequestResponse)
+		request(CONFIG.apiuri + "/event/" + eventId + "/participant", "GET", undefined, function(response: RequestResponse): void
 			{
 				participants = response as unknown as Array<Participant>;
 				participantEvent.trigger(id);
 			}, reAuthHandler);
-		request(CONFIG.apiuri + "/user", "GET", {"page": 1, "per-page": 1000, "group": id}, function(response: RequestResponse)
+		request(CONFIG.apiuri + "/user", "GET", {"page": 1, "per-page": 1000, "group": id}, function(response: RequestResponse): void
 			{
 				users = response.users as Array<User>;
 				participantEvent.trigger(id);
 			}, reAuthHandler);
-		document.getElementById("importGroupNext")!.onclick = function(){};
+		document.getElementById("importGroupNext")!.onclick = function(): void {};
 	}
 }
 
-function importGroupSelectParticipantsRender(id: string)
+function importGroupSelectParticipantsRender(id: string): void
 {
 	var newparticipants = setdiff(participants, users);
 	if(newparticipants.length === 0)
@@ -98,10 +98,10 @@ function importGroupSelectParticipantsRender(id: string)
 	html += "</form>";
 	document.getElementById("importList")!.innerHTML = html;
 	document.getElementById("importGroupNext")!.innerHTML = "<i class=\"icon-floppy\"></i>Uložit";
-	document.getElementById("importGroupNext")!.onclick = function() {importGroupSave(id)};
+	document.getElementById("importGroupNext")!.onclick = function(): void {importGroupSave(id)};
 }
 
-function importGroupSave(id: string)
+function importGroupSave(id: string): void
 {
 	var participants: Array<Participant> = [];
 	var nodes = document.getElementById("sidePanelForm")!.getElementsByTagName("input");
@@ -127,7 +127,7 @@ function importGroupSave(id: string)
 		request(CONFIG.apiuri + "/user", "POST", participants[j], addEvent.trigger, authFailHandler);
 	}
 
-	addEvent.addCallback(function()
+	addEvent.addCallback(function(): void
 		{
 			groupEvent = new AfterLoadEvent(participants.length);
 			for(var k = 0; k < participants.length; k++)
@@ -136,7 +136,7 @@ function importGroupSave(id: string)
 				request(CONFIG.apiuri + "/user/" + participants[k].id + "/group", "PUT", payload, groupEvent.trigger, authFailHandler);
 			}
 
-			groupEvent.addCallback(function()
+			groupEvent.addCallback(function(): void
 				{
 					sidePanelClose();
 					spinner();
@@ -150,9 +150,9 @@ function importGroupSave(id: string)
 	spinner();
 }
 
-function setdiff(a: Array<Participant>, b: Array<User>)
+function setdiff(a: Array<Participant>, b: Array<User>): Array<Participant>
 {
-	var bArr = b.map(function(x) {
+	var bArr = b.map(function(x): number {
 		return x.id;
 	});
 	var result = [];

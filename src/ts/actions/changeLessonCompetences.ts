@@ -3,7 +3,7 @@
 
 var lessonCompetencesChanged = false;
 
-function changeLessonCompetencesOnClick(id: string, actionQueue: ActionQueue)
+function changeLessonCompetencesOnClick(id: string, actionQueue: ActionQueue): void
 {
 	lessonCompetencesChanged = false;
 	var html = "<div class=\"button yellowButton\" id=\"cancelEditorAction\"><i class=\"icon-cancel\"></i>Zrušit</div>";
@@ -23,11 +23,11 @@ function changeLessonCompetencesOnClick(id: string, actionQueue: ActionQueue)
 	html += "</form>";
 	document.getElementById("sidePanel")!.innerHTML = html;
 
-	document.getElementById("cancelEditorAction")!.onclick = function()
+	document.getElementById("cancelEditorAction")!.onclick = function(): void
 		{
 			lessonSettings(id, actionQueue, true);
 		};
-	document.getElementById("changeLessonCompetencesSave")!.onclick = function() {changeLessonCompetencesSave(id, actionQueue);};
+	document.getElementById("changeLessonCompetencesSave")!.onclick = function(): void {changeLessonCompetencesSave(id, actionQueue);};
 
 	var nodes = document.getElementById("sidePanelForm")!.getElementsByTagName("input");
 	for(var j = 0; j < nodes.length; j++)
@@ -38,12 +38,12 @@ function changeLessonCompetencesOnClick(id: string, actionQueue: ActionQueue)
 	refreshLogin();
 }
 
-function lessonCompetenceOnclick()
+function lessonCompetenceOnclick(): void
 {
 	lessonCompetencesChanged = true;
 }
 
-function changeLessonCompetencesSave(id: string, actionQueue: ActionQueue)
+function changeLessonCompetencesSave(id: string, actionQueue: ActionQueue): void
 {
 	if(lessonCompetencesChanged)
 	{
@@ -54,7 +54,7 @@ function changeLessonCompetencesSave(id: string, actionQueue: ActionQueue)
 		{
 			encodedCompetences.push(encodeURIComponent(competences[i]));
 		}
-		actionQueue.actions.push(new Action(CONFIG.apiuri + "/lesson/" + id + "/competence", "PUT", function() {return {"competence": encodedCompetences};}));
+		actionQueue.actions.push(new Action(CONFIG.apiuri + "/lesson/" + id + "/competence", "PUT", function(): Payload {return {"competence": encodedCompetences};}));
 		lessonSettingsCache.competences = competences;
 		lessonSettings(id, actionQueue, true);
 	}

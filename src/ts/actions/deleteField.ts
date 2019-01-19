@@ -1,7 +1,7 @@
 "use strict";
 /* exported deleteFieldOnClick */
 
-function deleteFieldOnClick(event: MouseEvent)
+function deleteFieldOnClick(event: MouseEvent): void
 {
 	var name = "";
 	var id = getAttribute(event, "id");
@@ -15,7 +15,7 @@ function deleteFieldOnClick(event: MouseEvent)
 	}
 
 	var aq = new ActionQueue([new Action(CONFIG.apiuri + "/field/" + encodeURIComponent(id), "DELETE")]);
-	dialog("Opravdu si přejete smazat oblast \"" + name + "\"?", "Ano", aq.closeDispatch, "Ne", function(){history.back();});
+	dialog("Opravdu si přejete smazat oblast \"" + name + "\"?", "Ano", aq.closeDispatch, "Ne", function(): void {history.back();});
 	history.pushState({"sidePanel": "open"}, "title", "/admin/lessons");
 	refreshLogin();
 }

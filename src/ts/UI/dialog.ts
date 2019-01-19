@@ -3,7 +3,7 @@
 
 var confirmCallbackWrapped: () => void;
 
-function dialog(mainText: string, confirmText: string, confirmCallback?: () => void, dismissText?: string, dismissCallback?: () => void)
+function dialog(mainText: string, confirmText: string, confirmCallback?: () => void, dismissText?: string, dismissCallback?: () => void): void
 {
 	dismissSpinner();
 	document.getElementById("overlay")!.style.display = "inline";
@@ -12,7 +12,7 @@ function dialog(mainText: string, confirmText: string, confirmCallback?: () => v
 	document.getElementById("confirmText")!.innerHTML = "<i class=\"icon-ok\"></i>" + confirmText;
 	if(confirmCallback)
 	{
-		confirmCallbackWrapped = function()
+		confirmCallbackWrapped = function(): void
 			{
 				dismissDialog();
 				confirmCallback();
@@ -30,7 +30,7 @@ function dialog(mainText: string, confirmText: string, confirmCallback?: () => v
 		var dismissCallbackWrapped;
 		if(dismissCallback)
 		{
-			dismissCallbackWrapped = function()
+			dismissCallbackWrapped = function(): void
 				{
 					dismissDialog();
 					dismissCallback();
@@ -48,7 +48,7 @@ function dialog(mainText: string, confirmText: string, confirmCallback?: () => v
 	}
 }
 
-function keyPressDialog(event: KeyboardEvent)
+function keyPressDialog(event: KeyboardEvent): void
 {
 	if(event.keyCode === 13)
 	{
@@ -56,7 +56,7 @@ function keyPressDialog(event: KeyboardEvent)
 	}
 }
 
-function dismissDialog()
+function dismissDialog(): void
 {
 	document.getElementById("overlay")!.style.display = "none";
 	document.getElementById("dialog")!.style.display = "none";

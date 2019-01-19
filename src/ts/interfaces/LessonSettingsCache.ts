@@ -1,7 +1,7 @@
 "use strict";
 
 interface LessonSettingsCache {
-	competences: any;
-	field: any;
-	groups: any;
+	competences: Array<string>;
+	field: string;
+	groups: Array<string>;
 }
