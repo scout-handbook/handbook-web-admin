@@ -1,9 +1,9 @@
 "use strict";
 /* exported xssOptions */
 
-function xssOptions()
+function xssOptions(): XSSOptions
 {
-	return {onIgnoreTagAttr: function(tag, name, value, isWhiteAttr)
+	return {onIgnoreTagAttr: function(tag: string, name: string, value: string, isWhiteAttr: boolean): string
 		{
 			if(!isWhiteAttr)
 			{
@@ -20,6 +20,6 @@ function xssOptions()
 					return name + "=\"" + value + "\"";
 				}
 			}
-			return;
+			return "";
 		}};
 }

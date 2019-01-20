@@ -1,7 +1,7 @@
 "use strict";
 
 // Showdown extensions definitions
-var HandbookMarkdown = function()
+var HandbookMarkdown = function(): Array<object>
 {
 	var responsiveTablesBegin = {
 		type: "output",
@@ -25,11 +25,11 @@ var HandbookMarkdown = function()
 	};
 	var notes = {
 		type: "lang",
-		filter: function(text) {return filterCommand(text, "linky", notesCommand);}
+		filter: function(text: string): string {return filterCommand(text, "linky", notesCommand);}
 	};
 	var pagebreak = {
 		type: "lang",
-		filter: function(text) {return filterCommand(text, "novastrana", pagebreakCommand);}
+		filter: function(text: string): string {return filterCommand(text, "novastrana", pagebreakCommand);}
 	};
 	return [responsiveTablesBegin, responsiveTablesEnd, fullLinks, blankLinks, notes, pagebreak];
 }
@@ -38,7 +38,7 @@ var HandbookMarkdown = function()
 showdown.extension("HandbookMarkdown", HandbookMarkdown);
 
 // Generic command processing functions
-function filterCommand(text, commandName, command)
+function filterCommand(text: string, commandName: string, command: (args: Arguments) => string): string
 {
 	var lines = text.split("\n")
 	var ret = "";
@@ -58,7 +58,7 @@ function filterCommand(text, commandName, command)
 	return ret;
 }
 
-function getArgumentString(lines, current, commandName)
+function getArgumentString(lines: Array<string>, current: number, commandName: string): [string, number]
 {
 	var line = lines[current].trim();
 	var next = current;
@@ -94,9 +94,9 @@ function getArgumentString(lines, current, commandName)
 	return [argumentString, next];
 }
 
-function parseArgumentString(argumentString)
+function parseArgumentString(argumentString: string): Arguments
 {
-	var output = {};
+	var output: Arguments = {};
 	var list = argumentString.split(",");
 	for(var i = 0; i < list.length; ++i)
 	{
@@ -118,13 +118,13 @@ function parseArgumentString(argumentString)
 }
 
 // Specific commands
-function notesCommand()
+function notesCommand(): string
 {
 	//return "<textarea class=\"notes\" placeholder=\"Tvoje poznámky\"></textarea>";
 	return "";
 }
 
-function pagebreakCommand()
+function pagebreakCommand(): string
 {
 	return "";
 }
