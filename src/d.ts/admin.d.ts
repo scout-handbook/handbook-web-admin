@@ -1,18 +1,18 @@
 /* eslint strict: "off", no-unused-vars: "off" */
 
-declare var COMPETENCES: any;
-declare var CONFIG: any;
-declare var FIELDS: any;
-declare var GROUPS: any;
-declare var LOGINSTATE: any;
-declare var authFailHandler: any;
-declare var mainPageTab: any;
-declare var metadataEvent: any;
-declare var reAuthHandler: any;
-declare function refreshLogin(...a: any): any;
-declare function refreshMetadata(...a: any): any;
-declare function refreshPreview(...a: any): any;
-declare function request(...a: any): any;
+declare var COMPETENCES: Array<Competence>;
+declare var CONFIG: Config;
+declare var FIELDS: Array<Field>;
+declare var GROUPS: Array<Group>;
+declare var LOGINSTATE: Loginstate;
+declare var authFailHandler: ExceptionHandler;
+declare var mainPageTab: MainPageTab;
+declare var metadataEvent: AfterLoadEvent;
+declare var reAuthHandler: ExceptionHandler;
+declare function refreshLogin(forceRelogin?: boolean, afterAction?: () => void): void;
+declare function refreshMetadata(): void;
+declare function refreshPreview(name: string, markdown: string, id: string): void;
+declare function request(url: string, method: string, payload: Payload, callback: (response: RequestResponse) => void, exceptionHandler?: ExceptionHandler): void;
 
 declare class Action {
 	public callback: (response: RequestResponse) => void;
@@ -45,5 +45,5 @@ declare class EasyMDE {
 	public static drawLink(): void;
 	public static drawTable(): void;
 	public value(): string;
-	public value(value: string): void;
+	public value(value: string): void; // eslint-disable-line no-dupe-class-members
 }

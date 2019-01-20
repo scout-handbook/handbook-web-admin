@@ -21,7 +21,7 @@ function showUserSubview(noHistory: boolean): void
 	}
 }
 
-function downloadUserList(searchName = "", page = 1, perPage = 25, role: Role = "all", group = "00000000-0000-0000-0000-000000000000"): void
+function downloadUserList(searchName = "", page = 1, perPage = 25, role: Role|"all" = "all", group = "00000000-0000-0000-0000-000000000000"): void
 {
 	document.getElementById("userList")!.innerHTML = "<div id=\"embeddedSpinner\"></div>";
 	var payload: UserSearchQuery = {"name": searchName, "page": page, "per-page": perPage}
@@ -40,7 +40,7 @@ function downloadUserList(searchName = "", page = 1, perPage = 25, role: Role = 
 	refreshLogin(true);
 }
 
-function showUserList(list: UserListResponse, searchName: string, page: number, perPage: number, role: Role, group: string): void
+function showUserList(list: UserListResponse, searchName: string, page: number, perPage: number, role: Role|"all", group: string): void
 {
 	if(mainPageTab !== "users")
 	{
@@ -77,7 +77,7 @@ function showUserList(list: UserListResponse, searchName: string, page: number, 
 		{
 			var roleSel = document.getElementById("roleSearchFilter") as HTMLSelectElement;
 			var groupSel = document.getElementById("groupSearchFilter") as HTMLSelectElement;
-			var newRole: Role = "all";
+			var newRole: Role|"all" = "all";
 			if(roleSel)
 			{
 				newRole = roleSel.options[roleSel.selectedIndex].value as Role;
@@ -100,7 +100,7 @@ function showUserList(list: UserListResponse, searchName: string, page: number, 
 			{
 				var roleSel = document.getElementById("roleSearchFilter") as HTMLSelectElement;
 				var groupSel = document.getElementById("groupSearchFilter") as HTMLSelectElement;
-				var newRole: Role = "all";
+				var newRole: Role|"all" = "all";
 				if(roleSel)
 				{
 					newRole = roleSel.options[roleSel.selectedIndex].value as Role;

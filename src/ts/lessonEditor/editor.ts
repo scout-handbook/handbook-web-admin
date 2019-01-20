@@ -162,7 +162,7 @@ function populateEditorCache(id: string): void
 		lessonSettingsCacheEvent.trigger();
 		return;
 	}
-	request(CONFIG.apiuri + "/lesson/" + id + "/group", "GET", undefined, function(response: RequestResponse): void
+	request(CONFIG.apiuri + "/lesson/" + id + "/group", "GET", {}, function(response: RequestResponse): void
 		{
 			lessonSettingsCache["groups"] = response as unknown as Array<string>;
 			lessonSettingsCacheEvent.trigger();

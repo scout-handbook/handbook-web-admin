@@ -3,7 +3,7 @@
 
 function deleteCompetenceOnClick(event: MouseEvent): void
 {
-	var number = "";
+	var number = 0;
 	var name = "";
 	for(var i = 0; i < COMPETENCES.length; i++)
 	{

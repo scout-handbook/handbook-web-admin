@@ -4,7 +4,7 @@
 var converter: Converter|undefined;
 var worker: Worker|undefined;
 var running = false;
-var queue: WorkerPayload|undefined;
+var queue: WorkerPayload|null;
 
 function refreshPreviewSetup(): void
 {
@@ -17,7 +17,7 @@ function refreshPreviewSetup(): void
 			if(queue)
 			{
 				worker!.postMessage(queue);
-				queue = undefined;
+				queue = null;
 			}
 			else
 			{

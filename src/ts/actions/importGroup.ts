@@ -2,8 +2,8 @@
 /* exported importGroupOnClick */
 
 var participantEvent: AfterLoadEvent;
-var addEvent;
-var groupEvent;
+var addEvent: AfterLoadEvent;
+var groupEvent: AfterLoadEvent;
 
 var participants: Array<Participant>;
 var users: Array<User>;
@@ -27,7 +27,7 @@ function importGroupOnClick(event: MouseEvent): void
 		{
 			history.back();
 		};
-	request(CONFIG.apiuri + "/event", "GET", undefined, function(response: RequestResponse): void
+	request(CONFIG.apiuri + "/event", "GET", {}, function(response: RequestResponse): void
 		{
 			importGroupSelectEventRender(getAttribute(event, "id"), response as unknown as Array<Event>);
 		}, reAuthHandler);
@@ -65,7 +65,7 @@ function importGroupSelectParticipants(id: string): void
 		document.getElementById("importList")!.innerHTML = html;
 		participantEvent = new AfterLoadEvent(2);
 		participantEvent.addCallback(importGroupSelectParticipantsRender);
-		request(CONFIG.apiuri + "/event/" + eventId + "/participant", "GET", undefined, function(response: RequestResponse): void
+		request(CONFIG.apiuri + "/event/" + eventId + "/participant", "GET", {}, function(response: RequestResponse): void
 			{
 				participants = response as unknown as Array<Participant>;
 				participantEvent.trigger(id);
@@ -124,7 +124,7 @@ function importGroupSave(id: string): void
 	addEvent = new AfterLoadEvent(participants.length);
 	for(var j = 0; j < participants.length; j++)
 	{
-		request(CONFIG.apiuri + "/user", "POST", participants[j], addEvent.trigger, authFailHandler);
+		request(CONFIG.apiuri + "/user", "POST", participants[j], function(): void {addEvent.trigger();}, authFailHandler);
 	}
 
 	addEvent.addCallback(function(): void
@@ -133,7 +133,7 @@ function importGroupSave(id: string): void
 			for(var k = 0; k < participants.length; k++)
 			{
 				var payload = {"group": id};
-				request(CONFIG.apiuri + "/user/" + participants[k].id + "/group", "PUT", payload, groupEvent.trigger, authFailHandler);
+				request(CONFIG.apiuri + "/user/" + participants[k].id + "/group", "PUT", payload, function(): void {groupEvent.trigger();}, authFailHandler);
 			}
 
 			groupEvent.addCallback(function(): void

@@ -1,7 +1,7 @@
 "use strict";
 /* exported refreshLogin */
 
-function refreshLogin(forceRelogin: boolean, afterAction: () => void): void
+function refreshLogin(forceRelogin = false, afterAction = function(): void {}): void
 {
 	var allCookies = "; " + document.cookie;
 	var parts = allCookies.split("; skautis_timeout=");

@@ -5,7 +5,7 @@ var imageSelectorOpen = false;
 
 function prepareImageSelector(page = 1 , perPage = 15): void
 {
-	request(CONFIG.apiuri + "/image", "GET", undefined, function(response: RequestResponse): void
+	request(CONFIG.apiuri + "/image", "GET", {}, function(response: RequestResponse): void
 		{
 			renderImageSelector(response as unknown as Array<string>, page, perPage);
 		}, reAuthHandler);

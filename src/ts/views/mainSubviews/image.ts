@@ -27,7 +27,7 @@ function showImageSubview(noHistory: boolean): void
 function downloadImageList(page: number, perPage: number): void
 {
 	document.getElementById("imageList")!.innerHTML = "<div id=\"embeddedSpinner\"></div>";
-	request(CONFIG.apiuri + "/image", "GET", undefined, function(response: RequestResponse): void
+	request(CONFIG.apiuri + "/image", "GET", {}, function(response: RequestResponse): void
 		{
 			showImageList(response as unknown as Array<string>, page, perPage);
 		}, reAuthHandler);
