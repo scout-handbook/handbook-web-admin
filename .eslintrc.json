@@ -1,16 +1,32 @@
 {
+	"parser": "typescript-eslint-parser",
 	"parserOptions": {
 		"ecmaVersion": 3
 	},
 	"env": {
 		"browser": true
 	},
-	"plugins": ["compat"],
+	"plugins": [
+		"compat",
+		"typescript"
+	],
 	"extends": "eslint:recommended",
 	"rules": {
 		"compat/compat": "warn",
 		"no-warning-comments": "warn",
-		"strict": ["error", "global"]
+		"strict": ["error", "global"],
+		"typescript/class-name-casing": "error",
+		"typescript/explicit-function-return-type": "error",
+		"typescript/explicit-member-accessibility": "error",
+		"typescript/member-delimiter-style": "error",
+		"typescript/member-ordering": "error",
+		"typescript/no-angle-bracket-type-assertion": "error",
+		"typescript/no-array-constructor": "error",
+		"typescript/no-empty-interface": "error",
+		"typescript/no-explicit-any": "error",
+		"typescript/no-inferrable-types": "error",
+		"typescript/no-unused-vars": "error",
+		"typescript/type-annotation-spacing": "error"
 	},
 	"globals": {
 		"COMPETENCES": false,
@@ -56,6 +72,7 @@
 		"getLessonById": false,
 		"headerSetup": false,
 		"historySetup": false,
+		"imageSelectorOpen": false,
 		"importGroupOnClick": false,
 		"lessonHistoryOpen": false,
 		"lessonViewSetup": false,
@@ -85,6 +102,7 @@
 		"sidePanelClose": false,
 		"sidePanelDoubleOpen": false,
 		"sidePanelOpen": false,
+		"sidePanelState": false,
 		"EasyMDE": false,
 		"showdown": false,
 		"showCompetenceListView": false,

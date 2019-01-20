@@ -19,6 +19,7 @@ var postcssCustomProperties = require('postcss-custom-properties');
 var autoprefixer = require('autoprefixer');
 var inject = require('gulp-inject-string');
 var htmlmin = require('gulp-htmlmin');
+var ts = require("gulp-typescript");
 
 var minify = composer(uglify, console);
 
@@ -32,7 +33,7 @@ function getConfig() {
 }
 
 gulp.task('eslint', function() {
-	return gulp.src(['**/*.js', '!node_modules/**', '!dist/**'])
+	return gulp.src(['**/*.js', '**/*.ts', '!node_modules/**', '!dist/**'])
 		.pipe(eslint())
 		.pipe(eslint.format())
 		.pipe(eslint.failAfterError());
@@ -69,9 +70,11 @@ gulp.task('build:html', function() {
 });
 
 gulp.task('build:js', function() {
-	function bundle(name, sources, addConfig) {
-		var ret = gulp.src(sources)
+	function bundle(name, addConfig) {
+		var tsProject = ts.createProject("tsconfig/" + name + ".json");
+		var ret = tsProject.src()
 			.pipe(sourcemaps.init())
+			.pipe(tsProject())
 			.pipe(concat(name + '.min.js'));
 		if(addConfig) {
 			ret = ret.pipe(inject.prepend('"use strict";\nvar CONFIG = JSON.parse(\'' + JSON.stringify(getConfig()) + '\');\n'))
@@ -83,67 +86,10 @@ gulp.task('build:js', function() {
 			.pipe(gulp.dest('dist/'));
 	}
 	return merge(
-		bundle('admin-pushed', [
-			'src/js/lessonEditor/refreshPreview.js',
-			'src/js/tools/ActionQueue.js',
-			'src/js/tools/refreshLogin.js',
-			'src/js/tools/request.js',
-			'src/js/views/main.js',
-			'src/js/AfterLoadEvent.js',
-			'src/js/history.js',
-			'src/js/main.js',
-			'src/js/metadata.js'
-		], true),
-		bundle('admin-worker', [
-			'src/js/lessonEditor/previewWorker.js',
-		]),
-		bundle('admin-worker-deps', [
-			'src/js/HandbookMarkdown.js',
-			'src/js/xssOptions.js'
-		]),
-		bundle('admin', [
-			'src/js/actions/addCompetence.js',
-			'src/js/actions/addField.js',
-			'src/js/actions/addGroup.js',
-			'src/js/actions/addImage.js',
-			'src/js/actions/changeCompetence.js',
-			'src/js/actions/changeField.js',
-			'src/js/actions/changeGroup.js',
-			'src/js/actions/changeLessonCompetences.js',
-			'src/js/actions/changeLessonField.js',
-			'src/js/actions/changeLessonGroups.js',
-			'src/js/actions/changeUserGroups.js',
-			'src/js/actions/changeUserRole.js',
-			'src/js/actions/deleteCompetence.js',
-			'src/js/actions/deleteField.js',
-			'src/js/actions/deleteGroup.js',
-			'src/js/actions/deleteImage.js',
-			'src/js/actions/deleteLesson.js',
-			'src/js/actions/importGroup.js',
-			'src/js/actions/restoreLesson.js',
-			'src/js/lessonEditor/defaultContent.js',
-			'src/js/lessonEditor/editor.js',
-			'src/js/lessonEditor/history.js',
-			'src/js/lessonEditor/imageSelector.js',
-			'src/js/lessonEditor/settings.js',
-			'src/js/tools/addOnClicks.js',
-			'src/js/tools/parseBoolForm.js',
-			'src/js/tools/parseVersion.js',
-			'src/js/UI/button.js',
-			'src/js/UI/dialog.js',
-			'src/js/UI/pagination.js',
-			'src/js/UI/sidePanel.js',
-			'src/js/UI/spinner.js',
-			'src/js/views/mainSubviews/competence.js',
-			'src/js/views/mainSubviews/group.js',
-			'src/js/views/mainSubviews/image.js',
-			'src/js/views/mainSubviews/lesson.js',
-			'src/js/views/mainSubviews/user.js',
-			'src/js/views/addLesson.js',
-			'src/js/views/editLesson.js',
-			'src/js/views/restoreLesson.js',
-			'src/js/getLessonById.js'
-		])
+		bundle('admin-pushed', true),
+		bundle('admin-worker'),
+		bundle('admin-worker-deps'),
+		bundle('admin')
 	);
 });
 

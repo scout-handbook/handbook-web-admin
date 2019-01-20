@@ -1,0 +1,14 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "lib": ["ES6", "WebWorker"],
+    "target": "ES6"
+  },
+  "files": [
+    "../src/d.ts/admin-worker.d.ts",
+    "../src/ts/interfaces/Converter.ts",
+    "../src/ts/interfaces/Showdown.ts",
+    "../src/ts/interfaces/XSSOptions.ts",
+    "../src/ts/lessonEditor/previewWorker.ts"
+  ]
+}
