@@ -1,3 +1,3 @@
 "use strict";
 
-type Role = "all"|"guest"|"editor"|"administrator"|"superuser";
+type Role = "guest"|"editor"|"administrator"|"superuser";

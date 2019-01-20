@@ -10,7 +10,7 @@ function deleteLessonOnClick(event: MouseEvent): void
 		{
 			dialog("Nelze smazat lekci, protože ji právě upravuje " + response.holder + ".", "OK");
 		};
-	request(CONFIG.apiuri + "/mutex/" + encodeURIComponent(id), "POST", undefined, function(): void
+	request(CONFIG.apiuri + "/mutex/" + encodeURIComponent(id), "POST", {}, function(): void
 		{
 			deleteLessonDialog(id);
 		}, exceptionHandler);

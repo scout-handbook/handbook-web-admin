@@ -6,7 +6,7 @@ var metadataEvent: AfterLoadEvent;
 var FIELDS = [];
 var COMPETENCES = [];
 var GROUPS = [];
-var LOGINSTATE: Loginstate = {avatar: "", name: ""};
+var LOGINSTATE: Loginstate = {avatar: "", name: "", role: "guest"};
 
 function metadataSetup(): void
 {
