@@ -70,20 +70,7 @@ gulp.task('build:html', function() {
 });
 
 gulp.task('build:js', function() {
-	function bundle(name, sources, addConfig) {
-		var ret = gulp.src(sources)
-			.pipe(sourcemaps.init())
-			.pipe(concat(name + '.min.js'));
-		if(addConfig) {
-			ret = ret.pipe(inject.prepend('"use strict";\nvar CONFIG = JSON.parse(\'' + JSON.stringify(getConfig()) + '\');\n'))
-		}
-		return ret
-			//.pipe(gulp.dest('dist/'));
-			.pipe(minify({ie8: true}))
-			.pipe(sourcemaps.write('./'))
-			.pipe(gulp.dest('dist/'));
-	}
-	function tsBundle(name, addConfig) {
+	function bundle(name, addConfig) {
 		var tsProject = ts.createProject("tsconfig/" + name + ".json");
 		var ret = tsProject.src()
 			.pipe(sourcemaps.init())
@@ -99,13 +86,10 @@ gulp.task('build:js', function() {
 			.pipe(gulp.dest('dist/'));
 	}
 	return merge(
-		tsBundle('admin-pushed', true),
-		tsBundle('admin-worker'),
-		bundle('admin-worker-deps', [
-			'src/js/HandbookMarkdown.js',
-			'src/js/xssOptions.js'
-		]),
-		tsBundle('admin')
+		bundle('admin-pushed', true),
+		bundle('admin-worker'),
+		bundle('admin-worker-deps'),
+		bundle('admin')
 	);
 });
 
