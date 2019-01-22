@@ -1,31 +1,4 @@
-"use strict";
 /* exported lessonSettings */
-
-function lessonSettings(id: string, actionQueue: ActionQueue, noHistory: boolean): void
-{
-	sidePanelOpen();
-	var html = "<div class=\"button yellowButton\" id=\"sidePanelCancel\"><i class=\"icon-right-open\"></i>Zavřít</div>";
-	html += "<div class=\"button\" id=\"lessonHistoryOpen\"><i class=\"icon-history\"></i>Historie lekce</div>";
-	html += renderField();
-	html += renderCompetences();
-	html += prerenderGroups();
-	document.getElementById("sidePanel")!.innerHTML = html;
-	lessonSettingsCacheEvent.addCallback(renderGroups);
-
-	document.getElementById("sidePanelCancel")!.onclick = function(): void
-		{
-			history.back();
-		};
-	document.getElementById("lessonHistoryOpen")!.onclick = function(): void {lessonHistoryOpen(id, actionQueue);};
-	document.getElementById("changeField")!.onclick = function(): void {changeLessonFieldOnClick(id, actionQueue);};
-	document.getElementById("changeCompetences")!.onclick = function(): void {changeLessonCompetencesOnClick(id, actionQueue);};
-	document.getElementById("changeGroups")!.onclick = function(): void {changeLessonGroupsOnClick(id, actionQueue);};
-	if(!noHistory)
-	{
-		history.pushState({"sidePanel": "open"}, "title", "/admin/lessons");
-	}
-	refreshLogin();
-}
 
 function renderField(): string
 {
@@ -89,4 +62,30 @@ function renderGroups(): void
 		}
 	}
 	document.getElementById("settingsGroupList")!.innerHTML = html;
+}
+
+function lessonSettings(id: string, actionQueue: ActionQueue, noHistory: boolean): void
+{
+	sidePanelOpen();
+	var html = "<div class=\"button yellowButton\" id=\"sidePanelCancel\"><i class=\"icon-right-open\"></i>Zavřít</div>";
+	html += "<div class=\"button\" id=\"lessonHistoryOpen\"><i class=\"icon-history\"></i>Historie lekce</div>";
+	html += renderField();
+	html += renderCompetences();
+	html += prerenderGroups();
+	document.getElementById("sidePanel")!.innerHTML = html;
+	lessonSettingsCacheEvent.addCallback(renderGroups);
+
+	document.getElementById("sidePanelCancel")!.onclick = function(): void
+	{
+		history.back();
+	};
+	document.getElementById("lessonHistoryOpen")!.onclick = function(): void {lessonHistoryOpen(id, actionQueue);};
+	document.getElementById("changeField")!.onclick = function(): void {changeLessonFieldOnClick(id, actionQueue);};
+	document.getElementById("changeCompetences")!.onclick = function(): void {changeLessonCompetencesOnClick(id, actionQueue);};
+	document.getElementById("changeGroups")!.onclick = function(): void {changeLessonGroupsOnClick(id, actionQueue);};
+	if(!noHistory)
+	{
+		history.pushState({"sidePanel": "open"}, "title", "/admin/lessons");
+	}
+	refreshLogin();
 }

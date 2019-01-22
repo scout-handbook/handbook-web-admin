@@ -1,6 +1,21 @@
-"use strict";
 /* global mainPageTab:true */
 /* exported showCompetenceSubview */
+
+function renderCompetenceList(): string
+{
+	var html = "";
+	for(var i = 0; i < COMPETENCES.length; i++)
+	{
+		html += "<h3 class = \"mainPage\">" + COMPETENCES[i].number + ": " + COMPETENCES[i].name + "</h3><br>";
+		if(LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser")
+		{
+			html += "<div class=\"button cyanButton changeCompetence\" data-id=\"" + COMPETENCES[i].id + "\"><i class=\"icon-pencil\"></i>Upravit</div>";
+			html += "<div class=\"button redButton deleteCompetence\" data-id=\"" + COMPETENCES[i].id + "\"><i class=\"icon-trash-empty\"></i>Smazat</div><br>";
+		}
+		html += "<span class=\"mainPage competenceDescription\">" + COMPETENCES[i].description + "</span><br>";
+	}
+	return html;
+}
 
 function showCompetenceSubview(noHistory: boolean): void
 {
@@ -32,20 +47,4 @@ function showCompetenceSubview(noHistory: boolean): void
 		history.pushState({"page": "competences"}, "title", "/admin/competences");
 	}
 	refreshLogin(true);
-}
-
-function renderCompetenceList(): string
-{
-	var html = "";
-	for(var i = 0; i < COMPETENCES.length; i++)
-	{
-		html += "<h3 class = \"mainPage\">" + COMPETENCES[i].number + ": " + COMPETENCES[i].name + "</h3><br>";
-		if(LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser")
-		{
-			html += "<div class=\"button cyanButton changeCompetence\" data-id=\"" + COMPETENCES[i].id + "\"><i class=\"icon-pencil\"></i>Upravit</div>";
-			html += "<div class=\"button redButton deleteCompetence\" data-id=\"" + COMPETENCES[i].id + "\"><i class=\"icon-trash-empty\"></i>Smazat</div><br>";
-		}
-		html += "<span class=\"mainPage competenceDescription\">" + COMPETENCES[i].description + "</span><br>";
-	}
-	return html;
 }

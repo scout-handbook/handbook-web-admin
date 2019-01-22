@@ -1,4 +1,3 @@
-"use strict";
 /* exported deleteGroupOnClick */
 
 function deleteGroupOnClick(event: MouseEvent): void

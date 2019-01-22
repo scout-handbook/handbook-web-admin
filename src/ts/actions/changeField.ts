@@ -1,7 +1,11 @@
-"use strict";
 /* exported changeFieldOnClick */
 
 var fieldChanged = false;
+
+function changeFieldPayloadBuilder(): Payload
+{
+	return {"name": encodeURIComponent((document.getElementById("fieldName") as HTMLInputElement).value)};
+}
 
 function changeFieldOnClick(event: MouseEvent): void
 {
@@ -23,27 +27,22 @@ function changeFieldOnClick(event: MouseEvent): void
 	document.getElementById("sidePanel")!.innerHTML = html;
 
 	document.getElementById("sidePanelCancel")!.onclick = function(): void
-		{
-			history.back();
-		};
+	{
+		history.back();
+	};
 
 	var aq = new ActionQueue([new Action(CONFIG.apiuri + "/field/" + encodeURIComponent(getAttribute(event, "id")), "PUT", changeFieldPayloadBuilder)]);
 	document.getElementById("changeFieldSave")!.onclick = aq.closeDispatch;
 
 	document.getElementById("fieldName")!.oninput = function(): void
-		{
-			fieldChanged = true;
-		};
+	{
+		fieldChanged = true;
+	};
 	document.getElementById("fieldName")!.onchange = function(): void
-		{
-			fieldChanged = true;
-		};
+	{
+		fieldChanged = true;
+	};
 
 	history.pushState({"sidePanel": "open"}, "title", "/admin/lessons");
 	refreshLogin();
-}
-
-function changeFieldPayloadBuilder(): Payload
-{
-	return {"name": encodeURIComponent((document.getElementById("fieldName") as HTMLInputElement).value)};
 }

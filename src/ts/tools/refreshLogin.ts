@@ -1,4 +1,3 @@
-"use strict";
 /* exported refreshLogin */
 
 function refreshLogin(forceRelogin = false, afterAction = function(): void {}): void
@@ -11,19 +10,19 @@ function refreshLogin(forceRelogin = false, afterAction = function(): void {}): 
 		if((timeout - Math.round(new Date().getTime() / 1000)) < 1500)
 		{
 			var exceptionHandler = {"AuthenticationException": function(): void
+			{
+				if(forceRelogin)
 				{
-					if(forceRelogin)
-					{
-						window.location.replace(CONFIG.apiuri + "/login?return-uri=/admin/" + mainPageTab);
-					}
-				}};
+					window.location.replace(CONFIG.apiuri + "/login?return-uri=/admin/" + mainPageTab);
+				}
+			}};
 			request(CONFIG.apiuri + "/refresh", "GET", {}, function(): void
+			{
+				if(afterAction)
 				{
-					if(afterAction)
-					{
-						afterAction();
-					}
-				}, exceptionHandler);
+					afterAction();
+				}
+			}, exceptionHandler);
 		}
 	}
 }

@@ -1,4 +1,3 @@
-"use strict";
 /* exported renderPagination */
 
 function renderPagination(total: number, current: number): string

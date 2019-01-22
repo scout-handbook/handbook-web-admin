@@ -23,8 +23,7 @@
 		"@typescript-eslint/member-ordering": "error",
 		"@typescript-eslint/no-extraneous-class": "error",
 		"@typescript-eslint/no-namespace": ["error", {"allowDeclarations": true}],
-		"@typescript-eslint/no-non-null-assertion": "off",
-		"@typescript-eslint/no-this-alias": "error"
+		"@typescript-eslint/no-non-null-assertion": "off"
 	},
 	"globals": {
 		"COMPETENCES": false,
@@ -58,6 +57,7 @@
 		"deleteGroupOnClick": false,
 		"deleteImageOnClick": false,
 		"deleteLessonOnClick": false,
+		"deserializeAction": false,
 		"dialog": false,
 		"dismissSpinner": false,
 		"EasyMDE": false,
@@ -87,6 +87,7 @@
 		"renderPagination": false,
 		"request": false,
 		"restoreLesson": false,
+		"serializeAction": false,
 		"showCompetenceSubview": false,
 		"showdown": false,
 		"showGroupSubview": false,

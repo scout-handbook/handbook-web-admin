@@ -1,5 +1,9 @@
-"use strict";
 /* exported addCompetence */
+
+function addCompetencePayloadBuilder(): Payload
+{
+	return {"number": encodeURIComponent((document.getElementById("competenceNumber") as HTMLInputElement).value), "name": encodeURIComponent((document.getElementById("competenceName") as HTMLInputElement).value), "description": encodeURIComponent((document.getElementById("competenceDescription") as HTMLInputElement).value)};
+}
 
 function addCompetence(): void
 {
@@ -14,18 +18,13 @@ function addCompetence(): void
 	document.getElementById("sidePanel")!.innerHTML = html;
 
 	document.getElementById("sidePanelCancel")!.onclick = function(): void
-		{
-			history.back();
-		};
+	{
+		history.back();
+	};
 
 	var aq = new ActionQueue([new Action(CONFIG.apiuri + "/competence", "POST", addCompetencePayloadBuilder)]);
 	document.getElementById("addCompetenceSave")!.onclick = aq.closeDispatch;
 
 	history.pushState({"sidePanel": "open"}, "title", "/admin/competences");
 	refreshLogin();
-}
-
-function addCompetencePayloadBuilder(): Payload
-{
-	return {"number": encodeURIComponent((document.getElementById("competenceNumber") as HTMLInputElement).value), "name": encodeURIComponent((document.getElementById("competenceName") as HTMLInputElement).value), "description": encodeURIComponent((document.getElementById("competenceDescription") as HTMLInputElement).value)};
 }

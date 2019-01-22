@@ -1,4 +1,3 @@
-"use strict";
 /* exported deleteFieldOnClick */
 
 function deleteFieldOnClick(event: MouseEvent): void

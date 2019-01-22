@@ -1,5 +1,30 @@
-"use strict";
 /* exported addImage */
+
+function addImageSave(): void
+{
+	if((document.getElementById("addImageFile") as HTMLInputElement).value !== "")
+	{
+		var formData = new FormData()
+		formData.append("image", (document.getElementById("addImageFile") as HTMLInputElement).files![0])
+		sidePanelClose();
+		spinner();
+		request(CONFIG.apiuri + "/image", "POST", formData, function(): void
+		{
+			dialog("Akce byla úspěšná.", "OK");
+			refreshMetadata();
+			history.back();
+		}, authFailHandler);
+	}
+}
+
+function changeLabel(event: Event): void
+{
+	var element = event.target as HTMLInputElement;
+	if(element.files)
+	{
+		element.parentElement!.children[1].innerHTML = "<i class=\"icon-upload\"></i>" + element.files[0].name;
+	}
+}
 
 function addImage(inEditor: boolean): void
 {
@@ -14,9 +39,9 @@ function addImage(inEditor: boolean): void
 	document.getElementById("sidePanel")!.innerHTML = html;
 
 	document.getElementById("sidePanelCancel")!.onclick = function(): void
-		{
-			history.back();
-		};
+	{
+		history.back();
+	};
 	document.getElementById("addImageSave")!.onclick = addImageSave;
 
 	document.getElementById("addImageFile")!.onchange = changeLabel;
@@ -30,30 +55,4 @@ function addImage(inEditor: boolean): void
 		history.pushState({"sidePanel": "open"}, "title", "/admin/images");
 	}
 	refreshLogin();
-}
-
-function changeLabel(event: Event): void
-{
-	var element = event.target as HTMLInputElement;
-	if(element.files)
-	{
-		element.parentElement!.children[1].innerHTML = "<i class=\"icon-upload\"></i>" + element.files[0].name;
-	}
-}
-
-function addImageSave(): void
-{
-	if((document.getElementById("addImageFile") as HTMLInputElement).value !== "")
-	{
-		var formData = new FormData()
-		formData.append("image", (document.getElementById("addImageFile") as HTMLInputElement).files![0])
-		sidePanelClose();
-		spinner();
-		request(CONFIG.apiuri + "/image", "POST", formData, function(): void
-			{
-				dialog("Akce byla úspěšná.", "OK");
-				refreshMetadata();
-				history.back();
-			}, authFailHandler);
-	}
 }

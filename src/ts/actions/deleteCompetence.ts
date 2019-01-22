@@ -1,4 +1,3 @@
-"use strict";
 /* exported deleteCompetenceOnClick */
 
 function deleteCompetenceOnClick(event: MouseEvent): void

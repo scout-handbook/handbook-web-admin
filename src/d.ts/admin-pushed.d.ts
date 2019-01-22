@@ -1,5 +1,3 @@
-/* eslint strict: "off", no-unused-vars: "off" */
-
 declare var CONFIG: Config;
 declare var imageSelectorOpen: boolean;
 declare var sidePanelState: boolean;

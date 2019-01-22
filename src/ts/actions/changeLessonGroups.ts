@@ -1,7 +1,32 @@
-"use strict";
 /* exported changeLessonGroupsOnClick */
 
 var lessonGroupsChanged = false;
+
+function changeLessonGroupsSave(id: string, actionQueue: ActionQueue): void
+{
+	if(lessonGroupsChanged)
+	{
+		id = typeof id !== 'undefined' ? id : "{id}";
+		var groups = parseBoolForm();
+		var encodedGroups: Array<string> = [];
+		for(var i = 0; i < groups.length; i++)
+		{
+			encodedGroups.push(encodeURIComponent(groups[i]));
+		}
+		actionQueue.actions.push(new Action(CONFIG.apiuri + "/lesson/" + id + "/group", "PUT", function (): Payload {return {"group": encodedGroups};}));
+		lessonSettingsCache.groups = groups;
+		lessonSettings(id, actionQueue, true);
+	}
+	else
+	{
+		lessonSettings(id, actionQueue, true);
+	}
+}
+
+function lessonGroupsOnclick(): void
+{
+	lessonGroupsChanged = true;
+}
 
 function changeLessonGroupsOnClick(id: string, actionQueue: ActionQueue): void
 {
@@ -34,9 +59,9 @@ function changeLessonGroupsOnClick(id: string, actionQueue: ActionQueue): void
 	document.getElementById("sidePanel")!.innerHTML = html;
 
 	document.getElementById("cancelEditorAction")!.onclick = function(): void
-		{
-			lessonSettings(id, actionQueue, true);
-		};
+	{
+		lessonSettings(id, actionQueue, true);
+	};
 	document.getElementById("changeLessonGroupsSave")!.onclick = function(): void {changeLessonGroupsSave(id, actionQueue);};
 
 	var nodes = document.getElementById("sidePanelForm")!.getElementsByTagName("input");
@@ -46,30 +71,4 @@ function changeLessonGroupsOnClick(id: string, actionQueue: ActionQueue): void
 	}
 
 	refreshLogin();
-}
-
-function lessonGroupsOnclick(): void
-{
-	lessonGroupsChanged = true;
-}
-
-function changeLessonGroupsSave(id: string, actionQueue: ActionQueue): void
-{
-	if(lessonGroupsChanged)
-	{
-		id = typeof id !== 'undefined' ? id : "{id}";
-		var groups = parseBoolForm();
-		var encodedGroups: Array<string> = [];
-		for(var i = 0; i < groups.length; i++)
-		{
-			encodedGroups.push(encodeURIComponent(groups[i]));
-		}
-		actionQueue.actions.push(new Action(CONFIG.apiuri + "/lesson/" + id + "/group", "PUT", function (): Payload {return {"group": encodedGroups};}));
-		lessonSettingsCache.groups = groups;
-		lessonSettings(id, actionQueue, true);
-	}
-	else
-	{
-		lessonSettings(id, actionQueue, true);
-	}
 }

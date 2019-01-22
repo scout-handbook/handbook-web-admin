@@ -1,4 +1,3 @@
-"use strict";
 /* exported parseVersion */
 
 function parseVersion(version: number): string

@@ -1,4 +1,3 @@
-"use strict";
 /* exported deleteImageOnClick */
 
 function deleteImageOnClick(event: MouseEvent): void

@@ -1,4 +1,3 @@
-"use strict";
 /* exported spinner, dismissSpinner */
 
 function spinner(): void

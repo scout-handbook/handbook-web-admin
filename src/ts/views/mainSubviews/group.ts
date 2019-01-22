@@ -1,6 +1,35 @@
-"use strict";
 /* global mainPageTab:true */
 /* exported showGroupSubview */
+
+function renderGroupList(): string
+{
+	var html = "";
+	for(var i = 0; i < GROUPS.length; i++)
+	{
+		if(GROUPS[i].id === "00000000-0000-0000-0000-000000000000")
+		{
+			html += "<br><h3 class = \"mainPage publicGroup\">" + GROUPS[i].name + "</h3>";
+		}
+		else
+		{
+			html += "<br><h3 class = \"mainPage\">" + GROUPS[i].name + "</h3>";
+		}
+		if(LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser")
+		{
+			html += "<div class=\"button cyanButton changeGroup\" data-id=\"" + GROUPS[i].id + "\"><i class=\"icon-pencil\"></i>Upravit</div>";
+			if(GROUPS[i].id !== "00000000-0000-0000-0000-000000000000")
+			{
+				html += "<div class=\"button redButton deleteGroup\" data-id=\"" + GROUPS[i].id + "\"><i class=\"icon-trash-empty\"></i>Smazat</div>";
+				html += "<div class=\"button importGroup\" data-id=\"" + GROUPS[i].id + "\"><i class=\"icon-user-plus\"></i> Importovat ze SkautISu</div>";
+			}
+		}
+		if(GROUPS[i].id !== "00000000-0000-0000-0000-000000000000")
+		{
+			html += "<br><span class=\"mainPage\">Uživatelů: " + GROUPS[i].count + "</span>";
+		}
+	}
+	return html;
+}
 
 function showGroupSubview(noHistory: boolean): void
 {
@@ -33,34 +62,4 @@ function showGroupSubview(noHistory: boolean): void
 		history.pushState({"page": "groups"}, "title", "/admin/groups");
 	}
 	refreshLogin(true);
-}
-
-function renderGroupList(): string
-{
-	var html = "";
-	for(var i = 0; i < GROUPS.length; i++)
-	{
-		if(GROUPS[i].id === "00000000-0000-0000-0000-000000000000")
-		{
-			html += "<br><h3 class = \"mainPage publicGroup\">" + GROUPS[i].name + "</h3>";
-		}
-		else
-		{
-			html += "<br><h3 class = \"mainPage\">" + GROUPS[i].name + "</h3>";
-		}
-		if(LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser")
-		{
-			html += "<div class=\"button cyanButton changeGroup\" data-id=\"" + GROUPS[i].id + "\"><i class=\"icon-pencil\"></i>Upravit</div>";
-			if(GROUPS[i].id !== "00000000-0000-0000-0000-000000000000")
-			{
-				html += "<div class=\"button redButton deleteGroup\" data-id=\"" + GROUPS[i].id + "\"><i class=\"icon-trash-empty\"></i>Smazat</div>";
-				html += "<div class=\"button importGroup\" data-id=\"" + GROUPS[i].id + "\"><i class=\"icon-user-plus\"></i> Importovat ze SkautISu</div>";
-			}
-		}
-		if(GROUPS[i].id !== "00000000-0000-0000-0000-000000000000")
-		{
-			html += "<br><span class=\"mainPage\">Uživatelů: " + GROUPS[i].count + "</span>";
-		}
-	}
-	return html;
 }

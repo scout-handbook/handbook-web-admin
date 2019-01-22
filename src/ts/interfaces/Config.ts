@@ -1,5 +1,3 @@
-"use strict";
-
 interface Config {
 	apiuri: string;
 	"admin-uri": string;

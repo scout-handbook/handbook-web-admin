@@ -1,7 +1,42 @@
-"use strict";
 /* exported showMainView */
 
 var mainPageTab: MainPageTab = "lessons";
+
+function renderMainView(noHistory: boolean): void
+{
+	if(LOGINSTATE.avatar)
+	{
+		(document.getElementById("userAvatar") as HTMLImageElement).src = "data:image/png;base64," + LOGINSTATE.avatar;
+	}
+	document.getElementById("userName")!.innerHTML = LOGINSTATE.name;
+
+	document.getElementById("lessonManager")!.onclick = function(): void {showLessonSubview(false)};
+	document.getElementById("competenceManager")!.onclick = function(): void {showCompetenceSubview(false)};
+	document.getElementById("imageManager")!.onclick = function(): void {showImageSubview(false)};
+	document.getElementById("userManager")!.onclick = function(): void {showUserSubview(false)};
+	document.getElementById("groupManager")!.onclick = function(): void {showGroupSubview(false)};
+
+	if(mainPageTab === "competences")
+	{
+		showCompetenceSubview(noHistory);
+	}
+	else if(mainPageTab === "images")
+	{
+		showImageSubview(noHistory);
+	}
+	else if(mainPageTab === "users")
+	{
+		showUserSubview(noHistory);
+	}
+	else if(mainPageTab === "groups")
+	{
+		showGroupSubview(noHistory);
+	}
+	else
+	{
+		showLessonSubview(noHistory);
+	}
+}
 
 function showMainView(noHistory: boolean): void
 {
@@ -41,43 +76,7 @@ function showMainView(noHistory: boolean): void
 	document.getElementsByTagName("main")[0].innerHTML = html;
 	document.getElementsByTagName("main")[0].scrollTop = 0;
 	metadataEvent.addCallback(function(): void
-		{
-			renderMainView(noHistory);
-		});
-}
-
-function renderMainView(noHistory: boolean): void
-{
-	if(LOGINSTATE.avatar)
 	{
-		(document.getElementById("userAvatar") as HTMLImageElement).src = "data:image/png;base64," + LOGINSTATE.avatar;
-	}
-	document.getElementById("userName")!.innerHTML = LOGINSTATE.name;
-
-	document.getElementById("lessonManager")!.onclick = function(): void {showLessonSubview(false)};
-	document.getElementById("competenceManager")!.onclick = function(): void {showCompetenceSubview(false)};
-	document.getElementById("imageManager")!.onclick = function(): void {showImageSubview(false)};
-	document.getElementById("userManager")!.onclick = function(): void {showUserSubview(false)};
-	document.getElementById("groupManager")!.onclick = function(): void {showGroupSubview(false)};
-
-	if(mainPageTab === "competences")
-	{
-		showCompetenceSubview(noHistory);
-	}
-	else if(mainPageTab === "images")
-	{
-		showImageSubview(noHistory);
-	}
-	else if(mainPageTab === "users")
-	{
-		showUserSubview(noHistory);
-	}
-	else if(mainPageTab === "groups")
-	{
-		showGroupSubview(noHistory);
-	}
-	else
-	{
-		showLessonSubview(noHistory);
-	}
+		renderMainView(noHistory);
+	});
 }

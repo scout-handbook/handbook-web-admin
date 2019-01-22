@@ -1,5 +1,3 @@
-"use strict";
-
 interface APIResponse {
 	status: number;
 	response?: RequestResponse;
