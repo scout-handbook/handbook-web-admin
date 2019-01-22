@@ -1,5 +1,9 @@
-"use strict";
 /* exported addGroup */
+
+function addGroupPayloadBuilder(): Payload
+{
+	return {"name": encodeURIComponent((document.getElementById("groupName") as HTMLInputElement).value)};
+}
 
 function addGroup(): void
 {
@@ -13,18 +17,13 @@ function addGroup(): void
 	document.getElementById("sidePanel")!.innerHTML = html;
 
 	document.getElementById("sidePanelCancel")!.onclick = function(): void
-		{
-			history.back();
-		};
+	{
+		history.back();
+	};
 
 	var aq = new ActionQueue([new Action(CONFIG.apiuri + "/group", "POST", addGroupPayloadBuilder)]);
 	document.getElementById("addGroupSave")!.onclick = aq.closeDispatch;
 
 	history.pushState({"sidePanel": "open"}, "title", "/admin/groups");
 	refreshLogin();
-}
-
-function addGroupPayloadBuilder(): Payload
-{
-	return {"name": encodeURIComponent((document.getElementById("groupName") as HTMLInputElement).value)};
 }

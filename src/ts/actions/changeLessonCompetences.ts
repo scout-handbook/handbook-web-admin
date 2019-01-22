@@ -1,7 +1,32 @@
-"use strict";
 /* exported changeLessonCompetencesOnClick */
 
 var lessonCompetencesChanged = false;
+
+function changeLessonCompetencesSave(id: string, actionQueue: ActionQueue): void
+{
+	if(lessonCompetencesChanged)
+	{
+		id = typeof id !== 'undefined' ? id : "{id}";
+		var competences = parseBoolForm();
+		var encodedCompetences: Array<string> = [];
+		for(var i = 0; i < competences.length; i++)
+		{
+			encodedCompetences.push(encodeURIComponent(competences[i]));
+		}
+		actionQueue.actions.push(new Action(CONFIG.apiuri + "/lesson/" + id + "/competence", "PUT", function(): Payload {return {"competence": encodedCompetences};}));
+		lessonSettingsCache.competences = competences;
+		lessonSettings(id, actionQueue, true);
+	}
+	else
+	{
+		lessonSettings(id, actionQueue, true);
+	}
+}
+
+function lessonCompetenceOnclick(): void
+{
+	lessonCompetencesChanged = true;
+}
 
 function changeLessonCompetencesOnClick(id: string, actionQueue: ActionQueue): void
 {
@@ -24,9 +49,9 @@ function changeLessonCompetencesOnClick(id: string, actionQueue: ActionQueue): v
 	document.getElementById("sidePanel")!.innerHTML = html;
 
 	document.getElementById("cancelEditorAction")!.onclick = function(): void
-		{
-			lessonSettings(id, actionQueue, true);
-		};
+	{
+		lessonSettings(id, actionQueue, true);
+	};
 	document.getElementById("changeLessonCompetencesSave")!.onclick = function(): void {changeLessonCompetencesSave(id, actionQueue);};
 
 	var nodes = document.getElementById("sidePanelForm")!.getElementsByTagName("input");
@@ -36,30 +61,4 @@ function changeLessonCompetencesOnClick(id: string, actionQueue: ActionQueue): v
 	}
 
 	refreshLogin();
-}
-
-function lessonCompetenceOnclick(): void
-{
-	lessonCompetencesChanged = true;
-}
-
-function changeLessonCompetencesSave(id: string, actionQueue: ActionQueue): void
-{
-	if(lessonCompetencesChanged)
-	{
-		id = typeof id !== 'undefined' ? id : "{id}";
-		var competences = parseBoolForm();
-		var encodedCompetences: Array<string> = [];
-		for(var i = 0; i < competences.length; i++)
-		{
-			encodedCompetences.push(encodeURIComponent(competences[i]));
-		}
-		actionQueue.actions.push(new Action(CONFIG.apiuri + "/lesson/" + id + "/competence", "PUT", function(): Payload {return {"competence": encodedCompetences};}));
-		lessonSettingsCache.competences = competences;
-		lessonSettings(id, actionQueue, true);
-	}
-	else
-	{
-		lessonSettings(id, actionQueue, true);
-	}
 }

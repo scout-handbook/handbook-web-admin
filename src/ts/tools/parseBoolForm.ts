@@ -1,4 +1,3 @@
-"use strict";
 /* exported parseBoolForm */
 
 function parseBoolForm(): Array<string>

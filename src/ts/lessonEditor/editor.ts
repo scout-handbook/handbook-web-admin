@@ -1,4 +1,3 @@
-"use strict";
 /* global editor:true, lessonSettingsCacheEvent:true */
 /* exported showLessonEditor */
 
@@ -6,6 +5,73 @@ var changed: boolean;
 var lessonSettingsCache: LessonSettingsCache;
 var lessonSettingsCacheEvent: AfterLoadEvent;
 var editor: EasyMDE;
+
+function populateEditorCache(id: string): void
+{
+	lessonSettingsCacheEvent = new AfterLoadEvent(1);
+	if(!id)
+	{
+		lessonSettingsCache["field"] = "";
+		lessonSettingsCache["competences"] = [];
+		lessonSettingsCache["groups"] = [];
+		lessonSettingsCacheEvent.trigger();
+		return;
+	}
+	request(CONFIG.apiuri + "/lesson/" + id + "/group", "GET", {}, function(response: RequestResponse): void
+	{
+		lessonSettingsCache["groups"] = response as unknown as Array<string>;
+		lessonSettingsCacheEvent.trigger();
+	}, reAuthHandler);
+	outer:
+	for(var i = 0; i < FIELDS.length; i++)
+	{
+		for(var j = 0; j < FIELDS[i].lessons.length; j++)
+		{
+			if(FIELDS[i].lessons[j].id === id)
+			{
+				if(FIELDS[i].id)
+				{
+					lessonSettingsCache["field"] = FIELDS[i].id;
+				}
+				else
+				{
+					lessonSettingsCache["field"] = "";
+				}
+				lessonSettingsCache["competences"] = FIELDS[i].lessons[j].competences;
+				break outer;
+			}
+		}
+	}
+}
+
+function editorDiscardNow(actionQueue: ActionQueue): void
+{
+	history.back();
+	actionQueue.dispatch(true);
+}
+
+function editorDiscard(actionQueue: ActionQueue): void
+{
+	if(!changed)
+	{
+		editorDiscardNow(actionQueue);
+	}
+	else
+	{
+		dialog("Opravdu si přejete zahodit všechny změny?", "Ano", function(): void
+		{
+			editorDiscardNow(actionQueue);
+		}, "Ne");
+	}
+	refreshLogin();
+}
+
+function editorOnChange(afterAction: () => void): void
+{
+	changed = true;
+	refreshPreview((document.getElementById("name") as HTMLInputElement).value, editor.value(), "preview-inner");
+	refreshLogin(false, afterAction);
+}
 
 function showLessonEditor(name: string, body: string, saveActionQueue: ActionQueue, id: string, discardActionQueue = new ActionQueue(), refreshAction = function(): void {}): void
 {
@@ -61,55 +127,55 @@ function showLessonEditor(name: string, body: string, saveActionQueue: ActionQue
 		status: false,
 		tabSize: 4,
 		toolbar: [{
-				name: "bold",
-				action: EasyMDE.toggleBold,
-				className: "icon-bold",
-				title: "Tučné"
-			},
-			{
-				name: "italic",
-				action: EasyMDE.toggleItalic,
-				className: "icon-italic",
-				title: "Kurzíva"
-			},
-			{
-				name: "heading",
-				action: EasyMDE.toggleHeadingSmaller,
-				className: "icon-header",
-				title: "Nadpis"
-			},
-			"|",
-			{
-				name: "unordered-list",
-				action: EasyMDE.toggleUnorderedList,
-				className: "icon-list-bullet",
-				title: "Seznam s odrážkami"
-			},
-			{
-				name: "ordered-list",
-				action: EasyMDE.toggleOrderedList,
-				className: "icon-list-numbered",
-				title: "Číslovaný seznam"
-			},
-			"|",
-			{
-				name: "link",
-				action: EasyMDE.drawLink,
-				className: "icon-link",
-				title: "Vložit odkaz"
-			},
-			{
-				name: "image",
-				action: toggleImageSelector,
-				className: "icon-picture",
-				title: "Vložit obrázek"
-			},
-			{
-				name: "table",
-				action: EasyMDE.drawTable,
-				className: "icon-table",
-				title: "Vložit tabulku"
-			}
+			name: "bold",
+			action: EasyMDE.toggleBold,
+			className: "icon-bold",
+			title: "Tučné"
+		},
+		{
+			name: "italic",
+			action: EasyMDE.toggleItalic,
+			className: "icon-italic",
+			title: "Kurzíva"
+		},
+		{
+			name: "heading",
+			action: EasyMDE.toggleHeadingSmaller,
+			className: "icon-header",
+			title: "Nadpis"
+		},
+		"|",
+		{
+			name: "unordered-list",
+			action: EasyMDE.toggleUnorderedList,
+			className: "icon-list-bullet",
+			title: "Seznam s odrážkami"
+		},
+		{
+			name: "ordered-list",
+			action: EasyMDE.toggleOrderedList,
+			className: "icon-list-numbered",
+			title: "Číslovaný seznam"
+		},
+		"|",
+		{
+			name: "link",
+			action: EasyMDE.drawLink,
+			className: "icon-link",
+			title: "Vložit odkaz"
+		},
+		{
+			name: "image",
+			action: toggleImageSelector,
+			className: "icon-picture",
+			title: "Vložit obrázek"
+		},
+		{
+			name: "table",
+			action: EasyMDE.drawTable,
+			className: "icon-table",
+			title: "Vložit tabulku"
+		}
 		]
 	});
 	editor.value(body);
@@ -120,71 +186,4 @@ function showLessonEditor(name: string, body: string, saveActionQueue: ActionQue
 	document.getElementById("name")!.onchange = function(): void {editorOnChange(refreshAction);};
 
 	prepareImageSelector();
-}
-
-function editorOnChange(afterAction: () => void): void
-{
-	changed = true;
-	refreshPreview((document.getElementById("name") as HTMLInputElement).value, editor.value(), "preview-inner");
-	refreshLogin(false, afterAction);
-}
-
-function editorDiscard(actionQueue: ActionQueue): void
-{
-	if(!changed)
-	{
-		editorDiscardNow(actionQueue);
-	}
-	else
-	{
-		dialog("Opravdu si přejete zahodit všechny změny?", "Ano", function(): void
-			{
-				editorDiscardNow(actionQueue);
-			}, "Ne");
-	}
-	refreshLogin();
-}
-
-function editorDiscardNow(actionQueue: ActionQueue): void
-{
-	history.back();
-	actionQueue.dispatch(true);
-}
-
-function populateEditorCache(id: string): void
-{
-	lessonSettingsCacheEvent = new AfterLoadEvent(1);
-	if(!id)
-	{
-		lessonSettingsCache["field"] = "";
-		lessonSettingsCache["competences"] = [];
-		lessonSettingsCache["groups"] = [];
-		lessonSettingsCacheEvent.trigger();
-		return;
-	}
-	request(CONFIG.apiuri + "/lesson/" + id + "/group", "GET", {}, function(response: RequestResponse): void
-		{
-			lessonSettingsCache["groups"] = response as unknown as Array<string>;
-			lessonSettingsCacheEvent.trigger();
-		}, reAuthHandler);
-	outer:
-	for(var i = 0; i < FIELDS.length; i++)
-	{
-		for(var j = 0; j < FIELDS[i].lessons.length; j++)
-		{
-			if(FIELDS[i].lessons[j].id === id)
-			{
-				if(FIELDS[i].id)
-				{
-					lessonSettingsCache["field"] = FIELDS[i].id;
-				}
-				else
-				{
-					lessonSettingsCache["field"] = "";
-				}
-				lessonSettingsCache["competences"] = FIELDS[i].lessons[j].competences;
-				break outer;
-			}
-		}
-	}
 }

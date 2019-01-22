@@ -1,4 +1,3 @@
-"use strict";
 /* exported addOnClicks */
 
 function addOnClicks(id: string, onclick: (event: MouseEvent) => void): void

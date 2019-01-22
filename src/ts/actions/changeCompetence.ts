@@ -1,7 +1,11 @@
-"use strict";
 /* exported changeCompetenceOnClick */
 
 var competenceChanged = false;
+
+function changeCompetencePayloadBuilder(): Payload
+{
+	return {"number": encodeURIComponent((document.getElementById("competenceNumber") as HTMLInputElement).value), "name": encodeURIComponent((document.getElementById("competenceName") as HTMLInputElement).value), "description": encodeURIComponent((document.getElementById("competenceDescription") as HTMLInputElement).value)};
+}
 
 function changeCompetenceOnClick(event: MouseEvent): void
 {
@@ -24,9 +28,9 @@ function changeCompetenceOnClick(event: MouseEvent): void
 	document.getElementById("sidePanel")!.innerHTML = html;
 
 	document.getElementById("sidePanelCancel")!.onclick = function(): void
-		{
-			history.back();
-		};
+	{
+		history.back();
+	};
 
 	var aq = new ActionQueue([new Action(CONFIG.apiuri + "/competence/" + encodeURIComponent(getAttribute(event, "id")), "PUT", changeCompetencePayloadBuilder)]);
 	document.getElementById("changeCompetenceSave")!.onclick = aq.closeDispatch;
@@ -34,13 +38,13 @@ function changeCompetenceOnClick(event: MouseEvent): void
 	function addOnChange(id: string): void
 	{
 		document.getElementById(id)!.oninput = function(): void
-			{
-				competenceChanged = true;
-			};
+		{
+			competenceChanged = true;
+		};
 		document.getElementById(id)!.onchange = function(): void
-			{
-				competenceChanged = true;
-			};
+		{
+			competenceChanged = true;
+		};
 	}
 	addOnChange("competenceNumber");
 	addOnChange("competenceName");
@@ -48,9 +52,4 @@ function changeCompetenceOnClick(event: MouseEvent): void
 
 	history.pushState({"sidePanel": "open"}, "title", "/admin/competences");
 	refreshLogin();
-}
-
-function changeCompetencePayloadBuilder(): Payload
-{
-	return {"number": encodeURIComponent((document.getElementById("competenceNumber") as HTMLInputElement).value), "name": encodeURIComponent((document.getElementById("competenceName") as HTMLInputElement).value), "description": encodeURIComponent((document.getElementById("competenceDescription") as HTMLInputElement).value)};
 }

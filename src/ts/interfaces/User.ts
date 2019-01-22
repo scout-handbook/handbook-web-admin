@@ -1,5 +1,3 @@
-"use strict";
-
 interface User {
 	id: number;
 	name: string;

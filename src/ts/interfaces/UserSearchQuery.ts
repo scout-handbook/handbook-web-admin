@@ -1,5 +1,3 @@
-"use strict";
-
 interface UserSearchQuery {
 	name: string;
 	page: number;

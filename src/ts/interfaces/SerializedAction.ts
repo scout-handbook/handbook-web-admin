@@ -1,5 +1,3 @@
-"use strict";
-
 interface SerializedAction {
 	url: string;
 	method: string;

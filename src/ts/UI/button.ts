@@ -1,4 +1,3 @@
-"use strict";
 /* exported getAttribute */
 
 function getAttribute(event: MouseEvent, attribute: string): string

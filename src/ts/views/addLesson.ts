@@ -1,5 +1,9 @@
-"use strict";
 /* exported addLessonInFieldOnClick */
+
+function addLessonPayloadBuilder(): Payload
+{
+	return {"name": encodeURIComponent((document.getElementById("name") as HTMLInputElement).value), "body": encodeURIComponent(editor.value())};
+}
 
 function showLessonAddView(field?: string): void
 {
@@ -12,11 +16,6 @@ function showLessonAddView(field?: string): void
 	}
 	aq.actions[0].callback = function(response): void {aq.fillID(response as unknown as string)}
 	showLessonEditor(defaultName, defaultBody, aq, "");
-}
-
-function addLessonPayloadBuilder(): Payload
-{
-	return {"name": encodeURIComponent((document.getElementById("name") as HTMLInputElement).value), "body": encodeURIComponent(editor.value())};
 }
 
 function addLessonInFieldOnClick(event: MouseEvent): void

@@ -1,16 +1,5 @@
-"use strict";
 /* global mainPageTab:true */
 /* exported historySetup */
-
-function historySetup(): void
-{
-	window.onpopstate = popback;
-	if(window.location.pathname.substring(7))
-	{
-		mainPageTab = window.location.pathname.substring(7) as MainPageTab;
-	}
-	showMainView(false);
-}
 
 function popback(): void
 {
@@ -29,9 +18,9 @@ function popback(): void
 			else
 			{
 				metadataEvent.addCallback(function(): void
-					{
-						showLessonEditView(history.state.id, true);
-					});
+				{
+					showLessonEditView(history.state.id, true);
+				});
 			}
 		}
 		else if(history.state.page)
@@ -44,4 +33,14 @@ function popback(): void
 			showMainView(false);
 		}
 	}
+}
+
+function historySetup(): void
+{
+	window.onpopstate = popback;
+	if(window.location.pathname.substring(7))
+	{
+		mainPageTab = window.location.pathname.substring(7) as MainPageTab;
+	}
+	showMainView(false);
 }

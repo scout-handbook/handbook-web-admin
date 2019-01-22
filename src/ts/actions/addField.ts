@@ -1,5 +1,9 @@
-"use strict";
 /* exported addField */
+
+function addFiledPayloadBuilder(): Payload
+{
+	return {"name": encodeURIComponent((document.getElementById("fieldName") as HTMLInputElement).value)};
+}
 
 function addField(): void
 {
@@ -13,18 +17,13 @@ function addField(): void
 	document.getElementById("sidePanel")!.innerHTML = html;
 
 	document.getElementById("sidePanelCancel")!.onclick = function(): void
-		{
-			history.back();
-		};
+	{
+		history.back();
+	};
 
 	var aq = new ActionQueue([new Action(CONFIG.apiuri + "/field", "POST", addFiledPayloadBuilder)]);
 	document.getElementById("addFieldSave")!.onclick = aq.closeDispatch;
 
 	history.pushState({"sidePanel": "open"}, "title", "/admin/lessons");
 	refreshLogin();
-}
-
-function addFiledPayloadBuilder(): Payload
-{
-	return {"name": encodeURIComponent((document.getElementById("fieldName") as HTMLInputElement).value)};
 }

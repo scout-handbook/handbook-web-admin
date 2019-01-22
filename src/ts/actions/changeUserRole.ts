@@ -1,7 +1,12 @@
-"use strict";
 /* exported changeUserRoleOnClick */
 
 var roleChanged = false;
+
+function changeUserRolePayloadBuilder(): Payload
+{
+	var sel = document.getElementById("roleSelect") as HTMLSelectElement;
+	return {"role": encodeURIComponent(sel.options[sel.selectedIndex].value)};
+}
 
 function changeUserRoleOnClick(event: MouseEvent): void
 {
@@ -32,24 +37,18 @@ function changeUserRoleOnClick(event: MouseEvent): void
 	(document.getElementById("roleSelect") as HTMLSelectElement).options.namedItem(getAttribute(event, "role"))!.selected = true;
 
 	document.getElementById("sidePanelCancel")!.onclick = function(): void
-		{
-			history.back();
-		};
+	{
+		history.back();
+	};
 
 	var aq = new ActionQueue([new Action(CONFIG.apiuri + "/user/" + encodeURIComponent(getAttribute(event, "id")) + "/role", "PUT", changeUserRolePayloadBuilder)]);
 	document.getElementById("changeUserRoleSave")!.onclick = aq.closeDispatch;
 
 	document.getElementById("roleSelect")!.onchange = function(): void
-		{
-			roleChanged = true;
-		};
+	{
+		roleChanged = true;
+	};
 
 	history.pushState({"sidePanel": "open"}, "title", "/admin/users");
 	refreshLogin();
-}
-
-function changeUserRolePayloadBuilder(): Payload
-{
-	var sel = document.getElementById("roleSelect") as HTMLSelectElement;
-	return {"role": encodeURIComponent(sel.options[sel.selectedIndex].value)};
 }

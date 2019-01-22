@@ -1,5 +1,9 @@
-"use strict";
 /* exported showLessonRestoreView */
+
+function restoreLessonPayloadBuilder(): Payload
+{
+	return {"name": encodeURIComponent((document.getElementById("name") as HTMLInputElement).value), "body": encodeURIComponent(editor.value())};
+}
 
 function showLessonRestoreView(name: string, body: string): void
 {
@@ -8,9 +12,4 @@ function showLessonRestoreView(name: string, body: string): void
 	showLessonEditor(name, body, aq, "");
 
 	history.pushState({}, "title", "/admin/lessons");
-}
-
-function restoreLessonPayloadBuilder(): Payload
-{
-	return {"name": encodeURIComponent((document.getElementById("name") as HTMLInputElement).value), "body": encodeURIComponent(editor.value())};
 }

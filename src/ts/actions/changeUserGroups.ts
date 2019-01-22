@@ -1,7 +1,22 @@
-"use strict";
 /* exported changeUserGroupsOnClick */
 
 var groupsChanged = false;
+
+function changeUserPayloadBuilder(): Payload
+{
+	var groups = parseBoolForm();
+	var encodedGroups = [];
+	for(var i = 0; i < groups.length; i++)
+	{
+		encodedGroups.push(encodeURIComponent(groups[i]));
+	}
+	return {"group": encodedGroups};
+}
+
+function userGroupsOnclick(): void
+{
+	groupsChanged = true;
+}
 
 function changeUserGroupsOnClick(event: MouseEvent): void
 {
@@ -35,9 +50,9 @@ function changeUserGroupsOnClick(event: MouseEvent): void
 	document.getElementById("sidePanel")!.innerHTML = html;
 
 	document.getElementById("sidePanelCancel")!.onclick = function(): void
-		{
-			history.back();
-		};
+	{
+		history.back();
+	};
 
 	var aq = new ActionQueue([new Action(CONFIG.apiuri + "/user/" + encodeURIComponent(getAttribute(event, "id")) + "/group", "PUT", changeUserPayloadBuilder)]);
 	document.getElementById("changeUserGroupsSave")!.onclick = aq.closeDispatch;
@@ -50,20 +65,4 @@ function changeUserGroupsOnClick(event: MouseEvent): void
 
 	history.pushState({"sidePanel": "open"}, "title", "/admin/users");
 	refreshLogin();
-}
-
-function userGroupsOnclick(): void
-{
-	groupsChanged = true;
-}
-
-function changeUserPayloadBuilder(): Payload
-{
-	var groups = parseBoolForm();
-	var encodedGroups = [];
-	for(var i = 0; i < groups.length; i++)
-	{
-		encodedGroups.push(encodeURIComponent(groups[i]));
-	}
-	return {"group": encodedGroups};
 }
