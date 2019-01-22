@@ -1,7 +1,7 @@
 "use strict";
 /* exported refreshPreviewSetup, refreshPreview */
 
-var converter: Converter|undefined;
+var converter: showdown.Converter|undefined;
 var worker: Worker|undefined;
 var running = false;
 var queue: WorkerPayload|null;
