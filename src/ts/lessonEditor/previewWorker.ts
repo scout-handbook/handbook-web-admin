@@ -1,7 +1,7 @@
 "use strict";
 /* eslint-env worker */
 
-var converter: Converter;
+var converter: showdown.Converter;
 
 function main(): void
 {

@@ -6,8 +6,7 @@
   },
   "files": [
     "../src/d.ts/admin-worker.d.ts",
-    "../src/ts/interfaces/Converter.ts",
-    "../src/ts/interfaces/Showdown.ts",
+    "../src/d.ts/showdown.d.ts",
     "../src/ts/interfaces/XSSOptions.ts",
     "../src/ts/lessonEditor/previewWorker.ts"
   ]

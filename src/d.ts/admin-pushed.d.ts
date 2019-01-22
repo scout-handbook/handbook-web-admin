@@ -2,7 +2,6 @@
 
 declare var CONFIG: Config;
 declare var imageSelectorOpen: boolean;
-declare var showdown: Showdown;
 declare var sidePanelState: boolean;
 declare function dialog(mainText: string, confirmText: string, confirmCallback?: () => void, dismissText?: string, dismissCallback?: () => void): void;
 declare function filterXSS(html: string, options: XSSOptions): string;
