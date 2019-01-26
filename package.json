@@ -20,14 +20,14 @@
     "url": "git+https://gitlab.com/skaut-handbook/handbook-web-admin.git"
   },
   "dependencies": {
-    "easymde": "^2.4.2",
+    "easymde": "^2.5.1",
     "showdown": "^1.9.0",
     "xss": "^1.0.3"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^1.0.0",
-    "@typescript-eslint/parser": "^1.0.0",
-    "eslint": "^5.11.0",
+    "@typescript-eslint/eslint-plugin": "^1.1.0",
+    "@typescript-eslint/parser": "^1.1.0",
+    "eslint": "^5.12.1",
     "eslint-plugin-compat": "^2.6.3",
     "gulp": "^4.0.0",
     "gulp-clean-css": "^4.0.0",
@@ -43,7 +43,7 @@
     "merge-stream": "^1.0.1",
     "nested-object-assign": "^1.0.3",
     "postcss-custom-properties": "^8.0.9",
-    "stylelint": "^9.9.0",
+    "stylelint": "^9.10.1",
     "stylelint-config-standard": "^18.2.0",
     "stylelint-no-unsupported-browser-features": "^3.0.2",
     "typescript": "^3.2.4",

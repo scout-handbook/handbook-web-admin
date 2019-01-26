@@ -2,7 +2,7 @@
 
 var converter: showdown.Converter;
 
-function process(payload: MessageEvent): void
+function convert(payload: MessageEvent): void
 {
 	var html = filterXSS(converter.makeHtml(payload.data.body), xssOptions());
 	postMessage({"id": payload.data.id, "body": html});
@@ -10,7 +10,7 @@ function process(payload: MessageEvent): void
 
 function main(): void
 {
-	(self as DedicatedWorkerGlobalScope).onmessage = process;
+	(self as DedicatedWorkerGlobalScope).onmessage = convert;
 	importScripts('showdown.min.js');
 	importScripts('xss.min.js');
 	importScripts('admin-worker-deps.min.js');
