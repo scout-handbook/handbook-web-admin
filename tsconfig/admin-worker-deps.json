@@ -2,7 +2,8 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "lib": ["ES6", "WebWorker"],
-    "target": "ES6"
+    "target": "ES6",
+    "types": []
   },
   "files": [
     "../src/d.ts/showdown.d.ts",
