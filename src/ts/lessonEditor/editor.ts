@@ -118,7 +118,7 @@ function showLessonEditor(name: string, body: string, saveActionQueue: ActionQue
 	editor = new EasyMDE({
 		autoDownloadFontAwesome: false,
 		autofocus: true,
-		element: document.getElementById("editor")!.firstChild,
+		element: document.getElementById("editor")!.firstChild as HTMLElement,
 		indentWithTabs: false,
 		parsingConfig: {
 			allowAtxHeaderWithoutSpace: true
