@@ -2,12 +2,12 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "lib": ["ES6", "WebWorker"],
+    "skipLibCheck": true,
     "target": "ES6",
-    "types": []
+    "types": ["showdown"]
   },
   "files": [
     "../src/d.ts/admin-worker.d.ts",
-    "../src/d.ts/showdown.d.ts",
     "../src/ts/interfaces/XSSOptions.ts",
     "../src/ts/lessonEditor/previewWorker.ts"
   ]
