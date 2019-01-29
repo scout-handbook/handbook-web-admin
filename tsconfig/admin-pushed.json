@@ -2,7 +2,6 @@
   "extends": "../tsconfig.json",
   "files": [
     "../src/d.ts/admin-pushed.d.ts",
-    "../src/d.ts/showdown.d.ts",
     "../src/ts/interfaces/APIResponse.ts",
     "../src/ts/interfaces/Competence.ts",
     "../src/ts/interfaces/Config.ts",
