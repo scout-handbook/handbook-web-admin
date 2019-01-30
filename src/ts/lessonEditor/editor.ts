@@ -2,7 +2,7 @@
 /* exported showLessonEditor */
 
 var changed: boolean;
-var lessonSettingsCache: LessonSettingsCache;
+var lessonSettingsCache: LessonSettingsCache = {competences: [], field: "", groups: []};
 var lessonSettingsCacheEvent: AfterLoadEvent;
 var editor: EasyMDE;
 
