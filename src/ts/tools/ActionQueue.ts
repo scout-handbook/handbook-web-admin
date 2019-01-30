@@ -30,8 +30,7 @@ class ActionQueue {
 		this.dispatch(background);
 	}
 
-	public closeDispatch(): void
-	{
+	public closeDispatch = () => {
 		sidePanelClose();
 		this.defaultDispatch(false);
 	}
