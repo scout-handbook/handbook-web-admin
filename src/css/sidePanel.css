@@ -31,3 +31,8 @@
 	width: 100%;
 	z-index: 9;
 }
+
+#sidePanelForm,
+.groupHelp {
+	margin-bottom: 30px;
+}
