@@ -103,11 +103,17 @@ function importGroupSelectParticipants(id: string): void
 		document.getElementById("importList")!.innerHTML = html;
 		participantEvent = new AfterLoadEvent(2);
 		participantEvent.addCallback(importGroupSelectParticipantsRender);
+		var exceptionHandler = reAuthHandler;
+		exceptionHandler.SkautISAuthorizationException = function(): void
+		{
+			sidePanelClose();
+			dialog("Pro tuto akci nemáte ve SkautISu dostatečná práva.", "OK");
+		};
 		request(CONFIG.apiuri + "/event/" + eventId + "/participant", "GET", {}, function(response: RequestResponse): void
 		{
 			participants = response as unknown as Array<Participant>;
 			participantEvent.trigger(id);
-		}, reAuthHandler);
+		}, exceptionHandler);
 		request(CONFIG.apiuri + "/user", "GET", {"page": 1, "per-page": 1000, "group": id}, function(response: RequestResponse): void
 		{
 			users = response.users as Array<User>;
