@@ -20,7 +20,19 @@ if(isset($loginState['status']))
 			$role = $loginState['response']['role'];
 			if($role == 'editor' or $role == 'administrator' or $role == 'superuser')
 			{
-				$file = fopen($CONFIG->apiuri . '/lesson/' . $_GET['id'] . '/pdf', 'rb');
+				$params = '';
+				foreach(['caption', 'qr'] as $param)
+				{
+					if(isset($_GET[$param]))
+					{
+						$params .= '&' . $param . '=' . $_GET[$param];
+					}
+				}
+				if($params !== '')
+				{
+					$params = '?' . mb_substr($params, 1);
+				}
+				$file = fopen($CONFIG->apiuri . '/lesson/' . $_GET['id'] . '/pdf' . $params, 'rb');
 				foreach($http_response_header as $header)
 				{
 					if(strtolower(substr($header, 0, 20)) === "content-disposition:")
