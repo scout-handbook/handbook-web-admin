@@ -17,7 +17,7 @@ function renderFieldImageSelector(list: Array<string>, name: string, description
 	var start = perPage * (page - 1);
 	for(var i = start; i < Math.min(list.length, start + perPage); i++)
 	{
-		html += "<div class=\"thumbnailContainer\"><div class=\"buttonContainer\"><img src=\"" + CONFIG.apiuri + "/image/" + list[i] + "?quality=thumbnail\" class=\"thumbnailImage\" data-id=\"" + list[i] + "\"></div></div>";
+		html += "<div class=\"thumbnailContainer\"><img src=\"" + CONFIG.apiuri + "/image/" + list[i] + "?quality=thumbnail\" class=\"thumbnailImage\" data-id=\"" + list[i] + "\"></div>";
 	}
 	if(list.length > perPage)
 	{
