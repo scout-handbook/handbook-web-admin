@@ -5,3 +5,8 @@
 #fieldDescription {
 	margin-top: 20px;
 }
+
+.fieldImageContainer {
+	margin: 0 auto;
+	max-width: 770px;
+}

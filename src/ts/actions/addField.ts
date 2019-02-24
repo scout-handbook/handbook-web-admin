@@ -13,7 +13,7 @@ function openFieldImageSelector(name: string, description: string, image: string
 
 function renderFieldImageSelector(list: Array<string>, name: string, description: string, image: string, page: number, perPage: number): void
 {
-	var html = "";
+	var html = "<div class=\"button yellowButton\" id=\"fieldImageCancel\"><i class=\"icon-cancel\"></i>Zrušit</div><div class=\"fieldImageContainer\">";
 	var start = perPage * (page - 1);
 	for(var i = start; i < Math.min(list.length, start + perPage); i++)
 	{
@@ -50,8 +50,13 @@ function renderFieldImageSelector(list: Array<string>, name: string, description
 		}
 		html += "</div>";
 	}
+	html += "</div>";
 	document.getElementById("sidePanel")!.innerHTML = html;
 
+	document.getElementById("fieldImageCancel")!.onclick = function()
+	{
+		addField(name, description, image); // eslint-disable-line @typescript-eslint/no-use-before-define
+	}
 	var	imageNodes = document.getElementById("sidePanel")!.getElementsByTagName("img");
 	for(var k = 0; k < imageNodes.length; k++)
 	{
