@@ -1,3 +1,7 @@
 .anonymousField {
 	font-style: italic;
 }
+
+#fieldDescription {
+	margin-top: 20px;
+}
