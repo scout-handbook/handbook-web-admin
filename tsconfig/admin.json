@@ -56,6 +56,7 @@
     "../src/ts/UI/dialog.ts",
     "../src/ts/UI/pagination.ts",
     "../src/ts/UI/sidePanel.ts",
+    "../src/ts/UI/sidePanelImageSelector.ts",
     "../src/ts/UI/spinner.ts",
     "../src/ts/views/mainSubviews/competence.ts",
     "../src/ts/views/mainSubviews/group.ts",

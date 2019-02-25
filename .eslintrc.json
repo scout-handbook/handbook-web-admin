@@ -76,6 +76,7 @@
 		"mainPageTab": false,
 		"metadataEvent": false,
 		"metadataSetup": false,
+		"openSidePanelImageSelector": false,
 		"parseBoolForm": false,
 		"parseVersion": false,
 		"prepareImageSelector": false,
