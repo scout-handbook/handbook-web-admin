@@ -2,6 +2,7 @@
 declare var COMPETENCES: Array<Competence>;
 declare var CONFIG: Config;
 declare var FIELDS: Array<Field>;
+declare var FULLFIELDS: Array<FullField>;
 declare var GROUPS: Array<Group>;
 declare var LOGINSTATE: Loginstate;
 declare var authFailHandler: ExceptionHandler;

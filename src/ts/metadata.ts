@@ -3,16 +3,22 @@
 
 var metadataEvent: AfterLoadEvent;
 var FIELDS = [];
+var FULLFIELDS = [];
 var COMPETENCES = [];
 var GROUPS = [];
 var LOGINSTATE: Loginstate = {avatar: "", name: "", role: "guest"};
 
 function refreshMetadata(): void
 {
-	metadataEvent = new AfterLoadEvent(4);
+	metadataEvent = new AfterLoadEvent(5);
 	request(CONFIG.apiuri + "/lesson?override-group=true", "GET", {}, function(response): void
 	{
 		FIELDS = response as unknown as Array<Field>;
+		metadataEvent.trigger();
+	}, undefined);
+	request(CONFIG.apiuri + "/field", "GET", {}, function(response): void
+	{
+		FULLFIELDS = response as unknown as Array<FullField>;
 		metadataEvent.trigger();
 	}, undefined);
 	request(CONFIG.apiuri + "/competence", "GET", {}, function(response): void
