@@ -30,6 +30,7 @@
 		"COMPETENCES": false,
 		"CONFIG": false,
 		"FIELDS": false,
+		"FULLFIELDS": false,
 		"GROUPS": false,
 		"LOGINSTATE": false,
 		"Action": false,
