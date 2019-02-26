@@ -1,5 +1,5 @@
-/* global FIELDS:true, COMPETENCES:true, GROUPS:true, LOGINSTATE:true, metadataEvent:true */
-/* exported FIELDS, COMPETENCES, GROUPS, LOGINSTATE, metadataSetup */
+/* global FIELDS:true, FULLFIELDS:true, COMPETENCES:true, GROUPS:true, LOGINSTATE:true, metadataEvent:true */
+/* exported FIELDS, FULLFIELDS, COMPETENCES, GROUPS, LOGINSTATE, metadataSetup */
 
 var metadataEvent: AfterLoadEvent;
 var FIELDS = [];

@@ -7,7 +7,7 @@ function changeFieldPayloadBuilder(): Payload
 	return {"name": encodeURIComponent((document.getElementById("fieldName") as HTMLInputElement).value), "description": encodeURIComponent((document.getElementById("fieldDescription") as HTMLInputElement).value), "image": encodeURIComponent((document.getElementById("fieldImage") as HTMLInputElement).value)};
 }
 
-function changeField(state: any, noHistory = false): void
+function changeField(state: SidePanelImageSelectorState, noHistory = false): void
 {
 	fieldChanged = false;
 	sidePanelOpen();
