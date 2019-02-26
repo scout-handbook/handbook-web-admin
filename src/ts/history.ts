@@ -5,7 +5,11 @@ function popback(): void
 {
 	if(history.state)
 	{
-		if(sidePanelState)
+		if(history.state.sidePanelImageSelectorAction)
+		{
+			closeSidePanelImageSelector(history.state.sidePanelImageSelectorAction, history.state.sidePanelImageSelectorState);
+		}
+		else if(sidePanelState)
 		{
 			sidePanelClose();
 		}

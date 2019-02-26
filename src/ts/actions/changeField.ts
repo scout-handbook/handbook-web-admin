@@ -7,7 +7,7 @@ function changeFieldPayloadBuilder(): Payload
 	return {"name": encodeURIComponent((document.getElementById("fieldName") as HTMLInputElement).value), "description": encodeURIComponent((document.getElementById("fieldDescription") as HTMLInputElement).value), "image": encodeURIComponent((document.getElementById("fieldImage") as HTMLInputElement).value)};
 }
 
-function changeField(state: any): void
+function changeField(state: any, noHistory = false): void
 {
 	fieldChanged = false;
 	sidePanelOpen();
@@ -31,7 +31,7 @@ function changeField(state: any): void
 
 	document.getElementById("fieldImageChange")!.onclick = function(): void
 	{
-		openSidePanelImageSelector(changeField, {id: state.id, name: (document.getElementById("fieldName") as HTMLInputElement).value, description: (document.getElementById("fieldDescription") as HTMLInputElement).value, image: state.image});
+		openSidePanelImageSelector("changeField", {id: state.id, name: (document.getElementById("fieldName") as HTMLInputElement).value, description: (document.getElementById("fieldDescription") as HTMLInputElement).value, image: state.image});
 	}
 
 	var aq = new ActionQueue([new Action(CONFIG.apiuri + "/field/" + encodeURIComponent(state.id), "PUT", changeFieldPayloadBuilder)]);
@@ -46,7 +46,10 @@ function changeField(state: any): void
 		fieldChanged = true;
 	};
 
-	history.pushState({"sidePanel": "open"}, "title", "/admin/lessons");
+	if(!noHistory)
+	{
+		history.pushState({"sidePanel": "open"}, "title", "/admin/lessons");
+	}
 	refreshLogin();
 }
 
