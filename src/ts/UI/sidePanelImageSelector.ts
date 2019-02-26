@@ -61,6 +61,7 @@ function renderSidePanelImageSelector(list: Array<string>, action: string, state
 		imageNodes[k].onclick = function(event: MouseEvent)
 		{
 			state.image = (event.target as HTMLElement).dataset.id
+			history.back();
 			closeSidePanelImageSelector(action, state);
 		};
 	}
