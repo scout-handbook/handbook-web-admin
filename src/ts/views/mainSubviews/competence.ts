@@ -1,5 +1,5 @@
 /* global mainPageTab:true */
-/* exported showCompetenceSubview */
+/* exported mainPageTab, showCompetenceSubview */
 
 function renderCompetenceList(): string
 {
