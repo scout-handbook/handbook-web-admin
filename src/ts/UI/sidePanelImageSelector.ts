@@ -1,4 +1,4 @@
-function openSidePanelImageSelector(action: string, state: any, page = 1 , perPage = 15, noHistory = false): void
+function openSidePanelImageSelector(action: string, state: SidePanelImageSelectorState, page = 1 , perPage = 15, noHistory = false): void
 {
 	sidePanelDoubleOpen();
 	document.getElementById("sidePanel")!.innerHTML = "<div id=\"embeddedSpinner\"></div>";
@@ -9,7 +9,20 @@ function openSidePanelImageSelector(action: string, state: any, page = 1 , perPa
 	refreshLogin();
 }
 
-function renderSidePanelImageSelector(list: Array<string>, action: string, state: any, page: number, perPage: number, noHistory: boolean): void
+function closeSidePanelImageSelector(action: string, state: SidePanelImageSelectorState): void
+{
+	switch(action)
+	{
+		case "addField":
+			addField(state, true);
+			break;
+		case "changeField":
+			changeField(state, true);
+			break;
+	}
+}
+
+function renderSidePanelImageSelector(list: Array<string>, action: string, state: SidePanelImageSelectorState, page: number, perPage: number, noHistory: boolean): void
 {
 	var html = "<div class=\"button yellowButton\" id=\"fieldImageCancel\"><i class=\"icon-cancel\"></i>Zrušit</div><div class=\"fieldImageContainer\">";
 	var start = perPage * (page - 1);
@@ -60,7 +73,7 @@ function renderSidePanelImageSelector(list: Array<string>, action: string, state
 	{
 		imageNodes[k].onclick = function(event: MouseEvent)
 		{
-			state.image = (event.target as HTMLElement).dataset.id
+			state.image = (event.target as HTMLElement).dataset.id!;
 			history.back();
 			closeSidePanelImageSelector(action, state);
 		};
@@ -80,17 +93,4 @@ function renderSidePanelImageSelector(list: Array<string>, action: string, state
 		history.pushState({"sidePanel": "open"}, "title", "/admin/lessons");
 	}
 	refreshLogin();
-}
-
-function closeSidePanelImageSelector(action: string, state: any)
-{
-	switch(action)
-	{
-		case "addField":
-			addField(state, true);
-			break;
-		case "changeField":
-			changeField(state, true);
-			break;
-	}
 }

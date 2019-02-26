@@ -16,6 +16,7 @@
     "../src/ts/interfaces/RequestResponse.ts",
     "../src/ts/interfaces/Role.ts",
     "../src/ts/interfaces/SerializedAction.ts",
+    "../src/ts/interfaces/SidePanelImageSelectorState.ts",
     "../src/ts/interfaces/WorkerPayload.ts",
     "../src/ts/interfaces/XSSOptions.ts",
     "../src/ts/lessonEditor/refreshPreview.ts",

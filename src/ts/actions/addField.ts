@@ -5,7 +5,7 @@ function addFieldPayloadBuilder(): Payload
 	return {"name": encodeURIComponent((document.getElementById("fieldName") as HTMLInputElement).value), "description": encodeURIComponent((document.getElementById("fieldDescription") as HTMLInputElement).value), "image": encodeURIComponent((document.getElementById("fieldImage") as HTMLInputElement).value)};
 }
 
-function addField(state = {name: "Nová oblast", description: "Popis nové oblasti", image: "00000000-0000-0000-0000-000000000000"}, noHistory = false): void
+function addField(state: SidePanelImageSelectorState = {name: "Nová oblast", description: "Popis nové oblasti", image: "00000000-0000-0000-0000-000000000000"}, noHistory = false): void
 {
 	sidePanelOpen();
 	var html = "<div class=\"button yellowButton\" id=\"sidePanelCancel\"><i class=\"icon-cancel\"></i>Zrušit</div>";
