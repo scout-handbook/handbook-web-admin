@@ -1,5 +1,5 @@
 /* global mainPageTab:true */
-/* exported showLessonSubview */
+/* exported mainPageTab, showLessonSubview */
 
 function renderLessonListLesson(lesson: Lesson, secondLevel: string): string
 {

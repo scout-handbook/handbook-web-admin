@@ -1,5 +1,5 @@
 /* global mainPageTab:true */
-/* exported historySetup */
+/* exported historySetup, mainPageTab */
 
 function popback(): void
 {

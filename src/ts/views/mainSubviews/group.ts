@@ -1,5 +1,5 @@
 /* global mainPageTab:true */
-/* exported showGroupSubview */
+/* exported mainPageTab, showGroupSubview */
 
 function renderGroupList(): string
 {
