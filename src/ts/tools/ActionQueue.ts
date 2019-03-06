@@ -70,7 +70,11 @@ class ActionQueue {
 		{
 			spinner();
 		}
-		this.actions[0].exceptionHandler["AuthenticationException"] = this.authException;
+		var that = this;
+		this.actions[0].exceptionHandler["AuthenticationException"] = function()
+		{
+			that.authException();
+		};
 		var that = this;
 		request(this.actions[0].url, this.actions[0].method, this.actions[0].payloadBuilder(), function(response): void
 		{
