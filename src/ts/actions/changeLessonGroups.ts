@@ -2,11 +2,11 @@
 
 var lessonGroupsChanged = false;
 
-function changeLessonGroupsSave(id: string, actionQueue: ActionQueue): void
+function changeLessonGroupsSave(id: string|null, actionQueue: ActionQueue): void
 {
+	id = id !== null ? id : "{id}";
 	if(lessonGroupsChanged)
 	{
-		id = typeof id !== 'undefined' ? id : "{id}";
 		var groups = parseBoolForm();
 		var encodedGroups: Array<string> = [];
 		for(var i = 0; i < groups.length; i++)
@@ -28,7 +28,7 @@ function lessonGroupsOnclick(): void
 	lessonGroupsChanged = true;
 }
 
-function changeLessonGroupsOnClick(id: string, actionQueue: ActionQueue): void
+function changeLessonGroupsOnClick(id: string|null, actionQueue: ActionQueue): void
 {
 	lessonGroupsChanged = false;
 	var html = "<div class=\"button yellowButton\" id=\"cancelEditorAction\"><i class=\"icon-cancel\"></i>Zrušit</div>";

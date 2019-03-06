@@ -2,11 +2,11 @@
 
 var lessonFieldChanged = false;
 
-function changeLessonFieldSave(id: string, actionQueue: ActionQueue): void
+function changeLessonFieldSave(id: string|null, actionQueue: ActionQueue): void
 {
+	id = id !== null ? id : "{id}";
 	if(lessonFieldChanged)
 	{
-		id = typeof id !== 'undefined' ? id : "{id}";
 		var fieldId = parseBoolForm()[0];
 		actionQueue.actions.push(new Action(CONFIG.apiuri + "/lesson/" + id + "/field", "PUT", function(): Payload {return {"field": encodeURIComponent(fieldId)};}));
 		lessonSettingsCache.field = fieldId;
@@ -23,7 +23,7 @@ function lessonFieldOnclick(): void
 	lessonFieldChanged = true;
 }
 
-function changeLessonFieldOnClick(id: string, actionQueue: ActionQueue): void
+function changeLessonFieldOnClick(id: string|null, actionQueue: ActionQueue): void
 {
 	lessonFieldChanged = false;
 	var html = "<div class=\"button yellowButton\" id=\"cancelEditorAction\"><i class=\"icon-cancel\"></i>Zrušit</div>";

@@ -6,7 +6,7 @@ var lessonSettingsCache: LessonSettingsCache = {competences: [], field: "", grou
 var lessonSettingsCacheEvent: AfterLoadEvent;
 var editor: EasyMDE;
 
-function populateEditorCache(id: string): void
+function populateEditorCache(id: string|null): void
 {
 	lessonSettingsCacheEvent = new AfterLoadEvent(1);
 	if(!id)
@@ -73,7 +73,7 @@ function editorOnChange(afterAction: () => void): void
 	refreshLogin(false, afterAction);
 }
 
-function showLessonEditor(name: string, body: string, saveActionQueue: ActionQueue, id: string, discardActionQueue = new ActionQueue(), refreshAction = function(): void {}): void
+function showLessonEditor(name: string, body: string, saveActionQueue: ActionQueue, id: string|null, discardActionQueue = new ActionQueue(), refreshAction = function(): void {}): void
 {
 	populateEditorCache(id);
 	changed = false;
