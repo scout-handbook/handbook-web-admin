@@ -15,7 +15,7 @@ function showLessonAddView(field?: string): void
 		aq.actions.push(new Action(CONFIG.apiuri + "/lesson/{id}/field", "PUT", function(): Payload {return {"field": encodeURIComponent(field)};}))
 	}
 	aq.actions[0].callback = function(response): void {aq.fillID(response as unknown as string)}
-	showLessonEditor(defaultName, defaultBody, aq, "");
+	showLessonEditor(defaultName, defaultBody, aq, null);
 }
 
 function addLessonInFieldOnClick(event: MouseEvent): void

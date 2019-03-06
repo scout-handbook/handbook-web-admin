@@ -64,7 +64,7 @@ function renderGroups(): void
 	document.getElementById("settingsGroupList")!.innerHTML = html;
 }
 
-function lessonSettings(id: string, actionQueue: ActionQueue, noHistory: boolean): void
+function lessonSettings(id: string|null, actionQueue: ActionQueue, noHistory: boolean): void
 {
 	sidePanelOpen();
 	var html = "<div class=\"button yellowButton\" id=\"sidePanelCancel\"><i class=\"icon-right-open\"></i>Zavřít</div>";

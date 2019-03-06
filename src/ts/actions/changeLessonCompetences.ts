@@ -2,11 +2,11 @@
 
 var lessonCompetencesChanged = false;
 
-function changeLessonCompetencesSave(id: string, actionQueue: ActionQueue): void
+function changeLessonCompetencesSave(id: string|null, actionQueue: ActionQueue): void
 {
+	id = id !== null ? id : "{id}";
 	if(lessonCompetencesChanged)
 	{
-		id = typeof id !== 'undefined' ? id : "{id}";
 		var competences = parseBoolForm();
 		var encodedCompetences: Array<string> = [];
 		for(var i = 0; i < competences.length; i++)
@@ -28,7 +28,7 @@ function lessonCompetenceOnclick(): void
 	lessonCompetencesChanged = true;
 }
 
-function changeLessonCompetencesOnClick(id: string, actionQueue: ActionQueue): void
+function changeLessonCompetencesOnClick(id: string|null, actionQueue: ActionQueue): void
 {
 	lessonCompetencesChanged = false;
 	var html = "<div class=\"button yellowButton\" id=\"cancelEditorAction\"><i class=\"icon-cancel\"></i>Zrušit</div>";
