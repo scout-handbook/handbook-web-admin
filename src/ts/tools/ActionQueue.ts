@@ -75,7 +75,6 @@ class ActionQueue {
 		{
 			that.authException();
 		};
-		var that = this;
 		request(this.actions[0].url, this.actions[0].method, this.actions[0].payloadBuilder(), function(response): void
 		{
 			that.actions[0].callback(response);
