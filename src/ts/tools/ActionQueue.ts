@@ -21,7 +21,10 @@ class ActionQueue {
 
 	public dispatch(background: boolean): void
 	{
-		this.pop(true, background);
+		if(this.actions.length > 0)
+		{
+			this.pop(true, background);
+		}
 	}
 
 	public defaultDispatch(background: boolean): void
