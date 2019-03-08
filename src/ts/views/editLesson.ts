@@ -42,12 +42,8 @@ function renderLessonEditView(id: string, markdown: string, noHistory: boolean):
 	}};
 	var discardExceptionHandler = {"NotFoundException": function(): void {}};
 
-	var saveActionQueue = new ActionQueue([new Action(CONFIG.apiuri + "/lesson/" + encodeURIComponent(id) , "PUT", saveLessonPayloadBuilder, removeBeacon, saveExceptionHandler)]);
-	var discardActionQueue = new ActionQueue([new Action(CONFIG.apiuri + "/mutex/" + encodeURIComponent(id) , "DELETE", undefined, function(): void
-	{
-		removeBeacon();
-		dismissSpinner();
-	}, discardExceptionHandler)]);
+	var saveActionQueue = new ActionQueue([new Action(CONFIG.apiuri + "/lesson/" + encodeURIComponent(id) , "PUT", saveLessonPayloadBuilder, [ActionCallback.RemoveBeacon], saveExceptionHandler)]);
+	var discardActionQueue = new ActionQueue([new Action(CONFIG.apiuri + "/mutex/" + encodeURIComponent(id) , "DELETE", undefined, [ActionCallback.RemoveBeacon, ActionCallback.DismissSpinner], discardExceptionHandler)]);
 	showLessonEditor(lesson.name, markdown, saveActionQueue, id, discardActionQueue, function(): void {lessonEditMutexExtend(id);});
 	document.getElementById("save")!.dataset.id = id;
 
