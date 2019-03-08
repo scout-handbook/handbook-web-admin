@@ -40,24 +40,7 @@ class ActionQueue {
 
 	private addDefaultCallback(): void
 	{
-		var origCallback = this.actions[this.actions.length - 1].callback;
-		this.actions[this.actions.length - 1].callback = function(response): void
-		{
-			dialog("Akce byla úspěšná.", "OK");
-			refreshMetadata();
-			if(!ActionQueueRetry && origCallback)
-			{
-				origCallback(response);
-			}
-			if(ActionQueueRetry)
-			{
-				showMainView(false);
-			}
-			else
-			{
-				history.back();
-			}
-		};
+		this.actions[this.actions.length - 1].callback = ActionCallback.DialogConfirm;
 	}
 
 	private pop(propagate: boolean, background: boolean): void
@@ -77,7 +60,7 @@ class ActionQueue {
 		};
 		request(this.actions[0].url, this.actions[0].method, this.actions[0].payloadBuilder(), function(response): void
 		{
-			that.actions[0].callback(response);
+			that.actions[0].runCallback(response);
 			that.actions.shift();
 			if(propagate)
 			{

@@ -1,0 +1,4 @@
+enum ActionCallback {
+	Nothing,
+	DialogConfirm
+}

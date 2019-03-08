@@ -21,6 +21,7 @@
     "../src/ts/interfaces/XSSOptions.ts",
     "../src/ts/lessonEditor/refreshPreview.ts",
     "../src/ts/tools/Action.ts",
+    "../src/ts/tools/ActionCallback.ts",
     "../src/ts/tools/ActionQueue.ts",
     "../src/ts/tools/refreshLogin.ts",
     "../src/ts/tools/request.ts",
