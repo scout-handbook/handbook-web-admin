@@ -8,7 +8,7 @@ class Action
 	public callbacks: Array<ActionCallback>;
 	public exceptionHandler: ExceptionHandler;
 
-	public constructor(url: string, method: string, payloadBuilder: () => Payload = function(): Payload {return{};}, callbacks: Array<ActionCallback> = [ActionCallback.Nothing], exceptionHandler: ExceptionHandler = {})
+	public constructor(url: string, method: string, payloadBuilder: () => Payload = function(): Payload {return{};}, callbacks: Array<ActionCallback> = [], exceptionHandler: ExceptionHandler = {})
 	{
 		this.url = url;
 		this.method = method;
@@ -34,8 +34,6 @@ class Action
 					break;
 				case ActionCallback.RemoveBeacon:
 					removeBeacon();
-					break;
-				default:
 					break;
 			}
 		}
