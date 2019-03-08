@@ -1,3 +1,4 @@
+/* global ActionQueueRetry:true */
 /* exported ActionQueueSetup */
 
 var ActionQueueRetry = false;

@@ -1,4 +1,4 @@
-/* exported imageSelectorOpen, showLessonEditView */
+/* exported imageSelectorOpen, showLessonEditView, removeBeacon */
 
 var imageSelectorOpen = false;
 
