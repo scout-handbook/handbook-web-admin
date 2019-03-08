@@ -60,7 +60,7 @@ class ActionQueue {
 		};
 		request(this.actions[0].url, this.actions[0].method, this.actions[0].payloadBuilder(), function(response): void
 		{
-			that.actions[0].runCallback(response);
+			that.actions[0].callback(response, that);
 			that.actions.shift();
 			if(propagate)
 			{

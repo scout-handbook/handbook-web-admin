@@ -17,7 +17,7 @@ class Action
 		this.exceptionHandler = exceptionHandler;
 	}
 
-	public runCallback(response: RequestResponse): void
+	public callback(response: RequestResponse, actionQueue: ActionQueue): void
 	{
 		for(var i = 0; i < this.callbacks.length; i++)
 		{
@@ -30,7 +30,7 @@ class Action
 					dismissSpinner();
 					break;
 				case ActionCallback.FillID:
-					// TODO
+					actionQueue.fillID(response as unknown as string);
 					break;
 				case ActionCallback.RemoveBeacon:
 					removeBeacon();
