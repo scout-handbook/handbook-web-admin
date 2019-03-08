@@ -7,8 +7,7 @@ function restoreLessonPayloadBuilder(): Payload
 
 function showLessonRestoreView(name: string, body: string): void
 {
-	var aq = new ActionQueue([new Action(CONFIG.apiuri + "/lesson", "POST", restoreLessonPayloadBuilder)])
-	aq.actions[0].callback = function(response): void {aq.fillID(response as unknown as string)}
+	var aq = new ActionQueue([new Action(CONFIG.apiuri + "/lesson", "POST", restoreLessonPayloadBuilder, [ActionCallback.FillID])])
 	showLessonEditor(name, body, aq, "");
 
 	history.pushState({}, "title", "/admin/lessons");
