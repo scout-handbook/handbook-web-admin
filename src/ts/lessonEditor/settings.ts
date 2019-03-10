@@ -68,7 +68,10 @@ function lessonSettings(id: string|null, actionQueue: ActionQueue, noHistory: bo
 {
 	sidePanelOpen();
 	var html = "<div class=\"button yellowButton\" id=\"sidePanelCancel\"><i class=\"icon-right-open\"></i>Zavřít</div>";
-	html += "<div class=\"button\" id=\"lessonHistoryOpen\"><i class=\"icon-history\"></i>Historie lekce</div>";
+	if(id != null)
+	{
+		html += "<div class=\"button\" id=\"lessonHistoryOpen\"><i class=\"icon-history\"></i>Historie lekce</div>";
+	}
 	html += renderField();
 	html += renderCompetences();
 	html += prerenderGroups();
@@ -79,7 +82,10 @@ function lessonSettings(id: string|null, actionQueue: ActionQueue, noHistory: bo
 	{
 		history.back();
 	};
-	document.getElementById("lessonHistoryOpen")!.onclick = function(): void {lessonHistoryOpen(id, actionQueue);};
+	if(id != null)
+	{
+		document.getElementById("lessonHistoryOpen")!.onclick = function(): void {lessonHistoryOpen(id, actionQueue);};
+	}
 	document.getElementById("changeField")!.onclick = function(): void {changeLessonFieldOnClick(id, actionQueue);};
 	document.getElementById("changeCompetences")!.onclick = function(): void {changeLessonCompetencesOnClick(id, actionQueue);};
 	document.getElementById("changeGroups")!.onclick = function(): void {changeLessonGroupsOnClick(id, actionQueue);};
