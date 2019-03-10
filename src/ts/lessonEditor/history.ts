@@ -1,4 +1,5 @@
-/* exported lessonHistoryOpen */
+/* global changed:true */
+/* exported changed, lessonHistoryOpen */
 
 function lessonHistoryPreviewShowCurrent(): void
 {
@@ -20,6 +21,7 @@ function lessonHistoryPreviewRenderVersion(id: string, name: string, body: strin
 	{
 		(document.getElementById("name") as HTMLInputElement).value = name;
 		editor.value(body);
+		changed = true;
 		lessonSettings(id, actionQueue, true);
 	};
 }
@@ -70,7 +72,7 @@ function lessonHistoryListRender(id: string, actionQueue: ActionQueue, list: Arr
 	}
 }
 
-function lessonHistoryOpen(id: string|null, actionQueue: ActionQueue): void
+function lessonHistoryOpen(id: string, actionQueue: ActionQueue): void
 {
 	sidePanelDoubleOpen();
 	var html = "<div id=\"lessonHistoryList\"><div class=\"button yellowButton\" id=\"cancelEditorAction\"><i class=\"icon-cancel\"></i>Zrušit</div><span id=\"lessonHistoryListHeader\"></span><h3 class=\"sidePanelTitle\">Historie lekce</h3><div id=\"lessonHistoryForm\"><div id=\"embeddedSpinner\"></div></div></div><div id=\"lessonHistoryPreview\"></div>";
@@ -83,7 +85,7 @@ function lessonHistoryOpen(id: string|null, actionQueue: ActionQueue): void
 
 	request(CONFIG.apiuri + "/lesson/" + id + "/history", "GET", {}, function(response: RequestResponse): void
 	{
-		lessonHistoryListRender(id!, actionQueue, response as unknown as Array<LessonVersion>); // TODO: Hide when id == null, when adding a new lesson
+		lessonHistoryListRender(id, actionQueue, response as unknown as Array<LessonVersion>);
 	}, authFailHandler);
 	lessonHistoryPreviewShowCurrent();
 }

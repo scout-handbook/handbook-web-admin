@@ -41,7 +41,7 @@ class ActionQueue {
 
 	private addDefaultCallback(): void
 	{
-		this.actions[this.actions.length - 1].callbacks.unshift(ActionCallback.DialogConfirm);
+		this.actions[this.actions.length - 1].callbacks.push(ActionCallback.DialogConfirm);
 	}
 
 	private pop(propagate: boolean, background: boolean): void
