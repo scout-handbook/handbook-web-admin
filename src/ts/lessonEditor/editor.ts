@@ -1,4 +1,4 @@
-/* global editor:true, lessonSettingsCacheEvent:true */
+/* global changed:true, editor:true, lessonSettingsCacheEvent:true */
 /* exported showLessonEditor */
 
 var changed: boolean;
@@ -110,7 +110,17 @@ function showLessonEditor(name: string, body: string, saveActionQueue: ActionQue
 	refreshPreview(name, body, "preview-inner");
 
 	document.getElementById("discard")!.onclick = function(): void {editorDiscard(discardActionQueue);};
-	document.getElementById("save")!.onclick = function(): void {saveActionQueue.defaultDispatch(false);}; // TODO: Check if editing, then if no change, do nothing
+	document.getElementById("save")!.onclick = function(): void {
+		if(changed)
+		{
+			saveActionQueue.defaultDispatch(false);
+		}
+		else
+		{
+			history.back();
+			discardActionQueue.defaultDispatch(false);
+		}
+	};
 	document.getElementById("lessonSettings")!.onclick = function(): void {lessonSettings(id, saveActionQueue, false);};
 	document.getElementById("closeImageSelector")!.onclick = toggleImageSelector;
 	document.getElementById("imageSelectorAdd")!.onclick = function(): void {addImage(true);};

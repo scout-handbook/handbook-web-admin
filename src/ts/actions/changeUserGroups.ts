@@ -55,7 +55,10 @@ function changeUserGroupsOnClick(event: MouseEvent): void
 	};
 
 	var aq = new ActionQueue([new Action(CONFIG.apiuri + "/user/" + encodeURIComponent(getAttribute(event, "id")) + "/group", "PUT", changeUserPayloadBuilder)]);
-	document.getElementById("changeUserGroupsSave")!.onclick = aq.closeDispatch;
+	document.getElementById("changeUserGroupsSave")!.onclick = function()
+	{
+		dispatchIfChanged(aq, groupsChanged);
+	};
 
 	var nodes = document.getElementById("sidePanelForm")!.getElementsByTagName("input");
 	for(var k = 0; k < nodes.length; k++)

@@ -1,4 +1,5 @@
-/* exported changeLessonGroupsOnClick */
+/* global changed:true */
+/* exported changed, changeLessonGroupsOnClick */
 
 var lessonGroupsChanged = false;
 
@@ -7,6 +8,7 @@ function changeLessonGroupsSave(id: string|null, actionQueue: ActionQueue): void
 	id = id !== null ? id : "{id}";
 	if(lessonGroupsChanged)
 	{
+		changed = true;
 		var groups = parseBoolForm();
 		var encodedGroups: Array<string> = [];
 		for(var i = 0; i < groups.length; i++)

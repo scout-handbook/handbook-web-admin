@@ -35,7 +35,10 @@ function changeField(state: SidePanelImageSelectorState, noHistory = false): voi
 	}
 
 	var aq = new ActionQueue([new Action(CONFIG.apiuri + "/field/" + encodeURIComponent(state.id), "PUT", changeFieldPayloadBuilder)]);
-	document.getElementById("changeFieldSave")!.onclick = aq.closeDispatch;
+	document.getElementById("changeFieldSave")!.onclick = function()
+	{
+		dispatchIfChanged(aq, fieldChanged);
+	};
 
 	document.getElementById("fieldName")!.oninput = function(): void
 	{

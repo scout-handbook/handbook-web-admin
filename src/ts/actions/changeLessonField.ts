@@ -1,4 +1,5 @@
-/* exported changeLessonFieldOnClick */
+/* global changed:true */
+/* exported changed, changeLessonFieldOnClick */
 
 var lessonFieldChanged = false;
 
@@ -7,6 +8,7 @@ function changeLessonFieldSave(id: string|null, actionQueue: ActionQueue): void
 	id = id !== null ? id : "{id}";
 	if(lessonFieldChanged)
 	{
+		changed = true;
 		var fieldId = parseBoolForm()[0];
 		actionQueue.actions.push(new Action(CONFIG.apiuri + "/lesson/" + id + "/field", "PUT", function(): Payload {return {"field": encodeURIComponent(fieldId)};}));
 		lessonSettingsCache.field = fieldId;

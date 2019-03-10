@@ -42,7 +42,10 @@ function changeUserRoleOnClick(event: MouseEvent): void
 	};
 
 	var aq = new ActionQueue([new Action(CONFIG.apiuri + "/user/" + encodeURIComponent(getAttribute(event, "id")) + "/role", "PUT", changeUserRolePayloadBuilder)]);
-	document.getElementById("changeUserRoleSave")!.onclick = aq.closeDispatch;
+	document.getElementById("changeUserRoleSave")!.onclick = function()
+	{
+		dispatchIfChanged(aq, roleChanged);
+	};
 
 	document.getElementById("roleSelect")!.onchange = function(): void
 	{

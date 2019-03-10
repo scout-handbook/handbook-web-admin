@@ -1,4 +1,5 @@
-/* exported changeLessonCompetencesOnClick */
+/* global changed:true */
+/* exported changed, changeLessonCompetencesOnClick */
 
 var lessonCompetencesChanged = false;
 
@@ -7,6 +8,7 @@ function changeLessonCompetencesSave(id: string|null, actionQueue: ActionQueue):
 	id = id !== null ? id : "{id}";
 	if(lessonCompetencesChanged)
 	{
+		changed = true;
 		var competences = parseBoolForm();
 		var encodedCompetences: Array<string> = [];
 		for(var i = 0; i < competences.length; i++)
