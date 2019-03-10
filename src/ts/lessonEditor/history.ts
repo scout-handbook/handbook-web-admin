@@ -1,4 +1,5 @@
-/* exported lessonHistoryOpen */
+/* global changed:true */
+/* exported changed, lessonHistoryOpen */
 
 function lessonHistoryPreviewShowCurrent(): void
 {
@@ -20,6 +21,7 @@ function lessonHistoryPreviewRenderVersion(id: string, name: string, body: strin
 	{
 		(document.getElementById("name") as HTMLInputElement).value = name;
 		editor.value(body);
+		changed = true;
 		lessonSettings(id, actionQueue, true);
 	};
 }

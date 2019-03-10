@@ -1,4 +1,5 @@
-/* exported addLessonInFieldOnClick */
+/* global changed:true */
+/* exported changed, addLessonInFieldOnClick */
 
 function addLessonPayloadBuilder(): Payload
 {
@@ -15,6 +16,7 @@ function showLessonAddView(field?: string): void
 		aq.actions.push(new Action(CONFIG.apiuri + "/lesson/{id}/field", "PUT", function(): Payload {return {"field": encodeURIComponent(field)};}))
 	}
 	showLessonEditor(defaultName, defaultBody, aq, null);
+	changed = true;
 }
 
 function addLessonInFieldOnClick(event: MouseEvent): void
