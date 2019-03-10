@@ -66,6 +66,7 @@
 		"deserializeAction": false,
 		"dialog": false,
 		"dismissSpinner": false,
+		"dispatchIfChanged": false,
 		"EasyMDE": false,
 		"editor": false,
 		"filterXSS": false,
