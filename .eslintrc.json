@@ -47,6 +47,7 @@
 		"AfterLoadEvent": false,
 		"authFailHandler": false,
 		"changeCompetenceOnClick": false,
+		"changed": false,
 		"changeField": false,
 		"changeFieldOnClick": false,
 		"changeGroupOnClick": false,
