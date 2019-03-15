@@ -123,7 +123,8 @@ function showLessonEditor(name: string, body: string, saveActionQueue: ActionQue
 	};
 	document.getElementById("lessonSettings")!.onclick = function(): void {lessonSettings(id, saveActionQueue, false);};
 	document.getElementById("closeImageSelector")!.onclick = toggleImageSelector;
-	document.getElementById("imageSelectorAdd")!.onclick = function(): void {addImage(true);};
+	//document.getElementById("imageSelectorAdd")!.onclick = function(): void {addImage(true);};
+	document.getElementById("imageSelectorAdd")!.style.display = "none"; // TODO: Re-enable uploads in editor without discarding its contents
 
 	editor = new EasyMDE({
 		autoDownloadFontAwesome: false,
