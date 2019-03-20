@@ -1,10 +1,10 @@
+/// <reference types="xss" />
 declare var CONFIG: Config;
 declare var imageSelectorOpen: boolean;
 declare var sidePanelState: boolean;
 declare function closeSidePanelImageSelector(action: string, state: SidePanelImageSelectorState): void;
 declare function dialog(mainText: string, confirmText: string, confirmCallback?: () => void, dismissText?: string, dismissCallback?: () => void): void;
 declare function dismissSpinner(): void;
-declare function filterXSS(html: string, options: XSSOptions): string;
 declare function prepareImageSelector(page?: number, perPage?: number): void;
 declare function removeBeacon(): void;
 declare function showCompetenceSubview(noHistory: boolean): void;
