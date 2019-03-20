@@ -1,2 +1,2 @@
-declare function filterXSS(html: string, options: XSSOptions): string;
+/// <reference types="xss" />
 declare function xssOptions(): XSSOptions;
