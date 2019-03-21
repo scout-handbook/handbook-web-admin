@@ -1,2 +1,2 @@
 /// <reference types="xss" />
-declare function xssOptions(): XSSOptions;
+declare function xssOptions(): XSS.IFilterXSSOptions;

@@ -8,7 +8,6 @@
   },
   "files": [
     "../src/d.ts/admin-worker.d.ts",
-    "../src/ts/interfaces/XSSOptions.ts",
     "../src/ts/lessonEditor/previewWorker.ts"
   ]
 }

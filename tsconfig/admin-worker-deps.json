@@ -7,8 +7,8 @@
     "types": ["showdown"]
   },
   "files": [
+    "../src/d.ts/admin-worker-deps.d.ts",
     "../src/ts/interfaces/Arguments.ts",
-    "../src/ts/interfaces/XSSOptions.ts",
     "../src/ts/HandbookMarkdown.ts",
     "../src/ts/xssOptions.ts"
   ]
