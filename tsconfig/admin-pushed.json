@@ -18,7 +18,6 @@
     "../src/ts/interfaces/SerializedAction.ts",
     "../src/ts/interfaces/SidePanelImageSelectorState.ts",
     "../src/ts/interfaces/WorkerPayload.ts",
-    "../src/ts/interfaces/XSSOptions.ts",
     "../src/ts/lessonEditor/refreshPreview.ts",
     "../src/ts/tools/Action.ts",
     "../src/ts/tools/ActionCallback.ts",

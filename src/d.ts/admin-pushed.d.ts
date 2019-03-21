@@ -15,4 +15,4 @@ declare function showLessonSubview(noHistory: boolean): void;
 declare function showUserSubview(noHistory: boolean): void;
 declare function sidePanelClose(): void;
 declare function spinner(): void;
-declare function xssOptions(): XSSOptions;
+declare function xssOptions(): XSS.IFilterXSSOptions;
