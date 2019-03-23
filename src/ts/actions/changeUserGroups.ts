@@ -66,6 +66,6 @@ function changeUserGroupsOnClick(event: MouseEvent): void
 		nodes[k].onchange = userGroupsOnclick;
 	}
 
-	history.pushState({"sidePanel": "open"}, "title", "/admin/users");
+	history.pushState({"sidePanel": "open"}, "title", "/admin/users"); // eslint-disable-line compat/compat
 	refreshLogin();
 }

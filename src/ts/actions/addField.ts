@@ -35,7 +35,7 @@ function addField(state: SidePanelImageSelectorState = {name: "Nová oblast", de
 
 	if(!noHistory)
 	{
-		history.pushState({"sidePanel": "open"}, "title", "/admin/lessons");
+		history.pushState({"sidePanel": "open"}, "title", "/admin/lessons"); // eslint-disable-line compat/compat
 	}
 	refreshLogin();
 }

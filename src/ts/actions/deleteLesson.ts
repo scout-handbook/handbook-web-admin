@@ -25,7 +25,7 @@ function deleteLessonDialog(id: string): void
 		discardActionQueue.dispatch(true);
 		history.back();
 	});
-	history.pushState({"sidePanel": "open"}, "title", "/admin/lessons");
+	history.pushState({"sidePanel": "open"}, "title", "/admin/lessons"); // eslint-disable-line compat/compat
 	refreshLogin();
 }
 

@@ -17,6 +17,6 @@ function deleteCompetenceOnClick(event: MouseEvent): void
 	var aq = new ActionQueue([new Action(CONFIG.apiuri + "/competence/" + encodeURIComponent(getAttribute(event, "id")), "DELETE")]);
 
 	dialog("Opravdu si přejete smazat kompetenci " + number + ": \"" + name + "\"?", "Ano", aq.closeDispatch, "Ne", function(): void {history.back();});
-	history.pushState({"sidePanel": "open"}, "title", "/admin/competences");
+	history.pushState({"sidePanel": "open"}, "title", "/admin/competences"); // eslint-disable-line compat/compat
 	refreshLogin();
 }

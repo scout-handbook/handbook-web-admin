@@ -21,9 +21,9 @@ function lessonEditMutexExtend(id: string): void
 
 function sendBeacon(id: string): void
 {
-	if(navigator.sendBeacon)
+	if(navigator.sendBeacon) // eslint-disable-line compat/compat
 	{
-		navigator.sendBeacon(CONFIG.apiuri + "/mutex-beacon/" + encodeURIComponent(id));
+		navigator.sendBeacon(CONFIG.apiuri + "/mutex-beacon/" + encodeURIComponent(id)); // eslint-disable-line compat/compat
 	}
 }
 
@@ -33,7 +33,7 @@ function renderLessonEditView(id: string, markdown: string, noHistory: boolean):
 	var lesson = getLessonById(id)!;
 	if(!noHistory)
 	{
-		history.pushState({"id": id}, "title", "/admin/lessons");
+		history.pushState({"id": id}, "title", "/admin/lessons"); // eslint-disable-line compat/compat
 	}
 
 	var saveExceptionHandler = {"NotLockedException": function(): void

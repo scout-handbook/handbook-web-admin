@@ -80,6 +80,6 @@ function showImageSubview(noHistory: boolean): void
 	downloadImageList(1, 15);
 	if(!noHistory)
 	{
-		history.pushState({"page": "images"}, "title", "/admin/images");
+		history.pushState({"page": "images"}, "title", "/admin/images"); // eslint-disable-line compat/compat
 	}
 }

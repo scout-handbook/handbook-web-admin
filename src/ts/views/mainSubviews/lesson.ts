@@ -105,7 +105,7 @@ function showLessonSubview(noHistory: boolean): void
 	addOnClicks("deleteLesson", deleteLessonOnClick);
 	if(!noHistory)
 	{
-		history.pushState({"page": "lessons"}, "title", "/admin/lessons");
+		history.pushState({"page": "lessons"}, "title", "/admin/lessons"); // eslint-disable-line compat/compat
 	}
 	refreshLogin(true);
 }

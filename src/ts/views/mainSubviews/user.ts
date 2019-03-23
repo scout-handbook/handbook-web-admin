@@ -187,6 +187,6 @@ function showUserSubview(noHistory: boolean): void
 	downloadUserList();
 	if(!noHistory)
 	{
-		history.pushState({"page": "users"}, "title", "/admin/users");
+		history.pushState({"page": "users"}, "title", "/admin/users"); // eslint-disable-line compat/compat
 	}
 }

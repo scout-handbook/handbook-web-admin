@@ -44,7 +44,7 @@ function showCompetenceSubview(noHistory: boolean): void
 	addOnClicks("deleteCompetence", deleteCompetenceOnClick);
 	if(!noHistory)
 	{
-		history.pushState({"page": "competences"}, "title", "/admin/competences");
+		history.pushState({"page": "competences"}, "title", "/admin/competences"); // eslint-disable-line compat/compat
 	}
 	refreshLogin(true);
 }

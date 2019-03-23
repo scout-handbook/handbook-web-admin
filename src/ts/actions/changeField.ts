@@ -51,7 +51,7 @@ function changeField(state: SidePanelImageSelectorState, noHistory = false): voi
 
 	if(!noHistory)
 	{
-		history.pushState({"sidePanel": "open"}, "title", "/admin/lessons");
+		history.pushState({"sidePanel": "open"}, "title", "/admin/lessons"); // eslint-disable-line compat/compat
 	}
 	refreshLogin();
 }
