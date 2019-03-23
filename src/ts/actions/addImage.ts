@@ -4,7 +4,11 @@ function addImageSave(): void
 {
 	if((document.getElementById("addImageFile") as HTMLInputElement).value !== "")
 	{
-		var formData = new FormData()
+		if(!FormData)
+		{
+			dialog("Tento prohlížeč nepodporuje nahrávání souborů", "OK");
+		}
+		var formData = new FormData() // eslint-disable-line compat/compat
 		formData.append("image", (document.getElementById("addImageFile") as HTMLInputElement).files![0])
 		sidePanelClose();
 		spinner();
