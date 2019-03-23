@@ -104,6 +104,6 @@ function restoreLesson(): void
 		restoreLessonRenderLessonList(response as unknown as Array<DeletedLesson>);
 	}, reAuthHandler);
 
-	history.pushState({"sidePanel": "open"}, "title", "/admin/lessons");
+	history.pushState({"sidePanel": "open"}, "title", "/admin/lessons"); // eslint-disable-line compat/compat
 	refreshLogin();
 }

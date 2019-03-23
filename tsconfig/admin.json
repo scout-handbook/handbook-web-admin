@@ -54,6 +54,7 @@
     "../src/ts/tools/ActionCallback.ts",
     "../src/ts/tools/addOnClicks.ts",
     "../src/ts/tools/dispatchIfChanged.ts",
+    "../src/ts/tools/getElementsByClassName.ts",
     "../src/ts/tools/parseBoolForm.ts",
     "../src/ts/tools/parseVersion.ts",
     "../src/ts/UI/button.ts",

@@ -9,7 +9,7 @@ function refreshPreviewSetup(): void
 {
 	if(Worker)
 	{
-		worker = new Worker(CONFIG['admin-uri'] + "/admin-worker.min.js");
+		worker = new Worker(CONFIG['admin-uri'] + "/admin-worker.min.js"); // eslint-disable-line compat/compat
 		worker.onmessage = function(payload): void
 		{
 			document.getElementById(payload.data.id)!.innerHTML = payload.data.body;

@@ -116,5 +116,10 @@
 		"spinner": false,
 		"toggleImageSelector": false,
 		"xssOptions": false
+	},
+	"settings": {
+		"polyfills": [
+			"document.getElementsByClassName"
+		]
 	}
 }

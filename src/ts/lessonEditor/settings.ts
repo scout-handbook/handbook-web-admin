@@ -91,7 +91,7 @@ function lessonSettings(id: string|null, actionQueue: ActionQueue, noHistory: bo
 	document.getElementById("changeGroups")!.onclick = function(): void {changeLessonGroupsOnClick(id, actionQueue);};
 	if(!noHistory)
 	{
-		history.pushState({"sidePanel": "open"}, "title", "/admin/lessons");
+		history.pushState({"sidePanel": "open"}, "title", "/admin/lessons"); // eslint-disable-line compat/compat
 	}
 	refreshLogin();
 }

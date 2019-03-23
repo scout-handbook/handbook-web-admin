@@ -89,8 +89,8 @@ function renderSidePanelImageSelector(list: Array<string>, action: string, state
 
 	if(!noHistory)
 	{
-		history.replaceState({"sidePanelImageSelectorAction": action, "sidePanelImageSelectorState": state}, "title", "/admin/lessons");
-		history.pushState({"sidePanel": "open"}, "title", "/admin/lessons");
+		history.replaceState({"sidePanelImageSelectorAction": action, "sidePanelImageSelectorState": state}, "title", "/admin/lessons"); // eslint-disable-line compat/compat
+		history.pushState({"sidePanel": "open"}, "title", "/admin/lessons"); // eslint-disable-line compat/compat
 	}
 	refreshLogin();
 }

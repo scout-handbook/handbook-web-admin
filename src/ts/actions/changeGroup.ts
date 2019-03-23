@@ -46,6 +46,6 @@ function changeGroupOnClick(event: MouseEvent): void
 		groupChanged = true;
 	};
 
-	history.pushState({"sidePanel": "open"}, "title", "/admin/groups");
+	history.pushState({"sidePanel": "open"}, "title", "/admin/groups"); // eslint-disable-line compat/compat
 	refreshLogin();
 }

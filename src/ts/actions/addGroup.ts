@@ -24,6 +24,6 @@ function addGroup(): void
 	var aq = new ActionQueue([new Action(CONFIG.apiuri + "/group", "POST", addGroupPayloadBuilder)]);
 	document.getElementById("addGroupSave")!.onclick = aq.closeDispatch;
 
-	history.pushState({"sidePanel": "open"}, "title", "/admin/groups");
+	history.pushState({"sidePanel": "open"}, "title", "/admin/groups"); // eslint-disable-line compat/compat
 	refreshLogin();
 }

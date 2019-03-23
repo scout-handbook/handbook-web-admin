@@ -167,6 +167,6 @@ function importGroupOnClick(event: MouseEvent): void
 		importGroupSelectEventRender(getAttribute(event, "id"), response as unknown as Array<Event>);
 	}, reAuthHandler);
 
-	history.pushState({"sidePanel": "open"}, "title", "/admin/groups");
+	history.pushState({"sidePanel": "open"}, "title", "/admin/groups"); // eslint-disable-line compat/compat
 	refreshLogin();
 }

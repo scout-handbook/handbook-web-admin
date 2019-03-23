@@ -8,7 +8,7 @@ function addLessonPayloadBuilder(): Payload
 
 function showLessonAddView(field?: string): void
 {
-	history.pushState({}, "title", "/admin/lessons");
+	history.pushState({}, "title", "/admin/lessons"); // eslint-disable-line compat/compat
 
 	var aq = new ActionQueue([new Action(CONFIG.apiuri + "/lesson", "POST", addLessonPayloadBuilder, [ActionCallback.FillID])])
 	if(field)
