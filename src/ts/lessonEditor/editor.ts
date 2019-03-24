@@ -22,7 +22,7 @@ function populateEditorCache(id: string|null): void
 		lessonSettingsCache["groups"] = response as unknown as Array<string>;
 		lessonSettingsCacheEvent.trigger();
 	}, reAuthHandler);
-	FULLFIELDS.iterate(function(fieldId, field)
+	FIELDS.iterate(function(fieldId, field)
 	{
 		if(field.lessons.indexOf(id) >= 0)
 		{

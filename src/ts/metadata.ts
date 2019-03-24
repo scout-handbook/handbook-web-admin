@@ -1,8 +1,8 @@
-/* global FULLFIELDS:true, COMPETENCES:true, GROUPS:true, LOGINSTATE:true, metadataEvent:true */
-/* exported FULLFIELDS, COMPETENCES, GROUPS, LOGINSTATE, metadataSetup */
+/* global COMPETENCES:true, GROUPS:true, LOGINSTATE:true, metadataEvent:true */
+/* exported COMPETENCES, GROUPS, LOGINSTATE, metadataSetup */
 
 var metadataEvent: AfterLoadEvent;
-var FULLFIELDS: IDList<FullField>;
+var FIELDS: IDList<Field>;
 var COMPETENCES: IDList<Competence>;
 var GROUPS: IDList<Group>;
 var LESSONS: IDList<Lesson>;
@@ -18,7 +18,7 @@ function refreshMetadata(): void
 	}, undefined);
 	request(CONFIG.apiuri + "/field", "GET", {}, function(response): void
 	{
-		FULLFIELDS = new IDList<FullField>(response as IDListItems<FullField>);
+		FIELDS = new IDList<Field>(response as IDListItems<Field>);
 		metadataEvent.trigger();
 	}, undefined);
 	request(CONFIG.apiuri + "/competence", "GET", {}, function(response): void
