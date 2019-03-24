@@ -36,17 +36,17 @@ function changeLessonCompetencesOnClick(id: string|null, actionQueue: ActionQueu
 	var html = "<div class=\"button yellowButton\" id=\"cancelEditorAction\"><i class=\"icon-cancel\"></i>Zrušit</div>";
 	html += "<div class=\"button greenButton\" id=\"changeLessonCompetencesSave\"><i class=\"icon-floppy\"></i>Uložit</div>";
 	html += "<h3 class=\"sidePanelTitle\">Změnit kompetence</h3><form id=\"sidePanelForm\">";
-	for(var i = 0; i < COMPETENCES.length; i++)
+	COMPETENCES.iterate(function(competenceId, competence)
 	{
 		html += "<div class=\"formRow\"><label class=\"formSwitch\"><input type=\"checkbox\"";
-		if(lessonSettingsCache.competences.indexOf(COMPETENCES[i].id) >= 0)
+		if(lessonSettingsCache.competences.indexOf(competenceId) >= 0)
 		{
 			html += " checked";
 		}
-		html += " data-id=\"" + COMPETENCES[i].id + "\"";
+		html += " data-id=\"" + competenceId + "\"";
 		html += "><span class=\"formCustom formCheckbox\"></span></label>";
-		html += "<span class=\"competenceNumber\">" + COMPETENCES[i].number + ":</span> " + COMPETENCES[i].name + "</div>";
-	}
+		html += "<span class=\"competenceNumber\">" + competence.number + ":</span> " + competence.name + "</div>";
+	});
 	html += "</form>";
 	document.getElementById("sidePanel")!.innerHTML = html;
 

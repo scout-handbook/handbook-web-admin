@@ -19,13 +19,13 @@ function renderCompetences(): string
 {
 	var html = "<br><h3 class=\"sidePanelTitle noNewline\">Kompetence</h3>"
 	html += "<div class=\"button cyanButton\" id=\"changeCompetences\"><i class=\"icon-pencil\"></i>Upravit</div>";
-	for(var i = 0; i < COMPETENCES.length; i++)
+	COMPETENCES.iterate(function(id, competence)
 	{
-		if(lessonSettingsCache.competences.indexOf(COMPETENCES[i].id) >= 0)
+		if(lessonSettingsCache.competences.indexOf(id) >= 0)
 		{
-			html += "<br><span class=\"competenceNumber\">" + COMPETENCES[i].number + ":</span> " + COMPETENCES[i].name;
+			html += "<br><span class=\"competenceNumber\">" + competence.number + ":</span> " + competence.name;
 		}
-	}
+	});
 	return html;
 }
 
