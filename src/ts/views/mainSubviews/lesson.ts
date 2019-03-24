@@ -11,22 +11,21 @@ function renderLessonListLesson(id: string, lesson: Lesson, secondLevel: string)
 	}
 	html += "<a href=\"" + CONFIG['admin-uri'] + "/lesson/" + id + "\" target=\"_blank\" class=\"button exportLesson\"><i class=\"icon-file-pdf\"></i>PDF</a>";
 	html += "<br><span class=\"mainPage" + secondLevel + "\">Kompetence: ";
-	if(lesson.competences.length > 0)
+	var first = true;
+	COMPETENCES.iterate(function(competenceId, competence)
 	{
-		var competences = [];
-		for(var k = 0; k < COMPETENCES.length; k++)
+		if(lesson.competences.indexOf(competenceId) >= 0)
 		{
-			if(lesson.competences.indexOf(COMPETENCES[k].id) >= 0)
+			if(first)
 			{
-				competences.push(COMPETENCES[k]);
+				html += competence.number;
+			}
+			else
+			{
+				html += ", " + competence.number;
 			}
 		}
-		html += competences[0].number;
-		for(var m = 1; m < competences.length; m++)
-		{
-			html += ", " + competences[m].number;
-		}
-	}
+	});
 	html += "</span>";
 	return html;
 }
@@ -48,12 +47,12 @@ function renderLessonList(): string
 			}
 			html += "<div class=\"button greenButton addLessonInField\" data-id=\"" + id + "\"><i class=\"icon-plus\"></i>Přidat lekci</div>";
 		}
-		LESSONS.filter(function(lessonId)
+		LESSONS.iterate(function(lessonId, lesson)
 		{
-			return field.lessons.indexOf(lessonId) >= 0;
-		}).iterate(function(lessonId, lesson)
-		{
-			html += renderLessonListLesson(lessonId, lesson, secondLevel);
+			if(field.lessons.indexOf(lessonId) >= 0)
+			{
+				html += renderLessonListLesson(lessonId, lesson, secondLevel);
+			}
 		});
 	});
 	return html;

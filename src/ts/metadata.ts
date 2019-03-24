@@ -3,7 +3,7 @@
 
 var metadataEvent: AfterLoadEvent;
 var FULLFIELDS: IDList<FullField>;
-var COMPETENCES = [];
+var COMPETENCES: IDList<Competence>;
 var GROUPS = [];
 var LESSONS: IDList<Lesson>;
 var LOGINSTATE: Loginstate = {avatar: "", name: "", role: "guest"};
@@ -23,7 +23,7 @@ function refreshMetadata(): void
 	}, undefined);
 	request(CONFIG.apiuri + "/competence", "GET", {}, function(response): void
 	{
-		COMPETENCES = response as unknown as Array<Competence>;
+		COMPETENCES = new IDList<Competence>(response as IDListItems<Competence>);
 		metadataEvent.trigger();
 	}, undefined);
 	var groupExceptionHandler = {"AuthenticationException": function(): void

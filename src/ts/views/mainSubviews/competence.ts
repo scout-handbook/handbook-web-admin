@@ -4,16 +4,16 @@
 function renderCompetenceList(): string
 {
 	var html = "";
-	for(var i = 0; i < COMPETENCES.length; i++)
+	COMPETENCES.iterate(function(id, competence)
 	{
-		html += "<h3 class = \"mainPage\">" + COMPETENCES[i].number + ": " + COMPETENCES[i].name + "</h3><br>";
+		html += "<h3 class = \"mainPage\">" + competence.number + ": " + competence.name + "</h3><br>";
 		if(LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser")
 		{
-			html += "<div class=\"button cyanButton changeCompetence\" data-id=\"" + COMPETENCES[i].id + "\"><i class=\"icon-pencil\"></i>Upravit</div>";
-			html += "<div class=\"button redButton deleteCompetence\" data-id=\"" + COMPETENCES[i].id + "\"><i class=\"icon-trash-empty\"></i>Smazat</div><br>";
+			html += "<div class=\"button cyanButton changeCompetence\" data-id=\"" + id + "\"><i class=\"icon-pencil\"></i>Upravit</div>";
+			html += "<div class=\"button redButton deleteCompetence\" data-id=\"" + id + "\"><i class=\"icon-trash-empty\"></i>Smazat</div><br>";
 		}
-		html += "<span class=\"mainPage competenceDescription\">" + COMPETENCES[i].description + "</span><br>";
-	}
+		html += "<span class=\"mainPage competenceDescription\">" + competence.description + "</span><br>";
+	});
 	return html;
 }
 
