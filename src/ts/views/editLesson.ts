@@ -30,7 +30,7 @@ function sendBeacon(id: string): void
 function renderLessonEditView(id: string, markdown: string, noHistory: boolean): void
 {
 	dismissSpinner();
-	var lesson = getLessonById(id)!;
+	var lesson = LESSONS.get(id)!;
 	if(!noHistory)
 	{
 		history.pushState({"id": id}, "title", "/admin/lessons"); // eslint-disable-line compat/compat

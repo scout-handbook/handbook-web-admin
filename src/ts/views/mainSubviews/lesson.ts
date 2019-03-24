@@ -1,15 +1,15 @@
 /* global mainPageTab:true */
 /* exported mainPageTab, showLessonSubview */
 
-function renderLessonListLesson(lesson: Lesson, secondLevel: string): string
+function renderLessonListLesson(id: string, lesson: Lesson, secondLevel: string): string
 {
 	var html = "<br><h3 class=\"mainPage" + secondLevel + "\">" + lesson.name + "</h3>";
-	html += "<div class=\"button cyanButton changeLesson\" data-id=\"" + lesson.id + "\"><i class=\"icon-pencil\"></i>Upravit</div>";
+	html += "<div class=\"button cyanButton changeLesson\" data-id=\"" + id + "\"><i class=\"icon-pencil\"></i>Upravit</div>";
 	if(LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser")
 	{
-		html += "<div class=\"button redButton deleteLesson\" data-id=\"" + lesson.id + "\"><i class=\"icon-trash-empty\"></i>Smazat</div>";
+		html += "<div class=\"button redButton deleteLesson\" data-id=\"" + id + "\"><i class=\"icon-trash-empty\"></i>Smazat</div>";
 	}
-	html += "<a href=\"" + CONFIG['admin-uri'] + "/lesson/" + lesson.id + "\" target=\"_blank\" class=\"button exportLesson\"><i class=\"icon-file-pdf\"></i>PDF</a>";
+	html += "<a href=\"" + CONFIG['admin-uri'] + "/lesson/" + id + "\" target=\"_blank\" class=\"button exportLesson\"><i class=\"icon-file-pdf\"></i>PDF</a>";
 	html += "<br><span class=\"mainPage" + secondLevel + "\">Kompetence: ";
 	if(lesson.competences.length > 0)
 	{
@@ -34,25 +34,28 @@ function renderLessonListLesson(lesson: Lesson, secondLevel: string): string
 function renderLessonList(): string
 {
 	var html = "";
-	for(var i = 0; i < FIELDS.length; i++)
+	FULLFIELDS.iterate(function(id, field)
 	{
 		var secondLevel = "";
-		if(FIELDS[i].name)
+		if(field.name)
 		{
 			secondLevel = " secondLevel";
-			html += "<br><h2 class=\"mainPage\">" + FIELDS[i].name + "</h2>";
+			html += "<br><h2 class=\"mainPage\">" + field.name + "</h2>";
 			if(LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser")
 			{
-				html += "<div class=\"button cyanButton changeField\" data-id=\"" + FIELDS[i].id + "\"><i class=\"icon-pencil\"></i>Upravit</div>";
-				html += "<div class=\"button redButton deleteField\" data-id=\"" + FIELDS[i].id + "\"><i class=\"icon-trash-empty\"></i>Smazat</div>";
+				html += "<div class=\"button cyanButton changeField\" data-id=\"" + id + "\"><i class=\"icon-pencil\"></i>Upravit</div>";
+				html += "<div class=\"button redButton deleteField\" data-id=\"" + id + "\"><i class=\"icon-trash-empty\"></i>Smazat</div>";
 			}
-			html += "<div class=\"button greenButton addLessonInField\" data-id=\"" + FIELDS[i].id + "\"><i class=\"icon-plus\"></i>Přidat lekci</div>";
+			html += "<div class=\"button greenButton addLessonInField\" data-id=\"" + id + "\"><i class=\"icon-plus\"></i>Přidat lekci</div>";
 		}
-		for(var j = 0; j < FIELDS[i].lessons.length; j++)
+		LESSONS.filter(function(lessonId)
 		{
-			html += renderLessonListLesson(FIELDS[i].lessons[j], secondLevel);
-		}
-	}
+			return field.lessons.indexOf(lessonId) >= 0;
+		}).iterate(function(lessonId, lesson)
+		{
+			html += renderLessonListLesson(lessonId, lesson, secondLevel);
+		});
+	});
 	return html;
 }
 

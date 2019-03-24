@@ -31,10 +31,10 @@ function changeLessonFieldOnClick(id: string|null, actionQueue: ActionQueue): vo
 	var html = "<div class=\"button yellowButton\" id=\"cancelEditorAction\"><i class=\"icon-cancel\"></i>Zrušit</div>";
 	html += "<div class=\"button greenButton\" id=\"changeLessonFieldSave\"><i class=\"icon-floppy\"></i>Uložit</div>";
 	html += "<h3 class=\"sidePanelTitle\">Změnit oblast</h3><form id=\"sidePanelForm\">";
-	for(var i = 0; i < FIELDS.length; i++)
+	FULLFIELDS.iterate(function(fieldId, field)
 	{
 		var checked = false;
-		if((FIELDS[i].id && FIELDS[i].id === lessonSettingsCache.field) || (!FIELDS[i].id && lessonSettingsCache.field === ""))
+		if((fieldId && fieldId === lessonSettingsCache.field) || (!fieldId && lessonSettingsCache.field === ""))
 		{
 			checked = true;
 		}
@@ -43,25 +43,25 @@ function changeLessonFieldOnClick(id: string|null, actionQueue: ActionQueue): vo
 		{
 			html += " checked";
 		}
-		if(FIELDS[i].id)
+		if(fieldId)
 		{
-			html += " data-id=\"" + FIELDS[i].id + "\"";
+			html += " data-id=\"" + fieldId + "\"";
 		}
 		else
 		{
 			html += " data-id=\"\"";
 		}
 		html += "><span class=\"formCustom formRadio\"></span></label>";
-		if(FIELDS[i].id)
+		if(fieldId)
 		{
-			html += FIELDS[i].name;
+			html += field.name;
 		}
 		else
 		{
 			html += "<span class=\"anonymousField\">Nezařazeno</span>"
 		}
 		html += "</div>";
-	}
+	});
 	html += "</form>";
 	document.getElementById("sidePanel")!.innerHTML = html;
 

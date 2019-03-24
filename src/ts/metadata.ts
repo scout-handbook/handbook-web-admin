@@ -1,11 +1,11 @@
-/* global FIELDS:true, FULLFIELDS:true, COMPETENCES:true, GROUPS:true, LOGINSTATE:true, metadataEvent:true */
-/* exported FIELDS, FULLFIELDS, COMPETENCES, GROUPS, LOGINSTATE, metadataSetup */
+/* global FULLFIELDS:true, COMPETENCES:true, GROUPS:true, LOGINSTATE:true, metadataEvent:true */
+/* exported FULLFIELDS, COMPETENCES, GROUPS, LOGINSTATE, metadataSetup */
 
 var metadataEvent: AfterLoadEvent;
-var FIELDS = [];
-var FULLFIELDS = [];
+var FULLFIELDS: IDList<FullField>;
 var COMPETENCES = [];
 var GROUPS = [];
+var LESSONS: IDList<Lesson>;
 var LOGINSTATE: Loginstate = {avatar: "", name: "", role: "guest"};
 
 function refreshMetadata(): void
@@ -13,12 +13,12 @@ function refreshMetadata(): void
 	metadataEvent = new AfterLoadEvent(5);
 	request(CONFIG.apiuri + "/lesson?override-group=true", "GET", {}, function(response): void
 	{
-		FIELDS = response as unknown as Array<Field>;
+		LESSONS = new IDList<Lesson>(response as IDListItems<Lesson>);
 		metadataEvent.trigger();
 	}, undefined);
 	request(CONFIG.apiuri + "/field", "GET", {}, function(response): void
 	{
-		FULLFIELDS = response as unknown as Array<FullField>;
+		FULLFIELDS = new IDList<FullField>(response as IDListItems<FullField>);
 		metadataEvent.trigger();
 	}, undefined);
 	request(CONFIG.apiuri + "/competence", "GET", {}, function(response): void

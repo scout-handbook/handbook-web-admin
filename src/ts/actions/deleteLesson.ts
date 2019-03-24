@@ -2,19 +2,7 @@
 
 function deleteLessonDialog(id: string): void
 {
-	var name = "";
-	outer:
-	for(var i = 0; i < FIELDS.length; i++)
-	{
-		for(var j = 0; j < FIELDS[i].lessons.length; j++)
-		{
-			if(FIELDS[i].lessons[j].id === id)
-			{
-				name = FIELDS[i].lessons[j].name
-				break outer;
-			}
-		}
-	}
+	var name = LESSONS.get(id).name;
 
 	var saveExceptionHandler = {"NotLockedException": function(): void {dialog("Kvůli příliš malé aktivitě byla lekce odemknuta a již ji upravil někdo jiný. Zkuste to prosím znovu.", "OK");}};
 	var discardExceptionHandler = {"NotFoundException": function(): void {}};
