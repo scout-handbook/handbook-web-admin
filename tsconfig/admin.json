@@ -11,7 +11,7 @@
     "../src/ts/interfaces/Config.ts",
     "../src/ts/interfaces/DeletedLesson.ts",
     "../src/ts/interfaces/Event.ts",
-    "../src/ts/interfaces/FullField.ts",
+    "../src/ts/interfaces/Field.ts",
     "../src/ts/interfaces/Group.ts",
     "../src/ts/interfaces/IDListItems.ts",
     "../src/ts/interfaces/ExceptionHandler.ts",

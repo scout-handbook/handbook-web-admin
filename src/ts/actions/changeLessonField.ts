@@ -31,7 +31,7 @@ function changeLessonFieldOnClick(id: string|null, actionQueue: ActionQueue): vo
 	var html = "<div class=\"button yellowButton\" id=\"cancelEditorAction\"><i class=\"icon-cancel\"></i>Zrušit</div>";
 	html += "<div class=\"button greenButton\" id=\"changeLessonFieldSave\"><i class=\"icon-floppy\"></i>Uložit</div>";
 	html += "<h3 class=\"sidePanelTitle\">Změnit oblast</h3><form id=\"sidePanelForm\">";
-	FULLFIELDS.iterate(function(fieldId, field)
+	FIELDS.iterate(function(fieldId, field)
 	{
 		var checked = false;
 		if((fieldId && fieldId === lessonSettingsCache.field) || (!fieldId && lessonSettingsCache.field === ""))

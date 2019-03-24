@@ -31,7 +31,7 @@ function renderLessonListLesson(id: string, lesson: Lesson, secondLevel: string)
 function renderLessonList(): string
 {
 	var html = "";
-	FULLFIELDS.iterate(function(id, field)
+	FIELDS.iterate(function(id, field)
 	{
 		var secondLevel = "";
 		if(field.name)
