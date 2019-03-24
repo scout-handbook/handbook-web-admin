@@ -31,25 +31,35 @@ function renderLessonListLesson(id: string, lesson: Lesson, secondLevel: string)
 function renderLessonList(): string
 {
 	var html = "";
+	LESSONS.iterate(function(id, lesson)
+	{
+		var inField = false;
+		FIELDS.iterate(function(_, field)
+		{
+			if(field.lessons.indexOf(id) >= 0)
+			{
+				inField = true;
+			}
+		});
+		if(!inField)
+		{
+			html += renderLessonListLesson(id, lesson, "");
+		}
+	});
 	FIELDS.iterate(function(id, field)
 	{
-		var secondLevel = "";
-		if(field.name)
+		html += "<br><h2 class=\"mainPage\">" + field.name + "</h2>";
+		if(LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser")
 		{
-			secondLevel = " secondLevel";
-			html += "<br><h2 class=\"mainPage\">" + field.name + "</h2>";
-			if(LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser")
-			{
-				html += "<div class=\"button cyanButton changeField\" data-id=\"" + id + "\"><i class=\"icon-pencil\"></i>Upravit</div>";
-				html += "<div class=\"button redButton deleteField\" data-id=\"" + id + "\"><i class=\"icon-trash-empty\"></i>Smazat</div>";
-			}
-			html += "<div class=\"button greenButton addLessonInField\" data-id=\"" + id + "\"><i class=\"icon-plus\"></i>Přidat lekci</div>";
+			html += "<div class=\"button cyanButton changeField\" data-id=\"" + id + "\"><i class=\"icon-pencil\"></i>Upravit</div>";
+			html += "<div class=\"button redButton deleteField\" data-id=\"" + id + "\"><i class=\"icon-trash-empty\"></i>Smazat</div>";
 		}
+		html += "<div class=\"button greenButton addLessonInField\" data-id=\"" + id + "\"><i class=\"icon-plus\"></i>Přidat lekci</div>";
 		LESSONS.iterate(function(lessonId, lesson)
 		{
 			if(field.lessons.indexOf(lessonId) >= 0)
 			{
-				html += renderLessonListLesson(lessonId, lesson, secondLevel);
+				html += renderLessonListLesson(lessonId, lesson, " secondLevel");
 			}
 		});
 	});
