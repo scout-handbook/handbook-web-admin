@@ -4,7 +4,7 @@
 var metadataEvent: AfterLoadEvent;
 var FULLFIELDS: IDList<FullField>;
 var COMPETENCES: IDList<Competence>;
-var GROUPS = [];
+var GROUPS: IDList<Group>;
 var LESSONS: IDList<Lesson>;
 var LOGINSTATE: Loginstate = {avatar: "", name: "", role: "guest"};
 
@@ -35,7 +35,7 @@ function refreshMetadata(): void
 	}};
 	request(CONFIG.apiuri + "/group", "GET", {}, function(response): void
 	{
-		GROUPS = response as unknown as Array<Group>;
+		GROUPS = new IDList<Group>(response as IDListItems<Group>);
 		metadataEvent.trigger();
 	}, groupExceptionHandler);
 	rawRequest(CONFIG.apiuri + "/account", "GET", undefined, function(response): void

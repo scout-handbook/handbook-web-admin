@@ -27,24 +27,24 @@ function changeUserGroupsOnClick(event: MouseEvent): void
 	html += "<h3 class=\"sidePanelTitle\">Změnit skupiny: " + getAttribute(event, "name") + "</h3><form id=\"sidePanelForm\">";
 	var currentGroups = JSON.parse(getAttribute(event, "groups"));
 	var publicName = "";
-	for(var i = 0; i < GROUPS.length; i++)
+	GROUPS.iterate(function(id, group)
 	{
-		if(GROUPS[i].id === "00000000-0000-0000-0000-000000000000")
+		if(id === "00000000-0000-0000-0000-000000000000")
 		{
-			publicName = GROUPS[i].name;
+			publicName = group.name;
 		}
 		else
 		{
 			html += "<div class=\"formRow\"><label class=\"formSwitch\"><input type=\"checkbox\"";
-			if(currentGroups.indexOf(GROUPS[i].id) >= 0)
+			if(currentGroups.indexOf(id) >= 0)
 			{
 				html += " checked";
 			}
-			html += " data-id=\"" + GROUPS[i].id + "\"";
+			html += " data-id=\"" + id + "\"";
 			html += "><span class=\"formCustom formCheckbox\"></span></label>";
-			html += GROUPS[i].name + "</div>";
+			html += group.name + "</div>";
 		}
-	}
+	});
 	html += "</form>";
 	html += "<div class=\"groupHelp\"><i class=\"icon-info-circled\"></i> Každého uživatele lze zařadit do několika skupin (nebo i žádné). Podle toho poté tento uživatel bude moct zobrazit pouze lekce, které byly těmto skupiným zveřejněny. Lekce ve skupině \"<span class=\"publicGroup\">" + publicName + "</span>\" uvidí všichni uživatelé bez ohledu na jejich skupiny. </div>";
 	document.getElementById("sidePanel")!.innerHTML = html;

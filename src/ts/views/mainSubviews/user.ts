@@ -24,13 +24,13 @@ function renderGroupSelector(): string
 {
 	var html = "<select class=\"formSelect\" id=\"groupSearchFilter\">";
 	html += "<option id=\"00000000-0000-0000-0000-000000000000\" value=\"00000000-0000-0000-0000-000000000000\" class=\"selectFilterSpecial\">Všechny skupiny</option>";
-	for(var i = 0; i < GROUPS.length; i++)
+	GROUPS.iterate(function(id, group)
 	{
-		if(GROUPS[i].id !== "00000000-0000-0000-0000-000000000000")
+		if(id !== "00000000-0000-0000-0000-000000000000")
 		{
-			html += "<option id=\"" + GROUPS[i].id + "\" value=\"" + GROUPS[i].id + "\">" + GROUPS[i].name + "</option>";
+			html += "<option id=\"" + id + "\" value=\"" + id + "\">" + group.name + "</option>";
 		}
-	}
+	});
 	html += "</select>";
 	return html;
 }
@@ -59,18 +59,18 @@ function renderUserRow(user: User): string
 	}
 	html += "</td><td>";
 	var first = true;
-	for(var j = 0; j < GROUPS.length; j++)
+	GROUPS.iterate(function(id, group)
 	{
-		if(user.groups.indexOf(GROUPS[j].id) >= 0)
+		if(user.groups.indexOf(id) >= 0)
 		{
 			if(!first)
 			{
 				html += ", ";
 			}
-			html += GROUPS[j].name;
+			html += group.name;
 			first = false;
 		}
-	}
+	});
 	if(user.groups.length > 0)
 	{
 		html += "<br>";
