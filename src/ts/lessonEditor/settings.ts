@@ -40,20 +40,20 @@ function renderGroups(): void
 {
 	document.getElementById("changeGroups")!.style.display = "inline-block";
 	var html = "";
-	for(var i = 0; i < GROUPS.length; i++)
+	GROUPS.iterate(function(id, group)
 	{
-		if(lessonSettingsCache.groups.indexOf(GROUPS[i].id) >= 0)
+		if(lessonSettingsCache.groups.indexOf(id) >= 0)
 		{
-			if(GROUPS[i].id === "00000000-0000-0000-0000-000000000000")
+			if(id === "00000000-0000-0000-0000-000000000000")
 			{
-				html += "<span class=\"publicGroup\">" + GROUPS[i].name + "</span><br>";
+				html += "<span class=\"publicGroup\">" + group.name + "</span><br>";
 			}
 			else
 			{
-				html += GROUPS[i].name + "<br>";
+				html += group.name + "<br>";
 			}
 		}
-	}
+	});
 	document.getElementById("settingsGroupList")!.innerHTML = html;
 }
 

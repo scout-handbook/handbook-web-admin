@@ -37,25 +37,25 @@ function changeLessonGroupsOnClick(id: string|null, actionQueue: ActionQueue): v
 	html += "<div class=\"button greenButton\" id=\"changeLessonGroupsSave\"><i class=\"icon-floppy\"></i>Uložit</div>";
 	html += "<h3 class=\"sidePanelTitle\">Změnit skupiny</h3><form id=\"sidePanelForm\">";
 	var publicName = ''
-	for(var i = 0; i < GROUPS.length; i++)
+	GROUPS.iterate(function(groupId, group)
 	{
 		html += "<div class=\"formRow\"><label class=\"formSwitch\"><input type=\"checkbox\"";
-		if(lessonSettingsCache.groups.indexOf(GROUPS[i].id) >= 0)
+		if(lessonSettingsCache.groups.indexOf(groupId) >= 0)
 		{
 			html += " checked";
 		}
-		html += " data-id=\"" + GROUPS[i].id + "\"";
+		html += " data-id=\"" + groupId + "\"";
 		html += "><span class=\"formCustom formCheckbox\"></span></label>";
-		if(GROUPS[i].id === "00000000-0000-0000-0000-000000000000")
+		if(groupId === "00000000-0000-0000-0000-000000000000")
 		{
-			html += "<span class=\"publicGroup\">" + GROUPS[i].name + "</span></div>";
-			publicName = GROUPS[i].name;
+			html += "<span class=\"publicGroup\">" + group.name + "</span></div>";
+			publicName = group.name;
 		}
 		else
 		{
-			html += GROUPS[i].name + "</div>";
+			html += group.name + "</div>";
 		}
-	}
+	});
 	html += "</form>";
 	html += "<div class=\"groupHelp\"><i class=\"icon-info-circled\"></i> U každé lekce lze zvolit, kteří uživatelé ji budou moct zobrazit (resp. které skupiny uživatelů). Pokud není vybrána žádná skupiny, nebude lekce pro běžné uživatele vůbec přístupná (pouze v administraci). Pokud je vybrána skupina \"<span class=\"publicGroup\">" + publicName + "</span>\", bude lekce přístupná všem uživatelům (i nepřihlášeným návštěvníkům webu) bez ohledu na skupiny.</div>";
 	document.getElementById("sidePanel")!.innerHTML = html;

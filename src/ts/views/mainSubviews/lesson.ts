@@ -16,14 +16,12 @@ function renderLessonListLesson(id: string, lesson: Lesson, secondLevel: string)
 	{
 		if(lesson.competences.indexOf(competenceId) >= 0)
 		{
-			if(first)
+			if(!first)
 			{
-				html += competence.number;
+				html += ", ";
 			}
-			else
-			{
-				html += ", " + competence.number;
-			}
+			html += competence.number;
+			first = false;
 		}
 	});
 	html += "</span>";
