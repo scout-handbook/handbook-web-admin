@@ -1,8 +1,3 @@
-interface IDListItems<T>
-{
-	[key: string]: T;
-}
-
 class IDList<T>
 {
 	private list: IDListItems<T>;
@@ -19,6 +14,16 @@ class IDList<T>
 				iterator(key, this.list[key]);
 			}
 		}
+	}
+
+	public empty(): boolean
+	{
+		var ret = true;
+		this.iterate(function()
+		{
+			ret = false;
+		});
+		return ret;
 	}
 
 	public get(key: string): T
