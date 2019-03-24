@@ -22,26 +22,14 @@ function populateEditorCache(id: string|null): void
 		lessonSettingsCache["groups"] = response as unknown as Array<string>;
 		lessonSettingsCacheEvent.trigger();
 	}, reAuthHandler);
-	outer:
-	for(var i = 0; i < FIELDS.length; i++)
+	FULLFIELDS.iterate(function(fieldId, field)
 	{
-		for(var j = 0; j < FIELDS[i].lessons.length; j++)
+		if(field.lessons.indexOf(id) >= 0)
 		{
-			if(FIELDS[i].lessons[j].id === id)
-			{
-				if(FIELDS[i].id)
-				{
-					lessonSettingsCache["field"] = FIELDS[i].id;
-				}
-				else
-				{
-					lessonSettingsCache["field"] = "";
-				}
-				lessonSettingsCache["competences"] = FIELDS[i].lessons[j].competences;
-				break outer;
-			}
+			lessonSettingsCache["field"] = fieldId;
 		}
-	}
+	});
+	lessonSettingsCache["competences"] = LESSONS.get(id).competences;
 }
 
 function editorDiscardNow(actionQueue: ActionQueue): void

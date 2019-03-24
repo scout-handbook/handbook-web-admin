@@ -10,14 +10,7 @@ function renderField(): string
 	}
 	else
 	{
-		for(var i = 0; i < FIELDS.length; i++)
-		{
-			if(FIELDS[i].id && FIELDS[i].id === lessonSettingsCache.field)
-			{
-				html += FIELDS[i].name;
-				break;
-			}
-		}
+		html += FULLFIELDS.get(lessonSettingsCache.field).name
 	}
 	return html;
 }

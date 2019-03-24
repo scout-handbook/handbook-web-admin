@@ -43,17 +43,7 @@ function lessonHistoryListRender(id: string, actionQueue: ActionQueue, list: Arr
 {
 	var html = "<form id=\"sidePanelForm\">";
 	outer:
-	for(var i = 0; i < FIELDS.length; i++)
-	{
-		for(var j = 0; j < FIELDS[i].lessons.length; j++)
-		{
-			if(FIELDS[i].lessons[j].id === id)
-			{
-				html += "<div class=\"formRow\"><label class=\"formSwitch\"><input type=\"radio\" name=\"version\" checked><span class=\"formCustom formRadio\"></span></label><span class=\"lessonHistoryCurrent\">Současná verze</span> — " + parseVersion(FIELDS[i].lessons[j].version) + "</div>";
-				break outer;
-			}
-		}
-	}
+	html += "<div class=\"formRow\"><label class=\"formSwitch\"><input type=\"radio\" name=\"version\" checked><span class=\"formCustom formRadio\"></span></label><span class=\"lessonHistoryCurrent\">Současná verze</span> — " + parseVersion(LESSONS.get(id).version) + "</div>";
 	for(var k = 0; k < list.length; k++)
 	{
 		html += "<div class=\"formRow\"><label class=\"formSwitch\"><input type=\"radio\" name=\"version\" data-name=\"" + list[k].name + "\" data-version=\"" + list[k].version + "\"><span class=\"formCustom formRadio\"></span></label><span class=\"lessonHistoryVersion\">" + list[k].name + "</span> — " + parseVersion(list[k].version) + "</div>";

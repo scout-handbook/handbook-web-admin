@@ -58,12 +58,7 @@ function changeField(state: SidePanelImageSelectorState, noHistory = false): voi
 
 function changeFieldOnClick(event: MouseEvent): void
 {
-	for(var i = 0; i < FULLFIELDS.length; i++)
-	{
-		if(FULLFIELDS[i].id === getAttribute(event, "id"))
-		{
-			changeField({id: FULLFIELDS[i].id, name: FULLFIELDS[i].name, description: FULLFIELDS[i].description, image: FULLFIELDS[i].image})
-			break;
-		}
-	}
+	var id = getAttribute(event, "id");
+	var field = FULLFIELDS.get(id);
+	changeField({id: id, name: field.name, description: field.description, image: field.image})
 }
