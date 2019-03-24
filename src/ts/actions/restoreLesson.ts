@@ -67,9 +67,9 @@ function restoreLessonSelectVersion(): void
 	}
 }
 
-function restoreLessonRenderLessonList(list: Array<DeletedLesson>): void
+function restoreLessonRenderLessonList(list: IDList<DeletedLesson>): void
 {
-	if(list.length === 0)
+	if(list.empty())
 	{
 		sidePanelClose();
 		spinner();
@@ -78,10 +78,10 @@ function restoreLessonRenderLessonList(list: Array<DeletedLesson>): void
 		history.back();
 	}
 	var html = "<form id=\"sidePanelForm\">";
-	for(var i = 0; i < list.length; i++)
+	list.iterate(function(id, deletedLesson)
 	{
-		html += "<div class=\"formRow\"><label class=\"formSwitch\"><input type=\"radio\" name=\"lesson\" data-id=\"" + list[i].id + "\"><span class=\"formCustom formRadio\"></span></label>" + list[i].name + "</div>";
-	}
+		html += "<div class=\"formRow\"><label class=\"formSwitch\"><input type=\"radio\" name=\"lesson\" data-id=\"" + id + "\"><span class=\"formCustom formRadio\"></span></label>" + deletedLesson.name + "</div>";
+	});
 	html += "</form>";
 	document.getElementById("restoreLessonList")!.innerHTML = html;
 	document.getElementById("restoreLessonNext")!.onclick = restoreLessonSelectVersion;
@@ -101,7 +101,7 @@ function restoreLesson(): void
 	};
 	request(CONFIG.apiuri + "/deleted-lesson", "GET", {}, function(response: RequestResponse): void
 	{
-		restoreLessonRenderLessonList(response as unknown as Array<DeletedLesson>);
+		restoreLessonRenderLessonList(new IDList<DeletedLesson>(response as IDListItems<DeletedLesson>));
 	}, reAuthHandler);
 
 	history.pushState({"sidePanel": "open"}, "title", "/admin/lessons"); // eslint-disable-line compat/compat
