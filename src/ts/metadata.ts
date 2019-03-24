@@ -1,5 +1,5 @@
-/* global COMPETENCES:true, GROUPS:true, LOGINSTATE:true, metadataEvent:true */
-/* exported COMPETENCES, GROUPS, LOGINSTATE, metadataSetup */
+/* global COMPETENCES:true, FIELDS:true, GROUPS:true, LESSONS:true, LOGINSTATE:true, metadataEvent:true */
+/* exported COMPETENCES, FIELDS, GROUPS, LESSONS, LOGINSTATE, metadataSetup */
 
 var metadataEvent: AfterLoadEvent;
 var FIELDS: IDList<Field>;

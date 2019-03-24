@@ -1,3 +1,5 @@
+/* exported IDList */
+
 class IDList<T>
 {
 	private list: IDListItems<T>;
