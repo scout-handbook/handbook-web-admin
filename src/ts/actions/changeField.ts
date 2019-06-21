@@ -48,6 +48,14 @@ function changeField(state: SidePanelImageSelectorState, noHistory = false): voi
 	{
 		fieldChanged = true;
 	};
+	document.getElementById("fieldDescription")!.oninput = function(): void
+	{
+		fieldChanged = true;
+	};
+	document.getElementById("fieldDescription")!.onchange = function(): void
+	{
+		fieldChanged = true;
+	};
 
 	if(!noHistory)
 	{
