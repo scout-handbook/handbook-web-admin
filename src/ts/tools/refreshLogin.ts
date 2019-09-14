@@ -1,6 +1,6 @@
 /* exported refreshLogin */
 
-function refreshLogin(forceRelogin = false, afterAction = function(): void {}): void
+function refreshLogin(forceRelogin = false, afterAction: (() => void)|null = null): void
 {
 	var allCookies = "; " + document.cookie;
 	var parts = allCookies.split("; skautis_timeout=");

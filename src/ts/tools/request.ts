@@ -15,7 +15,7 @@ function requestQueryBuilder(payload: Payload): string
 	var first = true;
 	for(var key in payload)
 	{
-		if(!payload.hasOwnProperty(key))
+		if(!Object.prototype.hasOwnProperty.call(payload, key))
 		{
 			continue;
 		}
@@ -93,7 +93,7 @@ function request(url: string, method: string, payload: Payload, callback: (respo
 		{
 			callback(response.response!);
 		}
-		else if(exceptionHandler.hasOwnProperty(response.type!))
+		else if(Object.prototype.hasOwnProperty.call(exceptionHandler, response.type!))
 		{
 			exceptionHandler[response.type!]!(response);
 		}

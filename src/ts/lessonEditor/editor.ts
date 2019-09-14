@@ -66,14 +66,14 @@ function editorDiscard(actionQueue: ActionQueue): void
 	refreshLogin();
 }
 
-function editorOnChange(afterAction: () => void): void
+function editorOnChange(afterAction: (() => void)|null): void
 {
 	changed = true;
 	refreshPreview((document.getElementById("name") as HTMLInputElement).value, editor.value(), "preview-inner");
 	refreshLogin(false, afterAction);
 }
 
-function showLessonEditor(name: string, body: string, saveActionQueue: ActionQueue, id: string|null, discardActionQueue = new ActionQueue(), refreshAction = function(): void {}): void
+function showLessonEditor(name: string, body: string, saveActionQueue: ActionQueue, id: string|null, discardActionQueue = new ActionQueue(), refreshAction: (() => void)|null = null): void
 {
 	populateEditorCache(id);
 	changed = false;

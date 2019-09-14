@@ -119,7 +119,7 @@ function importGroupSelectParticipants(id: string): void
 			users = response.users as Array<User>;
 			participantEvent.trigger(id);
 		}, reAuthHandler);
-		document.getElementById("importGroupNext")!.onclick = function(): void {};
+		document.getElementById("importGroupNext")!.removeAttribute("onclick");
 	}
 }
 

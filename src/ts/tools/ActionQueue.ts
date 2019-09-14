@@ -54,18 +54,13 @@ class ActionQueue {
 		{
 			spinner();
 		}
-		var that = this;
-		this.actions[0].exceptionHandler["AuthenticationException"] = function()
-		{
-			that.authException();
-		};
-		request(this.actions[0].url, this.actions[0].method, this.actions[0].payloadBuilder(), function(response): void
-		{
-			that.actions[0].callback(response, that);
-			that.actions.shift();
+		this.actions[0].exceptionHandler["AuthenticationException"] = this.authException;
+		request(this.actions[0].url, this.actions[0].method, this.actions[0].payloadBuilder(), (response) => {
+			this.actions[0].callback(response, this);
+			this.actions.shift();
 			if(propagate)
 			{
-				that.pop(true, background);
+				this.pop(true, background);
 			}
 		}, this.actions[0].exceptionHandler);
 	}
