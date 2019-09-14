@@ -14,7 +14,7 @@ function removeBeacon(): void
 
 function lessonEditMutexExtend(id: string): void
 {
-	var exceptionHandler = {"NotFoundException": function(): void {}};
+	var exceptionHandler = {"NotFoundException": null};
 	var actionQueue = new ActionQueue([new Action(CONFIG.apiuri + "/mutex/" + encodeURIComponent(id) , "PUT", undefined, undefined, exceptionHandler)]);
 	actionQueue.dispatch(true);
 }
@@ -40,7 +40,7 @@ function renderLessonEditView(id: string, markdown: string, noHistory: boolean):
 	{
 		dialog("Kvůli příliš malé aktivitě byla lekce odemknuta a již ji upravil někdo jiný. Zkuste to prosím znovu.", "OK");
 	}};
-	var discardExceptionHandler = {"NotFoundException": function(): void {}};
+	var discardExceptionHandler = {"NotFoundException": null};
 
 	var saveActionQueue = new ActionQueue([new Action(CONFIG.apiuri + "/lesson/" + encodeURIComponent(id) , "PUT", saveLessonPayloadBuilder, [ActionCallback.RemoveBeacon], saveExceptionHandler)]);
 	var discardActionQueue = new ActionQueue([new Action(CONFIG.apiuri + "/mutex/" + encodeURIComponent(id) , "DELETE", undefined, [ActionCallback.RemoveBeacon, ActionCallback.DismissSpinner], discardExceptionHandler)]);

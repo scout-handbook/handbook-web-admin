@@ -63,7 +63,7 @@ function restoreLessonSelectVersion(): void
 		{
 			restoreLessonRenderVersionList(lessonId, response as unknown as Array<LessonVersion>);
 		}, reAuthHandler);
-		document.getElementById("restoreLessonNext")!.onclick = function(): void {};
+		document.getElementById("restoreLessonNext")!.removeAttribute("onclick");
 	}
 }
 
