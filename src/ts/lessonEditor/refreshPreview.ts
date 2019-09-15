@@ -1,9 +1,9 @@
 /* exported refreshPreviewSetup, refreshPreview */
 
-var converter: showdown.Converter|undefined;
-var worker: Worker|undefined;
-var running = false;
-var queue: WorkerPayload|null;
+let converter: showdown.Converter|undefined;
+let worker: Worker|undefined;
+let running = false;
+let queue: WorkerPayload|null;
 
 function refreshPreviewSetup(): void
 {
@@ -35,7 +35,7 @@ function refreshPreviewSetup(): void
 
 function refreshPreview(name: string, markdown: string, id: string): void
 {
-	var payload = {"id": id, "body": "# " + name + "\n" + markdown};
+	const payload = {"id": id, "body": "# " + name + "\n" + markdown};
 	if(Worker)
 	{
 		if(running)
@@ -50,7 +50,7 @@ function refreshPreview(name: string, markdown: string, id: string): void
 	}
 	else
 	{
-		var html = "<h1>" + name + "</h1>";
+		let html = "<h1>" + name + "</h1>";
 		html += filterXSS(converter!.makeHtml(payload.body), xssOptions());
 		document.getElementById(payload.id)!.innerHTML = html;
 	}

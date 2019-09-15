@@ -19,7 +19,7 @@ class Action
 
 	public callback(response: RequestResponse, actionQueue: ActionQueue): void
 	{
-		for(var i = 0; i < this.callbacks.length; i++)
+		for(let i = 0; i < this.callbacks.length; i++)
 		{
 			switch(this.callbacks[i])
 			{
