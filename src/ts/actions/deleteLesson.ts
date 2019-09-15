@@ -20,7 +20,7 @@ function deleteLessonDialog(id: string): void
 	var discardExceptionHandler = {"NotFoundException": null};
 	var saveActionQueue = new ActionQueue([new Action(CONFIG.apiuri + "/lesson/" + encodeURIComponent(id), "DELETE", undefined, [], saveExceptionHandler)]);
 	var discardActionQueue = new ActionQueue([new Action(CONFIG.apiuri + "/mutex/" + encodeURIComponent(id) , "DELETE", undefined, [], discardExceptionHandler)]);
-	dialog("Opravdu si přejete smazat lekci \"" + name + "\"?", "Ano", saveActionQueue.closeDispatch, "Ne", function(): void
+	dialog("Opravdu si přejete smazat lekci \"" + name + "\"?", "Ano", () => saveActionQueue.closeDispatch(), "Ne", function(): void
 	{
 		discardActionQueue.dispatch(true);
 		history.back();
