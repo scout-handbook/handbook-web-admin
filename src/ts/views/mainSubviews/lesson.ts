@@ -3,7 +3,7 @@
 
 function renderLessonListLesson(id: string, lesson: Lesson, secondLevel: string): string
 {
-	var html = "<br><h3 class=\"mainPage" + secondLevel + "\">" + lesson.name + "</h3>";
+	let html = "<br><h3 class=\"mainPage" + secondLevel + "\">" + lesson.name + "</h3>";
 	html += "<div class=\"button cyanButton changeLesson\" data-id=\"" + id + "\"><i class=\"icon-pencil\"></i>Upravit</div>";
 	if(LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser")
 	{
@@ -30,7 +30,7 @@ function renderLessonListLesson(id: string, lesson: Lesson, secondLevel: string)
 
 function renderLessonList(): string
 {
-	var html = "";
+	let html = "";
 	LESSONS.iterate(function(id, lesson)
 	{
 		var inField = false;
@@ -75,13 +75,13 @@ function changeLessonOnClick(event: MouseEvent): boolean
 function showLessonSubview(noHistory: boolean): void
 {
 	mainPageTab = "lessons";
-	var nodes = document.getElementsByClassName("topBarTab");
-	for(var l = 0; l < nodes.length; l++)
+	const nodes = getElementsByClassName("topBarTab");
+	for(let i = 0; i < nodes.length; i++)
 	{
-		nodes[l].className = "topBarTab";
+		nodes[i].className = "topBarTab";
 	}
 	document.getElementById("lessonManager")!.className += " activeTopBarTab";
-	var html = "<h1>" + CONFIG["site-name"] + " - Lekce</h1>";
+	let html = "<h1>" + CONFIG["site-name"] + " - Lekce</h1>";
 	if(LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser")
 	{
 		html += "<div class=\"button greenButton\" id=\"addField\"><i class=\"icon-plus\"></i>Přidat oblast</div>";
@@ -97,7 +97,7 @@ function showLessonSubview(noHistory: boolean): void
 
 	if(LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser")
 	{
-		document.getElementById("addField")!.onclick = function()
+		document.getElementById("addField")!.onclick = function(): void
 		{
 			addField();
 		};

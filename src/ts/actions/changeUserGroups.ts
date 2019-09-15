@@ -1,12 +1,12 @@
 /* exported changeUserGroupsOnClick */
 
-var groupsChanged = false;
+let groupsChanged = false;
 
 function changeUserPayloadBuilder(): Payload
 {
-	var groups = parseBoolForm();
-	var encodedGroups = [];
-	for(var i = 0; i < groups.length; i++)
+	const groups = parseBoolForm();
+	const encodedGroups = [];
+	for(let i = 0; i < groups.length; i++)
 	{
 		encodedGroups.push(encodeURIComponent(groups[i]));
 	}
@@ -22,11 +22,11 @@ function changeUserGroupsOnClick(event: MouseEvent): void
 {
 	groupsChanged = false;
 	sidePanelOpen();
-	var html = "<div class=\"button yellowButton\" id=\"sidePanelCancel\"><i class=\"icon-cancel\"></i>Zrušit</div>";
+	let html = "<div class=\"button yellowButton\" id=\"sidePanelCancel\"><i class=\"icon-cancel\"></i>Zrušit</div>";
 	html += "<div class=\"button greenButton\" id=\"changeUserGroupsSave\"><i class=\"icon-floppy\"></i>Uložit</div>";
 	html += "<h3 class=\"sidePanelTitle\">Změnit skupiny: " + getAttribute(event, "name") + "</h3><form id=\"sidePanelForm\">";
-	var currentGroups = JSON.parse(getAttribute(event, "groups"));
-	var publicName = "";
+	const currentGroups = JSON.parse(getAttribute(event, "groups"));
+	let publicName = "";
 	GROUPS.iterate(function(id, group)
 	{
 		if(id === "00000000-0000-0000-0000-000000000000")
@@ -54,16 +54,16 @@ function changeUserGroupsOnClick(event: MouseEvent): void
 		history.back();
 	};
 
-	var aq = new ActionQueue([new Action(CONFIG.apiuri + "/user/" + encodeURIComponent(getAttribute(event, "id")) + "/group", "PUT", changeUserPayloadBuilder)]);
-	document.getElementById("changeUserGroupsSave")!.onclick = function()
+	const aq = new ActionQueue([new Action(CONFIG.apiuri + "/user/" + encodeURIComponent(getAttribute(event, "id")) + "/group", "PUT", changeUserPayloadBuilder)]);
+	document.getElementById("changeUserGroupsSave")!.onclick = function(): void
 	{
 		dispatchIfChanged(aq, groupsChanged);
 	};
 
-	var nodes = document.getElementById("sidePanelForm")!.getElementsByTagName("input");
-	for(var k = 0; k < nodes.length; k++)
+	const nodes = document.getElementById("sidePanelForm")!.getElementsByTagName("input");
+	for(let i = 0; i < nodes.length; i++)
 	{
-		nodes[k].onchange = userGroupsOnclick;
+		nodes[i].onchange = userGroupsOnclick;
 	}
 
 	history.pushState({"sidePanel": "open"}, "title", "/admin/users"); // eslint-disable-line compat/compat

@@ -1,12 +1,12 @@
 /* global COMPETENCES:true, FIELDS:true, GROUPS:true, LESSONS:true, LOGINSTATE:true, metadataEvent:true */
 /* exported COMPETENCES, FIELDS, GROUPS, LESSONS, LOGINSTATE, metadataSetup */
 
-var metadataEvent: AfterLoadEvent;
-var FIELDS: IDList<Field>;
-var COMPETENCES: IDList<Competence>;
-var GROUPS: IDList<Group>;
-var LESSONS: IDList<Lesson>;
-var LOGINSTATE: Loginstate = {avatar: "", name: "", role: "guest"};
+let metadataEvent: AfterLoadEvent;
+let FIELDS: IDList<Field>;
+let COMPETENCES: IDList<Competence>;
+let GROUPS: IDList<Group>;
+let LESSONS: IDList<Lesson>;
+let LOGINSTATE: Loginstate = {avatar: "", name: "", role: "guest"};
 
 function refreshMetadata(): void
 {
@@ -26,7 +26,7 @@ function refreshMetadata(): void
 		COMPETENCES = new IDList<Competence>(response as IDListItems<Competence>);
 		metadataEvent.trigger();
 	}, undefined);
-	var groupExceptionHandler = {"AuthenticationException": function(): void
+	const groupExceptionHandler = {"AuthenticationException": function(): void
 	{
 		window.location.href = CONFIG.apiuri + "/login?return-uri=" + encodeURIComponent(window.location.href);
 	}, "RoleException": function(): void

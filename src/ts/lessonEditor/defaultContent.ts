@@ -1,9 +1,9 @@
 /* global defaultBody:true */
 /* exported defaultName, defaultBody */
 
-var defaultName = "Nová lekce";
+const defaultName = "Nová lekce";
 
-var defaultBody = "# Velký nadpis\n\
+const defaultBody = "# Velký nadpis\n\
 \n\
 ## Menší nadpis\n\
 \n\

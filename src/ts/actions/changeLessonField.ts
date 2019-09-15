@@ -1,7 +1,7 @@
 /* global changed:true */
 /* exported changed, changeLessonFieldOnClick */
 
-var lessonFieldChanged = false;
+let lessonFieldChanged = false;
 
 function changeLessonFieldSave(id: string|null, actionQueue: ActionQueue): void
 {
@@ -9,7 +9,7 @@ function changeLessonFieldSave(id: string|null, actionQueue: ActionQueue): void
 	if(lessonFieldChanged)
 	{
 		changed = true;
-		var fieldId = parseBoolForm()[0];
+		const fieldId = parseBoolForm()[0];
 		actionQueue.actions.push(new Action(CONFIG.apiuri + "/lesson/" + id + "/field", "PUT", function(): Payload {return {"field": encodeURIComponent(fieldId)};}));
 		lessonSettingsCache.field = fieldId;
 		lessonSettings(id, actionQueue, true);
@@ -28,7 +28,7 @@ function lessonFieldOnclick(): void
 function changeLessonFieldOnClick(id: string|null, actionQueue: ActionQueue): void
 {
 	lessonFieldChanged = false;
-	var html = "<div class=\"button yellowButton\" id=\"cancelEditorAction\"><i class=\"icon-cancel\"></i>Zrušit</div>";
+	let html = "<div class=\"button yellowButton\" id=\"cancelEditorAction\"><i class=\"icon-cancel\"></i>Zrušit</div>";
 	html += "<div class=\"button greenButton\" id=\"changeLessonFieldSave\"><i class=\"icon-floppy\"></i>Uložit</div>";
 	html += "<h3 class=\"sidePanelTitle\">Změnit oblast</h3><form id=\"sidePanelForm\">";
 	FIELDS.iterate(function(fieldId, field)
@@ -71,10 +71,10 @@ function changeLessonFieldOnClick(id: string|null, actionQueue: ActionQueue): vo
 	};
 	document.getElementById("changeLessonFieldSave")!.onclick = function(): void {changeLessonFieldSave(id, actionQueue);};
 
-	var nodes = document.getElementById("sidePanelForm")!.getElementsByTagName("input");
-	for(var k = 0; k < nodes.length; k++)
+	const nodes = document.getElementById("sidePanelForm")!.getElementsByTagName("input");
+	for(let i = 0; i < nodes.length; i++)
 	{
-		nodes[k].onchange = lessonFieldOnclick;
+		nodes[i].onchange = lessonFieldOnclick;
 	}
 
 	refreshLogin();

@@ -1,10 +1,10 @@
 /* eslint-env worker */
 
-var converter: showdown.Converter;
+let converter: showdown.Converter;
 
 function convert(payload: MessageEvent): void
 {
-	var html = filterXSS(converter.makeHtml(payload.data.body), xssOptions());
+	const html = filterXSS(converter.makeHtml(payload.data.body), xssOptions());
 	postMessage({"id": payload.data.id, "body": html});
 }
 

@@ -1,10 +1,10 @@
 /* global changed:true, editor:true, lessonSettingsCacheEvent:true */
 /* exported showLessonEditor */
 
-var changed: boolean;
-var lessonSettingsCache: LessonSettingsCache = {competences: [], field: "", groups: []};
-var lessonSettingsCacheEvent: AfterLoadEvent;
-var editor: EasyMDE;
+let changed: boolean;
+const lessonSettingsCache: LessonSettingsCache = {competences: [], field: "", groups: []};
+let lessonSettingsCacheEvent: AfterLoadEvent;
+let editor: EasyMDE;
 
 function populateEditorCache(id: string|null): void
 {
@@ -54,18 +54,18 @@ function editorDiscard(actionQueue: ActionQueue): void
 	refreshLogin();
 }
 
-function editorOnChange(afterAction: () => void): void
+function editorOnChange(afterAction: (() => void)|null): void
 {
 	changed = true;
 	refreshPreview((document.getElementById("name") as HTMLInputElement).value, editor.value(), "preview-inner");
 	refreshLogin(false, afterAction);
 }
 
-function showLessonEditor(name: string, body: string, saveActionQueue: ActionQueue, id: string|null, discardActionQueue = new ActionQueue(), refreshAction = function(): void {}): void
+function showLessonEditor(name: string, body: string, saveActionQueue: ActionQueue, id: string|null, discardActionQueue = new ActionQueue(), refreshAction: (() => void)|null = null): void
 {
 	populateEditorCache(id);
 	changed = false;
-	var html = '\
+	const html = '\
 <div id="sidePanel"></div><div id="sidePanelOverlay"></div>\
 <header>\
 	<div class="button yellowButton" id="discard">\
