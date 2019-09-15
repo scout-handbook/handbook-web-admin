@@ -87,7 +87,7 @@ function showLessonSubview(noHistory: boolean): void
 
 	if(LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser")
 	{
-		document.getElementById("addField")!.onclick = function()
+		document.getElementById("addField")!.onclick = function(): void
 		{
 			addField();
 		};
