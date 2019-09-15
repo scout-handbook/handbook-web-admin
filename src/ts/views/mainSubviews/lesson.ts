@@ -3,7 +3,7 @@
 
 function renderLessonListLesson(lesson: Lesson, secondLevel: string): string
 {
-	var html = "<br><h3 class=\"mainPage" + secondLevel + "\">" + lesson.name + "</h3>";
+	let html = "<br><h3 class=\"mainPage" + secondLevel + "\">" + lesson.name + "</h3>";
 	html += "<div class=\"button cyanButton changeLesson\" data-id=\"" + lesson.id + "\"><i class=\"icon-pencil\"></i>Upravit</div>";
 	if(LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser")
 	{
@@ -13,18 +13,18 @@ function renderLessonListLesson(lesson: Lesson, secondLevel: string): string
 	html += "<br><span class=\"mainPage" + secondLevel + "\">Kompetence: ";
 	if(lesson.competences.length > 0)
 	{
-		var competences = [];
-		for(var k = 0; k < COMPETENCES.length; k++)
+		const competences = [];
+		for(let i = 0; i < COMPETENCES.length; i++)
 		{
-			if(lesson.competences.indexOf(COMPETENCES[k].id) >= 0)
+			if(lesson.competences.indexOf(COMPETENCES[i].id) >= 0)
 			{
-				competences.push(COMPETENCES[k]);
+				competences.push(COMPETENCES[i]);
 			}
 		}
 		html += competences[0].number;
-		for(var m = 1; m < competences.length; m++)
+		for(let i = 1; i < competences.length; i++)
 		{
-			html += ", " + competences[m].number;
+			html += ", " + competences[i].number;
 		}
 	}
 	html += "</span>";
@@ -33,10 +33,10 @@ function renderLessonListLesson(lesson: Lesson, secondLevel: string): string
 
 function renderLessonList(): string
 {
-	var html = "";
-	for(var i = 0; i < FIELDS.length; i++)
+	let html = "";
+	for(let i = 0; i < FIELDS.length; i++)
 	{
-		var secondLevel = "";
+		let secondLevel = "";
 		if(FIELDS[i].name)
 		{
 			secondLevel = " secondLevel";
@@ -48,7 +48,7 @@ function renderLessonList(): string
 			}
 			html += "<div class=\"button greenButton addLessonInField\" data-id=\"" + FIELDS[i].id + "\"><i class=\"icon-plus\"></i>Přidat lekci</div>";
 		}
-		for(var j = 0; j < FIELDS[i].lessons.length; j++)
+		for(let j = 0; j < FIELDS[i].lessons.length; j++)
 		{
 			html += renderLessonListLesson(FIELDS[i].lessons[j], secondLevel);
 		}
@@ -65,13 +65,13 @@ function changeLessonOnClick(event: MouseEvent): boolean
 function showLessonSubview(noHistory: boolean): void
 {
 	mainPageTab = "lessons";
-	var nodes = document.getElementsByClassName("topBarTab");
-	for(var l = 0; l < nodes.length; l++)
+	const nodes = getElementsByClassName("topBarTab");
+	for(let i = 0; i < nodes.length; i++)
 	{
-		nodes[l].className = "topBarTab";
+		nodes[i].className = "topBarTab";
 	}
 	document.getElementById("lessonManager")!.className += " activeTopBarTab";
-	var html = "<h1>" + CONFIG["site-name"] + " - Lekce</h1>";
+	let html = "<h1>" + CONFIG["site-name"] + " - Lekce</h1>";
 	if(LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser")
 	{
 		html += "<div class=\"button greenButton\" id=\"addField\"><i class=\"icon-plus\"></i>Přidat oblast</div>";
@@ -87,7 +87,7 @@ function showLessonSubview(noHistory: boolean): void
 
 	if(LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser")
 	{
-		document.getElementById("addField")!.onclick = function()
+		document.getElementById("addField")!.onclick = function(): void
 		{
 			addField();
 		};

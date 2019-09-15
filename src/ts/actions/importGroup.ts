@@ -1,23 +1,23 @@
 /* exported importGroupOnClick */
 
-var participantEvent: AfterLoadEvent;
-var addEvent: AfterLoadEvent;
-var groupEvent: AfterLoadEvent;
+let participantEvent: AfterLoadEvent;
+let addEvent: AfterLoadEvent;
+let groupEvent: AfterLoadEvent;
 
-var participants: Array<Participant>;
-var users: Array<User>;
+let participants: Array<Participant>;
+let users: Array<User>;
 
 function setdiff(a: Array<Participant>, b: Array<User>): Array<Participant>
 {
-	var bArr = b.map(function(x): number {
+	const bArr = b.map(function(x): number {
 		return x.id;
 	});
-	var result = [];
-	for(var j = 0; j < a.length; j++)
+	const result = [];
+	for(let i = 0; i < a.length; i++)
 	{
-		if(bArr.indexOf(a[j].id) < 0)
+		if(bArr.indexOf(a[i].id) < 0)
 		{
-			result.push(a[j]);
+			result.push(a[i]);
 		}
 	}
 	return result;
@@ -25,9 +25,9 @@ function setdiff(a: Array<Participant>, b: Array<User>): Array<Participant>
 
 function importGroupSave(id: string): void
 {
-	var participants: Array<Participant> = [];
-	var nodes = document.getElementById("sidePanelForm")!.getElementsByTagName("input");
-	for(var i = 0; i < nodes.length; i++)
+	const participants: Array<Participant> = [];
+	const nodes = document.getElementById("sidePanelForm")!.getElementsByTagName("input");
+	for(let i = 0; i < nodes.length; i++)
 	{
 		if(nodes[i].checked)
 		{
@@ -40,22 +40,22 @@ function importGroupSave(id: string): void
 		return;
 	}
 
-	var html = "<div id=\"embeddedSpinner\"></div>";
+	const html = "<div id=\"embeddedSpinner\"></div>";
 	document.getElementById("importList")!.innerHTML = html;
 
 	addEvent = new AfterLoadEvent(participants.length);
-	for(var j = 0; j < participants.length; j++)
+	for(let i = 0; i < participants.length; i++)
 	{
-		request(CONFIG.apiuri + "/user", "POST", participants[j], function(): void {addEvent.trigger();}, authFailHandler);
+		request(CONFIG.apiuri + "/user", "POST", participants[i], function(): void {addEvent.trigger();}, authFailHandler);
 	}
 
 	addEvent.addCallback(function(): void
 	{
 		groupEvent = new AfterLoadEvent(participants.length);
-		for(var k = 0; k < participants.length; k++)
+		for(let i = 0; i < participants.length; i++)
 		{
-			var payload = {"group": id};
-			request(CONFIG.apiuri + "/user/" + participants[k].id + "/group", "PUT", payload, function(): void {groupEvent.trigger();}, authFailHandler);
+			const payload = {"group": id};
+			request(CONFIG.apiuri + "/user/" + participants[i].id + "/group", "PUT", payload, function(): void {groupEvent.trigger();}, authFailHandler);
 		}
 
 		groupEvent.addCallback(function(): void
@@ -74,7 +74,7 @@ function importGroupSave(id: string): void
 
 function importGroupSelectParticipantsRender(id: string): void
 {
-	var newparticipants = setdiff(participants, users);
+	const newparticipants = setdiff(participants, users);
 	if(newparticipants.length === 0)
 	{
 		sidePanelClose();
@@ -83,8 +83,8 @@ function importGroupSelectParticipantsRender(id: string): void
 		refreshMetadata();
 		history.back();
 	}
-	var html = "<h4>Výběr účastníků:</h4><form id=\"sidePanelForm\">";
-	for(var i = 0; i < newparticipants.length; i++)
+	let html = "<h4>Výběr účastníků:</h4><form id=\"sidePanelForm\">";
+	for(let i = 0; i < newparticipants.length; i++)
 	{
 		html += "<div class=\"formRow\"><label class=\"formSwitch\"><input type=\"checkbox\" data-id=\"" + newparticipants[i].id + "\" data-name=\"" + newparticipants[i].name + "\"><span class=\"formCustom formCheckbox\"></span></label>" + newparticipants[i].name + "</div>";
 	}
@@ -96,14 +96,14 @@ function importGroupSelectParticipantsRender(id: string): void
 
 function importGroupSelectParticipants(id: string): void
 {
-	var eventId = parseBoolForm()[0];
+	const eventId = parseBoolForm()[0];
 	if(eventId)
 	{
-		var html = "<div id=\"embeddedSpinner\"></div>";
+		const html = "<div id=\"embeddedSpinner\"></div>";
 		document.getElementById("importList")!.innerHTML = html;
 		participantEvent = new AfterLoadEvent(2);
 		participantEvent.addCallback(importGroupSelectParticipantsRender);
-		var exceptionHandler = reAuthHandler;
+		const exceptionHandler = reAuthHandler;
 		exceptionHandler.SkautISAuthorizationException = function(): void
 		{
 			sidePanelClose();
@@ -119,7 +119,7 @@ function importGroupSelectParticipants(id: string): void
 			users = response.users as Array<User>;
 			participantEvent.trigger(id);
 		}, reAuthHandler);
-		document.getElementById("importGroupNext")!.onclick = function(): void {};
+		document.getElementById("importGroupNext")!.removeAttribute("onclick");
 	}
 }
 
@@ -133,8 +133,8 @@ function importGroupSelectEventRender(id: string, events: Array<Event>): void
 		refreshMetadata();
 		history.back();
 	}
-	var html = "<h4>Volba kurzu:</h4><form id=\"sidePanelForm\">";
-	for(var i = 0; i < events.length; i++)
+	let html = "<h4>Volba kurzu:</h4><form id=\"sidePanelForm\">";
+	for(let i = 0; i < events.length; i++)
 	{
 		html += "<div class=\"formRow\"><label class=\"formSwitch\"><input type=\"radio\" name=\"field\" data-id=\"" + events[i].id + "\"><span class=\"formCustom formRadio\"></span></label>" + events[i].name + "</div>";
 	}
@@ -146,9 +146,9 @@ function importGroupSelectEventRender(id: string, events: Array<Event>): void
 function importGroupOnClick(event: MouseEvent): void
 {
 	sidePanelOpen();
-	var html = "<div class=\"button yellowButton\" id=\"sidePanelCancel\"><i class=\"icon-cancel\"></i>Zrušit</div>";
+	let html = "<div class=\"button yellowButton\" id=\"sidePanelCancel\"><i class=\"icon-cancel\"></i>Zrušit</div>";
 	html += "<div class=\"button greenButton\" id=\"importGroupNext\"><i class=\"icon-fast-fw\"></i>Pokračovat</div>";
-	for(var i = 0; i < GROUPS.length; i++)
+	for(let i = 0; i < GROUPS.length; i++)
 	{
 		if(GROUPS[i].id === getAttribute(event, "id"))
 		{

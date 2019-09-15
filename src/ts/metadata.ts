@@ -1,12 +1,12 @@
 /* global FIELDS:true, FULLFIELDS:true, COMPETENCES:true, GROUPS:true, LOGINSTATE:true, metadataEvent:true */
 /* exported FIELDS, FULLFIELDS, COMPETENCES, GROUPS, LOGINSTATE, metadataSetup */
 
-var metadataEvent: AfterLoadEvent;
-var FIELDS = [];
-var FULLFIELDS = [];
-var COMPETENCES = [];
-var GROUPS = [];
-var LOGINSTATE: Loginstate = {avatar: "", name: "", role: "guest"};
+let metadataEvent: AfterLoadEvent;
+let FIELDS = [];
+let FULLFIELDS = [];
+let COMPETENCES = [];
+let GROUPS = [];
+let LOGINSTATE: Loginstate = {avatar: "", name: "", role: "guest"};
 
 function refreshMetadata(): void
 {
@@ -26,7 +26,7 @@ function refreshMetadata(): void
 		COMPETENCES = response as unknown as Array<Competence>;
 		metadataEvent.trigger();
 	}, undefined);
-	var groupExceptionHandler = {"AuthenticationException": function(): void
+	const groupExceptionHandler = {"AuthenticationException": function(): void
 	{
 		window.location.href = CONFIG.apiuri + "/login?return-uri=" + encodeURIComponent(window.location.href);
 	}, "RoleException": function(): void

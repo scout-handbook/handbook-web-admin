@@ -1,6 +1,6 @@
 /* exported changeFieldOnClick */
 
-var fieldChanged = false;
+let fieldChanged = false;
 
 function changeFieldPayloadBuilder(): Payload
 {
@@ -11,7 +11,7 @@ function changeField(state: SidePanelImageSelectorState, noHistory = false): voi
 {
 	fieldChanged = false;
 	sidePanelOpen();
-	var html = "<div class=\"button yellowButton\" id=\"sidePanelCancel\"><i class=\"icon-cancel\"></i>Zrušit</div>";
+	let html = "<div class=\"button yellowButton\" id=\"sidePanelCancel\"><i class=\"icon-cancel\"></i>Zrušit</div>";
 	html += "<div class=\"button greenButton\" id=\"changeFieldSave\"><i class=\"icon-floppy\"></i>Uložit</div>";
 	html += "<h3 class=\"sidePanelTitle\">Upravit oblast</h3><form id=\"sidePanelForm\">";
 	html += "<legend for=\"fieldName\">Název:</legend>";
@@ -34,8 +34,8 @@ function changeField(state: SidePanelImageSelectorState, noHistory = false): voi
 		openSidePanelImageSelector("changeField", {id: state.id, name: (document.getElementById("fieldName") as HTMLInputElement).value, description: (document.getElementById("fieldDescription") as HTMLInputElement).value, image: state.image});
 	}
 
-	var aq = new ActionQueue([new Action(CONFIG.apiuri + "/field/" + encodeURIComponent(state.id), "PUT", changeFieldPayloadBuilder)]);
-	document.getElementById("changeFieldSave")!.onclick = function()
+	const aq = new ActionQueue([new Action(CONFIG.apiuri + "/field/" + encodeURIComponent(state.id), "PUT", changeFieldPayloadBuilder)]);
+	document.getElementById("changeFieldSave")!.onclick = function(): void
 	{
 		dispatchIfChanged(aq, fieldChanged);
 	};
@@ -66,7 +66,7 @@ function changeField(state: SidePanelImageSelectorState, noHistory = false): voi
 
 function changeFieldOnClick(event: MouseEvent): void
 {
-	for(var i = 0; i < FULLFIELDS.length; i++)
+	for(let i = 0; i < FULLFIELDS.length; i++)
 	{
 		if(FULLFIELDS[i].id === getAttribute(event, "id"))
 		{
