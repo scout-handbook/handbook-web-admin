@@ -17,7 +17,7 @@ function closeSidePanelImageSelector(action: string, state: SidePanelImageSelect
 			addField(state, true);
 			break;
 		case "changeField":
-			changeField(state, true);
+			changeField(state, true, true);
 			break;
 	}
 }
