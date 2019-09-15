@@ -78,7 +78,6 @@ function restoreLessonRenderLessonList(list: IDList<DeletedLesson>): void
 		history.back();
 	}
 	let html = "<form id=\"sidePanelForm\">";
-	var html = "<form id=\"sidePanelForm\">";
 	list.iterate(function(id, deletedLesson)
 	{
 		html += "<div class=\"formRow\"><label class=\"formSwitch\"><input type=\"radio\" name=\"lesson\" data-id=\"" + id + "\"><span class=\"formCustom formRadio\"></span></label>" + deletedLesson.name + "</div>";

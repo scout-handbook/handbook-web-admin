@@ -43,7 +43,7 @@ function lessonHistoryListRender(id: string, actionQueue: ActionQueue, list: Arr
 {
 	var html = "<form id=\"sidePanelForm\">";
 	html += "<div class=\"formRow\"><label class=\"formSwitch\"><input type=\"radio\" name=\"version\" checked><span class=\"formCustom formRadio\"></span></label><span class=\"lessonHistoryCurrent\">Současná verze</span> — " + parseVersion(LESSONS.get(id).version) + "</div>";
-	for(var k = 0; k < list.length; k++)
+	for(var i = 0; i < list.length; i++)
 	{
 		html += "<div class=\"formRow\"><label class=\"formSwitch\"><input type=\"radio\" name=\"version\" data-name=\"" + list[i].name + "\" data-version=\"" + list[i].version + "\"><span class=\"formCustom formRadio\"></span></label><span class=\"lessonHistoryVersion\">" + list[i].name + "</span> — " + parseVersion(list[i].version) + "</div>";
 	}
