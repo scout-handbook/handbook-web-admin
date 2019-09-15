@@ -133,7 +133,7 @@ function showUserList(list: UserListResponse, searchName: string, page: number, 
 			downloadUserList(undefined, 1, perPage); // eslint-disable-line @typescript-eslint/no-use-before-define
 		};
 	}
-	var nodes = document.getElementsByClassName("paginationButton");
+	var nodes = getElementsByClassName("paginationButton");
 	for(var l = 0; l < nodes.length; l++)
 	{
 		(nodes[l] as HTMLElement).onclick = function(event): void
@@ -175,7 +175,7 @@ function downloadUserList(searchName = "", page = 1, perPage = 25, role: Role|"a
 function showUserSubview(noHistory: boolean): void
 {
 	mainPageTab = "users";
-	var nodes = document.getElementsByClassName("topBarTab");
+	var nodes = getElementsByClassName("topBarTab");
 	for(var l = 0; l < nodes.length; l++)
 	{
 		nodes[l].className = "topBarTab";

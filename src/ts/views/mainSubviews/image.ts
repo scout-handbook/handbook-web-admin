@@ -37,12 +37,12 @@ function showImageList(list: Array<string>, page: number, perPage: number): void
 	{
 		ImageNodes[j].onclick = showImagePreview;
 	}
-	var deleteNodes = document.getElementsByClassName("deleteImage");
+	var deleteNodes = getElementsByClassName("deleteImage");
 	for(var k = 0; k < deleteNodes.length; k++)
 	{
 		(deleteNodes[k] as HTMLElement).onclick = deleteImageOnClick;
 	}
-	var paginationNodes = document.getElementsByClassName("paginationButton");
+	var paginationNodes = getElementsByClassName("paginationButton");
 	for(var l = 0; l < paginationNodes.length; l++)
 	{
 		(paginationNodes[l] as HTMLElement).onclick = function(event): void
@@ -65,7 +65,7 @@ function downloadImageList(page: number, perPage: number): void
 function showImageSubview(noHistory: boolean): void
 {
 	mainPageTab = "images";
-	var nodes = document.getElementsByClassName("topBarTab");
+	var nodes = getElementsByClassName("topBarTab");
 	for(var i = 0; i < nodes.length; i++)
 	{
 		nodes[i].className = "topBarTab";

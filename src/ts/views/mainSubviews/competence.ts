@@ -20,7 +20,7 @@ function renderCompetenceList(): string
 function showCompetenceSubview(noHistory: boolean): void
 {
 	mainPageTab = "competences";
-	var nodes = document.getElementsByClassName("topBarTab");
+	var nodes = getElementsByClassName("topBarTab");
 	for(var l = 0; l < nodes.length; l++)
 	{
 		nodes[l].className = "topBarTab";
