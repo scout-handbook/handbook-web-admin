@@ -33,7 +33,7 @@ function changeLessonFieldOnClick(id: string|null, actionQueue: ActionQueue): vo
 	html += "<h3 class=\"sidePanelTitle\">Změnit oblast</h3><form id=\"sidePanelForm\">";
 	FIELDS.iterate(function(fieldId, field)
 	{
-		var checked = false;
+		let checked = false;
 		if((fieldId && fieldId === lessonSettingsCache.field) || (!fieldId && lessonSettingsCache.field === ""))
 		{
 			checked = true;
