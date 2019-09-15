@@ -11,8 +11,8 @@ class IDList<T>
 
 	public iterate(iterator: (key: string, value: T) => void): void
 	{
-		for (var key in this.list) {
-			if (this.list.hasOwnProperty(key)) {
+		for (const key in this.list) {
+			if (Object.prototype.hasOwnProperty.call(this.list, key)) {
 				iterator(key, this.list[key]);
 			}
 		}
@@ -20,7 +20,7 @@ class IDList<T>
 
 	public empty(): boolean
 	{
-		var ret = true;
+		let ret = true;
 		this.iterate(function()
 		{
 			ret = false;

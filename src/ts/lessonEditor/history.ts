@@ -41,9 +41,9 @@ function lessonHistoryPreviewShowVersion(id: string, actionQueue: ActionQueue, e
 
 function lessonHistoryListRender(id: string, actionQueue: ActionQueue, list: Array<LessonVersion>): void
 {
-	var html = "<form id=\"sidePanelForm\">";
+	let html = "<form id=\"sidePanelForm\">";
 	html += "<div class=\"formRow\"><label class=\"formSwitch\"><input type=\"radio\" name=\"version\" checked><span class=\"formCustom formRadio\"></span></label><span class=\"lessonHistoryCurrent\">Současná verze</span> — " + parseVersion(LESSONS.get(id).version) + "</div>";
-	for(var i = 0; i < list.length; i++)
+	for(let i = 0; i < list.length; i++)
 	{
 		html += "<div class=\"formRow\"><label class=\"formSwitch\"><input type=\"radio\" name=\"version\" data-name=\"" + list[i].name + "\" data-version=\"" + list[i].version + "\"><span class=\"formCustom formRadio\"></span></label><span class=\"lessonHistoryVersion\">" + list[i].name + "</span> — " + parseVersion(list[i].version) + "</div>";
 	}

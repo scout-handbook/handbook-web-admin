@@ -11,7 +11,7 @@ function renderLessonListLesson(id: string, lesson: Lesson, secondLevel: string)
 	}
 	html += "<a href=\"" + CONFIG['admin-uri'] + "/lesson/" + id + "\" target=\"_blank\" class=\"button exportLesson\"><i class=\"icon-file-pdf\"></i>PDF</a>";
 	html += "<br><span class=\"mainPage" + secondLevel + "\">Kompetence: ";
-	var first = true;
+	let first = true;
 	COMPETENCES.iterate(function(competenceId, competence)
 	{
 		if(lesson.competences.indexOf(competenceId) >= 0)
@@ -33,7 +33,7 @@ function renderLessonList(): string
 	let html = "";
 	LESSONS.iterate(function(id, lesson)
 	{
-		var inField = false;
+		let inField = false;
 		FIELDS.iterate(function(_, field)
 		{
 			if(field.lessons.indexOf(id) >= 0)
