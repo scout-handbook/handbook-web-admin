@@ -3,8 +3,8 @@
 
 function renderGroupList(): string
 {
-	var html = "";
-	for(var i = 0; i < GROUPS.length; i++)
+	let html = "";
+	for(let i = 0; i < GROUPS.length; i++)
 	{
 		if(GROUPS[i].id === "00000000-0000-0000-0000-000000000000")
 		{
@@ -34,13 +34,13 @@ function renderGroupList(): string
 function showGroupSubview(noHistory: boolean): void
 {
 	mainPageTab = "groups";
-	var nodes = getElementsByClassName("topBarTab");
-	for(var l = 0; l < nodes.length; l++)
+	const nodes = getElementsByClassName("topBarTab");
+	for(let l = 0; l < nodes.length; l++)
 	{
 		nodes[l].className = "topBarTab";
 	}
 	document.getElementById("groupManager")!.className += " activeTopBarTab";
-	var html = "<h1>" + CONFIG["site-name"] + " - Uživatelské skupiny</h1>";
+	let html = "<h1>" + CONFIG["site-name"] + " - Uživatelské skupiny</h1>";
 	if(LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser")
 	{
 		html += "<div class=\"button greenButton\" id=\"addGroup\"><i class=\"icon-plus\"></i>Přidat</div>";

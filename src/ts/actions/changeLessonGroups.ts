@@ -1,7 +1,7 @@
 /* global changed:true */
 /* exported changed, changeLessonGroupsOnClick */
 
-var lessonGroupsChanged = false;
+let lessonGroupsChanged = false;
 
 function changeLessonGroupsSave(id: string|null, actionQueue: ActionQueue): void
 {
@@ -9,9 +9,9 @@ function changeLessonGroupsSave(id: string|null, actionQueue: ActionQueue): void
 	if(lessonGroupsChanged)
 	{
 		changed = true;
-		var groups = parseBoolForm();
-		var encodedGroups: Array<string> = [];
-		for(var i = 0; i < groups.length; i++)
+		const groups = parseBoolForm();
+		const encodedGroups: Array<string> = [];
+		for(let i = 0; i < groups.length; i++)
 		{
 			encodedGroups.push(encodeURIComponent(groups[i]));
 		}
@@ -33,11 +33,11 @@ function lessonGroupsOnclick(): void
 function changeLessonGroupsOnClick(id: string|null, actionQueue: ActionQueue): void
 {
 	lessonGroupsChanged = false;
-	var html = "<div class=\"button yellowButton\" id=\"cancelEditorAction\"><i class=\"icon-cancel\"></i>Zrušit</div>";
+	let html = "<div class=\"button yellowButton\" id=\"cancelEditorAction\"><i class=\"icon-cancel\"></i>Zrušit</div>";
 	html += "<div class=\"button greenButton\" id=\"changeLessonGroupsSave\"><i class=\"icon-floppy\"></i>Uložit</div>";
 	html += "<h3 class=\"sidePanelTitle\">Změnit skupiny</h3><form id=\"sidePanelForm\">";
-	var publicName = ''
-	for(var i = 0; i < GROUPS.length; i++)
+	let publicName = ''
+	for(let i = 0; i < GROUPS.length; i++)
 	{
 		html += "<div class=\"formRow\"><label class=\"formSwitch\"><input type=\"checkbox\"";
 		if(lessonSettingsCache.groups.indexOf(GROUPS[i].id) >= 0)
@@ -66,8 +66,8 @@ function changeLessonGroupsOnClick(id: string|null, actionQueue: ActionQueue): v
 	};
 	document.getElementById("changeLessonGroupsSave")!.onclick = function(): void {changeLessonGroupsSave(id, actionQueue);};
 
-	var nodes = document.getElementById("sidePanelForm")!.getElementsByTagName("input");
-	for(var k = 0; k < nodes.length; k++)
+	const nodes = document.getElementById("sidePanelForm")!.getElementsByTagName("input");
+	for(let k = 0; k < nodes.length; k++)
 	{
 		nodes[k].onchange = lessonGroupsOnclick;
 	}

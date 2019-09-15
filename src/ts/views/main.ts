@@ -1,6 +1,6 @@
 /* exported showMainView */
 
-var mainPageTab: MainPageTab = "lessons";
+let mainPageTab: MainPageTab = "lessons";
 
 function renderMainView(noHistory: boolean): void
 {
@@ -40,7 +40,7 @@ function renderMainView(noHistory: boolean): void
 
 function showMainView(noHistory: boolean): void
 {
-	var html = "<div id=\"sidePanel\"></div><div id=\"sidePanelOverlay\"></div>";
+	let html = "<div id=\"sidePanel\"></div><div id=\"sidePanelOverlay\"></div>";
 	html += "<div id=\"topBar\"><div id=\"userAccount\"><img id=\"userAvatar\" alt=\"Account avatar\" src=\"" + CONFIG['admin-uri'] + "/avatar.png\">";
 	html += "<div id=\"userName\">&nbsp;</div>";
 	html += "<div id=\"logLink\"><a href=\"" + CONFIG.apiuri + "/logout?redirect-uri=" + encodeURIComponent(CONFIG['frontend-uri']) + "\">Odhlásit</a><a href=\"/\" id=\"frontendLink\">Zpět na web</a></div></div>";

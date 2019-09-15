@@ -1,7 +1,7 @@
 /// <reference types="xss" />
-declare var CONFIG: Config;
-declare var imageSelectorOpen: boolean;
-declare var sidePanelState: boolean;
+declare const CONFIG: Config;
+declare const imageSelectorOpen: boolean;
+declare const sidePanelState: boolean;
 declare function closeSidePanelImageSelector(action: string, state: SidePanelImageSelectorState): void;
 declare function dialog(mainText: string, confirmText: string, confirmCallback?: () => void, dismissText?: string, dismissCallback?: () => void): void;
 declare function dismissSpinner(): void;

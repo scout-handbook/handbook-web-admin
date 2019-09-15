@@ -8,7 +8,7 @@ function addImageSave(): void
 		{
 			dialog("Tento prohlížeč nepodporuje nahrávání souborů", "OK");
 		}
-		var formData = new FormData() // eslint-disable-line compat/compat
+		const formData = new FormData() // eslint-disable-line compat/compat
 		formData.append("image", (document.getElementById("addImageFile") as HTMLInputElement).files![0])
 		sidePanelClose();
 		spinner();
@@ -23,7 +23,7 @@ function addImageSave(): void
 
 function changeLabel(event: Event): void
 {
-	var element = event.target as HTMLInputElement;
+	const element = event.target as HTMLInputElement;
 	if(element.files)
 	{
 		element.parentElement!.children[1].innerHTML = "<i class=\"icon-upload\"></i>" + element.files[0].name;
@@ -33,7 +33,7 @@ function changeLabel(event: Event): void
 function addImage(inEditor: boolean): void
 {
 	sidePanelOpen();
-	var html = "<div class=\"button yellowButton\" id=\"sidePanelCancel\"><i class=\"icon-cancel\"></i>Zrušit</div>";
+	let html = "<div class=\"button yellowButton\" id=\"sidePanelCancel\"><i class=\"icon-cancel\"></i>Zrušit</div>";
 	html += "<div class=\"button greenButton\" id=\"addImageSave\"><i class=\"icon-floppy\"></i>Uložit</div>";
 	html += "<h3 class=\"sidePanelTitle\">Nahrát obrázek</h3><form id=\"sidePanelForm\">";
 	html += "<div class=\"formRow\"><label class=\"formFile\">";

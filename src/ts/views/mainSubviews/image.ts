@@ -3,10 +3,10 @@
 
 function showImagePreview(event: MouseEvent): void
 {
-	var overlay = document.getElementById("overlay")!;
+	const overlay = document.getElementById("overlay")!;
 	overlay.style.display = "inline";
 	overlay.style.cursor = "pointer";
-	var html = "<img src=\"" + CONFIG.apiuri + "/image/" + (event.target as HTMLElement).dataset.id + "\" class=\"previewImage\">";
+	const html = "<img src=\"" + CONFIG.apiuri + "/image/" + (event.target as HTMLElement).dataset.id + "\" class=\"previewImage\">";
 	overlay.innerHTML = html;
 	overlay.onclick = function(): void
 	{
@@ -23,27 +23,27 @@ function showImageList(list: Array<string>, page: number, perPage: number): void
 	{
 		return;
 	}
-	var html = "";
-	var start = perPage * (page - 1);
-	for(var i = start; i < Math.min(list.length, start + perPage); i++)
+	let html = "";
+	const start = perPage * (page - 1);
+	for(let i = start; i < Math.min(list.length, start + perPage); i++)
 	{
 		html += "<div class=\"thumbnailContainer\"><div class=\"buttonContainer\"><img src=\"" + CONFIG.apiuri + "/image/" + list[i] + "?quality=thumbnail\" class=\"thumbnailImage\" data-id=\"" + list[i] + "\"><div class=\"button redButton deleteImage\" data-id=\"" + list[i] + "\"><i class=\"icon-trash-empty\"></i>Smazat</div></div></div>";
 	}
 	html += renderPagination(Math.ceil(list.length / perPage), page);
 	document.getElementById("imageList")!.innerHTML = html;
 
-	var	ImageNodes = document.getElementById("imageList")!.getElementsByTagName("img");
-	for(var j = 0; j < ImageNodes.length; j++)
+	const ImageNodes = document.getElementById("imageList")!.getElementsByTagName("img");
+	for(let j = 0; j < ImageNodes.length; j++)
 	{
 		ImageNodes[j].onclick = showImagePreview;
 	}
-	var deleteNodes = getElementsByClassName("deleteImage");
-	for(var k = 0; k < deleteNodes.length; k++)
+	const deleteNodes = getElementsByClassName("deleteImage");
+	for(let k = 0; k < deleteNodes.length; k++)
 	{
 		(deleteNodes[k] as HTMLElement).onclick = deleteImageOnClick;
 	}
-	var paginationNodes = getElementsByClassName("paginationButton");
-	for(var l = 0; l < paginationNodes.length; l++)
+	const paginationNodes = getElementsByClassName("paginationButton");
+	for(let l = 0; l < paginationNodes.length; l++)
 	{
 		(paginationNodes[l] as HTMLElement).onclick = function(event): void
 		{
@@ -65,13 +65,13 @@ function downloadImageList(page: number, perPage: number): void
 function showImageSubview(noHistory: boolean): void
 {
 	mainPageTab = "images";
-	var nodes = getElementsByClassName("topBarTab");
-	for(var i = 0; i < nodes.length; i++)
+	const nodes = getElementsByClassName("topBarTab");
+	for(let i = 0; i < nodes.length; i++)
 	{
 		nodes[i].className = "topBarTab";
 	}
 	document.getElementById("imageManager")!.className += " activeTopBarTab";
-	var html = "<h1>" + CONFIG["site-name"] + " - Obrázky</h1>";
+	let html = "<h1>" + CONFIG["site-name"] + " - Obrázky</h1>";
 	html += "<div class=\"button greenButton\" id=\"addImage\"><i class=\"icon-plus\"></i>Nahrát</div>";
 	html += "<div id=\"imageList\"></div>";
 	document.getElementById("mainPage")!.innerHTML = html;

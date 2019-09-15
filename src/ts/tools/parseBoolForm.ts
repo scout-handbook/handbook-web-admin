@@ -2,9 +2,9 @@
 
 function parseBoolForm(): Array<string>
 {
-	var ret = [];
-	var nodes = document.getElementById("sidePanelForm")!.getElementsByTagName("input");
-	for(var i = 0; i < nodes.length; i++)
+	const ret = [];
+	const nodes = document.getElementById("sidePanelForm")!.getElementsByTagName("input");
+	for(let i = 0; i < nodes.length; i++)
 	{
 		if(nodes[i].checked)
 		{

@@ -1,6 +1,6 @@
 /* exported changeCompetenceOnClick */
 
-var competenceChanged = false;
+let competenceChanged = false;
 
 function changeCompetencePayloadBuilder(): Payload
 {
@@ -11,10 +11,10 @@ function changeCompetenceOnClick(event: MouseEvent): void
 {
 	competenceChanged = false;
 	sidePanelOpen();
-	var html = "<div class=\"button yellowButton\" id=\"sidePanelCancel\"><i class=\"icon-cancel\"></i>Zrušit</div>";
+	let html = "<div class=\"button yellowButton\" id=\"sidePanelCancel\"><i class=\"icon-cancel\"></i>Zrušit</div>";
 	html += "<div class=\"button greenButton\" id=\"changeCompetenceSave\"><i class=\"icon-floppy\"></i>Uložit</div>";
 	html += "<h3 class=\"sidePanelTitle\">Upravit kompetenci</h3><form id=\"sidePanelForm\">";
-	for(var i = 0; i < COMPETENCES.length; i++)
+	for(let i = 0; i < COMPETENCES.length; i++)
 	{
 		if(COMPETENCES[i].id === getAttribute(event, "id"))
 		{
@@ -32,7 +32,7 @@ function changeCompetenceOnClick(event: MouseEvent): void
 		history.back();
 	};
 
-	var aq = new ActionQueue([new Action(CONFIG.apiuri + "/competence/" + encodeURIComponent(getAttribute(event, "id")), "PUT", changeCompetencePayloadBuilder)]);
+	const aq = new ActionQueue([new Action(CONFIG.apiuri + "/competence/" + encodeURIComponent(getAttribute(event, "id")), "PUT", changeCompetencePayloadBuilder)]);
 	document.getElementById("changeCompetenceSave")!.onclick = function(): void
 	{
 		dispatchIfChanged(aq, competenceChanged);

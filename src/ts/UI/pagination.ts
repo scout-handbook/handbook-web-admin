@@ -6,7 +6,7 @@ function renderPagination(total: number, current: number): string
 	{
 		return "";
 	}
-	var ret = "<div id=\"pagination\">";
+	let ret = "<div id=\"pagination\">";
 	if(current > 3)
 	{
 		ret += "<div class=\"paginationButton\" data-page=\"1\">1</div> ... ";

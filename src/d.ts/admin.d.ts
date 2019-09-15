@@ -1,14 +1,14 @@
 /// <reference types="EasyMDE" />
-declare var COMPETENCES: Array<Competence>;
-declare var CONFIG: Config;
-declare var FIELDS: Array<Field>;
-declare var FULLFIELDS: Array<FullField>;
-declare var GROUPS: Array<Group>;
-declare var LOGINSTATE: Loginstate;
-declare var authFailHandler: ExceptionHandler;
-declare var mainPageTab: MainPageTab;
-declare var metadataEvent: AfterLoadEvent;
-declare var reAuthHandler: ExceptionHandler;
+declare const COMPETENCES: Array<Competence>;
+declare const CONFIG: Config;
+declare const FIELDS: Array<Field>;
+declare const FULLFIELDS: Array<FullField>;
+declare const GROUPS: Array<Group>;
+declare const LOGINSTATE: Loginstate;
+declare const authFailHandler: ExceptionHandler;
+declare let mainPageTab: MainPageTab;
+declare const metadataEvent: AfterLoadEvent;
+declare const reAuthHandler: ExceptionHandler;
 declare function refreshLogin(forceRelogin?: boolean, afterAction?: (() => void)|null): void;
 declare function refreshMetadata(): void;
 declare function refreshPreview(name: string, markdown: string, id: string): void;
