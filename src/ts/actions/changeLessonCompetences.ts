@@ -57,9 +57,9 @@ function changeLessonCompetencesOnClick(id: string|null, actionQueue: ActionQueu
 	document.getElementById("changeLessonCompetencesSave")!.onclick = function(): void {changeLessonCompetencesSave(id, actionQueue);};
 
 	const nodes = document.getElementById("sidePanelForm")!.getElementsByTagName("input");
-	for(let j = 0; j < nodes.length; j++)
+	for(let i = 0; i < nodes.length; i++)
 	{
-		nodes[j].onchange = lessonCompetenceOnclick;
+		nodes[i].onchange = lessonCompetenceOnclick;
 	}
 
 	refreshLogin();

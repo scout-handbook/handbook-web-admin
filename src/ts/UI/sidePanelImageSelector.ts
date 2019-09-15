@@ -69,9 +69,9 @@ function renderSidePanelImageSelector(list: Array<string>, action: string, state
 		history.back();
 	}
 	const imageNodes = document.getElementById("sidePanel")!.getElementsByTagName("img");
-	for(let k = 0; k < imageNodes.length; k++)
+	for(let i = 0; i < imageNodes.length; i++)
 	{
-		imageNodes[k].onclick = function(event: MouseEvent): void
+		imageNodes[i].onclick = function(event: MouseEvent): void
 		{
 			state.image = (event.target as HTMLElement).dataset.id!;
 			history.back();
@@ -79,9 +79,9 @@ function renderSidePanelImageSelector(list: Array<string>, action: string, state
 		};
 	}
 	const buttonNodes = getElementsByClassName("paginationButton");
-	for(let l = 0; l < buttonNodes.length; l++)
+	for(let i = 0; i < buttonNodes.length; i++)
 	{
-		(buttonNodes[l] as HTMLElement).onclick = function(event): void
+		(buttonNodes[i] as HTMLElement).onclick = function(event): void
 		{
 			openSidePanelImageSelector(action, state, parseInt((event.target as HTMLElement).dataset.page!, 10), perPage, true);
 		};

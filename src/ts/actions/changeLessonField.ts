@@ -72,9 +72,9 @@ function changeLessonFieldOnClick(id: string|null, actionQueue: ActionQueue): vo
 	document.getElementById("changeLessonFieldSave")!.onclick = function(): void {changeLessonFieldSave(id, actionQueue);};
 
 	const nodes = document.getElementById("sidePanelForm")!.getElementsByTagName("input");
-	for(let k = 0; k < nodes.length; k++)
+	for(let i = 0; i < nodes.length; i++)
 	{
-		nodes[k].onchange = lessonFieldOnclick;
+		nodes[i].onchange = lessonFieldOnclick;
 	}
 
 	refreshLogin();

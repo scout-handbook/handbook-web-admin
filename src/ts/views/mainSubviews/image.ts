@@ -33,19 +33,19 @@ function showImageList(list: Array<string>, page: number, perPage: number): void
 	document.getElementById("imageList")!.innerHTML = html;
 
 	const ImageNodes = document.getElementById("imageList")!.getElementsByTagName("img");
-	for(let j = 0; j < ImageNodes.length; j++)
+	for(let i = 0; i < ImageNodes.length; i++)
 	{
-		ImageNodes[j].onclick = showImagePreview;
+		ImageNodes[i].onclick = showImagePreview;
 	}
 	const deleteNodes = getElementsByClassName("deleteImage");
-	for(let k = 0; k < deleteNodes.length; k++)
+	for(let i = 0; i < deleteNodes.length; i++)
 	{
-		(deleteNodes[k] as HTMLElement).onclick = deleteImageOnClick;
+		(deleteNodes[i] as HTMLElement).onclick = deleteImageOnClick;
 	}
 	const paginationNodes = getElementsByClassName("paginationButton");
-	for(let l = 0; l < paginationNodes.length; l++)
+	for(let i = 0; i < paginationNodes.length; i++)
 	{
-		(paginationNodes[l] as HTMLElement).onclick = function(event): void
+		(paginationNodes[i] as HTMLElement).onclick = function(event): void
 		{
 			downloadImageList(parseInt((event.target as HTMLElement).dataset.page!, 10), perPage); // eslint-disable-line @typescript-eslint/no-use-before-define
 		};

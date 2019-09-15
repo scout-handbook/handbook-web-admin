@@ -67,9 +67,9 @@ function changeLessonGroupsOnClick(id: string|null, actionQueue: ActionQueue): v
 	document.getElementById("changeLessonGroupsSave")!.onclick = function(): void {changeLessonGroupsSave(id, actionQueue);};
 
 	const nodes = document.getElementById("sidePanelForm")!.getElementsByTagName("input");
-	for(let k = 0; k < nodes.length; k++)
+	for(let i = 0; i < nodes.length; i++)
 	{
-		nodes[k].onchange = lessonGroupsOnclick;
+		nodes[i].onchange = lessonGroupsOnclick;
 	}
 
 	refreshLogin();

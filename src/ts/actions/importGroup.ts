@@ -13,11 +13,11 @@ function setdiff(a: Array<Participant>, b: Array<User>): Array<Participant>
 		return x.id;
 	});
 	const result = [];
-	for(let j = 0; j < a.length; j++)
+	for(let i = 0; i < a.length; i++)
 	{
-		if(bArr.indexOf(a[j].id) < 0)
+		if(bArr.indexOf(a[i].id) < 0)
 		{
-			result.push(a[j]);
+			result.push(a[i]);
 		}
 	}
 	return result;
@@ -44,18 +44,18 @@ function importGroupSave(id: string): void
 	document.getElementById("importList")!.innerHTML = html;
 
 	addEvent = new AfterLoadEvent(participants.length);
-	for(let j = 0; j < participants.length; j++)
+	for(let i = 0; i < participants.length; i++)
 	{
-		request(CONFIG.apiuri + "/user", "POST", participants[j], function(): void {addEvent.trigger();}, authFailHandler);
+		request(CONFIG.apiuri + "/user", "POST", participants[i], function(): void {addEvent.trigger();}, authFailHandler);
 	}
 
 	addEvent.addCallback(function(): void
 	{
 		groupEvent = new AfterLoadEvent(participants.length);
-		for(let k = 0; k < participants.length; k++)
+		for(let i = 0; i < participants.length; i++)
 		{
 			const payload = {"group": id};
-			request(CONFIG.apiuri + "/user/" + participants[k].id + "/group", "PUT", payload, function(): void {groupEvent.trigger();}, authFailHandler);
+			request(CONFIG.apiuri + "/user/" + participants[i].id + "/group", "PUT", payload, function(): void {groupEvent.trigger();}, authFailHandler);
 		}
 
 		groupEvent.addCallback(function(): void
