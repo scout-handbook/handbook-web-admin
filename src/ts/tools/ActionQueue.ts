@@ -34,7 +34,7 @@ class ActionQueue {
 		this.dispatch(background);
 	}
 
-	public closeDispatch = () => {
+	public closeDispatch(): void {
 		sidePanelClose();
 		this.defaultDispatch(false);
 	}
@@ -54,7 +54,7 @@ class ActionQueue {
 		{
 			spinner();
 		}
-		this.actions[0].exceptionHandler["AuthenticationException"] = this.authException;
+		this.actions[0].exceptionHandler["AuthenticationException"] = (): void => this.authException();
 		request(this.actions[0].url, this.actions[0].method, this.actions[0].payloadBuilder(), (response) => {
 			this.actions[0].callback(response, this);
 			this.actions.shift();

@@ -32,7 +32,7 @@ function changeGroupOnClick(event: MouseEvent): void
 	};
 
 	var aq = new ActionQueue([new Action(CONFIG.apiuri + "/group/" + encodeURIComponent(getAttribute(event, "id")), "PUT", changeGrouPayloadBuilder)]);
-	document.getElementById("changeGroupSave")!.onclick = function()
+	document.getElementById("changeGroupSave")!.onclick = function(): void
 	{
 		dispatchIfChanged(aq, groupChanged);
 	};
