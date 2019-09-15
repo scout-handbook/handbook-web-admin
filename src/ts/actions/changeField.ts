@@ -7,9 +7,9 @@ function changeFieldPayloadBuilder(): Payload
 	return {"name": encodeURIComponent((document.getElementById("fieldName") as HTMLInputElement).value), "description": encodeURIComponent((document.getElementById("fieldDescription") as HTMLInputElement).value), "image": encodeURIComponent((document.getElementById("fieldImage") as HTMLInputElement).value)};
 }
 
-function changeField(state: SidePanelImageSelectorState, noHistory = false): void
+function changeField(state: SidePanelImageSelectorState, noHistory = false, changed = false): void
 {
-	fieldChanged = false;
+	fieldChanged = changed;
 	sidePanelOpen();
 	let html = "<div class=\"button yellowButton\" id=\"sidePanelCancel\"><i class=\"icon-cancel\"></i>Zrušit</div>";
 	html += "<div class=\"button greenButton\" id=\"changeFieldSave\"><i class=\"icon-floppy\"></i>Uložit</div>";
@@ -45,6 +45,14 @@ function changeField(state: SidePanelImageSelectorState, noHistory = false): voi
 		fieldChanged = true;
 	};
 	document.getElementById("fieldName")!.onchange = function(): void
+	{
+		fieldChanged = true;
+	};
+	document.getElementById("fieldDescription")!.oninput = function(): void
+	{
+		fieldChanged = true;
+	};
+	document.getElementById("fieldDescription")!.onchange = function(): void
 	{
 		fieldChanged = true;
 	};
