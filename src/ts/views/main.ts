@@ -1,6 +1,6 @@
 /* exported showMainView */
 
-let mainPageTab: MainPageTab = "lessons";
+let mainPageTab: MainPageTab = "lessons"; // eslint-disable-line prefer-const
 
 function renderMainView(noHistory: boolean): void
 {

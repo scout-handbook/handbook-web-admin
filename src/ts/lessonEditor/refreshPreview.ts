@@ -51,7 +51,7 @@ function refreshPreview(name: string, markdown: string, id: string): void
 	else
 	{
 		let html = "<h1>" + name + "</h1>";
-		html += filterXSS(converter!.makeHtml(payload.body), xssOptions());
+		html += filterXSS(converter!.makeHtml(payload.body), xssOptions()); // eslint-disable-line @typescript-eslint/no-unnecessary-type-assertion
 		document.getElementById(payload.id)!.innerHTML = html;
 	}
 }
