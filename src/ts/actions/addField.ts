@@ -31,7 +31,7 @@ function addField(state: SidePanelImageSelectorState = {name: "Nová oblast", de
 	};
 
 	var aq = new ActionQueue([new Action(CONFIG.apiuri + "/field", "POST", addFieldPayloadBuilder)]);
-	document.getElementById("addFieldSave")!.onclick = aq.closeDispatch;
+	document.getElementById("addFieldSave")!.onclick = () => aq.closeDispatch();
 
 	if(!noHistory)
 	{
