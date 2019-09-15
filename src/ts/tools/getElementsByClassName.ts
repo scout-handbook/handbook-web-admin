@@ -1,3 +1,5 @@
+/* exported getElementsByClassName */
+
 function getElementsByClassName(className: string, context: Document|Element = document): HTMLCollection {
 	if(context.getElementsByClassName) {
 		return context.getElementsByClassName(className);
