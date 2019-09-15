@@ -34,7 +34,7 @@ function renderGroupList(): string
 function showGroupSubview(noHistory: boolean): void
 {
 	mainPageTab = "groups";
-	var nodes = document.getElementsByClassName("topBarTab");
+	var nodes = getElementsByClassName("topBarTab");
 	for(var l = 0; l < nodes.length; l++)
 	{
 		nodes[l].className = "topBarTab";
