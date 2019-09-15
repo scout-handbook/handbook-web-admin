@@ -1,19 +1,19 @@
 /* exported reAuthHandler, authFailHandler, request */
 
-var reAuthHandler = {"AuthenticationException": function(): void
+const reAuthHandler = {"AuthenticationException": function(): void
 {
 	window.location.replace(CONFIG.apiuri + "/login");
 }};
-var authFailHandler = {"AuthenticationException": function(): void
+const authFailHandler = {"AuthenticationException": function(): void
 {
 	dialog("Proběhlo automatické odhlášení. Přihlašte se prosím a zkuste to znovu.", "OK");
 }};
 
 function requestQueryBuilder(payload: Payload): string
 {
-	var query = "";
-	var first = true;
-	for(var key in payload)
+	let query = "";
+	let first = true;
+	for(const key in payload)
 	{
 		if(!Object.prototype.hasOwnProperty.call(payload, key))
 		{
@@ -21,7 +21,7 @@ function requestQueryBuilder(payload: Payload): string
 		}
 		if(payload[key].constructor === Array)
 		{
-			for(var i = 0; i < payload[key].length; i++)
+			for(let i = 0; i < payload[key].length; i++)
 			{
 				if(!first)
 				{
@@ -46,7 +46,7 @@ function requestQueryBuilder(payload: Payload): string
 
 function rawRequest(url: string, method: string, payload: Payload = {}, callback: (response: APIResponse) => void): void
 {
-	var xhr = new XMLHttpRequest();
+	const xhr = new XMLHttpRequest();
 	xhr.onreadystatechange = function(): void
 	{
 		if(this.readyState === 4)
@@ -54,7 +54,7 @@ function rawRequest(url: string, method: string, payload: Payload = {}, callback
 			callback(JSON.parse(this.responseText));
 		}
 	}
-	var query = "";
+	let query = "";
 	if(payload)
 	{
 		if(method === "GET" || method === "DELETE" || payload.toString() !== "[object FormData]")

@@ -1,10 +1,10 @@
 /* global changed:true, editor:true, lessonSettingsCacheEvent:true */
 /* exported showLessonEditor */
 
-var changed: boolean;
-var lessonSettingsCache: LessonSettingsCache = {competences: [], field: "", groups: []};
-var lessonSettingsCacheEvent: AfterLoadEvent;
-var editor: EasyMDE;
+let changed: boolean;
+const lessonSettingsCache: LessonSettingsCache = {competences: [], field: "", groups: []};
+let lessonSettingsCacheEvent: AfterLoadEvent;
+let editor: EasyMDE;
 
 function populateEditorCache(id: string|null): void
 {
@@ -23,9 +23,9 @@ function populateEditorCache(id: string|null): void
 		lessonSettingsCacheEvent.trigger();
 	}, reAuthHandler);
 	outer:
-	for(var i = 0; i < FIELDS.length; i++)
+	for(let i = 0; i < FIELDS.length; i++)
 	{
-		for(var j = 0; j < FIELDS[i].lessons.length; j++)
+		for(let j = 0; j < FIELDS[i].lessons.length; j++)
 		{
 			if(FIELDS[i].lessons[j].id === id)
 			{
@@ -77,7 +77,7 @@ function showLessonEditor(name: string, body: string, saveActionQueue: ActionQue
 {
 	populateEditorCache(id);
 	changed = false;
-	var html = '\
+	const html = '\
 <div id="sidePanel"></div><div id="sidePanelOverlay"></div>\
 <header>\
 	<div class="button yellowButton" id="discard">\
