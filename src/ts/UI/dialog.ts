@@ -1,6 +1,6 @@
 /* exported dialog */
 
-var confirmCallbackWrapped: () => void;
+let confirmCallbackWrapped: () => void;
 
 function keyPressDialog(event: KeyboardEvent): void
 {
@@ -42,7 +42,7 @@ function dialog(mainText: string, confirmText: string, confirmCallback?: () => v
 	{
 		document.getElementById("dismissText")!.style.display = "inline";
 		document.getElementById("dismissText")!.innerHTML = "<i class=\"icon-cancel\"></i>" + dismissText;
-		var dismissCallbackWrapped;
+		let dismissCallbackWrapped;
 		if(dismissCallback)
 		{
 			dismissCallbackWrapped = function(): void

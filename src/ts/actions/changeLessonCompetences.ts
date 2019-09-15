@@ -1,7 +1,7 @@
 /* global changed:true */
 /* exported changed, changeLessonCompetencesOnClick */
 
-var lessonCompetencesChanged = false;
+let lessonCompetencesChanged = false;
 
 function changeLessonCompetencesSave(id: string|null, actionQueue: ActionQueue): void
 {
@@ -9,9 +9,9 @@ function changeLessonCompetencesSave(id: string|null, actionQueue: ActionQueue):
 	if(lessonCompetencesChanged)
 	{
 		changed = true;
-		var competences = parseBoolForm();
-		var encodedCompetences: Array<string> = [];
-		for(var i = 0; i < competences.length; i++)
+		const competences = parseBoolForm();
+		const encodedCompetences: Array<string> = [];
+		for(let i = 0; i < competences.length; i++)
 		{
 			encodedCompetences.push(encodeURIComponent(competences[i]));
 		}
@@ -33,10 +33,10 @@ function lessonCompetenceOnclick(): void
 function changeLessonCompetencesOnClick(id: string|null, actionQueue: ActionQueue): void
 {
 	lessonCompetencesChanged = false;
-	var html = "<div class=\"button yellowButton\" id=\"cancelEditorAction\"><i class=\"icon-cancel\"></i>Zrušit</div>";
+	let html = "<div class=\"button yellowButton\" id=\"cancelEditorAction\"><i class=\"icon-cancel\"></i>Zrušit</div>";
 	html += "<div class=\"button greenButton\" id=\"changeLessonCompetencesSave\"><i class=\"icon-floppy\"></i>Uložit</div>";
 	html += "<h3 class=\"sidePanelTitle\">Změnit kompetence</h3><form id=\"sidePanelForm\">";
-	for(var i = 0; i < COMPETENCES.length; i++)
+	for(let i = 0; i < COMPETENCES.length; i++)
 	{
 		html += "<div class=\"formRow\"><label class=\"formSwitch\"><input type=\"checkbox\"";
 		if(lessonSettingsCache.competences.indexOf(COMPETENCES[i].id) >= 0)
@@ -56,10 +56,10 @@ function changeLessonCompetencesOnClick(id: string|null, actionQueue: ActionQueu
 	};
 	document.getElementById("changeLessonCompetencesSave")!.onclick = function(): void {changeLessonCompetencesSave(id, actionQueue);};
 
-	var nodes = document.getElementById("sidePanelForm")!.getElementsByTagName("input");
-	for(var j = 0; j < nodes.length; j++)
+	const nodes = document.getElementById("sidePanelForm")!.getElementsByTagName("input");
+	for(let i = 0; i < nodes.length; i++)
 	{
-		nodes[j].onchange = lessonCompetenceOnclick;
+		nodes[i].onchange = lessonCompetenceOnclick;
 	}
 
 	refreshLogin();

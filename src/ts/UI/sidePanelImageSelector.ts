@@ -24,15 +24,15 @@ function closeSidePanelImageSelector(action: string, state: SidePanelImageSelect
 
 function renderSidePanelImageSelector(list: Array<string>, action: string, state: SidePanelImageSelectorState, page: number, perPage: number, noHistory: boolean): void
 {
-	var html = "<div class=\"button yellowButton\" id=\"fieldImageCancel\"><i class=\"icon-cancel\"></i>Zrušit</div><div class=\"fieldImageContainer\">";
-	var start = perPage * (page - 1);
-	for(var i = start; i < Math.min(list.length, start + perPage); i++)
+	let html = "<div class=\"button yellowButton\" id=\"fieldImageCancel\"><i class=\"icon-cancel\"></i>Zrušit</div><div class=\"fieldImageContainer\">";
+	const start = perPage * (page - 1);
+	for(let i = start; i < Math.min(list.length, start + perPage); i++)
 	{
 		html += "<div class=\"thumbnailContainer\"><img src=\"" + CONFIG.apiuri + "/image/" + list[i] + "?quality=thumbnail\" class=\"thumbnailImage\" data-id=\"" + list[i] + "\"></div>";
 	}
 	if(list.length > perPage)
 	{
-		var maxPage = Math.ceil(list.length / perPage);
+		const maxPage = Math.ceil(list.length / perPage);
 		html += "<div id=\"pagination\">";
 		if(page > 3)
 		{
@@ -64,24 +64,24 @@ function renderSidePanelImageSelector(list: Array<string>, action: string, state
 	html += "</div>";
 	document.getElementById("sidePanel")!.innerHTML = html;
 
-	document.getElementById("fieldImageCancel")!.onclick = function()
+	document.getElementById("fieldImageCancel")!.onclick = function(): void
 	{
 		history.back();
 	}
-	var	imageNodes = document.getElementById("sidePanel")!.getElementsByTagName("img");
-	for(var k = 0; k < imageNodes.length; k++)
+	const imageNodes = document.getElementById("sidePanel")!.getElementsByTagName("img");
+	for(let i = 0; i < imageNodes.length; i++)
 	{
-		imageNodes[k].onclick = function(event: MouseEvent)
+		imageNodes[i].onclick = function(event: MouseEvent): void
 		{
 			state.image = (event.target as HTMLElement).dataset.id!;
 			history.back();
 			closeSidePanelImageSelector(action, state);
 		};
 	}
-	var buttonNodes = document.getElementsByClassName("paginationButton");
-	for(var l = 0; l < buttonNodes.length; l++)
+	const buttonNodes = getElementsByClassName("paginationButton");
+	for(let i = 0; i < buttonNodes.length; i++)
 	{
-		(buttonNodes[l] as HTMLElement).onclick = function(event): void
+		(buttonNodes[i] as HTMLElement).onclick = function(event): void
 		{
 			openSidePanelImageSelector(action, state, parseInt((event.target as HTMLElement).dataset.page!, 10), perPage, true);
 		};

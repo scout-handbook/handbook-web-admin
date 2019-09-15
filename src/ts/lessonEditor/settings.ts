@@ -2,7 +2,7 @@
 
 function renderField(): string
 {
-	var html = "<br><h3 class=\"sidePanelTitle noNewline\">Oblast</h3>"
+	let html = "<br><h3 class=\"sidePanelTitle noNewline\">Oblast</h3>"
 	html += "<div class=\"button cyanButton\" id=\"changeField\"><i class=\"icon-pencil\"></i>Upravit</div><br>";
 	if(!lessonSettingsCache.field)
 	{
@@ -10,7 +10,7 @@ function renderField(): string
 	}
 	else
 	{
-		for(var i = 0; i < FIELDS.length; i++)
+		for(let i = 0; i < FIELDS.length; i++)
 		{
 			if(FIELDS[i].id && FIELDS[i].id === lessonSettingsCache.field)
 			{
@@ -24,9 +24,9 @@ function renderField(): string
 
 function renderCompetences(): string
 {
-	var html = "<br><h3 class=\"sidePanelTitle noNewline\">Kompetence</h3>"
+	let html = "<br><h3 class=\"sidePanelTitle noNewline\">Kompetence</h3>"
 	html += "<div class=\"button cyanButton\" id=\"changeCompetences\"><i class=\"icon-pencil\"></i>Upravit</div>";
-	for(var i = 0; i < COMPETENCES.length; i++)
+	for(let i = 0; i < COMPETENCES.length; i++)
 	{
 		if(lessonSettingsCache.competences.indexOf(COMPETENCES[i].id) >= 0)
 		{
@@ -38,7 +38,7 @@ function renderCompetences(): string
 
 function prerenderGroups(): string
 {
-	var html = "<br><h3 class=\"sidePanelTitle noNewline\">Skupiny</h3>"
+	let html = "<br><h3 class=\"sidePanelTitle noNewline\">Skupiny</h3>"
 	html += "<div class=\"button cyanButton\" id=\"changeGroups\"><i class=\"icon-pencil\"></i>Upravit</div><br><div id=\"settingsGroupList\"><div id=\"embeddedSpinner\"></div></div>";
 	return html;
 }
@@ -46,8 +46,8 @@ function prerenderGroups(): string
 function renderGroups(): void
 {
 	document.getElementById("changeGroups")!.style.display = "inline-block";
-	var html = "";
-	for(var i = 0; i < GROUPS.length; i++)
+	let html = "";
+	for(let i = 0; i < GROUPS.length; i++)
 	{
 		if(lessonSettingsCache.groups.indexOf(GROUPS[i].id) >= 0)
 		{
@@ -67,7 +67,7 @@ function renderGroups(): void
 function lessonSettings(id: string|null, actionQueue: ActionQueue, noHistory: boolean): void
 {
 	sidePanelOpen();
-	var html = "<div class=\"button yellowButton\" id=\"sidePanelCancel\"><i class=\"icon-right-open\"></i>Zavřít</div>";
+	let html = "<div class=\"button yellowButton\" id=\"sidePanelCancel\"><i class=\"icon-right-open\"></i>Zavřít</div>";
 	if(id != null)
 	{
 		html += "<div class=\"button\" id=\"lessonHistoryOpen\"><i class=\"icon-history\"></i>Historie lekce</div>";

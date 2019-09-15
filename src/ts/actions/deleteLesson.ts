@@ -2,11 +2,11 @@
 
 function deleteLessonDialog(id: string): void
 {
-	var name = "";
+	let name = "";
 	outer:
-	for(var i = 0; i < FIELDS.length; i++)
+	for(let i = 0; i < FIELDS.length; i++)
 	{
-		for(var j = 0; j < FIELDS[i].lessons.length; j++)
+		for(let j = 0; j < FIELDS[i].lessons.length; j++)
 		{
 			if(FIELDS[i].lessons[j].id === id)
 			{
@@ -16,11 +16,11 @@ function deleteLessonDialog(id: string): void
 		}
 	}
 
-	var saveExceptionHandler = {"NotLockedException": function(): void {dialog("Kvůli příliš malé aktivitě byla lekce odemknuta a již ji upravil někdo jiný. Zkuste to prosím znovu.", "OK");}};
-	var discardExceptionHandler = {"NotFoundException": function(): void {}};
-	var saveActionQueue = new ActionQueue([new Action(CONFIG.apiuri + "/lesson/" + encodeURIComponent(id), "DELETE", undefined, [], saveExceptionHandler)]);
-	var discardActionQueue = new ActionQueue([new Action(CONFIG.apiuri + "/mutex/" + encodeURIComponent(id) , "DELETE", undefined, [], discardExceptionHandler)]);
-	dialog("Opravdu si přejete smazat lekci \"" + name + "\"?", "Ano", saveActionQueue.closeDispatch, "Ne", function(): void
+	const saveExceptionHandler = {"NotLockedException": function(): void {dialog("Kvůli příliš malé aktivitě byla lekce odemknuta a již ji upravil někdo jiný. Zkuste to prosím znovu.", "OK");}};
+	const discardExceptionHandler = {"NotFoundException": null};
+	const saveActionQueue = new ActionQueue([new Action(CONFIG.apiuri + "/lesson/" + encodeURIComponent(id), "DELETE", undefined, [], saveExceptionHandler)]);
+	const discardActionQueue = new ActionQueue([new Action(CONFIG.apiuri + "/mutex/" + encodeURIComponent(id) , "DELETE", undefined, [], discardExceptionHandler)]);
+	dialog("Opravdu si přejete smazat lekci \"" + name + "\"?", "Ano", () => saveActionQueue.closeDispatch(), "Ne", function(): void
 	{
 		discardActionQueue.dispatch(true);
 		history.back();
@@ -31,9 +31,9 @@ function deleteLessonDialog(id: string): void
 
 function deleteLessonOnClick(event: MouseEvent): void
 {
-	var id = getAttribute(event, "id");
+	const id = getAttribute(event, "id");
 	spinner();
-	var exceptionHandler = reAuthHandler;
+	const exceptionHandler = reAuthHandler;
 	exceptionHandler["LockedException"] = function(response: APIResponse): void
 	{
 		dialog("Nelze smazat lekci, protože ji právě upravuje " + response.holder + ".", "OK");

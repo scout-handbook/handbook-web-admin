@@ -3,8 +3,8 @@
 
 function renderCompetenceList(): string
 {
-	var html = "";
-	for(var i = 0; i < COMPETENCES.length; i++)
+	let html = "";
+	for(let i = 0; i < COMPETENCES.length; i++)
 	{
 		html += "<h3 class = \"mainPage\">" + COMPETENCES[i].number + ": " + COMPETENCES[i].name + "</h3><br>";
 		if(LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser")
@@ -20,13 +20,13 @@ function renderCompetenceList(): string
 function showCompetenceSubview(noHistory: boolean): void
 {
 	mainPageTab = "competences";
-	var nodes = document.getElementsByClassName("topBarTab");
-	for(var l = 0; l < nodes.length; l++)
+	const nodes = getElementsByClassName("topBarTab");
+	for(let i = 0; i < nodes.length; i++)
 	{
-		nodes[l].className = "topBarTab";
+		nodes[i].className = "topBarTab";
 	}
 	document.getElementById("competenceManager")!.className += " activeTopBarTab";
-	var html = "<h1>" + CONFIG["site-name"] + " - Kompetence</h1>";
+	let html = "<h1>" + CONFIG["site-name"] + " - Kompetence</h1>";
 	if(LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser")
 	{
 		html += "<div class=\"button greenButton\" id=\"addCompetence\"><i class=\"icon-plus\"></i>Přidat</div><br>";

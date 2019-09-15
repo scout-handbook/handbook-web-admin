@@ -3,7 +3,7 @@
 
 function renderRoleSelector(): string
 {
-	var html = "";
+	let html = "";
 	if(LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser")
 	{
 		html += "<select class=\"formSelect\" id=\"roleSearchFilter\">";
@@ -22,9 +22,9 @@ function renderRoleSelector(): string
 
 function renderGroupSelector(): string
 {
-	var html = "<select class=\"formSelect\" id=\"groupSearchFilter\">";
+	let html = "<select class=\"formSelect\" id=\"groupSearchFilter\">";
 	html += "<option id=\"00000000-0000-0000-0000-000000000000\" value=\"00000000-0000-0000-0000-000000000000\" class=\"selectFilterSpecial\">Všechny skupiny</option>";
-	for(var i = 0; i < GROUPS.length; i++)
+	for(let i = 0; i < GROUPS.length; i++)
 	{
 		if(GROUPS[i].id !== "00000000-0000-0000-0000-000000000000")
 		{
@@ -37,7 +37,7 @@ function renderGroupSelector(): string
 
 function renderUserRow(user: User): string
 {
-	var html = "<tr><td>" + user.name + "</td><td>";
+	let html = "<tr><td>" + user.name + "</td><td>";
 	switch(user.role)
 	{
 		case "superuser":
@@ -58,16 +58,16 @@ function renderUserRow(user: User): string
 		html += "<br><div class=\"button cyanButton changeUserRole\" data-id=\"" + user.id + "\" data-role=\"" + user.role + "\" data-name=\"" + user.name + "\"><i class=\"icon-pencil\"></i>Upravit</div><br>";
 	}
 	html += "</td><td>";
-	var first = true;
-	for(var j = 0; j < GROUPS.length; j++)
+	let first = true;
+	for(let i = 0; i < GROUPS.length; i++)
 	{
-		if(user.groups.indexOf(GROUPS[j].id) >= 0)
+		if(user.groups.indexOf(GROUPS[i].id) >= 0)
 		{
 			if(!first)
 			{
 				html += ", ";
 			}
-			html += GROUPS[j].name;
+			html += GROUPS[i].name;
 			first = false;
 		}
 	}
@@ -86,8 +86,8 @@ function showUserList(list: UserListResponse, searchName: string, page: number, 
 	{
 		return;
 	}
-	var users = list.users;
-	var html = "<form id=\"userSearchForm\"><input type=\"text\" class=\"formText\" id=\"userSearchBox\" placeholder=\"Jméno uživatele\">";
+	const users = list.users;
+	let html = "<form id=\"userSearchForm\"><input type=\"text\" class=\"formText\" id=\"userSearchBox\" placeholder=\"Jméno uživatele\">";
 	html += renderRoleSelector();
 	html += renderGroupSelector();
 	html += "<div class=\"button\" id=\"userSearchButton\"><i class=\"icon-search\"></i>Vyhledat</div>";
@@ -98,9 +98,9 @@ function showUserList(list: UserListResponse, searchName: string, page: number, 
 	html += "</form>";
 	html += "<table class=\"userTable\"><th>Jméno</th><th>Role</th><th>Skupiny</th>";
 	html += "</tr>";
-	for(var j = 0; j < users.length; j++)
+	for(let i = 0; i < users.length; i++)
 	{
-		html += renderUserRow(users[j]);
+		html += renderUserRow(users[i]);
 	}
 	html += "</table>";
 	html += renderPagination(Math.ceil(list.count / perPage), page);
@@ -115,9 +115,9 @@ function showUserList(list: UserListResponse, searchName: string, page: number, 
 
 	document.getElementById("userSearchForm")!.onsubmit = function(): boolean
 	{
-		var roleSel = document.getElementById("roleSearchFilter") as HTMLSelectElement;
-		var groupSel = document.getElementById("groupSearchFilter") as HTMLSelectElement;
-		var newRole: Role|"all" = "all";
+		const roleSel = document.getElementById("roleSearchFilter") as HTMLSelectElement;
+		const groupSel = document.getElementById("groupSearchFilter") as HTMLSelectElement;
+		let newRole: Role|"all" = "all";
 		if(roleSel)
 		{
 			newRole = roleSel.options[roleSel.selectedIndex].value as Role;
@@ -133,14 +133,14 @@ function showUserList(list: UserListResponse, searchName: string, page: number, 
 			downloadUserList(undefined, 1, perPage); // eslint-disable-line @typescript-eslint/no-use-before-define
 		};
 	}
-	var nodes = document.getElementsByClassName("paginationButton");
-	for(var l = 0; l < nodes.length; l++)
+	const nodes = getElementsByClassName("paginationButton");
+	for(let i = 0; i < nodes.length; i++)
 	{
-		(nodes[l] as HTMLElement).onclick = function(event): void
+		(nodes[i] as HTMLElement).onclick = function(event): void
 		{
-			var roleSel = document.getElementById("roleSearchFilter") as HTMLSelectElement;
-			var groupSel = document.getElementById("groupSearchFilter") as HTMLSelectElement;
-			var newRole: Role|"all" = "all";
+			const roleSel = document.getElementById("roleSearchFilter") as HTMLSelectElement;
+			const groupSel = document.getElementById("groupSearchFilter") as HTMLSelectElement;
+			let newRole: Role|"all" = "all";
 			if(roleSel)
 			{
 				newRole = roleSel.options[roleSel.selectedIndex].value as Role;
@@ -156,7 +156,7 @@ function showUserList(list: UserListResponse, searchName: string, page: number, 
 function downloadUserList(searchName = "", page = 1, perPage = 25, role: Role|"all" = "all", group = "00000000-0000-0000-0000-000000000000"): void
 {
 	document.getElementById("userList")!.innerHTML = "<div id=\"embeddedSpinner\"></div>";
-	var payload: UserSearchQuery = {"name": searchName, "page": page, "per-page": perPage}
+	const payload: UserSearchQuery = {"name": searchName, "page": page, "per-page": perPage}
 	if(role !== "all")
 	{
 		payload.role = role;
@@ -175,13 +175,13 @@ function downloadUserList(searchName = "", page = 1, perPage = 25, role: Role|"a
 function showUserSubview(noHistory: boolean): void
 {
 	mainPageTab = "users";
-	var nodes = document.getElementsByClassName("topBarTab");
-	for(var l = 0; l < nodes.length; l++)
+	const nodes = getElementsByClassName("topBarTab");
+	for(let i = 0; i < nodes.length; i++)
 	{
-		nodes[l].className = "topBarTab";
+		nodes[i].className = "topBarTab";
 	}
 	document.getElementById("userManager")!.className += " activeTopBarTab";
-	var html = "<h1>" + CONFIG["site-name"] + " - Uživatelé</h1><div id=\"userList\"></div>";
+	const html = "<h1>" + CONFIG["site-name"] + " - Uživatelé</h1><div id=\"userList\"></div>";
 	document.getElementById("mainPage")!.innerHTML = html;
 
 	downloadUserList();

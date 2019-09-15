@@ -2,9 +2,9 @@
 
 function addOnClicks(id: string, onclick: (event: MouseEvent) => void): void
 {
-	var nodes = document.getElementsByTagName("main")[0].getElementsByClassName(id);
-	for(var l = 0; l < nodes.length; l++)
+	const nodes = getElementsByClassName(id, document.getElementsByTagName("main")[0]);
+	for(let i = 0; i < nodes.length; i++)
 	{
-		(nodes[l] as HTMLElement).onclick = onclick;
+		(nodes[i] as HTMLElement).onclick = onclick;
 	}
 }

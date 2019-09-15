@@ -1,7 +1,7 @@
 /* global ActionQueueRetry:true */
 /* exported ActionQueueSetup */
 
-var ActionQueueRetry = false;
+let ActionQueueRetry = false;
 
 class ActionQueue {
 	public actions: Array<Action>;
@@ -14,7 +14,7 @@ class ActionQueue {
 
 	public fillID(id: string): void
 	{
-		for(var i = 0; i < this.actions.length; i++)
+		for(let i = 0; i < this.actions.length; i++)
 		{
 			this.actions[i].fillID(id);
 		}
@@ -34,7 +34,7 @@ class ActionQueue {
 		this.dispatch(background);
 	}
 
-	public closeDispatch = () => {
+	public closeDispatch(): void {
 		sidePanelClose();
 		this.defaultDispatch(false);
 	}
@@ -54,18 +54,13 @@ class ActionQueue {
 		{
 			spinner();
 		}
-		var that = this;
-		this.actions[0].exceptionHandler["AuthenticationException"] = function()
-		{
-			that.authException();
-		};
-		request(this.actions[0].url, this.actions[0].method, this.actions[0].payloadBuilder(), function(response): void
-		{
-			that.actions[0].callback(response, that);
-			that.actions.shift();
+		this.actions[0].exceptionHandler["AuthenticationException"] = (): void => this.authException();
+		request(this.actions[0].url, this.actions[0].method, this.actions[0].payloadBuilder(), (response) => {
+			this.actions[0].callback(response, this);
+			this.actions.shift();
 			if(propagate)
 			{
-				that.pop(true, background);
+				this.pop(true, background);
 			}
 		}, this.actions[0].exceptionHandler);
 	}
@@ -88,7 +83,7 @@ function ActionQueueSetup(): void
 {
 	if(window.sessionStorage && sessionStorage.getItem("ActionQueue"))
 	{
-		var aq = new ActionQueue(JSON.parse(sessionStorage.getItem("ActionQueue")!).map(deserializeAction), false);
+		const aq = new ActionQueue(JSON.parse(sessionStorage.getItem("ActionQueue")!).map(deserializeAction), false);
 		ActionQueueRetry = true;
 		sessionStorage.clear();
 		aq.dispatch(false);
