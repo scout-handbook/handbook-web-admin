@@ -8,7 +8,7 @@ function addCompetencePayloadBuilder(): Payload
 function addCompetence(): void
 {
 	sidePanelOpen();
-	var html = "<div class=\"button yellowButton\" id=\"sidePanelCancel\"><i class=\"icon-cancel\"></i>Zrušit</div>";
+	let html = "<div class=\"button yellowButton\" id=\"sidePanelCancel\"><i class=\"icon-cancel\"></i>Zrušit</div>";
 	html += "<div class=\"button greenButton\" id=\"addCompetenceSave\"><i class=\"icon-floppy\"></i>Uložit</div>";
 	html += "<h3 class=\"sidePanelTitle\">Přidat kompetenci</h3><form id=\"sidePanelForm\">";
 	html += "<span class=\"competenceHeading\">Kompetence</span> <input type=\"text\" class=\"formText formName\" id=\"competenceNumber\" value=\"00\" autocomplete=\"off\"><br>";
@@ -22,7 +22,7 @@ function addCompetence(): void
 		history.back();
 	};
 
-	var aq = new ActionQueue([new Action(CONFIG.apiuri + "/competence", "POST", addCompetencePayloadBuilder)]);
+	const aq = new ActionQueue([new Action(CONFIG.apiuri + "/competence", "POST", addCompetencePayloadBuilder)]);
 	document.getElementById("addCompetenceSave")!.onclick = (): void => aq.closeDispatch();
 
 	history.pushState({"sidePanel": "open"}, "title", "/admin/competences"); // eslint-disable-line compat/compat

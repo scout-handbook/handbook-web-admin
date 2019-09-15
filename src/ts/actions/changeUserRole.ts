@@ -1,10 +1,10 @@
 /* exported changeUserRoleOnClick */
 
-var roleChanged = false;
+let roleChanged = false;
 
 function changeUserRolePayloadBuilder(): Payload
 {
-	var sel = document.getElementById("roleSelect") as HTMLSelectElement;
+	const sel = document.getElementById("roleSelect") as HTMLSelectElement;
 	return {"role": encodeURIComponent(sel.options[sel.selectedIndex].value)};
 }
 
@@ -12,7 +12,7 @@ function changeUserRoleOnClick(event: MouseEvent): void
 {
 	roleChanged = false;
 	sidePanelOpen();
-	var html = "<div class=\"button yellowButton\" id=\"sidePanelCancel\"><i class=\"icon-cancel\"></i>Zrušit</div>";
+	let html = "<div class=\"button yellowButton\" id=\"sidePanelCancel\"><i class=\"icon-cancel\"></i>Zrušit</div>";
 	html += "<div class=\"button greenButton\" id=\"changeUserRoleSave\"><i class=\"icon-floppy\"></i>Uložit</div>";
 	html += "<h3 class=\"sidePanelTitle\">Změnit roli: " + getAttribute(event, "name") + "</h3><form id=\"sidePanelForm\">";
 	html += "<span class=\"roleText\">Role: </span><select class=\"formSelect\" id=\"roleSelect\">";
@@ -41,7 +41,7 @@ function changeUserRoleOnClick(event: MouseEvent): void
 		history.back();
 	};
 
-	var aq = new ActionQueue([new Action(CONFIG.apiuri + "/user/" + encodeURIComponent(getAttribute(event, "id")) + "/role", "PUT", changeUserRolePayloadBuilder)]);
+	const aq = new ActionQueue([new Action(CONFIG.apiuri + "/user/" + encodeURIComponent(getAttribute(event, "id")) + "/role", "PUT", changeUserRolePayloadBuilder)]);
 	document.getElementById("changeUserRoleSave")!.onclick = function(): void
 	{
 		dispatchIfChanged(aq, roleChanged);
