@@ -1,6 +1,16 @@
 /* eslint-env node */
 /* eslint-disable @typescript-eslint/no-var-requires */
 
+interface CustomProperties {
+	"--accent-color": string;
+}
+
+interface Config {
+	"admin-uri": string;
+	"site-name": string;
+	"custom-properties": CustomProperties;
+}
+
 const yargs = require('yargs');
 const fs = require("fs")
 const nestedObjectAssign = require('nested-object-assign');
@@ -23,7 +33,7 @@ const ts = require("gulp-typescript");
 
 const minify = composer(uglify, console);
 
-function getConfig() {
+function getConfig(): Config {
 	let config = JSON.parse(fs.readFileSync("src/json/config.json", "utf8"));
 	const overrideLocation = yargs.string('config').argv.config
 	if(overrideLocation) {
@@ -70,7 +80,7 @@ gulp.task('build:html', function() {
 });
 
 gulp.task('build:js', function() {
-	function bundle(name, addConfig) {
+	function bundle(name: string, addConfig = false): NodeJS.ReadWriteStream {
 		const tsProject = ts.createProject("tsconfig/" + name + ".json");
 		let ret = tsProject.src()
 			.pipe(sourcemaps.init())
@@ -94,7 +104,7 @@ gulp.task('build:js', function() {
 });
 
 gulp.task('build:css', function() {
-	function bundle(name, sources) {
+	function bundle(name: string, sources: Array<string>): NodeJS.ReadWriteStream {
 		return gulp.src(sources)
 			.pipe(sourcemaps.init())
 			.pipe(concat(name + '.min.css'))
