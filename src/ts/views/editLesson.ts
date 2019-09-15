@@ -1,7 +1,5 @@
 /* exported imageSelectorOpen, showLessonEditView, removeBeacon */
 
-let imageSelectorOpen = false;
-
 function saveLessonPayloadBuilder(): Payload
 {
 	return {"name": encodeURIComponent((document.getElementById("name") as HTMLInputElement).value), "body": encodeURIComponent(editor.value())};
