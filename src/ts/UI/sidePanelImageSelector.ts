@@ -64,14 +64,14 @@ function renderSidePanelImageSelector(list: Array<string>, action: string, state
 	html += "</div>";
 	document.getElementById("sidePanel")!.innerHTML = html;
 
-	document.getElementById("fieldImageCancel")!.onclick = function()
+	document.getElementById("fieldImageCancel")!.onclick = function(): void
 	{
 		history.back();
 	}
 	var	imageNodes = document.getElementById("sidePanel")!.getElementsByTagName("img");
 	for(var k = 0; k < imageNodes.length; k++)
 	{
-		imageNodes[k].onclick = function(event: MouseEvent)
+		imageNodes[k].onclick = function(event: MouseEvent): void
 		{
 			state.image = (event.target as HTMLElement).dataset.id!;
 			history.back();
