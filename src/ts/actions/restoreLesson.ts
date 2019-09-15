@@ -46,9 +46,9 @@ function restoreLessonRenderVersionList(id: string, list: Array<LessonVersion>):
 		history.back();
 	};
 	const nodes = document.getElementById("sidePanelForm")!.getElementsByTagName("input");
-	for(let j = 0; j < nodes.length; j++)
+	for(let i = 0; i < nodes.length; i++)
 	{
-		nodes[j].onchange = function(event): void {restoreLessonShowVersion(id, event);};
+		nodes[i].onchange = function(event): void {restoreLessonShowVersion(id, event);};
 	}
 }
 

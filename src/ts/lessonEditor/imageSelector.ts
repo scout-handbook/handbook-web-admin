@@ -80,14 +80,14 @@ function renderImageSelector(list: Array<string>, page: number, perPage: number)
 	document.getElementById("imageWrapper")!.innerHTML = html;
 
 	const imageNodes = document.getElementById("imageWrapper")!.getElementsByTagName("img");
-	for(let k = 0; k < imageNodes.length; k++)
+	for(let i = 0; i < imageNodes.length; i++)
 	{
-		imageNodes[k].onclick = insertImage;
+		imageNodes[i].onclick = insertImage;
 	}
 	const buttonNodes = getElementsByClassName("paginationButton");
-	for(let l = 0; l < buttonNodes.length; l++)
+	for(let i = 0; i < buttonNodes.length; i++)
 	{
-		(buttonNodes[l] as HTMLElement).onclick = function(event): void
+		(buttonNodes[i] as HTMLElement).onclick = function(event): void
 		{
 			prepareImageSelector(parseInt((event.target as HTMLElement).dataset.page!, 10), perPage);
 		};

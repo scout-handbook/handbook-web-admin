@@ -54,9 +54,9 @@ function lessonHistoryListRender(id: string, actionQueue: ActionQueue, list: Arr
 			}
 		}
 	}
-	for(let k = 0; k < list.length; k++)
+	for(let i = 0; i < list.length; i++)
 	{
-		html += "<div class=\"formRow\"><label class=\"formSwitch\"><input type=\"radio\" name=\"version\" data-name=\"" + list[k].name + "\" data-version=\"" + list[k].version + "\"><span class=\"formCustom formRadio\"></span></label><span class=\"lessonHistoryVersion\">" + list[k].name + "</span> — " + parseVersion(list[k].version) + "</div>";
+		html += "<div class=\"formRow\"><label class=\"formSwitch\"><input type=\"radio\" name=\"version\" data-name=\"" + list[i].name + "\" data-version=\"" + list[i].version + "\"><span class=\"formCustom formRadio\"></span></label><span class=\"lessonHistoryVersion\">" + list[i].name + "</span> — " + parseVersion(list[i].version) + "</div>";
 	}
 	html += "</form>";
 	document.getElementById("lessonHistoryForm")!.innerHTML = html;
@@ -65,9 +65,9 @@ function lessonHistoryListRender(id: string, actionQueue: ActionQueue, list: Arr
 	nodes[0].onchange = function(): void {lessonHistoryPreviewShowCurrent();};
 	if(nodes.length > 1)
 	{
-		for(let l = 1; l < nodes.length; l++)
+		for(let i = 1; i < nodes.length; i++)
 		{
-			nodes[l].onchange = function(event): void {lessonHistoryPreviewShowVersion(id, actionQueue, event);};
+			nodes[i].onchange = function(event): void {lessonHistoryPreviewShowVersion(id, actionQueue, event);};
 		}
 	}
 }

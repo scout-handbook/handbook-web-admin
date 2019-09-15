@@ -61,9 +61,9 @@ function changeUserGroupsOnClick(event: MouseEvent): void
 	};
 
 	const nodes = document.getElementById("sidePanelForm")!.getElementsByTagName("input");
-	for(let k = 0; k < nodes.length; k++)
+	for(let i = 0; i < nodes.length; i++)
 	{
-		nodes[k].onchange = userGroupsOnclick;
+		nodes[i].onchange = userGroupsOnclick;
 	}
 
 	history.pushState({"sidePanel": "open"}, "title", "/admin/users"); // eslint-disable-line compat/compat

@@ -59,15 +59,15 @@ function renderUserRow(user: User): string
 	}
 	html += "</td><td>";
 	let first = true;
-	for(let j = 0; j < GROUPS.length; j++)
+	for(let i = 0; i < GROUPS.length; i++)
 	{
-		if(user.groups.indexOf(GROUPS[j].id) >= 0)
+		if(user.groups.indexOf(GROUPS[i].id) >= 0)
 		{
 			if(!first)
 			{
 				html += ", ";
 			}
-			html += GROUPS[j].name;
+			html += GROUPS[i].name;
 			first = false;
 		}
 	}
@@ -98,9 +98,9 @@ function showUserList(list: UserListResponse, searchName: string, page: number, 
 	html += "</form>";
 	html += "<table class=\"userTable\"><th>Jméno</th><th>Role</th><th>Skupiny</th>";
 	html += "</tr>";
-	for(let j = 0; j < users.length; j++)
+	for(let i = 0; i < users.length; i++)
 	{
-		html += renderUserRow(users[j]);
+		html += renderUserRow(users[i]);
 	}
 	html += "</table>";
 	html += renderPagination(Math.ceil(list.count / perPage), page);
@@ -134,9 +134,9 @@ function showUserList(list: UserListResponse, searchName: string, page: number, 
 		};
 	}
 	const nodes = getElementsByClassName("paginationButton");
-	for(let l = 0; l < nodes.length; l++)
+	for(let i = 0; i < nodes.length; i++)
 	{
-		(nodes[l] as HTMLElement).onclick = function(event): void
+		(nodes[i] as HTMLElement).onclick = function(event): void
 		{
 			const roleSel = document.getElementById("roleSearchFilter") as HTMLSelectElement;
 			const groupSel = document.getElementById("groupSearchFilter") as HTMLSelectElement;
@@ -176,9 +176,9 @@ function showUserSubview(noHistory: boolean): void
 {
 	mainPageTab = "users";
 	const nodes = getElementsByClassName("topBarTab");
-	for(let l = 0; l < nodes.length; l++)
+	for(let i = 0; i < nodes.length; i++)
 	{
-		nodes[l].className = "topBarTab";
+		nodes[i].className = "topBarTab";
 	}
 	document.getElementById("userManager")!.className += " activeTopBarTab";
 	const html = "<h1>" + CONFIG["site-name"] + " - Uživatelé</h1><div id=\"userList\"></div>";

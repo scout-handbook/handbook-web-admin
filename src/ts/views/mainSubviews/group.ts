@@ -35,9 +35,9 @@ function showGroupSubview(noHistory: boolean): void
 {
 	mainPageTab = "groups";
 	const nodes = getElementsByClassName("topBarTab");
-	for(let l = 0; l < nodes.length; l++)
+	for(let i = 0; i < nodes.length; i++)
 	{
-		nodes[l].className = "topBarTab";
+		nodes[i].className = "topBarTab";
 	}
 	document.getElementById("groupManager")!.className += " activeTopBarTab";
 	let html = "<h1>" + CONFIG["site-name"] + " - Uživatelské skupiny</h1>";
