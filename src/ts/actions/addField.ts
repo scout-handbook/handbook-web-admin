@@ -8,7 +8,7 @@ function addFieldPayloadBuilder(): Payload
 function addField(state: SidePanelImageSelectorState = {name: "Nová oblast", description: "Popis nové oblasti", image: "00000000-0000-0000-0000-000000000000"}, noHistory = false): void
 {
 	sidePanelOpen();
-	var html = "<div class=\"button yellowButton\" id=\"sidePanelCancel\"><i class=\"icon-cancel\"></i>Zrušit</div>";
+	let html = "<div class=\"button yellowButton\" id=\"sidePanelCancel\"><i class=\"icon-cancel\"></i>Zrušit</div>";
 	html += "<div class=\"button greenButton\" id=\"addFieldSave\"><i class=\"icon-floppy\"></i>Uložit</div>";
 	html += "<h3 class=\"sidePanelTitle\">Přidat oblast</h3><form id=\"sidePanelForm\">";
 	html += "<legend for=\"fieldName\">Název:</legend>";
@@ -30,8 +30,8 @@ function addField(state: SidePanelImageSelectorState = {name: "Nová oblast", de
 		openSidePanelImageSelector("addField", {name: (document.getElementById("fieldName") as HTMLInputElement).value, description: (document.getElementById("fieldDescription") as HTMLInputElement).value, image: state.image});
 	};
 
-	var aq = new ActionQueue([new Action(CONFIG.apiuri + "/field", "POST", addFieldPayloadBuilder)]);
-	document.getElementById("addFieldSave")!.onclick = aq.closeDispatch;
+	const aq = new ActionQueue([new Action(CONFIG.apiuri + "/field", "POST", addFieldPayloadBuilder)]);
+	document.getElementById("addFieldSave")!.onclick = (): void => aq.closeDispatch();
 
 	if(!noHistory)
 	{

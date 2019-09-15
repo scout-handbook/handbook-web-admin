@@ -14,7 +14,7 @@ function lessonHistoryPreviewShowCurrent(): void
 function lessonHistoryPreviewRenderVersion(id: string, name: string, body: string, actionQueue: ActionQueue): void
 {
 	refreshPreview(name, body, "lessonHistoryPreview");
-	var html = "<div class=\"button greenButton\" id=\"lessonHistoryRevert\"><i class=\"icon-history\"></i>Obnovit</div>";
+	const html = "<div class=\"button greenButton\" id=\"lessonHistoryRevert\"><i class=\"icon-history\"></i>Obnovit</div>";
 	document.getElementById("lessonHistoryListHeader")!.innerHTML = html;
 
 	document.getElementById("lessonHistoryRevert")!.onclick = function(): void
@@ -45,18 +45,18 @@ function lessonHistoryListRender(id: string, actionQueue: ActionQueue, list: Arr
 	html += "<div class=\"formRow\"><label class=\"formSwitch\"><input type=\"radio\" name=\"version\" checked><span class=\"formCustom formRadio\"></span></label><span class=\"lessonHistoryCurrent\">Současná verze</span> — " + parseVersion(LESSONS.get(id).version) + "</div>";
 	for(var k = 0; k < list.length; k++)
 	{
-		html += "<div class=\"formRow\"><label class=\"formSwitch\"><input type=\"radio\" name=\"version\" data-name=\"" + list[k].name + "\" data-version=\"" + list[k].version + "\"><span class=\"formCustom formRadio\"></span></label><span class=\"lessonHistoryVersion\">" + list[k].name + "</span> — " + parseVersion(list[k].version) + "</div>";
+		html += "<div class=\"formRow\"><label class=\"formSwitch\"><input type=\"radio\" name=\"version\" data-name=\"" + list[i].name + "\" data-version=\"" + list[i].version + "\"><span class=\"formCustom formRadio\"></span></label><span class=\"lessonHistoryVersion\">" + list[i].name + "</span> — " + parseVersion(list[i].version) + "</div>";
 	}
 	html += "</form>";
 	document.getElementById("lessonHistoryForm")!.innerHTML = html;
 
-	var nodes = document.getElementById("sidePanelForm")!.getElementsByTagName("input");
+	const nodes = document.getElementById("sidePanelForm")!.getElementsByTagName("input");
 	nodes[0].onchange = function(): void {lessonHistoryPreviewShowCurrent();};
 	if(nodes.length > 1)
 	{
-		for(var l = 1; l < nodes.length; l++)
+		for(let i = 1; i < nodes.length; i++)
 		{
-			nodes[l].onchange = function(event): void {lessonHistoryPreviewShowVersion(id, actionQueue, event);};
+			nodes[i].onchange = function(event): void {lessonHistoryPreviewShowVersion(id, actionQueue, event);};
 		}
 	}
 }
@@ -64,7 +64,7 @@ function lessonHistoryListRender(id: string, actionQueue: ActionQueue, list: Arr
 function lessonHistoryOpen(id: string, actionQueue: ActionQueue): void
 {
 	sidePanelDoubleOpen();
-	var html = "<div id=\"lessonHistoryList\"><div class=\"button yellowButton\" id=\"cancelEditorAction\"><i class=\"icon-cancel\"></i>Zrušit</div><span id=\"lessonHistoryListHeader\"></span><h3 class=\"sidePanelTitle\">Historie lekce</h3><div id=\"lessonHistoryForm\"><div id=\"embeddedSpinner\"></div></div></div><div id=\"lessonHistoryPreview\"></div>";
+	const html = "<div id=\"lessonHistoryList\"><div class=\"button yellowButton\" id=\"cancelEditorAction\"><i class=\"icon-cancel\"></i>Zrušit</div><span id=\"lessonHistoryListHeader\"></span><h3 class=\"sidePanelTitle\">Historie lekce</h3><div id=\"lessonHistoryForm\"><div id=\"embeddedSpinner\"></div></div></div><div id=\"lessonHistoryPreview\"></div>";
 	document.getElementById("sidePanel")!.innerHTML = html;
 
 	document.getElementById("cancelEditorAction")!.onclick = function(): void

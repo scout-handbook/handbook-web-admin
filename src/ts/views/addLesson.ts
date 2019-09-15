@@ -10,7 +10,7 @@ function showLessonAddView(field?: string): void
 {
 	history.pushState({}, "title", "/admin/lessons"); // eslint-disable-line compat/compat
 
-	var aq = new ActionQueue([new Action(CONFIG.apiuri + "/lesson", "POST", addLessonPayloadBuilder, [ActionCallback.FillID])])
+	const aq = new ActionQueue([new Action(CONFIG.apiuri + "/lesson", "POST", addLessonPayloadBuilder, [ActionCallback.FillID])])
 	if(field)
 	{
 		aq.actions.push(new Action(CONFIG.apiuri + "/lesson/{id}/field", "PUT", function(): Payload {return {"field": encodeURIComponent(field)};}))

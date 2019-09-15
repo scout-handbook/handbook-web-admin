@@ -1,7 +1,5 @@
 /* exported imageSelectorOpen, showLessonEditView, removeBeacon */
 
-var imageSelectorOpen = false;
-
 function saveLessonPayloadBuilder(): Payload
 {
 	return {"name": encodeURIComponent((document.getElementById("name") as HTMLInputElement).value), "body": encodeURIComponent(editor.value())};
@@ -14,8 +12,8 @@ function removeBeacon(): void
 
 function lessonEditMutexExtend(id: string): void
 {
-	var exceptionHandler = {"NotFoundException": function(): void {}};
-	var actionQueue = new ActionQueue([new Action(CONFIG.apiuri + "/mutex/" + encodeURIComponent(id) , "PUT", undefined, undefined, exceptionHandler)]);
+	const exceptionHandler = {"NotFoundException": null};
+	const actionQueue = new ActionQueue([new Action(CONFIG.apiuri + "/mutex/" + encodeURIComponent(id) , "PUT", undefined, undefined, exceptionHandler)]);
 	actionQueue.dispatch(true);
 }
 
@@ -36,14 +34,14 @@ function renderLessonEditView(id: string, markdown: string, noHistory: boolean):
 		history.pushState({"id": id}, "title", "/admin/lessons"); // eslint-disable-line compat/compat
 	}
 
-	var saveExceptionHandler = {"NotLockedException": function(): void
+	const saveExceptionHandler = {"NotLockedException": function(): void
 	{
 		dialog("Kvůli příliš malé aktivitě byla lekce odemknuta a již ji upravil někdo jiný. Zkuste to prosím znovu.", "OK");
 	}};
-	var discardExceptionHandler = {"NotFoundException": function(): void {}};
+	const discardExceptionHandler = {"NotFoundException": null};
 
-	var saveActionQueue = new ActionQueue([new Action(CONFIG.apiuri + "/lesson/" + encodeURIComponent(id) , "PUT", saveLessonPayloadBuilder, [ActionCallback.RemoveBeacon], saveExceptionHandler)]);
-	var discardActionQueue = new ActionQueue([new Action(CONFIG.apiuri + "/mutex/" + encodeURIComponent(id) , "DELETE", undefined, [ActionCallback.RemoveBeacon, ActionCallback.DismissSpinner], discardExceptionHandler)]);
+	const saveActionQueue = new ActionQueue([new Action(CONFIG.apiuri + "/lesson/" + encodeURIComponent(id) , "PUT", saveLessonPayloadBuilder, [ActionCallback.RemoveBeacon], saveExceptionHandler)]);
+	const discardActionQueue = new ActionQueue([new Action(CONFIG.apiuri + "/mutex/" + encodeURIComponent(id) , "DELETE", undefined, [ActionCallback.RemoveBeacon, ActionCallback.DismissSpinner], discardExceptionHandler)]);
 	showLessonEditor(lesson.name, markdown, saveActionQueue, id, discardActionQueue, function(): void {lessonEditMutexExtend(id);});
 	document.getElementById("save")!.dataset.id = id;
 
@@ -64,7 +62,7 @@ function getLessonEditView(id: string, noHistory: boolean): void
 function showLessonEditView(id: string, noHistory: boolean): void
 {
 	spinner();
-	var exceptionHandler = reAuthHandler;
+	const exceptionHandler = reAuthHandler;
 	exceptionHandler["LockedException"] = function(response: APIResponse): void
 	{
 		dialog("Nelze upravovat lekci, protože ji právě upravuje " + response.holder + ".", "OK");

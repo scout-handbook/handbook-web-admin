@@ -1,6 +1,6 @@
 /* global imageSelectorOpen:true */
 
-var imageSelectorOpen = false;
+let imageSelectorOpen = false;
 
 function toggleImageSelector(): void
 {
@@ -18,8 +18,8 @@ function toggleImageSelector(): void
 
 function insertImage(event: MouseEvent): void
 {
-	var markdown = "![Text po najetí kurzorem](" + CONFIG.apiuri + "/image/" + (event.target as HTMLElement).dataset.id + ")"
-	var doc = editor.codemirror.getDoc();
+	const markdown = "![Text po najetí kurzorem](" + CONFIG.apiuri + "/image/" + (event.target as HTMLElement).dataset.id + ")"
+	const doc = editor.codemirror.getDoc();
 	doc.replaceRange(markdown, doc.getCursor());
 	toggleImageSelector();
 	refreshLogin();
@@ -40,15 +40,15 @@ function renderImageSelector(list: Array<string>, page: number, perPage: number)
 	{
 		return;
 	}
-	var html = "";
-	var start = perPage * (page - 1);
-	for(var i = start; i < Math.min(list.length, start + perPage); i++)
+	let html = "";
+	const start = perPage * (page - 1);
+	for(let i = start; i < Math.min(list.length, start + perPage); i++)
 	{
 		html += "<div class=\"thumbnailContainer\"><img src=\"" + CONFIG.apiuri + "/image/" + list[i] + "?quality=thumbnail\" class=\"thumbnailImage\" data-id=\"" + list[i] + "\"></div>";
 	}
 	if(list.length > perPage)
 	{
-		var maxPage = Math.ceil(list.length / perPage);
+		const maxPage = Math.ceil(list.length / perPage);
 		html += "<div id=\"pagination\">";
 		if(page > 3)
 		{
@@ -79,15 +79,15 @@ function renderImageSelector(list: Array<string>, page: number, perPage: number)
 	}
 	document.getElementById("imageWrapper")!.innerHTML = html;
 
-	var	imageNodes = document.getElementById("imageWrapper")!.getElementsByTagName("img");
-	for(var k = 0; k < imageNodes.length; k++)
+	const imageNodes = document.getElementById("imageWrapper")!.getElementsByTagName("img");
+	for(let i = 0; i < imageNodes.length; i++)
 	{
-		imageNodes[k].onclick = insertImage;
+		imageNodes[i].onclick = insertImage;
 	}
-	var buttonNodes = document.getElementsByClassName("paginationButton");
-	for(var l = 0; l < buttonNodes.length; l++)
+	const buttonNodes = getElementsByClassName("paginationButton");
+	for(let i = 0; i < buttonNodes.length; i++)
 	{
-		(buttonNodes[l] as HTMLElement).onclick = function(event): void
+		(buttonNodes[i] as HTMLElement).onclick = function(event): void
 		{
 			prepareImageSelector(parseInt((event.target as HTMLElement).dataset.page!, 10), perPage);
 		};

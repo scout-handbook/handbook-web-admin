@@ -3,7 +3,7 @@
 function restoreLessonRenderVersion(name: string, body: string): void
 {
 	refreshPreview(name, body, "restoreLessonPreview");
-	var html = "<div class=\"button greenButton\" id=\"restoreLessonEdit\"><i class=\"icon-history\"></i>Obnovit</div>";
+	const html = "<div class=\"button greenButton\" id=\"restoreLessonEdit\"><i class=\"icon-history\"></i>Obnovit</div>";
 	document.getElementById("restoreLessonListHeader")!.innerHTML = html;
 	document.getElementById("restoreLessonEdit")!.onclick = function(): void
 	{
@@ -15,8 +15,8 @@ function restoreLessonRenderVersion(name: string, body: string): void
 
 function restoreLessonShowVersion(id: string, event: Event): void
 {
-	var version = (event.target as HTMLElement).dataset.version;
-	var name = (event.target as HTMLElement).dataset.name!;
+	const version = (event.target as HTMLElement).dataset.version;
+	const name = (event.target as HTMLElement).dataset.name!;
 	document.getElementById("restoreLessonPreview")!.innerHTML = "<div id=\"embeddedSpinner\"></div>";
 	request(CONFIG.apiuri + "/deleted-lesson/" + id + "/history/" + version, "GET", {}, function(response: RequestResponse): void
 	{
@@ -30,9 +30,9 @@ function restoreLessonShowVersion(id: string, event: Event): void
 function restoreLessonRenderVersionList(id: string, list: Array<LessonVersion>): void
 {
 	sidePanelDoubleOpen();
-	var html = "<div id=\"restoreLessonVersionList\"><div class=\"button yellowButton\" id=\"sidePanelCancel\"><i class=\"icon-cancel\"></i>Zrušit</div><span id=\"restoreLessonListHeader\"></span><h3 class=\"sidePanelTitle\">Obnovit smazanou lekci</h3>";
+	let html = "<div id=\"restoreLessonVersionList\"><div class=\"button yellowButton\" id=\"sidePanelCancel\"><i class=\"icon-cancel\"></i>Zrušit</div><span id=\"restoreLessonListHeader\"></span><h3 class=\"sidePanelTitle\">Obnovit smazanou lekci</h3>";
 	html += "<form id=\"sidePanelForm\">";
-	for(var i = 0; i < list.length; i++)
+	for(let i = 0; i < list.length; i++)
 	{
 		html += "<div class=\"formRow\"><label class=\"formSwitch\"><input type=\"radio\" name=\"restoreLessonversion\" data-name=\"" + list[i].name + "\" data-version=\"" + list[i].version + "\"><span class=\"formCustom formRadio\"></span></label><span class=\"restoreLessonVersion\">" + list[i].name + "</span> — " + parseVersion(list[i].version) + "</div>";
 	}
@@ -45,25 +45,25 @@ function restoreLessonRenderVersionList(id: string, list: Array<LessonVersion>):
 		sidePanelOpen();
 		history.back();
 	};
-	var nodes = document.getElementById("sidePanelForm")!.getElementsByTagName("input");
-	for(var j = 0; j < nodes.length; j++)
+	const nodes = document.getElementById("sidePanelForm")!.getElementsByTagName("input");
+	for(let i = 0; i < nodes.length; i++)
 	{
-		nodes[j].onchange = function(event): void {restoreLessonShowVersion(id, event);};
+		nodes[i].onchange = function(event): void {restoreLessonShowVersion(id, event);};
 	}
 }
 
 function restoreLessonSelectVersion(): void
 {
-	var lessonId = parseBoolForm()[0];
+	const lessonId = parseBoolForm()[0];
 	if(lessonId)
 	{
-		var html = "<div id=\"embeddedSpinner\"></div>";
+		const html = "<div id=\"embeddedSpinner\"></div>";
 		document.getElementById("restoreLessonList")!.innerHTML = html;
 		request(CONFIG.apiuri + "/deleted-lesson/" + lessonId + "/history", "GET", {}, function(response: RequestResponse): void
 		{
 			restoreLessonRenderVersionList(lessonId, response as unknown as Array<LessonVersion>);
 		}, reAuthHandler);
-		document.getElementById("restoreLessonNext")!.onclick = function(): void {};
+		document.getElementById("restoreLessonNext")!.removeAttribute("onclick");
 	}
 }
 
@@ -77,6 +77,7 @@ function restoreLessonRenderLessonList(list: IDList<DeletedLesson>): void
 		refreshMetadata();
 		history.back();
 	}
+	let html = "<form id=\"sidePanelForm\">";
 	var html = "<form id=\"sidePanelForm\">";
 	list.iterate(function(id, deletedLesson)
 	{
@@ -90,7 +91,7 @@ function restoreLessonRenderLessonList(list: IDList<DeletedLesson>): void
 function restoreLesson(): void
 {
 	sidePanelOpen();
-	var html = "<div class=\"button yellowButton\" id=\"sidePanelCancel\"><i class=\"icon-cancel\"></i>Zrušit</div>";
+	let html = "<div class=\"button yellowButton\" id=\"sidePanelCancel\"><i class=\"icon-cancel\"></i>Zrušit</div>";
 	html += "<div class=\"button greenButton\" id=\"restoreLessonNext\"><i class=\"icon-fast-fw\"></i>Pokračovat</div>";
 	html += "<h3 class=\"sidePanelTitle\">Obnovit smazanou lekci</h3>";
 	html += "<div id=\"restoreLessonList\"><div id=\"embeddedSpinner\"></div></div>";

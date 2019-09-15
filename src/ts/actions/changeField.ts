@@ -1,17 +1,17 @@
 /* exported changeFieldOnClick */
 
-var fieldChanged = false;
+let fieldChanged = false;
 
 function changeFieldPayloadBuilder(): Payload
 {
 	return {"name": encodeURIComponent((document.getElementById("fieldName") as HTMLInputElement).value), "description": encodeURIComponent((document.getElementById("fieldDescription") as HTMLInputElement).value), "image": encodeURIComponent((document.getElementById("fieldImage") as HTMLInputElement).value)};
 }
 
-function changeField(state: SidePanelImageSelectorState, noHistory = false): void
+function changeField(state: SidePanelImageSelectorState, noHistory = false, changed = false): void
 {
-	fieldChanged = false;
+	fieldChanged = changed;
 	sidePanelOpen();
-	var html = "<div class=\"button yellowButton\" id=\"sidePanelCancel\"><i class=\"icon-cancel\"></i>Zrušit</div>";
+	let html = "<div class=\"button yellowButton\" id=\"sidePanelCancel\"><i class=\"icon-cancel\"></i>Zrušit</div>";
 	html += "<div class=\"button greenButton\" id=\"changeFieldSave\"><i class=\"icon-floppy\"></i>Uložit</div>";
 	html += "<h3 class=\"sidePanelTitle\">Upravit oblast</h3><form id=\"sidePanelForm\">";
 	html += "<legend for=\"fieldName\">Název:</legend>";
@@ -34,8 +34,8 @@ function changeField(state: SidePanelImageSelectorState, noHistory = false): voi
 		openSidePanelImageSelector("changeField", {id: state.id, name: (document.getElementById("fieldName") as HTMLInputElement).value, description: (document.getElementById("fieldDescription") as HTMLInputElement).value, image: state.image});
 	}
 
-	var aq = new ActionQueue([new Action(CONFIG.apiuri + "/field/" + encodeURIComponent(state.id), "PUT", changeFieldPayloadBuilder)]);
-	document.getElementById("changeFieldSave")!.onclick = function()
+	const aq = new ActionQueue([new Action(CONFIG.apiuri + "/field/" + encodeURIComponent(state.id), "PUT", changeFieldPayloadBuilder)]);
+	document.getElementById("changeFieldSave")!.onclick = function(): void
 	{
 		dispatchIfChanged(aq, fieldChanged);
 	};
@@ -45,6 +45,14 @@ function changeField(state: SidePanelImageSelectorState, noHistory = false): voi
 		fieldChanged = true;
 	};
 	document.getElementById("fieldName")!.onchange = function(): void
+	{
+		fieldChanged = true;
+	};
+	document.getElementById("fieldDescription")!.oninput = function(): void
+	{
+		fieldChanged = true;
+	};
+	document.getElementById("fieldDescription")!.onchange = function(): void
 	{
 		fieldChanged = true;
 	};
