@@ -78,7 +78,7 @@ function renderSidePanelImageSelector(list: Array<string>, action: string, state
 			closeSidePanelImageSelector(action, state);
 		};
 	}
-	var buttonNodes = document.getElementsByClassName("paginationButton");
+	var buttonNodes = getElementsByClassName("paginationButton");
 	for(var l = 0; l < buttonNodes.length; l++)
 	{
 		(buttonNodes[l] as HTMLElement).onclick = function(event): void

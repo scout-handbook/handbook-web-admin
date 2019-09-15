@@ -84,7 +84,7 @@ function renderImageSelector(list: Array<string>, page: number, perPage: number)
 	{
 		imageNodes[k].onclick = insertImage;
 	}
-	var buttonNodes = document.getElementsByClassName("paginationButton");
+	var buttonNodes = getElementsByClassName("paginationButton");
 	for(var l = 0; l < buttonNodes.length; l++)
 	{
 		(buttonNodes[l] as HTMLElement).onclick = function(event): void

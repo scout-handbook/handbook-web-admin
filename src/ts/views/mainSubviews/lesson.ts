@@ -65,7 +65,7 @@ function changeLessonOnClick(event: MouseEvent): boolean
 function showLessonSubview(noHistory: boolean): void
 {
 	mainPageTab = "lessons";
-	var nodes = document.getElementsByClassName("topBarTab");
+	var nodes = getElementsByClassName("topBarTab");
 	for(var l = 0; l < nodes.length; l++)
 	{
 		nodes[l].className = "topBarTab";
