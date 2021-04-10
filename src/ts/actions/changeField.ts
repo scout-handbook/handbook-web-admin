@@ -4,7 +4,7 @@ let fieldChanged = false;
 
 function changeFieldPayloadBuilder(): Payload
 {
-	return {"name": encodeURIComponent((document.getElementById("fieldName") as HTMLInputElement).value), "description": encodeURIComponent((document.getElementById("fieldDescription") as HTMLInputElement).value), "image": encodeURIComponent((document.getElementById("fieldImage") as HTMLInputElement).value)};
+	return {"name": encodeURIComponent((document.getElementById("fieldName") as HTMLInputElement).value), "description": encodeURIComponent((document.getElementById("fieldDescription") as HTMLInputElement).value), "image": encodeURIComponent((document.getElementById("fieldImage") as HTMLInputElement).value), "icon": encodeURIComponent((document.getElementById("fieldIcon") as HTMLInputElement).value)};
 }
 
 function changeField(state: SidePanelImageSelectorState, noHistory = false, changed = false): void
@@ -21,6 +21,10 @@ function changeField(state: SidePanelImageSelectorState, noHistory = false, chan
 	html += "<input type=\"hidden\" id=\"fieldImage\" value=\"" + state.image + "\">";
 	html += "<image src=\"" + CONFIG.apiuri + "/image/" + state.image + "?quality=thumbnail\">";
 	html += "<br><div class=\"button\" id=\"fieldImageChange\"><i class=\"icon-pencil\"></i>Změnit</div>"
+	html += "<legend for=\"fieldIcon\">Ikona:</legend>";
+	html += "<input type=\"hidden\" id=\"fieldIcon\" value=\"" + state.icon + "\">";
+	html += "<image src=\"" + CONFIG.apiuri + "/image/" + state.icon + "?quality=thumbnail\">";
+	html += "<br><div class=\"button\" id=\"fieldIconChange\"><i class=\"icon-pencil\"></i>Změnit</div>"
 	html += "</form>";
 	document.getElementById("sidePanel")!.innerHTML = html;
 
@@ -31,7 +35,12 @@ function changeField(state: SidePanelImageSelectorState, noHistory = false, chan
 
 	document.getElementById("fieldImageChange")!.onclick = function(): void
 	{
-		openSidePanelImageSelector("changeField", {id: state.id, name: (document.getElementById("fieldName") as HTMLInputElement).value, description: (document.getElementById("fieldDescription") as HTMLInputElement).value, image: state.image});
+		openSidePanelImageSelector("changeField", "image", {id: state.id, name: (document.getElementById("fieldName") as HTMLInputElement).value, description: (document.getElementById("fieldDescription") as HTMLInputElement).value, image: state.image, icon: state.icon});
+	}
+
+	document.getElementById("fieldIconChange")!.onclick = function(): void
+	{
+		openSidePanelImageSelector("changeField", "icon", {id: state.id, name: (document.getElementById("fieldName") as HTMLInputElement).value, description: (document.getElementById("fieldDescription") as HTMLInputElement).value, image: state.image, icon: state.icon});
 	}
 
 	const aq = new ActionQueue([new Action(CONFIG.apiuri + "/field/" + encodeURIComponent(state.id), "PUT", changeFieldPayloadBuilder)]);
@@ -70,7 +79,7 @@ function changeFieldOnClick(event: MouseEvent): void
 	{
 		if(FULLFIELDS[i].id === getAttribute(event, "id"))
 		{
-			changeField({id: FULLFIELDS[i].id, name: FULLFIELDS[i].name, description: FULLFIELDS[i].description, image: FULLFIELDS[i].image})
+			changeField({id: FULLFIELDS[i].id, name: FULLFIELDS[i].name, description: FULLFIELDS[i].description, image: FULLFIELDS[i].image, icon: FULLFIELDS[i].icon})
 			break;
 		}
 	}
