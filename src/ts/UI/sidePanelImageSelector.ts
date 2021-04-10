@@ -1,10 +1,10 @@
-function openSidePanelImageSelector(action: string, state: SidePanelImageSelectorState, page = 1 , perPage = 15, noHistory = false): void
+function openSidePanelImageSelector(action: string, property: string, state: SidePanelImageSelectorState, page = 1 , perPage = 15, noHistory = false): void
 {
 	sidePanelDoubleOpen();
 	document.getElementById("sidePanel")!.innerHTML = "<div id=\"embeddedSpinner\"></div>";
 	request(CONFIG.apiuri + "/image", "GET", {}, function(response: RequestResponse): void
 	{
-		renderSidePanelImageSelector(response as unknown as Array<string>, action, state, page, perPage, noHistory); // eslint-disable-line @typescript-eslint/no-use-before-define
+		renderSidePanelImageSelector(response as unknown as Array<string>, action, property, state, page, perPage, noHistory); // eslint-disable-line @typescript-eslint/no-use-before-define
 	}, reAuthHandler);
 	refreshLogin();
 }
@@ -22,7 +22,7 @@ function closeSidePanelImageSelector(action: string, state: SidePanelImageSelect
 	}
 }
 
-function renderSidePanelImageSelector(list: Array<string>, action: string, state: SidePanelImageSelectorState, page: number, perPage: number, noHistory: boolean): void
+function renderSidePanelImageSelector(list: Array<string>, action: string, property: string, state: SidePanelImageSelectorState, page: number, perPage: number, noHistory: boolean): void
 {
 	let html = "<div class=\"button yellowButton\" id=\"fieldImageCancel\"><i class=\"icon-cancel\"></i>Zrušit</div><div class=\"fieldImageContainer\">";
 	const start = perPage * (page - 1);
@@ -73,7 +73,7 @@ function renderSidePanelImageSelector(list: Array<string>, action: string, state
 	{
 		imageNodes[i].onclick = function(event: MouseEvent): void
 		{
-			state.image = (event.target as HTMLElement).dataset.id!;
+			state[property] = (event.target as HTMLElement).dataset.id!;
 			history.back();
 			closeSidePanelImageSelector(action, state);
 		};
@@ -83,7 +83,7 @@ function renderSidePanelImageSelector(list: Array<string>, action: string, state
 	{
 		(buttonNodes[i] as HTMLElement).onclick = function(event): void
 		{
-			openSidePanelImageSelector(action, state, parseInt((event.target as HTMLElement).dataset.page!, 10), perPage, true);
+			openSidePanelImageSelector(action, property, state, parseInt((event.target as HTMLElement).dataset.page!, 10), perPage, true);
 		};
 	}
 

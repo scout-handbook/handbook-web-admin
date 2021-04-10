@@ -3,4 +3,5 @@ interface FullField {
 	name: string;
 	description: string;
 	image: string;
+	icon: string;
 }
