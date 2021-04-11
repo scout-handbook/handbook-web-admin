@@ -24,6 +24,10 @@
     "showdown": "^1.9.1",
     "xss": "^1.0.8"
   },
+  "scripts": {
+    "build": "gulp build",
+    "lint": "gulp lint"
+  },
   "devDependencies": {
     "@types/codemirror": "0.0.77",
     "@types/showdown": "^1.9.3",
