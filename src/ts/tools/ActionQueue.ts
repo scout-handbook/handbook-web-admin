@@ -83,7 +83,7 @@ function ActionQueueSetup(): void
 {
 	if(window.sessionStorage && sessionStorage.getItem("ActionQueue"))
 	{
-		const aq = new ActionQueue(JSON.parse(sessionStorage.getItem("ActionQueue")!).map(deserializeAction), false);
+		const aq = new ActionQueue((JSON.parse(sessionStorage.getItem("ActionQueue")!) as Array<SerializedAction>).map(deserializeAction), false);
 		ActionQueueRetry = true;
 		sessionStorage.clear();
 		aq.dispatch(false);

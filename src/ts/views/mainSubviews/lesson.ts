@@ -24,7 +24,7 @@ function renderLessonListLesson(lesson: Lesson, secondLevel: string): string
 		html += competences[0].number;
 		for(let i = 1; i < competences.length; i++)
 		{
-			html += ", " + competences[i].number;
+			html += ", " + competences[i].number.toString();
 		}
 	}
 	html += "</span>";
