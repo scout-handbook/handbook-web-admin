@@ -15,7 +15,7 @@ function restoreLessonRenderVersion(name: string, body: string): void
 
 function restoreLessonShowVersion(id: string, event: Event): void
 {
-	const version = (event.target as HTMLElement).dataset.version;
+	const version = (event.target as HTMLElement).dataset.version as string;
 	const name = (event.target as HTMLElement).dataset.name!;
 	document.getElementById("restoreLessonPreview")!.innerHTML = "<div id=\"embeddedSpinner\"></div>";
 	request(CONFIG.apiuri + "/deleted-lesson/" + id + "/history/" + version, "GET", {}, function(response: RequestResponse): void
@@ -34,7 +34,7 @@ function restoreLessonRenderVersionList(id: string, list: Array<LessonVersion>):
 	html += "<form id=\"sidePanelForm\">";
 	for(let i = 0; i < list.length; i++)
 	{
-		html += "<div class=\"formRow\"><label class=\"formSwitch\"><input type=\"radio\" name=\"restoreLessonversion\" data-name=\"" + list[i].name + "\" data-version=\"" + list[i].version + "\"><span class=\"formCustom formRadio\"></span></label><span class=\"restoreLessonVersion\">" + list[i].name + "</span> — " + parseVersion(list[i].version) + "</div>";
+		html += "<div class=\"formRow\"><label class=\"formSwitch\"><input type=\"radio\" name=\"restoreLessonversion\" data-name=\"" + list[i].name + "\" data-version=\"" + list[i].version.toString() + "\"><span class=\"formCustom formRadio\"></span></label><span class=\"restoreLessonVersion\">" + list[i].name + "</span> — " + parseVersion(list[i].version) + "</div>";
 	}
 	html += "</form>"
 	html += "</div><div id=\"restoreLessonPreview\"></div>";

@@ -19,15 +19,15 @@ function requestQueryBuilder(payload: Payload): string
 		{
 			continue;
 		}
-		if(payload[key].constructor === Array)
+		if(Array.isArray(payload[key]))
 		{
-			for(let i = 0; i < payload[key].length; i++)
+			for(let i = 0; i < (payload[key] as Array<string>).length; i++)
 			{
 				if(!first)
 				{
 					query += "&";
 				}
-				query += key + "[]=" + payload[key][i];
+				query += key + "[]=" + (payload[key] as Array<string>)[i];
 				first = false;
 			}
 		}
@@ -37,7 +37,7 @@ function requestQueryBuilder(payload: Payload): string
 			{
 				query += "&";
 			}
-			query += key + "=" + payload[key];
+			query += key + "=" + (payload[key] as string);
 		}
 		first = false;
 	}
@@ -99,7 +99,7 @@ function request(url: string, method: string, payload: Payload, callback: (respo
 		}
 		else
 		{
-			dialog("Nastala neznámá chyba. Chybová hláška:<br>" + response.message, "OK");
+			dialog("Nastala neznámá chyba. Chybová hláška:<br>" + (response.message as string), "OK");
 		}
 	});
 }

@@ -25,7 +25,7 @@ function renderGroupList(): string
 		}
 		if(GROUPS[i].id !== "00000000-0000-0000-0000-000000000000")
 		{
-			html += "<br><span class=\"mainPage\">Uživatelů: " + GROUPS[i].count + "</span>";
+			html += "<br><span class=\"mainPage\">Uživatelů: " + GROUPS[i].count.toString() + "</span>";
 		}
 	}
 	return html;

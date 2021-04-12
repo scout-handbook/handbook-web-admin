@@ -4,13 +4,14 @@ let converter: showdown.Converter;
 
 function convert(payload: MessageEvent): void
 {
-	const html = filterXSS(converter.makeHtml(payload.data.body), xssOptions());
-	postMessage({"id": payload.data.id, "body": html});
+	const data = payload.data as WorkerPayload;
+	const html = filterXSS(converter.makeHtml(data.body), xssOptions());
+	postMessage({"id": data.id, "body": html});
 }
 
 function main(): void
 {
-	(self as DedicatedWorkerGlobalScope).onmessage = convert;
+	self.onmessage = convert;
 	importScripts('showdown.min.js');
 	importScripts('xss.min.js');
 	importScripts('admin-worker-deps.min.js');
