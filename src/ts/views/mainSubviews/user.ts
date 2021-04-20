@@ -55,7 +55,7 @@ function renderUserRow(user: User): string
 	}
 	if(LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser")
 	{
-		html += "<br><div class=\"button cyanButton changeUserRole\" data-id=\"" + user.id + "\" data-role=\"" + user.role + "\" data-name=\"" + user.name + "\"><i class=\"icon-pencil\"></i>Upravit</div><br>";
+		html += "<br><div class=\"button cyanButton changeUserRole\" data-id=\"" + user.id.toString() + "\" data-role=\"" + user.role + "\" data-name=\"" + user.name + "\"><i class=\"icon-pencil\"></i>Upravit</div><br>";
 	}
 	html += "</td><td>";
 	let first = true;
@@ -75,7 +75,7 @@ function renderUserRow(user: User): string
 	{
 		html += "<br>";
 	}
-	html += "<div class=\"button cyanButton changeUserGroups\" data-id=\"" + user.id + "\" data-groups='" + JSON.stringify(user.groups) + "' data-name=\"" + user.name + "\"><i class=\"icon-pencil\"></i>Upravit</div>";
+	html += "<div class=\"button cyanButton changeUserGroups\" data-id=\"" + user.id.toString() + "\" data-groups='" + JSON.stringify(user.groups) + "' data-name=\"" + user.name + "\"><i class=\"icon-pencil\"></i>Upravit</div>";
 	html += "</td></tr>";
 	return html;
 }

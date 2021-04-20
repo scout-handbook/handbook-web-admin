@@ -5,15 +5,16 @@ function popback(): void
 {
 	if(history.state)
 	{
-		if(history.state.sidePanelImageSelectorAction)
+		const state = history.state as HistoryState;
+		if(state.sidePanelImageSelectorAction)
 		{
-			closeSidePanelImageSelector(history.state.sidePanelImageSelectorAction, history.state.sidePanelImageSelectorState);
+			closeSidePanelImageSelector(state.sidePanelImageSelectorAction, state.sidePanelImageSelectorState!);
 		}
 		else if(sidePanelState)
 		{
 			sidePanelClose();
 		}
-		else if(history.state.id)
+		else if(state.id)
 		{
 			if(imageSelectorOpen)
 			{
@@ -23,13 +24,13 @@ function popback(): void
 			{
 				metadataEvent.addCallback(function(): void
 				{
-					showLessonEditView(history.state.id, true);
+					showLessonEditView(state.id!, true);
 				});
 			}
 		}
-		else if(history.state.page)
+		else if(state.page)
 		{
-			mainPageTab = history.state.page;
+			mainPageTab = state.page;
 			showMainView(true)
 		}
 		else

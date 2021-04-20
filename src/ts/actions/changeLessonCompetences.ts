@@ -45,7 +45,7 @@ function changeLessonCompetencesOnClick(id: string|null, actionQueue: ActionQueu
 		}
 		html += " data-id=\"" + competenceId + "\"";
 		html += "><span class=\"formCustom formCheckbox\"></span></label>";
-		html += "<span class=\"competenceNumber\">" + competence.number + ":</span> " + competence.name + "</div>";
+		html += "<span class=\"competenceNumber\">" + competence.number.toString() + ":</span> " + competence.name + "</div>";
 	});
 	html += "</form>";
 	document.getElementById("sidePanel")!.innerHTML = html;

@@ -55,7 +55,7 @@ function importGroupSave(id: string): void
 		for(let i = 0; i < participants.length; i++)
 		{
 			const payload = {"group": id};
-			request(CONFIG.apiuri + "/user/" + participants[i].id + "/group", "PUT", payload, function(): void {groupEvent.trigger();}, authFailHandler);
+			request(CONFIG.apiuri + "/user/" + participants[i].id.toString() + "/group", "PUT", payload, function(): void {groupEvent.trigger();}, authFailHandler);
 		}
 
 		groupEvent.addCallback(function(): void
@@ -86,7 +86,7 @@ function importGroupSelectParticipantsRender(id: string): void
 	let html = "<h4>Výběr účastníků:</h4><form id=\"sidePanelForm\">";
 	for(let i = 0; i < newparticipants.length; i++)
 	{
-		html += "<div class=\"formRow\"><label class=\"formSwitch\"><input type=\"checkbox\" data-id=\"" + newparticipants[i].id + "\" data-name=\"" + newparticipants[i].name + "\"><span class=\"formCustom formCheckbox\"></span></label>" + newparticipants[i].name + "</div>";
+		html += "<div class=\"formRow\"><label class=\"formSwitch\"><input type=\"checkbox\" data-id=\"" + newparticipants[i].id.toString() + "\" data-name=\"" + newparticipants[i].name + "\"><span class=\"formCustom formCheckbox\"></span></label>" + newparticipants[i].name + "</div>";
 	}
 	html += "</form>";
 	document.getElementById("importList")!.innerHTML = html;
@@ -136,7 +136,7 @@ function importGroupSelectEventRender(id: string, events: Array<Event>): void
 	let html = "<h4>Volba kurzu:</h4><form id=\"sidePanelForm\">";
 	for(let i = 0; i < events.length; i++)
 	{
-		html += "<div class=\"formRow\"><label class=\"formSwitch\"><input type=\"radio\" name=\"field\" data-id=\"" + events[i].id + "\"><span class=\"formCustom formRadio\"></span></label>" + events[i].name + "</div>";
+		html += "<div class=\"formRow\"><label class=\"formSwitch\"><input type=\"radio\" name=\"field\" data-id=\"" + events[i].id.toString() + "\"><span class=\"formCustom formRadio\"></span></label>" + events[i].name + "</div>";
 	}
 	html += "</form>";
 	document.getElementById("importList")!.innerHTML = html;
