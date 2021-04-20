@@ -25,7 +25,7 @@ function changeUserGroupsOnClick(event: MouseEvent): void
 	let html = "<div class=\"button yellowButton\" id=\"sidePanelCancel\"><i class=\"icon-cancel\"></i>Zrušit</div>";
 	html += "<div class=\"button greenButton\" id=\"changeUserGroupsSave\"><i class=\"icon-floppy\"></i>Uložit</div>";
 	html += "<h3 class=\"sidePanelTitle\">Změnit skupiny: " + getAttribute(event, "name") + "</h3><form id=\"sidePanelForm\">";
-	const currentGroups = JSON.parse(getAttribute(event, "groups"));
+	const currentGroups = JSON.parse(getAttribute(event, "groups")) as Array<string>;
 	let publicName = "";
 	for(let i = 0; i < GROUPS.length; i++)
 	{

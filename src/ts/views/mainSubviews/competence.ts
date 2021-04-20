@@ -6,7 +6,7 @@ function renderCompetenceList(): string
 	let html = "";
 	for(let i = 0; i < COMPETENCES.length; i++)
 	{
-		html += "<h3 class = \"mainPage\">" + COMPETENCES[i].number + ": " + COMPETENCES[i].name + "</h3><br>";
+		html += "<h3 class = \"mainPage\">" + COMPETENCES[i].number.toString() + ": " + COMPETENCES[i].name + "</h3><br>";
 		if(LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser")
 		{
 			html += "<div class=\"button cyanButton changeCompetence\" data-id=\"" + COMPETENCES[i].id + "\"><i class=\"icon-pencil\"></i>Upravit</div>";

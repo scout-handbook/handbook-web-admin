@@ -6,7 +6,7 @@ function showImagePreview(event: MouseEvent): void
 	const overlay = document.getElementById("overlay")!;
 	overlay.style.display = "inline";
 	overlay.style.cursor = "pointer";
-	const html = "<img src=\"" + CONFIG.apiuri + "/image/" + (event.target as HTMLElement).dataset.id + "\" class=\"previewImage\">";
+	const html = "<img src=\"" + CONFIG.apiuri + "/image/" + (event.target as HTMLElement).dataset.id! + "\" class=\"previewImage\">";
 	overlay.innerHTML = html;
 	overlay.onclick = function(): void
 	{

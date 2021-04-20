@@ -8,6 +8,7 @@
   },
   "files": [
     "../src/d.ts/admin-worker.d.ts",
+    "../src/ts/interfaces/WorkerPayload.ts",
     "../src/ts/lessonEditor/previewWorker.ts"
   ]
 }
