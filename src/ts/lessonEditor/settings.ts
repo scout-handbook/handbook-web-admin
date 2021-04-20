@@ -23,7 +23,7 @@ function renderCompetences(): string
 	{
 		if(lessonSettingsCache.competences.indexOf(id) >= 0)
 		{
-			html += "<br><span class=\"competenceNumber\">" + competence.number + ":</span> " + competence.name;
+			html += "<br><span class=\"competenceNumber\">" + competence.number.toString() + ":</span> " + competence.name;
 		}
 	});
 	return html;

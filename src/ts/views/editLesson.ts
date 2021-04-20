@@ -65,7 +65,7 @@ function showLessonEditView(id: string, noHistory: boolean): void
 	const exceptionHandler = reAuthHandler;
 	exceptionHandler["LockedException"] = function(response: APIResponse): void
 	{
-		dialog("Nelze upravovat lekci, protože ji právě upravuje " + response.holder + ".", "OK");
+		dialog("Nelze upravovat lekci, protože ji právě upravuje " + response.holder! + ".", "OK");
 	};
 	request(CONFIG.apiuri + "/mutex/" + encodeURIComponent(id), "POST", {}, function(): void
 	{

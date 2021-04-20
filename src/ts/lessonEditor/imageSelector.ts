@@ -18,7 +18,7 @@ function toggleImageSelector(): void
 
 function insertImage(event: MouseEvent): void
 {
-	const markdown = "![Text po najetí kurzorem](" + CONFIG.apiuri + "/image/" + (event.target as HTMLElement).dataset.id + ")"
+	const markdown = "![Text po najetí kurzorem](" + CONFIG.apiuri + "/image/" + ((event.target as HTMLElement).dataset.id as string) + ")"
 	const doc = editor.codemirror.getDoc();
 	doc.replaceRange(markdown, doc.getCursor());
 	toggleImageSelector();
@@ -56,24 +56,24 @@ function renderImageSelector(list: Array<string>, page: number, perPage: number)
 		}
 		if(page > 2)
 		{
-			html += "<div class=\"paginationButton\" data-page=\"" + (page - 2) + "\">" + (page - 2) + "</div>";
+			html += "<div class=\"paginationButton\" data-page=\"" + (page - 2).toString() + "\">" + (page - 2).toString() + "</div>";
 		}
 		if(page > 1)
 		{
-			html += "<div class=\"paginationButton\" data-page=\"" + (page - 1) + "\">" + (page - 1) + "</div>";
+			html += "<div class=\"paginationButton\" data-page=\"" + (page - 1).toString() + "\">" + (page - 1).toString() + "</div>";
 		}
-		html += "<div class=\"paginationButton active\">" + page + "</div>";
+		html += "<div class=\"paginationButton active\">" + page.toString() + "</div>";
 		if(page < maxPage)
 		{
-			html += "<div class=\"paginationButton\" data-page=\"" + (page + 1) + "\">" + (page + 1) + "</div>";
+			html += "<div class=\"paginationButton\" data-page=\"" + (page + 1).toString() + "\">" + (page + 1).toString() + "</div>";
 		}
 		if(page < maxPage - 1)
 		{
-			html += "<div class=\"paginationButton\" data-page=\"" + (page + 2) + "\">" + (page + 2) + "</div>";
+			html += "<div class=\"paginationButton\" data-page=\"" + (page + 2).toString() + "\">" + (page + 2).toString() + "</div>";
 		}
 		if(page < maxPage - 2)
 		{
-			html += " ... <div class=\"paginationButton\" data-page=\"" + maxPage + "\">" + maxPage + "</div>";
+			html += " ... <div class=\"paginationButton\" data-page=\"" + maxPage.toString() + "\">" + maxPage.toString() + "</div>";
 		}
 		html += "</div>";
 	}

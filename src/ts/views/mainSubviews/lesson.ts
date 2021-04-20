@@ -20,7 +20,7 @@ function renderLessonListLesson(id: string, lesson: Lesson, secondLevel: string)
 			{
 				html += ", ";
 			}
-			html += competence.number;
+			html += competence.number.toString();
 			first = false;
 		}
 	});

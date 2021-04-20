@@ -13,24 +13,24 @@ function renderPagination(total: number, current: number): string
 	}
 	if(current > 2)
 	{
-		ret += "<div class=\"paginationButton\" data-page=\"" + (current - 2) + "\">" + (current - 2) + "</div>";
+		ret += "<div class=\"paginationButton\" data-page=\"" + (current - 2).toString() + "\">" + (current - 2).toString() + "</div>";
 	}
 	if(current > 1)
 	{
-		ret += "<div class=\"paginationButton\" data-page=\"" + (current - 1) + "\">" + (current - 1) + "</div>";
+		ret += "<div class=\"paginationButton\" data-page=\"" + (current - 1).toString() + "\">" + (current - 1).toString() + "</div>";
 	}
-	ret += "<div class=\"paginationButton activePaginationButton\">" + current + "</div>";
+	ret += "<div class=\"paginationButton activePaginationButton\">" + current.toString() + "</div>";
 	if(current < total)
 	{
-		ret += "<div class=\"paginationButton\" data-page=\"" + (current + 1) + "\">" + (current + 1) + "</div>";
+		ret += "<div class=\"paginationButton\" data-page=\"" + (current + 1).toString() + "\">" + (current + 1).toString() + "</div>";
 	}
 	if(current < total - 1)
 	{
-		ret += "<div class=\"paginationButton\" data-page=\"" + (current + 2) + "\">" + (current + 2) + "</div>";
+		ret += "<div class=\"paginationButton\" data-page=\"" + (current + 2).toString() + "\">" + (current + 2).toString() + "</div>";
 	}
 	if(current < total - 2)
 	{
-		ret += " ... <div class=\"paginationButton\" data-page=\"" + total + "\">" + total + "</div>";
+		ret += " ... <div class=\"paginationButton\" data-page=\"" + total.toString() + "\">" + total.toString() + "</div>";
 	}
 	ret += "</div>";
 	return ret;

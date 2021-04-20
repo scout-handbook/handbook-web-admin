@@ -12,7 +12,8 @@ function refreshPreviewSetup(): void
 		worker = new Worker(CONFIG['admin-uri'] + "/admin-worker.min.js"); // eslint-disable-line compat/compat
 		worker.onmessage = function(payload): void
 		{
-			document.getElementById(payload.data.id)!.innerHTML = payload.data.body;
+			const data = payload.data as WorkerPayload;
+			document.getElementById(data.id)!.innerHTML = data.body;
 			if(queue)
 			{
 				worker!.postMessage(queue);
