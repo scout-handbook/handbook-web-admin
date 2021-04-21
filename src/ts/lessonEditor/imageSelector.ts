@@ -18,7 +18,7 @@ function toggleImageSelector(): void
 
 function insertImage(event: MouseEvent): void
 {
-	const markdown = "![Text po najetí kurzorem](" + CONFIG.apiuri + "/image/" + ((event.target as HTMLElement).dataset.id as string) + ")"
+	const markdown = "![Text po najetí kurzorem](" + CONFIG["api-uri"] + "/v1.0/image/" + ((event.target as HTMLElement).dataset.id as string) + ")"
 	const doc = editor.codemirror.getDoc();
 	doc.replaceRange(markdown, doc.getCursor());
 	toggleImageSelector();
@@ -27,7 +27,7 @@ function insertImage(event: MouseEvent): void
 
 function prepareImageSelector(page = 1 , perPage = 15): void
 {
-	request(CONFIG.apiuri + "/image", "GET", {}, function(response: RequestResponse): void
+	request(CONFIG["api-uri"] + "/v1.0/image", "GET", {}, function(response: RequestResponse): void
 	{
 		renderImageSelector(response as unknown as Array<string>, page, perPage); // eslint-disable-line @typescript-eslint/no-use-before-define
 	}, reAuthHandler);
@@ -44,7 +44,7 @@ function renderImageSelector(list: Array<string>, page: number, perPage: number)
 	const start = perPage * (page - 1);
 	for(let i = start; i < Math.min(list.length, start + perPage); i++)
 	{
-		html += "<div class=\"thumbnailContainer\"><img src=\"" + CONFIG.apiuri + "/image/" + list[i] + "?quality=thumbnail\" class=\"thumbnailImage\" data-id=\"" + list[i] + "\"></div>";
+		html += "<div class=\"thumbnailContainer\"><img src=\"" + CONFIG["api-uri"] + "/v1.0/image/" + list[i] + "?quality=thumbnail\" class=\"thumbnailImage\" data-id=\"" + list[i] + "\"></div>";
 	}
 	if(list.length > perPage)
 	{

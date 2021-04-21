@@ -11,34 +11,34 @@ let LOGINSTATE: Loginstate = {avatar: "", name: "", role: "guest"};
 function refreshMetadata(): void
 {
 	metadataEvent = new AfterLoadEvent(5);
-	request(CONFIG.apiuri + "/lesson?override-group=true", "GET", {}, function(response): void
+	request(CONFIG["api-uri"] + "/v1.0/lesson?override-group=true", "GET", {}, function(response): void
 	{
 		LESSONS = new IDList<Lesson>(response as IDListItems<Lesson>);
 		metadataEvent.trigger();
 	}, undefined);
-	request(CONFIG.apiuri + "/field", "GET", {}, function(response): void
+	request(CONFIG["api-uri"] + "/v1.0/field", "GET", {}, function(response): void
 	{
 		FIELDS = new IDList<Field>(response as IDListItems<Field>);
 		metadataEvent.trigger();
 	}, undefined);
-	request(CONFIG.apiuri + "/competence", "GET", {}, function(response): void
+	request(CONFIG["api-uri"] + "/v1.0/competence", "GET", {}, function(response): void
 	{
 		COMPETENCES = new IDList<Competence>(response as IDListItems<Competence>);
 		metadataEvent.trigger();
 	}, undefined);
 	const groupExceptionHandler = {"AuthenticationException": function(): void
 	{
-		window.location.href = CONFIG.apiuri + "/login?return-uri=" + encodeURIComponent(window.location.href);
+		window.location.href = CONFIG["api-uri"] + "/v1.0/login?return-uri=" + encodeURIComponent(window.location.href);
 	}, "RoleException": function(): void
 	{
 		window.location.replace(CONFIG['frontend-uri']);
 	}};
-	request(CONFIG.apiuri + "/group", "GET", {}, function(response): void
+	request(CONFIG["api-uri"] + "/v1.0/group", "GET", {}, function(response): void
 	{
 		GROUPS = new IDList<Group>(response as IDListItems<Group>);
 		metadataEvent.trigger();
 	}, groupExceptionHandler);
-	rawRequest(CONFIG.apiuri + "/account", "GET", undefined, function(response): void
+	rawRequest(CONFIG["api-uri"] + "/v1.0/account", "GET", undefined, function(response): void
 	{
 		if(response.status === 200)
 		{
@@ -54,7 +54,7 @@ function refreshMetadata(): void
 		}
 		else if(response.status === 401)
 		{
-			window.location.href = CONFIG.apiuri + "/login?return-uri=" + encodeURIComponent(window.location.href);
+			window.location.href = CONFIG["api-uri"] + "/v1.0/login?return-uri=" + encodeURIComponent(window.location.href);
 		}
 		else
 		{

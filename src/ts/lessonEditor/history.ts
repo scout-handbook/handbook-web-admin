@@ -29,7 +29,7 @@ function lessonHistoryPreviewRenderVersion(id: string, name: string, body: strin
 function lessonHistoryPreviewShowVersion(id: string, actionQueue: ActionQueue, event: Event): void
 {
 	document.getElementById("lessonHistoryPreview")!.innerHTML = "<div id=\"embeddedSpinner\"></div>";
-	request(CONFIG.apiuri + "/lesson/" + id + "/history/" + ((event.target as HTMLElement).dataset.version as string), "GET", {}, function(response: RequestResponse): void
+	request(CONFIG["api-uri"] + "/v1.0/lesson/" + id + "/history/" + ((event.target as HTMLElement).dataset.version as string), "GET", {}, function(response: RequestResponse): void
 	{
 		lessonHistoryPreviewRenderVersion(id, (event.target as HTMLElement).dataset.name!, response as unknown as string, actionQueue);
 	}, authFailHandler);
@@ -72,7 +72,7 @@ function lessonHistoryOpen(id: string, actionQueue: ActionQueue): void
 		lessonSettings(id, actionQueue, true);
 	};
 
-	request(CONFIG.apiuri + "/lesson/" + id + "/history", "GET", {}, function(response: RequestResponse): void
+	request(CONFIG["api-uri"] + "/v1.0/lesson/" + id + "/history", "GET", {}, function(response: RequestResponse): void
 	{
 		lessonHistoryListRender(id, actionQueue, response as unknown as Array<LessonVersion>);
 	}, authFailHandler);

@@ -15,7 +15,7 @@ function changeLessonGroupsSave(id: string|null, actionQueue: ActionQueue): void
 		{
 			encodedGroups.push(encodeURIComponent(groups[i]));
 		}
-		actionQueue.actions.push(new Action(CONFIG.apiuri + "/lesson/" + id + "/group", "PUT", function (): Payload {return {"group": encodedGroups};}));
+		actionQueue.actions.push(new Action(CONFIG["api-uri"] + "/v1.0/lesson/" + id + "/group", "PUT", function (): Payload {return {"group": encodedGroups};}));
 		lessonSettingsCache.groups = groups;
 		lessonSettings(id, actionQueue, true);
 	}

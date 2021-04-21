@@ -18,7 +18,7 @@ function restoreLessonShowVersion(id: string, event: Event): void
 	const version = (event.target as HTMLElement).dataset.version as string;
 	const name = (event.target as HTMLElement).dataset.name!;
 	document.getElementById("restoreLessonPreview")!.innerHTML = "<div id=\"embeddedSpinner\"></div>";
-	request(CONFIG.apiuri + "/deleted-lesson/" + id + "/history/" + version, "GET", {}, function(response: RequestResponse): void
+	request(CONFIG["api-uri"] + "/v1.0/deleted-lesson/" + id + "/history/" + version, "GET", {}, function(response: RequestResponse): void
 	{
 		restoreLessonRenderVersion(name, response as unknown as string);
 	}, authFailHandler);
@@ -59,7 +59,7 @@ function restoreLessonSelectVersion(): void
 	{
 		const html = "<div id=\"embeddedSpinner\"></div>";
 		document.getElementById("restoreLessonList")!.innerHTML = html;
-		request(CONFIG.apiuri + "/deleted-lesson/" + lessonId + "/history", "GET", {}, function(response: RequestResponse): void
+		request(CONFIG["api-uri"] + "/v1.0/deleted-lesson/" + lessonId + "/history", "GET", {}, function(response: RequestResponse): void
 		{
 			restoreLessonRenderVersionList(lessonId, response as unknown as Array<LessonVersion>);
 		}, reAuthHandler);
@@ -99,7 +99,7 @@ function restoreLesson(): void
 	{
 		history.back();
 	};
-	request(CONFIG.apiuri + "/deleted-lesson", "GET", {}, function(response: RequestResponse): void
+	request(CONFIG["api-uri"] + "/v1.0/deleted-lesson", "GET", {}, function(response: RequestResponse): void
 	{
 		restoreLessonRenderLessonList(new IDList<DeletedLesson>(response as IDListItems<DeletedLesson>));
 	}, reAuthHandler);
