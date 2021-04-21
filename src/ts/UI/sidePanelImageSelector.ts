@@ -1,3 +1,5 @@
+let sidePanelImageSelectorState: SidePanelImageSelectorGlobalState|undefined = undefined;
+
 function openSidePanelImageSelector(action: string, property: string, state: SidePanelImageSelectorState, page = 1 , perPage = 15, noHistory = false): void
 {
 	sidePanelDoubleOpen();
@@ -9,17 +11,18 @@ function openSidePanelImageSelector(action: string, property: string, state: Sid
 	refreshLogin();
 }
 
-function closeSidePanelImageSelector(action: string, state: SidePanelImageSelectorState): void
+function closeSidePanelImageSelector(): void
 {
-	switch(action)
+	switch(sidePanelImageSelectorState!.action)
 	{
 		case "addField":
-			addField(state, true);
+			addField(sidePanelImageSelectorState!.state, true);
 			break;
 		case "changeField":
-			changeField(state, true, true);
+			changeField(sidePanelImageSelectorState!.state, true, true);
 			break;
 	}
+	sidePanelImageSelectorState = undefined;
 }
 
 function renderSidePanelImageSelector(list: Array<string>, action: string, property: string, state: SidePanelImageSelectorState, page: number, perPage: number, noHistory: boolean): void
@@ -66,8 +69,7 @@ function renderSidePanelImageSelector(list: Array<string>, action: string, prope
 
 	document.getElementById("fieldImageCancel")!.onclick = function(): void
 	{
-		//history.back();
-		closeSidePanelImageSelector(action, state)
+		history.back();
 	}
 	const imageNodes = document.getElementById("sidePanel")!.getElementsByTagName("img");
 	for(let i = 0; i < imageNodes.length; i++)
@@ -75,8 +77,8 @@ function renderSidePanelImageSelector(list: Array<string>, action: string, prope
 		imageNodes[i].onclick = function(event: MouseEvent): void
 		{
 			state[property] = (event.target as HTMLElement).dataset.id!;
-			//history.back();
-			closeSidePanelImageSelector(action, state);
+			sidePanelImageSelectorState!.state = state;
+			history.back();
 		};
 	}
 	const buttonNodes = getElementsByClassName("paginationButton");
@@ -88,11 +90,10 @@ function renderSidePanelImageSelector(list: Array<string>, action: string, prope
 		};
 	}
 
+	sidePanelImageSelectorState = {action, state};
 	if(!noHistory)
 	{
-		// TODO: Re-enable history
-		//history.replaceState({"sidePanelImageSelectorAction": action, "sidePanelImageSelectorState": state}, "title", "/admin/lessons"); // eslint-disable-line compat/compat
-		//history.pushState({"sidePanel": "open"}, "title", "/admin/lessons"); // eslint-disable-line compat/compat
+		history.pushState({"sidePanelImageSelector": "open"}, "title", "/admin/lessons"); // eslint-disable-line compat/compat
 	}
 	refreshLogin();
 }
