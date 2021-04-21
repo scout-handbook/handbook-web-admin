@@ -20,7 +20,7 @@ function addField(state: SidePanelImageSelectorState = {name: "Nová oblast", de
 	html += "<br><div class=\"button\" id=\"fieldImageChange\"><i class=\"icon-pencil\"></i>Změnit</div>"
 	html += "<legend for=\"fieldIcon\">Ikona:</legend>";
 	html += "<input type=\"hidden\" id=\"fieldIcon\" value=\"" + state.icon + "\">";
-	html += "<image src=\"" + CONFIG.apiuri + "/image/" + state.icon + "?quality=thumbnail\">";
+	html += "<image src=\"" + CONFIG["api-uri"] + "/v0.9/image/" + state.icon + "?quality=thumbnail\">";
 	html += "<br><div class=\"button\" id=\"fieldIconChange\"><i class=\"icon-pencil\"></i>Změnit</div>"
 	html += "</form>";
 	document.getElementById("sidePanel")!.innerHTML = html;
