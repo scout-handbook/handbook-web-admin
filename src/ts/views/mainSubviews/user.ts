@@ -165,7 +165,7 @@ function downloadUserList(searchName = "", page = 1, perPage = 25, role: Role|"a
 	{
 		payload.group = group;
 	}
-	request(CONFIG.apiuri + "/user", "GET", payload, function(response: RequestResponse): void
+	request(CONFIG["api-uri"] + "/v0.9/user", "GET", payload, function(response: RequestResponse): void
 	{
 		showUserList(response as unknown as UserListResponse, searchName, page, perPage, role, group);
 	}, reAuthHandler);
