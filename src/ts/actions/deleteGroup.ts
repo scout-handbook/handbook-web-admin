@@ -12,7 +12,7 @@ function deleteGroupOnClick(event: MouseEvent): void
 		}
 	}
 
-	const aq = new ActionQueue([new Action(CONFIG.apiuri + "/group/" + encodeURIComponent(getAttribute(event, "id")), "DELETE")]);
+	const aq = new ActionQueue([new Action(CONFIG["api-uri"] + "/v0.9/group/" + encodeURIComponent(getAttribute(event, "id")), "DELETE")]);
 	dialog("Opravdu si přejete smazat skupinu \"" + name + "\"?", "Ano", () => aq.closeDispatch(), "Ne", function(): void {history.back();});
 	history.pushState({"sidePanel": "open"}, "title", "/admin/groups"); // eslint-disable-line compat/compat
 	refreshLogin();
