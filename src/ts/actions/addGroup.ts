@@ -21,7 +21,7 @@ function addGroup(): void
 		history.back();
 	};
 
-	const aq = new ActionQueue([new Action(CONFIG.apiuri + "/group", "POST", addGroupPayloadBuilder)]);
+	const aq = new ActionQueue([new Action(CONFIG["api-uri"] + "/v0.9/group", "POST", addGroupPayloadBuilder)]);
 	document.getElementById("addGroupSave")!.onclick = (): void => aq.closeDispatch();
 
 	history.pushState({"sidePanel": "open"}, "title", "/admin/groups"); // eslint-disable-line compat/compat

@@ -16,7 +16,7 @@ function addField(state: SidePanelImageSelectorState = {name: "Nová oblast", de
 	html += "<textarea rows=\"5\" class=\"formText\" id=\"fieldDescription\" autocomplete=\"off\">" + state.description + "</textarea>";
 	html += "<legend for=\"fieldImage\">Náhledový obrázek:</legend>";
 	html += "<input type=\"hidden\" id=\"fieldImage\" value=\"" + state.image + "\">";
-	html += "<image src=\"" + CONFIG.apiuri + "/image/" + state.image + "?quality=thumbnail\">";
+	html += "<image src=\"" + CONFIG["api-uri"] + "/v0.9/image/" + state.image + "?quality=thumbnail\">";
 	html += "<br><div class=\"button\" id=\"fieldImageChange\"><i class=\"icon-pencil\"></i>Změnit</div>"
 	html += "<legend for=\"fieldIcon\">Ikona:</legend>";
 	html += "<input type=\"hidden\" id=\"fieldIcon\" value=\"" + state.icon + "\">";
@@ -38,7 +38,7 @@ function addField(state: SidePanelImageSelectorState = {name: "Nová oblast", de
 		openSidePanelImageSelector("addField", "icon", {name: (document.getElementById("fieldName") as HTMLInputElement).value, description: (document.getElementById("fieldDescription") as HTMLInputElement).value, image: state.image, icon: state.icon});
 	};
 
-	const aq = new ActionQueue([new Action(CONFIG.apiuri + "/field", "POST", addFieldPayloadBuilder)]);
+	const aq = new ActionQueue([new Action(CONFIG["api-uri"] + "/v0.9/field", "POST", addFieldPayloadBuilder)]);
 	document.getElementById("addFieldSave")!.onclick = (): void => aq.closeDispatch();
 
 	if(!noHistory)

@@ -1,5 +1,5 @@
 interface Config {
-	apiuri: string;
+	"api-uri": string;
 	"admin-uri": string;
 	"frontend-uri": string;
 	"site-name": string;

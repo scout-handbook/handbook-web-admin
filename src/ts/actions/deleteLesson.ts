@@ -18,8 +18,8 @@ function deleteLessonDialog(id: string): void
 
 	const saveExceptionHandler = {"NotLockedException": function(): void {dialog("Kvůli příliš malé aktivitě byla lekce odemknuta a již ji upravil někdo jiný. Zkuste to prosím znovu.", "OK");}};
 	const discardExceptionHandler = {"NotFoundException": null};
-	const saveActionQueue = new ActionQueue([new Action(CONFIG.apiuri + "/lesson/" + encodeURIComponent(id), "DELETE", undefined, [], saveExceptionHandler)]);
-	const discardActionQueue = new ActionQueue([new Action(CONFIG.apiuri + "/mutex/" + encodeURIComponent(id) , "DELETE", undefined, [], discardExceptionHandler)]);
+	const saveActionQueue = new ActionQueue([new Action(CONFIG["api-uri"] + "/v0.9/lesson/" + encodeURIComponent(id), "DELETE", undefined, [], saveExceptionHandler)]);
+	const discardActionQueue = new ActionQueue([new Action(CONFIG["api-uri"] + "/v0.9/mutex/" + encodeURIComponent(id) , "DELETE", undefined, [], discardExceptionHandler)]);
 	dialog("Opravdu si přejete smazat lekci \"" + name + "\"?", "Ano", () => saveActionQueue.closeDispatch(), "Ne", function(): void
 	{
 		discardActionQueue.dispatch(true);
@@ -38,7 +38,7 @@ function deleteLessonOnClick(event: MouseEvent): void
 	{
 		dialog("Nelze smazat lekci, protože ji právě upravuje " + response.holder! + ".", "OK");
 	};
-	request(CONFIG.apiuri + "/mutex/" + encodeURIComponent(id), "POST", {}, function(): void
+	request(CONFIG["api-uri"] + "/v0.9/mutex/" + encodeURIComponent(id), "POST", {}, function(): void
 	{
 		deleteLessonDialog(id);
 	}, exceptionHandler);
