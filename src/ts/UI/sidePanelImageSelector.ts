@@ -66,7 +66,8 @@ function renderSidePanelImageSelector(list: Array<string>, action: string, prope
 
 	document.getElementById("fieldImageCancel")!.onclick = function(): void
 	{
-		history.back();
+		//history.back();
+		closeSidePanelImageSelector(action, state)
 	}
 	const imageNodes = document.getElementById("sidePanel")!.getElementsByTagName("img");
 	for(let i = 0; i < imageNodes.length; i++)
@@ -74,7 +75,7 @@ function renderSidePanelImageSelector(list: Array<string>, action: string, prope
 		imageNodes[i].onclick = function(event: MouseEvent): void
 		{
 			state[property] = (event.target as HTMLElement).dataset.id!;
-			history.back();
+			//history.back();
 			closeSidePanelImageSelector(action, state);
 		};
 	}
@@ -89,8 +90,9 @@ function renderSidePanelImageSelector(list: Array<string>, action: string, prope
 
 	if(!noHistory)
 	{
-		history.replaceState({"sidePanelImageSelectorAction": action, "sidePanelImageSelectorState": state}, "title", "/admin/lessons"); // eslint-disable-line compat/compat
-		history.pushState({"sidePanel": "open"}, "title", "/admin/lessons"); // eslint-disable-line compat/compat
+		// TODO: Re-enable history
+		//history.replaceState({"sidePanelImageSelectorAction": action, "sidePanelImageSelectorState": state}, "title", "/admin/lessons"); // eslint-disable-line compat/compat
+		//history.pushState({"sidePanel": "open"}, "title", "/admin/lessons"); // eslint-disable-line compat/compat
 	}
 	refreshLogin();
 }
