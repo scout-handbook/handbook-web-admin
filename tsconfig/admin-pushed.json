@@ -18,6 +18,7 @@
     "../src/ts/interfaces/Role.ts",
     "../src/ts/interfaces/SerializedAction.ts",
     "../src/ts/interfaces/SidePanelImageSelectorState.ts",
+    "../src/ts/interfaces/SidePanelImageSelectorGlobalState.ts",
     "../src/ts/interfaces/WorkerPayload.ts",
     "../src/ts/lessonEditor/refreshPreview.ts",
     "../src/ts/tools/Action.ts",
