@@ -22,7 +22,7 @@ function addCompetence(): void
 		history.back();
 	};
 
-	const aq = new ActionQueue([new Action(CONFIG.apiuri + "/competence", "POST", addCompetencePayloadBuilder)]);
+	const aq = new ActionQueue([new Action(CONFIG["api-uri"] + "/v1.0/competence", "POST", addCompetencePayloadBuilder)]);
 	document.getElementById("addCompetenceSave")!.onclick = (): void => aq.closeDispatch();
 
 	history.pushState({"sidePanel": "open"}, "title", "/admin/competences"); // eslint-disable-line compat/compat

@@ -13,7 +13,7 @@ function removeBeacon(): void
 function lessonEditMutexExtend(id: string): void
 {
 	const exceptionHandler = {"NotFoundException": null};
-	const actionQueue = new ActionQueue([new Action(CONFIG.apiuri + "/mutex/" + encodeURIComponent(id) , "PUT", undefined, undefined, exceptionHandler)]);
+	const actionQueue = new ActionQueue([new Action(CONFIG["api-uri"] + "/v1.0/mutex/" + encodeURIComponent(id) , "PUT", undefined, undefined, exceptionHandler)]);
 	actionQueue.dispatch(true);
 }
 
@@ -21,7 +21,7 @@ function sendBeacon(id: string): void
 {
 	if(navigator.sendBeacon) // eslint-disable-line compat/compat
 	{
-		navigator.sendBeacon(CONFIG.apiuri + "/mutex-beacon/" + encodeURIComponent(id)); // eslint-disable-line compat/compat
+		navigator.sendBeacon(CONFIG["api-uri"] + "/v1.0/mutex-beacon/" + encodeURIComponent(id)); // eslint-disable-line compat/compat
 	}
 }
 
@@ -40,8 +40,8 @@ function renderLessonEditView(id: string, markdown: string, noHistory: boolean):
 	}};
 	const discardExceptionHandler = {"NotFoundException": null};
 
-	const saveActionQueue = new ActionQueue([new Action(CONFIG.apiuri + "/lesson/" + encodeURIComponent(id) , "PUT", saveLessonPayloadBuilder, [ActionCallback.RemoveBeacon], saveExceptionHandler)]);
-	const discardActionQueue = new ActionQueue([new Action(CONFIG.apiuri + "/mutex/" + encodeURIComponent(id) , "DELETE", undefined, [ActionCallback.RemoveBeacon, ActionCallback.DismissSpinner], discardExceptionHandler)]);
+	const saveActionQueue = new ActionQueue([new Action(CONFIG["api-uri"] + "/v1.0/lesson/" + encodeURIComponent(id) , "PUT", saveLessonPayloadBuilder, [ActionCallback.RemoveBeacon], saveExceptionHandler)]);
+	const discardActionQueue = new ActionQueue([new Action(CONFIG["api-uri"] + "/v1.0/mutex/" + encodeURIComponent(id) , "DELETE", undefined, [ActionCallback.RemoveBeacon, ActionCallback.DismissSpinner], discardExceptionHandler)]);
 	showLessonEditor(lesson.name, markdown, saveActionQueue, id, discardActionQueue, function(): void {lessonEditMutexExtend(id);});
 	document.getElementById("save")!.dataset.id = id;
 
@@ -50,7 +50,7 @@ function renderLessonEditView(id: string, markdown: string, noHistory: boolean):
 
 function getLessonEditView(id: string, noHistory: boolean): void
 {
-	request(CONFIG.apiuri + "/lesson/" + encodeURIComponent(id), "GET", {}, function(response: RequestResponse): void
+	request(CONFIG["api-uri"] + "/v1.0/lesson/" + encodeURIComponent(id), "GET", {}, function(response: RequestResponse): void
 	{
 		metadataEvent.addCallback(function(): void
 		{
@@ -67,7 +67,7 @@ function showLessonEditView(id: string, noHistory: boolean): void
 	{
 		dialog("Nelze upravovat lekci, protože ji právě upravuje " + response.holder! + ".", "OK");
 	};
-	request(CONFIG.apiuri + "/mutex/" + encodeURIComponent(id), "POST", {}, function(): void
+	request(CONFIG["api-uri"] + "/v1.0/mutex/" + encodeURIComponent(id), "POST", {}, function(): void
 	{
 		getLessonEditView(id, noHistory);
 	}, exceptionHandler);

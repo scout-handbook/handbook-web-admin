@@ -43,7 +43,7 @@ function showMainView(noHistory: boolean): void
 	let html = "<div id=\"sidePanel\"></div><div id=\"sidePanelOverlay\"></div>";
 	html += "<div id=\"topBar\"><div id=\"userAccount\"><img id=\"userAvatar\" alt=\"Account avatar\" src=\"" + CONFIG['admin-uri'] + "/avatar.png\">";
 	html += "<div id=\"userName\">&nbsp;</div>";
-	html += "<div id=\"logLink\"><a href=\"" + CONFIG.apiuri + "/logout?redirect-uri=" + encodeURIComponent(CONFIG['frontend-uri']) + "\">Odhlásit</a><a href=\"/\" id=\"frontendLink\">Zpět na web</a></div></div>";
+	html += "<div id=\"logLink\"><a href=\"" + CONFIG["api-uri"] + "/v1.0/logout?redirect-uri=" + encodeURIComponent(CONFIG['frontend-uri']) + "\">Odhlásit</a><a href=\"/\" id=\"frontendLink\">Zpět na web</a></div></div>";
 	html += "<div class=\"topBarTab\" id=\"lessonManager\">Lekce</div>";
 	html += "<div class=\"topBarTab\" id=\"competenceManager\">Kompetence</div>";
 	html += "<div class=\"topBarTab\" id=\"imageManager\">Obrázky</div>";

@@ -70,7 +70,7 @@ class ActionQueue {
 		if(!ActionQueueRetry && window.sessionStorage)
 		{
 			sessionStorage.setItem("ActionQueue", JSON.stringify(this.actions.map(serializeAction)));
-			window.location.replace(CONFIG.apiuri + "/login?return-uri=/admin/" + mainPageTab);
+			window.location.replace(CONFIG["api-uri"] + "/v1.0/login?return-uri=/admin/" + mainPageTab);
 		}
 		else
 		{
