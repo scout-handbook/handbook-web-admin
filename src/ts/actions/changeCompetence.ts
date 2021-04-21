@@ -32,7 +32,7 @@ function changeCompetenceOnClick(event: MouseEvent): void
 		history.back();
 	};
 
-	const aq = new ActionQueue([new Action(CONFIG.apiuri + "/competence/" + encodeURIComponent(getAttribute(event, "id")), "PUT", changeCompetencePayloadBuilder)]);
+	const aq = new ActionQueue([new Action(CONFIG["api-uri"] + "/v0.9/competence/" + encodeURIComponent(getAttribute(event, "id")), "PUT", changeCompetencePayloadBuilder)]);
 	document.getElementById("changeCompetenceSave")!.onclick = function(): void
 	{
 		dispatchIfChanged(aq, competenceChanged);
