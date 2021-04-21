@@ -8,7 +8,7 @@ if(isset($_COOKIE['skautis_timeout']) and isset($_COOKIE['skautis_token']))
 {
 	stream_context_set_option($context, ['http' => ['header' => 'Cookie: skautis_timeout=' . $_COOKIE['skautis_timeout'] . '; skautis_token=' . $_COOKIE['skautis_token']]]);
 }
-$accountInfo = file_get_contents($CONFIG->apiuri . '/account?no-avatar=true', false, $context);
+$accountInfo = file_get_contents($CONFIG->{'api-uri'} . '/v0.9/account?no-avatar=true', false, $context);
 $loginState = json_decode($accountInfo, true);
 
 if(isset($loginState['status']))
@@ -32,7 +32,7 @@ if(isset($loginState['status']))
 				{
 					$params = '?' . mb_substr($params, 1);
 				}
-				$file = fopen($CONFIG->apiuri . '/lesson/' . $_GET['id'] . '/pdf' . $params, 'rb');
+				$file = fopen($CONFIG->{'api-uri'} . '/v0.9/lesson/' . $_GET['id'] . '/pdf' . $params, 'rb');
 				foreach($http_response_header as $header)
 				{
 					if(strtolower(substr($header, 0, 20)) === "content-disposition:")
@@ -56,7 +56,7 @@ if(isset($loginState['status']))
 	}
 	elseif($loginState['status'] == 401)
 	{
-		header('Location: ' . $CONFIG->apiuri . '/login?return-uri=' . urlencode($_SERVER['REQUEST_URI']));
+		header('Location: ' . $CONFIG->{'api-uri'} . '/v0.9/login?return-uri=' . urlencode($_SERVER['REQUEST_URI']));
 		die();
 	}
 }

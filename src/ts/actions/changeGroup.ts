@@ -31,7 +31,7 @@ function changeGroupOnClick(event: MouseEvent): void
 		history.back();
 	};
 
-	const aq = new ActionQueue([new Action(CONFIG.apiuri + "/group/" + encodeURIComponent(getAttribute(event, "id")), "PUT", changeGrouPayloadBuilder)]);
+	const aq = new ActionQueue([new Action(CONFIG["api-uri"] + "/v0.9/group/" + encodeURIComponent(getAttribute(event, "id")), "PUT", changeGrouPayloadBuilder)]);
 	document.getElementById("changeGroupSave")!.onclick = function(): void
 	{
 		dispatchIfChanged(aq, groupChanged);

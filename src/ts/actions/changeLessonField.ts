@@ -10,7 +10,7 @@ function changeLessonFieldSave(id: string|null, actionQueue: ActionQueue): void
 	{
 		changed = true;
 		const fieldId = parseBoolForm()[0];
-		actionQueue.actions.push(new Action(CONFIG.apiuri + "/lesson/" + id + "/field", "PUT", function(): Payload {return {"field": encodeURIComponent(fieldId)};}));
+		actionQueue.actions.push(new Action(CONFIG["api-uri"] + "/v0.9/lesson/" + id + "/field", "PUT", function(): Payload {return {"field": encodeURIComponent(fieldId)};}));
 		lessonSettingsCache.field = fieldId;
 		lessonSettings(id, actionQueue, true);
 	}

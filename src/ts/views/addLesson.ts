@@ -10,10 +10,10 @@ function showLessonAddView(field?: string): void
 {
 	history.pushState({}, "title", "/admin/lessons"); // eslint-disable-line compat/compat
 
-	const aq = new ActionQueue([new Action(CONFIG.apiuri + "/lesson", "POST", addLessonPayloadBuilder, [ActionCallback.FillID])])
+	const aq = new ActionQueue([new Action(CONFIG["api-uri"] + "/v0.9/lesson", "POST", addLessonPayloadBuilder, [ActionCallback.FillID])])
 	if(field)
 	{
-		aq.actions.push(new Action(CONFIG.apiuri + "/lesson/{id}/field", "PUT", function(): Payload {return {"field": encodeURIComponent(field)};}))
+		aq.actions.push(new Action(CONFIG["api-uri"] + "/v0.9/lesson/{id}/field", "PUT", function(): Payload {return {"field": encodeURIComponent(field)};}))
 	}
 	showLessonEditor(defaultName, defaultBody, aq, null);
 	changed = true;

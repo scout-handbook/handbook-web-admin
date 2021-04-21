@@ -46,7 +46,7 @@ function importGroupSave(id: string): void
 	addEvent = new AfterLoadEvent(participants.length);
 	for(let i = 0; i < participants.length; i++)
 	{
-		request(CONFIG.apiuri + "/user", "POST", participants[i], function(): void {addEvent.trigger();}, authFailHandler);
+		request(CONFIG["api-uri"] + "/v0.9/user", "POST", participants[i], function(): void {addEvent.trigger();}, authFailHandler);
 	}
 
 	addEvent.addCallback(function(): void
@@ -55,7 +55,7 @@ function importGroupSave(id: string): void
 		for(let i = 0; i < participants.length; i++)
 		{
 			const payload = {"group": id};
-			request(CONFIG.apiuri + "/user/" + participants[i].id.toString() + "/group", "PUT", payload, function(): void {groupEvent.trigger();}, authFailHandler);
+			request(CONFIG["api-uri"] + "/v0.9/user/" + participants[i].id.toString() + "/group", "PUT", payload, function(): void {groupEvent.trigger();}, authFailHandler);
 		}
 
 		groupEvent.addCallback(function(): void
@@ -109,12 +109,12 @@ function importGroupSelectParticipants(id: string): void
 			sidePanelClose();
 			dialog("Pro tuto akci nemáte ve SkautISu dostatečná práva.", "OK");
 		};
-		request(CONFIG.apiuri + "/event/" + eventId + "/participant", "GET", {}, function(response: RequestResponse): void
+		request(CONFIG["api-uri"] + "/v0.9/event/" + eventId + "/participant", "GET", {}, function(response: RequestResponse): void
 		{
 			participants = response as unknown as Array<Participant>;
 			participantEvent.trigger(id);
 		}, exceptionHandler);
-		request(CONFIG.apiuri + "/user", "GET", {"page": 1, "per-page": 1000, "group": id}, function(response: RequestResponse): void
+		request(CONFIG["api-uri"] + "/v0.9/user", "GET", {"page": 1, "per-page": 1000, "group": id}, function(response: RequestResponse): void
 		{
 			users = response.users as Array<User>;
 			participantEvent.trigger(id);
@@ -162,7 +162,7 @@ function importGroupOnClick(event: MouseEvent): void
 	{
 		history.back();
 	};
-	request(CONFIG.apiuri + "/event", "GET", {}, function(response: RequestResponse): void
+	request(CONFIG["api-uri"] + "/v0.9/event", "GET", {}, function(response: RequestResponse): void
 	{
 		importGroupSelectEventRender(getAttribute(event, "id"), response as unknown as Array<Event>);
 	}, reAuthHandler);
