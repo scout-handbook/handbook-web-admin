@@ -6,9 +6,9 @@ function popback(): void
 	if(history.state)
 	{
 		const state = history.state as HistoryState;
-		if(state.sidePanelImageSelectorAction)
+		if(sidePanelImageSelectorState)
 		{
-			closeSidePanelImageSelector(state.sidePanelImageSelectorAction, state.sidePanelImageSelectorState!);
+			closeSidePanelImageSelector();
 		}
 		else if(sidePanelState)
 		{
