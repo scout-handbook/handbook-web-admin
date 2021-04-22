@@ -1,7 +1,10 @@
 declare class IDList<T>
 {
-	public constructor(list: IDListItems<T>);
+	public constructor(list: Record<string, T>);
 	public iterate(iterator: (key: string, value: T) => void): void;
+	public map(transform: (value: T) => T): void;
+	public sort(comparator: (first: T, second: T) => number): void;
 	public empty(): boolean;
-	public get(key: string): T;
+	public get(key: string): T|undefined;
+	public push(key: string, value: T): void;
 }

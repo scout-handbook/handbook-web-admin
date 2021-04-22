@@ -101,7 +101,7 @@ function restoreLesson(): void
 	};
 	request(CONFIG["api-uri"] + "/v1.0/deleted-lesson", "GET", {}, function(response: RequestResponse): void
 	{
-		restoreLessonRenderLessonList(new IDList<DeletedLesson>(response as IDListItems<DeletedLesson>));
+		restoreLessonRenderLessonList(new IDList<DeletedLesson>(response as Record<string, DeletedLesson>));
 	}, reAuthHandler);
 
 	history.pushState({"sidePanel": "open"}, "title", "/admin/lessons"); // eslint-disable-line compat/compat

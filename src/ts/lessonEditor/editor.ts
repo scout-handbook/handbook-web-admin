@@ -29,7 +29,7 @@ function populateEditorCache(id: string|null): void
 			lessonSettingsCache["field"] = fieldId;
 		}
 	});
-	lessonSettingsCache["competences"] = LESSONS.get(id).competences;
+	lessonSettingsCache["competences"] = LESSONS.get(id)!.competences;
 }
 
 function editorDiscardNow(actionQueue: ActionQueue): void

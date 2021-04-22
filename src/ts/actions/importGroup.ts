@@ -148,7 +148,7 @@ function importGroupOnClick(event: MouseEvent): void
 	sidePanelOpen();
 	let html = "<div class=\"button yellowButton\" id=\"sidePanelCancel\"><i class=\"icon-cancel\"></i>Zrušit</div>";
 	html += "<div class=\"button greenButton\" id=\"importGroupNext\"><i class=\"icon-fast-fw\"></i>Pokračovat</div>";
-	html += "<h3 class=\"sidePanelTitle\">Importovat ze SkautISu: " + GROUPS.get(getAttribute(event, "id")).name + "</h3>";
+	html += "<h3 class=\"sidePanelTitle\">Importovat ze SkautISu: " + GROUPS.get(getAttribute(event, "id"))!.name + "</h3>";
 	html += "<div id=\"importList\"><div id=\"embeddedSpinner\"></div></div>";
 	document.getElementById("sidePanel")!.innerHTML = html;
 	document.getElementById("sidePanelCancel")!.onclick = function(): void
