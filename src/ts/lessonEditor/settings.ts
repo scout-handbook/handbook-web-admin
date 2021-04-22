@@ -19,12 +19,11 @@ function renderCompetences(): string
 {
 	let html = "<br><h3 class=\"sidePanelTitle noNewline\">Kompetence</h3>"
 	html += "<div class=\"button cyanButton\" id=\"changeCompetences\"><i class=\"icon-pencil\"></i>Upravit</div>";
-	COMPETENCES.iterate(function(id, competence)
+	COMPETENCES.filter(function(id) {
+		return lessonSettingsCache.competences.indexOf(id) >= 0;
+	}).iterate(function(_, competence)
 	{
-		if(lessonSettingsCache.competences.indexOf(id) >= 0)
-		{
-			html += "<br><span class=\"competenceNumber\">" + competence.number.toString() + ":</span> " + competence.name;
-		}
+		html += "<br><span class=\"competenceNumber\">" + competence.number.toString() + ":</span> " + competence.name;
 	});
 	return html;
 }
@@ -40,18 +39,17 @@ function renderGroups(): void
 {
 	document.getElementById("changeGroups")!.style.display = "inline-block";
 	let html = "";
-	GROUPS.iterate(function(id, group)
+	GROUPS.filter(function(id) {
+		return lessonSettingsCache.groups.indexOf(id) >= 0;
+	}).iterate(function(id, group)
 	{
-		if(lessonSettingsCache.groups.indexOf(id) >= 0)
+		if(id === "00000000-0000-0000-0000-000000000000")
 		{
-			if(id === "00000000-0000-0000-0000-000000000000")
-			{
-				html += "<span class=\"publicGroup\">" + group.name + "</span><br>";
-			}
-			else
-			{
-				html += group.name + "<br>";
-			}
+			html += "<span class=\"publicGroup\">" + group.name + "</span><br>";
+		}
+		else
+		{
+			html += group.name + "<br>";
 		}
 	});
 	document.getElementById("settingsGroupList")!.innerHTML = html;

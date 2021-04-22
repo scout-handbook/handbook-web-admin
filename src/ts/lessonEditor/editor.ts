@@ -22,12 +22,11 @@ function populateEditorCache(id: string|null): void
 		lessonSettingsCache["groups"] = response as unknown as Array<string>;
 		lessonSettingsCacheEvent.trigger();
 	}, reAuthHandler);
-	FIELDS.iterate(function(fieldId, field)
+	FIELDS.filter(function(_, field): boolean {
+		return field.lessons.indexOf(id) >= 0;
+	}).iterate(function(fieldId)
 	{
-		if(field.lessons.indexOf(id) >= 0)
-		{
-			lessonSettingsCache["field"] = fieldId;
-		}
+		lessonSettingsCache["field"] = fieldId;
 	});
 	lessonSettingsCache["competences"] = LESSONS.get(id)!.competences;
 }

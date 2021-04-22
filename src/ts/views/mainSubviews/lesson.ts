@@ -12,17 +12,16 @@ function renderLessonListLesson(id: string, lesson: Lesson, secondLevel: string)
 	html += "<a href=\"" + CONFIG['admin-uri'] + "/lesson/" + id + "\" target=\"_blank\" class=\"button exportLesson\"><i class=\"icon-file-pdf\"></i>PDF</a>";
 	html += "<br><span class=\"mainPage" + secondLevel + "\">Kompetence: ";
 	let first = true;
-	COMPETENCES.iterate(function(competenceId, competence)
+	COMPETENCES.filter(function(competenceId) {
+		return lesson.competences.indexOf(competenceId) >= 0;
+	}).iterate(function(_, competence)
 	{
-		if(lesson.competences.indexOf(competenceId) >= 0)
+		if(!first)
 		{
-			if(!first)
-			{
-				html += ", ";
-			}
-			html += competence.number.toString();
-			first = false;
+			html += ", ";
 		}
+		html += competence.number.toString();
+		first = false;
 	});
 	html += "</span>";
 	return html;
@@ -33,14 +32,9 @@ function renderLessonList(): string
 	let html = "";
 	LESSONS.iterate(function(id, lesson)
 	{
-		let inField = false;
-		FIELDS.iterate(function(_, field)
-		{
-			if(field.lessons.indexOf(id) >= 0)
-			{
-				inField = true;
-			}
-		});
+		const inField = !FIELDS.filter(function(_, field) {
+			return field.lessons.indexOf(id) >= 0;
+		}).empty();
 		if(!inField)
 		{
 			html += renderLessonListLesson(id, lesson, "");
