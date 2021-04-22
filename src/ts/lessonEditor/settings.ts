@@ -10,7 +10,7 @@ function renderField(): string
 	}
 	else
 	{
-		html += FIELDS.get(lessonSettingsCache.field).name
+		html += FIELDS.get(lessonSettingsCache.field)!.name
 	}
 	return html;
 }

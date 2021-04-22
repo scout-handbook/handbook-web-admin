@@ -2,7 +2,7 @@
 
 function deleteLessonDialog(id: string): void
 {
-	const name = LESSONS.get(id).name;
+	const name = LESSONS.get(id)!.name;
 
 	const saveExceptionHandler = {"NotLockedException": function(): void {dialog("Kvůli příliš malé aktivitě byla lekce odemknuta a již ji upravil někdo jiný. Zkuste to prosím znovu.", "OK");}};
 	const discardExceptionHandler = {"NotFoundException": null};

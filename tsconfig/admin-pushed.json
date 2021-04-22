@@ -8,7 +8,6 @@
     "../src/ts/interfaces/ExceptionHandler.ts",
     "../src/ts/interfaces/Field.ts",
     "../src/ts/interfaces/Group.ts",
-    "../src/ts/interfaces/IDListItems.ts",
     "../src/ts/interfaces/HistoryState.ts",
     "../src/ts/interfaces/Lesson.ts",
     "../src/ts/interfaces/Loginstate.ts",
