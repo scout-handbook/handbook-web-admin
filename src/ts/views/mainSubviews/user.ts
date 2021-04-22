@@ -24,12 +24,11 @@ function renderGroupSelector(): string
 {
 	let html = "<select class=\"formSelect\" id=\"groupSearchFilter\">";
 	html += "<option id=\"00000000-0000-0000-0000-000000000000\" value=\"00000000-0000-0000-0000-000000000000\" class=\"selectFilterSpecial\">Všechny skupiny</option>";
-	GROUPS.iterate(function(id, group)
+	GROUPS.filter(function(id) {
+		return id !== "00000000-0000-0000-0000-000000000000";
+	}).iterate(function(id, group)
 	{
-		if(id !== "00000000-0000-0000-0000-000000000000")
-		{
-			html += "<option id=\"" + id + "\" value=\"" + id + "\">" + group.name + "</option>";
-		}
+		html += "<option id=\"" + id + "\" value=\"" + id + "\">" + group.name + "</option>";
 	});
 	html += "</select>";
 	return html;
@@ -59,17 +58,16 @@ function renderUserRow(user: User): string
 	}
 	html += "</td><td>";
 	let first = true;
-	GROUPS.iterate(function(id, group)
+	GROUPS.filter(function(id) {
+		return user.groups.indexOf(id) >= 0;
+	}).iterate(function(_, group)
 	{
-		if(user.groups.indexOf(id) >= 0)
+		if(!first)
 		{
-			if(!first)
-			{
-				html += ", ";
-			}
-			html += group.name;
-			first = false;
+			html += ", ";
 		}
+		html += group.name;
+		first = false;
 	});
 	if(user.groups.length > 0)
 	{
