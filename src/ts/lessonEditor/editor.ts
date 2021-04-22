@@ -17,31 +17,18 @@ function populateEditorCache(id: string|null): void
 		lessonSettingsCacheEvent.trigger();
 		return;
 	}
-	request(CONFIG["api-uri"] + "/v0.9/lesson/" + id + "/group", "GET", {}, function(response: RequestResponse): void
+	request(CONFIG["api-uri"] + "/v1.0/lesson/" + id + "/group", "GET", {}, function(response: RequestResponse): void
 	{
 		lessonSettingsCache["groups"] = response as unknown as Array<string>;
 		lessonSettingsCacheEvent.trigger();
 	}, reAuthHandler);
-	outer:
-	for(let i = 0; i < FIELDS.length; i++)
+	FIELDS.filter(function(_, field): boolean {
+		return field.lessons.indexOf(id) >= 0;
+	}).iterate(function(fieldId)
 	{
-		for(let j = 0; j < FIELDS[i].lessons.length; j++)
-		{
-			if(FIELDS[i].lessons[j].id === id)
-			{
-				if(FIELDS[i].id)
-				{
-					lessonSettingsCache["field"] = FIELDS[i].id;
-				}
-				else
-				{
-					lessonSettingsCache["field"] = "";
-				}
-				lessonSettingsCache["competences"] = FIELDS[i].lessons[j].competences;
-				break outer;
-			}
-		}
-	}
+		lessonSettingsCache["field"] = fieldId;
+	});
+	lessonSettingsCache["competences"] = LESSONS.get(id)!.competences;
 }
 
 function editorDiscardNow(actionQueue: ActionQueue): void

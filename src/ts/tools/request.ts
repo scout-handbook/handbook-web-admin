@@ -2,7 +2,7 @@
 
 const reAuthHandler = {"AuthenticationException": function(): void
 {
-	window.location.replace(CONFIG["api-uri"] + "/v0.9/login");
+	window.location.replace(CONFIG["api-uri"] + "/v1.0/login");
 }};
 const authFailHandler = {"AuthenticationException": function(): void
 {

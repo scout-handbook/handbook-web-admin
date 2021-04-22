@@ -6,7 +6,7 @@ function showImagePreview(event: MouseEvent): void
 	const overlay = document.getElementById("overlay")!;
 	overlay.style.display = "inline";
 	overlay.style.cursor = "pointer";
-	const html = "<img src=\"" + CONFIG["api-uri"] + "/v0.9/image/" + (event.target as HTMLElement).dataset.id! + "\" class=\"previewImage\">";
+	const html = "<img src=\"" + CONFIG["api-uri"] + "/v1.0/image/" + (event.target as HTMLElement).dataset.id! + "\" class=\"previewImage\">";
 	overlay.innerHTML = html;
 	overlay.onclick = function(): void
 	{
@@ -27,7 +27,7 @@ function showImageList(list: Array<string>, page: number, perPage: number): void
 	const start = perPage * (page - 1);
 	for(let i = start; i < Math.min(list.length, start + perPage); i++)
 	{
-		html += "<div class=\"thumbnailContainer\"><div class=\"buttonContainer\"><img src=\"" + CONFIG["api-uri"] + "/v0.9/image/" + list[i] + "?quality=thumbnail\" class=\"thumbnailImage\" data-id=\"" + list[i] + "\"><div class=\"button redButton deleteImage\" data-id=\"" + list[i] + "\"><i class=\"icon-trash-empty\"></i>Smazat</div></div></div>";
+		html += "<div class=\"thumbnailContainer\"><div class=\"buttonContainer\"><img src=\"" + CONFIG["api-uri"] + "/v1.0/image/" + list[i] + "?quality=thumbnail\" class=\"thumbnailImage\" data-id=\"" + list[i] + "\"><div class=\"button redButton deleteImage\" data-id=\"" + list[i] + "\"><i class=\"icon-trash-empty\"></i>Smazat</div></div></div>";
 	}
 	html += renderPagination(Math.ceil(list.length / perPage), page);
 	document.getElementById("imageList")!.innerHTML = html;
@@ -55,7 +55,7 @@ function showImageList(list: Array<string>, page: number, perPage: number): void
 function downloadImageList(page: number, perPage: number): void
 {
 	document.getElementById("imageList")!.innerHTML = "<div id=\"embeddedSpinner\"></div>";
-	request(CONFIG["api-uri"] + "/v0.9/image", "GET", {}, function(response: RequestResponse): void
+	request(CONFIG["api-uri"] + "/v1.0/image", "GET", {}, function(response: RequestResponse): void
 	{
 		showImageList(response as unknown as Array<string>, page, perPage);
 	}, reAuthHandler);

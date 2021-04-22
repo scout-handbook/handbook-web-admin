@@ -12,7 +12,7 @@ function addImageSave(): void
 		formData.append("image", (document.getElementById("addImageFile") as HTMLInputElement).files![0])
 		sidePanelClose();
 		spinner();
-		request(CONFIG["api-uri"] + "/v0.9/image", "POST", formData, function(): void
+		request(CONFIG["api-uri"] + "/v1.0/image", "POST", formData, function(): void
 		{
 			dialog("Akce byla úspěšná.", "OK");
 			refreshMetadata();
