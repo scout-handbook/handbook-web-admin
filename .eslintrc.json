@@ -62,7 +62,7 @@
 		"AfterLoadEvent": "readonly",
 		"authFailHandler": "readonly",
 		"changeCompetenceOnClick": "readonly",
-		"changed": "readonly",
+		"changed": "writable",
 		"changeField": "readonly",
 		"changeFieldOnClick": "readonly",
 		"changeGroupOnClick": "readonly",
