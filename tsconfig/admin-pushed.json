@@ -7,7 +7,6 @@
     "../src/ts/interfaces/Config.ts",
     "../src/ts/interfaces/ExceptionHandler.ts",
     "../src/ts/interfaces/Field.ts",
-    "../src/ts/interfaces/FullField.ts",
     "../src/ts/interfaces/Group.ts",
     "../src/ts/interfaces/HistoryState.ts",
     "../src/ts/interfaces/Lesson.ts",
@@ -29,6 +28,7 @@
     "../src/ts/views/main.ts",
     "../src/ts/AfterLoadEvent.ts",
     "../src/ts/history.ts",
+    "../src/ts/IDList.ts",
     "../src/ts/main.ts",
     "../src/ts/metadata.ts"
   ]

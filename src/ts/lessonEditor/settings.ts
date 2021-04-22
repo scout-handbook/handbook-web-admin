@@ -10,14 +10,7 @@ function renderField(): string
 	}
 	else
 	{
-		for(let i = 0; i < FIELDS.length; i++)
-		{
-			if(FIELDS[i].id && FIELDS[i].id === lessonSettingsCache.field)
-			{
-				html += FIELDS[i].name;
-				break;
-			}
-		}
+		html += FIELDS.get(lessonSettingsCache.field)!.name
 	}
 	return html;
 }
@@ -26,13 +19,12 @@ function renderCompetences(): string
 {
 	let html = "<br><h3 class=\"sidePanelTitle noNewline\">Kompetence</h3>"
 	html += "<div class=\"button cyanButton\" id=\"changeCompetences\"><i class=\"icon-pencil\"></i>Upravit</div>";
-	for(let i = 0; i < COMPETENCES.length; i++)
+	COMPETENCES.filter(function(id) {
+		return lessonSettingsCache.competences.indexOf(id) >= 0;
+	}).iterate(function(_, competence)
 	{
-		if(lessonSettingsCache.competences.indexOf(COMPETENCES[i].id) >= 0)
-		{
-			html += "<br><span class=\"competenceNumber\">" + COMPETENCES[i].number.toString() + ":</span> " + COMPETENCES[i].name;
-		}
-	}
+		html += "<br><span class=\"competenceNumber\">" + competence.number.toString() + ":</span> " + competence.name;
+	});
 	return html;
 }
 
@@ -47,20 +39,19 @@ function renderGroups(): void
 {
 	document.getElementById("changeGroups")!.style.display = "inline-block";
 	let html = "";
-	for(let i = 0; i < GROUPS.length; i++)
+	GROUPS.filter(function(id) {
+		return lessonSettingsCache.groups.indexOf(id) >= 0;
+	}).iterate(function(id, group)
 	{
-		if(lessonSettingsCache.groups.indexOf(GROUPS[i].id) >= 0)
+		if(id === "00000000-0000-0000-0000-000000000000")
 		{
-			if(GROUPS[i].id === "00000000-0000-0000-0000-000000000000")
-			{
-				html += "<span class=\"publicGroup\">" + GROUPS[i].name + "</span><br>";
-			}
-			else
-			{
-				html += GROUPS[i].name + "<br>";
-			}
+			html += "<span class=\"publicGroup\">" + group.name + "</span><br>";
 		}
-	}
+		else
+		{
+			html += group.name + "<br>";
+		}
+	});
 	document.getElementById("settingsGroupList")!.innerHTML = html;
 }
 

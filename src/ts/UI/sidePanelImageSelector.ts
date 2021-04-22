@@ -4,7 +4,7 @@ function openSidePanelImageSelector(action: string, property: string, state: Sid
 {
 	sidePanelDoubleOpen();
 	document.getElementById("sidePanel")!.innerHTML = "<div id=\"embeddedSpinner\"></div>";
-	request(CONFIG["api-uri"] + "/v0.9/image", "GET", {}, function(response: RequestResponse): void
+	request(CONFIG["api-uri"] + "/v1.0/image", "GET", {}, function(response: RequestResponse): void
 	{
 		renderSidePanelImageSelector(response as unknown as Array<string>, action, property, state, page, perPage, noHistory); // eslint-disable-line @typescript-eslint/no-use-before-define
 	}, reAuthHandler);
@@ -31,7 +31,7 @@ function renderSidePanelImageSelector(list: Array<string>, action: string, prope
 	const start = perPage * (page - 1);
 	for(let i = start; i < Math.min(list.length, start + perPage); i++)
 	{
-		html += "<div class=\"thumbnailContainer\"><img src=\"" + CONFIG["api-uri"] + "/v0.9/image/" + list[i] + "?quality=thumbnail\" class=\"thumbnailImage\" data-id=\"" + list[i] + "\"></div>";
+		html += "<div class=\"thumbnailContainer\"><img src=\"" + CONFIG["api-uri"] + "/v1.0/image/" + list[i] + "?quality=thumbnail\" class=\"thumbnailImage\" data-id=\"" + list[i] + "\"></div>";
 	}
 	if(list.length > perPage)
 	{

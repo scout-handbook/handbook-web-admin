@@ -14,16 +14,10 @@ function changeCompetenceOnClick(event: MouseEvent): void
 	let html = "<div class=\"button yellowButton\" id=\"sidePanelCancel\"><i class=\"icon-cancel\"></i>Zrušit</div>";
 	html += "<div class=\"button greenButton\" id=\"changeCompetenceSave\"><i class=\"icon-floppy\"></i>Uložit</div>";
 	html += "<h3 class=\"sidePanelTitle\">Upravit kompetenci</h3><form id=\"sidePanelForm\">";
-	for(let i = 0; i < COMPETENCES.length; i++)
-	{
-		if(COMPETENCES[i].id === getAttribute(event, "id"))
-		{
-			html += "<span class=\"competenceHeading\">Kompetence</span> <input type=\"text\" class=\"formText formName\" id=\"competenceNumber\" value=\"" + COMPETENCES[i].number.toString() + "\" autocomplete=\"off\"><br>";
-			html += "<input type=\"text\" class=\"formText\" id=\"competenceName\" value=\"" + COMPETENCES[i].name + "\" autocomplete=\"off\"><br>";
-			html += "<textarea rows=\"5\" class=\"formText\" id=\"competenceDescription\" autocomplete=\"off\">" + COMPETENCES[i].description + "</textarea>";
-			break;
-		}
-	}
+	const competence = COMPETENCES.get(getAttribute(event, "id"))!;
+	html += "<span class=\"competenceHeading\">Kompetence</span> <input type=\"text\" class=\"formText formName\" id=\"competenceNumber\" value=\"" + competence.number.toString() + "\" autocomplete=\"off\"><br>";
+	html += "<input type=\"text\" class=\"formText\" id=\"competenceName\" value=\"" + competence.name + "\" autocomplete=\"off\"><br>";
+	html += "<textarea rows=\"5\" class=\"formText\" id=\"competenceDescription\" autocomplete=\"off\">" + competence.description + "</textarea>";
 	html += "</form>";
 	document.getElementById("sidePanel")!.innerHTML = html;
 
@@ -32,7 +26,7 @@ function changeCompetenceOnClick(event: MouseEvent): void
 		history.back();
 	};
 
-	const aq = new ActionQueue([new Action(CONFIG["api-uri"] + "/v0.9/competence/" + encodeURIComponent(getAttribute(event, "id")), "PUT", changeCompetencePayloadBuilder)]);
+	const aq = new ActionQueue([new Action(CONFIG["api-uri"] + "/v1.0/competence/" + encodeURIComponent(getAttribute(event, "id")), "PUT", changeCompetencePayloadBuilder)]);
 	document.getElementById("changeCompetenceSave")!.onclick = function(): void
 	{
 		dispatchIfChanged(aq, competenceChanged);

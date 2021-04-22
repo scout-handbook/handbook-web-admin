@@ -29,7 +29,7 @@ function lessonHistoryPreviewRenderVersion(id: string, name: string, body: strin
 function lessonHistoryPreviewShowVersion(id: string, actionQueue: ActionQueue, event: Event): void
 {
 	document.getElementById("lessonHistoryPreview")!.innerHTML = "<div id=\"embeddedSpinner\"></div>";
-	request(CONFIG["api-uri"] + "/v0.9/lesson/" + id + "/history/" + ((event.target as HTMLElement).dataset.version as string), "GET", {}, function(response: RequestResponse): void
+	request(CONFIG["api-uri"] + "/v1.0/lesson/" + id + "/history/" + ((event.target as HTMLElement).dataset.version as string), "GET", {}, function(response: RequestResponse): void
 	{
 		lessonHistoryPreviewRenderVersion(id, (event.target as HTMLElement).dataset.name!, response as unknown as string, actionQueue);
 	}, authFailHandler);
@@ -42,18 +42,7 @@ function lessonHistoryPreviewShowVersion(id: string, actionQueue: ActionQueue, e
 function lessonHistoryListRender(id: string, actionQueue: ActionQueue, list: Array<LessonVersion>): void
 {
 	let html = "<form id=\"sidePanelForm\">";
-	outer:
-	for(let i = 0; i < FIELDS.length; i++)
-	{
-		for(let j = 0; j < FIELDS[i].lessons.length; j++)
-		{
-			if(FIELDS[i].lessons[j].id === id)
-			{
-				html += "<div class=\"formRow\"><label class=\"formSwitch\"><input type=\"radio\" name=\"version\" checked><span class=\"formCustom formRadio\"></span></label><span class=\"lessonHistoryCurrent\">Současná verze</span> — " + parseVersion(FIELDS[i].lessons[j].version) + "</div>";
-				break outer;
-			}
-		}
-	}
+	html += "<div class=\"formRow\"><label class=\"formSwitch\"><input type=\"radio\" name=\"version\" checked><span class=\"formCustom formRadio\"></span></label><span class=\"lessonHistoryCurrent\">Současná verze</span> — " + parseVersion(LESSONS.get(id)!.version) + "</div>";
 	for(let i = 0; i < list.length; i++)
 	{
 		html += "<div class=\"formRow\"><label class=\"formSwitch\"><input type=\"radio\" name=\"version\" data-name=\"" + list[i].name + "\" data-version=\"" + list[i].version.toString() + "\"><span class=\"formCustom formRadio\"></span></label><span class=\"lessonHistoryVersion\">" + list[i].name + "</span> — " + parseVersion(list[i].version) + "</div>";
@@ -83,7 +72,7 @@ function lessonHistoryOpen(id: string, actionQueue: ActionQueue): void
 		lessonSettings(id, actionQueue, true);
 	};
 
-	request(CONFIG["api-uri"] + "/v0.9/lesson/" + id + "/history", "GET", {}, function(response: RequestResponse): void
+	request(CONFIG["api-uri"] + "/v1.0/lesson/" + id + "/history", "GET", {}, function(response: RequestResponse): void
 	{
 		lessonHistoryListRender(id, actionQueue, response as unknown as Array<LessonVersion>);
 	}, authFailHandler);

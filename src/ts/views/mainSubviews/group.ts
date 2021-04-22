@@ -4,30 +4,30 @@
 function renderGroupList(): string
 {
 	let html = "";
-	for(let i = 0; i < GROUPS.length; i++)
+	GROUPS.iterate(function(id, group)
 	{
-		if(GROUPS[i].id === "00000000-0000-0000-0000-000000000000")
+		if(id === "00000000-0000-0000-0000-000000000000")
 		{
-			html += "<br><h3 class = \"mainPage publicGroup\">" + GROUPS[i].name + "</h3>";
+			html += "<br><h3 class = \"mainPage publicGroup\">" + group.name + "</h3>";
 		}
 		else
 		{
-			html += "<br><h3 class = \"mainPage\">" + GROUPS[i].name + "</h3>";
+			html += "<br><h3 class = \"mainPage\">" + group.name + "</h3>";
 		}
 		if(LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser")
 		{
-			html += "<div class=\"button cyanButton changeGroup\" data-id=\"" + GROUPS[i].id + "\"><i class=\"icon-pencil\"></i>Upravit</div>";
-			if(GROUPS[i].id !== "00000000-0000-0000-0000-000000000000")
+			html += "<div class=\"button cyanButton changeGroup\" data-id=\"" + id + "\"><i class=\"icon-pencil\"></i>Upravit</div>";
+			if(id !== "00000000-0000-0000-0000-000000000000")
 			{
-				html += "<div class=\"button redButton deleteGroup\" data-id=\"" + GROUPS[i].id + "\"><i class=\"icon-trash-empty\"></i>Smazat</div>";
-				html += "<div class=\"button importGroup\" data-id=\"" + GROUPS[i].id + "\"><i class=\"icon-user-plus\"></i> Importovat ze SkautISu</div>";
+				html += "<div class=\"button redButton deleteGroup\" data-id=\"" + id + "\"><i class=\"icon-trash-empty\"></i>Smazat</div>";
+				html += "<div class=\"button importGroup\" data-id=\"" + id + "\"><i class=\"icon-user-plus\"></i> Importovat ze SkautISu</div>";
 			}
 		}
-		if(GROUPS[i].id !== "00000000-0000-0000-0000-000000000000")
+		if(id !== "00000000-0000-0000-0000-000000000000")
 		{
-			html += "<br><span class=\"mainPage\">Uživatelů: " + GROUPS[i].count.toString() + "</span>";
+			html += "<br><span class=\"mainPage\">Uživatelů: " + group.count.toString() + "</span>";
 		}
-	}
+	});
 	return html;
 }
 

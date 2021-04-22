@@ -46,7 +46,7 @@ function importGroupSave(id: string): void
 	addEvent = new AfterLoadEvent(participants.length);
 	for(let i = 0; i < participants.length; i++)
 	{
-		request(CONFIG["api-uri"] + "/v0.9/user", "POST", participants[i], function(): void {addEvent.trigger();}, authFailHandler);
+		request(CONFIG["api-uri"] + "/v1.0/user", "POST", participants[i], function(): void {addEvent.trigger();}, authFailHandler);
 	}
 
 	addEvent.addCallback(function(): void
@@ -55,7 +55,7 @@ function importGroupSave(id: string): void
 		for(let i = 0; i < participants.length; i++)
 		{
 			const payload = {"group": id};
-			request(CONFIG["api-uri"] + "/v0.9/user/" + participants[i].id.toString() + "/group", "PUT", payload, function(): void {groupEvent.trigger();}, authFailHandler);
+			request(CONFIG["api-uri"] + "/v1.0/user/" + participants[i].id.toString() + "/group", "PUT", payload, function(): void {groupEvent.trigger();}, authFailHandler);
 		}
 
 		groupEvent.addCallback(function(): void
@@ -109,12 +109,12 @@ function importGroupSelectParticipants(id: string): void
 			sidePanelClose();
 			dialog("Pro tuto akci nemáte ve SkautISu dostatečná práva.", "OK");
 		};
-		request(CONFIG["api-uri"] + "/v0.9/event/" + eventId + "/participant", "GET", {}, function(response: RequestResponse): void
+		request(CONFIG["api-uri"] + "/v1.0/event/" + eventId + "/participant", "GET", {}, function(response: RequestResponse): void
 		{
 			participants = response as unknown as Array<Participant>;
 			participantEvent.trigger(id);
 		}, exceptionHandler);
-		request(CONFIG["api-uri"] + "/v0.9/user", "GET", {"page": 1, "per-page": 1000, "group": id}, function(response: RequestResponse): void
+		request(CONFIG["api-uri"] + "/v1.0/user", "GET", {"page": 1, "per-page": 1000, "group": id}, function(response: RequestResponse): void
 		{
 			users = response.users as Array<User>;
 			participantEvent.trigger(id);
@@ -148,21 +148,14 @@ function importGroupOnClick(event: MouseEvent): void
 	sidePanelOpen();
 	let html = "<div class=\"button yellowButton\" id=\"sidePanelCancel\"><i class=\"icon-cancel\"></i>Zrušit</div>";
 	html += "<div class=\"button greenButton\" id=\"importGroupNext\"><i class=\"icon-fast-fw\"></i>Pokračovat</div>";
-	for(let i = 0; i < GROUPS.length; i++)
-	{
-		if(GROUPS[i].id === getAttribute(event, "id"))
-		{
-			html += "<h3 class=\"sidePanelTitle\">Importovat ze SkautISu: " + GROUPS[i].name + "</h3>";
-			break;
-		}
-	}
+	html += "<h3 class=\"sidePanelTitle\">Importovat ze SkautISu: " + GROUPS.get(getAttribute(event, "id"))!.name + "</h3>";
 	html += "<div id=\"importList\"><div id=\"embeddedSpinner\"></div></div>";
 	document.getElementById("sidePanel")!.innerHTML = html;
 	document.getElementById("sidePanelCancel")!.onclick = function(): void
 	{
 		history.back();
 	};
-	request(CONFIG["api-uri"] + "/v0.9/event", "GET", {}, function(response: RequestResponse): void
+	request(CONFIG["api-uri"] + "/v1.0/event", "GET", {}, function(response: RequestResponse): void
 	{
 		importGroupSelectEventRender(getAttribute(event, "id"), response as unknown as Array<Event>);
 	}, reAuthHandler);

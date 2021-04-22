@@ -15,7 +15,7 @@ function changeLessonCompetencesSave(id: string|null, actionQueue: ActionQueue):
 		{
 			encodedCompetences.push(encodeURIComponent(competences[i]));
 		}
-		actionQueue.actions.push(new Action(CONFIG["api-uri"] + "/v0.9/lesson/" + id + "/competence", "PUT", function(): Payload {return {"competence": encodedCompetences};}));
+		actionQueue.actions.push(new Action(CONFIG["api-uri"] + "/v1.0/lesson/" + id + "/competence", "PUT", function(): Payload {return {"competence": encodedCompetences};}));
 		lessonSettingsCache.competences = competences;
 		lessonSettings(id, actionQueue, true);
 	}
@@ -36,17 +36,17 @@ function changeLessonCompetencesOnClick(id: string|null, actionQueue: ActionQueu
 	let html = "<div class=\"button yellowButton\" id=\"cancelEditorAction\"><i class=\"icon-cancel\"></i>Zrušit</div>";
 	html += "<div class=\"button greenButton\" id=\"changeLessonCompetencesSave\"><i class=\"icon-floppy\"></i>Uložit</div>";
 	html += "<h3 class=\"sidePanelTitle\">Změnit kompetence</h3><form id=\"sidePanelForm\">";
-	for(let i = 0; i < COMPETENCES.length; i++)
+	COMPETENCES.iterate(function(competenceId, competence)
 	{
 		html += "<div class=\"formRow\"><label class=\"formSwitch\"><input type=\"checkbox\"";
-		if(lessonSettingsCache.competences.indexOf(COMPETENCES[i].id) >= 0)
+		if(lessonSettingsCache.competences.indexOf(competenceId) >= 0)
 		{
 			html += " checked";
 		}
-		html += " data-id=\"" + COMPETENCES[i].id + "\"";
+		html += " data-id=\"" + competenceId + "\"";
 		html += "><span class=\"formCustom formCheckbox\"></span></label>";
-		html += "<span class=\"competenceNumber\">" + COMPETENCES[i].number.toString() + ":</span> " + COMPETENCES[i].name + "</div>";
-	}
+		html += "<span class=\"competenceNumber\">" + competence.number.toString() + ":</span> " + competence.name + "</div>";
+	});
 	html += "</form>";
 	document.getElementById("sidePanel")!.innerHTML = html;
 

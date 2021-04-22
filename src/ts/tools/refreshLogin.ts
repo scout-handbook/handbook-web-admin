@@ -13,10 +13,10 @@ function refreshLogin(forceRelogin = false, afterAction: (() => void)|null = nul
 			{
 				if(forceRelogin)
 				{
-					window.location.replace(CONFIG["api-uri"] + "/v0.9/login?return-uri=/admin/" + mainPageTab);
+					window.location.replace(CONFIG["api-uri"] + "/v1.0/login?return-uri=/admin/" + mainPageTab);
 				}
 			}};
-			request(CONFIG["api-uri"] + "/v0.9/refresh", "GET", {}, function(): void
+			request(CONFIG["api-uri"] + "/v1.0/refresh", "GET", {}, function(): void
 			{
 				if(afterAction)
 				{

@@ -24,13 +24,12 @@ function renderGroupSelector(): string
 {
 	let html = "<select class=\"formSelect\" id=\"groupSearchFilter\">";
 	html += "<option id=\"00000000-0000-0000-0000-000000000000\" value=\"00000000-0000-0000-0000-000000000000\" class=\"selectFilterSpecial\">Všechny skupiny</option>";
-	for(let i = 0; i < GROUPS.length; i++)
+	GROUPS.filter(function(id) {
+		return id !== "00000000-0000-0000-0000-000000000000";
+	}).iterate(function(id, group)
 	{
-		if(GROUPS[i].id !== "00000000-0000-0000-0000-000000000000")
-		{
-			html += "<option id=\"" + GROUPS[i].id + "\" value=\"" + GROUPS[i].id + "\">" + GROUPS[i].name + "</option>";
-		}
-	}
+		html += "<option id=\"" + id + "\" value=\"" + id + "\">" + group.name + "</option>";
+	});
 	html += "</select>";
 	return html;
 }
@@ -59,18 +58,17 @@ function renderUserRow(user: User): string
 	}
 	html += "</td><td>";
 	let first = true;
-	for(let i = 0; i < GROUPS.length; i++)
+	GROUPS.filter(function(id) {
+		return user.groups.indexOf(id) >= 0;
+	}).iterate(function(_, group)
 	{
-		if(user.groups.indexOf(GROUPS[i].id) >= 0)
+		if(!first)
 		{
-			if(!first)
-			{
-				html += ", ";
-			}
-			html += GROUPS[i].name;
-			first = false;
+			html += ", ";
 		}
-	}
+		html += group.name;
+		first = false;
+	});
 	if(user.groups.length > 0)
 	{
 		html += "<br>";
@@ -165,7 +163,7 @@ function downloadUserList(searchName = "", page = 1, perPage = 25, role: Role|"a
 	{
 		payload.group = group;
 	}
-	request(CONFIG["api-uri"] + "/v0.9/user", "GET", payload, function(response: RequestResponse): void
+	request(CONFIG["api-uri"] + "/v1.0/user", "GET", payload, function(response: RequestResponse): void
 	{
 		showUserList(response as unknown as UserListResponse, searchName, page, perPage, role, group);
 	}, reAuthHandler);
