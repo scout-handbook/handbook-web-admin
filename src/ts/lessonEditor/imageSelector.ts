@@ -31,11 +31,7 @@ function prepareImageSelector(page = 1, perPage = 15): void {
     "GET",
     {},
     function (response: RequestResponse): void {
-      renderImageSelector(
-        (response as unknown) as Array<string>,
-        page,
-        perPage
-      );
+      renderImageSelector(response as Array<string>, page, perPage);
     },
     reAuthHandler
   );

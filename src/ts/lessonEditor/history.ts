@@ -53,7 +53,7 @@ function lessonHistoryPreviewShowVersion(
       lessonHistoryPreviewRenderVersion(
         id,
         (event.target as HTMLElement).dataset.name!,
-        (response as unknown) as string,
+        response as string,
         actionQueue
       );
     },
@@ -123,7 +123,7 @@ function lessonHistoryOpen(id: string, actionQueue: ActionQueue): void {
       lessonHistoryListRender(
         id,
         actionQueue,
-        (response as unknown) as Array<LessonVersion>
+        response as Array<LessonVersion>
       );
     },
     authFailHandler

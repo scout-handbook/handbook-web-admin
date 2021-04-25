@@ -24,7 +24,7 @@ function populateEditorCache(id: string | null): void {
     "GET",
     {},
     function (response: RequestResponse): void {
-      lessonSettingsCache["groups"] = (response as unknown) as Array<string>;
+      lessonSettingsCache["groups"] = response as Array<string>;
       lessonSettingsCacheEvent.trigger();
     },
     reAuthHandler

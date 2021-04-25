@@ -131,7 +131,7 @@ function importGroupSelectParticipants(id: string): void {
       "GET",
       {},
       function (response: RequestResponse): void {
-        participants = (response as unknown) as Array<Participant>;
+        participants = response as Array<Participant>;
         participantEvent.trigger(id);
       },
       exceptionHandler
@@ -196,7 +196,7 @@ function importGroupOnClick(event: MouseEvent): void {
     function (response: RequestResponse): void {
       importGroupSelectEventRender(
         getAttribute(event, "id"),
-        (response as unknown) as Array<Event>
+        response as Array<Event>
       );
     },
     reAuthHandler

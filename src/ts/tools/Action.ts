@@ -33,7 +33,7 @@ class Action {
           dismissSpinner();
           break;
         case ActionCallback.FillID:
-          actionQueue.fillID((response as unknown) as string);
+          actionQueue.fillID(response as string);
           break;
         case ActionCallback.RemoveBeacon:
           removeBeacon();
