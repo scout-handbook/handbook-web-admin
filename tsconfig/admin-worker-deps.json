@@ -8,7 +8,6 @@
   },
   "files": [
     "../src/d.ts/admin-worker-deps.d.ts",
-    "../src/ts/interfaces/Arguments.ts",
     "../src/ts/HandbookMarkdown.ts",
     "../src/ts/xssOptions.ts"
   ]

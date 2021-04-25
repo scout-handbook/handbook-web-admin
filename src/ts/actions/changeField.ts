@@ -20,7 +20,7 @@ function changeFieldPayloadBuilder(): Payload {
 }
 
 function changeField(
-  state: SidePanelImageSelectorState,
+  state: Record<string, string>,
   noHistory = false,
   changed = false
 ): void {

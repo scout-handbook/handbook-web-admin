@@ -22,7 +22,7 @@ declare function refreshPreview(
 declare function request(
   url: string,
   method: string,
-  payload: Payload,
+  payload: Payload | FormData,
   callback: (response: RequestResponse) => void,
   exceptionHandler?: ExceptionHandler
 ): void;

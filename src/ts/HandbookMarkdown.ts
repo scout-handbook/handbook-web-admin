@@ -29,8 +29,10 @@ function getArgumentString(
   return [argumentString, next];
 }
 
-function parseArgumentString(argumentString: string): Arguments {
-  const output: Arguments = {};
+function parseArgumentString(
+  argumentString: string
+): Record<string, string | boolean> {
+  const output: Record<string, string | boolean> = {};
   const list = argumentString.split(",");
   for (let i = 0; i < list.length; ++i) {
     if (list[i] === "") {
@@ -51,7 +53,7 @@ function parseArgumentString(argumentString: string): Arguments {
 function filterCommand(
   text: string,
   commandName: string,
-  command: (args: Arguments) => string
+  command: (args: Record<string, string | boolean>) => string
 ): string {
   const lines = text.split("\n");
   let ret = "";

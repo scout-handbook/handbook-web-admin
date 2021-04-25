@@ -46,7 +46,7 @@ function importGroupSave(id: string): void {
     request(
       CONFIG["api-uri"] + "/v1.0/user",
       "POST",
-      participants[i],
+      (participants[i] as unknown) as Payload,
       function (): void {
         addEvent.trigger();
       },
@@ -141,7 +141,7 @@ function importGroupSelectParticipants(id: string): void {
       "GET",
       { page: 1, "per-page": 1000, group: id },
       function (response: RequestResponse): void {
-        users = response.users as Array<User>;
+        users = (response as UserListResponse).users;
         participantEvent.trigger(id);
       },
       reAuthHandler

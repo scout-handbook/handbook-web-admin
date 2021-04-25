@@ -18,7 +18,7 @@ function addFieldPayloadBuilder(): Payload {
 }
 
 function addField(
-  state: SidePanelImageSelectorState = {
+  state: Record<string, string> = {
     name: "Nová oblast",
     description: "Popis nové oblasti",
     image: "00000000-0000-0000-0000-000000000000",

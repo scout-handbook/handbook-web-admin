@@ -216,7 +216,7 @@ function downloadUserList(
   request(
     CONFIG["api-uri"] + "/v1.0/user",
     "GET",
-    payload,
+    (payload as unknown) as Payload,
     function (response: RequestResponse): void {
       showUserList(
         (response as unknown) as UserListResponse,
