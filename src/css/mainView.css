@@ -1,109 +1,110 @@
 #mainPage {
-	margin: 0 auto;
-	max-width: 770px;
-	padding: 20px;
+  margin: 0 auto;
+  max-width: 770px;
+  padding: 20px;
 }
 
 h2.mainPage,
 h3.mainPage,
 .noNewline {
-	display: inline-block;
-	margin-right: 15px;
+  display: inline-block;
+  margin-right: 15px;
 }
 
 #mainPageContainer {
-	bottom: 0;
-	left: 0;
-	overflow-y: auto;
-	position: absolute;
-	right: 0;
-	top: 81px;
+  bottom: 0;
+  left: 0;
+  overflow-y: auto;
+  position: absolute;
+  right: 0;
+  top: 81px;
 }
 
 #topBar {
-	background-color: var(--background-darker);
-	border-bottom: 1px solid var(--border-color);
-	height: 80px;
+  background-color: var(--background-darker);
+  border-bottom: 1px solid var(--border-color);
+  height: 80px;
 }
 
 .topBarTab {
-	border-left: 1px solid var(--border-color);
-	border-right: 1px solid var(--border-color);
-	cursor: pointer;
-	display: inline-block;
-	font-size: 1.1em;
-	font-weight: bold;
-	height: 52px;
-	margin-left: -1px;
-	padding-top: 28px;
-	position: absolute;
-	text-align: center;
-	transition: color ease 0.15s, border-color ease 0.15s, background-color ease 0.15s;
-	width: 140px;
+  border-left: 1px solid var(--border-color);
+  border-right: 1px solid var(--border-color);
+  cursor: pointer;
+  display: inline-block;
+  font-size: 1.1em;
+  font-weight: bold;
+  height: 52px;
+  margin-left: -1px;
+  padding-top: 28px;
+  position: absolute;
+  text-align: center;
+  transition: color ease 0.15s, border-color ease 0.15s,
+    background-color ease 0.15s;
+  width: 140px;
 }
 
 .topBarTab:hover,
 .activeTopBarTab {
-	background-color: var(--background-darkest);
-	border-color: var(--accent-color);
-	color: var(--accent-color);
-	z-index: 1;
+  background-color: var(--background-darkest);
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+  z-index: 1;
 }
 
 #lessonManager {
-	left: 301px;
+  left: 301px;
 }
 
 #competenceManager {
-	left: 442px;
+  left: 442px;
 }
 
 #imageManager {
-	left: 583px;
+  left: 583px;
 }
 
 #userManager {
-	left: 724px;
+  left: 724px;
 }
 
 #groupManager {
-	left: 865px;
-	padding-bottom: 11px;
-	padding-top: 17px;
+  left: 865px;
+  padding-bottom: 11px;
+  padding-top: 17px;
 }
 
 #userAccount {
-	border-right: 1px solid var(--border-color);
-	display: inline-block;
-	height: 80px;
-	width: var(--nav-width);
+  border-right: 1px solid var(--border-color);
+  display: inline-block;
+  height: 80px;
+  width: var(--nav-width);
 }
 
 #userAvatar {
-	border: var(--avatar-border);
-	border-radius: 50%;
-	float: left;
-	height: 60px;
-	margin: 5px 15px;
-	overflow: hidden;
-	width: 60px;
+  border: var(--avatar-border);
+  border-radius: 50%;
+  float: left;
+  height: 60px;
+  margin: 5px 15px;
+  overflow: hidden;
+  width: 60px;
 }
 
 #userName {
-	padding-top: 12px;
+  padding-top: 12px;
 }
 
 #logLink {
-	margin-top: 5px;
+  margin-top: 5px;
 }
 
 #frontendLink {
-	float: right;
-	margin-right: 20px;
+  float: right;
+  margin-right: 20px;
 }
 
 #addField,
 #addLesson,
 #restoreLesson {
-	margin-bottom: -19px;
+  margin-bottom: -19px;
 }

@@ -1,64 +1,64 @@
 #userSearchForm {
-	margin-bottom: 50px;
-	margin-top: 20px;
+  margin-bottom: 50px;
+  margin-top: 20px;
 }
 
 #userSearchBox {
-	margin-right: 10px;
-	width: 179px;
+  margin-right: 10px;
+  width: 179px;
 }
 
 #roleSearchFilter,
 #groupSearchFilter {
-	margin-right: 10px;
+  margin-right: 10px;
 }
 
 .selectFilterSpecial {
-	font-style: italic;
+  font-style: italic;
 }
 
 #userSearchButton,
 #userSearchCancel {
-	margin-bottom: -11px;
+  margin-bottom: -11px;
 }
 
 .userTable {
-	border: none;
+  border: none;
 }
 
 .userTable th {
-	border: none;
-	border-bottom: 1px solid var(--border-color);
-	text-align: left;
+  border: none;
+  border-bottom: 1px solid var(--border-color);
+  text-align: left;
 }
 
 .userTable td {
-	border: none;
-	padding: 15px 20px;
+  border: none;
+  padding: 15px 20px;
 }
 
 .userTable td + td,
 .userTable th + th {
-	padding-left: 50px;
+  padding-left: 50px;
 }
 
-.userTable tr:nth-child(2n+1) {
-	background-color: #fff;
+.userTable tr:nth-child(2n + 1) {
+  background-color: #fff;
 }
 
 #roleSelect {
-	margin-bottom: 60px;
+  margin-bottom: 60px;
 }
 
 .roleText {
-	font-weight: bold;
+  font-weight: bold;
 }
 
 .roleHelp,
 .groupHelp {
-	margin-top: 20px;
+  margin-top: 20px;
 }
 
 .roleHelpName {
-	font-weight: bold;
+  font-weight: bold;
 }
