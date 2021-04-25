@@ -1,4 +1,4 @@
 interface SidePanelImageSelectorState {
-	[key: string]: string;
-	image: string;
+  [key: string]: string;
+  image: string;
 }

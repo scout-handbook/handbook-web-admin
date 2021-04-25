@@ -1,3 +1,3 @@
 interface Payload {
-	readonly [key: string]: any;
+  readonly [key: string]: any;
 }

@@ -1,4 +1,4 @@
 interface SidePanelImageSelectorGlobalState {
-	action: string;
-	state: SidePanelImageSelectorState;
+  action: string;
+  state: SidePanelImageSelectorState;
 }
