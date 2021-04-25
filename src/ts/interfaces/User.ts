@@ -1,3 +1,5 @@
+/* exported User */
+
 interface User {
   id: number;
   name: string;

@@ -1,3 +1,5 @@
+/* exported ExceptionHandler */
+
 interface ExceptionHandler {
   readonly [key: string]: ((response: APIResponse) => void) | null | undefined;
   AuthenticationException?: ((response: APIResponse) => void) | null;

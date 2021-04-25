@@ -1,3 +1,5 @@
+/* exported Config */
+
 interface Config {
   "api-uri": string;
   "admin-uri": string;
