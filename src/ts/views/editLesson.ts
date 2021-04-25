@@ -29,10 +29,9 @@ function lessonEditMutexExtend(id: string): void {
 
 function sendBeacon(id: string): void {
   if (navigator.sendBeacon) {
-    // eslint-disable-line compat/compat
     navigator.sendBeacon(
       CONFIG["api-uri"] + "/v1.0/mutex-beacon/" + encodeURIComponent(id)
-    ); // eslint-disable-line compat/compat
+    );
   }
 }
 
@@ -44,7 +43,7 @@ function renderLessonEditView(
   dismissSpinner();
   const lesson = LESSONS.get(id)!;
   if (!noHistory) {
-    history.pushState({ id: id }, "title", "/admin/lessons"); // eslint-disable-line compat/compat
+    history.pushState({ id: id }, "title", "/admin/lessons");
   }
 
   const saveExceptionHandler = {

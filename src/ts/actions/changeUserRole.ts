@@ -69,6 +69,6 @@ function changeUserRoleOnClick(event: MouseEvent): void {
     roleChanged = true;
   };
 
-  history.pushState({ sidePanel: "open" }, "title", "/admin/users"); // eslint-disable-line compat/compat
+  history.pushState({ sidePanel: "open" }, "title", "/admin/users");
   refreshLogin();
 }

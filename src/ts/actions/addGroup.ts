@@ -36,6 +36,6 @@ function addGroup(): void {
   document.getElementById("addGroupSave")!.onclick = (): void =>
     aq.closeDispatch();
 
-  history.pushState({ sidePanel: "open" }, "title", "/admin/groups"); // eslint-disable-line compat/compat
+  history.pushState({ sidePanel: "open" }, "title", "/admin/groups");
   refreshLogin();
 }

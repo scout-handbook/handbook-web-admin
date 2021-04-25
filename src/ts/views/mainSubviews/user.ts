@@ -151,7 +151,7 @@ function showUserList(
       perPage,
       newRole,
       groupSel.options[groupSel.selectedIndex].value
-    ); // eslint-disable-line @typescript-eslint/no-use-before-define
+    );
     return false;
   };
   document.getElementById(
@@ -163,7 +163,7 @@ function showUserList(
     group !== "00000000-0000-0000-0000-000000000000"
   ) {
     document.getElementById("userSearchCancel")!.onclick = function (): void {
-      downloadUserList(undefined, 1, perPage); // eslint-disable-line @typescript-eslint/no-use-before-define
+      downloadUserList(undefined, 1, perPage);
     };
   }
   const nodes = getElementsByClassName("paginationButton");
@@ -185,7 +185,7 @@ function showUserList(
         perPage,
         newRole,
         groupSel.options[groupSel.selectedIndex].value
-      ); // eslint-disable-line @typescript-eslint/no-use-before-define
+      );
     };
   }
 
@@ -245,6 +245,6 @@ function showUserSubview(noHistory: boolean): void {
 
   downloadUserList();
   if (!noHistory) {
-    history.pushState({ page: "users" }, "title", "/admin/users"); // eslint-disable-line compat/compat
+    history.pushState({ page: "users" }, "title", "/admin/users");
   }
 }

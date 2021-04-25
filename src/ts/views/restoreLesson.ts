@@ -18,7 +18,7 @@ function showLessonRestoreView(name: string, body: string): void {
       [ActionCallback.FillID]
     ),
   ]);
-  history.replaceState({}, "title", "/admin/lessons"); // eslint-disable-line compat/compat
+  history.replaceState({}, "title", "/admin/lessons");
   showLessonEditor(name, body, aq, null);
   changed = true;
 }

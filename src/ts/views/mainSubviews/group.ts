@@ -62,7 +62,7 @@ function showGroupSubview(noHistory: boolean): void {
   addOnClicks("importGroup", importGroupOnClick);
   addOnClicks("deleteGroup", deleteGroupOnClick);
   if (!noHistory) {
-    history.pushState({ page: "groups" }, "title", "/admin/groups"); // eslint-disable-line compat/compat
+    history.pushState({ page: "groups" }, "title", "/admin/groups");
   }
   refreshLogin(true);
 }

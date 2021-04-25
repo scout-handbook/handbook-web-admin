@@ -1,5 +1,4 @@
 declare class Action {
-  // eslint-disable-line @typescript-eslint/no-extraneous-class
   public url: string;
   public method: string;
   public payloadBuilder: () => Payload;

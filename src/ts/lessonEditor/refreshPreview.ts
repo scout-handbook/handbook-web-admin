@@ -7,7 +7,7 @@ let queue: WorkerPayload | null;
 
 function refreshPreviewSetup(): void {
   if (Worker) {
-    worker = new Worker(CONFIG["admin-uri"] + "/admin-worker.min.js"); // eslint-disable-line compat/compat
+    worker = new Worker(CONFIG["admin-uri"] + "/admin-worker.min.js");
     worker.onmessage = function (payload): void {
       const data = payload.data as WorkerPayload;
       document.getElementById(data.id)!.innerHTML = data.body;
@@ -37,7 +37,7 @@ function refreshPreview(name: string, markdown: string, id: string): void {
     }
   } else {
     let html = "<h1>" + name + "</h1>";
-    html += filterXSS(converter!.makeHtml(payload.body), xssOptions()); // eslint-disable-line @typescript-eslint/no-unnecessary-type-assertion
+    html += filterXSS(converter!.makeHtml(payload.body), xssOptions());
     document.getElementById(payload.id)!.innerHTML = html;
   }
 }

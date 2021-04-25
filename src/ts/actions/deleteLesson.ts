@@ -40,7 +40,7 @@ function deleteLessonDialog(id: string): void {
       history.back();
     }
   );
-  history.pushState({ sidePanel: "open" }, "title", "/admin/lessons"); // eslint-disable-line compat/compat
+  history.pushState({ sidePanel: "open" }, "title", "/admin/lessons");
   refreshLogin();
 }
 
