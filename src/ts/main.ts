@@ -1,9 +1,8 @@
-function main(): void
-{
-	refreshPreviewSetup();
-	metadataSetup();
-	historySetup();
-	ActionQueueSetup();
+function main(): void {
+  refreshPreviewSetup();
+  metadataSetup();
+  historySetup();
+  ActionQueueSetup();
 }
 
 window.onload = main;
