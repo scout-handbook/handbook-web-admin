@@ -23,7 +23,6 @@
     "../src/ts/interfaces/Payload.ts",
     "../src/ts/interfaces/RequestResponse.ts",
     "../src/ts/interfaces/Role.ts",
-    "../src/ts/interfaces/SidePanelImageSelectorState.ts",
     "../src/ts/interfaces/SidePanelImageSelectorGlobalState.ts",
     "../src/ts/interfaces/User.ts",
     "../src/ts/interfaces/UserListResponse.ts",

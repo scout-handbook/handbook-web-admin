@@ -1,5 +1,7 @@
+/* exported Lesson */
+
 interface Lesson {
-	name: string;
-	version: number;
-	competences: Array<string>;
+  name: string;
+  version: number;
+  competences: Array<string>;
 }

@@ -1,4 +1,6 @@
+/* exported SidePanelImageSelectorGlobalState */
+
 interface SidePanelImageSelectorGlobalState {
-	action: string;
-	state: SidePanelImageSelectorState;
+  action: string;
+  state: Record<string, string>;
 }

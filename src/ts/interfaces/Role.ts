@@ -1,1 +1,3 @@
-type Role = "guest"|"editor"|"administrator"|"superuser";
+/* exported Role */
+
+type Role = "guest" | "editor" | "administrator" | "superuser";

@@ -1,38 +1,38 @@
 #sidePanel {
-	background: white;
-	border-left: solid 1px var(--border-color);
-	bottom: 0;
-	overflow-x: hidden;
-	overflow-y: auto;
-	padding: 30px;
-	position: absolute;
-	right: -600px;
-	top: 0;
-	transition: right ease 0.3s, width ease 0.3s;
-	width: 539px;
-	z-index: 10;
+  background: white;
+  border-left: solid 1px var(--border-color);
+  bottom: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 30px;
+  position: absolute;
+  right: -600px;
+  top: 0;
+  transition: right ease 0.3s, width ease 0.3s;
+  width: 539px;
+  z-index: 10;
 }
 
 .sidePanelTitle {
-	font-size: 2em;
-	line-height: 150%;
+  font-size: 2em;
+  line-height: 150%;
 }
 
 #sidePanelCancel {
-	margin-right: 20px;
+  margin-right: 20px;
 }
 
 #sidePanelOverlay {
-	background-color: var(--overlay-fallback-color);
-	background-color: var(--overlay-color);
-	display: none;
-	height: 100%;
-	position: fixed;
-	width: 100%;
-	z-index: 9;
+  background-color: var(--overlay-fallback-color);
+  background-color: var(--overlay-color);
+  display: none;
+  height: 100%;
+  position: fixed;
+  width: 100%;
+  z-index: 9;
 }
 
 #sidePanelForm,
 .groupHelp {
-	margin-bottom: 30px;
+  margin-bottom: 30px;
 }

@@ -1,4 +1,6 @@
+/* exported Group */
+
 interface Group {
-	name: string;
-	count: number;
+  name: string;
+  count: number;
 }
