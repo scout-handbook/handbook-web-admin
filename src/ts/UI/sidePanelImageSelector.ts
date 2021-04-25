@@ -21,7 +21,7 @@ function openSidePanelImageSelector(
     {},
     function (response: RequestResponse): void {
       renderSidePanelImageSelector(
-        (response as unknown) as Array<string>,
+        response as Array<string>,
         action,
         property,
         state,

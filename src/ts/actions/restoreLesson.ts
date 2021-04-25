@@ -22,7 +22,7 @@ function restoreLessonShowVersion(id: string, event: Event): void {
     "GET",
     {},
     function (response: RequestResponse): void {
-      restoreLessonRenderVersion(name, (response as unknown) as string);
+      restoreLessonRenderVersion(name, response as string);
     },
     authFailHandler
   );
@@ -81,7 +81,7 @@ function restoreLessonSelectVersion(): void {
       function (response: RequestResponse): void {
         restoreLessonRenderVersionList(
           lessonId,
-          (response as unknown) as Array<LessonVersion>
+          response as Array<LessonVersion>
         );
       },
       reAuthHandler

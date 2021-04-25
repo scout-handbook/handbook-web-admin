@@ -219,7 +219,7 @@ function downloadUserList(
     (payload as unknown) as Payload,
     function (response: RequestResponse): void {
       showUserList(
-        (response as unknown) as UserListResponse,
+        response as UserListResponse,
         searchName,
         page,
         perPage,

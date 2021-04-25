@@ -74,7 +74,7 @@ function downloadImageList(page: number, perPage: number): void {
     "GET",
     {},
     function (response: RequestResponse): void {
-      showImageList((response as unknown) as Array<string>, page, perPage);
+      showImageList(response as Array<string>, page, perPage);
     },
     reAuthHandler
   );

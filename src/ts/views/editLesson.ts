@@ -98,7 +98,7 @@ function getLessonEditView(id: string, noHistory: boolean): void {
     {},
     function (response: RequestResponse): void {
       metadataEvent.addCallback(function (): void {
-        renderLessonEditView(id, (response as unknown) as string, noHistory);
+        renderLessonEditView(id, response as string, noHistory);
       });
     },
     reAuthHandler
