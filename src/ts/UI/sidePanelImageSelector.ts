@@ -7,7 +7,7 @@ let sidePanelImageSelectorState:
 function openSidePanelImageSelector(
   action: string,
   property: string,
-  state: SidePanelImageSelectorState,
+  state: Record<string, string>,
   page = 1,
   perPage = 15,
   noHistory = false
@@ -51,7 +51,7 @@ function renderSidePanelImageSelector(
   list: Array<string>,
   action: string,
   property: string,
-  state: SidePanelImageSelectorState,
+  state: Record<string, string>,
   page: number,
   perPage: number,
   noHistory: boolean

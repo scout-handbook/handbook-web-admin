@@ -132,10 +132,10 @@ function refreshMetadata(): void {
       if (response.status === 200) {
         if (
           ["editor", "administrator", "superuser"].indexOf(
-            response.response!.role
+            (response.response as Loginstate).role
           ) > -1
         ) {
-          LOGINSTATE = (response.response as unknown) as Loginstate;
+          LOGINSTATE = response.response as Loginstate;
           metadataEvent.trigger();
         } else {
           window.location.replace(CONFIG["frontend-uri"]);

@@ -43,7 +43,7 @@ function requestQueryBuilder(payload: Payload): string {
 function rawRequest(
   url: string,
   method: string,
-  payload: Payload = {},
+  payload: Payload | FormData = {},
   callback: (response: APIResponse) => void
 ): void {
   const xhr = new XMLHttpRequest();
@@ -59,7 +59,7 @@ function rawRequest(
       method === "DELETE" ||
       payload.toString() !== "[object FormData]"
     ) {
-      query = requestQueryBuilder(payload);
+      query = requestQueryBuilder(payload as Payload);
     }
     if ((method === "GET" || method === "DELETE") && query) {
       url += "?" + query;
@@ -85,7 +85,7 @@ function rawRequest(
 function request(
   url: string,
   method: string,
-  payload: Payload,
+  payload: Payload | FormData,
   callback: (response: RequestResponse) => void,
   exceptionHandler: ExceptionHandler = {}
 ): void {

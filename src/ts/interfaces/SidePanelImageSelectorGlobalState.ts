@@ -2,5 +2,5 @@
 
 interface SidePanelImageSelectorGlobalState {
   action: string;
-  state: SidePanelImageSelectorState;
+  state: Record<string, string>;
 }

@@ -1,5 +1,3 @@
 /* exported Payload */
 
-interface Payload {
-  readonly [key: string]: any;
-}
+type Payload = Record<string, number | string | Array<string>>;
