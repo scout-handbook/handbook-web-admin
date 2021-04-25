@@ -1,1 +1,1 @@
-type MainPageTab = "lessons"|"competences"|"images"|"users"|"groups";
+type MainPageTab = "lessons" | "competences" | "images" | "users" | "groups";

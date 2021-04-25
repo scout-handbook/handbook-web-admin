@@ -1,1 +1,1 @@
-type Role = "guest"|"editor"|"administrator"|"superuser";
+type Role = "guest" | "editor" | "administrator" | "superuser";
