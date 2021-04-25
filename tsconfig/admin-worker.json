@@ -1,9 +1,9 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "lib": ["ES5", "WebWorker"],
+    "lib": ["ES6", "WebWorker"],
     "skipLibCheck": true,
-    "target": "ES5",
+    "target": "ES6",
     "types": ["showdown"]
   },
   "files": [
