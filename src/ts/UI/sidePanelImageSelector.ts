@@ -26,7 +26,7 @@ function openSidePanelImageSelector(
         page,
         perPage,
         noHistory
-      ); // eslint-disable-line @typescript-eslint/no-use-before-define
+      );
     },
     reAuthHandler
   );
@@ -153,7 +153,7 @@ function renderSidePanelImageSelector(
       { sidePanelImageSelector: "open" },
       "title",
       "/admin/lessons"
-    ); // eslint-disable-line compat/compat
+    );
   }
   refreshLogin();
 }

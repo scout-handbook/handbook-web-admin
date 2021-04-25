@@ -71,6 +71,6 @@ function changeCompetenceOnClick(event: MouseEvent): void {
   addOnChange("competenceName");
   addOnChange("competenceDescription");
 
-  history.pushState({ sidePanel: "open" }, "title", "/admin/competences"); // eslint-disable-line compat/compat
+  history.pushState({ sidePanel: "open" }, "title", "/admin/competences");
   refreshLogin();
 }

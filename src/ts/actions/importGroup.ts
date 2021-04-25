@@ -202,6 +202,6 @@ function importGroupOnClick(event: MouseEvent): void {
     reAuthHandler
   );
 
-  history.pushState({ sidePanel: "open" }, "title", "/admin/groups"); // eslint-disable-line compat/compat
+  history.pushState({ sidePanel: "open" }, "title", "/admin/groups");
   refreshLogin();
 }

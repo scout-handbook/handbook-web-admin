@@ -35,7 +35,7 @@ function prepareImageSelector(page = 1, perPage = 15): void {
         (response as unknown) as Array<string>,
         page,
         perPage
-      ); // eslint-disable-line @typescript-eslint/no-use-before-define
+      );
     },
     reAuthHandler
   );

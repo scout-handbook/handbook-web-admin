@@ -1,6 +1,6 @@
-/* exported showMainView */
+/* exported mainPageTab, showMainView */
 
-let mainPageTab: MainPageTab = "lessons"; // eslint-disable-line prefer-const
+let mainPageTab: MainPageTab = "lessons";
 
 function renderMainView(noHistory: boolean): void {
   if (LOGINSTATE.avatar) {

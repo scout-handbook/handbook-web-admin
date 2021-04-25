@@ -61,7 +61,7 @@ function showImageList(
       downloadImageList(
         parseInt((event.target as HTMLElement).dataset.page!, 10),
         perPage
-      ); // eslint-disable-line @typescript-eslint/no-use-before-define
+      );
     };
   }
 }
@@ -99,6 +99,6 @@ function showImageSubview(noHistory: boolean): void {
   };
   downloadImageList(1, 15);
   if (!noHistory) {
-    history.pushState({ page: "images" }, "title", "/admin/images"); // eslint-disable-line compat/compat
+    history.pushState({ page: "images" }, "title", "/admin/images");
   }
 }

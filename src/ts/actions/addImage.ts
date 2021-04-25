@@ -7,7 +7,7 @@ function addImageSave(): void {
     if (!FormData) {
       dialog("Tento prohlížeč nepodporuje nahrávání souborů", "OK");
     }
-    const formData = new FormData(); // eslint-disable-line compat/compat
+    const formData = new FormData();
     formData.append(
       "image",
       (document.getElementById("addImageFile") as HTMLInputElement).files![0]
@@ -59,9 +59,9 @@ function addImage(inEditor: boolean): void {
   document.getElementById("addImageFile")!.onchange = changeLabel;
 
   if (inEditor) {
-    history.pushState({ sidePanel: "open" }, "title", "/admin/lessons"); // eslint-disable-line compat/compat
+    history.pushState({ sidePanel: "open" }, "title", "/admin/lessons");
   } else {
-    history.pushState({ sidePanel: "open" }, "title", "/admin/images"); // eslint-disable-line compat/compat
+    history.pushState({ sidePanel: "open" }, "title", "/admin/images");
   }
   refreshLogin();
 }

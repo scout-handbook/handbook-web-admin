@@ -11,7 +11,7 @@ function addLessonPayloadBuilder(): Payload {
 }
 
 function showLessonAddView(field?: string): void {
-  history.pushState({}, "title", "/admin/lessons"); // eslint-disable-line compat/compat
+  history.pushState({}, "title", "/admin/lessons");
 
   const aq = new ActionQueue([
     new Action(

@@ -17,6 +17,6 @@ function deleteFieldOnClick(event: MouseEvent): void {
       history.back();
     }
   );
-  history.pushState({ sidePanel: "open" }, "title", "/admin/lessons"); // eslint-disable-line compat/compat
+  history.pushState({ sidePanel: "open" }, "title", "/admin/lessons");
   refreshLogin();
 }

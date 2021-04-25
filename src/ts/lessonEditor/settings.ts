@@ -86,7 +86,7 @@ function lessonSettings(
     changeLessonGroupsOnClick(id, actionQueue);
   };
   if (!noHistory) {
-    history.pushState({ sidePanel: "open" }, "title", "/admin/lessons"); // eslint-disable-line compat/compat
+    history.pushState({ sidePanel: "open" }, "title", "/admin/lessons");
   }
   refreshLogin();
 }

@@ -22,6 +22,6 @@ function deleteCompetenceOnClick(event: MouseEvent): void {
       history.back();
     }
   );
-  history.pushState({ sidePanel: "open" }, "title", "/admin/competences"); // eslint-disable-line compat/compat
+  history.pushState({ sidePanel: "open" }, "title", "/admin/competences");
   refreshLogin();
 }
