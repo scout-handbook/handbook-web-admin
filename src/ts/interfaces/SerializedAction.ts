@@ -1,3 +1,5 @@
+/* exported SerializedAction */
+
 interface SerializedAction {
   url: string;
   method: string;

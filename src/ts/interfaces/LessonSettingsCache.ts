@@ -1,3 +1,5 @@
+/* exported LessonSettingsCache */
+
 interface LessonSettingsCache {
   competences: Array<string>;
   field: string;

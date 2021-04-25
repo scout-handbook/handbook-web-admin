@@ -1,3 +1,5 @@
+/* exported UserSearchQuery */
+
 interface UserSearchQuery {
   name: string;
   page: number;

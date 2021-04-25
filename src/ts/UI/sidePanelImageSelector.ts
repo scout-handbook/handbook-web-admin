@@ -1,3 +1,5 @@
+/* exported openSidePanelImageSelector, closeSidePanelImageSelector */
+
 let sidePanelImageSelectorState:
   | SidePanelImageSelectorGlobalState
   | undefined = undefined;
