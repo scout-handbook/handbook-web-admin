@@ -33,7 +33,7 @@
     "lint": "run-p -c --aggregate-output lint:*"
   },
   "devDependencies": {
-    "@types/codemirror": "0.0.109",
+    "@types/codemirror": "5.60.0",
     "@types/showdown": "^1.9.3",
     "@typescript-eslint/eslint-plugin": "^4.21.0",
     "@typescript-eslint/parser": "^4.21.0",
