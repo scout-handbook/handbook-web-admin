@@ -22,7 +22,7 @@
   "dependencies": {
     "easymde": "^2.14.0",
     "showdown": "^1.9.1",
-    "xss": "^1.0.8"
+    "xss": "^1.0.9"
   },
   "scripts": {
     "build": "gulp build",
