@@ -1,8 +1,7 @@
 /* exported openSidePanelImageSelector, closeSidePanelImageSelector */
 
-let sidePanelImageSelectorState:
-  | SidePanelImageSelectorGlobalState
-  | undefined = undefined;
+let sidePanelImageSelectorState: SidePanelImageSelectorGlobalState | undefined =
+  undefined;
 
 function openSidePanelImageSelector(
   action: string,

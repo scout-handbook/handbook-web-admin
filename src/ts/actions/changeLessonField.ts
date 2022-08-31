@@ -74,11 +74,10 @@ function changeLessonFieldOnClick(
   document.getElementById("cancelEditorAction")!.onclick = function (): void {
     lessonSettings(id, actionQueue, true);
   };
-  document.getElementById(
-    "changeLessonFieldSave"
-  )!.onclick = function (): void {
-    changeLessonFieldSave(id, actionQueue);
-  };
+  document.getElementById("changeLessonFieldSave")!.onclick =
+    function (): void {
+      changeLessonFieldSave(id, actionQueue);
+    };
 
   const nodes = document
     .getElementById("sidePanelForm")!

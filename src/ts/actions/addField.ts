@@ -71,9 +71,9 @@ function addField(
   document.getElementById("fieldImageChange")!.onclick = function (): void {
     openSidePanelImageSelector("addField", "image", {
       name: (document.getElementById("fieldName") as HTMLInputElement).value,
-      description: (document.getElementById(
-        "fieldDescription"
-      ) as HTMLInputElement).value,
+      description: (
+        document.getElementById("fieldDescription") as HTMLInputElement
+      ).value,
       image: state.image,
       icon: state.icon,
     });
@@ -81,9 +81,9 @@ function addField(
   document.getElementById("fieldIconChange")!.onclick = function (): void {
     openSidePanelImageSelector("addField", "icon", {
       name: (document.getElementById("fieldName") as HTMLInputElement).value,
-      description: (document.getElementById(
-        "fieldDescription"
-      ) as HTMLInputElement).value,
+      description: (
+        document.getElementById("fieldDescription") as HTMLInputElement
+      ).value,
       image: state.image,
       icon: state.icon,
     });
