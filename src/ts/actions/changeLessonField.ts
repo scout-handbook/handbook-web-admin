@@ -41,7 +41,7 @@ function changeLessonFieldOnClick(
   html +=
     '<div class="button greenButton" id="changeLessonFieldSave"><i class="icon-floppy"></i>Uložit</div>';
   html +=
-    '<h3 class="sidePanelTitle">Změnit oblast</h3><form id="sidePanelForm">';
+    '<h3 class="sidePanelTitle">Změnit oblast</h3><form id="side-panel-form">';
   FIELDS.iterate(function (fieldId, field) {
     let checked = false;
     if (
@@ -80,7 +80,7 @@ function changeLessonFieldOnClick(
     };
 
   const nodes = document
-    .getElementById("sidePanelForm")!
+    .getElementById("side-panel-form")!
     .getElementsByTagName("input");
   for (let i = 0; i < nodes.length; i++) {
     nodes[i].onchange = lessonFieldOnclick;

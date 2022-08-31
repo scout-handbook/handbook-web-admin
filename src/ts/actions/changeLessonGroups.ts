@@ -45,7 +45,7 @@ function changeLessonGroupsOnClick(
   html +=
     '<div class="button greenButton" id="changeLessonGroupsSave"><i class="icon-floppy"></i>Uložit</div>';
   html +=
-    '<h3 class="sidePanelTitle">Změnit skupiny</h3><form id="sidePanelForm">';
+    '<h3 class="sidePanelTitle">Změnit skupiny</h3><form id="side-panel-form">';
   let publicName = "";
   GROUPS.iterate(function (groupId, group) {
     html +=
@@ -78,7 +78,7 @@ function changeLessonGroupsOnClick(
     };
 
   const nodes = document
-    .getElementById("sidePanelForm")!
+    .getElementById("side-panel-form")!
     .getElementsByTagName("input");
   for (let i = 0; i < nodes.length; i++) {
     nodes[i].onchange = lessonGroupsOnclick;

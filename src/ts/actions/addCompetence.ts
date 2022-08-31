@@ -22,7 +22,7 @@ function addCompetence(): void {
   html +=
     '<div class="button greenButton" id="addCompetenceSave"><i class="icon-floppy"></i>Uložit</div>';
   html +=
-    '<h3 class="sidePanelTitle">Přidat kompetenci</h3><form id="sidePanelForm">';
+    '<h3 class="sidePanelTitle">Přidat kompetenci</h3><form id="side-panel-form">';
   html +=
     '<span class="competenceHeading">Kompetence</span> <input type="text" class="formText formName" id="competenceNumber" value="00" autocomplete="off"><br>';
   html +=

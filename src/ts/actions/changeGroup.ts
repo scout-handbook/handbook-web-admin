@@ -18,7 +18,7 @@ function changeGroupOnClick(event: MouseEvent): void {
   html +=
     '<div class="button greenButton" id="changeGroupSave"><i class="icon-floppy"></i>Uložit</div>';
   html +=
-    '<h3 class="sidePanelTitle">Upravit skupinu</h3><form id="sidePanelForm">';
+    '<h3 class="sidePanelTitle">Upravit skupinu</h3><form id="side-panel-form">';
   html += '<legend for="fieldName">Název:</legend>';
   html +=
     '<input type="text" class="formText" id="groupName" value="' +
