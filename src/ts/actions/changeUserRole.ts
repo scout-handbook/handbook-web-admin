@@ -19,7 +19,7 @@ function changeUserRoleOnClick(event: MouseEvent): void {
     getAttribute(event, "name") +
     '</h3><form id="sidePanelForm">';
   html +=
-    '<span class="roleText">Role: </span><select class="formSelect" id="roleSelect">';
+    '<span class="role-text">Role: </span><select class="formSelect" id="roleSelect">';
   html += '<option id="user" value="user">Uživatel</option>';
   html += '<option id="editor" value="editor">Editor</option>';
   if (LOGINSTATE.role === "superuser") {
