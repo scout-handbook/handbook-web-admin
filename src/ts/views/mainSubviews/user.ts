@@ -109,7 +109,7 @@ function showUserList(
     group !== "00000000-0000-0000-0000-000000000000"
   ) {
     html +=
-      '<div class="button yellowButton" id="userSearchCancel"><i class="icon-cancel"></i>Zrušit</div>';
+      '<div class="button yellowButton" id="user-search-cancel"><i class="icon-cancel"></i>Zrušit</div>';
   }
   html += "</form>";
   html +=
@@ -158,7 +158,7 @@ function showUserList(
     role !== "all" ||
     group !== "00000000-0000-0000-0000-000000000000"
   ) {
-    document.getElementById("userSearchCancel")!.onclick = function (): void {
+    document.getElementById("user-search-cancel")!.onclick = function (): void {
       downloadUserList(undefined, 1, perPage);
     };
   }
