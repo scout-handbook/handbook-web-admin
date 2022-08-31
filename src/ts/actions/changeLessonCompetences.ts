@@ -45,7 +45,7 @@ function changeLessonCompetencesOnClick(
   html +=
     '<div class="button greenButton" id="changeLessonCompetencesSave"><i class="icon-floppy"></i>Uložit</div>';
   html +=
-    '<h3 class="sidePanelTitle">Změnit kompetence</h3><form id="sidePanelForm">';
+    '<h3 class="sidePanelTitle">Změnit kompetence</h3><form id="side-panel-form">';
   COMPETENCES.iterate(function (competenceId, competence) {
     html +=
       '<div class="formRow"><label class="formSwitch"><input type="checkbox"';
@@ -73,7 +73,7 @@ function changeLessonCompetencesOnClick(
     };
 
   const nodes = document
-    .getElementById("sidePanelForm")!
+    .getElementById("side-panel-form")!
     .getElementsByTagName("input");
   for (let i = 0; i < nodes.length; i++) {
     nodes[i].onchange = lessonCompetenceOnclick;

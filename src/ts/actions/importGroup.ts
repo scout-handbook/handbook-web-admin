@@ -23,7 +23,7 @@ function setdiff(a: Array<Participant>, b: Array<User>): Array<Participant> {
 function importGroupSave(id: string): void {
   const participants: Array<Participant> = [];
   const nodes = document
-    .getElementById("sidePanelForm")!
+    .getElementById("side-panel-form")!
     .getElementsByTagName("input");
   for (let i = 0; i < nodes.length; i++) {
     if (nodes[i].checked) {
@@ -94,7 +94,7 @@ function importGroupSelectParticipantsRender(id: string): void {
     refreshMetadata();
     history.back();
   }
-  let html = '<h4>Výběr účastníků:</h4><form id="sidePanelForm">';
+  let html = '<h4>Výběr účastníků:</h4><form id="side-panel-form">';
   for (let i = 0; i < newparticipants.length; i++) {
     html +=
       '<div class="formRow"><label class="formSwitch"><input type="checkbox" data-id="' +
@@ -158,7 +158,7 @@ function importGroupSelectEventRender(id: string, events: Array<Event>): void {
     refreshMetadata();
     history.back();
   }
-  let html = '<h4>Volba kurzu:</h4><form id="sidePanelForm">';
+  let html = '<h4>Volba kurzu:</h4><form id="side-panel-form">';
   for (let i = 0; i < events.length; i++) {
     html +=
       '<div class="formRow"><label class="formSwitch"><input type="radio" name="field" data-id="' +

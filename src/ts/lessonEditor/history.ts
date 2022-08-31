@@ -70,7 +70,7 @@ function lessonHistoryListRender(
   actionQueue: ActionQueue,
   list: Array<LessonVersion>
 ): void {
-  let html = '<form id="sidePanelForm">';
+  let html = '<form id="side-panel-form">';
   html +=
     '<div class="formRow"><label class="formSwitch"><input type="radio" name="version" checked><span class="formCustom formRadio"></span></label><span class="lessonHistoryCurrent">Současná verze</span> — ' +
     parseVersion(LESSONS.get(id)!.version) +
@@ -91,7 +91,7 @@ function lessonHistoryListRender(
   document.getElementById("lessonHistoryForm")!.innerHTML = html;
 
   const nodes = document
-    .getElementById("sidePanelForm")!
+    .getElementById("side-panel-form")!
     .getElementsByTagName("input");
   nodes[0].onchange = function (): void {
     lessonHistoryPreviewShowCurrent();

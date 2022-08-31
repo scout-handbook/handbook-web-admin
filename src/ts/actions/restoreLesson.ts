@@ -38,7 +38,7 @@ function restoreLessonRenderVersionList(
   sidePanelDoubleOpen();
   let html =
     '<div id="restoreLessonVersionList"><div class="button yellowButton" id="sidePanelCancel"><i class="icon-cancel"></i>Zrušit</div><span id="restoreLessonListHeader"></span><h3 class="sidePanelTitle">Obnovit smazanou lekci</h3>';
-  html += '<form id="sidePanelForm">';
+  html += '<form id="side-panel-form">';
   for (let i = 0; i < list.length; i++) {
     html +=
       '<div class="formRow"><label class="formSwitch"><input type="radio" name="restoreLessonversion" data-name="' +
@@ -60,7 +60,7 @@ function restoreLessonRenderVersionList(
     history.back();
   };
   const nodes = document
-    .getElementById("sidePanelForm")!
+    .getElementById("side-panel-form")!
     .getElementsByTagName("input");
   for (let i = 0; i < nodes.length; i++) {
     nodes[i].onchange = function (event): void {
@@ -98,7 +98,7 @@ function restoreLessonRenderLessonList(list: IDList<DeletedLesson>): void {
     refreshMetadata();
     history.back();
   }
-  let html = '<form id="sidePanelForm">';
+  let html = '<form id="side-panel-form">';
   list.iterate(function (id, deletedLesson) {
     html +=
       '<div class="formRow"><label class="formSwitch"><input type="radio" name="lesson" data-id="' +

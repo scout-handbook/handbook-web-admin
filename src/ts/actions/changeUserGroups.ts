@@ -25,7 +25,7 @@ function changeUserGroupsOnClick(event: MouseEvent): void {
   html +=
     '<h3 class="sidePanelTitle">Změnit skupiny: ' +
     getAttribute(event, "name") +
-    '</h3><form id="sidePanelForm">';
+    '</h3><form id="side-panel-form">';
   const currentGroups = JSON.parse(
     getAttribute(event, "groups")
   ) as Array<string>;
@@ -70,7 +70,7 @@ function changeUserGroupsOnClick(event: MouseEvent): void {
   };
 
   const nodes = document
-    .getElementById("sidePanelForm")!
+    .getElementById("side-panel-form")!
     .getElementsByTagName("input");
   for (let i = 0; i < nodes.length; i++) {
     nodes[i].onchange = userGroupsOnclick;
