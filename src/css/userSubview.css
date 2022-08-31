@@ -22,27 +22,27 @@
   margin-bottom: -11px;
 }
 
-.userTable {
+.user-table {
   border: none;
 }
 
-.userTable th {
+.user-table th {
   border: none;
   border-bottom: 1px solid var(--border-color);
   text-align: left;
 }
 
-.userTable td {
+.user-table td {
   border: none;
   padding: 15px 20px;
 }
 
-.userTable td + td,
-.userTable th + th {
+.user-table td + td,
+.user-table th + th {
   padding-left: 50px;
 }
 
-.userTable tr:nth-child(2n + 1) {
+.user-table tr:nth-child(2n + 1) {
   background-color: #fff;
 }
 
