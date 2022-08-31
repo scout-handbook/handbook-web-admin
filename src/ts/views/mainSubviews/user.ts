@@ -98,7 +98,7 @@ function showUserList(
   }
   const users = list.users;
   let html =
-    '<form id="userSearchForm"><input type="text" class="formText" id="user-search-box" placeholder="Jméno uživatele">';
+    '<form id="user-search-form"><input type="text" class="formText" id="user-search-box" placeholder="Jméno uživatele">';
   html += renderRoleSelector();
   html += renderGroupSelector();
   html +=
@@ -151,7 +151,7 @@ function showUserList(
     );
     return false;
   };
-  document.getElementById("userSearchForm")!.onsubmit = submitFn;
+  document.getElementById("user-search-form")!.onsubmit = submitFn;
   document.getElementById("user-search-button")!.onclick = submitFn;
   if (
     searchName ||
