@@ -72,9 +72,9 @@ function changeField(
     openSidePanelImageSelector("changeField", "image", {
       id: state.id,
       name: (document.getElementById("fieldName") as HTMLInputElement).value,
-      description: (document.getElementById(
-        "fieldDescription"
-      ) as HTMLInputElement).value,
+      description: (
+        document.getElementById("fieldDescription") as HTMLInputElement
+      ).value,
       image: state.image,
       icon: state.icon,
     });
@@ -84,9 +84,9 @@ function changeField(
     openSidePanelImageSelector("changeField", "icon", {
       id: state.id,
       name: (document.getElementById("fieldName") as HTMLInputElement).value,
-      description: (document.getElementById(
-        "fieldDescription"
-      ) as HTMLInputElement).value,
+      description: (
+        document.getElementById("fieldDescription") as HTMLInputElement
+      ).value,
       image: state.image,
       icon: state.icon,
     });

@@ -78,7 +78,7 @@ function rawRequest(
   } else if (payload.toString() !== "[object FormData]") {
     xhr.send(query);
   } else {
-    xhr.send((payload as unknown) as string);
+    xhr.send(payload as unknown as string);
   }
 }
 

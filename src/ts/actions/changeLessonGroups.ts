@@ -72,11 +72,10 @@ function changeLessonGroupsOnClick(
   document.getElementById("cancelEditorAction")!.onclick = function (): void {
     lessonSettings(id, actionQueue, true);
   };
-  document.getElementById(
-    "changeLessonGroupsSave"
-  )!.onclick = function (): void {
-    changeLessonGroupsSave(id, actionQueue);
-  };
+  document.getElementById("changeLessonGroupsSave")!.onclick =
+    function (): void {
+      changeLessonGroupsSave(id, actionQueue);
+    };
 
   const nodes = document
     .getElementById("sidePanelForm")!

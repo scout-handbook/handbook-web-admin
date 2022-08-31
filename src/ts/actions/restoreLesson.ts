@@ -109,9 +109,8 @@ function restoreLessonRenderLessonList(list: IDList<DeletedLesson>): void {
   });
   html += "</form>";
   document.getElementById("restoreLessonList")!.innerHTML = html;
-  document.getElementById(
-    "restoreLessonNext"
-  )!.onclick = restoreLessonSelectVersion;
+  document.getElementById("restoreLessonNext")!.onclick =
+    restoreLessonSelectVersion;
 }
 
 function restoreLesson(): void {

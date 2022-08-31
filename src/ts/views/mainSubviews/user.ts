@@ -122,17 +122,14 @@ function showUserList(
   html += renderPagination(Math.ceil(list.count / perPage), page);
   document.getElementById("userList")!.innerHTML = html;
 
-  (document.getElementById(
-    "userSearchBox"
-  ) as HTMLInputElement).value = searchName;
+  (document.getElementById("userSearchBox") as HTMLInputElement).value =
+    searchName;
   if (LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser") {
-    (document.getElementById(
-      "roleSearchFilter"
-    ) as HTMLSelectElement).value = role;
+    (document.getElementById("roleSearchFilter") as HTMLSelectElement).value =
+      role;
   }
-  (document.getElementById(
-    "groupSearchFilter"
-  ) as HTMLSelectElement).value = group;
+  (document.getElementById("groupSearchFilter") as HTMLSelectElement).value =
+    group;
 
   const submitFn = function (): boolean {
     const roleSel = document.getElementById(
@@ -215,7 +212,7 @@ function downloadUserList(
   request(
     CONFIG["api-uri"] + "/v1.0/user",
     "GET",
-    (payload as unknown) as Payload,
+    payload as unknown as Payload,
     function (response: RequestResponse): void {
       showUserList(
         response as UserListResponse,

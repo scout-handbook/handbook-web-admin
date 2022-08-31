@@ -41,11 +41,9 @@ function changeUserRoleOnClick(event: MouseEvent): void {
   }
   document.getElementById("sidePanel")!.innerHTML = html;
 
-  (document.getElementById(
-    "roleSelect"
-  ) as HTMLSelectElement).options.namedItem(
-    getAttribute(event, "role")
-  )!.selected = true;
+  (
+    document.getElementById("roleSelect") as HTMLSelectElement
+  ).options.namedItem(getAttribute(event, "role"))!.selected = true;
 
   document.getElementById("sidePanelCancel")!.onclick = function (): void {
     history.back();

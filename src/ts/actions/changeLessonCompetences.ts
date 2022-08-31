@@ -67,11 +67,10 @@ function changeLessonCompetencesOnClick(
   document.getElementById("cancelEditorAction")!.onclick = function (): void {
     lessonSettings(id, actionQueue, true);
   };
-  document.getElementById(
-    "changeLessonCompetencesSave"
-  )!.onclick = function (): void {
-    changeLessonCompetencesSave(id, actionQueue);
-  };
+  document.getElementById("changeLessonCompetencesSave")!.onclick =
+    function (): void {
+      changeLessonCompetencesSave(id, actionQueue);
+    };
 
   const nodes = document
     .getElementById("sidePanelForm")!

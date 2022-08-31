@@ -46,7 +46,7 @@ function importGroupSave(id: string): void {
     request(
       CONFIG["api-uri"] + "/v1.0/user",
       "POST",
-      (participants[i] as unknown) as Payload,
+      participants[i] as unknown as Payload,
       function (): void {
         addEvent.trigger();
       },

@@ -8,9 +8,9 @@ function getElementsByClassName(
     return context.getElementsByClassName(className);
   }
   if (context.querySelectorAll) {
-    return (context.querySelectorAll(
+    return context.querySelectorAll(
       "." + className
-    ) as unknown) as HTMLCollection;
+    ) as unknown as HTMLCollection;
   }
   const all = context.getElementsByTagName("*");
   const ret = [];
@@ -23,5 +23,5 @@ function getElementsByClassName(
       ret.push(all[i]);
     }
   }
-  return (ret as unknown) as HTMLCollection;
+  return ret as unknown as HTMLCollection;
 }
