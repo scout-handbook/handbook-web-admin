@@ -18,7 +18,7 @@ function addCompetencePayloadBuilder(): Payload {
 function addCompetence(): void {
   sidePanelOpen();
   let html =
-    '<div class="button yellowButton" id="sidePanelCancel"><i class="icon-cancel"></i>Zrušit</div>';
+    '<div class="button yellowButton" id="side-panel-cancel"><i class="icon-cancel"></i>Zrušit</div>';
   html +=
     '<div class="button greenButton" id="addCompetenceSave"><i class="icon-floppy"></i>Uložit</div>';
   html +=
@@ -32,7 +32,7 @@ function addCompetence(): void {
   html += "</form>";
   document.getElementById("sidePanel")!.innerHTML = html;
 
-  document.getElementById("sidePanelCancel")!.onclick = function (): void {
+  document.getElementById("side-panel-cancel")!.onclick = function (): void {
     history.back();
   };
 

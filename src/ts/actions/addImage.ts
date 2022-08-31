@@ -39,7 +39,7 @@ function changeLabel(event: Event): void {
 function addImage(inEditor: boolean): void {
   sidePanelOpen();
   let html =
-    '<div class="button yellowButton" id="sidePanelCancel"><i class="icon-cancel"></i>Zrušit</div>';
+    '<div class="button yellowButton" id="side-panel-cancel"><i class="icon-cancel"></i>Zrušit</div>';
   html +=
     '<div class="button greenButton" id="addImageSave"><i class="icon-floppy"></i>Uložit</div>';
   html +=
@@ -51,7 +51,7 @@ function addImage(inEditor: boolean): void {
   html += "</div></form>";
   document.getElementById("sidePanel")!.innerHTML = html;
 
-  document.getElementById("sidePanelCancel")!.onclick = function (): void {
+  document.getElementById("side-panel-cancel")!.onclick = function (): void {
     history.back();
   };
   document.getElementById("addImageSave")!.onclick = addImageSave;

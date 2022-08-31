@@ -37,7 +37,7 @@ function restoreLessonRenderVersionList(
 ): void {
   sidePanelDoubleOpen();
   let html =
-    '<div id="restoreLessonVersionList"><div class="button yellowButton" id="sidePanelCancel"><i class="icon-cancel"></i>Zrušit</div><span id="restoreLessonListHeader"></span><h3 class="sidePanelTitle">Obnovit smazanou lekci</h3>';
+    '<div id="restoreLessonVersionList"><div class="button yellowButton" id="side-panel-cancel"><i class="icon-cancel"></i>Zrušit</div><span id="restoreLessonListHeader"></span><h3 class="sidePanelTitle">Obnovit smazanou lekci</h3>';
   html += '<form id="side-panel-form">';
   for (let i = 0; i < list.length; i++) {
     html +=
@@ -55,7 +55,7 @@ function restoreLessonRenderVersionList(
   html += '</div><div id="restoreLessonPreview"></div>';
   document.getElementById("sidePanel")!.innerHTML = html;
 
-  document.getElementById("sidePanelCancel")!.onclick = function (): void {
+  document.getElementById("side-panel-cancel")!.onclick = function (): void {
     sidePanelOpen();
     history.back();
   };
@@ -116,13 +116,13 @@ function restoreLessonRenderLessonList(list: IDList<DeletedLesson>): void {
 function restoreLesson(): void {
   sidePanelOpen();
   let html =
-    '<div class="button yellowButton" id="sidePanelCancel"><i class="icon-cancel"></i>Zrušit</div>';
+    '<div class="button yellowButton" id="side-panel-cancel"><i class="icon-cancel"></i>Zrušit</div>';
   html +=
     '<div class="button greenButton" id="restoreLessonNext"><i class="icon-fast-fw"></i>Pokračovat</div>';
   html += '<h3 class="sidePanelTitle">Obnovit smazanou lekci</h3>';
   html += '<div id="restoreLessonList"><div id="embeddedSpinner"></div></div>';
   document.getElementById("sidePanel")!.innerHTML = html;
-  document.getElementById("sidePanelCancel")!.onclick = function (): void {
+  document.getElementById("side-panel-cancel")!.onclick = function (): void {
     history.back();
   };
   request(

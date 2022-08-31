@@ -177,7 +177,7 @@ function importGroupSelectEventRender(id: string, events: Array<Event>): void {
 function importGroupOnClick(event: MouseEvent): void {
   sidePanelOpen();
   let html =
-    '<div class="button yellowButton" id="sidePanelCancel"><i class="icon-cancel"></i>Zrušit</div>';
+    '<div class="button yellowButton" id="side-panel-cancel"><i class="icon-cancel"></i>Zrušit</div>';
   html +=
     '<div class="button greenButton" id="importGroupNext"><i class="icon-fast-fw"></i>Pokračovat</div>';
   html +=
@@ -186,7 +186,7 @@ function importGroupOnClick(event: MouseEvent): void {
     "</h3>";
   html += '<div id="importList"><div id="embeddedSpinner"></div></div>';
   document.getElementById("sidePanel")!.innerHTML = html;
-  document.getElementById("sidePanelCancel")!.onclick = function (): void {
+  document.getElementById("side-panel-cancel")!.onclick = function (): void {
     history.back();
   };
   request(

@@ -19,7 +19,7 @@ function changeUserGroupsOnClick(event: MouseEvent): void {
   groupsChanged = false;
   sidePanelOpen();
   let html =
-    '<div class="button yellowButton" id="sidePanelCancel"><i class="icon-cancel"></i>Zrušit</div>';
+    '<div class="button yellowButton" id="side-panel-cancel"><i class="icon-cancel"></i>Zrušit</div>';
   html +=
     '<div class="button greenButton" id="changeUserGroupsSave"><i class="icon-floppy"></i>Uložit</div>';
   html +=
@@ -51,7 +51,7 @@ function changeUserGroupsOnClick(event: MouseEvent): void {
     '</span>" uvidí všichni uživatelé bez ohledu na jejich skupiny. </div>';
   document.getElementById("sidePanel")!.innerHTML = html;
 
-  document.getElementById("sidePanelCancel")!.onclick = function (): void {
+  document.getElementById("side-panel-cancel")!.onclick = function (): void {
     history.back();
   };
 
