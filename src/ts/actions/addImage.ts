@@ -43,7 +43,7 @@ function addImage(inEditor: boolean): void {
   html +=
     '<div class="button greenButton" id="addImageSave"><i class="icon-floppy"></i>Uložit</div>';
   html +=
-    '<h3 class="sidePanelTitle">Nahrát obrázek</h3><form id="side-panel-form">';
+    '<h3 class="side-panel-title">Nahrát obrázek</h3><form id="side-panel-form">';
   html += '<div class="formRow"><label class="formFile">';
   html += '<input type="file" class="formFile" id="addImageFile">';
   html +=

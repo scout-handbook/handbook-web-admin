@@ -45,7 +45,7 @@ function changeLessonGroupsOnClick(
   html +=
     '<div class="button greenButton" id="changeLessonGroupsSave"><i class="icon-floppy"></i>Uložit</div>';
   html +=
-    '<h3 class="sidePanelTitle">Změnit skupiny</h3><form id="side-panel-form">';
+    '<h3 class="side-panel-title">Změnit skupiny</h3><form id="side-panel-form">';
   let publicName = "";
   GROUPS.iterate(function (groupId, group) {
     html +=

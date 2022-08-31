@@ -25,7 +25,7 @@ function changeCompetenceOnClick(event: MouseEvent): void {
   html +=
     '<div class="button greenButton" id="changeCompetenceSave"><i class="icon-floppy"></i>Uložit</div>';
   html +=
-    '<h3 class="sidePanelTitle">Upravit kompetenci</h3><form id="side-panel-form">';
+    '<h3 class="side-panel-title">Upravit kompetenci</h3><form id="side-panel-form">';
   const competence = COMPETENCES.get(getAttribute(event, "id"))!;
   html +=
     '<span class="competenceHeading">Kompetence</span> <input type="text" class="formText formName" id="competenceNumber" value="' +

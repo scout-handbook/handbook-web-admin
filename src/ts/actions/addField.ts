@@ -32,7 +32,7 @@ function addField(
   html +=
     '<div class="button greenButton" id="addFieldSave"><i class="icon-floppy"></i>Uložit</div>';
   html +=
-    '<h3 class="sidePanelTitle">Přidat oblast</h3><form id="side-panel-form">';
+    '<h3 class="side-panel-title">Přidat oblast</h3><form id="side-panel-form">';
   html += '<legend for="fieldName">Název:</legend>';
   html +=
     '<input type="text" class="formText formName" id="fieldName" value="' +

@@ -31,7 +31,7 @@ function changeField(
   html +=
     '<div class="button greenButton" id="changeFieldSave"><i class="icon-floppy"></i>Uložit</div>';
   html +=
-    '<h3 class="sidePanelTitle">Upravit oblast</h3><form id="side-panel-form">';
+    '<h3 class="side-panel-title">Upravit oblast</h3><form id="side-panel-form">';
   html += '<legend for="fieldName">Název:</legend>';
   html +=
     '<input type="text" class="formText formName" id="fieldName" value="' +
