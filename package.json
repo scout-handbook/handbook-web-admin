@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "easymde": "^2.14.0",
-    "showdown": "^1.9.1",
+    "showdown": "^2.1.0",
     "xss": "^1.0.9"
   },
   "scripts": {
@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "@types/codemirror": "5.60.0",
-    "@types/showdown": "^1.9.3",
+    "@types/showdown": "^2.0.0",
     "@typescript-eslint/eslint-plugin": "^4.22.1",
     "@typescript-eslint/parser": "^4.21.0",
     "eslint": "^7.26.0",
