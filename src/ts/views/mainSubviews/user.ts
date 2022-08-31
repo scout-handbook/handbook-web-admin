@@ -102,7 +102,7 @@ function showUserList(
   html += renderRoleSelector();
   html += renderGroupSelector();
   html +=
-    '<div class="button" id="userSearchButton"><i class="icon-search"></i>Vyhledat</div>';
+    '<div class="button" id="user-search-button"><i class="icon-search"></i>Vyhledat</div>';
   if (
     searchName ||
     role !== "all" ||
@@ -152,7 +152,7 @@ function showUserList(
     return false;
   };
   document.getElementById("userSearchForm")!.onsubmit = submitFn;
-  document.getElementById("userSearchButton")!.onclick = submitFn;
+  document.getElementById("user-search-button")!.onclick = submitFn;
   if (
     searchName ||
     role !== "all" ||
