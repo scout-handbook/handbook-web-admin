@@ -185,7 +185,7 @@ function importGroupOnClick(event: MouseEvent): void {
     GROUPS.get(getAttribute(event, "id"))!.name +
     "</h3>";
   html += '<div id="importList"><div id="embeddedSpinner"></div></div>';
-  document.getElementById("sidePanel")!.innerHTML = html;
+  document.getElementById("side-panel")!.innerHTML = html;
   document.getElementById("side-panel-cancel")!.onclick = function (): void {
     history.back();
   };

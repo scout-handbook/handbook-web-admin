@@ -49,7 +49,7 @@ function addImage(inEditor: boolean): void {
   html +=
     '<div class="button"><i class="icon-upload"></i>Vybrat soubor</div></label>';
   html += "</div></form>";
-  document.getElementById("sidePanel")!.innerHTML = html;
+  document.getElementById("side-panel")!.innerHTML = html;
 
   document.getElementById("side-panel-cancel")!.onclick = function (): void {
     history.back();

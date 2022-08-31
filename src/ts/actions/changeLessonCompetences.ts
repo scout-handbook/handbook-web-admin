@@ -62,7 +62,7 @@ function changeLessonCompetencesOnClick(
       "</div>";
   });
   html += "</form>";
-  document.getElementById("sidePanel")!.innerHTML = html;
+  document.getElementById("side-panel")!.innerHTML = html;
 
   document.getElementById("cancelEditorAction")!.onclick = function (): void {
     lessonSettings(id, actionQueue, true);

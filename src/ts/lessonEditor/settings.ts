@@ -65,7 +65,7 @@ function lessonSettings(
   html += renderField();
   html += renderCompetences();
   html += prerenderGroups();
-  document.getElementById("sidePanel")!.innerHTML = html;
+  document.getElementById("side-panel")!.innerHTML = html;
   lessonSettingsCacheEvent.addCallback(renderGroups);
 
   document.getElementById("side-panel-cancel")!.onclick = function (): void {

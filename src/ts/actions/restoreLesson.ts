@@ -53,7 +53,7 @@ function restoreLessonRenderVersionList(
   }
   html += "</form>";
   html += '</div><div id="restoreLessonPreview"></div>';
-  document.getElementById("sidePanel")!.innerHTML = html;
+  document.getElementById("side-panel")!.innerHTML = html;
 
   document.getElementById("side-panel-cancel")!.onclick = function (): void {
     sidePanelOpen();
@@ -121,7 +121,7 @@ function restoreLesson(): void {
     '<div class="button greenButton" id="restoreLessonNext"><i class="icon-fast-fw"></i>Pokračovat</div>';
   html += '<h3 class="side-panel-title">Obnovit smazanou lekci</h3>';
   html += '<div id="restoreLessonList"><div id="embeddedSpinner"></div></div>';
-  document.getElementById("sidePanel")!.innerHTML = html;
+  document.getElementById("side-panel")!.innerHTML = html;
   document.getElementById("side-panel-cancel")!.onclick = function (): void {
     history.back();
   };
