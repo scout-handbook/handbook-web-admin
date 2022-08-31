@@ -16,7 +16,7 @@
 }
 
 .paginationButton:hover,
-.activePaginationButton {
+.active-pagination-button {
   background-color: var(--background-darkest);
   border-color: var(--accent-color);
   color: var(--accent-color);

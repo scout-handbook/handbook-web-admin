@@ -25,7 +25,7 @@ function renderPagination(total: number, current: number): string {
       "</div>";
   }
   ret +=
-    '<div class="paginationButton activePaginationButton">' +
+    '<div class="paginationButton active-pagination-button">' +
     current.toString() +
     "</div>";
   if (current < total) {
