@@ -134,7 +134,7 @@ function showUserList(
     "groupSearchFilter"
   ) as HTMLSelectElement).value = group;
 
-  document.getElementById("userSearchForm")!.onsubmit = function (): boolean {
+  const submitFn = function (): boolean {
     const roleSel = document.getElementById(
       "roleSearchFilter"
     ) as HTMLSelectElement;
@@ -154,9 +154,8 @@ function showUserList(
     );
     return false;
   };
-  document.getElementById(
-    "userSearchButton"
-  )!.onclick = document.getElementById("userSearchForm")!.onsubmit;
+  document.getElementById("userSearchForm")!.onsubmit = submitFn;
+  document.getElementById("userSearchButton")!.onclick = submitFn;
   if (
     searchName ||
     role !== "all" ||
