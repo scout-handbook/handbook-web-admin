@@ -22,7 +22,7 @@
   margin-right: 20px;
 }
 
-#sidePanelOverlay {
+#side-panel-overlay {
   background-color: var(--overlay-fallback-color);
   background-color: var(--overlay-color);
   display: none;
