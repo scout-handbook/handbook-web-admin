@@ -6,7 +6,7 @@ function renderRoleSelector(): string {
   if (LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser") {
     html += '<select class="formSelect" id="roleSearchFilter">';
     html +=
-      '<option id="all" value="all" class="selectFilterSpecial">Všechny role</option>';
+      '<option id="all" value="all" class="select-filter-special">Všechny role</option>';
     html += '<option id="user" value="user">Uživatel</option>';
     html += '<option id="editor" value="editor">Editor</option>';
     if (LOGINSTATE.role === "superuser") {
@@ -22,7 +22,7 @@ function renderRoleSelector(): string {
 function renderGroupSelector(): string {
   let html = '<select class="formSelect" id="groupSearchFilter">';
   html +=
-    '<option id="00000000-0000-0000-0000-000000000000" value="00000000-0000-0000-0000-000000000000" class="selectFilterSpecial">Všechny skupiny</option>';
+    '<option id="00000000-0000-0000-0000-000000000000" value="00000000-0000-0000-0000-000000000000" class="select-filter-special">Všechny skupiny</option>';
   GROUPS.filter(function (id) {
     return id !== "00000000-0000-0000-0000-000000000000";
   }).iterate(function (id, group) {
