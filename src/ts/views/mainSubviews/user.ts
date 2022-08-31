@@ -4,7 +4,7 @@
 function renderRoleSelector(): string {
   let html = "";
   if (LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser") {
-    html += '<select class="formSelect" id="roleSearchFilter">';
+    html += '<select class="formSelect" id="role-search-filter">';
     html +=
       '<option id="all" value="all" class="select-filter-special">Všechny role</option>';
     html += '<option id="user" value="user">Uživatel</option>';
@@ -125,7 +125,7 @@ function showUserList(
   (document.getElementById("userSearchBox") as HTMLInputElement).value =
     searchName;
   if (LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser") {
-    (document.getElementById("roleSearchFilter") as HTMLSelectElement).value =
+    (document.getElementById("role-search-filter") as HTMLSelectElement).value =
       role;
   }
   (document.getElementById("groupSearchFilter") as HTMLSelectElement).value =
@@ -133,7 +133,7 @@ function showUserList(
 
   const submitFn = function (): boolean {
     const roleSel = document.getElementById(
-      "roleSearchFilter"
+      "role-search-filter"
     ) as HTMLSelectElement;
     const groupSel = document.getElementById(
       "groupSearchFilter"
@@ -166,7 +166,7 @@ function showUserList(
   for (let i = 0; i < nodes.length; i++) {
     (nodes[i] as HTMLElement).onclick = function (event): void {
       const roleSel = document.getElementById(
-        "roleSearchFilter"
+        "role-search-filter"
       ) as HTMLSelectElement;
       const groupSel = document.getElementById(
         "groupSearchFilter"
