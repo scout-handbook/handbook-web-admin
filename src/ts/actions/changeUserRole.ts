@@ -30,14 +30,14 @@ function changeUserRoleOnClick(event: MouseEvent): void {
   html += "</select>";
   html += "</form>";
   html +=
-    '<div class="roleHelp"><i class="icon-info-circled"></i><span class="role-help-name">Uživatel</span> - Kdokoliv, kdo se někdy přihlásil pomocí skautISu. Nemá žádná oprávnění navíc oproti nepřihlášeným návštěvníkům.</div>';
+    '<div class="role-help"><i class="icon-info-circled"></i><span class="role-help-name">Uživatel</span> - Kdokoliv, kdo se někdy přihlásil pomocí skautISu. Nemá žádná oprávnění navíc oproti nepřihlášeným návštěvníkům.</div>';
   html +=
-    '<div class="roleHelp"><i class="icon-info-circled"></i><span class="role-help-name">Editor</span> - Instruktor, který má základní přístup ke správě. Může přidávat lekce, měnit jejich obsah, kompetence a přesouvat je mezi oblastmi. Editor má přístup ke správě uživatelů, avšak může prohlížet a měnit pouze hosty a uživatele.</div>';
+    '<div class="role-help"><i class="icon-info-circled"></i><span class="role-help-name">Editor</span> - Instruktor, který má základní přístup ke správě. Může přidávat lekce, měnit jejich obsah, kompetence a přesouvat je mezi oblastmi. Editor má přístup ke správě uživatelů, avšak může prohlížet a měnit pouze hosty a uživatele.</div>';
   if (LOGINSTATE.role === "superuser") {
     html +=
-      '<div class="roleHelp"><i class="icon-info-circled"></i><span class="role-help-name">Administrátor</span> - Instruktor, mající všechna práva editora. Navíc může i mazat lekce a přidávat, upravovat a mazat oblasti a kompetence. Administrátor může navíc přidělovat a odebírat práva editorů.</div>';
+      '<div class="role-help"><i class="icon-info-circled"></i><span class="role-help-name">Administrátor</span> - Instruktor, mající všechna práva editora. Navíc může i mazat lekce a přidávat, upravovat a mazat oblasti a kompetence. Administrátor může navíc přidělovat a odebírat práva editorů.</div>';
     html +=
-      '<div class="roleHelp"><i class="icon-info-circled"></i><span class="role-help-name">Superuser</span> - Uživatel-polobůh.</div>';
+      '<div class="role-help"><i class="icon-info-circled"></i><span class="role-help-name">Superuser</span> - Uživatel-polobůh.</div>';
   }
   document.getElementById("sidePanel")!.innerHTML = html;
 
