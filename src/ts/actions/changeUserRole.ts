@@ -3,7 +3,7 @@
 let roleChanged = false;
 
 function changeUserRolePayloadBuilder(): Payload {
-  const sel = document.getElementById("roleSelect") as HTMLSelectElement;
+  const sel = document.getElementById("role-select") as HTMLSelectElement;
   return { role: encodeURIComponent(sel.options[sel.selectedIndex].value) };
 }
 
@@ -19,7 +19,7 @@ function changeUserRoleOnClick(event: MouseEvent): void {
     getAttribute(event, "name") +
     '</h3><form id="sidePanelForm">';
   html +=
-    '<span class="role-text">Role: </span><select class="formSelect" id="roleSelect">';
+    '<span class="role-text">Role: </span><select class="formSelect" id="role-select">';
   html += '<option id="user" value="user">Uživatel</option>';
   html += '<option id="editor" value="editor">Editor</option>';
   if (LOGINSTATE.role === "superuser") {
@@ -42,7 +42,7 @@ function changeUserRoleOnClick(event: MouseEvent): void {
   document.getElementById("sidePanel")!.innerHTML = html;
 
   (
-    document.getElementById("roleSelect") as HTMLSelectElement
+    document.getElementById("role-select") as HTMLSelectElement
   ).options.namedItem(getAttribute(event, "role"))!.selected = true;
 
   document.getElementById("sidePanelCancel")!.onclick = function (): void {
@@ -63,7 +63,7 @@ function changeUserRoleOnClick(event: MouseEvent): void {
     dispatchIfChanged(aq, roleChanged);
   };
 
-  document.getElementById("roleSelect")!.onchange = function (): void {
+  document.getElementById("role-select")!.onchange = function (): void {
     roleChanged = true;
   };
 
