@@ -39,7 +39,7 @@ function renderMainView(noHistory: boolean): void {
 }
 
 function showMainView(noHistory: boolean): void {
-  let html = '<div id="sidePanel"></div><div id="sidePanelOverlay"></div>';
+  let html = '<div id="sidePanel"></div><div id="side-panel-overlay"></div>';
   html +=
     '<div id="topBar"><div id="userAccount"><img id="userAvatar" alt="Account avatar" src="' +
     CONFIG["admin-uri"] +

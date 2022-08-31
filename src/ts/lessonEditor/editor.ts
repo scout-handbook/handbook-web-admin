@@ -80,7 +80,7 @@ function showLessonEditor(
   changed = false;
   const html =
     '\
-<div id="sidePanel"></div><div id="sidePanelOverlay"></div>\
+<div id="sidePanel"></div><div id="side-panel-overlay"></div>\
 <header>\
 	<div class="button yellowButton" id="discard">\
 		<i class="icon-cancel"></i>Zrušit\
