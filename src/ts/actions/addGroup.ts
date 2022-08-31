@@ -20,7 +20,7 @@ function addGroup(): void {
   html +=
     '<input type="text" class="formText" id="groupName" value="Nová skupina" autocomplete="off"><br>';
   html += "</form>";
-  document.getElementById("sidePanel")!.innerHTML = html;
+  document.getElementById("side-panel")!.innerHTML = html;
 
   document.getElementById("side-panel-cancel")!.onclick = function (): void {
     history.back();

@@ -12,7 +12,7 @@ function openSidePanelImageSelector(
   noHistory = false
 ): void {
   sidePanelDoubleOpen();
-  document.getElementById("sidePanel")!.innerHTML =
+  document.getElementById("side-panel")!.innerHTML =
     '<div id="embeddedSpinner"></div>';
   request(
     CONFIG["api-uri"] + "/v1.0/image",
@@ -119,13 +119,13 @@ function renderSidePanelImageSelector(
     html += "</div>";
   }
   html += "</div>";
-  document.getElementById("sidePanel")!.innerHTML = html;
+  document.getElementById("side-panel")!.innerHTML = html;
 
   document.getElementById("fieldImageCancel")!.onclick = function (): void {
     history.back();
   };
   const imageNodes = document
-    .getElementById("sidePanel")!
+    .getElementById("side-panel")!
     .getElementsByTagName("img");
   for (let i = 0; i < imageNodes.length; i++) {
     imageNodes[i].onclick = function (event: MouseEvent): void {

@@ -30,7 +30,7 @@ function addCompetence(): void {
   html +=
     '<textarea rows="5" class="formText" id="competenceDescription" autocomplete="off">Popis nové kompetence</textarea>';
   html += "</form>";
-  document.getElementById("sidePanel")!.innerHTML = html;
+  document.getElementById("side-panel")!.innerHTML = html;
 
   document.getElementById("side-panel-cancel")!.onclick = function (): void {
     history.back();

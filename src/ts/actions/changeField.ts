@@ -62,7 +62,7 @@ function changeField(
   html +=
     '<br><div class="button" id="fieldIconChange"><i class="icon-pencil"></i>Změnit</div>';
   html += "</form>";
-  document.getElementById("sidePanel")!.innerHTML = html;
+  document.getElementById("side-panel")!.innerHTML = html;
 
   document.getElementById("side-panel-cancel")!.onclick = function (): void {
     history.back();

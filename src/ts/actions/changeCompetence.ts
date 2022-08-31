@@ -40,7 +40,7 @@ function changeCompetenceOnClick(event: MouseEvent): void {
     competence.description +
     "</textarea>";
   html += "</form>";
-  document.getElementById("sidePanel")!.innerHTML = html;
+  document.getElementById("side-panel")!.innerHTML = html;
 
   document.getElementById("side-panel-cancel")!.onclick = function (): void {
     history.back();

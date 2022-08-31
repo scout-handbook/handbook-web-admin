@@ -109,7 +109,7 @@ function lessonHistoryOpen(id: string, actionQueue: ActionQueue): void {
   sidePanelDoubleOpen();
   const html =
     '<div id="lessonHistoryList"><div class="button yellowButton" id="cancelEditorAction"><i class="icon-cancel"></i>Zrušit</div><span id="lessonHistoryListHeader"></span><h3 class="side-panel-title">Historie lekce</h3><div id="lessonHistoryForm"><div id="embeddedSpinner"></div></div></div><div id="lessonHistoryPreview"></div>';
-  document.getElementById("sidePanel")!.innerHTML = html;
+  document.getElementById("side-panel")!.innerHTML = html;
 
   document.getElementById("cancelEditorAction")!.onclick = function (): void {
     lessonSettings(id, actionQueue, true);

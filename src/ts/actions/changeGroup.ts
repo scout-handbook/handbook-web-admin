@@ -25,7 +25,7 @@ function changeGroupOnClick(event: MouseEvent): void {
     GROUPS.get(getAttribute(event, "id"))!.name +
     '" autocomplete="off"><br>';
   html += "</form>";
-  document.getElementById("sidePanel")!.innerHTML = html;
+  document.getElementById("side-panel")!.innerHTML = html;
 
   document.getElementById("side-panel-cancel")!.onclick = function (): void {
     history.back();

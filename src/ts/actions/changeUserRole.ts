@@ -39,7 +39,7 @@ function changeUserRoleOnClick(event: MouseEvent): void {
     html +=
       '<div class="role-help"><i class="icon-info-circled"></i><span class="role-help-name">Superuser</span> - Uživatel-polobůh.</div>';
   }
-  document.getElementById("sidePanel")!.innerHTML = html;
+  document.getElementById("side-panel")!.innerHTML = html;
 
   (
     document.getElementById("role-select") as HTMLSelectElement
