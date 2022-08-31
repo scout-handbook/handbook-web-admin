@@ -46,7 +46,7 @@ function changeUserGroupsOnClick(event: MouseEvent): void {
   });
   html += "</form>";
   html +=
-    '<div class="groupHelp"><i class="icon-info-circled"></i> Každého uživatele lze zařadit do několika skupin (nebo i žádné). Podle toho poté tento uživatel bude moct zobrazit pouze lekce, které byly těmto skupiným zveřejněny. Lekce ve skupině "<span class="publicGroup">' +
+    '<div class="group-help"><i class="icon-info-circled"></i> Každého uživatele lze zařadit do několika skupin (nebo i žádné). Podle toho poté tento uživatel bude moct zobrazit pouze lekce, které byly těmto skupiným zveřejněny. Lekce ve skupině "<span class="publicGroup">' +
     publicName +
     '</span>" uvidí všichni uživatelé bez ohledu na jejich skupiny. </div>';
   document.getElementById("sidePanel")!.innerHTML = html;
