@@ -49,7 +49,7 @@ function rawRequest(
   const xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function (): void {
     if (this.readyState === 4) {
-      callback(JSON.parse(this.responseText));
+      callback(JSON.parse(this.responseText) as APIResponse);
     }
   };
   let query = "";
