@@ -20,7 +20,7 @@ function renderRoleSelector(): string {
 }
 
 function renderGroupSelector(): string {
-  let html = '<select class="formSelect" id="groupSearchFilter">';
+  let html = '<select class="formSelect" id="group-search-filter">';
   html +=
     '<option id="00000000-0000-0000-0000-000000000000" value="00000000-0000-0000-0000-000000000000" class="select-filter-special">Všechny skupiny</option>';
   GROUPS.filter(function (id) {
@@ -128,7 +128,7 @@ function showUserList(
     (document.getElementById("role-search-filter") as HTMLSelectElement).value =
       role;
   }
-  (document.getElementById("groupSearchFilter") as HTMLSelectElement).value =
+  (document.getElementById("group-search-filter") as HTMLSelectElement).value =
     group;
 
   const submitFn = function (): boolean {
@@ -136,7 +136,7 @@ function showUserList(
       "role-search-filter"
     ) as HTMLSelectElement;
     const groupSel = document.getElementById(
-      "groupSearchFilter"
+      "group-search-filter"
     ) as HTMLSelectElement;
     let newRole: Role | "all" = "all";
     if (roleSel) {
@@ -169,7 +169,7 @@ function showUserList(
         "role-search-filter"
       ) as HTMLSelectElement;
       const groupSel = document.getElementById(
-        "groupSearchFilter"
+        "group-search-filter"
       ) as HTMLSelectElement;
       let newRole: Role | "all" = "all";
       if (roleSel) {
