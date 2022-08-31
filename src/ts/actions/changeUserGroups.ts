@@ -23,7 +23,7 @@ function changeUserGroupsOnClick(event: MouseEvent): void {
   html +=
     '<div class="button greenButton" id="changeUserGroupsSave"><i class="icon-floppy"></i>Uložit</div>';
   html +=
-    '<h3 class="sidePanelTitle">Změnit skupiny: ' +
+    '<h3 class="side-panel-title">Změnit skupiny: ' +
     getAttribute(event, "name") +
     '</h3><form id="side-panel-form">';
   const currentGroups = JSON.parse(

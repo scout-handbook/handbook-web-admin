@@ -37,7 +37,7 @@ function restoreLessonRenderVersionList(
 ): void {
   sidePanelDoubleOpen();
   let html =
-    '<div id="restoreLessonVersionList"><div class="button yellowButton" id="side-panel-cancel"><i class="icon-cancel"></i>Zrušit</div><span id="restoreLessonListHeader"></span><h3 class="sidePanelTitle">Obnovit smazanou lekci</h3>';
+    '<div id="restoreLessonVersionList"><div class="button yellowButton" id="side-panel-cancel"><i class="icon-cancel"></i>Zrušit</div><span id="restoreLessonListHeader"></span><h3 class="side-panel-title">Obnovit smazanou lekci</h3>';
   html += '<form id="side-panel-form">';
   for (let i = 0; i < list.length; i++) {
     html +=
@@ -119,7 +119,7 @@ function restoreLesson(): void {
     '<div class="button yellowButton" id="side-panel-cancel"><i class="icon-cancel"></i>Zrušit</div>';
   html +=
     '<div class="button greenButton" id="restoreLessonNext"><i class="icon-fast-fw"></i>Pokračovat</div>';
-  html += '<h3 class="sidePanelTitle">Obnovit smazanou lekci</h3>';
+  html += '<h3 class="side-panel-title">Obnovit smazanou lekci</h3>';
   html += '<div id="restoreLessonList"><div id="embeddedSpinner"></div></div>';
   document.getElementById("sidePanel")!.innerHTML = html;
   document.getElementById("side-panel-cancel")!.onclick = function (): void {
