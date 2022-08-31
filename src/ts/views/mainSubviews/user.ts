@@ -98,7 +98,7 @@ function showUserList(
   }
   const users = list.users;
   let html =
-    '<form id="userSearchForm"><input type="text" class="formText" id="userSearchBox" placeholder="Jméno uživatele">';
+    '<form id="userSearchForm"><input type="text" class="formText" id="user-search-box" placeholder="Jméno uživatele">';
   html += renderRoleSelector();
   html += renderGroupSelector();
   html +=
@@ -122,7 +122,7 @@ function showUserList(
   html += renderPagination(Math.ceil(list.count / perPage), page);
   document.getElementById("userList")!.innerHTML = html;
 
-  (document.getElementById("userSearchBox") as HTMLInputElement).value =
+  (document.getElementById("user-search-box") as HTMLInputElement).value =
     searchName;
   if (LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser") {
     (document.getElementById("role-search-filter") as HTMLSelectElement).value =
@@ -143,7 +143,7 @@ function showUserList(
       newRole = roleSel.options[roleSel.selectedIndex].value as Role;
     }
     downloadUserList(
-      (document.getElementById("userSearchBox") as HTMLInputElement).value,
+      (document.getElementById("user-search-box") as HTMLInputElement).value,
       1,
       perPage,
       newRole,
