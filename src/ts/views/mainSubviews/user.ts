@@ -113,7 +113,7 @@ function showUserList(
   }
   html += "</form>";
   html +=
-    '<table class="userTable"><th>Jméno</th><th>Role</th><th>Skupiny</th>';
+    '<table class="user-table"><th>Jméno</th><th>Role</th><th>Skupiny</th>';
   html += "</tr>";
   for (let i = 0; i < users.length; i++) {
     html += renderUserRow(users[i]);
