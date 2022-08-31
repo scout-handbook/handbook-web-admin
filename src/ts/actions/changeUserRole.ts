@@ -11,7 +11,7 @@ function changeUserRoleOnClick(event: MouseEvent): void {
   roleChanged = false;
   sidePanelOpen();
   let html =
-    '<div class="button yellowButton" id="sidePanelCancel"><i class="icon-cancel"></i>Zrušit</div>';
+    '<div class="button yellowButton" id="side-panel-cancel"><i class="icon-cancel"></i>Zrušit</div>';
   html +=
     '<div class="button greenButton" id="changeUserRoleSave"><i class="icon-floppy"></i>Uložit</div>';
   html +=
@@ -45,7 +45,7 @@ function changeUserRoleOnClick(event: MouseEvent): void {
     document.getElementById("role-select") as HTMLSelectElement
   ).options.namedItem(getAttribute(event, "role"))!.selected = true;
 
-  document.getElementById("sidePanelCancel")!.onclick = function (): void {
+  document.getElementById("side-panel-cancel")!.onclick = function (): void {
     history.back();
   };
 

@@ -28,7 +28,7 @@ function addField(
 ): void {
   sidePanelOpen();
   let html =
-    '<div class="button yellowButton" id="sidePanelCancel"><i class="icon-cancel"></i>Zrušit</div>';
+    '<div class="button yellowButton" id="side-panel-cancel"><i class="icon-cancel"></i>Zrušit</div>';
   html +=
     '<div class="button greenButton" id="addFieldSave"><i class="icon-floppy"></i>Uložit</div>';
   html +=
@@ -65,7 +65,7 @@ function addField(
   html += "</form>";
   document.getElementById("sidePanel")!.innerHTML = html;
 
-  document.getElementById("sidePanelCancel")!.onclick = function (): void {
+  document.getElementById("side-panel-cancel")!.onclick = function (): void {
     history.back();
   };
   document.getElementById("fieldImageChange")!.onclick = function (): void {
