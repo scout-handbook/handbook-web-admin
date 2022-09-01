@@ -99,7 +99,7 @@ function showLessonEditor(
 </header>\
 <div id="image-selector">\
 	<div id="image-scroller">\
-		<div class="button yellowButton" id="closeImageSelector">\
+		<div class="button yellowButton" id="close-image-selector">\
 			<i class="icon-up-open"></i> Zavřít\
 		</div>\
 		<div class="button greenButton" id="imageSelectorAdd">\
@@ -127,7 +127,7 @@ function showLessonEditor(
   document.getElementById("lessonSettings")!.onclick = function (): void {
     lessonSettings(id, saveActionQueue, false);
   };
-  document.getElementById("closeImageSelector")!.onclick = toggleImageSelector;
+  document.getElementById("close-image-selector")!.onclick = toggleImageSelector;
   //document.getElementById("imageSelectorAdd")!.onclick = function(): void {addImage(true);};
   document.getElementById("imageSelectorAdd")!.style.display = "none"; // TODO: Re-enable uploads in editor without discarding its contents
 
