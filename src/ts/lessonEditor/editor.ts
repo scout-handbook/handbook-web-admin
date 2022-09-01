@@ -90,7 +90,7 @@ function showLessonEditor(
     name +
     '" autocomplete="off">\
 	</form>\
-	<div class="button greenButton" id="save">\
+	<div class="button green-button" id="save">\
 		<i class="icon-floppy"></i>Uložit\
 	</div>\
 	<div class="button" id="lesson-settings">\
@@ -102,7 +102,7 @@ function showLessonEditor(
 		<div class="button yellow-button" id="close-image-selector">\
 			<i class="icon-up-open"></i> Zavřít\
 		</div>\
-		<div class="button greenButton" id="imageSelectorAdd">\
+		<div class="button green-button" id="imageSelectorAdd">\
 			<i class="icon-plus"></i> Nahrát\
 		</div>\
 		<div id="image-wrapper"></div>\

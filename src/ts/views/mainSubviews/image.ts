@@ -90,7 +90,7 @@ function showImageSubview(noHistory: boolean): void {
   document.getElementById("image-manager")!.className += " active-top-bar-tab";
   let html = "<h1>" + CONFIG["site-name"] + " - Obrázky</h1>";
   html +=
-    '<div class="button greenButton" id="addImage"><i class="icon-plus"></i>Nahrát</div>';
+    '<div class="button green-button" id="addImage"><i class="icon-plus"></i>Nahrát</div>';
   html += '<div id="imageList"></div>';
   document.getElementById("main-page")!.innerHTML = html;
 

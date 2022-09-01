@@ -25,11 +25,11 @@
   text-decoration: none;
 }
 
-.greenButton {
+.green-button {
   background-color: var(--button-accent-green);
 }
 
-.greenButton:hover {
+.green-button:hover {
   border-color: var(--button-accent-green);
 }
 

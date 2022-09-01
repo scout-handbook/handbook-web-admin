@@ -41,7 +41,7 @@ function showCompetenceSubview(noHistory: boolean): void {
   let html = "<h1>" + CONFIG["site-name"] + " - Kompetence</h1>";
   if (LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser") {
     html +=
-      '<div class="button greenButton" id="addCompetence"><i class="icon-plus"></i>Přidat</div><br>';
+      '<div class="button green-button" id="addCompetence"><i class="icon-plus"></i>Přidat</div><br>';
   }
   html += renderCompetenceList();
   document.getElementById("main-page")!.innerHTML = html;
