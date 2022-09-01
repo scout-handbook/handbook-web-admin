@@ -20,7 +20,7 @@ h3.main-page,
   top: 81px;
 }
 
-#topBar {
+#top-bar {
   background-color: var(--background-darker);
   border-bottom: 1px solid var(--border-color);
   height: 80px;
