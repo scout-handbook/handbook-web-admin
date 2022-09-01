@@ -50,7 +50,7 @@
   display: none;
 }
 
-.formCustom {
+.form-custom {
   background-color: var(--background-darker);
   border: 1px solid var(--border-color);
   cursor: pointer;
@@ -62,17 +62,17 @@
   width: 15px;
 }
 
-.formCustom::before {
+.form-custom::before {
   content: "";
   position: absolute;
 }
 
-.formCustom:hover {
+.form-custom:hover {
   background-color: var(--background-darkest);
   border-color: var(--accent-color);
 }
 
-input:checked + .formCustom {
+input:checked + .form-custom {
   background-color: var(--background-darkest);
   border-color: var(--accent-color);
 }

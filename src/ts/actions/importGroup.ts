@@ -101,7 +101,7 @@ function importGroupSelectParticipantsRender(id: string): void {
       newparticipants[i].id.toString() +
       '" data-name="' +
       newparticipants[i].name +
-      '"><span class="formCustom form-checkbox"></span></label>' +
+      '"><span class="form-custom form-checkbox"></span></label>' +
       newparticipants[i].name +
       "</div>";
   }
@@ -163,7 +163,7 @@ function importGroupSelectEventRender(id: string, events: Array<Event>): void {
     html +=
       '<div class="formRow"><label class="formSwitch"><input type="radio" name="field" data-id="' +
       events[i].id.toString() +
-      '"><span class="formCustom form-radio"></span></label>' +
+      '"><span class="form-custom form-radio"></span></label>' +
       events[i].name +
       "</div>";
   }

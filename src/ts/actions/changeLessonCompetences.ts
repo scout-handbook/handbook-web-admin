@@ -53,7 +53,7 @@ function changeLessonCompetencesOnClick(
       html += " checked";
     }
     html += ' data-id="' + competenceId + '"';
-    html += '><span class="formCustom form-checkbox"></span></label>';
+    html += '><span class="form-custom form-checkbox"></span></label>';
     html +=
       '<span class="competenceNumber">' +
       competence.number.toString() +
