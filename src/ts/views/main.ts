@@ -57,7 +57,7 @@ function showMainView(noHistory: boolean): void {
   html += '<div class="topBarTab" id="userManager">Uživatelé</div>';
   html += '<div class="topBarTab" id="groupManager">Uživatelské skupiny</div>';
   html += "</div>";
-  html += '<div id="mainPageContainer"><div id="main-page">';
+  html += '<div id="main-page-container"><div id="main-page">';
   html += "<h1>" + CONFIG["site-name"] + " - ";
   if (mainPageTab === "competences") {
     html += "Kompetence";
