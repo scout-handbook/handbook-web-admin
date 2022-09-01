@@ -163,7 +163,7 @@ function importGroupSelectEventRender(id: string, events: Array<Event>): void {
     html +=
       '<div class="formRow"><label class="formSwitch"><input type="radio" name="field" data-id="' +
       events[i].id.toString() +
-      '"><span class="formCustom formRadio"></span></label>' +
+      '"><span class="formCustom form-radio"></span></label>' +
       events[i].name +
       "</div>";
   }

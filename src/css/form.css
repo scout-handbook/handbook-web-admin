@@ -77,11 +77,11 @@ input:checked + .formCustom {
   border-color: var(--accent-color);
 }
 
-.formRadio {
+.form-radio {
   border-radius: 8px;
 }
 
-.formRadio::before {
+.form-radio::before {
   background-color: var(--border-color);
   border-radius: 4px;
   height: 7px;
@@ -91,11 +91,11 @@ input:checked + .formCustom {
   width: 7px;
 }
 
-.formRadio:hover::before {
+.form-radio:hover::before {
   background-color: var(--accent-color);
 }
 
-input:checked + .formRadio::before {
+input:checked + .form-radio::before {
   background-color: var(--accent-color);
 }
 
