@@ -60,7 +60,7 @@ function renderSidePanelImageSelector(
   const start = perPage * (page - 1);
   for (let i = start; i < Math.min(list.length, start + perPage); i++) {
     html +=
-      '<div class="thumbnailContainer"><img src="' +
+      '<div class="thumbnail-container"><img src="' +
       CONFIG["api-uri"] +
       "/v1.0/image/" +
       list[i] +
