@@ -35,11 +35,11 @@ function addField(
     '<h3 class="side-panel-title">Přidat oblast</h3><form id="side-panel-form">';
   html += '<legend for="fieldName">Název:</legend>';
   html +=
-    '<input type="text" class="formText formName" id="fieldName" value="' +
+    '<input type="text" class="form-text formName" id="fieldName" value="' +
     state.name +
     '" autocomplete="off">';
   html +=
-    '<textarea rows="5" class="formText" id="fieldDescription" autocomplete="off">' +
+    '<textarea rows="5" class="form-text" id="fieldDescription" autocomplete="off">' +
     state.description +
     "</textarea>";
   html += '<legend for="fieldImage">Náhledový obrázek:</legend>';

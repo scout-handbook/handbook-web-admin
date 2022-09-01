@@ -98,7 +98,7 @@ function showUserList(
   }
   const users = list.users;
   let html =
-    '<form id="user-search-form"><input type="text" class="formText" id="user-search-box" placeholder="Jméno uživatele">';
+    '<form id="user-search-form"><input type="text" class="form-text" id="user-search-box" placeholder="Jméno uživatele">';
   html += renderRoleSelector();
   html += renderGroupSelector();
   html +=

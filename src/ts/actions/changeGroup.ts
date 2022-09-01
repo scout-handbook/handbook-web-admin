@@ -21,7 +21,7 @@ function changeGroupOnClick(event: MouseEvent): void {
     '<h3 class="side-panel-title">Upravit skupinu</h3><form id="side-panel-form">';
   html += '<legend for="fieldName">Název:</legend>';
   html +=
-    '<input type="text" class="formText" id="groupName" value="' +
+    '<input type="text" class="form-text" id="groupName" value="' +
     GROUPS.get(getAttribute(event, "id"))!.name +
     '" autocomplete="off"><br>';
   html += "</form>";

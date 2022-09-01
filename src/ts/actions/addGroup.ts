@@ -18,7 +18,7 @@ function addGroup(): void {
     '<h3 class="side-panel-title">Přidat skupinu</h3><form id="side-panel-form">';
   html += '<legend for="fieldName">Název:</legend>';
   html +=
-    '<input type="text" class="formText" id="groupName" value="Nová skupina" autocomplete="off"><br>';
+    '<input type="text" class="form-text" id="groupName" value="Nová skupina" autocomplete="off"><br>';
   html += "</form>";
   document.getElementById("side-panel")!.innerHTML = html;
 

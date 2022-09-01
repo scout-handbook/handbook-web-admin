@@ -86,7 +86,7 @@ function showLessonEditor(
 		<i class="icon-cancel"></i>Zrušit\
 	</div>\
 	<form>\
-		<input type="text" class="formText formName" id="name" value="' +
+		<input type="text" class="form-text formName" id="name" value="' +
     name +
     '" autocomplete="off">\
 	</form>\
