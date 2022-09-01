@@ -51,7 +51,7 @@ function changeLessonFieldOnClick(
       checked = true;
     }
     html +=
-      '<div class="formRow"><label class="form-switch"><input type="radio" name="field"';
+      '<div class="form-row"><label class="form-switch"><input type="radio" name="field"';
     if (checked) {
       html += " checked";
     }

@@ -41,7 +41,7 @@ function restoreLessonRenderVersionList(
   html += '<form id="side-panel-form">';
   for (let i = 0; i < list.length; i++) {
     html +=
-      '<div class="formRow"><label class="form-switch"><input type="radio" name="restoreLessonversion" data-name="' +
+      '<div class="form-row"><label class="form-switch"><input type="radio" name="restoreLessonversion" data-name="' +
       list[i].name +
       '" data-version="' +
       list[i].version.toString() +
@@ -101,7 +101,7 @@ function restoreLessonRenderLessonList(list: IDList<DeletedLesson>): void {
   let html = '<form id="side-panel-form">';
   list.iterate(function (id, deletedLesson) {
     html +=
-      '<div class="formRow"><label class="form-switch"><input type="radio" name="lesson" data-id="' +
+      '<div class="form-row"><label class="form-switch"><input type="radio" name="lesson" data-id="' +
       id +
       '"><span class="form-custom form-radio"></span></label>' +
       deletedLesson.name +

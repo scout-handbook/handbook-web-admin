@@ -48,7 +48,7 @@ function changeLessonCompetencesOnClick(
     '<h3 class="side-panel-title">Změnit kompetence</h3><form id="side-panel-form">';
   COMPETENCES.iterate(function (competenceId, competence) {
     html +=
-      '<div class="formRow"><label class="form-switch"><input type="checkbox"';
+      '<div class="form-row"><label class="form-switch"><input type="checkbox"';
     if (lessonSettingsCache.competences.indexOf(competenceId) >= 0) {
       html += " checked";
     }
