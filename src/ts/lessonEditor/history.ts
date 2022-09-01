@@ -81,7 +81,7 @@ function lessonHistoryListRender(
       list[i].name +
       '" data-version="' +
       list[i].version.toString() +
-      '"><span class="form-custom form-radio"></span></label><span class="lessonHistoryVersion">' +
+      '"><span class="form-custom form-radio"></span></label><span class="lesson-history-version">' +
       list[i].name +
       "</span> — " +
       parseVersion(list[i].version) +
