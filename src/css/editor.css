@@ -47,7 +47,7 @@ header {
 
 #discard,
 #save,
-#lessonSettings,
+#lesson-settings,
 #close-image-selector {
   margin-top: 19px;
 }
@@ -59,7 +59,7 @@ header {
 }
 
 #save,
-#lessonSettings {
+#lesson-settings {
   float: right;
   margin-right: 19px;
 }

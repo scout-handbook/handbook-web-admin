@@ -93,7 +93,7 @@ function showLessonEditor(
 	<div class="button greenButton" id="save">\
 		<i class="icon-floppy"></i>Uložit\
 	</div>\
-	<div class="button" id="lessonSettings">\
+	<div class="button" id="lesson-settings">\
 		<i class="icon-cog"></i>Nastavení\
 	</div>\
 </header>\
@@ -124,7 +124,7 @@ function showLessonEditor(
       discardActionQueue.defaultDispatch(false);
     }
   };
-  document.getElementById("lessonSettings")!.onclick = function (): void {
+  document.getElementById("lesson-settings")!.onclick = function (): void {
     lessonSettings(id, saveActionQueue, false);
   };
   document.getElementById("close-image-selector")!.onclick = toggleImageSelector;
