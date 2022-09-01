@@ -95,7 +95,7 @@ function showLessonSubview(noHistory: boolean): void {
       '<div class="button greenButton" id="addField"><i class="icon-plus"></i>Přidat oblast</div>';
   }
   html +=
-    '<div class="button greenButton" id="addLesson"><i class="icon-plus"></i>Přidat lekci</div>';
+    '<div class="button greenButton" id="add-lesson"><i class="icon-plus"></i>Přidat lekci</div>';
   if (LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser") {
     html +=
       '<div class="button" id="restoreLesson"><i class="icon-history"></i>Smazané lekce</div>';
@@ -109,7 +109,7 @@ function showLessonSubview(noHistory: boolean): void {
       addField();
     };
   }
-  document.getElementById("addLesson")!.onclick = function (): void {
+  document.getElementById("add-lesson")!.onclick = function (): void {
     showLessonAddView();
   };
   if (LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser") {
