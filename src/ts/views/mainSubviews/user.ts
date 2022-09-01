@@ -230,9 +230,9 @@ function downloadUserList(
 
 function showUserSubview(noHistory: boolean): void {
   mainPageTab = "users";
-  const nodes = getElementsByClassName("topBarTab");
+  const nodes = getElementsByClassName("top-bar-tab");
   for (let i = 0; i < nodes.length; i++) {
-    nodes[i].className = "topBarTab";
+    nodes[i].className = "top-bar-tab";
   }
   document.getElementById("userManager")!.className += " active-top-bar-tab";
   const html =

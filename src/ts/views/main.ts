@@ -51,11 +51,11 @@ function showMainView(noHistory: boolean): void {
     "/v1.0/logout?redirect-uri=" +
     encodeURIComponent(CONFIG["frontend-uri"]) +
     '">Odhlásit</a><a href="/" id="frontend-link">Zpět na web</a></div></div>';
-  html += '<div class="topBarTab" id="lessonManager">Lekce</div>';
-  html += '<div class="topBarTab" id="competenceManager">Kompetence</div>';
-  html += '<div class="topBarTab" id="imageManager">Obrázky</div>';
-  html += '<div class="topBarTab" id="userManager">Uživatelé</div>';
-  html += '<div class="topBarTab" id="groupManager">Uživatelské skupiny</div>';
+  html += '<div class="top-bar-tab" id="lessonManager">Lekce</div>';
+  html += '<div class="top-bar-tab" id="competenceManager">Kompetence</div>';
+  html += '<div class="top-bar-tab" id="imageManager">Obrázky</div>';
+  html += '<div class="top-bar-tab" id="userManager">Uživatelé</div>';
+  html += '<div class="top-bar-tab" id="groupManager">Uživatelské skupiny</div>';
   html += "</div>";
   html += '<div id="main-page-container"><div id="main-page">';
   html += "<h1>" + CONFIG["site-name"] + " - ";

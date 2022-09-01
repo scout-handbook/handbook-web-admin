@@ -40,9 +40,9 @@ function renderGroupList(): string {
 
 function showGroupSubview(noHistory: boolean): void {
   mainPageTab = "groups";
-  const nodes = getElementsByClassName("topBarTab");
+  const nodes = getElementsByClassName("top-bar-tab");
   for (let i = 0; i < nodes.length; i++) {
-    nodes[i].className = "topBarTab";
+    nodes[i].className = "top-bar-tab";
   }
   document.getElementById("groupManager")!.className += " active-top-bar-tab";
   let html = "<h1>" + CONFIG["site-name"] + " - Uživatelské skupiny</h1>";
