@@ -52,7 +52,7 @@ function showGroupSubview(noHistory: boolean): void {
   }
   html += renderGroupList();
   document.getElementById("main-page")!.innerHTML = html;
-  document.getElementById("mainPageContainer")!.scrollTop = 0;
+  document.getElementById("main-page-container")!.scrollTop = 0;
 
   if (LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser") {
     document.getElementById("addGroup")!.onclick = addGroup;

@@ -45,7 +45,7 @@ function showCompetenceSubview(noHistory: boolean): void {
   }
   html += renderCompetenceList();
   document.getElementById("main-page")!.innerHTML = html;
-  document.getElementById("mainPageContainer")!.scrollTop = 0;
+  document.getElementById("main-page-container")!.scrollTop = 0;
 
   if (LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser") {
     document.getElementById("addCompetence")!.onclick = addCompetence;
