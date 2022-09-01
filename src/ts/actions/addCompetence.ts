@@ -24,7 +24,7 @@ function addCompetence(): void {
   html +=
     '<h3 class="side-panel-title">Přidat kompetenci</h3><form id="side-panel-form">';
   html +=
-    '<span class="competenceHeading">Kompetence</span> <input type="text" class="form-text formName" id="competenceNumber" value="00" autocomplete="off"><br>';
+    '<span class="competenceHeading">Kompetence</span> <input type="text" class="form-text form-name" id="competenceNumber" value="00" autocomplete="off"><br>';
   html +=
     '<input type="text" class="form-text" id="competenceName" value="Nová kompetence" autocomplete="off"><br>';
   html +=
