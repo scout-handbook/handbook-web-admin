@@ -10,7 +10,7 @@ function showImagePreview(event: MouseEvent): void {
     CONFIG["api-uri"] +
     "/v1.0/image/" +
     (event.target as HTMLElement).dataset.id! +
-    '" class="previewImage">';
+    '" class="preview-image">';
   overlay.innerHTML = html;
   overlay.onclick = function (): void {
     overlay.style.display = "none";
