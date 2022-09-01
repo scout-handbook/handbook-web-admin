@@ -55,7 +55,8 @@ function showMainView(noHistory: boolean): void {
   html += '<div class="top-bar-tab" id="competence-manager">Kompetence</div>';
   html += '<div class="top-bar-tab" id="image-manager">Obrázky</div>';
   html += '<div class="top-bar-tab" id="user-manager">Uživatelé</div>';
-  html += '<div class="top-bar-tab" id="group-manager">Uživatelské skupiny</div>';
+  html +=
+    '<div class="top-bar-tab" id="group-manager">Uživatelské skupiny</div>';
   html += "</div>";
   html += '<div id="main-page-container"><div id="main-page">';
   html += "<h1>" + CONFIG["site-name"] + " - ";
