@@ -1,7 +1,7 @@
 /* exported restoreLesson */
 
 function restoreLessonRenderVersion(name: string, body: string): void {
-  refreshPreview(name, body, "restoreLessonPreview");
+  refreshPreview(name, body, "restore-lesson-preview");
   const html =
     '<div class="button greenButton" id="restoreLessonEdit"><i class="icon-history"></i>Obnovit</div>';
   document.getElementById("restoreLessonListHeader")!.innerHTML = html;
@@ -15,7 +15,7 @@ function restoreLessonRenderVersion(name: string, body: string): void {
 function restoreLessonShowVersion(id: string, event: Event): void {
   const version = (event.target as HTMLElement).dataset.version as string;
   const name = (event.target as HTMLElement).dataset.name!;
-  document.getElementById("restoreLessonPreview")!.innerHTML =
+  document.getElementById("restore-lesson-preview")!.innerHTML =
     '<div id="embeddedSpinner"></div>';
   request(
     CONFIG["api-uri"] + "/v1.0/deleted-lesson/" + id + "/history/" + version,
@@ -52,7 +52,7 @@ function restoreLessonRenderVersionList(
       "</div>";
   }
   html += "</form>";
-  html += '</div><div id="restoreLessonPreview"></div>';
+  html += '</div><div id="restore-lesson-preview"></div>';
   document.getElementById("side-panel")!.innerHTML = html;
 
   document.getElementById("side-panel-cancel")!.onclick = function (): void {
