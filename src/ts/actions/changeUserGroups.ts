@@ -40,7 +40,7 @@ function changeUserGroupsOnClick(event: MouseEvent): void {
         html += " checked";
       }
       html += ' data-id="' + id + '"';
-      html += '><span class="formCustom form-checkbox"></span></label>';
+      html += '><span class="form-custom form-checkbox"></span></label>';
       html += group.name + "</div>";
     }
   });

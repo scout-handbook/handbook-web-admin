@@ -45,7 +45,7 @@ function restoreLessonRenderVersionList(
       list[i].name +
       '" data-version="' +
       list[i].version.toString() +
-      '"><span class="formCustom form-radio"></span></label><span class="restore-lesson-version">' +
+      '"><span class="form-custom form-radio"></span></label><span class="restore-lesson-version">' +
       list[i].name +
       "</span> — " +
       parseVersion(list[i].version) +
@@ -103,7 +103,7 @@ function restoreLessonRenderLessonList(list: IDList<DeletedLesson>): void {
     html +=
       '<div class="formRow"><label class="formSwitch"><input type="radio" name="lesson" data-id="' +
       id +
-      '"><span class="formCustom form-radio"></span></label>' +
+      '"><span class="form-custom form-radio"></span></label>' +
       deletedLesson.name +
       "</div>";
   });

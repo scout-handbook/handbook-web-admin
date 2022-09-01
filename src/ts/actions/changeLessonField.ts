@@ -60,7 +60,7 @@ function changeLessonFieldOnClick(
     } else {
       html += ' data-id=""';
     }
-    html += '><span class="formCustom form-radio"></span></label>';
+    html += '><span class="form-custom form-radio"></span></label>';
     if (fieldId) {
       html += field.name;
     } else {

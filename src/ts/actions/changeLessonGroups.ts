@@ -54,7 +54,7 @@ function changeLessonGroupsOnClick(
       html += " checked";
     }
     html += ' data-id="' + groupId + '"';
-    html += '><span class="formCustom form-checkbox"></span></label>';
+    html += '><span class="form-custom form-checkbox"></span></label>';
     if (groupId === "00000000-0000-0000-0000-000000000000") {
       html += '<span class="public-group">' + group.name + "</span></div>";
       publicName = group.name;
