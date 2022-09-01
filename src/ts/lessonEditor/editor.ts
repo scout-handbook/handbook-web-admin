@@ -98,7 +98,7 @@ function showLessonEditor(
 	</div>\
 </header>\
 <div id="imageSelector">\
-	<div id="imageScroller">\
+	<div id="image-scroller">\
 		<div class="button yellowButton" id="closeImageSelector">\
 			<i class="icon-up-open"></i> Zavřít\
 		</div>\
