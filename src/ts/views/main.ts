@@ -4,7 +4,7 @@ let mainPageTab: MainPageTab = "lessons";
 
 function renderMainView(noHistory: boolean): void {
   if (LOGINSTATE.avatar) {
-    (document.getElementById("userAvatar") as HTMLImageElement).src =
+    (document.getElementById("user-avatar") as HTMLImageElement).src =
       "data:image/png;base64," + LOGINSTATE.avatar;
   }
   document.getElementById("user-name")!.innerHTML = LOGINSTATE.name;
@@ -41,7 +41,7 @@ function renderMainView(noHistory: boolean): void {
 function showMainView(noHistory: boolean): void {
   let html = '<div id="side-panel"></div><div id="side-panel-overlay"></div>';
   html +=
-    '<div id="topBar"><div id="userAccount"><img id="userAvatar" alt="Account avatar" src="' +
+    '<div id="topBar"><div id="userAccount"><img id="user-avatar" alt="Account avatar" src="' +
     CONFIG["admin-uri"] +
     '/avatar.png">';
   html += '<div id="user-name">&nbsp;</div>';
