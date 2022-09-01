@@ -64,7 +64,7 @@ function changeLessonFieldOnClick(
     if (fieldId) {
       html += field.name;
     } else {
-      html += '<span class="anonymousField">Nezařazeno</span>';
+      html += '<span class="anonymous-field">Nezařazeno</span>';
     }
     html += "</div>";
   });

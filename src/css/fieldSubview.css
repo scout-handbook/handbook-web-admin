@@ -1,4 +1,4 @@
-.anonymousField {
+.anonymous-field {
   font-style: italic;
 }
 
@@ -7,6 +7,6 @@
 }
 
 .field-image-container {
-  margin: 0 auto 30px auto;
+  margin: 0 auto 30px;
   max-width: 770px;
 }

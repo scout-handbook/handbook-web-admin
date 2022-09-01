@@ -5,7 +5,7 @@ function renderField(): string {
   html +=
     '<div class="button cyanButton" id="changeField"><i class="icon-pencil"></i>Upravit</div><br>';
   if (!lessonSettingsCache.field) {
-    html += '<span class="anonymousField">Nezařazeno</span>';
+    html += '<span class="anonymous-field">Nezařazeno</span>';
   } else {
     html += FIELDS.get(lessonSettingsCache.field)!.name;
   }
