@@ -51,7 +51,7 @@ function renderUserRow(user: User): string {
   }
   if (LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser") {
     html +=
-      '<br><div class="button cyanButton changeUserRole" data-id="' +
+      '<br><div class="button cyan-button changeUserRole" data-id="' +
       user.id.toString() +
       '" data-role="' +
       user.role +
@@ -74,7 +74,7 @@ function renderUserRow(user: User): string {
     html += "<br>";
   }
   html +=
-    '<div class="button cyanButton changeUserGroups" data-id="' +
+    '<div class="button cyan-button changeUserGroups" data-id="' +
     user.id.toString() +
     "\" data-groups='" +
     JSON.stringify(user.groups) +

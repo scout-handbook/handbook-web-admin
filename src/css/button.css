@@ -33,11 +33,11 @@
   border-color: var(--button-accent-green);
 }
 
-.cyanButton {
+.cyan-button {
   background-color: var(--button-accent-cyan);
 }
 
-.cyanButton:hover {
+.cyan-button:hover {
   border-color: var(--button-accent-cyan);
 }
 
