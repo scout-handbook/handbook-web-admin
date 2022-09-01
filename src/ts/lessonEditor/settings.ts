@@ -20,7 +20,7 @@ function renderCompetences(): string {
     return lessonSettingsCache.competences.indexOf(id) >= 0;
   }).iterate(function (_, competence) {
     html +=
-      '<br><span class="competenceNumber">' +
+      '<br><span class="competence-number">' +
       competence.number.toString() +
       ":</span> " +
       competence.name;

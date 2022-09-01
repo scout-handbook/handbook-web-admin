@@ -3,7 +3,7 @@
 function addCompetencePayloadBuilder(): Payload {
   return {
     number: encodeURIComponent(
-      (document.getElementById("competenceNumber") as HTMLInputElement).value
+      (document.getElementById("competence-number") as HTMLInputElement).value
     ),
     name: encodeURIComponent(
       (document.getElementById("competence-name") as HTMLInputElement).value
@@ -24,7 +24,7 @@ function addCompetence(): void {
   html +=
     '<h3 class="side-panel-title">Přidat kompetenci</h3><form id="side-panel-form">';
   html +=
-    '<span class="competence-heading">Kompetence</span> <input type="text" class="form-text form-name" id="competenceNumber" value="00" autocomplete="off"><br>';
+    '<span class="competence-heading">Kompetence</span> <input type="text" class="form-text form-name" id="competence-number" value="00" autocomplete="off"><br>';
   html +=
     '<input type="text" class="form-text" id="competence-name" value="Nová kompetence" autocomplete="off"><br>';
   html +=

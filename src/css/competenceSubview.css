@@ -1,8 +1,8 @@
-.competenceNumber {
+.competence-number {
   font-weight: bold;
 }
 
-#competenceNumber {
+#competence-number {
   margin-left: 5px;
   width: 37px;
 }
