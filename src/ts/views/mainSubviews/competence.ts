@@ -19,7 +19,7 @@ function renderCompetenceList(): string {
         id +
         '"><i class="icon-pencil"></i>Upravit</div>';
       html +=
-        '<div class="button redButton deleteCompetence" data-id="' +
+        '<div class="button redButton delete-competence" data-id="' +
         id +
         '"><i class="icon-trash-empty"></i>Smazat</div><br>';
     }
@@ -52,7 +52,7 @@ function showCompetenceSubview(noHistory: boolean): void {
   }
 
   addOnClicks("changeCompetence", changeCompetenceOnClick);
-  addOnClicks("deleteCompetence", deleteCompetenceOnClick);
+  addOnClicks("delete-competence", deleteCompetenceOnClick);
   if (!noHistory) {
     history.pushState({ page: "competences" }, "title", "/admin/competences");
   }
