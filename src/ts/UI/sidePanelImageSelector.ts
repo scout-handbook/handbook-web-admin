@@ -64,7 +64,7 @@ function renderSidePanelImageSelector(
       CONFIG["api-uri"] +
       "/v1.0/image/" +
       list[i] +
-      '?quality=thumbnail" class="thumbnailImage" data-id="' +
+      '?quality=thumbnail" class="thumbnail-image" data-id="' +
       list[i] +
       '"></div>';
   }
