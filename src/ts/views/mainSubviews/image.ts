@@ -38,7 +38,7 @@ function showImageList(
       list[i] +
       '?quality=thumbnail" class="thumbnailImage" data-id="' +
       list[i] +
-      '"><div class="button redButton deleteImage" data-id="' +
+      '"><div class="button redButton delete-image" data-id="' +
       list[i] +
       '"><i class="icon-trash-empty"></i>Smazat</div></div></div>';
   }
@@ -51,7 +51,7 @@ function showImageList(
   for (let i = 0; i < ImageNodes.length; i++) {
     ImageNodes[i].onclick = showImagePreview;
   }
-  const deleteNodes = getElementsByClassName("deleteImage");
+  const deleteNodes = getElementsByClassName("delete-image");
   for (let i = 0; i < deleteNodes.length; i++) {
     (deleteNodes[i] as HTMLElement).onclick = deleteImageOnClick;
   }
