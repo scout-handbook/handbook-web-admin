@@ -13,7 +13,7 @@ function openSidePanelImageSelector(
 ): void {
   sidePanelDoubleOpen();
   document.getElementById("side-panel")!.innerHTML =
-    '<div id="embeddedSpinner"></div>';
+    '<div id="embedded-spinner"></div>';
   request(
     CONFIG["api-uri"] + "/v1.0/image",
     "GET",
