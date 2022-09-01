@@ -105,7 +105,7 @@ function showLessonEditor(
 		<div class="button greenButton" id="imageSelectorAdd">\
 			<i class="icon-plus"></i> Nahrát\
 		</div>\
-		<div id="imageWrapper"></div>\
+		<div id="image-wrapper"></div>\
 	</div>\
 </div>\
 <div id="editor"><textarea></textarea></div><div id="preview"><div id="preview-inner"></div></div>';
