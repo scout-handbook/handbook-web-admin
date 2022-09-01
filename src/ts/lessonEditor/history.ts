@@ -72,7 +72,7 @@ function lessonHistoryListRender(
 ): void {
   let html = '<form id="side-panel-form">';
   html +=
-    '<div class="formRow"><label class="formSwitch"><input type="radio" name="version" checked><span class="formCustom formRadio"></span></label><span class="lessonHistoryCurrent">Současná verze</span> — ' +
+    '<div class="formRow"><label class="formSwitch"><input type="radio" name="version" checked><span class="formCustom form-radio"></span></label><span class="lessonHistoryCurrent">Současná verze</span> — ' +
     parseVersion(LESSONS.get(id)!.version) +
     "</div>";
   for (let i = 0; i < list.length; i++) {
@@ -81,7 +81,7 @@ function lessonHistoryListRender(
       list[i].name +
       '" data-version="' +
       list[i].version.toString() +
-      '"><span class="formCustom formRadio"></span></label><span class="lessonHistoryVersion">' +
+      '"><span class="formCustom form-radio"></span></label><span class="lessonHistoryVersion">' +
       list[i].name +
       "</span> — " +
       parseVersion(list[i].version) +
