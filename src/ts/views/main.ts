@@ -46,7 +46,7 @@ function showMainView(noHistory: boolean): void {
     '/avatar.png">';
   html += '<div id="userName">&nbsp;</div>';
   html +=
-    '<div id="logLink"><a href="' +
+    '<div id="log-link"><a href="' +
     CONFIG["api-uri"] +
     "/v1.0/logout?redirect-uri=" +
     encodeURIComponent(CONFIG["frontend-uri"]) +
