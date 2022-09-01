@@ -101,7 +101,7 @@ function importGroupSelectParticipantsRender(id: string): void {
       newparticipants[i].id.toString() +
       '" data-name="' +
       newparticipants[i].name +
-      '"><span class="formCustom formCheckbox"></span></label>' +
+      '"><span class="formCustom form-checkbox"></span></label>' +
       newparticipants[i].name +
       "</div>";
   }

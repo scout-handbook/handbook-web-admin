@@ -99,11 +99,11 @@ input:checked + .formRadio::before {
   background-color: var(--accent-color);
 }
 
-.formCheckbox {
+.form-checkbox {
   border-radius: 3px;
 }
 
-.formCheckbox::before {
+.form-checkbox::before {
   border: 3px solid var(--border-color);
   border-right: none;
   border-top: none;
@@ -115,11 +115,11 @@ input:checked + .formRadio::before {
   width: 8px;
 }
 
-.formCheckbox:hover::before {
+.form-checkbox:hover::before {
   border-color: var(--accent-color);
 }
 
-input:checked + .formCheckbox::before {
+input:checked + .form-checkbox::before {
   border-color: var(--accent-color);
 }
 
