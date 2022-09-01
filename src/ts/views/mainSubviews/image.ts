@@ -87,7 +87,7 @@ function showImageSubview(noHistory: boolean): void {
   for (let i = 0; i < nodes.length; i++) {
     nodes[i].className = "topBarTab";
   }
-  document.getElementById("imageManager")!.className += " activeTopBarTab";
+  document.getElementById("imageManager")!.className += " active-top-bar-tab";
   let html = "<h1>" + CONFIG["site-name"] + " - Obrázky</h1>";
   html +=
     '<div class="button greenButton" id="addImage"><i class="icon-plus"></i>Nahrát</div>';
