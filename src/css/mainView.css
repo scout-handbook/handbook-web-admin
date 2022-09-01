@@ -1,11 +1,11 @@
-#mainPage {
+#main-page {
   margin: 0 auto;
   max-width: 770px;
   padding: 20px;
 }
 
-h2.mainPage,
-h3.mainPage,
+h2.main-page,
+h3.main-page,
 .noNewline {
   display: inline-block;
   margin-right: 15px;

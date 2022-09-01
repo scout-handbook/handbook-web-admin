@@ -92,7 +92,7 @@ function showImageSubview(noHistory: boolean): void {
   html +=
     '<div class="button greenButton" id="addImage"><i class="icon-plus"></i>Nahrát</div>';
   html += '<div id="imageList"></div>';
-  document.getElementById("mainPage")!.innerHTML = html;
+  document.getElementById("main-page")!.innerHTML = html;
 
   document.getElementById("addImage")!.onclick = function (): void {
     addImage(false);

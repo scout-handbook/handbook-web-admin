@@ -5,7 +5,7 @@ function renderCompetenceList(): string {
   let html = "";
   COMPETENCES.iterate(function (id, competence) {
     html +=
-      '<h3 class = "mainPage">' +
+      '<h3 class = "main-page">' +
       competence.number.toString() +
       ": " +
       competence.name +
@@ -24,7 +24,7 @@ function renderCompetenceList(): string {
         '"><i class="icon-trash-empty"></i>Smazat</div><br>';
     }
     html +=
-      '<span class="mainPage competenceDescription">' +
+      '<span class="main-page competenceDescription">' +
       competence.description +
       "</span><br>";
   });
@@ -44,7 +44,7 @@ function showCompetenceSubview(noHistory: boolean): void {
       '<div class="button greenButton" id="addCompetence"><i class="icon-plus"></i>Přidat</div><br>';
   }
   html += renderCompetenceList();
-  document.getElementById("mainPage")!.innerHTML = html;
+  document.getElementById("main-page")!.innerHTML = html;
   document.getElementById("mainPageContainer")!.scrollTop = 0;
 
   if (LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser") {
