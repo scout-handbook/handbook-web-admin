@@ -92,7 +92,7 @@ function showLessonSubview(noHistory: boolean): void {
   let html = "<h1>" + CONFIG["site-name"] + " - Lekce</h1>";
   if (LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser") {
     html +=
-      '<div class="button greenButton" id="addField"><i class="icon-plus"></i>Přidat oblast</div>';
+      '<div class="button greenButton" id="add-field"><i class="icon-plus"></i>Přidat oblast</div>';
   }
   html +=
     '<div class="button greenButton" id="add-lesson"><i class="icon-plus"></i>Přidat lekci</div>';
@@ -105,7 +105,7 @@ function showLessonSubview(noHistory: boolean): void {
   document.getElementById("mainPageContainer")!.scrollTop = 0;
 
   if (LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser") {
-    document.getElementById("addField")!.onclick = function (): void {
+    document.getElementById("add-field")!.onclick = function (): void {
       addField();
     };
   }
