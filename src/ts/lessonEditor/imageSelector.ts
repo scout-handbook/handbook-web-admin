@@ -43,7 +43,7 @@ function renderImageSelector(
   page: number,
   perPage: number
 ): void {
-  if (!document.getElementById("imageWrapper")) {
+  if (!document.getElementById("image-wrapper")) {
     return;
   }
   let html = "";
@@ -108,10 +108,10 @@ function renderImageSelector(
     }
     html += "</div>";
   }
-  document.getElementById("imageWrapper")!.innerHTML = html;
+  document.getElementById("image-wrapper")!.innerHTML = html;
 
   const imageNodes = document
-    .getElementById("imageWrapper")!
+    .getElementById("image-wrapper")!
     .getElementsByTagName("img");
   for (let i = 0; i < imageNodes.length; i++) {
     imageNodes[i].onclick = insertImage;
