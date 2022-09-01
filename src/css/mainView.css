@@ -6,7 +6,7 @@
 
 h2.main-page,
 h3.main-page,
-.noNewline {
+.no-newline {
   display: inline-block;
   margin-right: 15px;
 }
