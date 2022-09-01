@@ -5,7 +5,7 @@ let groupChanged = false;
 function changeGrouPayloadBuilder(): Payload {
   return {
     name: encodeURIComponent(
-      (document.getElementById("groupName") as HTMLInputElement).value
+      (document.getElementById("group-name") as HTMLInputElement).value
     ),
   };
 }
@@ -21,7 +21,7 @@ function changeGroupOnClick(event: MouseEvent): void {
     '<h3 class="side-panel-title">Upravit skupinu</h3><form id="side-panel-form">';
   html += '<legend for="fieldName">Název:</legend>';
   html +=
-    '<input type="text" class="form-text" id="groupName" value="' +
+    '<input type="text" class="form-text" id="group-name" value="' +
     GROUPS.get(getAttribute(event, "id"))!.name +
     '" autocomplete="off"><br>';
   html += "</form>";
@@ -44,10 +44,10 @@ function changeGroupOnClick(event: MouseEvent): void {
     dispatchIfChanged(aq, groupChanged);
   };
 
-  document.getElementById("groupName")!.oninput = function (): void {
+  document.getElementById("group-name")!.oninput = function (): void {
     groupChanged = true;
   };
-  document.getElementById("groupName")!.onchange = function (): void {
+  document.getElementById("group-name")!.onchange = function (): void {
     groupChanged = true;
   };
 
