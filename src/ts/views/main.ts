@@ -12,7 +12,7 @@ function renderMainView(noHistory: boolean): void {
   document.getElementById("lessonManager")!.onclick = function (): void {
     showLessonSubview(false);
   };
-  document.getElementById("competenceManager")!.onclick = function (): void {
+  document.getElementById("competence-manager")!.onclick = function (): void {
     showCompetenceSubview(false);
   };
   document.getElementById("image-manager")!.onclick = function (): void {
@@ -52,7 +52,7 @@ function showMainView(noHistory: boolean): void {
     encodeURIComponent(CONFIG["frontend-uri"]) +
     '">Odhlásit</a><a href="/" id="frontend-link">Zpět na web</a></div></div>';
   html += '<div class="top-bar-tab" id="lessonManager">Lekce</div>';
-  html += '<div class="top-bar-tab" id="competenceManager">Kompetence</div>';
+  html += '<div class="top-bar-tab" id="competence-manager">Kompetence</div>';
   html += '<div class="top-bar-tab" id="image-manager">Obrázky</div>';
   html += '<div class="top-bar-tab" id="user-manager">Uživatelé</div>';
   html += '<div class="top-bar-tab" id="group-manager">Uživatelské skupiny</div>';
