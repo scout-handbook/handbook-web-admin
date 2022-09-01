@@ -19,7 +19,7 @@ function renderGroupList(): string {
         '"><i class="icon-pencil"></i>Upravit</div>';
       if (id !== "00000000-0000-0000-0000-000000000000") {
         html +=
-          '<div class="button redButton deleteGroup" data-id="' +
+          '<div class="button red-button deleteGroup" data-id="' +
           id +
           '"><i class="icon-trash-empty"></i>Smazat</div>';
         html +=

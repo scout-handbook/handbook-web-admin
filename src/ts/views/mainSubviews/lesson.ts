@@ -14,7 +14,7 @@ function renderLessonListLesson(
     '"><i class="icon-pencil"></i>Upravit</div>';
   if (LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser") {
     html +=
-      '<div class="button redButton deleteLesson" data-id="' +
+      '<div class="button red-button deleteLesson" data-id="' +
       id +
       '"><i class="icon-trash-empty"></i>Smazat</div>';
   }
@@ -60,7 +60,7 @@ function renderLessonList(): string {
         id +
         '"><i class="icon-pencil"></i>Upravit</div>';
       html +=
-        '<div class="button redButton deleteField" data-id="' +
+        '<div class="button red-button deleteField" data-id="' +
         id +
         '"><i class="icon-trash-empty"></i>Smazat</div>';
     }
