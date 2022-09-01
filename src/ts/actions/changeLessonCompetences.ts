@@ -41,7 +41,7 @@ function changeLessonCompetencesOnClick(
 ): void {
   lessonCompetencesChanged = false;
   let html =
-    '<div class="button yellowButton" id="cancelEditorAction"><i class="icon-cancel"></i>Zrušit</div>';
+    '<div class="button yellow-button" id="cancelEditorAction"><i class="icon-cancel"></i>Zrušit</div>';
   html +=
     '<div class="button greenButton" id="changeLessonCompetencesSave"><i class="icon-floppy"></i>Uložit</div>';
   html +=

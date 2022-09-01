@@ -37,7 +37,7 @@ function restoreLessonRenderVersionList(
 ): void {
   sidePanelDoubleOpen();
   let html =
-    '<div id="restore-lesson-version-list"><div class="button yellowButton" id="side-panel-cancel"><i class="icon-cancel"></i>Zrušit</div><span id="restoreLessonListHeader"></span><h3 class="side-panel-title">Obnovit smazanou lekci</h3>';
+    '<div id="restore-lesson-version-list"><div class="button yellow-button" id="side-panel-cancel"><i class="icon-cancel"></i>Zrušit</div><span id="restoreLessonListHeader"></span><h3 class="side-panel-title">Obnovit smazanou lekci</h3>';
   html += '<form id="side-panel-form">';
   for (let i = 0; i < list.length; i++) {
     html +=
@@ -116,7 +116,7 @@ function restoreLessonRenderLessonList(list: IDList<DeletedLesson>): void {
 function restoreLesson(): void {
   sidePanelOpen();
   let html =
-    '<div class="button yellowButton" id="side-panel-cancel"><i class="icon-cancel"></i>Zrušit</div>';
+    '<div class="button yellow-button" id="side-panel-cancel"><i class="icon-cancel"></i>Zrušit</div>';
   html +=
     '<div class="button greenButton" id="restoreLessonNext"><i class="icon-fast-fw"></i>Pokračovat</div>';
   html += '<h3 class="side-panel-title">Obnovit smazanou lekci</h3>';
