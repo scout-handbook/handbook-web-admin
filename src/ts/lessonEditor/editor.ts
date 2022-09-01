@@ -82,7 +82,7 @@ function showLessonEditor(
     '\
 <div id="side-panel"></div><div id="side-panel-overlay"></div>\
 <header>\
-	<div class="button yellowButton" id="discard">\
+	<div class="button yellow-button" id="discard">\
 		<i class="icon-cancel"></i>Zrušit\
 	</div>\
 	<form>\
@@ -99,7 +99,7 @@ function showLessonEditor(
 </header>\
 <div id="image-selector">\
 	<div id="image-scroller">\
-		<div class="button yellowButton" id="close-image-selector">\
+		<div class="button yellow-button" id="close-image-selector">\
 			<i class="icon-up-open"></i> Zavřít\
 		</div>\
 		<div class="button greenButton" id="imageSelectorAdd">\

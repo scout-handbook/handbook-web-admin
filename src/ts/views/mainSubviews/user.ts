@@ -109,7 +109,7 @@ function showUserList(
     group !== "00000000-0000-0000-0000-000000000000"
   ) {
     html +=
-      '<div class="button yellowButton" id="user-search-cancel"><i class="icon-cancel"></i>Zrušit</div>';
+      '<div class="button yellow-button" id="user-search-cancel"><i class="icon-cancel"></i>Zrušit</div>';
   }
   html += "</form>";
   html +=

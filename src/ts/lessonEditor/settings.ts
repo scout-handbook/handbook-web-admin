@@ -57,7 +57,7 @@ function lessonSettings(
 ): void {
   sidePanelOpen();
   let html =
-    '<div class="button yellowButton" id="side-panel-cancel"><i class="icon-right-open"></i>Zavřít</div>';
+    '<div class="button yellow-button" id="side-panel-cancel"><i class="icon-right-open"></i>Zavřít</div>';
   if (id != null) {
     html +=
       '<div class="button" id="lessonHistoryOpen"><i class="icon-history"></i>Historie lekce</div>';

@@ -41,11 +41,11 @@
   border-color: var(--button-accent-cyan);
 }
 
-.yellowButton {
+.yellow-button {
   background-color: var(--button-accent-yellow);
 }
 
-.yellowButton:hover {
+.yellow-button:hover {
   border-color: var(--button-accent-yellow);
 }
 
