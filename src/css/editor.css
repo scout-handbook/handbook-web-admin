@@ -99,7 +99,7 @@ header {
   max-width: 770px;
 }
 
-#lessonHistoryList {
+#lesson-history-list {
   bottom: 0;
   overflow-y: auto;
   padding-bottom: 30px;
