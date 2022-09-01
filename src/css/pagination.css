@@ -3,7 +3,7 @@
   text-align: center;
 }
 
-.paginationButton {
+.pagination-button {
   background-color: var(--background-darker);
   border: 1px solid var(--border-color);
   border-radius: 3px;
@@ -15,7 +15,7 @@
     background-color ease 0.15s;
 }
 
-.paginationButton:hover,
+.pagination-button:hover,
 .active-pagination-button {
   background-color: var(--background-darkest);
   border-color: var(--accent-color);

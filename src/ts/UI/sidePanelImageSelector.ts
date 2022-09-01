@@ -72,11 +72,11 @@ function renderSidePanelImageSelector(
     const maxPage = Math.ceil(list.length / perPage);
     html += '<div id="pagination">';
     if (page > 3) {
-      html += '<div class="paginationButton" data-page="1">1</div> ... ';
+      html += '<div class="pagination-button" data-page="1">1</div> ... ';
     }
     if (page > 2) {
       html +=
-        '<div class="paginationButton" data-page="' +
+        '<div class="pagination-button" data-page="' +
         (page - 2).toString() +
         '">' +
         (page - 2).toString() +
@@ -84,17 +84,17 @@ function renderSidePanelImageSelector(
     }
     if (page > 1) {
       html +=
-        '<div class="paginationButton" data-page="' +
+        '<div class="pagination-button" data-page="' +
         (page - 1).toString() +
         '">' +
         (page - 1).toString() +
         "</div>";
     }
     html +=
-      '<div class="paginationButton active">' + page.toString() + "</div>";
+      '<div class="pagination-button active">' + page.toString() + "</div>";
     if (page < maxPage) {
       html +=
-        '<div class="paginationButton" data-page="' +
+        '<div class="pagination-button" data-page="' +
         (page + 1).toString() +
         '">' +
         (page + 1).toString() +
@@ -102,7 +102,7 @@ function renderSidePanelImageSelector(
     }
     if (page < maxPage - 1) {
       html +=
-        '<div class="paginationButton" data-page="' +
+        '<div class="pagination-button" data-page="' +
         (page + 2).toString() +
         '">' +
         (page + 2).toString() +
@@ -110,7 +110,7 @@ function renderSidePanelImageSelector(
     }
     if (page < maxPage - 2) {
       html +=
-        ' ... <div class="paginationButton" data-page="' +
+        ' ... <div class="pagination-button" data-page="' +
         maxPage.toString() +
         '">' +
         maxPage.toString() +
@@ -134,7 +134,7 @@ function renderSidePanelImageSelector(
       history.back();
     };
   }
-  const buttonNodes = getElementsByClassName("paginationButton");
+  const buttonNodes = getElementsByClassName("pagination-button");
   for (let i = 0; i < buttonNodes.length; i++) {
     (buttonNodes[i] as HTMLElement).onclick = function (event): void {
       openSidePanelImageSelector(

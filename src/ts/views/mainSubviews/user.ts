@@ -162,7 +162,7 @@ function showUserList(
       downloadUserList(undefined, 1, perPage);
     };
   }
-  const nodes = getElementsByClassName("paginationButton");
+  const nodes = getElementsByClassName("pagination-button");
   for (let i = 0; i < nodes.length; i++) {
     (nodes[i] as HTMLElement).onclick = function (event): void {
       const roleSel = document.getElementById(
