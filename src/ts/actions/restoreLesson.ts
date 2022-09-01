@@ -45,7 +45,7 @@ function restoreLessonRenderVersionList(
       list[i].name +
       '" data-version="' +
       list[i].version.toString() +
-      '"><span class="formCustom formRadio"></span></label><span class="restoreLessonVersion">' +
+      '"><span class="formCustom formRadio"></span></label><span class="restore-lesson-version">' +
       list[i].name +
       "</span> — " +
       parseVersion(list[i].version) +
