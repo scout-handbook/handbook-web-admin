@@ -80,7 +80,7 @@ h3.main-page,
   width: var(--nav-width);
 }
 
-#userAvatar {
+#user-avatar {
   border: var(--avatar-border);
   border-radius: 50%;
   float: left;
