@@ -15,7 +15,7 @@ function renderCompetenceList(): string {
       LOGINSTATE.role === "superuser"
     ) {
       html +=
-        '<div class="button cyanButton changeCompetence" data-id="' +
+        '<div class="button cyanButton change-competence" data-id="' +
         id +
         '"><i class="icon-pencil"></i>Upravit</div>';
       html +=
@@ -51,7 +51,7 @@ function showCompetenceSubview(noHistory: boolean): void {
     document.getElementById("addCompetence")!.onclick = addCompetence;
   }
 
-  addOnClicks("changeCompetence", changeCompetenceOnClick);
+  addOnClicks("change-competence", changeCompetenceOnClick);
   addOnClicks("delete-competence", deleteCompetenceOnClick);
   if (!noHistory) {
     history.pushState({ page: "competences" }, "title", "/admin/competences");
