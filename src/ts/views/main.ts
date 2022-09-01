@@ -21,7 +21,7 @@ function renderMainView(noHistory: boolean): void {
   document.getElementById("userManager")!.onclick = function (): void {
     showUserSubview(false);
   };
-  document.getElementById("groupManager")!.onclick = function (): void {
+  document.getElementById("group-manager")!.onclick = function (): void {
     showGroupSubview(false);
   };
 
@@ -55,7 +55,7 @@ function showMainView(noHistory: boolean): void {
   html += '<div class="top-bar-tab" id="competenceManager">Kompetence</div>';
   html += '<div class="top-bar-tab" id="imageManager">Obrázky</div>';
   html += '<div class="top-bar-tab" id="userManager">Uživatelé</div>';
-  html += '<div class="top-bar-tab" id="groupManager">Uživatelské skupiny</div>';
+  html += '<div class="top-bar-tab" id="group-manager">Uživatelské skupiny</div>';
   html += "</div>";
   html += '<div id="main-page-container"><div id="main-page">';
   html += "<h1>" + CONFIG["site-name"] + " - ";

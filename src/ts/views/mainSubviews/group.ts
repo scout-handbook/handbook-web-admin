@@ -44,7 +44,7 @@ function showGroupSubview(noHistory: boolean): void {
   for (let i = 0; i < nodes.length; i++) {
     nodes[i].className = "top-bar-tab";
   }
-  document.getElementById("groupManager")!.className += " active-top-bar-tab";
+  document.getElementById("group-manager")!.className += " active-top-bar-tab";
   let html = "<h1>" + CONFIG["site-name"] + " - Uživatelské skupiny</h1>";
   if (LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser") {
     html +=
