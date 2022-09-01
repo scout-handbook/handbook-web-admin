@@ -123,7 +123,7 @@ input:checked + .formCheckbox::before {
   border-color: var(--accent-color);
 }
 
-.formFile input {
+.form-file input {
   height: 0.1px;
   opacity: 0;
   overflow: hidden;
