@@ -8,7 +8,7 @@ function changeFieldPayloadBuilder(): Payload {
       (document.getElementById("fieldName") as HTMLInputElement).value
     ),
     description: encodeURIComponent(
-      (document.getElementById("fieldDescription") as HTMLInputElement).value
+      (document.getElementById("field-description") as HTMLInputElement).value
     ),
     image: encodeURIComponent(
       (document.getElementById("fieldImage") as HTMLInputElement).value
@@ -38,7 +38,7 @@ function changeField(
     state.name +
     '" autocomplete="off">';
   html +=
-    '<textarea rows="5" class="form-text" id="fieldDescription" autocomplete="off">' +
+    '<textarea rows="5" class="form-text" id="field-description" autocomplete="off">' +
     state.description +
     "</textarea>";
   html += '<legend for="fieldImage">Náhledový obrázek:</legend>';
@@ -73,7 +73,7 @@ function changeField(
       id: state.id,
       name: (document.getElementById("fieldName") as HTMLInputElement).value,
       description: (
-        document.getElementById("fieldDescription") as HTMLInputElement
+        document.getElementById("field-description") as HTMLInputElement
       ).value,
       image: state.image,
       icon: state.icon,
@@ -85,7 +85,7 @@ function changeField(
       id: state.id,
       name: (document.getElementById("fieldName") as HTMLInputElement).value,
       description: (
-        document.getElementById("fieldDescription") as HTMLInputElement
+        document.getElementById("field-description") as HTMLInputElement
       ).value,
       image: state.image,
       icon: state.icon,
@@ -109,10 +109,10 @@ function changeField(
   document.getElementById("fieldName")!.onchange = function (): void {
     fieldChanged = true;
   };
-  document.getElementById("fieldDescription")!.oninput = function (): void {
+  document.getElementById("field-description")!.oninput = function (): void {
     fieldChanged = true;
   };
-  document.getElementById("fieldDescription")!.onchange = function (): void {
+  document.getElementById("field-description")!.onchange = function (): void {
     fieldChanged = true;
   };
 
