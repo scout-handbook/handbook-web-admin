@@ -120,7 +120,7 @@ header {
   width: 528px;
 }
 
-.lessonHistoryCurrent {
+.lesson-history-current {
   font-style: italic;
   font-weight: bold;
 }

@@ -72,7 +72,7 @@ function lessonHistoryListRender(
 ): void {
   let html = '<form id="side-panel-form">';
   html +=
-    '<div class="form-row"><label class="form-switch"><input type="radio" name="version" checked><span class="form-custom form-radio"></span></label><span class="lessonHistoryCurrent">Současná verze</span> — ' +
+    '<div class="form-row"><label class="form-switch"><input type="radio" name="version" checked><span class="form-custom form-radio"></span></label><span class="lesson-history-current">Současná verze</span> — ' +
     parseVersion(LESSONS.get(id)!.version) +
     "</div>";
   for (let i = 0; i < list.length; i++) {
