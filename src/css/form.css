@@ -14,7 +14,7 @@
   margin-top: 30px;
 }
 
-.formText {
+.form-text {
   border: 1px solid var(--border-color);
   border-radius: 3px;
   font-family: "Open Sans", sans-serif;
@@ -39,7 +39,7 @@
   transition: border-color ease 0.15s, background-color ease 0.15s;
 }
 
-.formText:focus,
+.form-text:focus,
 .form-select:focus {
   background-color: var(--background-darkest);
   border-color: var(--accent-color);

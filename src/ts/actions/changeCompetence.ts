@@ -28,15 +28,15 @@ function changeCompetenceOnClick(event: MouseEvent): void {
     '<h3 class="side-panel-title">Upravit kompetenci</h3><form id="side-panel-form">';
   const competence = COMPETENCES.get(getAttribute(event, "id"))!;
   html +=
-    '<span class="competenceHeading">Kompetence</span> <input type="text" class="formText formName" id="competenceNumber" value="' +
+    '<span class="competenceHeading">Kompetence</span> <input type="text" class="form-text formName" id="competenceNumber" value="' +
     competence.number.toString() +
     '" autocomplete="off"><br>';
   html +=
-    '<input type="text" class="formText" id="competenceName" value="' +
+    '<input type="text" class="form-text" id="competenceName" value="' +
     competence.name +
     '" autocomplete="off"><br>';
   html +=
-    '<textarea rows="5" class="formText" id="competenceDescription" autocomplete="off">' +
+    '<textarea rows="5" class="form-text" id="competenceDescription" autocomplete="off">' +
     competence.description +
     "</textarea>";
   html += "</form>";
