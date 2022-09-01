@@ -15,7 +15,7 @@ function renderMainView(noHistory: boolean): void {
   document.getElementById("competenceManager")!.onclick = function (): void {
     showCompetenceSubview(false);
   };
-  document.getElementById("imageManager")!.onclick = function (): void {
+  document.getElementById("image-manager")!.onclick = function (): void {
     showImageSubview(false);
   };
   document.getElementById("user-manager")!.onclick = function (): void {
@@ -53,7 +53,7 @@ function showMainView(noHistory: boolean): void {
     '">Odhlásit</a><a href="/" id="frontend-link">Zpět na web</a></div></div>';
   html += '<div class="top-bar-tab" id="lessonManager">Lekce</div>';
   html += '<div class="top-bar-tab" id="competenceManager">Kompetence</div>';
-  html += '<div class="top-bar-tab" id="imageManager">Obrázky</div>';
+  html += '<div class="top-bar-tab" id="image-manager">Obrázky</div>';
   html += '<div class="top-bar-tab" id="user-manager">Uživatelé</div>';
   html += '<div class="top-bar-tab" id="group-manager">Uživatelské skupiny</div>';
   html += "</div>";
