@@ -97,7 +97,7 @@ function importGroupSelectParticipantsRender(id: string): void {
   let html = '<h4>Výběr účastníků:</h4><form id="side-panel-form">';
   for (let i = 0; i < newparticipants.length; i++) {
     html +=
-      '<div class="formRow"><label class="form-switch"><input type="checkbox" data-id="' +
+      '<div class="form-row"><label class="form-switch"><input type="checkbox" data-id="' +
       newparticipants[i].id.toString() +
       '" data-name="' +
       newparticipants[i].name +
@@ -161,7 +161,7 @@ function importGroupSelectEventRender(id: string, events: Array<Event>): void {
   let html = '<h4>Volba kurzu:</h4><form id="side-panel-form">';
   for (let i = 0; i < events.length; i++) {
     html +=
-      '<div class="formRow"><label class="form-switch"><input type="radio" name="field" data-id="' +
+      '<div class="form-row"><label class="form-switch"><input type="radio" name="field" data-id="' +
       events[i].id.toString() +
       '"><span class="form-custom form-radio"></span></label>' +
       events[i].name +
