@@ -4,9 +4,9 @@ let imageSelectorOpen = false;
 
 function toggleImageSelector(): void {
   if (imageSelectorOpen) {
-    document.getElementById("imageSelector")!.style.top = "-100%";
+    document.getElementById("image-selector")!.style.top = "-100%";
   } else {
-    document.getElementById("imageSelector")!.style.top = "-76px";
+    document.getElementById("image-selector")!.style.top = "-76px";
   }
   imageSelectorOpen = !imageSelectorOpen;
   refreshLogin();

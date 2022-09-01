@@ -97,7 +97,7 @@ function showLessonEditor(
 		<i class="icon-cog"></i>Nastavení\
 	</div>\
 </header>\
-<div id="imageSelector">\
+<div id="image-selector">\
 	<div id="image-scroller">\
 		<div class="button yellowButton" id="closeImageSelector">\
 			<i class="icon-up-open"></i> Zavřít\
