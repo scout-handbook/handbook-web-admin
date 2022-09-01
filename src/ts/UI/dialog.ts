@@ -11,7 +11,7 @@ function keyPressDialog(event: KeyboardEvent): void {
 function dismissDialog(): void {
   document.getElementById("overlay")!.style.display = "none";
   document.getElementById("dialog")!.style.display = "none";
-  document.getElementById("dismissText")!.style.display = "none";
+  document.getElementById("dismiss-text")!.style.display = "none";
   document.removeEventListener("keypress", keyPressDialog);
 }
 
@@ -26,7 +26,7 @@ function dialog(
   document.getElementById("overlay")!.style.display = "inline";
   document.getElementById("dialog")!.style.display = "block";
   document.getElementById("dialogText")!.innerHTML = mainText;
-  document.getElementById("confirmText")!.innerHTML =
+  document.getElementById("confirm-text")!.innerHTML =
     '<i class="icon-ok"></i>' + confirmText;
   if (confirmCallback) {
     confirmCallbackWrapped = function (): void {
@@ -36,10 +36,10 @@ function dialog(
   } else {
     confirmCallbackWrapped = dismissDialog;
   }
-  document.getElementById("confirmText")!.onclick = confirmCallbackWrapped;
+  document.getElementById("confirm-text")!.onclick = confirmCallbackWrapped;
   if (dismissText) {
-    document.getElementById("dismissText")!.style.display = "inline";
-    document.getElementById("dismissText")!.innerHTML =
+    document.getElementById("dismiss-text")!.style.display = "inline";
+    document.getElementById("dismiss-text")!.innerHTML =
       '<i class="icon-cancel"></i>' + dismissText;
     let dismissCallbackWrapped;
     if (dismissCallback) {
@@ -50,7 +50,7 @@ function dialog(
     } else {
       dismissCallbackWrapped = dismissDialog;
     }
-    document.getElementById("dismissText")!.onclick = dismissCallbackWrapped;
+    document.getElementById("dismiss-text")!.onclick = dismissCallbackWrapped;
   } else {
     document.addEventListener("keypress", keyPressDialog);
   }
