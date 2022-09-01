@@ -70,7 +70,7 @@ function renderLessonList(): string {
       '"><i class="icon-plus"></i>Přidat lekci</div>';
     LESSONS.iterate(function (lessonId, lesson) {
       if (field.lessons.indexOf(lessonId) >= 0) {
-        html += renderLessonListLesson(lessonId, lesson, " secondLevel");
+        html += renderLessonListLesson(lessonId, lesson, " second-level");
       }
     });
   });
