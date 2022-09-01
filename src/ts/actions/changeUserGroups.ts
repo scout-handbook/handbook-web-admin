@@ -35,7 +35,7 @@ function changeUserGroupsOnClick(event: MouseEvent): void {
       publicName = group.name;
     } else {
       html +=
-        '<div class="formRow"><label class="formSwitch"><input type="checkbox"';
+        '<div class="formRow"><label class="form-switch"><input type="checkbox"';
       if (currentGroups.indexOf(id) >= 0) {
         html += " checked";
       }

@@ -49,7 +49,7 @@ function changeLessonGroupsOnClick(
   let publicName = "";
   GROUPS.iterate(function (groupId, group) {
     html +=
-      '<div class="formRow"><label class="formSwitch"><input type="checkbox"';
+      '<div class="formRow"><label class="form-switch"><input type="checkbox"';
     if (lessonSettingsCache.groups.indexOf(groupId) >= 0) {
       html += " checked";
     }
