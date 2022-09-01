@@ -26,6 +26,7 @@ header {
   border: none;
 }
 
+/* stylelint-disable-next-line selector-class-pattern */
 .CodeMirror {
   bottom: 0;
   left: 0;
@@ -42,7 +43,7 @@ header {
 }
 
 #preview-inner {
-  margin: 0 20px 20px 20px;
+  margin: 0 20px 20px;
 }
 
 #discard,
