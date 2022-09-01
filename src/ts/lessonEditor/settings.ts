@@ -31,7 +31,7 @@ function renderCompetences(): string {
 function prerenderGroups(): string {
   let html = '<br><h3 class="side-panel-title no-newline">Skupiny</h3>';
   html +=
-    '<div class="button cyanButton" id="changeGroups"><i class="icon-pencil"></i>Upravit</div><br><div id="settingsGroupList"><div id="embeddedSpinner"></div></div>';
+    '<div class="button cyanButton" id="changeGroups"><i class="icon-pencil"></i>Upravit</div><br><div id="settingsGroupList"><div id="embedded-spinner"></div></div>';
   return html;
 }
 

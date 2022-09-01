@@ -16,7 +16,7 @@ function restoreLessonShowVersion(id: string, event: Event): void {
   const version = (event.target as HTMLElement).dataset.version as string;
   const name = (event.target as HTMLElement).dataset.name!;
   document.getElementById("restore-lesson-preview")!.innerHTML =
-    '<div id="embeddedSpinner"></div>';
+    '<div id="embedded-spinner"></div>';
   request(
     CONFIG["api-uri"] + "/v1.0/deleted-lesson/" + id + "/history/" + version,
     "GET",
@@ -72,7 +72,7 @@ function restoreLessonRenderVersionList(
 function restoreLessonSelectVersion(): void {
   const lessonId = parseBoolForm()[0];
   if (lessonId) {
-    const html = '<div id="embeddedSpinner"></div>';
+    const html = '<div id="embedded-spinner"></div>';
     document.getElementById("restoreLessonList")!.innerHTML = html;
     request(
       CONFIG["api-uri"] + "/v1.0/deleted-lesson/" + lessonId + "/history",
@@ -120,7 +120,7 @@ function restoreLesson(): void {
   html +=
     '<div class="button greenButton" id="restoreLessonNext"><i class="icon-fast-fw"></i>Pokračovat</div>';
   html += '<h3 class="side-panel-title">Obnovit smazanou lekci</h3>';
-  html += '<div id="restoreLessonList"><div id="embeddedSpinner"></div></div>';
+  html += '<div id="restoreLessonList"><div id="embedded-spinner"></div></div>';
   document.getElementById("side-panel")!.innerHTML = html;
   document.getElementById("side-panel-cancel")!.onclick = function (): void {
     history.back();

@@ -68,7 +68,7 @@ function showImageList(
 
 function downloadImageList(page: number, perPage: number): void {
   document.getElementById("imageList")!.innerHTML =
-    '<div id="embeddedSpinner"></div>';
+    '<div id="embedded-spinner"></div>';
   request(
     CONFIG["api-uri"] + "/v1.0/image",
     "GET",

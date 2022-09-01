@@ -70,7 +70,7 @@ function showMainView(noHistory: boolean): void {
   } else {
     html += "Lekce";
   }
-  html += '</h1><div id="embeddedSpinner"></div></div></div>';
+  html += '</h1><div id="embedded-spinner"></div></div></div>';
   document.getElementsByTagName("main")[0].innerHTML = html;
   document.getElementsByTagName("main")[0].scrollTop = 0;
   metadataEvent.addCallback(function (): void {

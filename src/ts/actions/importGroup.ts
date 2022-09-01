@@ -38,7 +38,7 @@ function importGroupSave(id: string): void {
     return;
   }
 
-  const html = '<div id="embeddedSpinner"></div>';
+  const html = '<div id="embedded-spinner"></div>';
   document.getElementById("importList")!.innerHTML = html;
 
   addEvent = new AfterLoadEvent(participants.length);
@@ -117,7 +117,7 @@ function importGroupSelectParticipantsRender(id: string): void {
 function importGroupSelectParticipants(id: string): void {
   const eventId = parseBoolForm()[0];
   if (eventId) {
-    const html = '<div id="embeddedSpinner"></div>';
+    const html = '<div id="embedded-spinner"></div>';
     document.getElementById("importList")!.innerHTML = html;
     participantEvent = new AfterLoadEvent(2);
     participantEvent.addCallback(importGroupSelectParticipantsRender);
@@ -184,7 +184,7 @@ function importGroupOnClick(event: MouseEvent): void {
     '<h3 class="side-panel-title">Importovat ze SkautISu: ' +
     GROUPS.get(getAttribute(event, "id"))!.name +
     "</h3>";
-  html += '<div id="importList"><div id="embeddedSpinner"></div></div>';
+  html += '<div id="importList"><div id="embedded-spinner"></div></div>';
   document.getElementById("side-panel")!.innerHTML = html;
   document.getElementById("side-panel-cancel")!.onclick = function (): void {
     history.back();

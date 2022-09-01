@@ -197,7 +197,7 @@ function downloadUserList(
   group = "00000000-0000-0000-0000-000000000000"
 ): void {
   document.getElementById("userList")!.innerHTML =
-    '<div id="embeddedSpinner"></div>';
+    '<div id="embedded-spinner"></div>';
   const payload: UserSearchQuery = {
     name: searchName,
     page: page,
