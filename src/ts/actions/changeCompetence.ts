@@ -11,7 +11,7 @@ function changeCompetencePayloadBuilder(): Payload {
       (document.getElementById("competenceName") as HTMLInputElement).value
     ),
     description: encodeURIComponent(
-      (document.getElementById("competenceDescription") as HTMLInputElement)
+      (document.getElementById("competence-description") as HTMLInputElement)
         .value
     ),
   };
@@ -36,7 +36,7 @@ function changeCompetenceOnClick(event: MouseEvent): void {
     competence.name +
     '" autocomplete="off"><br>';
   html +=
-    '<textarea rows="5" class="form-text" id="competenceDescription" autocomplete="off">' +
+    '<textarea rows="5" class="form-text" id="competence-description" autocomplete="off">' +
     competence.description +
     "</textarea>";
   html += "</form>";
@@ -69,7 +69,7 @@ function changeCompetenceOnClick(event: MouseEvent): void {
   }
   addOnChange("competenceNumber");
   addOnChange("competenceName");
-  addOnChange("competenceDescription");
+  addOnChange("competence-description");
 
   history.pushState({ sidePanel: "open" }, "title", "/admin/competences");
   refreshLogin();

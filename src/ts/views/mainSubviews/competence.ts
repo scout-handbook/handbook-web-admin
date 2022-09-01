@@ -24,7 +24,7 @@ function renderCompetenceList(): string {
         '"><i class="icon-trash-empty"></i>Smazat</div><br>';
     }
     html +=
-      '<span class="main-page competenceDescription">' +
+      '<span class="main-page competence-description">' +
       competence.description +
       "</span><br>";
   });
