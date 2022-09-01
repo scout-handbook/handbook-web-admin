@@ -31,12 +31,12 @@ function renderCompetences(): string {
 function prerenderGroups(): string {
   let html = '<br><h3 class="side-panel-title no-newline">Skupiny</h3>';
   html +=
-    '<div class="button cyanButton" id="changeGroups"><i class="icon-pencil"></i>Upravit</div><br><div id="settingsGroupList"><div id="embedded-spinner"></div></div>';
+    '<div class="button cyanButton" id="change-groups"><i class="icon-pencil"></i>Upravit</div><br><div id="settingsGroupList"><div id="embedded-spinner"></div></div>';
   return html;
 }
 
 function renderGroups(): void {
-  document.getElementById("changeGroups")!.style.display = "inline-block";
+  document.getElementById("change-groups")!.style.display = "inline-block";
   let html = "";
   GROUPS.filter(function (id) {
     return lessonSettingsCache.groups.indexOf(id) >= 0;
@@ -82,7 +82,7 @@ function lessonSettings(
   document.getElementById("changeCompetences")!.onclick = function (): void {
     changeLessonCompetencesOnClick(id, actionQueue);
   };
-  document.getElementById("changeGroups")!.onclick = function (): void {
+  document.getElementById("change-groups")!.onclick = function (): void {
     changeLessonGroupsOnClick(id, actionQueue);
   };
   if (!noHistory) {
