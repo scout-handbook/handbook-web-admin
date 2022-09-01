@@ -23,7 +23,7 @@ function changeCompetenceOnClick(event: MouseEvent): void {
   let html =
     '<div class="button yellow-button" id="side-panel-cancel"><i class="icon-cancel"></i>Zrušit</div>';
   html +=
-    '<div class="button greenButton" id="changeCompetenceSave"><i class="icon-floppy"></i>Uložit</div>';
+    '<div class="button green-button" id="changeCompetenceSave"><i class="icon-floppy"></i>Uložit</div>';
   html +=
     '<h3 class="side-panel-title">Upravit kompetenci</h3><form id="side-panel-form">';
   const competence = COMPETENCES.get(getAttribute(event, "id"))!;

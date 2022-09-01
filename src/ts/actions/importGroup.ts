@@ -179,7 +179,7 @@ function importGroupOnClick(event: MouseEvent): void {
   let html =
     '<div class="button yellow-button" id="side-panel-cancel"><i class="icon-cancel"></i>Zrušit</div>';
   html +=
-    '<div class="button greenButton" id="importGroupNext"><i class="icon-fast-fw"></i>Pokračovat</div>';
+    '<div class="button green-button" id="importGroupNext"><i class="icon-fast-fw"></i>Pokračovat</div>';
   html +=
     '<h3 class="side-panel-title">Importovat ze SkautISu: ' +
     GROUPS.get(getAttribute(event, "id"))!.name +

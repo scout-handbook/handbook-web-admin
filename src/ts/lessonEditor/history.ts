@@ -23,7 +23,7 @@ function lessonHistoryPreviewRenderVersion(
 ): void {
   refreshPreview(name, body, "lesson-history-preview");
   const html =
-    '<div class="button greenButton" id="lessonHistoryRevert"><i class="icon-history"></i>Obnovit</div>';
+    '<div class="button green-button" id="lessonHistoryRevert"><i class="icon-history"></i>Obnovit</div>';
   document.getElementById("lessonHistoryListHeader")!.innerHTML = html;
 
   document.getElementById("lessonHistoryRevert")!.onclick = function (): void {

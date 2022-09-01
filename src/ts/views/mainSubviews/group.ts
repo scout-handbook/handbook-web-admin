@@ -48,7 +48,7 @@ function showGroupSubview(noHistory: boolean): void {
   let html = "<h1>" + CONFIG["site-name"] + " - Uživatelské skupiny</h1>";
   if (LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser") {
     html +=
-      '<div class="button greenButton" id="addGroup"><i class="icon-plus"></i>Přidat</div>';
+      '<div class="button green-button" id="addGroup"><i class="icon-plus"></i>Přidat</div>';
   }
   html += renderGroupList();
   document.getElementById("main-page")!.innerHTML = html;

@@ -30,7 +30,7 @@ function addField(
   let html =
     '<div class="button yellow-button" id="side-panel-cancel"><i class="icon-cancel"></i>Zrušit</div>';
   html +=
-    '<div class="button greenButton" id="addFieldSave"><i class="icon-floppy"></i>Uložit</div>';
+    '<div class="button green-button" id="addFieldSave"><i class="icon-floppy"></i>Uložit</div>';
   html +=
     '<h3 class="side-panel-title">Přidat oblast</h3><form id="side-panel-form">';
   html += '<legend for="fieldName">Název:</legend>';

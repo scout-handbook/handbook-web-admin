@@ -13,7 +13,7 @@ function changeUserRoleOnClick(event: MouseEvent): void {
   let html =
     '<div class="button yellow-button" id="side-panel-cancel"><i class="icon-cancel"></i>Zrušit</div>';
   html +=
-    '<div class="button greenButton" id="changeUserRoleSave"><i class="icon-floppy"></i>Uložit</div>';
+    '<div class="button green-button" id="changeUserRoleSave"><i class="icon-floppy"></i>Uložit</div>';
   html +=
     '<h3 class="side-panel-title">Změnit roli: ' +
     getAttribute(event, "name") +

@@ -65,7 +65,7 @@ function renderLessonList(): string {
         '"><i class="icon-trash-empty"></i>Smazat</div>';
     }
     html +=
-      '<div class="button greenButton addLessonInField" data-id="' +
+      '<div class="button green-button addLessonInField" data-id="' +
       id +
       '"><i class="icon-plus"></i>Přidat lekci</div>';
     LESSONS.iterate(function (lessonId, lesson) {
@@ -92,10 +92,10 @@ function showLessonSubview(noHistory: boolean): void {
   let html = "<h1>" + CONFIG["site-name"] + " - Lekce</h1>";
   if (LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser") {
     html +=
-      '<div class="button greenButton" id="add-field"><i class="icon-plus"></i>Přidat oblast</div>';
+      '<div class="button green-button" id="add-field"><i class="icon-plus"></i>Přidat oblast</div>';
   }
   html +=
-    '<div class="button greenButton" id="add-lesson"><i class="icon-plus"></i>Přidat lekci</div>';
+    '<div class="button green-button" id="add-lesson"><i class="icon-plus"></i>Přidat lekci</div>';
   if (LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser") {
     html +=
       '<div class="button" id="restore-lesson"><i class="icon-history"></i>Smazané lekce</div>';

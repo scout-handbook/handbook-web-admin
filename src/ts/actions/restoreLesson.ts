@@ -3,7 +3,7 @@
 function restoreLessonRenderVersion(name: string, body: string): void {
   refreshPreview(name, body, "restore-lesson-preview");
   const html =
-    '<div class="button greenButton" id="restoreLessonEdit"><i class="icon-history"></i>Obnovit</div>';
+    '<div class="button green-button" id="restoreLessonEdit"><i class="icon-history"></i>Obnovit</div>';
   document.getElementById("restoreLessonListHeader")!.innerHTML = html;
   document.getElementById("restoreLessonEdit")!.onclick = function (): void {
     sidePanelOpen();
@@ -118,7 +118,7 @@ function restoreLesson(): void {
   let html =
     '<div class="button yellow-button" id="side-panel-cancel"><i class="icon-cancel"></i>Zrušit</div>';
   html +=
-    '<div class="button greenButton" id="restoreLessonNext"><i class="icon-fast-fw"></i>Pokračovat</div>';
+    '<div class="button green-button" id="restoreLessonNext"><i class="icon-fast-fw"></i>Pokračovat</div>';
   html += '<h3 class="side-panel-title">Obnovit smazanou lekci</h3>';
   html += '<div id="restoreLessonList"><div id="embedded-spinner"></div></div>';
   document.getElementById("side-panel")!.innerHTML = html;
