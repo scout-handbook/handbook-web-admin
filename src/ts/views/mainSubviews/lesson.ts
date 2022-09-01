@@ -84,9 +84,9 @@ function changeLessonOnClick(event: MouseEvent): boolean {
 
 function showLessonSubview(noHistory: boolean): void {
   mainPageTab = "lessons";
-  const nodes = getElementsByClassName("topBarTab");
+  const nodes = getElementsByClassName("top-bar-tab");
   for (let i = 0; i < nodes.length; i++) {
-    nodes[i].className = "topBarTab";
+    nodes[i].className = "top-bar-tab";
   }
   document.getElementById("lessonManager")!.className += " active-top-bar-tab";
   let html = "<h1>" + CONFIG["site-name"] + " - Lekce</h1>";

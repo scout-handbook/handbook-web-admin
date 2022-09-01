@@ -26,7 +26,7 @@ h3.main-page,
   height: 80px;
 }
 
-.topBarTab {
+.top-bar-tab {
   border-left: 1px solid var(--border-color);
   border-right: 1px solid var(--border-color);
   cursor: pointer;
@@ -43,7 +43,7 @@ h3.main-page,
   width: 140px;
 }
 
-.topBarTab:hover,
+.top-bar-tab:hover,
 .active-top-bar-tab {
   background-color: var(--background-darkest);
   border-color: var(--accent-color);

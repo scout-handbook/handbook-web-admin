@@ -33,9 +33,9 @@ function renderCompetenceList(): string {
 
 function showCompetenceSubview(noHistory: boolean): void {
   mainPageTab = "competences";
-  const nodes = getElementsByClassName("topBarTab");
+  const nodes = getElementsByClassName("top-bar-tab");
   for (let i = 0; i < nodes.length; i++) {
-    nodes[i].className = "topBarTab";
+    nodes[i].className = "top-bar-tab";
   }
   document.getElementById("competenceManager")!.className += " active-top-bar-tab";
   let html = "<h1>" + CONFIG["site-name"] + " - Kompetence</h1>";
