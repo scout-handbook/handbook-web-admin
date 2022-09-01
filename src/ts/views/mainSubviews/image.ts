@@ -32,7 +32,7 @@ function showImageList(
   const start = perPage * (page - 1);
   for (let i = start; i < Math.min(list.length, start + perPage); i++) {
     html +=
-      '<div class="thumbnailContainer"><div class="buttonContainer"><img src="' +
+      '<div class="thumbnailContainer"><div class="button-container"><img src="' +
       CONFIG["api-uri"] +
       "/v1.0/image/" +
       list[i] +

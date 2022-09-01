@@ -6,7 +6,7 @@
   width: 256px;
 }
 
-.buttonContainer {
+.button-container {
   display: inline-block;
   position: relative;
   width: fit-content;
