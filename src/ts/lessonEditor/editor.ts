@@ -127,7 +127,8 @@ function showLessonEditor(
   document.getElementById("lesson-settings")!.onclick = function (): void {
     lessonSettings(id, saveActionQueue, false);
   };
-  document.getElementById("close-image-selector")!.onclick = toggleImageSelector;
+  document.getElementById("close-image-selector")!.onclick =
+    toggleImageSelector;
   //document.getElementById("imageSelectorAdd")!.onclick = function(): void {addImage(true);};
   document.getElementById("imageSelectorAdd")!.style.display = "none"; // TODO: Re-enable uploads in editor without discarding its contents
 
