@@ -88,7 +88,7 @@ function showLessonSubview(noHistory: boolean): void {
   for (let i = 0; i < nodes.length; i++) {
     nodes[i].className = "topBarTab";
   }
-  document.getElementById("lessonManager")!.className += " activeTopBarTab";
+  document.getElementById("lessonManager")!.className += " active-top-bar-tab";
   let html = "<h1>" + CONFIG["site-name"] + " - Lekce</h1>";
   if (LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser") {
     html +=

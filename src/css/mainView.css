@@ -44,7 +44,7 @@ h3.main-page,
 }
 
 .topBarTab:hover,
-.activeTopBarTab {
+.active-top-bar-tab {
   background-color: var(--background-darkest);
   border-color: var(--accent-color);
   color: var(--accent-color);

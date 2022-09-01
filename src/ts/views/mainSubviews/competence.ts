@@ -37,7 +37,7 @@ function showCompetenceSubview(noHistory: boolean): void {
   for (let i = 0; i < nodes.length; i++) {
     nodes[i].className = "topBarTab";
   }
-  document.getElementById("competenceManager")!.className += " activeTopBarTab";
+  document.getElementById("competenceManager")!.className += " active-top-bar-tab";
   let html = "<h1>" + CONFIG["site-name"] + " - Kompetence</h1>";
   if (LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser") {
     html +=
