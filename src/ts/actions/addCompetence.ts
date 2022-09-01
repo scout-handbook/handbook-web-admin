@@ -9,7 +9,7 @@ function addCompetencePayloadBuilder(): Payload {
       (document.getElementById("competenceName") as HTMLInputElement).value
     ),
     description: encodeURIComponent(
-      (document.getElementById("competenceDescription") as HTMLInputElement)
+      (document.getElementById("competence-description") as HTMLInputElement)
         .value
     ),
   };
@@ -28,7 +28,7 @@ function addCompetence(): void {
   html +=
     '<input type="text" class="form-text" id="competenceName" value="Nová kompetence" autocomplete="off"><br>';
   html +=
-    '<textarea rows="5" class="form-text" id="competenceDescription" autocomplete="off">Popis nové kompetence</textarea>';
+    '<textarea rows="5" class="form-text" id="competence-description" autocomplete="off">Popis nové kompetence</textarea>';
   html += "</form>";
   document.getElementById("side-panel")!.innerHTML = html;
 
