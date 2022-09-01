@@ -55,7 +55,7 @@ function changeLessonCompetencesOnClick(
     html += ' data-id="' + competenceId + '"';
     html += '><span class="form-custom form-checkbox"></span></label>';
     html +=
-      '<span class="competenceNumber">' +
+      '<span class="competence-number">' +
       competence.number.toString() +
       ":</span> " +
       competence.name +

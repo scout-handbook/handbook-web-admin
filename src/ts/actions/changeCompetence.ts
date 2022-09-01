@@ -5,7 +5,7 @@ let competenceChanged = false;
 function changeCompetencePayloadBuilder(): Payload {
   return {
     number: encodeURIComponent(
-      (document.getElementById("competenceNumber") as HTMLInputElement).value
+      (document.getElementById("competence-number") as HTMLInputElement).value
     ),
     name: encodeURIComponent(
       (document.getElementById("competence-name") as HTMLInputElement).value
@@ -28,7 +28,7 @@ function changeCompetenceOnClick(event: MouseEvent): void {
     '<h3 class="side-panel-title">Upravit kompetenci</h3><form id="side-panel-form">';
   const competence = COMPETENCES.get(getAttribute(event, "id"))!;
   html +=
-    '<span class="competence-heading">Kompetence</span> <input type="text" class="form-text form-name" id="competenceNumber" value="' +
+    '<span class="competence-heading">Kompetence</span> <input type="text" class="form-text form-name" id="competence-number" value="' +
     competence.number.toString() +
     '" autocomplete="off"><br>';
   html +=
@@ -67,7 +67,7 @@ function changeCompetenceOnClick(event: MouseEvent): void {
       competenceChanged = true;
     };
   }
-  addOnChange("competenceNumber");
+  addOnChange("competence-number");
   addOnChange("competence-name");
   addOnChange("competence-description");
 
