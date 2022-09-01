@@ -50,7 +50,7 @@ function showMainView(noHistory: boolean): void {
     CONFIG["api-uri"] +
     "/v1.0/logout?redirect-uri=" +
     encodeURIComponent(CONFIG["frontend-uri"]) +
-    '">Odhlásit</a><a href="/" id="frontendLink">Zpět na web</a></div></div>';
+    '">Odhlásit</a><a href="/" id="frontend-link">Zpět na web</a></div></div>';
   html += '<div class="topBarTab" id="lessonManager">Lekce</div>';
   html += '<div class="topBarTab" id="competenceManager">Kompetence</div>';
   html += '<div class="topBarTab" id="imageManager">Obrázky</div>';
