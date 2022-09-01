@@ -73,7 +73,7 @@ h3.main-page,
   padding-top: 17px;
 }
 
-#userAccount {
+#user-account {
   border-right: 1px solid var(--border-color);
   display: inline-block;
   height: 80px;
