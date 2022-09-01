@@ -9,7 +9,7 @@ function renderMainView(noHistory: boolean): void {
   }
   document.getElementById("user-name")!.innerHTML = LOGINSTATE.name;
 
-  document.getElementById("lessonManager")!.onclick = function (): void {
+  document.getElementById("lesson-manager")!.onclick = function (): void {
     showLessonSubview(false);
   };
   document.getElementById("competence-manager")!.onclick = function (): void {
@@ -51,7 +51,7 @@ function showMainView(noHistory: boolean): void {
     "/v1.0/logout?redirect-uri=" +
     encodeURIComponent(CONFIG["frontend-uri"]) +
     '">Odhlásit</a><a href="/" id="frontend-link">Zpět na web</a></div></div>';
-  html += '<div class="top-bar-tab" id="lessonManager">Lekce</div>';
+  html += '<div class="top-bar-tab" id="lesson-manager">Lekce</div>';
   html += '<div class="top-bar-tab" id="competence-manager">Kompetence</div>';
   html += '<div class="top-bar-tab" id="image-manager">Obrázky</div>';
   html += '<div class="top-bar-tab" id="user-manager">Uživatelé</div>';
