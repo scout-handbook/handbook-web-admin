@@ -7,7 +7,7 @@ function renderMainView(noHistory: boolean): void {
     (document.getElementById("userAvatar") as HTMLImageElement).src =
       "data:image/png;base64," + LOGINSTATE.avatar;
   }
-  document.getElementById("userName")!.innerHTML = LOGINSTATE.name;
+  document.getElementById("user-name")!.innerHTML = LOGINSTATE.name;
 
   document.getElementById("lessonManager")!.onclick = function (): void {
     showLessonSubview(false);
@@ -44,7 +44,7 @@ function showMainView(noHistory: boolean): void {
     '<div id="topBar"><div id="userAccount"><img id="userAvatar" alt="Account avatar" src="' +
     CONFIG["admin-uri"] +
     '/avatar.png">';
-  html += '<div id="userName">&nbsp;</div>';
+  html += '<div id="user-name">&nbsp;</div>';
   html +=
     '<div id="log-link"><a href="' +
     CONFIG["api-uri"] +
