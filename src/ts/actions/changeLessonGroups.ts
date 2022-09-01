@@ -56,7 +56,7 @@ function changeLessonGroupsOnClick(
     html += ' data-id="' + groupId + '"';
     html += '><span class="formCustom formCheckbox"></span></label>';
     if (groupId === "00000000-0000-0000-0000-000000000000") {
-      html += '<span class="publicGroup">' + group.name + "</span></div>";
+      html += '<span class="public-group">' + group.name + "</span></div>";
       publicName = group.name;
     } else {
       html += group.name + "</div>";
@@ -64,7 +64,7 @@ function changeLessonGroupsOnClick(
   });
   html += "</form>";
   html +=
-    '<div class="group-help"><i class="icon-info-circled"></i> U každé lekce lze zvolit, kteří uživatelé ji budou moct zobrazit (resp. které skupiny uživatelů). Pokud není vybrána žádná skupiny, nebude lekce pro běžné uživatele vůbec přístupná (pouze v administraci). Pokud je vybrána skupina "<span class="publicGroup">' +
+    '<div class="group-help"><i class="icon-info-circled"></i> U každé lekce lze zvolit, kteří uživatelé ji budou moct zobrazit (resp. které skupiny uživatelů). Pokud není vybrána žádná skupiny, nebude lekce pro běžné uživatele vůbec přístupná (pouze v administraci). Pokud je vybrána skupina "<span class="public-group">' +
     publicName +
     '</span>", bude lekce přístupná všem uživatelům (i nepřihlášeným návštěvníkům webu) bez ohledu na skupiny.</div>';
   document.getElementById("side-panel")!.innerHTML = html;

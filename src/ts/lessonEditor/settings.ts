@@ -42,7 +42,7 @@ function renderGroups(): void {
     return lessonSettingsCache.groups.indexOf(id) >= 0;
   }).iterate(function (id, group) {
     if (id === "00000000-0000-0000-0000-000000000000") {
-      html += '<span class="publicGroup">' + group.name + "</span><br>";
+      html += '<span class="public-group">' + group.name + "</span><br>";
     } else {
       html += group.name + "<br>";
     }

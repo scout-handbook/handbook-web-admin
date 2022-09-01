@@ -5,7 +5,7 @@ function renderGroupList(): string {
   let html = "";
   GROUPS.iterate(function (id, group) {
     if (id === "00000000-0000-0000-0000-000000000000") {
-      html += '<br><h3 class = "main-page publicGroup">' + group.name + "</h3>";
+      html += '<br><h3 class = "main-page public-group">' + group.name + "</h3>";
     } else {
       html += '<br><h3 class = "main-page">' + group.name + "</h3>";
     }
