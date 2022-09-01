@@ -38,7 +38,7 @@ function showImageList(
       list[i] +
       '?quality=thumbnail" class="thumbnail-image" data-id="' +
       list[i] +
-      '"><div class="button redButton delete-image" data-id="' +
+      '"><div class="button red-button delete-image" data-id="' +
       list[i] +
       '"><i class="icon-trash-empty"></i>Smazat</div></div></div>';
   }

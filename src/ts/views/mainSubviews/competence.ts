@@ -19,7 +19,7 @@ function renderCompetenceList(): string {
         id +
         '"><i class="icon-pencil"></i>Upravit</div>';
       html +=
-        '<div class="button redButton delete-competence" data-id="' +
+        '<div class="button red-button delete-competence" data-id="' +
         id +
         '"><i class="icon-trash-empty"></i>Smazat</div><br>';
     }
