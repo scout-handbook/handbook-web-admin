@@ -55,7 +55,7 @@ function showImageList(
   for (let i = 0; i < deleteNodes.length; i++) {
     (deleteNodes[i] as HTMLElement).onclick = deleteImageOnClick;
   }
-  const paginationNodes = getElementsByClassName("paginationButton");
+  const paginationNodes = getElementsByClassName("pagination-button");
   for (let i = 0; i < paginationNodes.length; i++) {
     (paginationNodes[i] as HTMLElement).onclick = function (event): void {
       downloadImageList(
