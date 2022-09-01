@@ -56,7 +56,7 @@ function renderSidePanelImageSelector(
   noHistory: boolean
 ): void {
   let html =
-    '<div class="button yellowButton" id="fieldImageCancel"><i class="icon-cancel"></i>Zrušit</div><div class="fieldImageContainer">';
+    '<div class="button yellowButton" id="fieldImageCancel"><i class="icon-cancel"></i>Zrušit</div><div class="field-image-container">';
   const start = perPage * (page - 1);
   for (let i = start; i < Math.min(list.length, start + perPage); i++) {
     html +=
