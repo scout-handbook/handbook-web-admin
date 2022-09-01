@@ -84,7 +84,7 @@ header {
   z-index: 7;
 }
 
-#imageScroller {
+#image-scroller {
   bottom: 0;
   left: 0;
   overflow-y: auto;
