@@ -3,7 +3,7 @@
 function renderField(): string {
   let html = '<br><h3 class="side-panel-title no-newline">Oblast</h3>';
   html +=
-    '<div class="button cyanButton" id="changeField"><i class="icon-pencil"></i>Upravit</div><br>';
+    '<div class="button cyan-button" id="changeField"><i class="icon-pencil"></i>Upravit</div><br>';
   if (!lessonSettingsCache.field) {
     html += '<span class="anonymous-field">Nezařazeno</span>';
   } else {
@@ -15,7 +15,7 @@ function renderField(): string {
 function renderCompetences(): string {
   let html = '<br><h3 class="side-panel-title no-newline">Kompetence</h3>';
   html +=
-    '<div class="button cyanButton" id="changeCompetences"><i class="icon-pencil"></i>Upravit</div>';
+    '<div class="button cyan-button" id="changeCompetences"><i class="icon-pencil"></i>Upravit</div>';
   COMPETENCES.filter(function (id) {
     return lessonSettingsCache.competences.indexOf(id) >= 0;
   }).iterate(function (_, competence) {
@@ -31,7 +31,7 @@ function renderCompetences(): string {
 function prerenderGroups(): string {
   let html = '<br><h3 class="side-panel-title no-newline">Skupiny</h3>';
   html +=
-    '<div class="button cyanButton" id="change-groups"><i class="icon-pencil"></i>Upravit</div><br><div id="settingsGroupList"><div id="embedded-spinner"></div></div>';
+    '<div class="button cyan-button" id="change-groups"><i class="icon-pencil"></i>Upravit</div><br><div id="settingsGroupList"><div id="embedded-spinner"></div></div>';
   return html;
 }
 

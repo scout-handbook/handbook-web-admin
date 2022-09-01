@@ -15,7 +15,7 @@ function renderCompetenceList(): string {
       LOGINSTATE.role === "superuser"
     ) {
       html +=
-        '<div class="button cyanButton change-competence" data-id="' +
+        '<div class="button cyan-button change-competence" data-id="' +
         id +
         '"><i class="icon-pencil"></i>Upravit</div>';
       html +=

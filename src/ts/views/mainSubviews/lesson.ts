@@ -9,7 +9,7 @@ function renderLessonListLesson(
   let html =
     '<br><h3 class="main-page' + secondLevel + '">' + lesson.name + "</h3>";
   html +=
-    '<div class="button cyanButton changeLesson" data-id="' +
+    '<div class="button cyan-button changeLesson" data-id="' +
     id +
     '"><i class="icon-pencil"></i>Upravit</div>';
   if (LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser") {
@@ -56,7 +56,7 @@ function renderLessonList(): string {
       LOGINSTATE.role === "superuser"
     ) {
       html +=
-        '<div class="button cyanButton changeField" data-id="' +
+        '<div class="button cyan-button changeField" data-id="' +
         id +
         '"><i class="icon-pencil"></i>Upravit</div>';
       html +=

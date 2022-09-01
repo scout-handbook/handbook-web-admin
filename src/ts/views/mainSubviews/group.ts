@@ -14,7 +14,7 @@ function renderGroupList(): string {
       LOGINSTATE.role === "superuser"
     ) {
       html +=
-        '<div class="button cyanButton changeGroup" data-id="' +
+        '<div class="button cyan-button changeGroup" data-id="' +
         id +
         '"><i class="icon-pencil"></i>Upravit</div>';
       if (id !== "00000000-0000-0000-0000-000000000000") {
