@@ -7,7 +7,7 @@ function renderLessonListLesson(
   secondLevel: string
 ): string {
   let html =
-    '<br><h3 class="mainPage' + secondLevel + '">' + lesson.name + "</h3>";
+    '<br><h3 class="main-page' + secondLevel + '">' + lesson.name + "</h3>";
   html +=
     '<div class="button cyanButton changeLesson" data-id="' +
     id +
@@ -24,7 +24,7 @@ function renderLessonListLesson(
     "/lesson/" +
     id +
     '" target="_blank" class="button exportLesson"><i class="icon-file-pdf"></i>PDF</a>';
-  html += '<br><span class="mainPage' + secondLevel + '">Kompetence: ';
+  html += '<br><span class="main-page' + secondLevel + '">Kompetence: ';
   let first = true;
   COMPETENCES.filter(function (competenceId) {
     return lesson.competences.indexOf(competenceId) >= 0;
@@ -50,7 +50,7 @@ function renderLessonList(): string {
     }
   });
   FIELDS.iterate(function (id, field) {
-    html += '<br><h2 class="mainPage">' + field.name + "</h2>";
+    html += '<br><h2 class="main-page">' + field.name + "</h2>";
     if (
       LOGINSTATE.role === "administrator" ||
       LOGINSTATE.role === "superuser"
@@ -101,7 +101,7 @@ function showLessonSubview(noHistory: boolean): void {
       '<div class="button" id="restoreLesson"><i class="icon-history"></i>Smazané lekce</div>';
   }
   html += renderLessonList();
-  document.getElementById("mainPage")!.innerHTML = html;
+  document.getElementById("main-page")!.innerHTML = html;
   document.getElementById("mainPageContainer")!.scrollTop = 0;
 
   if (LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser") {

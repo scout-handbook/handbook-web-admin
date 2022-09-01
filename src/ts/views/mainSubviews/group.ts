@@ -5,9 +5,9 @@ function renderGroupList(): string {
   let html = "";
   GROUPS.iterate(function (id, group) {
     if (id === "00000000-0000-0000-0000-000000000000") {
-      html += '<br><h3 class = "mainPage publicGroup">' + group.name + "</h3>";
+      html += '<br><h3 class = "main-page publicGroup">' + group.name + "</h3>";
     } else {
-      html += '<br><h3 class = "mainPage">' + group.name + "</h3>";
+      html += '<br><h3 class = "main-page">' + group.name + "</h3>";
     }
     if (
       LOGINSTATE.role === "administrator" ||
@@ -30,7 +30,7 @@ function renderGroupList(): string {
     }
     if (id !== "00000000-0000-0000-0000-000000000000") {
       html +=
-        '<br><span class="mainPage">Uživatelů: ' +
+        '<br><span class="main-page">Uživatelů: ' +
         group.count.toString() +
         "</span>";
     }
@@ -51,7 +51,7 @@ function showGroupSubview(noHistory: boolean): void {
       '<div class="button greenButton" id="addGroup"><i class="icon-plus"></i>Přidat</div>';
   }
   html += renderGroupList();
-  document.getElementById("mainPage")!.innerHTML = html;
+  document.getElementById("main-page")!.innerHTML = html;
   document.getElementById("mainPageContainer")!.scrollTop = 0;
 
   if (LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser") {

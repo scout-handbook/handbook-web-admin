@@ -237,7 +237,7 @@ function showUserSubview(noHistory: boolean): void {
   document.getElementById("userManager")!.className += " activeTopBarTab";
   const html =
     "<h1>" + CONFIG["site-name"] + ' - Uživatelé</h1><div id="userList"></div>';
-  document.getElementById("mainPage")!.innerHTML = html;
+  document.getElementById("main-page")!.innerHTML = html;
 
   downloadUserList();
   if (!noHistory) {
