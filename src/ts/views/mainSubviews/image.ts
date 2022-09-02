@@ -10,7 +10,7 @@ function showImagePreview(event: MouseEvent): void {
     CONFIG["api-uri"] +
     "/v1.0/image/" +
     (event.target as HTMLElement).dataset.id! +
-    '" class="previewImage">';
+    '" class="preview-image">';
   overlay.innerHTML = html;
   overlay.onclick = function (): void {
     overlay.style.display = "none";
@@ -32,13 +32,13 @@ function showImageList(
   const start = perPage * (page - 1);
   for (let i = start; i < Math.min(list.length, start + perPage); i++) {
     html +=
-      '<div class="thumbnailContainer"><div class="buttonContainer"><img src="' +
+      '<div class="thumbnail-container"><div class="button-container"><img src="' +
       CONFIG["api-uri"] +
       "/v1.0/image/" +
       list[i] +
-      '?quality=thumbnail" class="thumbnailImage" data-id="' +
+      '?quality=thumbnail" class="thumbnail-image" data-id="' +
       list[i] +
-      '"><div class="button redButton deleteImage" data-id="' +
+      '"><div class="button red-button delete-image" data-id="' +
       list[i] +
       '"><i class="icon-trash-empty"></i>Smazat</div></div></div>';
   }
@@ -51,11 +51,11 @@ function showImageList(
   for (let i = 0; i < ImageNodes.length; i++) {
     ImageNodes[i].onclick = showImagePreview;
   }
-  const deleteNodes = getElementsByClassName("deleteImage");
+  const deleteNodes = getElementsByClassName("delete-image");
   for (let i = 0; i < deleteNodes.length; i++) {
     (deleteNodes[i] as HTMLElement).onclick = deleteImageOnClick;
   }
-  const paginationNodes = getElementsByClassName("paginationButton");
+  const paginationNodes = getElementsByClassName("pagination-button");
   for (let i = 0; i < paginationNodes.length; i++) {
     (paginationNodes[i] as HTMLElement).onclick = function (event): void {
       downloadImageList(
@@ -68,7 +68,7 @@ function showImageList(
 
 function downloadImageList(page: number, perPage: number): void {
   document.getElementById("imageList")!.innerHTML =
-    '<div id="embeddedSpinner"></div>';
+    '<div id="embedded-spinner"></div>';
   request(
     CONFIG["api-uri"] + "/v1.0/image",
     "GET",
@@ -83,16 +83,16 @@ function downloadImageList(page: number, perPage: number): void {
 
 function showImageSubview(noHistory: boolean): void {
   mainPageTab = "images";
-  const nodes = getElementsByClassName("topBarTab");
+  const nodes = getElementsByClassName("top-bar-tab");
   for (let i = 0; i < nodes.length; i++) {
-    nodes[i].className = "topBarTab";
+    nodes[i].className = "top-bar-tab";
   }
-  document.getElementById("imageManager")!.className += " activeTopBarTab";
+  document.getElementById("image-manager")!.className += " active-top-bar-tab";
   let html = "<h1>" + CONFIG["site-name"] + " - Obrázky</h1>";
   html +=
-    '<div class="button greenButton" id="addImage"><i class="icon-plus"></i>Nahrát</div>';
+    '<div class="button green-button" id="addImage"><i class="icon-plus"></i>Nahrát</div>';
   html += '<div id="imageList"></div>';
-  document.getElementById("mainPage")!.innerHTML = html;
+  document.getElementById("main-page")!.innerHTML = html;
 
   document.getElementById("addImage")!.onclick = function (): void {
     addImage(false);

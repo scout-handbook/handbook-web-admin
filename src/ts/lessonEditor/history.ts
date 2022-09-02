@@ -2,12 +2,12 @@
 /* exported changed, lessonHistoryOpen */
 
 function lessonHistoryPreviewShowCurrent(): void {
-  document.getElementById("lessonHistoryPreview")!.innerHTML =
-    '<div id="embeddedSpinner"></div>';
+  document.getElementById("lesson-history-preview")!.innerHTML =
+    '<div id="embedded-spinner"></div>';
   refreshPreview(
     (document.getElementById("name") as HTMLInputElement).value,
     editor.value(),
-    "lessonHistoryPreview"
+    "lesson-history-preview"
   );
 
   document.getElementById("lessonHistoryListHeader")!.innerHTML = "";
@@ -21,9 +21,9 @@ function lessonHistoryPreviewRenderVersion(
   body: string,
   actionQueue: ActionQueue
 ): void {
-  refreshPreview(name, body, "lessonHistoryPreview");
+  refreshPreview(name, body, "lesson-history-preview");
   const html =
-    '<div class="button greenButton" id="lessonHistoryRevert"><i class="icon-history"></i>Obnovit</div>';
+    '<div class="button green-button" id="lessonHistoryRevert"><i class="icon-history"></i>Obnovit</div>';
   document.getElementById("lessonHistoryListHeader")!.innerHTML = html;
 
   document.getElementById("lessonHistoryRevert")!.onclick = function (): void {
@@ -39,8 +39,8 @@ function lessonHistoryPreviewShowVersion(
   actionQueue: ActionQueue,
   event: Event
 ): void {
-  document.getElementById("lessonHistoryPreview")!.innerHTML =
-    '<div id="embeddedSpinner"></div>';
+  document.getElementById("lesson-history-preview")!.innerHTML =
+    '<div id="embedded-spinner"></div>';
   request(
     CONFIG["api-uri"] +
       "/v1.0/lesson/" +
@@ -70,18 +70,18 @@ function lessonHistoryListRender(
   actionQueue: ActionQueue,
   list: Array<LessonVersion>
 ): void {
-  let html = '<form id="sidePanelForm">';
+  let html = '<form id="side-panel-form">';
   html +=
-    '<div class="formRow"><label class="formSwitch"><input type="radio" name="version" checked><span class="formCustom formRadio"></span></label><span class="lessonHistoryCurrent">Současná verze</span> — ' +
+    '<div class="form-row"><label class="form-switch"><input type="radio" name="version" checked><span class="form-custom form-radio"></span></label><span class="lesson-history-current">Současná verze</span> — ' +
     parseVersion(LESSONS.get(id)!.version) +
     "</div>";
   for (let i = 0; i < list.length; i++) {
     html +=
-      '<div class="formRow"><label class="formSwitch"><input type="radio" name="version" data-name="' +
+      '<div class="form-row"><label class="form-switch"><input type="radio" name="version" data-name="' +
       list[i].name +
       '" data-version="' +
       list[i].version.toString() +
-      '"><span class="formCustom formRadio"></span></label><span class="lessonHistoryVersion">' +
+      '"><span class="form-custom form-radio"></span></label><span class="lesson-history-version">' +
       list[i].name +
       "</span> — " +
       parseVersion(list[i].version) +
@@ -91,7 +91,7 @@ function lessonHistoryListRender(
   document.getElementById("lessonHistoryForm")!.innerHTML = html;
 
   const nodes = document
-    .getElementById("sidePanelForm")!
+    .getElementById("side-panel-form")!
     .getElementsByTagName("input");
   nodes[0].onchange = function (): void {
     lessonHistoryPreviewShowCurrent();
@@ -108,8 +108,8 @@ function lessonHistoryListRender(
 function lessonHistoryOpen(id: string, actionQueue: ActionQueue): void {
   sidePanelDoubleOpen();
   const html =
-    '<div id="lessonHistoryList"><div class="button yellowButton" id="cancelEditorAction"><i class="icon-cancel"></i>Zrušit</div><span id="lessonHistoryListHeader"></span><h3 class="sidePanelTitle">Historie lekce</h3><div id="lessonHistoryForm"><div id="embeddedSpinner"></div></div></div><div id="lessonHistoryPreview"></div>';
-  document.getElementById("sidePanel")!.innerHTML = html;
+    '<div id="lesson-history-list"><div class="button yellow-button" id="cancelEditorAction"><i class="icon-cancel"></i>Zrušit</div><span id="lessonHistoryListHeader"></span><h3 class="side-panel-title">Historie lekce</h3><div id="lessonHistoryForm"><div id="embedded-spinner"></div></div></div><div id="lesson-history-preview"></div>';
+  document.getElementById("side-panel")!.innerHTML = html;
 
   document.getElementById("cancelEditorAction")!.onclick = function (): void {
     lessonSettings(id, actionQueue, true);

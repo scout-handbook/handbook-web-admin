@@ -80,32 +80,32 @@ function showLessonEditor(
   changed = false;
   const html =
     '\
-<div id="sidePanel"></div><div id="sidePanelOverlay"></div>\
+<div id="side-panel"></div><div id="side-panel-overlay"></div>\
 <header>\
-	<div class="button yellowButton" id="discard">\
+	<div class="button yellow-button" id="discard">\
 		<i class="icon-cancel"></i>Zrušit\
 	</div>\
 	<form>\
-		<input type="text" class="formText formName" id="name" value="' +
+		<input type="text" class="form-text form-name" id="name" value="' +
     name +
     '" autocomplete="off">\
 	</form>\
-	<div class="button greenButton" id="save">\
+	<div class="button green-button" id="save">\
 		<i class="icon-floppy"></i>Uložit\
 	</div>\
-	<div class="button" id="lessonSettings">\
+	<div class="button" id="lesson-settings">\
 		<i class="icon-cog"></i>Nastavení\
 	</div>\
 </header>\
-<div id="imageSelector">\
-	<div id="imageScroller">\
-		<div class="button yellowButton" id="closeImageSelector">\
+<div id="image-selector">\
+	<div id="image-scroller">\
+		<div class="button yellow-button" id="close-image-selector">\
 			<i class="icon-up-open"></i> Zavřít\
 		</div>\
-		<div class="button greenButton" id="imageSelectorAdd">\
+		<div class="button green-button" id="imageSelectorAdd">\
 			<i class="icon-plus"></i> Nahrát\
 		</div>\
-		<div id="imageWrapper"></div>\
+		<div id="image-wrapper"></div>\
 	</div>\
 </div>\
 <div id="editor"><textarea></textarea></div><div id="preview"><div id="preview-inner"></div></div>';
@@ -124,10 +124,11 @@ function showLessonEditor(
       discardActionQueue.defaultDispatch(false);
     }
   };
-  document.getElementById("lessonSettings")!.onclick = function (): void {
+  document.getElementById("lesson-settings")!.onclick = function (): void {
     lessonSettings(id, saveActionQueue, false);
   };
-  document.getElementById("closeImageSelector")!.onclick = toggleImageSelector;
+  document.getElementById("close-image-selector")!.onclick =
+    toggleImageSelector;
   //document.getElementById("imageSelectorAdd")!.onclick = function(): void {addImage(true);};
   document.getElementById("imageSelectorAdd")!.style.display = "none"; // TODO: Re-enable uploads in editor without discarding its contents
 

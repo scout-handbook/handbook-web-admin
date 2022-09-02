@@ -1,12 +1,12 @@
-.anonymousField {
+.anonymous-field {
   font-style: italic;
 }
 
-#fieldDescription {
+#field-description {
   margin-top: 20px;
 }
 
-.fieldImageContainer {
-  margin: 0 auto 30px auto;
+.field-image-container {
+  margin: 0 auto 30px;
   max-width: 770px;
 }

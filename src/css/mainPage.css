@@ -1,17 +1,17 @@
-h2.mainPage {
+h2.main-page {
   margin-bottom: 10px;
   margin-top: 2.3em;
 }
 
-h2.mainPage a {
+h2.main-page a {
   color: var(--non-accented-link-color);
 }
 
-h3.mainPage {
+h3.main-page {
   margin-bottom: 10px;
   margin-top: 1.9em;
 }
 
-.secondLevel {
+.second-level {
   margin-left: 40px;
 }

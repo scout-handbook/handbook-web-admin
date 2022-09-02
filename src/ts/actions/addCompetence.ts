@@ -3,13 +3,13 @@
 function addCompetencePayloadBuilder(): Payload {
   return {
     number: encodeURIComponent(
-      (document.getElementById("competenceNumber") as HTMLInputElement).value
+      (document.getElementById("competence-number") as HTMLInputElement).value
     ),
     name: encodeURIComponent(
-      (document.getElementById("competenceName") as HTMLInputElement).value
+      (document.getElementById("competence-name") as HTMLInputElement).value
     ),
     description: encodeURIComponent(
-      (document.getElementById("competenceDescription") as HTMLInputElement)
+      (document.getElementById("competence-description") as HTMLInputElement)
         .value
     ),
   };
@@ -18,21 +18,21 @@ function addCompetencePayloadBuilder(): Payload {
 function addCompetence(): void {
   sidePanelOpen();
   let html =
-    '<div class="button yellowButton" id="sidePanelCancel"><i class="icon-cancel"></i>Zrušit</div>';
+    '<div class="button yellow-button" id="side-panel-cancel"><i class="icon-cancel"></i>Zrušit</div>';
   html +=
-    '<div class="button greenButton" id="addCompetenceSave"><i class="icon-floppy"></i>Uložit</div>';
+    '<div class="button green-button" id="addCompetenceSave"><i class="icon-floppy"></i>Uložit</div>';
   html +=
-    '<h3 class="sidePanelTitle">Přidat kompetenci</h3><form id="sidePanelForm">';
+    '<h3 class="side-panel-title">Přidat kompetenci</h3><form id="side-panel-form">';
   html +=
-    '<span class="competenceHeading">Kompetence</span> <input type="text" class="formText formName" id="competenceNumber" value="00" autocomplete="off"><br>';
+    '<span class="competence-heading">Kompetence</span> <input type="text" class="form-text form-name" id="competence-number" value="00" autocomplete="off"><br>';
   html +=
-    '<input type="text" class="formText" id="competenceName" value="Nová kompetence" autocomplete="off"><br>';
+    '<input type="text" class="form-text" id="competence-name" value="Nová kompetence" autocomplete="off"><br>';
   html +=
-    '<textarea rows="5" class="formText" id="competenceDescription" autocomplete="off">Popis nové kompetence</textarea>';
+    '<textarea rows="5" class="form-text" id="competence-description" autocomplete="off">Popis nové kompetence</textarea>';
   html += "</form>";
-  document.getElementById("sidePanel")!.innerHTML = html;
+  document.getElementById("side-panel")!.innerHTML = html;
 
-  document.getElementById("sidePanelCancel")!.onclick = function (): void {
+  document.getElementById("side-panel-cancel")!.onclick = function (): void {
     history.back();
   };
 

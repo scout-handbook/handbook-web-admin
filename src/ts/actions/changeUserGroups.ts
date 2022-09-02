@@ -19,13 +19,13 @@ function changeUserGroupsOnClick(event: MouseEvent): void {
   groupsChanged = false;
   sidePanelOpen();
   let html =
-    '<div class="button yellowButton" id="sidePanelCancel"><i class="icon-cancel"></i>Zrušit</div>';
+    '<div class="button yellow-button" id="side-panel-cancel"><i class="icon-cancel"></i>Zrušit</div>';
   html +=
-    '<div class="button greenButton" id="changeUserGroupsSave"><i class="icon-floppy"></i>Uložit</div>';
+    '<div class="button green-button" id="changeUserGroupsSave"><i class="icon-floppy"></i>Uložit</div>';
   html +=
-    '<h3 class="sidePanelTitle">Změnit skupiny: ' +
+    '<h3 class="side-panel-title">Změnit skupiny: ' +
     getAttribute(event, "name") +
-    '</h3><form id="sidePanelForm">';
+    '</h3><form id="side-panel-form">';
   const currentGroups = JSON.parse(
     getAttribute(event, "groups")
   ) as Array<string>;
@@ -35,23 +35,23 @@ function changeUserGroupsOnClick(event: MouseEvent): void {
       publicName = group.name;
     } else {
       html +=
-        '<div class="formRow"><label class="formSwitch"><input type="checkbox"';
+        '<div class="form-row"><label class="form-switch"><input type="checkbox"';
       if (currentGroups.indexOf(id) >= 0) {
         html += " checked";
       }
       html += ' data-id="' + id + '"';
-      html += '><span class="formCustom formCheckbox"></span></label>';
+      html += '><span class="form-custom form-checkbox"></span></label>';
       html += group.name + "</div>";
     }
   });
   html += "</form>";
   html +=
-    '<div class="groupHelp"><i class="icon-info-circled"></i> Každého uživatele lze zařadit do několika skupin (nebo i žádné). Podle toho poté tento uživatel bude moct zobrazit pouze lekce, které byly těmto skupiným zveřejněny. Lekce ve skupině "<span class="publicGroup">' +
+    '<div class="group-help"><i class="icon-info-circled"></i> Každého uživatele lze zařadit do několika skupin (nebo i žádné). Podle toho poté tento uživatel bude moct zobrazit pouze lekce, které byly těmto skupiným zveřejněny. Lekce ve skupině "<span class="public-group">' +
     publicName +
     '</span>" uvidí všichni uživatelé bez ohledu na jejich skupiny. </div>';
-  document.getElementById("sidePanel")!.innerHTML = html;
+  document.getElementById("side-panel")!.innerHTML = html;
 
-  document.getElementById("sidePanelCancel")!.onclick = function (): void {
+  document.getElementById("side-panel-cancel")!.onclick = function (): void {
     history.back();
   };
 
@@ -70,7 +70,7 @@ function changeUserGroupsOnClick(event: MouseEvent): void {
   };
 
   const nodes = document
-    .getElementById("sidePanelForm")!
+    .getElementById("side-panel-form")!
     .getElementsByTagName("input");
   for (let i = 0; i < nodes.length; i++) {
     nodes[i].onchange = userGroupsOnclick;

@@ -7,14 +7,14 @@ function renderLessonListLesson(
   secondLevel: string
 ): string {
   let html =
-    '<br><h3 class="mainPage' + secondLevel + '">' + lesson.name + "</h3>";
+    '<br><h3 class="main-page' + secondLevel + '">' + lesson.name + "</h3>";
   html +=
-    '<div class="button cyanButton changeLesson" data-id="' +
+    '<div class="button cyan-button changeLesson" data-id="' +
     id +
     '"><i class="icon-pencil"></i>Upravit</div>';
   if (LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser") {
     html +=
-      '<div class="button redButton deleteLesson" data-id="' +
+      '<div class="button red-button deleteLesson" data-id="' +
       id +
       '"><i class="icon-trash-empty"></i>Smazat</div>';
   }
@@ -24,7 +24,7 @@ function renderLessonListLesson(
     "/lesson/" +
     id +
     '" target="_blank" class="button exportLesson"><i class="icon-file-pdf"></i>PDF</a>';
-  html += '<br><span class="mainPage' + secondLevel + '">Kompetence: ';
+  html += '<br><span class="main-page' + secondLevel + '">Kompetence: ';
   let first = true;
   COMPETENCES.filter(function (competenceId) {
     return lesson.competences.indexOf(competenceId) >= 0;
@@ -50,27 +50,27 @@ function renderLessonList(): string {
     }
   });
   FIELDS.iterate(function (id, field) {
-    html += '<br><h2 class="mainPage">' + field.name + "</h2>";
+    html += '<br><h2 class="main-page">' + field.name + "</h2>";
     if (
       LOGINSTATE.role === "administrator" ||
       LOGINSTATE.role === "superuser"
     ) {
       html +=
-        '<div class="button cyanButton changeField" data-id="' +
+        '<div class="button cyan-button changeField" data-id="' +
         id +
         '"><i class="icon-pencil"></i>Upravit</div>';
       html +=
-        '<div class="button redButton deleteField" data-id="' +
+        '<div class="button red-button deleteField" data-id="' +
         id +
         '"><i class="icon-trash-empty"></i>Smazat</div>';
     }
     html +=
-      '<div class="button greenButton addLessonInField" data-id="' +
+      '<div class="button green-button addLessonInField" data-id="' +
       id +
       '"><i class="icon-plus"></i>Přidat lekci</div>';
     LESSONS.iterate(function (lessonId, lesson) {
       if (field.lessons.indexOf(lessonId) >= 0) {
-        html += renderLessonListLesson(lessonId, lesson, " secondLevel");
+        html += renderLessonListLesson(lessonId, lesson, " second-level");
       }
     });
   });
@@ -84,36 +84,36 @@ function changeLessonOnClick(event: MouseEvent): boolean {
 
 function showLessonSubview(noHistory: boolean): void {
   mainPageTab = "lessons";
-  const nodes = getElementsByClassName("topBarTab");
+  const nodes = getElementsByClassName("top-bar-tab");
   for (let i = 0; i < nodes.length; i++) {
-    nodes[i].className = "topBarTab";
+    nodes[i].className = "top-bar-tab";
   }
-  document.getElementById("lessonManager")!.className += " activeTopBarTab";
+  document.getElementById("lesson-manager")!.className += " active-top-bar-tab";
   let html = "<h1>" + CONFIG["site-name"] + " - Lekce</h1>";
   if (LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser") {
     html +=
-      '<div class="button greenButton" id="addField"><i class="icon-plus"></i>Přidat oblast</div>';
+      '<div class="button green-button" id="add-field"><i class="icon-plus"></i>Přidat oblast</div>';
   }
   html +=
-    '<div class="button greenButton" id="addLesson"><i class="icon-plus"></i>Přidat lekci</div>';
+    '<div class="button green-button" id="add-lesson"><i class="icon-plus"></i>Přidat lekci</div>';
   if (LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser") {
     html +=
-      '<div class="button" id="restoreLesson"><i class="icon-history"></i>Smazané lekce</div>';
+      '<div class="button" id="restore-lesson"><i class="icon-history"></i>Smazané lekce</div>';
   }
   html += renderLessonList();
-  document.getElementById("mainPage")!.innerHTML = html;
-  document.getElementById("mainPageContainer")!.scrollTop = 0;
+  document.getElementById("main-page")!.innerHTML = html;
+  document.getElementById("main-page-container")!.scrollTop = 0;
 
   if (LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser") {
-    document.getElementById("addField")!.onclick = function (): void {
+    document.getElementById("add-field")!.onclick = function (): void {
       addField();
     };
   }
-  document.getElementById("addLesson")!.onclick = function (): void {
+  document.getElementById("add-lesson")!.onclick = function (): void {
     showLessonAddView();
   };
   if (LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser") {
-    document.getElementById("restoreLesson")!.onclick = restoreLesson;
+    document.getElementById("restore-lesson")!.onclick = restoreLesson;
   }
 
   addOnClicks("changeField", changeFieldOnClick);

@@ -5,13 +5,13 @@ let competenceChanged = false;
 function changeCompetencePayloadBuilder(): Payload {
   return {
     number: encodeURIComponent(
-      (document.getElementById("competenceNumber") as HTMLInputElement).value
+      (document.getElementById("competence-number") as HTMLInputElement).value
     ),
     name: encodeURIComponent(
-      (document.getElementById("competenceName") as HTMLInputElement).value
+      (document.getElementById("competence-name") as HTMLInputElement).value
     ),
     description: encodeURIComponent(
-      (document.getElementById("competenceDescription") as HTMLInputElement)
+      (document.getElementById("competence-description") as HTMLInputElement)
         .value
     ),
   };
@@ -21,28 +21,28 @@ function changeCompetenceOnClick(event: MouseEvent): void {
   competenceChanged = false;
   sidePanelOpen();
   let html =
-    '<div class="button yellowButton" id="sidePanelCancel"><i class="icon-cancel"></i>Zrušit</div>';
+    '<div class="button yellow-button" id="side-panel-cancel"><i class="icon-cancel"></i>Zrušit</div>';
   html +=
-    '<div class="button greenButton" id="changeCompetenceSave"><i class="icon-floppy"></i>Uložit</div>';
+    '<div class="button green-button" id="changeCompetenceSave"><i class="icon-floppy"></i>Uložit</div>';
   html +=
-    '<h3 class="sidePanelTitle">Upravit kompetenci</h3><form id="sidePanelForm">';
+    '<h3 class="side-panel-title">Upravit kompetenci</h3><form id="side-panel-form">';
   const competence = COMPETENCES.get(getAttribute(event, "id"))!;
   html +=
-    '<span class="competenceHeading">Kompetence</span> <input type="text" class="formText formName" id="competenceNumber" value="' +
+    '<span class="competence-heading">Kompetence</span> <input type="text" class="form-text form-name" id="competence-number" value="' +
     competence.number.toString() +
     '" autocomplete="off"><br>';
   html +=
-    '<input type="text" class="formText" id="competenceName" value="' +
+    '<input type="text" class="form-text" id="competence-name" value="' +
     competence.name +
     '" autocomplete="off"><br>';
   html +=
-    '<textarea rows="5" class="formText" id="competenceDescription" autocomplete="off">' +
+    '<textarea rows="5" class="form-text" id="competence-description" autocomplete="off">' +
     competence.description +
     "</textarea>";
   html += "</form>";
-  document.getElementById("sidePanel")!.innerHTML = html;
+  document.getElementById("side-panel")!.innerHTML = html;
 
-  document.getElementById("sidePanelCancel")!.onclick = function (): void {
+  document.getElementById("side-panel-cancel")!.onclick = function (): void {
     history.back();
   };
 
@@ -67,9 +67,9 @@ function changeCompetenceOnClick(event: MouseEvent): void {
       competenceChanged = true;
     };
   }
-  addOnChange("competenceNumber");
-  addOnChange("competenceName");
-  addOnChange("competenceDescription");
+  addOnChange("competence-number");
+  addOnChange("competence-name");
+  addOnChange("competence-description");
 
   history.pushState({ sidePanel: "open" }, "title", "/admin/competences");
   refreshLogin();

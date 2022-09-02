@@ -6,7 +6,7 @@ function addFieldPayloadBuilder(): Payload {
       (document.getElementById("fieldName") as HTMLInputElement).value
     ),
     description: encodeURIComponent(
-      (document.getElementById("fieldDescription") as HTMLInputElement).value
+      (document.getElementById("field-description") as HTMLInputElement).value
     ),
     image: encodeURIComponent(
       (document.getElementById("fieldImage") as HTMLInputElement).value
@@ -28,18 +28,18 @@ function addField(
 ): void {
   sidePanelOpen();
   let html =
-    '<div class="button yellowButton" id="sidePanelCancel"><i class="icon-cancel"></i>Zrušit</div>';
+    '<div class="button yellow-button" id="side-panel-cancel"><i class="icon-cancel"></i>Zrušit</div>';
   html +=
-    '<div class="button greenButton" id="addFieldSave"><i class="icon-floppy"></i>Uložit</div>';
+    '<div class="button green-button" id="addFieldSave"><i class="icon-floppy"></i>Uložit</div>';
   html +=
-    '<h3 class="sidePanelTitle">Přidat oblast</h3><form id="sidePanelForm">';
+    '<h3 class="side-panel-title">Přidat oblast</h3><form id="side-panel-form">';
   html += '<legend for="fieldName">Název:</legend>';
   html +=
-    '<input type="text" class="formText formName" id="fieldName" value="' +
+    '<input type="text" class="form-text form-name" id="fieldName" value="' +
     state.name +
     '" autocomplete="off">';
   html +=
-    '<textarea rows="5" class="formText" id="fieldDescription" autocomplete="off">' +
+    '<textarea rows="5" class="form-text" id="field-description" autocomplete="off">' +
     state.description +
     "</textarea>";
   html += '<legend for="fieldImage">Náhledový obrázek:</legend>';
@@ -63,17 +63,17 @@ function addField(
   html +=
     '<br><div class="button" id="fieldIconChange"><i class="icon-pencil"></i>Změnit</div>';
   html += "</form>";
-  document.getElementById("sidePanel")!.innerHTML = html;
+  document.getElementById("side-panel")!.innerHTML = html;
 
-  document.getElementById("sidePanelCancel")!.onclick = function (): void {
+  document.getElementById("side-panel-cancel")!.onclick = function (): void {
     history.back();
   };
   document.getElementById("fieldImageChange")!.onclick = function (): void {
     openSidePanelImageSelector("addField", "image", {
       name: (document.getElementById("fieldName") as HTMLInputElement).value,
-      description: (document.getElementById(
-        "fieldDescription"
-      ) as HTMLInputElement).value,
+      description: (
+        document.getElementById("field-description") as HTMLInputElement
+      ).value,
       image: state.image,
       icon: state.icon,
     });
@@ -81,9 +81,9 @@ function addField(
   document.getElementById("fieldIconChange")!.onclick = function (): void {
     openSidePanelImageSelector("addField", "icon", {
       name: (document.getElementById("fieldName") as HTMLInputElement).value,
-      description: (document.getElementById(
-        "fieldDescription"
-      ) as HTMLInputElement).value,
+      description: (
+        document.getElementById("field-description") as HTMLInputElement
+      ).value,
       image: state.image,
       icon: state.icon,
     });

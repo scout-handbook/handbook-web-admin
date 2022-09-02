@@ -41,40 +41,39 @@ function changeLessonCompetencesOnClick(
 ): void {
   lessonCompetencesChanged = false;
   let html =
-    '<div class="button yellowButton" id="cancelEditorAction"><i class="icon-cancel"></i>Zrušit</div>';
+    '<div class="button yellow-button" id="cancelEditorAction"><i class="icon-cancel"></i>Zrušit</div>';
   html +=
-    '<div class="button greenButton" id="changeLessonCompetencesSave"><i class="icon-floppy"></i>Uložit</div>';
+    '<div class="button green-button" id="changeLessonCompetencesSave"><i class="icon-floppy"></i>Uložit</div>';
   html +=
-    '<h3 class="sidePanelTitle">Změnit kompetence</h3><form id="sidePanelForm">';
+    '<h3 class="side-panel-title">Změnit kompetence</h3><form id="side-panel-form">';
   COMPETENCES.iterate(function (competenceId, competence) {
     html +=
-      '<div class="formRow"><label class="formSwitch"><input type="checkbox"';
+      '<div class="form-row"><label class="form-switch"><input type="checkbox"';
     if (lessonSettingsCache.competences.indexOf(competenceId) >= 0) {
       html += " checked";
     }
     html += ' data-id="' + competenceId + '"';
-    html += '><span class="formCustom formCheckbox"></span></label>';
+    html += '><span class="form-custom form-checkbox"></span></label>';
     html +=
-      '<span class="competenceNumber">' +
+      '<span class="competence-number">' +
       competence.number.toString() +
       ":</span> " +
       competence.name +
       "</div>";
   });
   html += "</form>";
-  document.getElementById("sidePanel")!.innerHTML = html;
+  document.getElementById("side-panel")!.innerHTML = html;
 
   document.getElementById("cancelEditorAction")!.onclick = function (): void {
     lessonSettings(id, actionQueue, true);
   };
-  document.getElementById(
-    "changeLessonCompetencesSave"
-  )!.onclick = function (): void {
-    changeLessonCompetencesSave(id, actionQueue);
-  };
+  document.getElementById("changeLessonCompetencesSave")!.onclick =
+    function (): void {
+      changeLessonCompetencesSave(id, actionQueue);
+    };
 
   const nodes = document
-    .getElementById("sidePanelForm")!
+    .getElementById("side-panel-form")!
     .getElementsByTagName("input");
   for (let i = 0; i < nodes.length; i++) {
     nodes[i].onchange = lessonCompetenceOnclick;

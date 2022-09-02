@@ -41,22 +41,22 @@ function changeLessonGroupsOnClick(
 ): void {
   lessonGroupsChanged = false;
   let html =
-    '<div class="button yellowButton" id="cancelEditorAction"><i class="icon-cancel"></i>Zrušit</div>';
+    '<div class="button yellow-button" id="cancelEditorAction"><i class="icon-cancel"></i>Zrušit</div>';
   html +=
-    '<div class="button greenButton" id="changeLessonGroupsSave"><i class="icon-floppy"></i>Uložit</div>';
+    '<div class="button green-button" id="changeLessonGroupsSave"><i class="icon-floppy"></i>Uložit</div>';
   html +=
-    '<h3 class="sidePanelTitle">Změnit skupiny</h3><form id="sidePanelForm">';
+    '<h3 class="side-panel-title">Změnit skupiny</h3><form id="side-panel-form">';
   let publicName = "";
   GROUPS.iterate(function (groupId, group) {
     html +=
-      '<div class="formRow"><label class="formSwitch"><input type="checkbox"';
+      '<div class="form-row"><label class="form-switch"><input type="checkbox"';
     if (lessonSettingsCache.groups.indexOf(groupId) >= 0) {
       html += " checked";
     }
     html += ' data-id="' + groupId + '"';
-    html += '><span class="formCustom formCheckbox"></span></label>';
+    html += '><span class="form-custom form-checkbox"></span></label>';
     if (groupId === "00000000-0000-0000-0000-000000000000") {
-      html += '<span class="publicGroup">' + group.name + "</span></div>";
+      html += '<span class="public-group">' + group.name + "</span></div>";
       publicName = group.name;
     } else {
       html += group.name + "</div>";
@@ -64,22 +64,21 @@ function changeLessonGroupsOnClick(
   });
   html += "</form>";
   html +=
-    '<div class="groupHelp"><i class="icon-info-circled"></i> U každé lekce lze zvolit, kteří uživatelé ji budou moct zobrazit (resp. které skupiny uživatelů). Pokud není vybrána žádná skupiny, nebude lekce pro běžné uživatele vůbec přístupná (pouze v administraci). Pokud je vybrána skupina "<span class="publicGroup">' +
+    '<div class="group-help"><i class="icon-info-circled"></i> U každé lekce lze zvolit, kteří uživatelé ji budou moct zobrazit (resp. které skupiny uživatelů). Pokud není vybrána žádná skupiny, nebude lekce pro běžné uživatele vůbec přístupná (pouze v administraci). Pokud je vybrána skupina "<span class="public-group">' +
     publicName +
     '</span>", bude lekce přístupná všem uživatelům (i nepřihlášeným návštěvníkům webu) bez ohledu na skupiny.</div>';
-  document.getElementById("sidePanel")!.innerHTML = html;
+  document.getElementById("side-panel")!.innerHTML = html;
 
   document.getElementById("cancelEditorAction")!.onclick = function (): void {
     lessonSettings(id, actionQueue, true);
   };
-  document.getElementById(
-    "changeLessonGroupsSave"
-  )!.onclick = function (): void {
-    changeLessonGroupsSave(id, actionQueue);
-  };
+  document.getElementById("changeLessonGroupsSave")!.onclick =
+    function (): void {
+      changeLessonGroupsSave(id, actionQueue);
+    };
 
   const nodes = document
-    .getElementById("sidePanelForm")!
+    .getElementById("side-panel-form")!
     .getElementsByTagName("input");
   for (let i = 0; i < nodes.length; i++) {
     nodes[i].onchange = lessonGroupsOnclick;

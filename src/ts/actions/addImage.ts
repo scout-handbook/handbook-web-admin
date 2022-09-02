@@ -39,19 +39,19 @@ function changeLabel(event: Event): void {
 function addImage(inEditor: boolean): void {
   sidePanelOpen();
   let html =
-    '<div class="button yellowButton" id="sidePanelCancel"><i class="icon-cancel"></i>Zrušit</div>';
+    '<div class="button yellow-button" id="side-panel-cancel"><i class="icon-cancel"></i>Zrušit</div>';
   html +=
-    '<div class="button greenButton" id="addImageSave"><i class="icon-floppy"></i>Uložit</div>';
+    '<div class="button green-button" id="addImageSave"><i class="icon-floppy"></i>Uložit</div>';
   html +=
-    '<h3 class="sidePanelTitle">Nahrát obrázek</h3><form id="sidePanelForm">';
-  html += '<div class="formRow"><label class="formFile">';
-  html += '<input type="file" class="formFile" id="addImageFile">';
+    '<h3 class="side-panel-title">Nahrát obrázek</h3><form id="side-panel-form">';
+  html += '<div class="form-row"><label class="form-file">';
+  html += '<input type="file" class="form-file" id="addImageFile">';
   html +=
     '<div class="button"><i class="icon-upload"></i>Vybrat soubor</div></label>';
   html += "</div></form>";
-  document.getElementById("sidePanel")!.innerHTML = html;
+  document.getElementById("side-panel")!.innerHTML = html;
 
-  document.getElementById("sidePanelCancel")!.onclick = function (): void {
+  document.getElementById("side-panel-cancel")!.onclick = function (): void {
     history.back();
   };
   document.getElementById("addImageSave")!.onclick = addImageSave;

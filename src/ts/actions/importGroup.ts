@@ -23,7 +23,7 @@ function setdiff(a: Array<Participant>, b: Array<User>): Array<Participant> {
 function importGroupSave(id: string): void {
   const participants: Array<Participant> = [];
   const nodes = document
-    .getElementById("sidePanelForm")!
+    .getElementById("side-panel-form")!
     .getElementsByTagName("input");
   for (let i = 0; i < nodes.length; i++) {
     if (nodes[i].checked) {
@@ -38,7 +38,7 @@ function importGroupSave(id: string): void {
     return;
   }
 
-  const html = '<div id="embeddedSpinner"></div>';
+  const html = '<div id="embedded-spinner"></div>';
   document.getElementById("importList")!.innerHTML = html;
 
   addEvent = new AfterLoadEvent(participants.length);
@@ -46,7 +46,7 @@ function importGroupSave(id: string): void {
     request(
       CONFIG["api-uri"] + "/v1.0/user",
       "POST",
-      (participants[i] as unknown) as Payload,
+      participants[i] as unknown as Payload,
       function (): void {
         addEvent.trigger();
       },
@@ -94,14 +94,14 @@ function importGroupSelectParticipantsRender(id: string): void {
     refreshMetadata();
     history.back();
   }
-  let html = '<h4>Výběr účastníků:</h4><form id="sidePanelForm">';
+  let html = '<h4>Výběr účastníků:</h4><form id="side-panel-form">';
   for (let i = 0; i < newparticipants.length; i++) {
     html +=
-      '<div class="formRow"><label class="formSwitch"><input type="checkbox" data-id="' +
+      '<div class="form-row"><label class="form-switch"><input type="checkbox" data-id="' +
       newparticipants[i].id.toString() +
       '" data-name="' +
       newparticipants[i].name +
-      '"><span class="formCustom formCheckbox"></span></label>' +
+      '"><span class="form-custom form-checkbox"></span></label>' +
       newparticipants[i].name +
       "</div>";
   }
@@ -117,7 +117,7 @@ function importGroupSelectParticipantsRender(id: string): void {
 function importGroupSelectParticipants(id: string): void {
   const eventId = parseBoolForm()[0];
   if (eventId) {
-    const html = '<div id="embeddedSpinner"></div>';
+    const html = '<div id="embedded-spinner"></div>';
     document.getElementById("importList")!.innerHTML = html;
     participantEvent = new AfterLoadEvent(2);
     participantEvent.addCallback(importGroupSelectParticipantsRender);
@@ -158,12 +158,12 @@ function importGroupSelectEventRender(id: string, events: Array<Event>): void {
     refreshMetadata();
     history.back();
   }
-  let html = '<h4>Volba kurzu:</h4><form id="sidePanelForm">';
+  let html = '<h4>Volba kurzu:</h4><form id="side-panel-form">';
   for (let i = 0; i < events.length; i++) {
     html +=
-      '<div class="formRow"><label class="formSwitch"><input type="radio" name="field" data-id="' +
+      '<div class="form-row"><label class="form-switch"><input type="radio" name="field" data-id="' +
       events[i].id.toString() +
-      '"><span class="formCustom formRadio"></span></label>' +
+      '"><span class="form-custom form-radio"></span></label>' +
       events[i].name +
       "</div>";
   }
@@ -177,16 +177,16 @@ function importGroupSelectEventRender(id: string, events: Array<Event>): void {
 function importGroupOnClick(event: MouseEvent): void {
   sidePanelOpen();
   let html =
-    '<div class="button yellowButton" id="sidePanelCancel"><i class="icon-cancel"></i>Zrušit</div>';
+    '<div class="button yellow-button" id="side-panel-cancel"><i class="icon-cancel"></i>Zrušit</div>';
   html +=
-    '<div class="button greenButton" id="importGroupNext"><i class="icon-fast-fw"></i>Pokračovat</div>';
+    '<div class="button green-button" id="importGroupNext"><i class="icon-fast-fw"></i>Pokračovat</div>';
   html +=
-    '<h3 class="sidePanelTitle">Importovat ze SkautISu: ' +
+    '<h3 class="side-panel-title">Importovat ze SkautISu: ' +
     GROUPS.get(getAttribute(event, "id"))!.name +
     "</h3>";
-  html += '<div id="importList"><div id="embeddedSpinner"></div></div>';
-  document.getElementById("sidePanel")!.innerHTML = html;
-  document.getElementById("sidePanelCancel")!.onclick = function (): void {
+  html += '<div id="importList"><div id="embedded-spinner"></div></div>';
+  document.getElementById("side-panel")!.innerHTML = html;
+  document.getElementById("side-panel-cancel")!.onclick = function (): void {
     history.back();
   };
   request(

@@ -5,21 +5,22 @@ function renderGroupList(): string {
   let html = "";
   GROUPS.iterate(function (id, group) {
     if (id === "00000000-0000-0000-0000-000000000000") {
-      html += '<br><h3 class = "mainPage publicGroup">' + group.name + "</h3>";
+      html +=
+        '<br><h3 class = "main-page public-group">' + group.name + "</h3>";
     } else {
-      html += '<br><h3 class = "mainPage">' + group.name + "</h3>";
+      html += '<br><h3 class = "main-page">' + group.name + "</h3>";
     }
     if (
       LOGINSTATE.role === "administrator" ||
       LOGINSTATE.role === "superuser"
     ) {
       html +=
-        '<div class="button cyanButton changeGroup" data-id="' +
+        '<div class="button cyan-button changeGroup" data-id="' +
         id +
         '"><i class="icon-pencil"></i>Upravit</div>';
       if (id !== "00000000-0000-0000-0000-000000000000") {
         html +=
-          '<div class="button redButton deleteGroup" data-id="' +
+          '<div class="button red-button deleteGroup" data-id="' +
           id +
           '"><i class="icon-trash-empty"></i>Smazat</div>';
         html +=
@@ -30,7 +31,7 @@ function renderGroupList(): string {
     }
     if (id !== "00000000-0000-0000-0000-000000000000") {
       html +=
-        '<br><span class="mainPage">Uživatelů: ' +
+        '<br><span class="main-page">Uživatelů: ' +
         group.count.toString() +
         "</span>";
     }
@@ -40,19 +41,19 @@ function renderGroupList(): string {
 
 function showGroupSubview(noHistory: boolean): void {
   mainPageTab = "groups";
-  const nodes = getElementsByClassName("topBarTab");
+  const nodes = getElementsByClassName("top-bar-tab");
   for (let i = 0; i < nodes.length; i++) {
-    nodes[i].className = "topBarTab";
+    nodes[i].className = "top-bar-tab";
   }
-  document.getElementById("groupManager")!.className += " activeTopBarTab";
+  document.getElementById("group-manager")!.className += " active-top-bar-tab";
   let html = "<h1>" + CONFIG["site-name"] + " - Uživatelské skupiny</h1>";
   if (LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser") {
     html +=
-      '<div class="button greenButton" id="addGroup"><i class="icon-plus"></i>Přidat</div>';
+      '<div class="button green-button" id="addGroup"><i class="icon-plus"></i>Přidat</div>';
   }
   html += renderGroupList();
-  document.getElementById("mainPage")!.innerHTML = html;
-  document.getElementById("mainPageContainer")!.scrollTop = 0;
+  document.getElementById("main-page")!.innerHTML = html;
+  document.getElementById("main-page-container")!.scrollTop = 0;
 
   if (LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser") {
     document.getElementById("addGroup")!.onclick = addGroup;

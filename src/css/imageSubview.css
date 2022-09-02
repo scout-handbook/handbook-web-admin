@@ -1,4 +1,4 @@
-.thumbnailContainer {
+.thumbnail-container {
   display: inline-block;
   margin-top: 50px;
   position: relative;
@@ -6,24 +6,24 @@
   width: 256px;
 }
 
-.buttonContainer {
+.button-container {
   display: inline-block;
   position: relative;
   width: fit-content;
 }
 
-.thumbnailImage {
+.thumbnail-image {
   cursor: pointer;
   transform: scale(0.9);
   transition: transform ease 0.15s;
   vertical-align: middle;
 }
 
-.thumbnailImage:hover {
+.thumbnail-image:hover {
   transform: scale(1);
 }
 
-.deleteImage {
+.delete-image {
   bottom: 5%;
   margin-bottom: 6px;
   margin-right: 8px;
@@ -31,7 +31,7 @@
   right: 5%;
 }
 
-.previewImage {
+.preview-image {
   bottom: 0;
   left: 0;
   margin: auto;

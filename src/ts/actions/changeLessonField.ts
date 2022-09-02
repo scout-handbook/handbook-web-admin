@@ -37,11 +37,11 @@ function changeLessonFieldOnClick(
 ): void {
   lessonFieldChanged = false;
   let html =
-    '<div class="button yellowButton" id="cancelEditorAction"><i class="icon-cancel"></i>Zrušit</div>';
+    '<div class="button yellow-button" id="cancelEditorAction"><i class="icon-cancel"></i>Zrušit</div>';
   html +=
-    '<div class="button greenButton" id="changeLessonFieldSave"><i class="icon-floppy"></i>Uložit</div>';
+    '<div class="button green-button" id="changeLessonFieldSave"><i class="icon-floppy"></i>Uložit</div>';
   html +=
-    '<h3 class="sidePanelTitle">Změnit oblast</h3><form id="sidePanelForm">';
+    '<h3 class="side-panel-title">Změnit oblast</h3><form id="side-panel-form">';
   FIELDS.iterate(function (fieldId, field) {
     let checked = false;
     if (
@@ -51,7 +51,7 @@ function changeLessonFieldOnClick(
       checked = true;
     }
     html +=
-      '<div class="formRow"><label class="formSwitch"><input type="radio" name="field"';
+      '<div class="form-row"><label class="form-switch"><input type="radio" name="field"';
     if (checked) {
       html += " checked";
     }
@@ -60,28 +60,27 @@ function changeLessonFieldOnClick(
     } else {
       html += ' data-id=""';
     }
-    html += '><span class="formCustom formRadio"></span></label>';
+    html += '><span class="form-custom form-radio"></span></label>';
     if (fieldId) {
       html += field.name;
     } else {
-      html += '<span class="anonymousField">Nezařazeno</span>';
+      html += '<span class="anonymous-field">Nezařazeno</span>';
     }
     html += "</div>";
   });
   html += "</form>";
-  document.getElementById("sidePanel")!.innerHTML = html;
+  document.getElementById("side-panel")!.innerHTML = html;
 
   document.getElementById("cancelEditorAction")!.onclick = function (): void {
     lessonSettings(id, actionQueue, true);
   };
-  document.getElementById(
-    "changeLessonFieldSave"
-  )!.onclick = function (): void {
-    changeLessonFieldSave(id, actionQueue);
-  };
+  document.getElementById("changeLessonFieldSave")!.onclick =
+    function (): void {
+      changeLessonFieldSave(id, actionQueue);
+    };
 
   const nodes = document
-    .getElementById("sidePanelForm")!
+    .getElementById("side-panel-form")!
     .getElementsByTagName("input");
   for (let i = 0; i < nodes.length; i++) {
     nodes[i].onchange = lessonFieldOnclick;

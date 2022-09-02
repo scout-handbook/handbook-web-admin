@@ -4,9 +4,9 @@
 function renderRoleSelector(): string {
   let html = "";
   if (LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser") {
-    html += '<select class="formSelect" id="roleSearchFilter">';
+    html += '<select class="form-select" id="role-search-filter">';
     html +=
-      '<option id="all" value="all" class="selectFilterSpecial">Všechny role</option>';
+      '<option id="all" value="all" class="select-filter-special">Všechny role</option>';
     html += '<option id="user" value="user">Uživatel</option>';
     html += '<option id="editor" value="editor">Editor</option>';
     if (LOGINSTATE.role === "superuser") {
@@ -20,9 +20,9 @@ function renderRoleSelector(): string {
 }
 
 function renderGroupSelector(): string {
-  let html = '<select class="formSelect" id="groupSearchFilter">';
+  let html = '<select class="form-select" id="group-search-filter">';
   html +=
-    '<option id="00000000-0000-0000-0000-000000000000" value="00000000-0000-0000-0000-000000000000" class="selectFilterSpecial">Všechny skupiny</option>';
+    '<option id="00000000-0000-0000-0000-000000000000" value="00000000-0000-0000-0000-000000000000" class="select-filter-special">Všechny skupiny</option>';
   GROUPS.filter(function (id) {
     return id !== "00000000-0000-0000-0000-000000000000";
   }).iterate(function (id, group) {
@@ -51,7 +51,7 @@ function renderUserRow(user: User): string {
   }
   if (LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser") {
     html +=
-      '<br><div class="button cyanButton changeUserRole" data-id="' +
+      '<br><div class="button cyan-button changeUserRole" data-id="' +
       user.id.toString() +
       '" data-role="' +
       user.role +
@@ -74,7 +74,7 @@ function renderUserRow(user: User): string {
     html += "<br>";
   }
   html +=
-    '<div class="button cyanButton changeUserGroups" data-id="' +
+    '<div class="button cyan-button changeUserGroups" data-id="' +
     user.id.toString() +
     "\" data-groups='" +
     JSON.stringify(user.groups) +
@@ -98,22 +98,22 @@ function showUserList(
   }
   const users = list.users;
   let html =
-    '<form id="userSearchForm"><input type="text" class="formText" id="userSearchBox" placeholder="Jméno uživatele">';
+    '<form id="user-search-form"><input type="text" class="form-text" id="user-search-box" placeholder="Jméno uživatele">';
   html += renderRoleSelector();
   html += renderGroupSelector();
   html +=
-    '<div class="button" id="userSearchButton"><i class="icon-search"></i>Vyhledat</div>';
+    '<div class="button" id="user-search-button"><i class="icon-search"></i>Vyhledat</div>';
   if (
     searchName ||
     role !== "all" ||
     group !== "00000000-0000-0000-0000-000000000000"
   ) {
     html +=
-      '<div class="button yellowButton" id="userSearchCancel"><i class="icon-cancel"></i>Zrušit</div>';
+      '<div class="button yellow-button" id="user-search-cancel"><i class="icon-cancel"></i>Zrušit</div>';
   }
   html += "</form>";
   html +=
-    '<table class="userTable"><th>Jméno</th><th>Role</th><th>Skupiny</th>';
+    '<table class="user-table"><th>Jméno</th><th>Role</th><th>Skupiny</th>';
   html += "</tr>";
   for (let i = 0; i < users.length; i++) {
     html += renderUserRow(users[i]);
@@ -122,31 +122,28 @@ function showUserList(
   html += renderPagination(Math.ceil(list.count / perPage), page);
   document.getElementById("userList")!.innerHTML = html;
 
-  (document.getElementById(
-    "userSearchBox"
-  ) as HTMLInputElement).value = searchName;
+  (document.getElementById("user-search-box") as HTMLInputElement).value =
+    searchName;
   if (LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser") {
-    (document.getElementById(
-      "roleSearchFilter"
-    ) as HTMLSelectElement).value = role;
+    (document.getElementById("role-search-filter") as HTMLSelectElement).value =
+      role;
   }
-  (document.getElementById(
-    "groupSearchFilter"
-  ) as HTMLSelectElement).value = group;
+  (document.getElementById("group-search-filter") as HTMLSelectElement).value =
+    group;
 
-  document.getElementById("userSearchForm")!.onsubmit = function (): boolean {
+  const submitFn = function (): boolean {
     const roleSel = document.getElementById(
-      "roleSearchFilter"
+      "role-search-filter"
     ) as HTMLSelectElement;
     const groupSel = document.getElementById(
-      "groupSearchFilter"
+      "group-search-filter"
     ) as HTMLSelectElement;
     let newRole: Role | "all" = "all";
     if (roleSel) {
       newRole = roleSel.options[roleSel.selectedIndex].value as Role;
     }
     downloadUserList(
-      (document.getElementById("userSearchBox") as HTMLInputElement).value,
+      (document.getElementById("user-search-box") as HTMLInputElement).value,
       1,
       perPage,
       newRole,
@@ -154,26 +151,25 @@ function showUserList(
     );
     return false;
   };
-  document.getElementById(
-    "userSearchButton"
-  )!.onclick = document.getElementById("userSearchForm")!.onsubmit;
+  document.getElementById("user-search-form")!.onsubmit = submitFn;
+  document.getElementById("user-search-button")!.onclick = submitFn;
   if (
     searchName ||
     role !== "all" ||
     group !== "00000000-0000-0000-0000-000000000000"
   ) {
-    document.getElementById("userSearchCancel")!.onclick = function (): void {
+    document.getElementById("user-search-cancel")!.onclick = function (): void {
       downloadUserList(undefined, 1, perPage);
     };
   }
-  const nodes = getElementsByClassName("paginationButton");
+  const nodes = getElementsByClassName("pagination-button");
   for (let i = 0; i < nodes.length; i++) {
     (nodes[i] as HTMLElement).onclick = function (event): void {
       const roleSel = document.getElementById(
-        "roleSearchFilter"
+        "role-search-filter"
       ) as HTMLSelectElement;
       const groupSel = document.getElementById(
-        "groupSearchFilter"
+        "group-search-filter"
       ) as HTMLSelectElement;
       let newRole: Role | "all" = "all";
       if (roleSel) {
@@ -201,7 +197,7 @@ function downloadUserList(
   group = "00000000-0000-0000-0000-000000000000"
 ): void {
   document.getElementById("userList")!.innerHTML =
-    '<div id="embeddedSpinner"></div>';
+    '<div id="embedded-spinner"></div>';
   const payload: UserSearchQuery = {
     name: searchName,
     page: page,
@@ -216,7 +212,7 @@ function downloadUserList(
   request(
     CONFIG["api-uri"] + "/v1.0/user",
     "GET",
-    (payload as unknown) as Payload,
+    payload as unknown as Payload,
     function (response: RequestResponse): void {
       showUserList(
         response as UserListResponse,
@@ -234,14 +230,14 @@ function downloadUserList(
 
 function showUserSubview(noHistory: boolean): void {
   mainPageTab = "users";
-  const nodes = getElementsByClassName("topBarTab");
+  const nodes = getElementsByClassName("top-bar-tab");
   for (let i = 0; i < nodes.length; i++) {
-    nodes[i].className = "topBarTab";
+    nodes[i].className = "top-bar-tab";
   }
-  document.getElementById("userManager")!.className += " activeTopBarTab";
+  document.getElementById("user-manager")!.className += " active-top-bar-tab";
   const html =
     "<h1>" + CONFIG["site-name"] + ' - Uživatelé</h1><div id="userList"></div>';
-  document.getElementById("mainPage")!.innerHTML = html;
+  document.getElementById("main-page")!.innerHTML = html;
 
   downloadUserList();
   if (!noHistory) {
