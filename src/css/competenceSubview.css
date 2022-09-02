@@ -1,23 +1,23 @@
-.competenceNumber {
+.competence-number {
   font-weight: bold;
 }
 
-#competenceNumber {
+#competence-number {
   margin-left: 5px;
   width: 37px;
 }
 
-#competenceName,
-#groupName {
+#competence-name,
+#group-name {
   font-size: 1.5em;
   font-weight: bold;
 }
 
-#competenceDescription {
+#competence-description {
   margin-top: 20px;
 }
 
-.changeCompetence,
-.deleteCompetence {
+.change-competence,
+.delete-competence {
   margin-bottom: 0;
 }

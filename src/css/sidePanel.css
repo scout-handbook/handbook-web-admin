@@ -1,4 +1,4 @@
-#sidePanel {
+#side-panel {
   background: white;
   border-left: solid 1px var(--border-color);
   bottom: 0;
@@ -13,16 +13,16 @@
   z-index: 10;
 }
 
-.sidePanelTitle {
+.side-panel-title {
   font-size: 2em;
   line-height: 150%;
 }
 
-#sidePanelCancel {
+#side-panel-cancel {
   margin-right: 20px;
 }
 
-#sidePanelOverlay {
+#side-panel-overlay {
   background-color: var(--overlay-fallback-color);
   background-color: var(--overlay-color);
   display: none;
@@ -32,7 +32,7 @@
   z-index: 9;
 }
 
-#sidePanelForm,
-.groupHelp {
+#side-panel-form,
+.group-help {
   margin-bottom: 30px;
 }

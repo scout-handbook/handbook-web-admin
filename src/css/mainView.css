@@ -1,17 +1,17 @@
-#mainPage {
+#main-page {
   margin: 0 auto;
   max-width: 770px;
   padding: 20px;
 }
 
-h2.mainPage,
-h3.mainPage,
-.noNewline {
+h2.main-page,
+h3.main-page,
+.no-newline {
   display: inline-block;
   margin-right: 15px;
 }
 
-#mainPageContainer {
+#main-page-container {
   bottom: 0;
   left: 0;
   overflow-y: auto;
@@ -20,13 +20,13 @@ h3.mainPage,
   top: 81px;
 }
 
-#topBar {
+#top-bar {
   background-color: var(--background-darker);
   border-bottom: 1px solid var(--border-color);
   height: 80px;
 }
 
-.topBarTab {
+.top-bar-tab {
   border-left: 1px solid var(--border-color);
   border-right: 1px solid var(--border-color);
   cursor: pointer;
@@ -43,44 +43,44 @@ h3.mainPage,
   width: 140px;
 }
 
-.topBarTab:hover,
-.activeTopBarTab {
+.top-bar-tab:hover,
+.active-top-bar-tab {
   background-color: var(--background-darkest);
   border-color: var(--accent-color);
   color: var(--accent-color);
   z-index: 1;
 }
 
-#lessonManager {
+#lesson-manager {
   left: 301px;
 }
 
-#competenceManager {
+#competence-manager {
   left: 442px;
 }
 
-#imageManager {
+#image-manager {
   left: 583px;
 }
 
-#userManager {
+#user-manager {
   left: 724px;
 }
 
-#groupManager {
+#group-manager {
   left: 865px;
   padding-bottom: 11px;
   padding-top: 17px;
 }
 
-#userAccount {
+#user-account {
   border-right: 1px solid var(--border-color);
   display: inline-block;
   height: 80px;
   width: var(--nav-width);
 }
 
-#userAvatar {
+#user-avatar {
   border: var(--avatar-border);
   border-radius: 50%;
   float: left;
@@ -90,21 +90,21 @@ h3.mainPage,
   width: 60px;
 }
 
-#userName {
+#user-name {
   padding-top: 12px;
 }
 
-#logLink {
+#log-link {
   margin-top: 5px;
 }
 
-#frontendLink {
+#frontend-link {
   float: right;
   margin-right: 20px;
 }
 
-#addField,
-#addLesson,
-#restoreLesson {
+#add-field,
+#add-lesson,
+#restore-lesson {
   margin-bottom: -19px;
 }

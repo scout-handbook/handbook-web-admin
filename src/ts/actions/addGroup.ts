@@ -3,7 +3,7 @@
 function addGroupPayloadBuilder(): Payload {
   return {
     name: encodeURIComponent(
-      (document.getElementById("groupName") as HTMLInputElement).value
+      (document.getElementById("group-name") as HTMLInputElement).value
     ),
   };
 }
@@ -11,18 +11,18 @@ function addGroupPayloadBuilder(): Payload {
 function addGroup(): void {
   sidePanelOpen();
   let html =
-    '<div class="button yellowButton" id="sidePanelCancel"><i class="icon-cancel"></i>Zrušit</div>';
+    '<div class="button yellow-button" id="side-panel-cancel"><i class="icon-cancel"></i>Zrušit</div>';
   html +=
-    '<div class="button greenButton" id="addGroupSave"><i class="icon-floppy"></i>Uložit</div>';
+    '<div class="button green-button" id="addGroupSave"><i class="icon-floppy"></i>Uložit</div>';
   html +=
-    '<h3 class="sidePanelTitle">Přidat skupinu</h3><form id="sidePanelForm">';
+    '<h3 class="side-panel-title">Přidat skupinu</h3><form id="side-panel-form">';
   html += '<legend for="fieldName">Název:</legend>';
   html +=
-    '<input type="text" class="formText" id="groupName" value="Nová skupina" autocomplete="off"><br>';
+    '<input type="text" class="form-text" id="group-name" value="Nová skupina" autocomplete="off"><br>';
   html += "</form>";
-  document.getElementById("sidePanel")!.innerHTML = html;
+  document.getElementById("side-panel")!.innerHTML = html;
 
-  document.getElementById("sidePanelCancel")!.onclick = function (): void {
+  document.getElementById("side-panel-cancel")!.onclick = function (): void {
     history.back();
   };
 

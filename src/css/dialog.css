@@ -22,14 +22,14 @@
   z-index: 9;
 }
 
-#dismissText,
-#confirmText {
+#dismiss-text,
+#confirm-text {
   bottom: 30px;
   position: absolute;
   right: 10px;
 }
 
-#dismissText {
+#dismiss-text {
   display: none;
   right: 100px;
 }
