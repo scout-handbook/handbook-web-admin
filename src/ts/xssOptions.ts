@@ -1,6 +1,4 @@
-/* exported xssOptions */
-
-function xssOptions(): XSS.IFilterXSSOptions {
+export function xssOptions(): XSS.IFilterXSSOptions {
   return {
     onIgnoreTagAttr: function (
       tag: string,

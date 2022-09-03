@@ -1,8 +1,12 @@
+/// <reference path="../d.ts/admin.d.ts" />
+
+import { refreshPreviewSetup } from "./lessonEditor/refreshPreview";
+
 function main(): void {
   refreshPreviewSetup();
-  metadataSetup();
-  historySetup();
-  ActionQueueSetup();
+  //metadataSetup();
+  //historySetup();
+  //ActionQueueSetup();
 }
 
 window.onload = main;

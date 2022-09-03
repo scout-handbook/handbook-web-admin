@@ -1,11 +1,13 @@
-/* exported refreshPreviewSetup, refreshPreview */
+import { Converter } from "showdown";
+import { WorkerPayload } from "../interfaces/WorkerPayload";
+import { xssOptions } from "../xssOptions";
 
 let converter: showdown.Converter | undefined;
 let worker: Worker | undefined;
 let running = false;
 let queue: WorkerPayload | null;
 
-function refreshPreviewSetup(): void {
+export function refreshPreviewSetup(): void {
   if (Worker) {
     worker = new Worker(CONFIG["admin-uri"] + "/admin-worker.min.js");
     worker.onmessage = function (payload): void {
@@ -19,14 +21,14 @@ function refreshPreviewSetup(): void {
       }
     };
   } else {
-    converter = new showdown.Converter({ extensions: ["HandbookMarkdown"] });
+    converter = new Converter({ extensions: ["HandbookMarkdown"] });
     converter.setOption("noHeaderId", "true");
     converter.setOption("tables", "true");
     converter.setOption("smoothLivePreview", "true");
   }
 }
 
-function refreshPreview(name: string, markdown: string, id: string): void {
+export function refreshPreview(name: string, markdown: string, id: string): void {
   const payload = { id: id, body: "# " + name + "\n" + markdown };
   if (Worker) {
     if (running) {
