@@ -1,6 +1,4 @@
-/* exported WorkerPayload */
-
-interface WorkerPayload {
+export interface WorkerPayload {
   id: string;
   body: string;
 }
