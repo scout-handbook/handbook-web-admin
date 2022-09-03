@@ -75,10 +75,9 @@ gulp.task("build:js", function () {
     );
   }
   return merge(
-    bundle("admin-pushed", true),
+    bundle("admin", true),
     bundle("admin-worker"),
-    bundle("admin-worker-deps"),
-    bundle("admin")
+    bundle("admin-worker-deps")
   );
 });
 
@@ -106,25 +105,23 @@ gulp.task("build:css", function () {
   }
   return merge(
     bundle("error", ["src/css/error.css"]),
-    bundle("admin-pushed", [
-      "src/css/button.css",
-      "src/css/dialog.css",
-      "src/css/fontello.css",
-      "src/css/lesson.css",
-      "src/css/main.css",
-      "src/css/mainPage.css",
-      "src/css/mainView.css",
-      "src/css/sidePanel.css",
-    ]),
     bundle("admin", [
+      "src/css/button.css",
       "src/css/competenceSubview.css",
+      "src/css/dialog.css",
       "src/css/editor.css",
       "src/css/fieldSubview.css",
+      "src/css/fontello.css",
       "src/css/form.css",
       "src/css/groupSubview.css",
       "src/css/imageSubview.css",
+      "src/css/lesson.css",
       "src/css/lessonSubview.css",
+      "src/css/main.css",
+      "src/css/mainPage.css",
+      "src/css/mainView.css",
       "src/css/pagination.css",
+      "src/css/sidePanel.css",
       "src/css/userSubview.css",
     ])
   );

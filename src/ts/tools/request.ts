@@ -1,6 +1,6 @@
 /* exported reAuthHandler, authFailHandler, request */
 
-const reAuthHandler = {
+const reAuthHandler: ExceptionHandler = {
   AuthenticationException: function (): void {
     window.location.replace(CONFIG["api-uri"] + "/v1.0/login");
   },
