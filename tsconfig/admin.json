@@ -2,11 +2,6 @@
   "extends": "../tsconfig.json",
   "files": [
     "../src/d.ts/admin.d.ts",
-    "../src/d.ts/admin-pushed.d.ts",
-    "../src/d.ts/Action.d.ts",
-    "../src/d.ts/ActionQueue.d.ts",
-    "../src/d.ts/AfterLoadEvent.d.ts",
-    "../src/d.ts/IDList.d.ts",
     "../src/ts/interfaces/APIResponse.ts",
     "../src/ts/interfaces/Competence.ts",
     "../src/ts/interfaces/Config.ts",
@@ -85,6 +80,7 @@
     "../src/ts/history.ts",
     "../src/ts/IDList.ts",
     "../src/ts/main.ts",
-    "../src/ts/metadata.ts"
+    "../src/ts/metadata.ts",
+    "../src/ts/xssOptions.ts"
   ]
 }
