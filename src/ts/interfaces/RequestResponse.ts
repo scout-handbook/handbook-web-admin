@@ -1,6 +1,14 @@
-/* exported RequestResponse */
+import { Competence } from "./Competence";
+import { DeletedLesson } from "./DeletedLesson";
+import { Field } from "./Field";
+import { Group } from "./Group";
+import { Lesson } from "./Lesson";
+import { LessonVersion } from "./LessonVersion";
+import { Loginstate } from "./Loginstate";
+import { Participant } from "./Participant";
+import { UserListResponse } from "./UserListResponse";
 
-type RequestResponse =
+export type RequestResponse =
   | string
   | Loginstate
   | UserListResponse

@@ -1,6 +1,6 @@
-/* exported User */
+import { Role } from "./Role";
 
-interface User {
+export interface User {
   id: number;
   name: string;
   role: Role;

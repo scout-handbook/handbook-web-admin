@@ -1,6 +1,4 @@
-/* exported LessonVersion */
-
-interface LessonVersion {
+export interface LessonVersion {
   name: string;
   version: number;
 }

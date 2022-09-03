@@ -1,11 +1,16 @@
-/* exported reAuthHandler, authFailHandler, request */
+import { APIResponse } from "../interfaces/APIResponse";
+import { dialog } from "../UI/dialog";
+import { ExceptionHandler } from "../interfaces/ExceptionHandler";
+import { Payload } from "../interfaces/Payload";
+import { RequestResponse } from "../interfaces/RequestResponse";
 
-const reAuthHandler: ExceptionHandler = {
+export const reAuthHandler: ExceptionHandler = {
   AuthenticationException: function (): void {
     window.location.replace(CONFIG["api-uri"] + "/v1.0/login");
   },
 };
-const authFailHandler = {
+
+export const authFailHandler = {
   AuthenticationException: function (): void {
     dialog(
       "Proběhlo automatické odhlášení. Přihlašte se prosím a zkuste to znovu.",
@@ -40,7 +45,7 @@ function requestQueryBuilder(payload: Payload): string {
   return query;
 }
 
-function rawRequest(
+export function rawRequest(
   url: string,
   method: string,
   payload: Payload | FormData = {},
@@ -82,7 +87,7 @@ function rawRequest(
   }
 }
 
-function request(
+export function request(
   url: string,
   method: string,
   payload: Payload | FormData,
