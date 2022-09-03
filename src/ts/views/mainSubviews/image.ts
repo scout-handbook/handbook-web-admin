@@ -1,5 +1,11 @@
-/* global mainPageTab:true */
-/* exported showImageSubview */
+import { addImage } from "../../actions/addImage";
+import { deleteImageOnClick } from "../../actions/deleteImage";
+import { getElementsByClassName } from "../../tools/getElementsByClassName";
+import { mainPageTab, setMainPageTab } from "../main";
+import { reAuthHandler, request } from "../../tools/request";
+import { refreshLogin } from "../../tools/refreshLogin";
+import { renderPagination } from "../../UI/pagination";
+import { RequestResponse } from "../../interfaces/RequestResponse";
 
 function showImagePreview(event: MouseEvent): void {
   const overlay = document.getElementById("overlay")!;
@@ -81,8 +87,8 @@ function downloadImageList(page: number, perPage: number): void {
   refreshLogin(true);
 }
 
-function showImageSubview(noHistory: boolean): void {
-  mainPageTab = "images";
+export function showImageSubview(noHistory: boolean): void {
+  setMainPageTab("images");
   const nodes = getElementsByClassName("top-bar-tab");
   for (let i = 0; i < nodes.length; i++) {
     nodes[i].className = "top-bar-tab";

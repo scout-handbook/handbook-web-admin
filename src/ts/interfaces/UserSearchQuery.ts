@@ -1,6 +1,6 @@
-/* exported UserSearchQuery */
+import { Role } from "./Role";
 
-interface UserSearchQuery {
+export interface UserSearchQuery {
   name: string;
   page: number;
   "per-page": number;

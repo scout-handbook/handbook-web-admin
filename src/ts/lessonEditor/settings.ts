@@ -1,4 +1,12 @@
-/* exported lessonSettings */
+import { ActionQueue } from "../tools/ActionQueue";
+import { changeLessonCompetencesOnClick } from "../actions/changeLessonCompetences";
+import { changeLessonFieldOnClick } from "../actions/changeLessonField";
+import { changeLessonGroupsOnClick } from "../actions/changeLessonGroups";
+import { COMPETENCES, FIELDS, GROUPS } from "../metadata";
+import { lessonHistoryOpen } from "./history";
+import { lessonSettingsCache, lessonSettingsCacheEvent } from "./editor";
+import { refreshLogin } from "../tools/refreshLogin";
+import { sidePanelOpen } from "../UI/sidePanel";
 
 function renderField(): string {
   let html = '<br><h3 class="side-panel-title no-newline">Oblast</h3>';
@@ -50,7 +58,7 @@ function renderGroups(): void {
   document.getElementById("settingsGroupList")!.innerHTML = html;
 }
 
-function lessonSettings(
+export function lessonSettings(
   id: string | null,
   actionQueue: ActionQueue,
   noHistory: boolean

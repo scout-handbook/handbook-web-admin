@@ -1,5 +1,12 @@
-/* global mainPageTab:true */
-/* exported mainPageTab, showGroupSubview */
+import { addGroup } from "../../actions/addGroup";
+import { addOnClicks } from "../../tools/addOnClicks";
+import { changeGroupOnClick } from "../../actions/changeGroup";
+import { deleteGroupOnClick } from "../../actions/deleteGroup";
+import { getElementsByClassName } from "../../tools/getElementsByClassName";
+import { GROUPS, LOGINSTATE } from "../../metadata";
+import { importGroupOnClick } from "../../actions/importGroup";
+import { refreshLogin } from "../../tools/refreshLogin";
+import { setMainPageTab } from "../main";
 
 function renderGroupList(): string {
   let html = "";
@@ -39,8 +46,8 @@ function renderGroupList(): string {
   return html;
 }
 
-function showGroupSubview(noHistory: boolean): void {
-  mainPageTab = "groups";
+export function showGroupSubview(noHistory: boolean): void {
+  setMainPageTab("groups");
   const nodes = getElementsByClassName("top-bar-tab");
   for (let i = 0; i < nodes.length; i++) {
     nodes[i].className = "top-bar-tab";

@@ -1,9 +1,16 @@
-/* global ActionQueueRetry:true */
-/* exported ActionQueueSetup */
+import { Action } from "./Action";
+import { ActionCallback } from "./ActionCallback";
+import { deserializeAction, serializeAction } from "./Action";
+import { dialog } from "../UI/dialog";
+import { mainPageTab } from "../views/main";
+import { request } from "../tools/request";
+import { SerializedAction } from "../interfaces/SerializedAction";
+import { sidePanelClose } from "../UI/sidePanel";
+import { spinner } from "../UI/spinner";
 
-let ActionQueueRetry = false;
+export let ActionQueueRetry = false;
 
-class ActionQueue {
+export class ActionQueue {
   public actions: Array<Action>;
 
   public constructor(actions: Array<Action> = [], retry = false) {
@@ -81,7 +88,7 @@ class ActionQueue {
   }
 }
 
-function ActionQueueSetup(): void {
+export function ActionQueueSetup(): void {
   if (window.sessionStorage && sessionStorage.getItem("ActionQueue")) {
     const aq = new ActionQueue(
       (

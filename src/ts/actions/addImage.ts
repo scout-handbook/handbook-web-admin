@@ -1,4 +1,9 @@
-/* exported addImage */
+import { authFailHandler, request } from "../tools/request";
+import { dialog } from "../UI/dialog";
+import { refreshLogin } from "../tools/refreshLogin";
+import { refreshMetadata } from "../metadata";
+import { sidePanelClose, sidePanelOpen } from "../UI/sidePanel";
+import { spinner } from "../UI/spinner";
 
 function addImageSave(): void {
   if (
@@ -36,7 +41,7 @@ function changeLabel(event: Event): void {
   }
 }
 
-function addImage(inEditor: boolean): void {
+export function addImage(inEditor: boolean): void {
   sidePanelOpen();
   let html =
     '<div class="button yellow-button" id="side-panel-cancel"><i class="icon-cancel"></i>Zrušit</div>';

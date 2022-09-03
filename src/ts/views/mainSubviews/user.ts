@@ -1,5 +1,18 @@
-/* global mainPageTab:true */
-/* exported showUserSubview */
+import { addOnClicks } from "../../tools/addOnClicks";
+import { changeUserGroupsOnClick } from "../../actions/changeUserGroups";
+import { changeUserRoleOnClick } from "../../actions/changeUserRole";
+import { getElementsByClassName } from "../../tools/getElementsByClassName";
+import { GROUPS, LOGINSTATE } from "../../metadata";
+import { mainPageTab, setMainPageTab } from "../main";
+import { Payload } from "../../interfaces/Payload";
+import { reAuthHandler, request } from "../../tools/request";
+import { refreshLogin } from "../../tools/refreshLogin";
+import { renderPagination } from "../../UI/pagination";
+import { RequestResponse } from "../../interfaces/RequestResponse";
+import { Role } from "../../interfaces/Role";
+import { User } from "../../interfaces/User";
+import { UserListResponse } from "../../interfaces/UserListResponse";
+import { UserSearchQuery } from "../../interfaces/UserSearchQuery";
 
 function renderRoleSelector(): string {
   let html = "";
@@ -228,8 +241,8 @@ function downloadUserList(
   refreshLogin(true);
 }
 
-function showUserSubview(noHistory: boolean): void {
-  mainPageTab = "users";
+export function showUserSubview(noHistory: boolean): void {
+  setMainPageTab("users");
   const nodes = getElementsByClassName("top-bar-tab");
   for (let i = 0; i < nodes.length; i++) {
     nodes[i].className = "top-bar-tab";

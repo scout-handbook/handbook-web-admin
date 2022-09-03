@@ -1,4 +1,18 @@
-/* exported importGroupOnClick */
+import { AfterLoadEvent } from "../AfterLoadEvent";
+import { authFailHandler, reAuthHandler, request } from "../tools/request";
+import { dialog } from "../UI/dialog";
+import { Event } from "../interfaces/Event";
+import { getAttribute } from "../UI/button";
+import { GROUPS, refreshMetadata } from "../metadata";
+import { Participant } from "../interfaces/Participant";
+import { parseBoolForm } from "../tools/parseBoolForm";
+import { Payload } from "../interfaces/Payload";
+import { refreshLogin } from "../tools/refreshLogin";
+import { RequestResponse } from "../interfaces/RequestResponse";
+import { sidePanelClose, sidePanelOpen } from "../UI/sidePanel";
+import { spinner } from "../UI/spinner";
+import { User } from "../interfaces/User";
+import { UserListResponse } from "../interfaces/UserListResponse";
 
 let participantEvent: AfterLoadEvent;
 let addEvent: AfterLoadEvent;
@@ -174,7 +188,7 @@ function importGroupSelectEventRender(id: string, events: Array<Event>): void {
   };
 }
 
-function importGroupOnClick(event: MouseEvent): void {
+export function importGroupOnClick(event: MouseEvent): void {
   sidePanelOpen();
   let html =
     '<div class="button yellow-button" id="side-panel-cancel"><i class="icon-cancel"></i>Zrušit</div>';

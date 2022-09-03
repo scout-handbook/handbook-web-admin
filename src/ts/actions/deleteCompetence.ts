@@ -1,6 +1,11 @@
-/* exported deleteCompetenceOnClick */
+import { Action } from "../tools/Action";
+import { ActionQueue } from "../tools/ActionQueue";
+import { COMPETENCES } from "../metadata";
+import { dialog } from "../UI/dialog";
+import { getAttribute } from "../UI/button";
+import { refreshLogin } from "../tools/refreshLogin";
 
-function deleteCompetenceOnClick(event: MouseEvent): void {
+export function deleteCompetenceOnClick(event: MouseEvent): void {
   const id = getAttribute(event, "id");
   const competence = COMPETENCES.get(id)!;
   const aq = new ActionQueue([

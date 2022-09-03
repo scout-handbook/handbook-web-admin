@@ -1,9 +1,16 @@
-/* exported openSidePanelImageSelector, closeSidePanelImageSelector */
+import { addField } from "../actions/addField";
+import { changeField } from "../actions/changeField";
+import { getElementsByClassName } from "../tools/getElementsByClassName";
+import { reAuthHandler, request } from "../tools/request";
+import { refreshLogin } from "../tools/refreshLogin";
+import { RequestResponse } from "../interfaces/RequestResponse";
+import { sidePanelDoubleOpen } from "./sidePanel";
+import { SidePanelImageSelectorGlobalState } from "../interfaces/SidePanelImageSelectorGlobalState";
 
-let sidePanelImageSelectorState: SidePanelImageSelectorGlobalState | undefined =
+export let sidePanelImageSelectorState: SidePanelImageSelectorGlobalState | undefined =
   undefined;
 
-function openSidePanelImageSelector(
+export function openSidePanelImageSelector(
   action: string,
   property: string,
   state: Record<string, string>,
@@ -34,7 +41,7 @@ function openSidePanelImageSelector(
   refreshLogin();
 }
 
-function closeSidePanelImageSelector(): void {
+export function closeSidePanelImageSelector(): void {
   switch (sidePanelImageSelectorState!.action) {
     case "addField":
       addField(sidePanelImageSelectorState!.state, true);

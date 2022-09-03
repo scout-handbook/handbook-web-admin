@@ -1,5 +1,11 @@
-/* global changed:true */
-/* exported changed, changeLessonFieldOnClick */
+import { Action } from "../tools/Action";
+import { ActionQueue } from "../tools/ActionQueue";
+import { FIELDS } from "../metadata";
+import { lessonSettingsCache, setChanged } from "../lessonEditor/editor";
+import { lessonSettings } from "../lessonEditor/settings";
+import { parseBoolForm } from "../tools/parseBoolForm";
+import { Payload } from "../interfaces/Payload";
+import { refreshLogin } from "../tools/refreshLogin";
 
 let lessonFieldChanged = false;
 
@@ -9,7 +15,7 @@ function changeLessonFieldSave(
 ): void {
   id = id !== null ? id : "{id}";
   if (lessonFieldChanged) {
-    changed = true;
+    setChanged();
     const fieldId = parseBoolForm()[0];
     actionQueue.actions.push(
       new Action(
@@ -31,7 +37,7 @@ function lessonFieldOnclick(): void {
   lessonFieldChanged = true;
 }
 
-function changeLessonFieldOnClick(
+export function changeLessonFieldOnClick(
   id: string | null,
   actionQueue: ActionQueue
 ): void {

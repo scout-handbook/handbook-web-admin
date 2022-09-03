@@ -1,5 +1,11 @@
-/* global changed:true */
-/* exported changed, changeLessonCompetencesOnClick */
+import { Action } from "../tools/Action";
+import { ActionQueue } from "../tools/ActionQueue";
+import { COMPETENCES } from "../metadata";
+import { lessonSettings } from "../lessonEditor/settings";
+import { lessonSettingsCache, setChanged } from "../lessonEditor/editor";
+import { parseBoolForm } from "../tools/parseBoolForm";
+import { Payload } from "../interfaces/Payload";
+import { refreshLogin } from "../tools/refreshLogin";
 
 let lessonCompetencesChanged = false;
 
@@ -9,7 +15,7 @@ function changeLessonCompetencesSave(
 ): void {
   id = id !== null ? id : "{id}";
   if (lessonCompetencesChanged) {
-    changed = true;
+    setChanged();
     const competences = parseBoolForm();
     const encodedCompetences: Array<string> = [];
     for (let i = 0; i < competences.length; i++) {
@@ -35,7 +41,7 @@ function lessonCompetenceOnclick(): void {
   lessonCompetencesChanged = true;
 }
 
-function changeLessonCompetencesOnClick(
+export function changeLessonCompetencesOnClick(
   id: string | null,
   actionQueue: ActionQueue
 ): void {

@@ -1,6 +1,16 @@
-/* exported serializeAction, deserializeAction */
+import { ActionCallback } from "./ActionCallback";
+import { ActionQueue, ActionQueueRetry } from "./ActionQueue";
+import { dialog } from "../UI/dialog";
+import { dismissSpinner } from "../UI/spinner";
+import { ExceptionHandler } from "../interfaces/ExceptionHandler";
+import { Payload } from "../interfaces/Payload";
+import { refreshMetadata } from "../metadata";
+import { RequestResponse } from "../interfaces/RequestResponse";
+import { removeBeacon } from "../views/editLesson";
+import { SerializedAction } from "../interfaces/SerializedAction";
+import { showMainView } from "../views/main";
 
-class Action {
+export class Action {
   public url: string;
   public method: string;
   public payloadBuilder: () => Payload;
@@ -57,7 +67,7 @@ class Action {
   }
 }
 
-function serializeAction(action: Action): SerializedAction {
+export function serializeAction(action: Action): SerializedAction {
   return {
     url: action.url,
     method: action.method,
@@ -66,7 +76,7 @@ function serializeAction(action: Action): SerializedAction {
   };
 }
 
-function deserializeAction(action: SerializedAction): Action {
+export function deserializeAction(action: SerializedAction): Action {
   return new Action(
     action.url,
     action.method,

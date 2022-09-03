@@ -1,6 +1,16 @@
-/* exported mainPageTab, showMainView */
+import { LOGINSTATE, metadataEvent } from "../metadata";
+import { MainPageTab } from "../interfaces/MainPageTab";
+import { showCompetenceSubview } from "./mainSubviews/competence";
+import { showGroupSubview } from "./mainSubviews/group";
+import { showImageSubview } from "./mainSubviews/image";
+import { showLessonSubview } from "./mainSubviews/lesson";
+import { showUserSubview } from "./mainSubviews/user";
 
-let mainPageTab: MainPageTab = "lessons";
+export let mainPageTab: MainPageTab = "lessons";
+
+export function setMainPageTab(val: MainPageTab): void {
+  mainPageTab = val;
+}
 
 function renderMainView(noHistory: boolean): void {
   if (LOGINSTATE.avatar) {
@@ -38,7 +48,7 @@ function renderMainView(noHistory: boolean): void {
   }
 }
 
-function showMainView(noHistory: boolean): void {
+export function showMainView(noHistory: boolean): void {
   let html = '<div id="side-panel"></div><div id="side-panel-overlay"></div>';
   html +=
     '<div id="top-bar"><div id="user-account"><img id="user-avatar" alt="Account avatar" src="' +
