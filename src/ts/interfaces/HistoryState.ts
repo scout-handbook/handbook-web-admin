@@ -1,6 +1,6 @@
-/* exported HistoryState */
+import { MainPageTab } from "./MainPageTab";
 
-interface HistoryState {
+export interface HistoryState {
   id?: string;
   page?: MainPageTab;
   sidePanelImageSelectorAction?: string;

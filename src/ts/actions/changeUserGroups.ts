@@ -1,4 +1,12 @@
-/* exported changeUserGroupsOnClick */
+import { Action } from "../tools/Action";
+import { ActionQueue } from "../tools/ActionQueue";
+import { dispatchIfChanged } from "../tools/dispatchIfChanged";
+import { getAttribute } from "../UI/button";
+import { GROUPS } from "../metadata";
+import { parseBoolForm } from "../tools/parseBoolForm";
+import { Payload } from "../interfaces/Payload";
+import { refreshLogin } from "../tools/refreshLogin";
+import { sidePanelOpen } from "../UI/sidePanel";
 
 let groupsChanged = false;
 
@@ -15,7 +23,7 @@ function userGroupsOnclick(): void {
   groupsChanged = true;
 }
 
-function changeUserGroupsOnClick(event: MouseEvent): void {
+export function changeUserGroupsOnClick(event: MouseEvent): void {
   groupsChanged = false;
   sidePanelOpen();
   let html =

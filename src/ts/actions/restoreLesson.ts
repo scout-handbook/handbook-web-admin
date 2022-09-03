@@ -1,4 +1,21 @@
-/* exported restoreLesson */
+import { authFailHandler, reAuthHandler, request } from "../tools/request";
+import { DeletedLesson } from "../interfaces/DeletedLesson";
+import { dialog } from "../UI/dialog";
+import { IDList } from "../IDList";
+import { LessonVersion } from "../interfaces/LessonVersion";
+import { parseBoolForm } from "../tools/parseBoolForm";
+import { parseVersion } from "../tools/parseVersion";
+import { refreshLogin } from "../tools/refreshLogin";
+import { refreshMetadata } from "../metadata";
+import { refreshPreview } from "../lessonEditor/refreshPreview";
+import { RequestResponse } from "../interfaces/RequestResponse";
+import { showLessonRestoreView } from "../views/restoreLesson";
+import {
+  sidePanelClose,
+  sidePanelDoubleOpen,
+  sidePanelOpen,
+} from "../UI/sidePanel";
+import { spinner } from "../UI/spinner";
 
 function restoreLessonRenderVersion(name: string, body: string): void {
   refreshPreview(name, body, "restore-lesson-preview");
@@ -113,7 +130,7 @@ function restoreLessonRenderLessonList(list: IDList<DeletedLesson>): void {
     restoreLessonSelectVersion;
 }
 
-function restoreLesson(): void {
+export function restoreLesson(): void {
   sidePanelOpen();
   let html =
     '<div class="button yellow-button" id="side-panel-cancel"><i class="icon-cancel"></i>Zrušit</div>';

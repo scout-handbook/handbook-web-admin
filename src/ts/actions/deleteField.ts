@@ -1,6 +1,11 @@
-/* exported deleteFieldOnClick */
+import { Action } from "../tools/Action";
+import { ActionQueue } from "../tools/ActionQueue";
+import { dialog } from "../UI/dialog";
+import { FIELDS } from "../metadata";
+import { getAttribute } from "../UI/button";
+import { refreshLogin } from "../tools/refreshLogin";
 
-function deleteFieldOnClick(event: MouseEvent): void {
+export function deleteFieldOnClick(event: MouseEvent): void {
   const id = getAttribute(event, "id");
   const aq = new ActionQueue([
     new Action(

@@ -1,4 +1,11 @@
-/* exported changeUserRoleOnClick */
+import { Action } from "../tools/Action";
+import { ActionQueue } from "../tools/ActionQueue";
+import { dispatchIfChanged } from "../tools/dispatchIfChanged";
+import { getAttribute } from "../UI/button";
+import { LOGINSTATE } from "../metadata";
+import { Payload } from "../interfaces/Payload";
+import { refreshLogin } from "../tools/refreshLogin";
+import { sidePanelOpen } from "../UI/sidePanel"
 
 let roleChanged = false;
 
@@ -7,7 +14,7 @@ function changeUserRolePayloadBuilder(): Payload {
   return { role: encodeURIComponent(sel.options[sel.selectedIndex].value) };
 }
 
-function changeUserRoleOnClick(event: MouseEvent): void {
+export function changeUserRoleOnClick(event: MouseEvent): void {
   roleChanged = false;
   sidePanelOpen();
   let html =

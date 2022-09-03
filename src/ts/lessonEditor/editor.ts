@@ -1,14 +1,28 @@
-/* global changed:true, editor:true, lessonSettingsCacheEvent:true */
-/* exported showLessonEditor */
+import { ActionQueue } from "../tools/ActionQueue";
+import { AfterLoadEvent } from "../AfterLoadEvent";
+import { dialog } from "../UI/dialog";
+import { default as EasyMDE } from "easymde";
+import { FIELDS, LESSONS } from "../metadata";
+import { lessonSettings } from "./settings";
+import { LessonSettingsCache } from "../interfaces/LessonSettingsCache";
+import { prepareImageSelector, toggleImageSelector } from "./imageSelector";
+import { reAuthHandler, request } from "../tools/request";
+import { refreshLogin } from "../tools/refreshLogin";
+import { refreshPreview } from "./refreshPreview";
+import { RequestResponse } from "../interfaces/RequestResponse";
 
-let changed: boolean;
-const lessonSettingsCache: LessonSettingsCache = {
+export let changed: boolean;
+export const lessonSettingsCache: LessonSettingsCache = {
   competences: [],
   field: "",
   groups: [],
 };
-let lessonSettingsCacheEvent: AfterLoadEvent;
-let editor: EasyMDE;
+export let lessonSettingsCacheEvent: AfterLoadEvent;
+export let editor: EasyMDE;
+
+export function setChanged(): void {
+  changed = true;
+}
 
 function populateEditorCache(id: string | null): void {
   lessonSettingsCacheEvent = new AfterLoadEvent(1);
@@ -68,7 +82,7 @@ function editorOnChange(afterAction: (() => void) | null): void {
   refreshLogin(false, afterAction);
 }
 
-function showLessonEditor(
+export function showLessonEditor(
   name: string,
   body: string,
   saveActionQueue: ActionQueue,

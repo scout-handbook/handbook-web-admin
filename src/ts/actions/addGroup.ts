@@ -1,4 +1,8 @@
-/* exported addGroup */
+import { Action } from "../tools/Action";
+import { ActionQueue } from "../tools/ActionQueue";
+import { Payload } from "../interfaces/Payload";
+import { refreshLogin } from "../tools/refreshLogin";
+import { sidePanelOpen } from "../UI/sidePanel";
 
 function addGroupPayloadBuilder(): Payload {
   return {
@@ -8,7 +12,7 @@ function addGroupPayloadBuilder(): Payload {
   };
 }
 
-function addGroup(): void {
+export function addGroup(): void {
   sidePanelOpen();
   let html =
     '<div class="button yellow-button" id="side-panel-cancel"><i class="icon-cancel"></i>Zrušit</div>';

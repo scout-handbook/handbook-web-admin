@@ -1,6 +1,7 @@
-/* exported refreshLogin */
+import { mainPageTab } from "../views/main";
+import { request } from "./request";
 
-function refreshLogin(
+export function refreshLogin(
   forceRelogin = false,
   afterAction: (() => void) | null = null
 ): void {

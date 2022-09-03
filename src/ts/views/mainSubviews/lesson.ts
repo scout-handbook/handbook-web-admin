@@ -1,5 +1,18 @@
-/* global mainPageTab:true */
-/* exported mainPageTab, showLessonSubview */
+import { addField } from "../../actions/addField";
+import { addLessonInFieldOnClick } from "../addLesson";
+import { addOnClicks } from "../../tools/addOnClicks";
+import { changeFieldOnClick } from "../../actions/changeField";
+import { COMPETENCES, FIELDS, LESSONS, LOGINSTATE } from "../../metadata";
+import { deleteFieldOnClick } from "../../actions/deleteField";
+import { deleteLessonOnClick } from "../../actions/deleteLesson";
+import { getAttribute } from "../../UI/button";
+import { getElementsByClassName } from "../../tools/getElementsByClassName";
+import { Lesson } from "../../interfaces/Lesson";
+import { refreshLogin } from "../../tools/refreshLogin";
+import { restoreLesson } from "../../actions/restoreLesson";
+import { setMainPageTab } from "../main";
+import { showLessonAddView } from "../addLesson";
+import { showLessonEditView } from "../editLesson";
 
 function renderLessonListLesson(
   id: string,
@@ -82,8 +95,8 @@ function changeLessonOnClick(event: MouseEvent): boolean {
   return false;
 }
 
-function showLessonSubview(noHistory: boolean): void {
-  mainPageTab = "lessons";
+export function showLessonSubview(noHistory: boolean): void {
+  setMainPageTab("lessons");
   const nodes = getElementsByClassName("top-bar-tab");
   for (let i = 0; i < nodes.length; i++) {
     nodes[i].className = "top-bar-tab";

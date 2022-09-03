@@ -1,6 +1,7 @@
-/* exported SerializedAction */
+import { ActionCallback } from "../tools/ActionCallback";
+import { Payload } from "./Payload";
 
-interface SerializedAction {
+export interface SerializedAction {
   url: string;
   method: string;
   payload: Payload;

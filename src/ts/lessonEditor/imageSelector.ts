@@ -1,8 +1,12 @@
-/* global imageSelectorOpen:true */
+import { editor } from "./editor";
+import { getElementsByClassName } from "../tools/getElementsByClassName";
+import { refreshLogin } from "../tools/refreshLogin";
+import { reAuthHandler, request } from "../tools/request";
+import { RequestResponse } from "../interfaces/RequestResponse";
 
-let imageSelectorOpen = false;
+export let imageSelectorOpen = false;
 
-function toggleImageSelector(): void {
+export function toggleImageSelector(): void {
   if (imageSelectorOpen) {
     document.getElementById("image-selector")!.style.top = "-100%";
   } else {
@@ -25,7 +29,7 @@ function insertImage(event: MouseEvent): void {
   refreshLogin();
 }
 
-function prepareImageSelector(page = 1, perPage = 15): void {
+export function prepareImageSelector(page = 1, perPage = 15): void {
   request(
     CONFIG["api-uri"] + "/v1.0/image",
     "GET",

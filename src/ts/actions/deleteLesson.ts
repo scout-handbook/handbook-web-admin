@@ -1,4 +1,12 @@
-/* exported deleteLessonOnClick */
+import { Action } from "../tools/Action";
+import { ActionQueue } from "../tools/ActionQueue";
+import { APIResponse } from "../interfaces/APIResponse";
+import { dialog } from "../UI/dialog";
+import { getAttribute } from "../UI/button";
+import { LESSONS } from "../metadata";
+import { reAuthHandler, request } from "../tools/request";
+import { refreshLogin } from "../tools/refreshLogin";
+import { spinner } from "../UI/spinner";
 
 function deleteLessonDialog(id: string): void {
   const name = LESSONS.get(id)!.name;
@@ -44,7 +52,7 @@ function deleteLessonDialog(id: string): void {
   refreshLogin();
 }
 
-function deleteLessonOnClick(event: MouseEvent): void {
+export function deleteLessonOnClick(event: MouseEvent): void {
   const id = getAttribute(event, "id");
   spinner();
   const exceptionHandler = reAuthHandler;

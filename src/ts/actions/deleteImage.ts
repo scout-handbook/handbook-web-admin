@@ -1,6 +1,10 @@
-/* exported deleteImageOnClick */
+import { Action } from "../tools/Action";
+import { ActionQueue } from "../tools/ActionQueue";
+import { dialog } from "../UI/dialog";
+import { getAttribute } from "../UI/button";
+import { refreshLogin } from "../tools/refreshLogin";
 
-function deleteImageOnClick(event: MouseEvent): void {
+export function deleteImageOnClick(event: MouseEvent): void {
   const aq = new ActionQueue([
     new Action(
       CONFIG["api-uri"] +

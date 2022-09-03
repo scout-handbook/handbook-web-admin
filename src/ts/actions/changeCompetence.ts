@@ -1,4 +1,11 @@
-/* exported changeCompetenceOnClick */
+import { Action } from "../tools/Action";
+import { ActionQueue } from "../tools/ActionQueue";
+import { COMPETENCES } from "../metadata";
+import { dispatchIfChanged } from "../tools/dispatchIfChanged";
+import { getAttribute } from "../UI/button";
+import { Payload } from "../interfaces/Payload";
+import { refreshLogin } from "../tools/refreshLogin";
+import { sidePanelOpen } from "../UI/sidePanel";
 
 let competenceChanged = false;
 
@@ -17,7 +24,7 @@ function changeCompetencePayloadBuilder(): Payload {
   };
 }
 
-function changeCompetenceOnClick(event: MouseEvent): void {
+export function changeCompetenceOnClick(event: MouseEvent): void {
   competenceChanged = false;
   sidePanelOpen();
   let html =

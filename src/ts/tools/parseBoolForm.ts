@@ -1,6 +1,4 @@
-/* exported parseBoolForm */
-
-function parseBoolForm(): Array<string> {
+export function parseBoolForm(): Array<string> {
   const ret = [];
   const nodes = document
     .getElementById("side-panel-form")!

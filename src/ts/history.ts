@@ -1,5 +1,17 @@
-/* global mainPageTab:true */
-/* exported historySetup, mainPageTab */
+import { HistoryState } from "./interfaces/HistoryState";
+import {
+  closeSidePanelImageSelector,
+  sidePanelImageSelectorState,
+} from "./UI/sidePanelImageSelector";
+import {
+  imageSelectorOpen,
+  prepareImageSelector,
+} from "./lessonEditor/imageSelector";
+import { MainPageTab } from "./interfaces/MainPageTab";
+import { metadataEvent } from "./metadata";
+import { sidePanelClose, sidePanelState } from "./UI/sidePanel";
+import { showLessonEditView } from "./views/editLesson";
+import { setMainPageTab, showMainView } from "./views/main";
 
 function popback(): void {
   if (history.state) {
@@ -17,7 +29,7 @@ function popback(): void {
         });
       }
     } else if (state.page) {
-      mainPageTab = state.page;
+      setMainPageTab(state.page);
       showMainView(true);
     } else {
       showMainView(false);
@@ -25,10 +37,10 @@ function popback(): void {
   }
 }
 
-function historySetup(): void {
+export function historySetup(): void {
   window.onpopstate = popback;
   if (window.location.pathname.substring(7)) {
-    mainPageTab = window.location.pathname.substring(7) as MainPageTab;
+    setMainPageTab(window.location.pathname.substring(7) as MainPageTab);
   }
   showMainView(false);
 }

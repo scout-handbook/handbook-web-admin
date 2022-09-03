@@ -1,4 +1,9 @@
-/* exported addField */
+import { Action } from "../tools/Action";
+import { ActionQueue } from "../tools/ActionQueue";
+import { openSidePanelImageSelector } from "../UI/sidePanelImageSelector";
+import { Payload } from "../interfaces/Payload";
+import { refreshLogin } from "../tools/refreshLogin";
+import { sidePanelOpen } from "../UI/sidePanel";
 
 function addFieldPayloadBuilder(): Payload {
   return {
@@ -17,7 +22,7 @@ function addFieldPayloadBuilder(): Payload {
   };
 }
 
-function addField(
+export function addField(
   state: Record<string, string> = {
     name: "Nová oblast",
     description: "Popis nové oblasti",

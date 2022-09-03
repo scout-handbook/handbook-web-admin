@@ -1,5 +1,12 @@
-/* global changed:true */
-/* exported changed, changeLessonGroupsOnClick */
+import { Action } from "../tools/Action";
+import { ActionQueue } from "../tools/ActionQueue";
+import { GROUPS } from "../metadata";
+import { lessonSettings } from "../lessonEditor/settings";
+import { lessonSettingsCache } from "../lessonEditor/editor";
+import { parseBoolForm } from "../tools/parseBoolForm";
+import { Payload } from "../interfaces/Payload";
+import { refreshLogin } from "../tools/refreshLogin";
+import { setChanged } from "../lessonEditor/editor";
 
 let lessonGroupsChanged = false;
 
@@ -9,7 +16,7 @@ function changeLessonGroupsSave(
 ): void {
   id = id !== null ? id : "{id}";
   if (lessonGroupsChanged) {
-    changed = true;
+    setChanged();
     const groups = parseBoolForm();
     const encodedGroups: Array<string> = [];
     for (let i = 0; i < groups.length; i++) {
@@ -35,7 +42,7 @@ function lessonGroupsOnclick(): void {
   lessonGroupsChanged = true;
 }
 
-function changeLessonGroupsOnClick(
+export function changeLessonGroupsOnClick(
   id: string | null,
   actionQueue: ActionQueue
 ): void {

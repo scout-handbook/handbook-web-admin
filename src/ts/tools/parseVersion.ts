@@ -1,6 +1,4 @@
-/* exported parseVersion */
-
-function parseVersion(version: number): string {
+export function parseVersion(version: number): string {
   const d = new Date(version);
   return (
     d.getDate().toString() +

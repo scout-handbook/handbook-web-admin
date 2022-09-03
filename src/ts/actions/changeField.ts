@@ -1,4 +1,12 @@
-/* exported changeFieldOnClick */
+import { Action } from "../tools/Action";
+import { ActionQueue } from "../tools/ActionQueue";
+import { dispatchIfChanged } from "../tools/dispatchIfChanged";
+import { FIELDS } from "../metadata";
+import { getAttribute } from "../UI/button";
+import { openSidePanelImageSelector } from "../UI/sidePanelImageSelector";
+import { Payload } from "../interfaces/Payload";
+import { refreshLogin } from "../tools/refreshLogin";
+import { sidePanelOpen } from "../UI/sidePanel";
 
 let fieldChanged = false;
 
@@ -19,7 +27,7 @@ function changeFieldPayloadBuilder(): Payload {
   };
 }
 
-function changeField(
+export function changeField(
   state: Record<string, string>,
   noHistory = false,
   changed = false
@@ -122,7 +130,7 @@ function changeField(
   refreshLogin();
 }
 
-function changeFieldOnClick(event: MouseEvent): void {
+export function changeFieldOnClick(event: MouseEvent): void {
   const id = getAttribute(event, "id");
   const field = FIELDS.get(id)!;
   changeField({

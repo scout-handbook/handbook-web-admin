@@ -1,5 +1,11 @@
-/* global mainPageTab:true */
-/* exported mainPageTab, showCompetenceSubview */
+import { addCompetence } from "../../actions/addCompetence";
+import { addOnClicks } from "../../tools/addOnClicks";
+import { changeCompetenceOnClick } from "../../actions/changeCompetence";
+import { COMPETENCES, LOGINSTATE } from "../../metadata";
+import { deleteCompetenceOnClick } from "../../actions/deleteCompetence";
+import { getElementsByClassName } from "../../tools/getElementsByClassName";
+import { refreshLogin } from "../../tools/refreshLogin";
+import { setMainPageTab } from "../main";
 
 function renderCompetenceList(): string {
   let html = "";
@@ -31,8 +37,8 @@ function renderCompetenceList(): string {
   return html;
 }
 
-function showCompetenceSubview(noHistory: boolean): void {
-  mainPageTab = "competences";
+export function showCompetenceSubview(noHistory: boolean): void {
+  setMainPageTab("competences");
   const nodes = getElementsByClassName("top-bar-tab");
   for (let i = 0; i < nodes.length; i++) {
     nodes[i].className = "top-bar-tab";

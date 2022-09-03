@@ -1,6 +1,4 @@
-/* exported ActionCallback */
-
-enum ActionCallback {
+export enum ActionCallback {
   DialogConfirm = "DialogConfirm",
   DismissSpinner = "DismissSpinner",
   FillID = "FillID",

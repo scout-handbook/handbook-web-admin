@@ -1,5 +1,15 @@
-/* global changed:true */
-/* exported changed, lessonHistoryOpen */
+import { ActionQueue } from "../tools/ActionQueue";
+import { authFailHandler, request } from "../tools/request";
+import { editor } from "./editor";
+import { LESSONS } from "../metadata";
+import { lessonSettings } from "./settings";
+import { LessonVersion } from "../interfaces/LessonVersion";
+import { parseVersion } from "../tools/parseVersion";
+import { refreshLogin } from "../tools/refreshLogin";
+import { refreshPreview } from "./refreshPreview";
+import { RequestResponse } from "../interfaces/RequestResponse";
+import { setChanged } from "./editor";
+import { sidePanelDoubleOpen } from "../UI/sidePanel";
 
 function lessonHistoryPreviewShowCurrent(): void {
   document.getElementById("lesson-history-preview")!.innerHTML =
@@ -29,7 +39,7 @@ function lessonHistoryPreviewRenderVersion(
   document.getElementById("lessonHistoryRevert")!.onclick = function (): void {
     (document.getElementById("name") as HTMLInputElement).value = name;
     editor.value(body);
-    changed = true;
+    setChanged();
     lessonSettings(id, actionQueue, true);
   };
 }
@@ -105,7 +115,7 @@ function lessonHistoryListRender(
   }
 }
 
-function lessonHistoryOpen(id: string, actionQueue: ActionQueue): void {
+export function lessonHistoryOpen(id: string, actionQueue: ActionQueue): void {
   sidePanelDoubleOpen();
   const html =
     '<div id="lesson-history-list"><div class="button yellow-button" id="cancelEditorAction"><i class="icon-cancel"></i>Zrušit</div><span id="lessonHistoryListHeader"></span><h3 class="side-panel-title">Historie lekce</h3><div id="lessonHistoryForm"><div id="embedded-spinner"></div></div></div><div id="lesson-history-preview"></div>';

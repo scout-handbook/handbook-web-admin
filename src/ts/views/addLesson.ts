@@ -1,5 +1,10 @@
-/* global changed:true */
-/* exported changed, addLessonInFieldOnClick */
+import { Action } from "../tools/Action";
+import { ActionCallback } from "../tools/ActionCallback";
+import { ActionQueue } from "../tools/ActionQueue";
+import { defaultBody, defaultName } from "../lessonEditor/defaultContent";
+import { editor, setChanged, showLessonEditor } from "../lessonEditor/editor";
+import { getAttribute } from "../UI/button";
+import { Payload } from "../interfaces/Payload";
 
 function addLessonPayloadBuilder(): Payload {
   return {
@@ -10,7 +15,7 @@ function addLessonPayloadBuilder(): Payload {
   };
 }
 
-function showLessonAddView(field?: string): void {
+export function showLessonAddView(field?: string): void {
   history.pushState({}, "title", "/admin/lessons");
 
   const aq = new ActionQueue([
@@ -33,9 +38,9 @@ function showLessonAddView(field?: string): void {
     );
   }
   showLessonEditor(defaultName, defaultBody, aq, null);
-  changed = true;
+  setChanged();
 }
 
-function addLessonInFieldOnClick(event: MouseEvent): void {
+export function addLessonInFieldOnClick(event: MouseEvent): void {
   showLessonAddView(getAttribute(event, "id"));
 }

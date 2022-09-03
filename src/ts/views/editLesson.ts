@@ -1,4 +1,15 @@
-/* exported imageSelectorOpen, showLessonEditView, removeBeacon */
+import { Action } from "../tools/Action";
+import { ActionCallback } from "../tools/ActionCallback";
+import { ActionQueue } from "../tools/ActionQueue";
+import { APIResponse } from "../interfaces/APIResponse";
+import { dialog } from "../UI/dialog";
+import { dismissSpinner } from "../UI/spinner";
+import { editor, showLessonEditor } from "../lessonEditor/editor";
+import { LESSONS, metadataEvent } from "../metadata";
+import { Payload } from "../interfaces/Payload";
+import { reAuthHandler, request } from "../tools/request";
+import { RequestResponse } from "../interfaces/RequestResponse";
+import { spinner } from "../UI/spinner";
 
 function saveLessonPayloadBuilder(): Payload {
   return {
@@ -9,7 +20,7 @@ function saveLessonPayloadBuilder(): Payload {
   };
 }
 
-function removeBeacon(): void {
+export function removeBeacon(): void {
   window.onbeforeunload = null;
 }
 
@@ -105,7 +116,7 @@ function getLessonEditView(id: string, noHistory: boolean): void {
   );
 }
 
-function showLessonEditView(id: string, noHistory: boolean): void {
+export function showLessonEditView(id: string, noHistory: boolean): void {
   spinner();
   const exceptionHandler = reAuthHandler;
   exceptionHandler["LockedException"] = function (response: APIResponse): void {

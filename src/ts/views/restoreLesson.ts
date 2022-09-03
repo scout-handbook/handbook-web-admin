@@ -1,4 +1,8 @@
-/* exported showLessonRestoreView */
+import { Action } from "../tools/Action";
+import { ActionCallback } from "../tools/ActionCallback";
+import { ActionQueue } from "../tools/ActionQueue";
+import { editor, showLessonEditor, setChanged } from "../lessonEditor/editor";
+import { Payload } from "../interfaces/Payload";
 
 function restoreLessonPayloadBuilder(): Payload {
   return {
@@ -9,7 +13,7 @@ function restoreLessonPayloadBuilder(): Payload {
   };
 }
 
-function showLessonRestoreView(name: string, body: string): void {
+export function showLessonRestoreView(name: string, body: string): void {
   const aq = new ActionQueue([
     new Action(
       CONFIG["api-uri"] + "/v1.0/lesson",
@@ -20,5 +24,5 @@ function showLessonRestoreView(name: string, body: string): void {
   ]);
   history.replaceState({}, "title", "/admin/lessons");
   showLessonEditor(name, body, aq, null);
-  changed = true;
+  setChanged();
 }

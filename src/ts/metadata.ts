@@ -8,11 +8,11 @@ import { Lesson } from "./interfaces/Lesson";
 import { Loginstate } from "./interfaces/Loginstate";
 import { rawRequest, request } from "./tools/request";
 
-let metadataEvent: AfterLoadEvent;
-let FIELDS: IDList<Field>;
-let COMPETENCES: IDList<Competence>;
-let GROUPS: IDList<Group>;
-let LESSONS: IDList<Lesson>;
+export let metadataEvent: AfterLoadEvent;
+export let FIELDS: IDList<Field>;
+export let COMPETENCES: IDList<Competence>;
+export let GROUPS: IDList<Group>;
+export let LESSONS: IDList<Lesson>;
 export let LOGINSTATE: Loginstate = { avatar: "", name: "", role: "guest" };
 
 function competenceComparator(first: Competence, second: Competence): number {
@@ -51,7 +51,7 @@ function fieldComparator(first: Field, second: Field): number {
   );
 }
 
-function refreshMetadata(): void {
+export function refreshMetadata(): void {
   metadataEvent = new AfterLoadEvent(3);
   const metadataSortEvent = new AfterLoadEvent(3);
   metadataSortEvent.addCallback(function (): void {

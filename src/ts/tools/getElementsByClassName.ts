@@ -1,6 +1,4 @@
-/* exported getElementsByClassName */
-
-function getElementsByClassName(
+export function getElementsByClassName(
   className: string,
   context: Document | Element = document
 ): HTMLCollection {

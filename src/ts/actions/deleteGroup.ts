@@ -1,6 +1,11 @@
-/* exported deleteGroupOnClick */
+import { Action } from "../tools/Action";
+import { ActionQueue } from "../tools/ActionQueue";
+import { dialog } from "../UI/dialog";
+import { getAttribute } from "../UI/button";
+import { GROUPS } from "../metadata";
+import { refreshLogin } from "../tools/refreshLogin";
 
-function deleteGroupOnClick(event: MouseEvent): void {
+export function deleteGroupOnClick(event: MouseEvent): void {
   const id = getAttribute(event, "id");
   const aq = new ActionQueue([
     new Action(

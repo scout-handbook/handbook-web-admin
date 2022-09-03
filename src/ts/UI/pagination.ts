@@ -1,6 +1,4 @@
-/* exported renderPagination */
-
-function renderPagination(total: number, current: number): string {
+export function renderPagination(total: number, current: number): string {
   if (total < 2) {
     return "";
   }
