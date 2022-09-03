@@ -1,12 +1,19 @@
-/* global COMPETENCES:true, FIELDS:true, GROUPS:true, LESSONS:true, LOGINSTATE:true, metadataEvent:true */
-/* exported COMPETENCES, FIELDS, GROUPS, LESSONS, LOGINSTATE, metadataSetup */
+import { AfterLoadEvent } from "./AfterLoadEvent";
+import { Competence } from "./interfaces/Competence";
+import { dialog } from "./UI/dialog";
+import { Field } from "./interfaces/Field";
+import { Group } from "./interfaces/Group";
+import { IDList } from "./IDList";
+import { Lesson } from "./interfaces/Lesson";
+import { Loginstate } from "./interfaces/Loginstate";
+import { rawRequest, request } from "./tools/request";
 
 let metadataEvent: AfterLoadEvent;
 let FIELDS: IDList<Field>;
 let COMPETENCES: IDList<Competence>;
 let GROUPS: IDList<Group>;
 let LESSONS: IDList<Lesson>;
-let LOGINSTATE: Loginstate = { avatar: "", name: "", role: "guest" };
+export let LOGINSTATE: Loginstate = { avatar: "", name: "", role: "guest" };
 
 function competenceComparator(first: Competence, second: Competence): number {
   return first.number - second.number;
@@ -155,6 +162,6 @@ function refreshMetadata(): void {
   );
 }
 
-function metadataSetup(): void {
+export function metadataSetup(): void {
   refreshMetadata();
 }

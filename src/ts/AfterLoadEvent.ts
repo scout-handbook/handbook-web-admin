@@ -1,6 +1,4 @@
-/* exported AfterLoadEvent */
-
-class AfterLoadEvent {
+export class AfterLoadEvent {
   private triggered: boolean;
   private threshold: number;
   private count: number;

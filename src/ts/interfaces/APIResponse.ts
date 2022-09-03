@@ -1,6 +1,6 @@
-/* exported APIResponse */
+import { RequestResponse } from "./RequestResponse";
 
-interface APIResponse {
+export interface APIResponse {
   status: number;
   response?: RequestResponse;
   type?: string;

@@ -1,6 +1,6 @@
-/* exported Loginstate */
+import { Role } from "./Role";
 
-interface Loginstate {
+export interface Loginstate {
   avatar: string;
   name: string;
   role: Role;

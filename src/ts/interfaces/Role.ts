@@ -1,3 +1,1 @@
-/* exported Role */
-
-type Role = "guest" | "editor" | "administrator" | "superuser";
+export type Role = "guest" | "editor" | "administrator" | "superuser";

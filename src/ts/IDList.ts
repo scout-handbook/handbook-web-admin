@@ -1,6 +1,4 @@
-/* exported IDList */
-
-class IDList<T> {
+export class IDList<T> {
   private list: Array<{ k: string; v: T }>;
 
   public constructor(list: Record<string, T> = {}) {

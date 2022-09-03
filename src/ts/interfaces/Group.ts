@@ -1,6 +1,4 @@
-/* exported Group */
-
-interface Group {
+export interface Group {
   name: string;
   count: number;
 }

@@ -1,6 +1,4 @@
-/* exported Field */
-
-interface Field {
+export interface Field {
   name: string;
   description: string;
   image: string;

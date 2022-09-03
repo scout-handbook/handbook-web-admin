@@ -1,6 +1,4 @@
-/* exported DeletedLesson */
-
-interface DeletedLesson {
+export interface DeletedLesson {
   id: string;
   name: string;
 }

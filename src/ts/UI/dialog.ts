@@ -1,4 +1,4 @@
-/* exported dialog */
+import { dismissSpinner } from "./spinner";
 
 let confirmCallbackWrapped: () => void;
 
@@ -15,7 +15,7 @@ function dismissDialog(): void {
   document.removeEventListener("keypress", keyPressDialog);
 }
 
-function dialog(
+export function dialog(
   mainText: string,
   confirmText: string,
   confirmCallback?: () => void,

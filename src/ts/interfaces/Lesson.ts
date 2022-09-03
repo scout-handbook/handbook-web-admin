@@ -1,6 +1,4 @@
-/* exported Lesson */
-
-interface Lesson {
+export interface Lesson {
   name: string;
   version: number;
   competences: Array<string>;

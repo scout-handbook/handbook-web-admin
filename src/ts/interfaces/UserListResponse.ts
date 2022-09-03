@@ -1,6 +1,6 @@
-/* exported UserListResponse */
+import { User } from "./User";
 
-interface UserListResponse {
+export interface UserListResponse {
   count: number;
   users: Array<User>;
 }
