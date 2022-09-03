@@ -17,6 +17,7 @@ const autoprefixer = require("autoprefixer");
 const inject = require("gulp-inject-string");
 const htmlmin = require("gulp-htmlmin");
 const ts = require("gulp-typescript");
+const webpack = require("webpack-stream");
 
 const minify = composer(uglify, console);
 
@@ -74,11 +75,28 @@ gulp.task("build:js", function () {
         .pipe(gulp.dest("dist/"))
     );
   }
-  return merge(
-    bundle("admin", true),
-    bundle("admin-worker"),
-    bundle("admin-worker-deps")
-  );
+  return merge(bundle("admin-worker"), bundle("admin-worker-deps"));
+});
+
+gulp.task("build:js-webpack", function () {
+  // TODO: sourcemaps - check that they're still written
+  // TODO: Minify
+  function bundle(name, addConfig = false) {
+    let ret = gulp
+      .src("src/ts/main.ts")
+      .pipe(webpack(require("./webpack.config.js")));
+    if (addConfig) {
+      ret = ret.pipe(
+        inject.prepend(
+          '"use strict";\nvar CONFIG = JSON.parse(\'' +
+            JSON.stringify(getConfig()) +
+            "');\n"
+        )
+      );
+    }
+    return ret.pipe(gulp.dest("dist/"));
+  }
+  return merge(bundle("admin", true));
 });
 
 gulp.task("build:css", function () {
@@ -190,6 +208,7 @@ gulp.task(
     "build:html",
     "build:css",
     "build:js",
+    "build:js-webpack",
     "build:php",
     "build:txt",
     "build:font",
