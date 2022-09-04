@@ -76,7 +76,7 @@ gulp.task("build:js", function () {
         .pipe(gulp.dest("dist/"))
     );
   }
-  return merge(bundle("admin-worker"), bundle("admin-worker-deps"));
+  return merge(bundle("admin-worker-deps"));
 });
 
 gulp.task("build:js-webpack", function () {
@@ -99,7 +99,7 @@ gulp.task("build:js-webpack", function () {
       .pipe(rename(name + ".min.js"))
       .pipe(gulp.dest("dist/"));
   }
-  return merge(bundle("admin", true));
+  return merge(bundle("admin", true), bundle("admin-worker"));
 });
 
 gulp.task("build:css", function () {
