@@ -1,9 +1,9 @@
 /* eslint-env worker */
 
 import { Converter } from "showdown";
-import { WorkerPayload } from "./interfaces/WorkerPayload";
-import { xssOptions } from "./admin/xssOptions"; // TODO
-import "./HandbookMarkdown"; // TODO
+import { WorkerPayload } from "./common/WorkerPayload";
+import { xssOptions } from "./common/xssOptions";
+import "./common/HandbookMarkdown";
 
 let converter: Converter;
 

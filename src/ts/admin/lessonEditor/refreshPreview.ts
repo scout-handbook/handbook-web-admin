@@ -1,7 +1,7 @@
 import { Converter } from "showdown";
-import { xssOptions } from "../xssOptions"; // TODO
-import { WorkerPayload } from "../../interfaces/WorkerPayload";
-import "../../HandbookMarkdown"; // TODO
+import { xssOptions } from "../../common/xssOptions";
+import { WorkerPayload } from "../../common/WorkerPayload";
+import "../../common/HandbookMarkdown";
 
 let converter: showdown.Converter | undefined;
 let worker: Worker | undefined;
