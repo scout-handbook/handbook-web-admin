@@ -1,7 +1,10 @@
 /* eslint-env node */
 
+const TerserPlugin = require("terser-webpack-plugin");
+
 module.exports = {
-  mode: "development",
+  mode: "production",
+  devtool: "source-map",
   module: {
     rules: [
       {
@@ -20,5 +23,21 @@ module.exports = {
   },
   output: {
     filename: "[name].js",
+  },
+  optimization: {
+    minimize: true,
+    minimizer: [
+      new TerserPlugin({
+        extractComments: false,
+        terserOptions: {
+          format: {
+            comments: false,
+          },
+        },
+      }),
+    ],
+  },
+  performance: {
+    hints: false,
   },
 };
