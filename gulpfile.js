@@ -13,6 +13,7 @@ const concat = require("gulp-concat");
 const cleanCSS = require("gulp-clean-css");
 const postcss = require("gulp-postcss");
 const postcssCustomProperties = require("postcss-custom-properties");
+const rename = require("gulp-rename");
 const autoprefixer = require("autoprefixer");
 const inject = require("gulp-inject-string");
 const htmlmin = require("gulp-htmlmin");
@@ -83,7 +84,7 @@ gulp.task("build:js-webpack", function () {
   // TODO: Minify
   function bundle(name, addConfig = false) {
     let ret = gulp
-      .src("src/ts/main.ts")
+      .src("src/ts/" + name + ".ts")
       .pipe(webpack(require("./webpack.config.js")));
     if (addConfig) {
       ret = ret.pipe(
@@ -94,7 +95,9 @@ gulp.task("build:js-webpack", function () {
         )
       );
     }
-    return ret.pipe(gulp.dest("dist/"));
+    return ret
+      .pipe(rename(name + ".min.js"))
+      .pipe(gulp.dest("dist/"));
   }
   return merge(bundle("admin", true));
 });

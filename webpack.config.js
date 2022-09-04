@@ -15,9 +15,6 @@ module.exports = {
   resolve: {
     extensions: [".ts", ".js", ".svelte"],
   },
-  entry: {
-    index: "./src/ts/main.ts",
-  },
   output: {
     filename: "[name].js",
   },
