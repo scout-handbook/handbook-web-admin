@@ -9,6 +9,5 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "strict": true,
-  },
-  "files": ["src/ts/admin.ts"]
+  }
 }
