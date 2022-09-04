@@ -52,34 +52,6 @@ gulp.task("build:html", function () {
 });
 
 gulp.task("build:js", function () {
-  function bundle(name, addConfig = false) {
-    const tsProject = ts.createProject("tsconfig/" + name + ".json");
-    let ret = tsProject
-      .src()
-      .pipe(sourcemaps.init())
-      .pipe(tsProject())
-      .pipe(concat(name + ".min.js"));
-    if (addConfig) {
-      ret = ret.pipe(
-        inject.prepend(
-          '"use strict";\nvar CONFIG = JSON.parse(\'' +
-            JSON.stringify(getConfig()) +
-            "');\n"
-        )
-      );
-    }
-    return (
-      ret
-        //.pipe(gulp.dest('dist/'));
-        .pipe(minify())
-        .pipe(sourcemaps.write("./"))
-        .pipe(gulp.dest("dist/"))
-    );
-  }
-  return merge(bundle("admin-worker-deps"));
-});
-
-gulp.task("build:js-webpack", function () {
   // TODO: sourcemaps - check that they're still written
   // TODO: Minify
   function bundle(name, addConfig = false) {
@@ -99,8 +71,7 @@ gulp.task("build:js-webpack", function () {
   }
   return merge(
     bundle("admin", true),
-    bundle("admin-worker"),
-    bundle("admin-worker-deps")
+    bundle("admin-worker")
   );
 });
 
@@ -213,7 +184,6 @@ gulp.task(
     "build:html",
     "build:css",
     "build:js",
-    "build:js-webpack",
     "build:php",
     "build:txt",
     "build:font",

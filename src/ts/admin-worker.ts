@@ -2,6 +2,8 @@
 
 import { Converter } from "showdown";
 import { WorkerPayload } from "./interfaces/WorkerPayload";
+import { xssOptions } from "./admin/xssOptions"; // TODO
+import "./HandbookMarkdown"; // TODO
 
 let converter: Converter;
 
