@@ -84,7 +84,7 @@ function pagebreakCommand(): string {
 }
 
 // Showdown extensions definitions
-const HandbookMarkdown = function (): Array<showdown.ShowdownExtension> {
+const HandbookMarkdown = function (): Array<ShowdownExtension> {
   const responsiveTablesBegin = {
     type: "output",
     regex: "<table>",
