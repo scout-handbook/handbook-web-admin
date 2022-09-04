@@ -10,5 +10,5 @@
     "noUnusedParameters": true,
     "strict": true,
   },
-  "files": ["src/ts/main.ts"]
+  "files": ["src/ts/admin.ts"]
 }
