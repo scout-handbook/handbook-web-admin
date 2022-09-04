@@ -1,6 +1,7 @@
 /* eslint-env worker */
 
 import { Converter } from "showdown";
+import { filterXSS } from "xss";
 import { WorkerPayload } from "./common/WorkerPayload";
 import { xssOptions } from "./common/xssOptions";
 import "./common/HandbookMarkdown";

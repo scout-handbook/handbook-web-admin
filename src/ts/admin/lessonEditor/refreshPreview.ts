@@ -1,6 +1,7 @@
 import { Converter } from "showdown";
-import { xssOptions } from "../../common/xssOptions";
+import { filterXSS } from "xss";
 import { WorkerPayload } from "../../common/WorkerPayload";
+import { xssOptions } from "../../common/xssOptions";
 import "../../common/HandbookMarkdown";
 
 let converter: showdown.Converter | undefined;
