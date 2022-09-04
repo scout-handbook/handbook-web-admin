@@ -48,40 +48,51 @@ gulp.task("build:html", function () {
   );
 });
 
-gulp.task("build:js", function () {
-  function bundle(name, addConfig = false, worker = false) {
-    let ret = gulp
-      .src("src/ts/" + name + ".ts")
-      .pipe(webpack(require("./webpack.config.js")))
-      .pipe(sourcemaps.init({ loadMaps: true }))
-      .pipe(
-        through.obj(function (file, _, cb) {
-          const isSourceMap = /\.map$/.test(file.path);
-          if (!isSourceMap) this.push(file);
-          cb();
-        })
-      );
-    if (addConfig) {
-      ret = ret.pipe(
-        inject.prepend(
-          "var CONFIG = JSON.parse('" + JSON.stringify(getConfig()) + "');\n"
-        )
-      );
-    }
-    if (worker) {
-      ret = ret.pipe(
-        inject.prepend(
-          'importScripts("showdown.min.js");\nimportScripts("xss.min.js");\n'
-        )
-      );
-    }
-    return ret
-      .pipe(rename({ basename: name, suffix: ".min" }))
-      .pipe(sourcemaps.write("."))
-      .pipe(gulp.dest("dist/"));
-  }
-  return merge(bundle("admin", true), bundle("admin-worker", false, true));
+gulp.task("build:js:main", function () {
+  return gulp
+    .src("src/ts/admin.ts")
+    .pipe(webpack(require("./webpack.config.js")))
+    .pipe(sourcemaps.init({ loadMaps: true }))
+    .pipe(
+      through.obj(function (file, _, cb) {
+        const isSourceMap = /\.map$/.test(file.path);
+        if (!isSourceMap) this.push(file);
+        cb();
+      })
+    )
+    .pipe(
+      inject.prepend(
+        "var CONFIG = JSON.parse('" + JSON.stringify(getConfig()) + "');\n"
+      )
+    )
+    .pipe(rename({ basename: "admin", suffix: ".min" }))
+    .pipe(sourcemaps.write("."))
+    .pipe(gulp.dest("dist/"));
 });
+
+gulp.task("build:js:worker", function () {
+  return gulp
+    .src("src/ts/admin-worker.ts")
+    .pipe(webpack(require("./webpack.config.js")))
+    .pipe(sourcemaps.init({ loadMaps: true }))
+    .pipe(
+      through.obj(function (file, _, cb) {
+        const isSourceMap = /\.map$/.test(file.path);
+        if (!isSourceMap) this.push(file);
+        cb();
+      })
+    )
+    .pipe(
+      inject.prepend(
+        'importScripts("showdown.min.js");\nimportScripts("xss.min.js");\n'
+      )
+    )
+    .pipe(rename({ basename: "admin-worker", suffix: ".min" }))
+    .pipe(sourcemaps.write("."))
+    .pipe(gulp.dest("dist/"));
+});
+
+gulp.task("build:js", gulp.parallel("build:js:main", "build:js:worker"));
 
 gulp.task("build:css", function () {
   function bundle(name, sources) {
