@@ -1,3 +1,5 @@
+import { extension, ShowdownExtension } from "showdown";
+
 function getArgumentString(
   lines: Array<string>,
   current: number,
@@ -126,4 +128,4 @@ const HandbookMarkdown = function (): Array<showdown.ShowdownExtension> {
 };
 
 //Register extensions
-showdown.extension("HandbookMarkdown", HandbookMarkdown);
+extension("HandbookMarkdown", HandbookMarkdown);
