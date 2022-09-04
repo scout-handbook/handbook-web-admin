@@ -24,6 +24,11 @@ module.exports = {
   output: {
     filename: "[name].js",
   },
+  externals: {
+    easymde: "easymde",
+    showdown: "showdown",
+    xss: "xss",
+  },
   optimization: {
     minimize: true,
     minimizer: [
@@ -36,8 +41,5 @@ module.exports = {
         },
       }),
     ],
-  },
-  performance: {
-    hints: false,
   },
 };
