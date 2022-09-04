@@ -1,9 +1,9 @@
 /// <reference path="../d.ts/admin.d.ts" />
 
-import { ActionQueueSetup } from "./tools/ActionQueue";
-import { historySetup } from "./history";
-import { metadataSetup } from "./metadata";
-import { refreshPreviewSetup } from "./lessonEditor/refreshPreview";
+import { ActionQueueSetup } from "./admin/tools/ActionQueue";
+import { historySetup } from "./admin/history";
+import { metadataSetup } from "./admin/metadata";
+import { refreshPreviewSetup } from "./admin/lessonEditor/refreshPreview";
 
 function main(): void {
   refreshPreviewSetup();
