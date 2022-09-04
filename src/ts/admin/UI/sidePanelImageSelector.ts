@@ -7,8 +7,9 @@ import { RequestResponse } from "../interfaces/RequestResponse";
 import { sidePanelDoubleOpen } from "./sidePanel";
 import { SidePanelImageSelectorGlobalState } from "../interfaces/SidePanelImageSelectorGlobalState";
 
-export let sidePanelImageSelectorState: SidePanelImageSelectorGlobalState | undefined =
-  undefined;
+export let sidePanelImageSelectorState:
+  | SidePanelImageSelectorGlobalState
+  | undefined = undefined;
 
 export function openSidePanelImageSelector(
   action: string,

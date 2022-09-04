@@ -1,6 +1,9 @@
 import { getElementsByClassName } from "./getElementsByClassName";
 
-export function addOnClicks(id: string, onclick: (event: MouseEvent) => void): void {
+export function addOnClicks(
+  id: string,
+  onclick: (event: MouseEvent) => void
+): void {
   const nodes = getElementsByClassName(
     id,
     document.getElementsByTagName("main")[0]

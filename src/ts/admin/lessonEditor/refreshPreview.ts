@@ -29,7 +29,11 @@ export function refreshPreviewSetup(): void {
   }
 }
 
-export function refreshPreview(name: string, markdown: string, id: string): void {
+export function refreshPreview(
+  name: string,
+  markdown: string,
+  id: string
+): void {
   const payload = { id: id, body: "# " + name + "\n" + markdown };
   if (Worker) {
     if (running) {

@@ -5,7 +5,7 @@ import { getAttribute } from "../UI/button";
 import { LOGINSTATE } from "../metadata";
 import { Payload } from "../interfaces/Payload";
 import { refreshLogin } from "../tools/refreshLogin";
-import { sidePanelOpen } from "../UI/sidePanel"
+import { sidePanelOpen } from "../UI/sidePanel";
 
 let roleChanged = false;
 
