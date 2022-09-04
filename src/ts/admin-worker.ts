@@ -16,9 +16,6 @@ function convert(payload: MessageEvent): void {
 
 function main(): void {
   self.onmessage = convert;
-  importScripts("showdown.min.js");
-  importScripts("xss.min.js");
-  importScripts("admin-worker-deps.min.js");
   converter = new Converter({ extensions: ["HandbookMarkdown"] });
   converter.setOption("noHeaderId", "true");
   converter.setOption("tables", "true");

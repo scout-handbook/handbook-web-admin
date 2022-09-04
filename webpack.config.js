@@ -24,10 +24,11 @@ module.exports = {
   output: {
     filename: "[name].js",
   },
+  externalsType: "var",
   externals: {
-    easymde: "easymde",
+    easymde: "EasyMDE",
     showdown: "showdown",
-    xss: "xss",
+    xss: "filterXSS",
   },
   optimization: {
     minimize: true,

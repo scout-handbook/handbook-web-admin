@@ -49,7 +49,7 @@ gulp.task("build:html", function () {
 });
 
 gulp.task("build:js", function () {
-  function bundle(name, addConfig = false) {
+  function bundle(name, addConfig = false, worker = false) {
     let ret = gulp
       .src("src/ts/" + name + ".ts")
       .pipe(webpack(require("./webpack.config.js")))
@@ -68,12 +68,19 @@ gulp.task("build:js", function () {
         )
       );
     }
+    if (worker) {
+      ret = ret.pipe(
+        inject.prepend(
+          'importScripts("showdown.min.js");\nimportScripts("xss.min.js");\n'
+        )
+      );
+    }
     return ret
       .pipe(rename({ basename: name, suffix: ".min" }))
       .pipe(sourcemaps.write("."))
       .pipe(gulp.dest("dist/"));
   }
-  return merge(bundle("admin", true), bundle("admin-worker"));
+  return merge(bundle("admin", true), bundle("admin-worker", false, true));
 });
 
 gulp.task("build:css", function () {
