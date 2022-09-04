@@ -95,11 +95,13 @@ gulp.task("build:js-webpack", function () {
         )
       );
     }
-    return ret
-      .pipe(rename(name + ".min.js"))
-      .pipe(gulp.dest("dist/"));
+    return ret.pipe(rename(name + ".min.js")).pipe(gulp.dest("dist/"));
   }
-  return merge(bundle("admin", true), bundle("admin-worker"));
+  return merge(
+    bundle("admin", true),
+    bundle("admin-worker"),
+    bundle("admin-worker-deps")
+  );
 });
 
 gulp.task("build:css", function () {
