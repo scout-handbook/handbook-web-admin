@@ -1,6 +1,5 @@
 import { Converter } from "showdown";
 import { WorkerPayload } from "../../interfaces/WorkerPayload";
-import { xssOptions } from "../xssOptions";
 
 let converter: showdown.Converter | undefined;
 let worker: Worker | undefined;
