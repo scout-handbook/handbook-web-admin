@@ -8,7 +8,6 @@ const gulp = require("gulp");
 
 const autoprefixer = require("autoprefixer");
 const cleanCSS = require("gulp-clean-css");
-const composer = require("gulp-uglify/composer");
 const concat = require("gulp-concat");
 const htmlmin = require("gulp-htmlmin");
 const inject = require("gulp-inject-string");
@@ -18,11 +17,7 @@ const postcssCustomProperties = require("postcss-custom-properties");
 const rename = require("gulp-rename");
 const sourcemaps = require("gulp-sourcemaps");
 const through = require("through2");
-const ts = require("gulp-typescript");
-const uglify = require("uglify-js");
 const webpack = require("webpack-stream");
-
-const minify = composer(uglify, console);
 
 function getConfig() {
   let config = JSON.parse(fs.readFileSync("src/json/config.json", "utf8"));
