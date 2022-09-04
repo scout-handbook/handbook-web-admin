@@ -5,20 +5,19 @@ const fs = require("fs");
 const nestedObjectAssign = require("nested-object-assign");
 
 const gulp = require("gulp");
-const uglify = require("uglify-js");
-const composer = require("gulp-uglify/composer");
-const merge = require("merge-stream");
-const sourcemaps = require("gulp-sourcemaps");
-const concat = require("gulp-concat");
+
+const autoprefixer = require("autoprefixer");
 const cleanCSS = require("gulp-clean-css");
+const concat = require("gulp-concat");
+const htmlmin = require("gulp-htmlmin");
+const inject = require("gulp-inject-string");
+const merge = require("merge-stream");
 const postcss = require("gulp-postcss");
 const postcssCustomProperties = require("postcss-custom-properties");
-const autoprefixer = require("autoprefixer");
-const inject = require("gulp-inject-string");
-const htmlmin = require("gulp-htmlmin");
-const ts = require("gulp-typescript");
-
-const minify = composer(uglify, console);
+const rename = require("gulp-rename");
+const sourcemaps = require("gulp-sourcemaps");
+const through = require("through2");
+const webpack = require("webpack-stream");
 
 function getConfig() {
   let config = JSON.parse(fs.readFileSync("src/json/config.json", "utf8"));
@@ -51,34 +50,30 @@ gulp.task("build:html", function () {
 
 gulp.task("build:js", function () {
   function bundle(name, addConfig = false) {
-    const tsProject = ts.createProject("tsconfig/" + name + ".json");
-    let ret = tsProject
-      .src()
-      .pipe(sourcemaps.init())
-      .pipe(tsProject())
-      .pipe(concat(name + ".min.js"));
+    let ret = gulp
+      .src("src/ts/" + name + ".ts")
+      .pipe(webpack(require("./webpack.config.js")))
+      .pipe(sourcemaps.init({ loadMaps: true }))
+      .pipe(
+        through.obj(function (file, _, cb) {
+          const isSourceMap = /\.map$/.test(file.path);
+          if (!isSourceMap) this.push(file);
+          cb();
+        })
+      );
     if (addConfig) {
       ret = ret.pipe(
         inject.prepend(
-          '"use strict";\nvar CONFIG = JSON.parse(\'' +
-            JSON.stringify(getConfig()) +
-            "');\n"
+          "var CONFIG = JSON.parse('" + JSON.stringify(getConfig()) + "');\n"
         )
       );
     }
-    return (
-      ret
-        //.pipe(gulp.dest('dist/'));
-        .pipe(minify())
-        .pipe(sourcemaps.write("./"))
-        .pipe(gulp.dest("dist/"))
-    );
+    return ret
+      .pipe(rename({ basename: name, suffix: ".min" }))
+      .pipe(sourcemaps.write("."))
+      .pipe(gulp.dest("dist/"));
   }
-  return merge(
-    bundle("admin", true),
-    bundle("admin-worker"),
-    bundle("admin-worker-deps")
-  );
+  return merge(bundle("admin", true), bundle("admin-worker"));
 });
 
 gulp.task("build:css", function () {
