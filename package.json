@@ -30,7 +30,7 @@
     "lint:css": "run-p -c --aggregate-output lint:css:*",
     "lint:svelte:svelte-check": "svelte-check",
     "lint:svelte": "run-p -c --aggregate-output lint:svelte:*",
-    "lint:ts:eslint": "eslint --color 'src/**/*.ts' 'gulpfile.js'",
+    "lint:ts:eslint": "eslint --color 'src/**/*.ts' 'gulpfile.js' 'webpack.config.js' '.eslintrc.js'",
     "lint:ts": "run-p -c --aggregate-output lint:ts:*",
     "lint": "run-p -c --aggregate-output lint:*"
   },
