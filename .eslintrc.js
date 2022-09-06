@@ -9,7 +9,7 @@ module.exports = {
     browser: true,
     node: false,
   },
-  plugins: ["compat", "@typescript-eslint"],
+  plugins: ["compat", "svelte3", "@typescript-eslint"],
   extends: [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
@@ -28,8 +28,13 @@ module.exports = {
   },
   settings: {
     polyfills: ["document.getElementsByClassName"],
+    "svelte3/typescript": require("typescript"),
   },
   overrides: [
+    {
+      files: ["*.svelte"],
+      processor: "svelte3/svelte3",
+    },
     {
       parserOptions: {
         project: null,
