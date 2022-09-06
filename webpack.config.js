@@ -1,5 +1,8 @@
 /* eslint-env node */
 
+const path = require("path");
+
+const sveltePreprocess = require("svelte-preprocess");
 const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
@@ -7,6 +10,17 @@ module.exports = {
   devtool: "source-map",
   module: {
     rules: [
+      {
+        test: /\.svelte$/,
+        use: {
+          loader: "svelte-loader",
+          options: {
+            preprocess: sveltePreprocess({
+              tsconfigFile: "./tsconfig.json",
+            }),
+          },
+        },
+      },
       {
         test: /\.ts$/,
         use: {
@@ -19,7 +33,11 @@ module.exports = {
     ],
   },
   resolve: {
+    alias: {
+      svelte: path.resolve("node_modules", "svelte"),
+    },
     extensions: [".ts", ".js", ".svelte"],
+    mainFields: ["svelte", "browser", "module", "main"],
   },
   output: {
     filename: "[name].js",
