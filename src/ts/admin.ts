@@ -14,7 +14,7 @@ function main(): void {
   historySetup();
   ActionQueueSetup();
   new TopBar({
-    target: document.body
+    target: document.body,
   });
 }
 
