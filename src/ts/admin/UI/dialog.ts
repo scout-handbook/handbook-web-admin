@@ -3,7 +3,7 @@ import { dismissSpinner } from "./spinner";
 let confirmCallbackWrapped: () => void;
 
 function keyPressDialog(event: KeyboardEvent): void {
-  if (event.keyCode === 13) {
+  if (event.key === "Enter") {
     confirmCallbackWrapped();
   }
 }
