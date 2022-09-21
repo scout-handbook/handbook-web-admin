@@ -4,6 +4,7 @@ module.exports = {
   parserOptions: {
     project: "./tsconfig.json",
     sourceType: "script",
+    extraFileExtensions: [".svelte"],
   },
   env: {
     browser: true,
