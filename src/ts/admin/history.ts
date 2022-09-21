@@ -7,7 +7,6 @@ import {
   imageSelectorOpen,
   prepareImageSelector,
 } from "./lessonEditor/imageSelector";
-import { MainPageTab } from "./interfaces/MainPageTab";
 import { metadataEvent } from "./metadata";
 import { sidePanelClose, sidePanelState } from "./UI/sidePanel";
 import { showLessonEditView } from "./views/editLesson";
@@ -39,8 +38,4 @@ function popback(): void {
 
 export function historySetup(): void {
   window.onpopstate = popback;
-  if (window.location.pathname.substring(7)) {
-    setMainPageTab(window.location.pathname.substring(7) as MainPageTab);
-  }
-  showMainView(false);
 }
