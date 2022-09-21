@@ -9,7 +9,7 @@ module.exports = {
     browser: true,
     node: false,
   },
-  plugins: ["compat", "svelte3", "@typescript-eslint"],
+  plugins: ["compat", "deprecation", "svelte3", "@typescript-eslint"],
   extends: [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
@@ -18,6 +18,7 @@ module.exports = {
   ],
   rules: {
     "compat/compat": "warn",
+    "deprecation/deprecation": "warn",
     "no-warning-comments": "warn",
     strict: ["error", "never"],
     "@typescript-eslint/array-type": ["error", { default: "generic" }],
