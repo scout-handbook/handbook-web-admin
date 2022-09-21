@@ -1,4 +1,4 @@
-// TODO: Extract from config
+<!-- TODO: Extract from config -->
 <Router basepath="/admin">
 	<Route path="lessons" component={MainView}/>
 	<Route path="competences" component={MainView}/>
