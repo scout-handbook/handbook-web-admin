@@ -4,7 +4,7 @@
 <div id="main-page-container">
 	<div id="main-page">
 		<h1>
-			{CONFIG["site-name"]} - 
+			{$site_name} - 
 			{#if mainPageTab === "competences"}
 				Kompetence
 			{:else if mainPageTab === "images"}
@@ -23,7 +23,10 @@
 
 <script lang="ts">
 import TopBar from "./TopBar.svelte";
+import { site_name } from "../../ts/admin/stores";
 import { mainPageTab, setMainPageTab, showMainView } from "../../ts/admin/views/main";
+
+import { MainPageTab } from "../../ts/admin/interfaces/MainPageTab";
 
 if (window.location.pathname.substring(7)) {
 setMainPageTab(window.location.pathname.substring(7) as MainPageTab);
