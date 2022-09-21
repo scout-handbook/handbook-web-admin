@@ -1,7 +1,30 @@
-<div></div>
+<div id="side-panel"></div>
+<div id="side-panel-overlay"></div>
+<TopBar />
+<div id="main-page-container">
+	<div id="main-page">
+		<h1>
+			{CONFIG["site-name"]} - 
+			{#if mainPageTab === "competences"}
+				Kompetence
+			{:else if mainPageTab === "images"}
+				Obrázky
+			{:else if mainPageTab === "users"}
+				Uživatelé
+			{:else if mainPageTab === "groups"}
+				Uživatelské skupiny
+			{:else}
+				Lekce
+			{/if}
+		</h1>
+		<div id="embedded-spinner"></div>
+	</div>
+</div>
 
 <script lang="ts">
-import { setMainPageTab, showMainView } from "../../ts/admin/views/main";
+import TopBar from "./TopBar.svelte";
+import { mainPageTab, setMainPageTab, showMainView } from "../../ts/admin/views/main";
+
 if (window.location.pathname.substring(7)) {
 setMainPageTab(window.location.pathname.substring(7) as MainPageTab);
 }

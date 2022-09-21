@@ -14,7 +14,7 @@ function main(): void {
   historySetup();
   ActionQueueSetup();
   new App({
-    target: document.body,
+    target: document.querySelector("main")!,
   });
 }
 
