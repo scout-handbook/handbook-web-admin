@@ -3,17 +3,17 @@
 /// <reference path="../d.ts/CONFIG.d.ts" />
 
 import { ActionQueueSetup } from "./admin/tools/ActionQueue";
-import { historySetup } from "./admin/history";
+//import { historySetup } from "./admin/history";
 import { metadataSetup } from "./admin/metadata";
 import { refreshPreviewSetup } from "./admin/lessonEditor/refreshPreview";
-import TopBar from "./admin/TopBar.svelte";
+import App from "./admin/App.svelte";
 
 function main(): void {
   refreshPreviewSetup();
   metadataSetup();
-  historySetup();
+  //historySetup();
   ActionQueueSetup();
-  new TopBar({
+  new App({
     target: document.body,
   });
 }
