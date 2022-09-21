@@ -6,7 +6,7 @@ import { ActionQueueSetup } from "./admin/tools/ActionQueue";
 //import { historySetup } from "./admin/history";
 import { metadataSetup } from "./admin/metadata";
 import { refreshPreviewSetup } from "./admin/lessonEditor/refreshPreview";
-import App from "./admin/App.svelte";
+import App from "../svelte/admin/App.svelte";
 
 function main(): void {
   refreshPreviewSetup();
