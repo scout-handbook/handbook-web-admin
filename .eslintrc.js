@@ -42,6 +42,7 @@ module.exports = {
       },
       files: ["gulpfile.js", "webpack.config.js", ".eslintrc.js"],
       rules: {
+        "deprecation/deprecation": "off",
         "@typescript-eslint/await-thenable": "off",
         "@typescript-eslint/no-floating-promises": "off",
         "@typescript-eslint/no-implied-eval": "off",
