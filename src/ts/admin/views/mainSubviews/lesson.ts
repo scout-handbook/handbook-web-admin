@@ -12,7 +12,6 @@ import { Lesson } from "../../interfaces/Lesson";
 import { refreshLogin } from "../../tools/refreshLogin";
 import { restoreLesson } from "../../actions/restoreLesson";
 import { setMainPageTab } from "../main";
-import { showLessonEditView } from "../editLesson";
 
 function renderLessonListLesson(
   id: string,
@@ -91,7 +90,7 @@ function renderLessonList(): string {
 }
 
 function changeLessonOnClick(event: MouseEvent): boolean {
-  showLessonEditView(getAttribute(event, "id"), false);
+  navigate("/admin/lessons/" + getAttribute(event, "id") + "/edit");
   return false;
 }
 
