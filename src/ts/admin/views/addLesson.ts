@@ -15,8 +15,6 @@ function addLessonPayloadBuilder(): Payload {
 }
 
 export function showLessonAddView(field?: string): void {
-  history.pushState({}, "title", "/admin/lessons");
-
   const aq = new ActionQueue([
     new Action(
       CONFIG["api-uri"] + "/v1.0/lesson",

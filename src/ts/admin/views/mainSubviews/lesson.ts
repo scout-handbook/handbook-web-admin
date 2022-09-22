@@ -12,7 +12,6 @@ import { Lesson } from "../../interfaces/Lesson";
 import { refreshLogin } from "../../tools/refreshLogin";
 import { restoreLesson } from "../../actions/restoreLesson";
 import { setMainPageTab } from "../main";
-import { showLessonAddView } from "../addLesson";
 import { showLessonEditView } from "../editLesson";
 
 function renderLessonListLesson(
@@ -124,7 +123,7 @@ export function showLessonSubview(noHistory: boolean): void {
     };
   }
   document.getElementById("add-lesson")!.onclick = function (): void {
-    showLessonAddView();
+    navigate("/admin/lessons/add");
   };
   if (LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser") {
     document.getElementById("restore-lesson")!.onclick = restoreLesson;
