@@ -1,3 +1,5 @@
+import { navigate } from "svelte-navigator";
+
 import { ActionQueue } from "../tools/ActionQueue";
 import { AfterLoadEvent } from "../AfterLoadEvent";
 import { dialog } from "../UI/dialog";
@@ -52,7 +54,7 @@ function populateEditorCache(id: string | null): void {
 }
 
 function editorDiscardNow(actionQueue: ActionQueue): void {
-  history.back();
+  navigate("/admin/lessons");
   actionQueue.dispatch(true);
 }
 
@@ -134,7 +136,7 @@ export function showLessonEditor(
     if (changed) {
       saveActionQueue.defaultDispatch(false);
     } else {
-      history.back();
+      navigate("/admin/lessons");
       discardActionQueue.defaultDispatch(false);
     }
   };
