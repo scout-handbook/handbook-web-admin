@@ -9,6 +9,5 @@
 
 <script lang="ts">
 import {Router, Route} from "svelte-navigator";
-
 import MainView from "./MainView.svelte";
 </script>
