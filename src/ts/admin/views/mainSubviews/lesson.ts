@@ -1,5 +1,6 @@
+import { navigate } from "svelte-navigator";
+
 import { addField } from "../../actions/addField";
-import { addLessonInFieldOnClick } from "../addLesson";
 import { addOnClicks } from "../../tools/addOnClicks";
 import { changeFieldOnClick } from "../../actions/changeField";
 import { COMPETENCES, FIELDS, LESSONS, LOGINSTATE } from "../../metadata";
@@ -131,7 +132,15 @@ export function showLessonSubview(noHistory: boolean): void {
 
   addOnClicks("changeField", changeFieldOnClick);
   addOnClicks("deleteField", deleteFieldOnClick);
-  addOnClicks("addLessonInField", addLessonInFieldOnClick);
+  const nodes2 = getElementsByClassName(
+    "addLessonInField",
+    document.getElementsByTagName("main")[0]
+  );
+  for (let i = 0; i < nodes2.length; i++) {
+    (nodes2[i] as HTMLElement).onclick = () => {
+      navigate("/admin/lessons/add"); // TODO: Field
+    };
+  }
   addOnClicks("changeLesson", changeLessonOnClick);
   addOnClicks("deleteLesson", deleteLessonOnClick);
   if (!noHistory) {
