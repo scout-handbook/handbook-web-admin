@@ -2,7 +2,6 @@ import { Action } from "../tools/Action";
 import { ActionCallback } from "../tools/ActionCallback";
 import { ActionQueue } from "../tools/ActionQueue";
 import { editor, showLessonEditor, setChanged } from "../lessonEditor/editor";
-import { refreshPreview } from "../lessonEditor/refreshPreview";
 import { Payload } from "../interfaces/Payload";
 import { RequestResponse } from "../interfaces/RequestResponse";
 import { authFailHandler, request } from "../tools/request";
@@ -40,7 +39,6 @@ export function showLessonRestoreView(
     {},
     function (response: RequestResponse): void {
       const body = response as string;
-      refreshPreview(name ?? "Obnovená lekce", body, "restore-lesson-preview");
       renderLessonRestoreView(name ?? "Obnovená lekce", body);
     },
     authFailHandler
