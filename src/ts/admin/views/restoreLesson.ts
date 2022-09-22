@@ -25,7 +25,6 @@ function renderLessonRestoreView(name: string, body: string): void {
       [ActionCallback.FillID]
     ),
   ]);
-  history.replaceState({}, "title", "/admin/lessons");
   showLessonEditor(name, body, aq, null);
   setChanged();
 }
