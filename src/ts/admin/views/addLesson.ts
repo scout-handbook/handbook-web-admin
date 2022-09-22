@@ -3,7 +3,6 @@ import { ActionCallback } from "../tools/ActionCallback";
 import { ActionQueue } from "../tools/ActionQueue";
 import { defaultBody, defaultName } from "../lessonEditor/defaultContent";
 import { editor, setChanged, showLessonEditor } from "../lessonEditor/editor";
-import { getAttribute } from "../UI/button";
 import { Payload } from "../interfaces/Payload";
 
 function addLessonPayloadBuilder(): Payload {
@@ -39,8 +38,4 @@ export function showLessonAddView(field?: string): void {
   }
   showLessonEditor(defaultName, defaultBody, aq, null);
   setChanged();
-}
-
-export function addLessonInFieldOnClick(event: MouseEvent): void {
-  showLessonAddView(getAttribute(event, "id"));
 }
