@@ -1,3 +1,5 @@
+import { navigate } from "svelte-navigator";
+
 import { HistoryState } from "./interfaces/HistoryState";
 import {
   closeSidePanelImageSelector,
@@ -9,7 +11,6 @@ import {
 } from "./lessonEditor/imageSelector";
 import { metadataEvent } from "./metadata";
 import { sidePanelClose, sidePanelState } from "./UI/sidePanel";
-import { showLessonEditView } from "./views/editLesson";
 import { setMainPageTab, showMainView } from "./views/main";
 
 function popback(): void {
@@ -24,7 +25,7 @@ function popback(): void {
         prepareImageSelector();
       } else {
         metadataEvent.addCallback(function (): void {
-          showLessonEditView(state.id!, true);
+          navigate("/admin/lessons/" + state.id! + "/edit");
         });
       }
     } else if (state.page) {

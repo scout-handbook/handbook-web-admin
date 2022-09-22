@@ -46,16 +46,9 @@ function sendBeacon(id: string): void {
   }
 }
 
-function renderLessonEditView(
-  id: string,
-  markdown: string,
-  noHistory: boolean
-): void {
+function renderLessonEditView(id: string, markdown: string): void {
   dismissSpinner();
   const lesson = LESSONS.get(id)!;
-  if (!noHistory) {
-    history.pushState({ id: id }, "title", "/admin/lessons");
-  }
 
   const saveExceptionHandler = {
     NotLockedException: function (): void {
@@ -102,21 +95,21 @@ function renderLessonEditView(
   };
 }
 
-function getLessonEditView(id: string, noHistory: boolean): void {
+function getLessonEditView(id: string): void {
   request(
     CONFIG["api-uri"] + "/v1.0/lesson/" + encodeURIComponent(id),
     "GET",
     {},
     function (response: RequestResponse): void {
       metadataEvent.addCallback(function (): void {
-        renderLessonEditView(id, response as string, noHistory);
+        renderLessonEditView(id, response as string);
       });
     },
     reAuthHandler
   );
 }
 
-export function showLessonEditView(id: string, noHistory: boolean): void {
+export function showLessonEditView(id: string): void {
   spinner();
   const exceptionHandler = reAuthHandler;
   exceptionHandler["LockedException"] = function (response: APIResponse): void {
@@ -132,7 +125,7 @@ export function showLessonEditView(id: string, noHistory: boolean): void {
     "POST",
     {},
     function (): void {
-      getLessonEditView(id, noHistory);
+      getLessonEditView(id);
     },
     exceptionHandler
   );
