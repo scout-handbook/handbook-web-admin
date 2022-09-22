@@ -1,3 +1,5 @@
+import { navigate } from "svelte-navigator";
+
 import { authFailHandler, reAuthHandler, request } from "../tools/request";
 import { DeletedLesson } from "../interfaces/DeletedLesson";
 import { dialog } from "../UI/dialog";
@@ -9,7 +11,6 @@ import { refreshLogin } from "../tools/refreshLogin";
 import { refreshMetadata } from "../metadata";
 import { refreshPreview } from "../lessonEditor/refreshPreview";
 import { RequestResponse } from "../interfaces/RequestResponse";
-import { showLessonRestoreView } from "../views/restoreLesson";
 import {
   sidePanelClose,
   sidePanelDoubleOpen,
@@ -17,7 +18,12 @@ import {
 } from "../UI/sidePanel";
 import { spinner } from "../UI/spinner";
 
-function restoreLessonRenderVersion(name: string, body: string): void {
+function restoreLessonRenderVersion(
+  id: string,
+  version: string,
+  name: string,
+  body: string
+): void {
   refreshPreview(name, body, "restore-lesson-preview");
   const html =
     '<div class="button green-button" id="restoreLessonEdit"><i class="icon-history"></i>Obnovit</div>';
@@ -25,7 +31,9 @@ function restoreLessonRenderVersion(name: string, body: string): void {
   document.getElementById("restoreLessonEdit")!.onclick = function (): void {
     sidePanelOpen();
     history.back();
-    showLessonRestoreView(name, body);
+    navigate(
+      "/admin/lessons/" + id + "/versions/" + version + "/restore?name=" + name
+    );
   };
 }
 
@@ -39,7 +47,7 @@ function restoreLessonShowVersion(id: string, event: Event): void {
     "GET",
     {},
     function (response: RequestResponse): void {
-      restoreLessonRenderVersion(name, response as string);
+      restoreLessonRenderVersion(id, version, name, response as string);
     },
     authFailHandler
   );

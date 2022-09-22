@@ -4,6 +4,9 @@
 	<Route path="lessons/:id/edit" let:params>
 		<EditLessonView lesson={params.id} />
 	</Route>
+	<Route path="lessons/:id/versions/:version/restore" let:params>
+		<RestoreLessonView lesson={params.id} version={params.version} />
+	</Route>
 
 	<Route path="lessons" component={MainView} />
 	<Route path="competences" component={MainView} />
@@ -16,5 +19,6 @@
 import {Router, Route} from "svelte-navigator";
 import AddLessonView from "./AddLessonView.svelte";
 import EditLessonView from "./EditLessonView.svelte";
+import RestoreLessonView from "./RestoreLessonView.svelte";
 import MainView from "./MainView.svelte";
 </script>
