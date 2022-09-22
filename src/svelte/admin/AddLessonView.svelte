@@ -6,8 +6,6 @@
 
   const location = useLocation();
 
-  console.log($location);
-
-  const fieldID: string|undefined = undefined;
+  const fieldID = (new URLSearchParams($location.search)).get("field");
   showLessonAddView(fieldID);
 </script>

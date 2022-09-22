@@ -137,7 +137,8 @@ export function showLessonSubview(noHistory: boolean): void {
   );
   for (let i = 0; i < nodes2.length; i++) {
     (nodes2[i] as HTMLElement).onclick = () => {
-      navigate("/admin/lessons/add"); // TODO: Field
+      const fieldId = (nodes2[i] as HTMLElement).dataset.id!;
+      navigate("/admin/lessons/add?field=" + fieldId);
     };
   }
   addOnClicks("changeLesson", changeLessonOnClick);

@@ -14,7 +14,7 @@ function addLessonPayloadBuilder(): Payload {
   };
 }
 
-export function showLessonAddView(field?: string): void {
+export function showLessonAddView(field: string | null): void {
   const aq = new ActionQueue([
     new Action(
       CONFIG["api-uri"] + "/v1.0/lesson",
