@@ -5,6 +5,7 @@
 	<div class="button" id="confirm-text"></div>
 </div>
 <div id="spinner"></div>
+<!-- TODO: Remove main -->
 <main>
 	<!-- TODO: Extract from config -->
 	<Router basepath="/admin">
@@ -26,9 +27,9 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700,700i">
 
 <script lang="ts">
-import {Router, Route} from "svelte-navigator";
-import AddLessonView from "./AddLessonView.svelte";
-import EditLessonView from "./EditLessonView.svelte";
-import RestoreLessonView from "./RestoreLessonView.svelte";
-import MainView from "./MainView.svelte";
+	import {Router, Route} from "svelte-navigator";
+	import AddLessonView from "./AddLessonView.svelte";
+	import EditLessonView from "./EditLessonView.svelte";
+	import RestoreLessonView from "./RestoreLessonView.svelte";
+	import MainView from "./MainView.svelte";
 </script>
