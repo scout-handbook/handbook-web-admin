@@ -4,6 +4,8 @@
 	<div class="button yellow-button" id="dismiss-text"></div>
 	<div class="button" id="confirm-text"></div>
 </div>
+<LoadingIndicator />
+<!-- TODO: Remove legacy spinner -->
 <div id="spinner"></div>
 <!-- TODO: Remove main -->
 <main>
@@ -30,6 +32,7 @@
 	import {Router, Route} from "svelte-navigator";
 	import AddLessonView from "./AddLessonView.svelte";
 	import EditLessonView from "./EditLessonView.svelte";
+	import LoadingIndicator from "./LoadingIndicator.svelte";
 	import RestoreLessonView from "./RestoreLessonView.svelte";
 	import MainView from "./MainView.svelte";
 </script>

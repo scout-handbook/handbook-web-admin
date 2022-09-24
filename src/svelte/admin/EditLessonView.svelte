@@ -1,19 +1,55 @@
-<div></div>
+{#if !$loadingIndicatorVisible}
+  <LessonEditor name={lessonName} body={lessonBody} {saveActionQueue} id={lessonID} {discardActionQueue} refreshAction={() => {lessonEditMutexExtend(lessonID)}} />
+{/if}
+
 <script lang="ts">
   import { Action } from "../../ts/admin/tools/Action";
   import { ActionCallback } from "../../ts/admin/tools/ActionCallback";
   import { ActionQueue } from "../../ts/admin/tools/ActionQueue";
   import { APIResponse } from "../../ts/admin/interfaces/APIResponse";
   import { dialog } from "../../ts/admin/UI/dialog";
-  import { dismissSpinner } from "../../ts/admin/UI/spinner";
-  import { editor, showLessonEditor } from "../../ts/admin/lessonEditor/editor";
+  import { editor } from "../../ts/admin/lessonEditor/editor";
+  import LessonEditor from "./LessonEditor.svelte";
   import { LESSONS, metadataEvent } from "../../ts/admin/metadata";
+  import { loadingIndicatorVisible } from "../../ts/admin/stores";
   import { Payload } from "../../ts/admin/interfaces/Payload";
   import { reAuthHandler, request } from "../../ts/admin/tools/request";
   import { RequestResponse } from "../../ts/admin/interfaces/RequestResponse";
-  import { spinner } from "../../ts/admin/UI/spinner";
 
   export let lessonID: string;
+
+  $: lessonName = LESSONS.get(lessonID)?.name ?? "";
+  let lessonBody = "";
+
+  const saveExceptionHandler = {
+    NotLockedException: function (): void {
+      dialog(
+        "Kvůli příliš malé aktivitě byla lekce odemknuta a již ji upravil někdo jiný. Zkuste to prosím znovu.",
+        "OK"
+      );
+    },
+  };
+  const discardExceptionHandler = { NotFoundException: null };
+
+  const saveActionQueue = new ActionQueue([
+    new Action(
+      CONFIG["api-uri"] + "/v1.0/lesson/" + encodeURIComponent(lessonID),
+      "PUT",
+      saveLessonPayloadBuilder,
+      [ActionCallback.RemoveBeacon],
+      saveExceptionHandler
+    ),
+  ]);
+
+  const discardActionQueue = new ActionQueue([
+    new Action(
+      CONFIG["api-uri"] + "/v1.0/mutex/" + encodeURIComponent(lessonID),
+      "DELETE",
+      undefined,
+      [ActionCallback.RemoveBeacon, ActionCallback.DismissSpinner],
+      discardExceptionHandler
+    ),
+  ]);
 
   function saveLessonPayloadBuilder(): Payload {
     return {
@@ -47,48 +83,10 @@
   }
 
   function renderLessonEditView(id: string, markdown: string): void {
-    dismissSpinner();
-    const lesson = LESSONS.get(id)!;
-
-    const saveExceptionHandler = {
-      NotLockedException: function (): void {
-        dialog(
-          "Kvůli příliš malé aktivitě byla lekce odemknuta a již ji upravil někdo jiný. Zkuste to prosím znovu.",
-          "OK"
-        );
-      },
-    };
-    const discardExceptionHandler = { NotFoundException: null };
-
-    const saveActionQueue = new ActionQueue([
-      new Action(
-        CONFIG["api-uri"] + "/v1.0/lesson/" + encodeURIComponent(id),
-        "PUT",
-        saveLessonPayloadBuilder,
-        [ActionCallback.RemoveBeacon],
-        saveExceptionHandler
-      ),
-    ]);
-    const discardActionQueue = new ActionQueue([
-      new Action(
-        CONFIG["api-uri"] + "/v1.0/mutex/" + encodeURIComponent(id),
-        "DELETE",
-        undefined,
-        [ActionCallback.RemoveBeacon, ActionCallback.DismissSpinner],
-        discardExceptionHandler
-      ),
-    ]);
-    showLessonEditor(
-      lesson.name,
-      markdown,
-      saveActionQueue,
-      id,
-      discardActionQueue,
-      function (): void {
-        lessonEditMutexExtend(id);
-      }
-    );
-    document.getElementById("save")!.dataset.id = id;
+    lessonBody = markdown;
+    loadingIndicatorVisible.set(false);
+    // TODO: Remove this horrible hack
+    setTimeout(() => {document.getElementById("save")!.dataset.id = id;}, 100);
 
     window.onbeforeunload = function (): void {
       sendBeacon(id);
@@ -109,7 +107,7 @@
     );
   }
 
-  spinner();
+  loadingIndicatorVisible.set(true);
   const exceptionHandler = reAuthHandler;
   exceptionHandler["LockedException"] = function (response: APIResponse): void {
     dialog(
