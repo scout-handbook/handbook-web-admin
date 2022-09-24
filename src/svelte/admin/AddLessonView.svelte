@@ -1,4 +1,5 @@
-<div></div>
+<LessonEditor name={defaultName} body={defaultBody} saveActionQueue={aq} id={null} />
+
 <script lang="ts">
   import { useLocation } from "svelte-navigator";
 
@@ -6,8 +7,9 @@
   import { ActionCallback } from "../../ts/admin/tools/ActionCallback";
   import { ActionQueue } from "../../ts/admin/tools/ActionQueue";
   import { defaultBody, defaultName } from "../../ts/admin/lessonEditor/defaultContent";
+  import LessonEditor from "./LessonEditor.svelte";
   import { Payload } from "../../ts/admin/interfaces/Payload";
-  import { editor, setChanged, showLessonEditor } from "../../ts/admin/lessonEditor/editor";
+  import { editor, setChanged } from "../../ts/admin/lessonEditor/editor";
 
   const location = useLocation();
   const fieldID = (new URLSearchParams($location.search)).get("field");
@@ -40,6 +42,7 @@
       )
     );
   }
-  showLessonEditor(defaultName, defaultBody, aq, null);
-  setChanged();
+
+  // TODO: Remove this horrible hack
+  setTimeout(() => {setChanged();}, 100);
 </script>
