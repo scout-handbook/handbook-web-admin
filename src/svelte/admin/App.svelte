@@ -5,7 +5,7 @@
 		<EditLessonView lessonID={params.id} />
 	</Route>
 	<Route path="lessons/:id/versions/:version/restore" let:params>
-		<RestoreLessonView lesson={params.id} version={params.version} />
+		<RestoreLessonView lessonID={params.id} version={params.version} />
 	</Route>
 
 	<Route path="lessons" component={MainView} />
