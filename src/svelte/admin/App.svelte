@@ -2,7 +2,7 @@
 <Router basepath="/admin">
 	<Route path="lessons/add" component={AddLessonView} />
 	<Route path="lessons/:id/edit" let:params>
-		<EditLessonView lesson={params.id} />
+		<EditLessonView lessonID={params.id} />
 	</Route>
 	<Route path="lessons/:id/versions/:version/restore" let:params>
 		<RestoreLessonView lesson={params.id} version={params.version} />
