@@ -1,15 +1,17 @@
-<div style:display={$loadingIndicatorVisible ? "block" : "none"} />
+<div style:border-color={$config["custom-properties"]["--border-color"]} style:border-top-color={$config["custom-properties"]["--accent-color"]} style:display={$loadingIndicatorVisible ? "block" : "none"} />
 
 <script lang="ts">
-  import { loadingIndicatorVisible } from "../../ts/admin/stores";
+  import { config, loadingIndicatorVisible } from "../../ts/admin/stores";
+  console.log($config["custom-properties"]["--background-darker"]);
+  console.log($config["custom-properties"]);
 </script>
 
 <style>
   div {
     animation: spin 2s linear infinite;
-    border: 16px solid var(--background-darker);
     border-radius: 50%;
-    border-top: 16px solid var(--accent-color);
+    border-style: solid;
+    border-width: 16px;
     height: 120px;
     left: 50%;
     position: absolute;
