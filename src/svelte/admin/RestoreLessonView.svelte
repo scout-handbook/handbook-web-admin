@@ -1,4 +1,7 @@
-<div></div>
+{#if !$loadingIndicatorVisible}
+  <LessonEditor {name} {body} {saveActionQueue} id={null} />
+{/if}
+
 <script lang="ts">
   import { useLocation } from "svelte-navigator";
 
@@ -6,7 +9,9 @@
   import { ActionCallback } from "../../ts/admin/tools/ActionCallback";
   import { ActionQueue } from "../../ts/admin/tools/ActionQueue";
   import { authFailHandler, request } from "../../ts/admin/tools/request";
-  import { editor, showLessonEditor, setChanged } from "../../ts/admin/lessonEditor/editor";
+  import { editor, setChanged } from "../../ts/admin/lessonEditor/editor";
+  import LessonEditor from "./LessonEditor.svelte";
+  import { loadingIndicatorVisible } from "../../ts/admin/stores";
   import { Payload } from "../../ts/admin/interfaces/Payload";
   import { RequestResponse } from "../../ts/admin/interfaces/RequestResponse";
 
@@ -14,7 +19,17 @@
   export let version: string;
 
   const location = useLocation();
-  const name = (new URLSearchParams($location.search)).get("name");
+  const name = (new URLSearchParams($location.search)).get("name") ?? "Obnovená lekce";
+  let body = "";
+
+  const saveActionQueue = new ActionQueue([
+    new Action(
+      CONFIG["api-uri"] + "/v1.0/lesson",
+      "POST",
+      restoreLessonPayloadBuilder,
+      [ActionCallback.FillID]
+    ),
+    ]);
 
   function restoreLessonPayloadBuilder(): Payload {
     return {
@@ -25,26 +40,16 @@
     };
   }
 
-  function renderLessonRestoreView(name: string, body: string): void {
-    const aq = new ActionQueue([
-      new Action(
-        CONFIG["api-uri"] + "/v1.0/lesson",
-        "POST",
-        restoreLessonPayloadBuilder,
-        [ActionCallback.FillID]
-      ),
-    ]);
-    showLessonEditor(name, body, aq, null);
-    setChanged();
-  }
-
+  loadingIndicatorVisible.set(true);
   request(
     CONFIG["api-uri"] + "/v1.0/deleted-lesson/" + lessonID + "/history/" + version,
     "GET",
     {},
     function (response: RequestResponse): void {
-      const body = response as string;
-      renderLessonRestoreView(name ?? "Obnovená lekce", body);
+      body = response as string;
+      loadingIndicatorVisible.set(false);
+      // TODO: Remove this horrible hack
+      setTimeout(() => {setChanged();}, 100);
     },
     authFailHandler
   );
