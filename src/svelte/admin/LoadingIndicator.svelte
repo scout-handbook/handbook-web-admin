@@ -2,8 +2,6 @@
 
 <script lang="ts">
   import { config, loadingIndicatorVisible } from "../../ts/admin/stores";
-  console.log($config["custom-properties"]["--background-darker"]);
-  console.log($config["custom-properties"]);
 </script>
 
 <style>
