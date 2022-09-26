@@ -1,4 +1,4 @@
-<LessonEditor name={defaultName} body={defaultBody} saveActionQueue={aq} id={null} />
+<LessonEditor lessonName={defaultName} body={defaultBody} saveActionQueue={aq} id={null} />
 
 <script lang="ts">
   import { useLocation } from "svelte-navigator";

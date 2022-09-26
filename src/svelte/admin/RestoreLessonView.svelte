@@ -1,5 +1,5 @@
 {#if !$loadingIndicatorVisible}
-  <LessonEditor {name} {body} {saveActionQueue} id={null} />
+  <LessonEditor {lessonName} {body} {saveActionQueue} id={null} />
 {/if}
 
 <script lang="ts">
@@ -20,7 +20,7 @@
   export let version: string;
 
   const location = useLocation();
-  const name = (new URLSearchParams($location.search)).get("name") ?? "Obnovená lekce";
+  const lessonName = (new URLSearchParams($location.search)).get("name") ?? "Obnovená lekce";
   let body = "";
 
   const saveActionQueue = new ActionQueue([
