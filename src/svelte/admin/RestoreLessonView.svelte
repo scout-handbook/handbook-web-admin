@@ -19,8 +19,8 @@
   export let lessonID: string;
   export let version: string;
 
-  const location = useLocation();
-  const lessonName = (new URLSearchParams($location.search)).get("name") ?? "Obnovená lekce";
+  const routerLocation = useLocation();
+  const lessonName = (new URLSearchParams($routerLocation.search)).get("name") ?? "Obnovená lekce";
   let body = "";
 
   const saveActionQueue = new ActionQueue([

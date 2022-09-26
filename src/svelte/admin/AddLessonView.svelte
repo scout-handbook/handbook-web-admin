@@ -12,8 +12,8 @@
   import { Payload } from "../../ts/admin/interfaces/Payload";
   import { editor, setChanged } from "../../ts/admin/lessonEditor/editor";
 
-  const location = useLocation();
-  const fieldID = (new URLSearchParams($location.search)).get("field");
+  const routerLocation = useLocation();
+  const fieldID = (new URLSearchParams($routerLocation.search)).get("field");
 
   function addLessonPayloadBuilder(): Payload {
     return {
