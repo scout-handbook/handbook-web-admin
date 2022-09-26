@@ -6,6 +6,7 @@
   import { Action } from "../../ts/admin/tools/Action";
   import { ActionCallback } from "../../ts/admin/tools/ActionCallback";
   import { ActionQueue } from "../../ts/admin/tools/ActionQueue";
+  import { config } from "../../ts/admin/stores";
   import { defaultBody, defaultName } from "../../ts/admin/lessonEditor/defaultContent";
   import LessonEditor from "./components/LessonEditor.svelte";
   import { Payload } from "../../ts/admin/interfaces/Payload";
@@ -25,7 +26,7 @@
 
   const aq = new ActionQueue([
     new Action(
-      CONFIG["api-uri"] + "/v1.0/lesson",
+      $config["api-uri"] + "/v1.0/lesson",
       "POST",
       addLessonPayloadBuilder,
       [ActionCallback.FillID]
@@ -34,7 +35,7 @@
   if (fieldID) {
     aq.actions.push(
       new Action(
-        CONFIG["api-uri"] + "/v1.0/lesson/{id}/field",
+        $config["api-uri"] + "/v1.0/lesson/{id}/field",
         "PUT",
         function (): Payload {
           return { field: encodeURIComponent(fieldID) };
