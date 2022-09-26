@@ -1,10 +1,11 @@
 <script lang="ts">
-  import { navigate } from "svelte-navigator";
+  import { Link } from "svelte-navigator";
 
   import { addField } from "../../ts/admin/actions/addField";
   import { addOnClicks } from "../../ts/admin/tools/addOnClicks";
   import { changeFieldOnClick } from "../../ts/admin/actions/changeField";
   import { changeLessonOnClick } from "../../ts/admin/views/mainSubviews/lesson";
+  import { config } from "../../ts/admin/stores";
   import { deleteFieldOnClick } from "../../ts/admin/actions/deleteField";
   import { deleteLessonOnClick } from "../../ts/admin/actions/deleteLesson";
   import { getElementsByClassName } from "../../ts/admin/tools/getElementsByClassName";
@@ -14,37 +15,13 @@
   import { restoreLesson } from "../../ts/admin/actions/restoreLesson";
 
   export let loginstate: Loginstate;
+  $: adminPermissions = loginstate.role === "administrator" || loginstate.role === "superuser";
 
   const nodes = getElementsByClassName("top-bar-tab");
   for (let i = 0; i < nodes.length; i++) {
     nodes[i].className = "top-bar-tab";
   }
   document.getElementById("lesson-manager")!.className += " active-top-bar-tab";
-  let html = "<h1>" + CONFIG["site-name"] + " - Lekce</h1>";
-  if (loginstate.role === "administrator" || loginstate.role === "superuser") {
-    html +=
-      '<div class="button green-button" id="add-field"><i class="icon-plus"></i>Přidat oblast</div>';
-  }
-  html +=
-    '<div class="button green-button" id="add-lesson"><i class="icon-plus"></i>Přidat lekci</div>';
-  if (loginstate.role === "administrator" || loginstate.role === "superuser") {
-    html +=
-      '<div class="button" id="restore-lesson"><i class="icon-history"></i>Smazané lekce</div>';
-  }
-  html += renderLessonList();
-  document.getElementById("main-page")!.innerHTML = html;
-
-  if (loginstate.role === "administrator" || loginstate.role === "superuser") {
-    document.getElementById("add-field")!.onclick = function (): void {
-      addField();
-    };
-  }
-  document.getElementById("add-lesson")!.onclick = function (): void {
-    navigate("/admin/lessons/add");
-  };
-  if (loginstate.role === "administrator" || loginstate.role === "superuser") {
-    document.getElementById("restore-lesson")!.onclick = restoreLesson;
-  }
 
   addOnClicks("changeField", changeFieldOnClick);
   addOnClicks("deleteField", deleteFieldOnClick);
@@ -62,3 +39,22 @@
   addOnClicks("deleteLesson", deleteLessonOnClick);
   refreshLogin(true);
 </script>
+
+<h1>{$config["site-name"] + " - Lekce"}</h1>
+{#if adminPermissions}
+  <div class="button green-button" id="add-field" on:click={addField}>
+    <i class="icon-plus" />
+    Přidat oblast
+  </div>
+{/if}
+<Link class="button green-button" id="add-lesson" to="/lessons/add">
+  <i class="icon-plus" />
+  Přidat lekci
+</Link>
+{#if adminPermissions}
+  <div class="button" id="restore-lesson" on:click={restoreLesson}>
+    <i class="icon-history" />
+    Smazané lekce
+  </div>
+{/if}
+{@html renderLessonList()}
