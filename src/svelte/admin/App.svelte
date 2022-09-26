@@ -1,5 +1,6 @@
 <script lang="ts">
-  import {Router, Route} from "svelte-navigator";
+  import { Router, Route } from "svelte-navigator";
+
   import AddLessonView from "./AddLessonView.svelte";
   import EditLessonView from "./EditLessonView.svelte";
   import LoadingIndicator from "./components/LoadingIndicator.svelte";
@@ -7,20 +8,20 @@
   import MainView from "./MainView.svelte";
 </script>
 
-<div id="overlay"></div>
+<div id="overlay" />
 <div id="dialog">
-  <div id="dialogText"></div>
-  <div class="button yellow-button" id="dismiss-text"></div>
-  <div class="button" id="confirm-text"></div>
+  <div id="dialogText" />
+  <div id="dismiss-text" class="button yellow-button" />
+  <div id="confirm-text" class="button" />
 </div>
 <LoadingIndicator />
 <!-- TODO: Remove legacy spinner -->
-<div id="spinner"></div>
+<div id="spinner" />
 <!-- TODO: Remove main -->
 <main>
   <!-- TODO: Extract from config -->
   <Router basepath="/admin">
-    <Route path="/lessons/add" component={AddLessonView} />
+    <Route component={AddLessonView} path="/lessons/add" />
     <Route path="/lessons/:id/edit" let:params>
       <EditLessonView lessonID={params.id} />
     </Route>
@@ -28,12 +29,15 @@
       <RestoreLessonView lessonID={params.id} version={params.version} />
     </Route>
 
-    <Route path="/" component={MainView} />
-    <Route path="/lessons" component={MainView} />
-    <Route path="/competences" component={MainView} />
-    <Route path="/images" component={MainView} />
-    <Route path="/users" component={MainView} />
-    <Route path="/groups" component={MainView} />
+    <Route component={MainView} path="/" />
+    <Route component={MainView} path="/lessons" />
+    <Route component={MainView} path="/competences" />
+    <Route component={MainView} path="/images" />
+    <Route component={MainView} path="/users" />
+    <Route component={MainView} path="/groups" />
   </Router>
 </main>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700,700i">
+<link
+  href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700,700i"
+  rel="stylesheet"
+/>

@@ -5,13 +5,16 @@
   import { ActionCallback } from "../../ts/admin/tools/ActionCallback";
   import { ActionQueue } from "../../ts/admin/tools/ActionQueue";
   import { config } from "../../ts/admin/stores";
-  import { defaultBody, defaultName } from "../../ts/admin/lessonEditor/defaultContent";
+  import {
+    defaultBody,
+    defaultName,
+  } from "../../ts/admin/lessonEditor/defaultContent";
   import LessonEditor from "./components/LessonEditor.svelte";
   import { Payload } from "../../ts/admin/interfaces/Payload";
   import { editor, setChanged } from "../../ts/admin/lessonEditor/editor";
 
   const routerLocation = useLocation();
-  const fieldID = (new URLSearchParams($routerLocation.search)).get("field");
+  const fieldID = new URLSearchParams($routerLocation.search).get("field");
 
   function addLessonPayloadBuilder(): Payload {
     return {
@@ -43,7 +46,14 @@
   }
 
   // TODO: Remove this horrible hack
-  setTimeout(() => {setChanged();}, 100);
+  setTimeout(() => {
+    setChanged();
+  }, 100);
 </script>
 
-<LessonEditor lessonName={defaultName} body={defaultBody} saveActionQueue={aq} id={null} />
+<LessonEditor
+  id={null}
+  body={defaultBody}
+  lessonName={defaultName}
+  saveActionQueue={aq}
+/>
