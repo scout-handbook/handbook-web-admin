@@ -1,10 +1,11 @@
 <script lang="ts">
-  import { Link, navigate } from "svelte-navigator";
+  import { Link } from "svelte-navigator";
 
   import { addField } from "../../ts/admin/actions/addField";
   import { addOnClicks } from "../../ts/admin/tools/addOnClicks";
   import { changeFieldOnClick } from "../../ts/admin/actions/changeField";
   import { changeLessonOnClick } from "../../ts/admin/views/mainSubviews/lesson";
+  import { Competence } from "../../ts/admin/interfaces/Competence";
   import { config } from "../../ts/admin/stores";
   import { deleteFieldOnClick } from "../../ts/admin/actions/deleteField";
   import { deleteLessonOnClick } from "../../ts/admin/actions/deleteLesson";
@@ -12,11 +13,12 @@
   import { getElementsByClassName } from "../../ts/admin/tools/getElementsByClassName";
   import { IDList } from "../../ts/admin/IDList";
   import { Lesson } from "../../ts/admin/interfaces/Lesson";
+  import LessonViewLesson from "./LessonViewLesson.svelte";
   import { Loginstate } from "../../ts/admin/interfaces/Loginstate";
   import { refreshLogin } from "../../ts/admin/tools/refreshLogin";
-  import { renderLessonListLesson } from "../../ts/admin/views/mainSubviews/lesson";
   import { restoreLesson } from "../../ts/admin/actions/restoreLesson";
 
+  export let competences: IDList<Competence>;
   export let fields: IDList<Field>;
   export let lessons: IDList<Lesson>;
   export let loginstate: Loginstate;
@@ -29,8 +31,6 @@
   }
   document.getElementById("lesson-manager")!.className += " active-top-bar-tab";
 
-  addOnClicks("changeLesson", changeLessonOnClick);
-  addOnClicks("deleteLesson", deleteLessonOnClick);
   refreshLogin(true);
 </script>
 
@@ -56,7 +56,7 @@
   {#if (fields.filter(function (_, field) {
     return field.lessons.indexOf(id) >= 0;
   }).empty())}
-    {@html renderLessonListLesson(id, lesson, "")}
+    <LessonViewLesson {competences} {adminPermissions} {id} {lesson} />
   {/if}
 {/each}
 {#each fields.asArray() as {id, value: field}}
@@ -78,7 +78,7 @@
   </Link>
   {#each lessons.asArray() as {id: lessonId, value: lesson}}
     {#if field.lessons.indexOf(lessonId) >= 0}
-      {@html renderLessonListLesson(lessonId, lesson, " second-level")}
+      <LessonViewLesson {competences} {adminPermissions} id={lessonId} {lesson} secondLevel={true} />
     {/if}
   {/each}
 {/each}
