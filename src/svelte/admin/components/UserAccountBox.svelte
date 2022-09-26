@@ -7,7 +7,7 @@
     <img
       id="user-avatar"
       alt="Account avatar"
-      src={$config['admin-uri'] + "/avatar.png"}
+      src={$config["admin-uri"] + "/avatar.png"}
     />
     <div id="user-name">&nbsp;</div>
   {:then state}
@@ -21,18 +21,16 @@
       <img
         id="user-avatar"
         alt="Account avatar"
-        src={$config['admin-uri'] + "/avatar.png"}
+        src={$config["admin-uri"] + "/avatar.png"}
       />
     {/if}
     <div id="user-name">{state.name}</div>
   {/await}
   <div id="log-link">
     <a
-      href={$config[
-        'admin-uri'
-      ] + "/v1.0/logout?redirect-uri=" + encodeURIComponent(
-        $config['frontend-uri']
-      )}
+      href={$config["admin-uri"] +
+        "/v1.0/logout?redirect-uri=" +
+        encodeURIComponent($config["frontend-uri"])}
     >
       Odhlásit
     </a>

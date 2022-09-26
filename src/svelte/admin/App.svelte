@@ -5,7 +5,12 @@
   import EditLessonView from "./EditLessonView.svelte";
   import LessonView from "./LessonView.svelte";
   import LoadingIndicator from "./components/LoadingIndicator.svelte";
-  import { competences, fields, lessons, loginstate } from "../../ts/admin/stores";
+  import {
+    competences,
+    fields,
+    lessons,
+    loginstate,
+  } from "../../ts/admin/stores";
   import RestoreLessonView from "./RestoreLessonView.svelte";
   import TopBar from "./components/TopBar.svelte";
 </script>
@@ -50,8 +55,13 @@
         <div id="main-page">
           {#await Promise.all([$competences, $fields, $lessons, $loginstate])}
             <div id="embedded-spinner" />
-          {:then [competencesValue, fieldsValue, lessonsValue, loginstateValue] }
-            <LessonView competences={competencesValue} fields={fieldsValue} lessons={lessonsValue} loginstate={loginstateValue} />
+          {:then [competencesValue, fieldsValue, lessonsValue, loginstateValue]}
+            <LessonView
+              competences={competencesValue}
+              fields={fieldsValue}
+              lessons={lessonsValue}
+              loginstate={loginstateValue}
+            />
           {/await}
         </div>
       </div>
