@@ -4,11 +4,27 @@
 
 <div id="top-bar">
   <div id="user-account">
-    <img
-      id="user-avatar"
-      alt="Account avatar"
-      src="{$config['admin-uri']}/avatar.png"
-    />
+    {#await $loginstate}
+      <img
+        id="user-avatar"
+        alt="Account avatar"
+        src={$config['admin-uri'] + "/avatar.png"}
+      />
+    {:then state}
+      {#if state.avatar}
+        <img
+          id="user-avatar"
+          alt="Account avatar"
+          src={"data:image/png;base64," + state.avatar}
+        />
+      {:else}
+        <img
+          id="user-avatar"
+          alt="Account avatar"
+          src={$config['admin-uri'] + "/avatar.png"}
+        />
+      {/if}
+    {/await}
     <div id="user-name">&nbsp;</div>
     <div id="log-link">
       <a
