@@ -1,10 +1,10 @@
 import { navigate } from "svelte-navigator";
 
-import { COMPETENCES, FIELDS, LESSONS, LOGINSTATE } from "../../metadata";
+import { COMPETENCES, LOGINSTATE } from "../../metadata";
 import { getAttribute } from "../../UI/button";
 import { Lesson } from "../../interfaces/Lesson";
 
-function renderLessonListLesson(
+export function renderLessonListLesson(
   id: string,
   lesson: Lesson,
   secondLevel: string
@@ -39,44 +39,6 @@ function renderLessonListLesson(
     first = false;
   });
   html += "</span>";
-  return html;
-}
-
-export function renderLessonList(): string {
-  let html = "";
-  LESSONS.iterate(function (id, lesson) {
-    const inField = !FIELDS.filter(function (_, field) {
-      return field.lessons.indexOf(id) >= 0;
-    }).empty();
-    if (!inField) {
-      html += renderLessonListLesson(id, lesson, "");
-    }
-  });
-  FIELDS.iterate(function (id, field) {
-    html += '<br><h2 class="main-page">' + field.name + "</h2>";
-    if (
-      LOGINSTATE.role === "administrator" ||
-      LOGINSTATE.role === "superuser"
-    ) {
-      html +=
-        '<div class="button cyan-button changeField" data-id="' +
-        id +
-        '"><i class="icon-pencil"></i>Upravit</div>';
-      html +=
-        '<div class="button red-button deleteField" data-id="' +
-        id +
-        '"><i class="icon-trash-empty"></i>Smazat</div>';
-    }
-    html +=
-      '<div class="button green-button addLessonInField" data-id="' +
-      id +
-      '"><i class="icon-plus"></i>Přidat lekci</div>';
-    LESSONS.iterate(function (lessonId, lesson) {
-      if (field.lessons.indexOf(lessonId) >= 0) {
-        html += renderLessonListLesson(lessonId, lesson, " second-level");
-      }
-    });
-  });
   return html;
 }
 
