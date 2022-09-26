@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { changeLessonOnClick } from "../../ts/admin/views/mainSubviews/lesson";
+  import { Link } from "svelte-navigator";
+
   import { Competence } from "../../ts/admin/interfaces/Competence";
   import { config } from "../../ts/admin/stores";
   import { deleteLessonOnClick } from "../../ts/admin/actions/deleteLesson";
@@ -30,10 +31,10 @@
 
 <br>
 <h3 class="main-page" class:second-level={secondLevel}>{lesson.name}</h3>
-<div class="button cyan-button changeLesson" data-id={id} on:click={changeLessonOnClick}>
+<Link class="button cyan-button changeLesson" data-id={id} to={"/lessons/" + id + "/edit"}>
   <i class="icon-pencil" />
   Upravit
-</div>
+</Link>
 {#if adminPermissions}
   <div class="button red-button deleteLesson" data-id={id} on:click={deleteLessonOnClick}>
     <i class="icon-trash-empty" />

@@ -2,13 +2,10 @@
   import { Link } from "svelte-navigator";
 
   import { addField } from "../../ts/admin/actions/addField";
-  import { addOnClicks } from "../../ts/admin/tools/addOnClicks";
   import { changeFieldOnClick } from "../../ts/admin/actions/changeField";
-  import { changeLessonOnClick } from "../../ts/admin/views/mainSubviews/lesson";
   import { Competence } from "../../ts/admin/interfaces/Competence";
   import { config } from "../../ts/admin/stores";
   import { deleteFieldOnClick } from "../../ts/admin/actions/deleteField";
-  import { deleteLessonOnClick } from "../../ts/admin/actions/deleteLesson";
   import { Field } from "../../ts/admin/interfaces/Field";
   import { getElementsByClassName } from "../../ts/admin/tools/getElementsByClassName";
   import { IDList } from "../../ts/admin/IDList";
