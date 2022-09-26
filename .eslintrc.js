@@ -10,12 +10,14 @@ module.exports = {
     browser: true,
     node: false,
   },
-  plugins: ["compat", "deprecation", "svelte3", "@typescript-eslint"],
+  plugins: ["compat", "deprecation", "@typescript-eslint"],
   extends: [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:svelte/recommended",
     "plugin:prettier/recommended",
+    "plugin:svelte/prettier",
   ],
   rules: {
     "compat/compat": "warn",
@@ -27,15 +29,36 @@ module.exports = {
     "@typescript-eslint/no-extraneous-class": "error",
     "@typescript-eslint/no-namespace": ["error", { allowDeclarations: true }],
     "@typescript-eslint/no-non-null-assertion": "off",
+    "svelte/no-store-async": "error",
+    "svelte/no-target-blank": "error",
+    "svelte/button-has-type": "error",
+    "svelte/no-reactive-functions": "error",
+    "svelte/no-reactive-literals": "error",
+    "svelte/no-useless-mustaches": "error",
+    "svelte/require-optimized-style-attribute": "error",
+    "svelte/require-stores-init": "error",
+    "svelte/derived-has-same-inputs-outputs": "error",
+    "svelte/no-extra-reactive-curlies": "error",
+    "svelte/prefer-class-directive": "error",
+    "svelte/prefer-style-directive": "error",
+    "svelte/sort-attributes": "error",
+    "svelte/spaced-html-comment": "error",
   },
   settings: {
-    polyfills: ["document.getElementsByClassName"],
-    "svelte3/typescript": require("typescript"),
+    svelte: {
+      ignoreWarnings: ["@typescript-eslint/explicit-function-return-type"],
+    },
   },
   overrides: [
     {
       files: ["*.svelte"],
-      processor: "svelte3/svelte3",
+      parser: "svelte-eslint-parser",
+      parserOptions: {
+        parser: "@typescript-eslint/parser",
+      },
+      rules: {
+        "deprecation/deprecation": "off",
+      },
     },
     {
       parserOptions: {
