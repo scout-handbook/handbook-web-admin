@@ -3,9 +3,11 @@
 
   import AddLessonView from "./AddLessonView.svelte";
   import EditLessonView from "./EditLessonView.svelte";
+  import LessonView from "./LessonView.svelte";
   import LoadingIndicator from "./components/LoadingIndicator.svelte";
+  import { lessons, loginstate } from "../../ts/admin/stores";
   import RestoreLessonView from "./RestoreLessonView.svelte";
-  import MainView from "./MainView.svelte";
+  import TopBar from "./components/TopBar.svelte";
 </script>
 
 <div id="overlay" />
@@ -35,6 +37,7 @@
       <TopBar />
       <div id="main-page-container">
         <div id="main-page">
+          <!-- TODO -->
           <div id="embedded-spinner" />
         </div>
       </div>
@@ -45,7 +48,11 @@
       <TopBar />
       <div id="main-page-container">
         <div id="main-page">
-          <div id="embedded-spinner" />
+          {#await Promise.all([$lessons, $loginstate])}
+            <div id="embedded-spinner" />
+          {:then [_, state] }
+            <LessonView loginstate={state} />
+          {/await}
         </div>
       </div>
     </Route>
