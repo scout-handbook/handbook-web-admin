@@ -29,12 +29,66 @@
       <RestoreLessonView lessonID={params.id} version={params.version} />
     </Route>
 
-    <Route component={MainView} path="/" />
-    <Route component={MainView} path="/lessons" />
-    <Route component={MainView} path="/competences" />
-    <Route component={MainView} path="/images" />
-    <Route component={MainView} path="/users" />
-    <Route component={MainView} path="/groups" />
+    <Route path="/">
+      <div id="side-panel" />
+      <div id="side-panel-overlay" />
+      <TopBar />
+      <div id="main-page-container">
+        <div id="main-page">
+          <div id="embedded-spinner" />
+        </div>
+      </div>
+    </Route>
+    <Route path="/lessons">
+      <div id="side-panel" />
+      <div id="side-panel-overlay" />
+      <TopBar />
+      <div id="main-page-container">
+        <div id="main-page">
+          <div id="embedded-spinner" />
+        </div>
+      </div>
+    </Route>
+    <Route path="/competences">
+      <div id="side-panel" />
+      <div id="side-panel-overlay" />
+      <TopBar />
+      <div id="main-page-container">
+        <div id="main-page">
+          <div id="embedded-spinner" />
+        </div>
+      </div>
+    </Route>
+    <Route path="/images">
+      <div id="side-panel" />
+      <div id="side-panel-overlay" />
+      <TopBar />
+      <div id="main-page-container">
+        <div id="main-page">
+          <div id="embedded-spinner" />
+        </div>
+      </div>
+    </Route>
+    <Route path="/users">
+      <div id="side-panel" />
+      <div id="side-panel-overlay" />
+      <TopBar />
+      <div id="main-page-container">
+        <div id="main-page">
+          <div id="embedded-spinner" />
+        </div>
+      </div>
+    </Route>
+    <Route path="/groups">
+      <div id="side-panel" />
+      <div id="side-panel-overlay" />
+      <TopBar />
+      <div id="main-page-container">
+        <div id="main-page">
+          <div id="embedded-spinner" />
+        </div>
+      </div>
+    </Route>
   </Router>
 </main>
 <link
