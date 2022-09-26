@@ -19,26 +19,3 @@
     showMainView(false);
   });
 </script>
-
-<div id="side-panel" />
-<div id="side-panel-overlay" />
-<TopBar />
-<div id="main-page-container">
-  <div id="main-page">
-    <h1>
-      {$config["site-name"]} -
-      {#if mainPageTab === "competences"}
-        Kompetence
-      {:else if mainPageTab === "images"}
-        Obrázky
-      {:else if mainPageTab === "users"}
-        Uživatelé
-      {:else if mainPageTab === "groups"}
-        Uživatelské skupiny
-      {:else}
-        Lekce
-      {/if}
-    </h1>
-    <div id="embedded-spinner" />
-  </div>
-</div>
