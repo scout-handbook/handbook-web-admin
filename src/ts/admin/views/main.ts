@@ -13,10 +13,6 @@ export function setMainPageTab(val: MainPageTab): void {
 }
 
 function renderMainView(noHistory: boolean): void {
-  if (LOGINSTATE.avatar) {
-    (document.getElementById("user-avatar") as HTMLImageElement).src =
-      "data:image/png;base64," + LOGINSTATE.avatar;
-  }
   document.getElementById("user-name")!.innerHTML = LOGINSTATE.name;
 
   document.getElementById("lesson-manager")!.onclick = function (): void {
