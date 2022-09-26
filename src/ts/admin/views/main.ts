@@ -3,7 +3,6 @@ import { MainPageTab } from "../interfaces/MainPageTab";
 import { showCompetenceSubview } from "./mainSubviews/competence";
 import { showGroupSubview } from "./mainSubviews/group";
 import { showImageSubview } from "./mainSubviews/image";
-import { showLessonSubview } from "./mainSubviews/lesson";
 import { showUserSubview } from "./mainSubviews/user";
 
 export let mainPageTab: MainPageTab = "lessons";
@@ -22,7 +21,7 @@ function renderMainView(noHistory: boolean): void {
   } else if (mainPageTab === "groups") {
     showGroupSubview(noHistory);
   } else {
-    showLessonSubview(noHistory);
+    //showLessonSubview(noHistory);
   }
 }
 

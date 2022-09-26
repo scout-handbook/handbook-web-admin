@@ -5,7 +5,7 @@ import { Field } from "./interfaces/Field";
 import { Group } from "./interfaces/Group";
 import { IDList } from "./IDList";
 import { Lesson } from "./interfaces/Lesson";
-import { loginstate } from "./stores";
+import { fields, competences, groups, lessons, loginstate } from "./stores";
 import { Loginstate } from "./interfaces/Loginstate";
 import { rawRequest, request } from "./tools/request";
 
@@ -74,6 +74,9 @@ export function refreshMetadata(): void {
       return value;
     });
     FIELDS.sort(fieldComparator);
+    competences.set(Promise.resolve(COMPETENCES));
+    lessons.set(Promise.resolve(LESSONS));
+    fields.set(Promise.resolve(FIELDS));
     metadataEvent.trigger();
   });
   request(
@@ -128,6 +131,7 @@ export function refreshMetadata(): void {
       GROUPS.sort(function (first: Group, second: Group): number {
         return first.name.localeCompare(second.name);
       });
+      groups.set(Promise.resolve(GROUPS));
       metadataEvent.trigger();
     },
     groupExceptionHandler
