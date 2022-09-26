@@ -22,7 +22,7 @@
 </div>
 
 <script lang="ts">
-import TopBar from "./TopBar.svelte";
+import TopBar from "./components/TopBar.svelte";
 import { config } from "../../ts/admin/stores";
 import { mainPageTab, setMainPageTab, showMainView } from "../../ts/admin/views/main";
 
