@@ -15,5 +15,5 @@
 </div>
 
 <script lang="ts">
-	import { config } from "../../ts/admin/stores";
+	import { config } from "../../../ts/admin/stores";
 </script>
