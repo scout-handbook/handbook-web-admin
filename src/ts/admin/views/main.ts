@@ -1,4 +1,4 @@
-import { LOGINSTATE, metadataEvent } from "../metadata";
+import { metadataEvent } from "../metadata";
 import { MainPageTab } from "../interfaces/MainPageTab";
 import { showCompetenceSubview } from "./mainSubviews/competence";
 import { showGroupSubview } from "./mainSubviews/group";
@@ -13,8 +13,6 @@ export function setMainPageTab(val: MainPageTab): void {
 }
 
 function renderMainView(noHistory: boolean): void {
-  document.getElementById("user-name")!.innerHTML = LOGINSTATE.name;
-
   document.getElementById("lesson-manager")!.onclick = function (): void {
     showLessonSubview(false);
   };
