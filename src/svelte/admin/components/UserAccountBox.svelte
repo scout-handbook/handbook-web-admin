@@ -9,6 +9,7 @@
       alt="Account avatar"
       src={$config['admin-uri'] + "/avatar.png"}
     />
+    <div id="user-name">&nbsp;</div>
   {:then state}
     {#if state.avatar}
       <img
@@ -23,8 +24,8 @@
         src={$config['admin-uri'] + "/avatar.png"}
       />
     {/if}
+    <div id="user-name">{state.name}</div>
   {/await}
-  <div id="user-name">&nbsp;</div>
   <div id="log-link">
     <a
       href={$config[
