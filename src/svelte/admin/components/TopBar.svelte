@@ -10,13 +10,7 @@
 
 <div id="top-bar">
   <UserAccountBox />
-  <Link
-    id="lesson-manager"
-    class="top-bar-tab"
-    to="/lessons"
-  >
-    Lekce
-  </Link>
+  <Link id="lesson-manager" class="top-bar-tab" to="/lessons">Lekce</Link>
   <div
     id="competence-manager"
     class="top-bar-tab"

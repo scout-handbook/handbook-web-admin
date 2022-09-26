@@ -20,7 +20,8 @@
   export let lessons: IDList<Lesson>;
   export let loginstate: Loginstate;
 
-  $: adminPermissions = loginstate.role === "administrator" || loginstate.role === "superuser";
+  $: adminPermissions =
+    loginstate.role === "administrator" || loginstate.role === "superuser";
 
   const nodes = getElementsByClassName("top-bar-tab");
   for (let i = 0; i < nodes.length; i++) {
@@ -33,49 +34,75 @@
 
 <h1>{$config["site-name"] + " - Lekce"}</h1>
 {#if adminPermissions}
-  <div class="button green-button" id="add-field" on:click={() => {addField();}}>
+  <div
+    id="add-field"
+    class="button green-button"
+    on:click={() => {
+      addField();
+    }}
+  >
     <i class="icon-plus" />
     Přidat oblast
   </div>
 {/if}
-<Link class="button green-button" id="add-lesson" to="/lessons/add">
+<Link id="add-lesson" class="button green-button" to="/lessons/add">
   <i class="icon-plus" />
   Přidat lekci
 </Link>
 {#if adminPermissions}
-  <div class="button" id="restore-lesson" on:click={restoreLesson}>
+  <div id="restore-lesson" class="button" on:click={restoreLesson}>
     <i class="icon-history" />
     Smazané lekce
   </div>
 {/if}
-{#each lessons.asArray() as {id, value: lesson}}
+{#each lessons.asArray() as { id, value: lesson }}
   <!-- TODO: Precompute -->
-  {#if (fields.filter(function (_, field) {
-    return field.lessons.indexOf(id) >= 0;
-  }).empty())}
-    <LessonViewLesson {competences} {adminPermissions} {id} {lesson} />
+  {#if fields
+    .filter(function (_, field) {
+      return field.lessons.indexOf(id) >= 0;
+    })
+    .empty()}
+    <LessonViewLesson {id} {adminPermissions} {competences} {lesson} />
   {/if}
 {/each}
-{#each fields.asArray() as {id, value: field}}
-  <br>
+{#each fields.asArray() as { id, value: field }}
+  <br />
   <h2 class="main-page">{field.name}</h2>
   {#if adminPermissions}
-    <div class="button cyan-button changeField" data-id={id} on:click={changeFieldOnClick}>
+    <div
+      class="button cyan-button changeField"
+      data-id={id}
+      on:click={changeFieldOnClick}
+    >
       <i class="icon-pencil" />
       Upravit
     </div>
-    <div class="button red-button deleteField" data-id={id} on:click={deleteFieldOnClick}>
+    <div
+      class="button red-button deleteField"
+      data-id={id}
+      on:click={deleteFieldOnClick}
+    >
       <i class="icon-trash-empty" />
       Smazat
     </div>
   {/if}
-  <Link class="button green-button addLessonInField" data-id={id} to={"/lessons/add?field=" + id}>
+  <Link
+    class="button green-button addLessonInField"
+    data-id={id}
+    to={"/lessons/add?field=" + id}
+  >
     <i class="icon-plus" />
     Přidat lekci
   </Link>
-  {#each lessons.asArray() as {id: lessonId, value: lesson}}
+  {#each lessons.asArray() as { id: lessonId, value: lesson }}
     {#if field.lessons.indexOf(lessonId) >= 0}
-      <LessonViewLesson {competences} {adminPermissions} id={lessonId} {lesson} secondLevel={true} />
+      <LessonViewLesson
+        id={lessonId}
+        {adminPermissions}
+        {competences}
+        {lesson}
+        secondLevel={true}
+      />
     {/if}
   {/each}
 {/each}

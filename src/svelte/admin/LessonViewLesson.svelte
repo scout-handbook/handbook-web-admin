@@ -11,41 +11,56 @@
   export let adminPermissions: boolean;
   export let id: string;
   export let lesson: Lesson;
-  export let secondLevel: boolean = false;
+  export let secondLevel = false;
 
   function lessonCompetenceList(): string {
     let output = "";
     let first = true;
-    competences.filter(function (competenceId) {
-      return lesson.competences.indexOf(competenceId) >= 0;
-    }).iterate(function (_, competence) {
-      if (!first) {
-        output += ", ";
-      }
-      output += competence.number.toString();
-      first = false;
-    });
-    return 'Kompetence: ' + output;
+    competences
+      .filter(function (competenceId) {
+        return lesson.competences.indexOf(competenceId) >= 0;
+      })
+      .iterate(function (_, competence) {
+        if (!first) {
+          output += ", ";
+        }
+        output += competence.number.toString();
+        first = false;
+      });
+    return "Kompetence: " + output;
   }
 </script>
 
-<br>
+<br />
 <h3 class="main-page" class:second-level={secondLevel}>{lesson.name}</h3>
-<Link class="button cyan-button changeLesson" data-id={id} to={"/lessons/" + id + "/edit"}>
+<Link
+  class="button cyan-button changeLesson"
+  data-id={id}
+  to={"/lessons/" + id + "/edit"}
+>
   <i class="icon-pencil" />
   Upravit
 </Link>
 {#if adminPermissions}
-  <div class="button red-button deleteLesson" data-id={id} on:click={deleteLessonOnClick}>
+  <div
+    class="button red-button deleteLesson"
+    data-id={id}
+    on:click={deleteLessonOnClick}
+  >
     <i class="icon-trash-empty" />
     Smazat
   </div>
 {/if}
-<a href={$config["admin-uri"] + "/lesson/" + id} target="_blank" class="button exportLesson">
+<a
+  class="button exportLesson"
+  href={$config["admin-uri"] + "/lesson/" + id}
+  rel="noopener noreferrer"
+  target="_blank"
+>
   <i class="icon-file-pdf" />
   PDF
 </a>
-<br>
+<br />
 <span class="main-page" class:second-level={secondLevel}>
   {lessonCompetenceList()}
 </span>
