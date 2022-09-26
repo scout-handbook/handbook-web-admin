@@ -1,5 +1,3 @@
-<LessonEditor lessonName={defaultName} body={defaultBody} saveActionQueue={aq} id={null} />
-
 <script lang="ts">
   import { useLocation } from "svelte-navigator";
 
@@ -47,3 +45,5 @@
   // TODO: Remove this horrible hack
   setTimeout(() => {setChanged();}, 100);
 </script>
+
+<LessonEditor lessonName={defaultName} body={defaultBody} saveActionQueue={aq} id={null} />
