@@ -1,3 +1,7 @@
+<script lang="ts">
+	import { config } from "../../../ts/admin/stores";
+</script>
+
 <div id="top-bar">
 	<div id="user-account">
 		<img id="user-avatar" alt="Account avatar" src="{$config['admin-uri']}/avatar.png">
@@ -13,7 +17,3 @@
 	<div class="top-bar-tab" id="user-manager">Uživatelé</div>
 	<div class="top-bar-tab" id="group-manager">Uživatelské skupiny</div>
 </div>
-
-<script lang="ts">
-	import { config } from "../../../ts/admin/stores";
-</script>

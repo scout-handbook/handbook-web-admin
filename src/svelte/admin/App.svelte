@@ -1,3 +1,12 @@
+<script lang="ts">
+	import {Router, Route} from "svelte-navigator";
+	import AddLessonView from "./AddLessonView.svelte";
+	import EditLessonView from "./EditLessonView.svelte";
+	import LoadingIndicator from "./components/LoadingIndicator.svelte";
+	import RestoreLessonView from "./RestoreLessonView.svelte";
+	import MainView from "./MainView.svelte";
+</script>
+
 <div id="overlay"></div>
 <div id="dialog">
 	<div id="dialogText"></div>
@@ -28,12 +37,3 @@
 	</Router>
 </main>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700,700i">
-
-<script lang="ts">
-	import {Router, Route} from "svelte-navigator";
-	import AddLessonView from "./AddLessonView.svelte";
-	import EditLessonView from "./EditLessonView.svelte";
-	import LoadingIndicator from "./components/LoadingIndicator.svelte";
-	import RestoreLessonView from "./RestoreLessonView.svelte";
-	import MainView from "./MainView.svelte";
-</script>

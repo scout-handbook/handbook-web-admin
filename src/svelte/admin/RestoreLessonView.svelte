@@ -1,7 +1,3 @@
-{#if !$loadingIndicatorVisible}
-  <LessonEditor {lessonName} {body} {saveActionQueue} id={null} />
-{/if}
-
 <script lang="ts">
   import { useLocation } from "svelte-navigator";
 
@@ -55,3 +51,7 @@
     authFailHandler
   );
 </script>
+
+{#if !$loadingIndicatorVisible}
+  <LessonEditor {lessonName} {body} {saveActionQueue} id={null} />
+{/if}

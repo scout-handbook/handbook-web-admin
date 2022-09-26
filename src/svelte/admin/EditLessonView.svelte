@@ -1,7 +1,3 @@
-{#if !$loadingIndicatorVisible}
-  <LessonEditor {lessonName} body={lessonBody} {saveActionQueue} id={lessonID} {discardActionQueue} refreshAction={() => {lessonEditMutexExtend(lessonID)}} />
-{/if}
-
 <script lang="ts">
   import { Action } from "../../ts/admin/tools/Action";
   import { ActionCallback } from "../../ts/admin/tools/ActionCallback";
@@ -128,3 +124,7 @@
     exceptionHandler
   );
 </script>
+
+{#if !$loadingIndicatorVisible}
+  <LessonEditor {lessonName} body={lessonBody} {saveActionQueue} id={lessonID} {discardActionQueue} refreshAction={() => {lessonEditMutexExtend(lessonID)}} />
+{/if}

@@ -1,44 +1,3 @@
-<div id="side-panel"></div>
-<div id="side-panel-overlay"></div>
-<header>
-  <div class="button yellow-button" id="discard" on:click={() => {editorDiscard(discardActionQueue);}}>
-    <i class="icon-cancel"></i>
-    Zrušit
-  </div>
-  <form>
-    <input type="text" class="form-text form-name" id="name" value={lessonName} autocomplete="off" on:input={() => {editorOnChange(refreshAction);}} on:change={() => {editorOnChange(refreshAction);}}>
-  </form>
-  <div class="button green-button" id="save" on:click={saveCallback}>
-    <i class="icon-floppy"></i>
-    Uložit
-  </div>
-  <div class="button" id="lesson-settings" on:click={() => {lessonSettings(id, saveActionQueue, false);}}>
-    <i class="icon-cog"></i>
-    Nastavení
-  </div>
-</header>
-<div id="image-selector">
-  <div id="image-scroller">
-    <div class="button yellow-button" id="close-image-selector" on:click={toggleImageSelector}>
-      <i class="icon-up-open"></i>
-      Zavřít
-    </div>
-    <!-- TODO: Re-enable uploads in editor without discarding its contents
-    <div class="button green-button" on:click={() => {addImage(true);}}>
-      <i class="icon-plus"></i>
-      Nahrát
-    </div>
-    -->
-    <div id="image-wrapper"></div>
-  </div>
-</div>
-<div id="editor">
-  <textarea bind:this={editorArea}></textarea>
-</div>
-<div id="preview">
-  <div id="preview-inner"></div>
-</div>
-
 <script lang="ts">
   import { onMount } from "svelte";
   import { navigate } from "svelte-navigator";
@@ -145,3 +104,44 @@
     });
   });
 </script>
+
+<div id="side-panel"></div>
+<div id="side-panel-overlay"></div>
+<header>
+  <div class="button yellow-button" id="discard" on:click={() => {editorDiscard(discardActionQueue);}}>
+    <i class="icon-cancel"></i>
+    Zrušit
+  </div>
+  <form>
+    <input type="text" class="form-text form-name" id="name" value={lessonName} autocomplete="off" on:input={() => {editorOnChange(refreshAction);}} on:change={() => {editorOnChange(refreshAction);}}>
+  </form>
+  <div class="button green-button" id="save" on:click={saveCallback}>
+    <i class="icon-floppy"></i>
+    Uložit
+  </div>
+  <div class="button" id="lesson-settings" on:click={() => {lessonSettings(id, saveActionQueue, false);}}>
+    <i class="icon-cog"></i>
+    Nastavení
+  </div>
+</header>
+<div id="image-selector">
+  <div id="image-scroller">
+    <div class="button yellow-button" id="close-image-selector" on:click={toggleImageSelector}>
+      <i class="icon-up-open"></i>
+      Zavřít
+    </div>
+    <!-- TODO: Re-enable uploads in editor without discarding its contents
+    <div class="button green-button" on:click={() => {addImage(true);}}>
+      <i class="icon-plus"></i>
+      Nahrát
+    </div>
+    -->
+    <div id="image-wrapper"></div>
+  </div>
+</div>
+<div id="editor">
+  <textarea bind:this={editorArea}></textarea>
+</div>
+<div id="preview">
+  <div id="preview-inner"></div>
+</div>
