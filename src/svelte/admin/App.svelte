@@ -32,7 +32,7 @@
 	import {Router, Route} from "svelte-navigator";
 	import AddLessonView from "./AddLessonView.svelte";
 	import EditLessonView from "./EditLessonView.svelte";
-	import LoadingIndicator from "./LoadingIndicator.svelte";
+	import LoadingIndicator from "./components/LoadingIndicator.svelte";
 	import RestoreLessonView from "./RestoreLessonView.svelte";
 	import MainView from "./MainView.svelte";
 </script>
