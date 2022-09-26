@@ -49,7 +49,6 @@ function renderMainView(noHistory: boolean): void {
 }
 
 export function showMainView(noHistory: boolean): void {
-  document.getElementsByTagName("main")[0].scrollTop = 0;
   metadataEvent.addCallback(function (): void {
     renderMainView(noHistory);
   });
