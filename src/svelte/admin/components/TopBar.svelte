@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { config } from "../../../ts/admin/stores";
+  import { config, loginstate } from "../../../ts/admin/stores";
 </script>
 
 <div id="top-bar">
@@ -12,12 +12,11 @@
     <div id="user-name">&nbsp;</div>
     <div id="log-link">
       <a
-        href="{$config[
+        href={$config[
           'admin-uri'
-        ]}/v1.0/logout?redirect-uri={encodeURIComponent(
+        ] + "/v1.0/logout?redirect-uri=" + encodeURIComponent(
           $config['frontend-uri']
         )}
-      "
       >
         Odhlásit
       </a>
