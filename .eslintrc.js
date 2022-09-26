@@ -46,7 +46,10 @@ module.exports = {
   },
   settings: {
     svelte: {
-      ignoreWarnings: ["@typescript-eslint/explicit-function-return-type"],
+      ignoreWarnings: [
+        "@typescript-eslint/explicit-function-return-type",
+        "@typescript-eslint/no-unsafe-member-access"
+      ],
     },
   },
   overrides: [
