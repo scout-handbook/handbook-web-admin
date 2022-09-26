@@ -6,7 +6,7 @@
     Zrušit
   </div>
   <form>
-    <input type="text" class="form-text form-name" id="name" value={name} autocomplete="off" on:input={() => {editorOnChange(refreshAction);}} on:change={() => {editorOnChange(refreshAction);}}>
+    <input type="text" class="form-text form-name" id="name" value={lessonName} autocomplete="off" on:input={() => {editorOnChange(refreshAction);}} on:change={() => {editorOnChange(refreshAction);}}>
   </form>
   <div class="button green-button" id="save" on:click={saveCallback}>
     <i class="icon-floppy"></i>
@@ -50,7 +50,7 @@
   import { prepareImageSelector, toggleImageSelector } from "../../../ts/admin/lessonEditor/imageSelector";
   import { refreshPreview } from "../../../ts/admin/lessonEditor/refreshPreview";
 
-  export let name: string;
+  export let lessonName: string;
   export let body: string;
   export let saveActionQueue: ActionQueue;
   export let id: string | null;
@@ -70,7 +70,7 @@
 
   populateEditorCache(id);
   setChanged(false);
-  refreshPreview(name, body, "preview-inner");
+  refreshPreview(lessonName, body, "preview-inner");
   prepareImageSelector();
 
   onMount(() => {

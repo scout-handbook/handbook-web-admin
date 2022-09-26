@@ -1,5 +1,5 @@
 {#if !$loadingIndicatorVisible}
-  <LessonEditor name={lessonName} body={lessonBody} {saveActionQueue} id={lessonID} {discardActionQueue} refreshAction={() => {lessonEditMutexExtend(lessonID)}} />
+  <LessonEditor {lessonName} body={lessonBody} {saveActionQueue} id={lessonID} {discardActionQueue} refreshAction={() => {lessonEditMutexExtend(lessonID)}} />
 {/if}
 
 <script lang="ts">
