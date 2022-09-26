@@ -13,22 +13,6 @@ export function setMainPageTab(val: MainPageTab): void {
 }
 
 function renderMainView(noHistory: boolean): void {
-  document.getElementById("lesson-manager")!.onclick = function (): void {
-    showLessonSubview(false);
-  };
-  document.getElementById("competence-manager")!.onclick = function (): void {
-    showCompetenceSubview(false);
-  };
-  document.getElementById("image-manager")!.onclick = function (): void {
-    showImageSubview(false);
-  };
-  document.getElementById("user-manager")!.onclick = function (): void {
-    showUserSubview(false);
-  };
-  document.getElementById("group-manager")!.onclick = function (): void {
-    showGroupSubview(false);
-  };
-
   if (mainPageTab === "competences") {
     showCompetenceSubview(noHistory);
   } else if (mainPageTab === "images") {
