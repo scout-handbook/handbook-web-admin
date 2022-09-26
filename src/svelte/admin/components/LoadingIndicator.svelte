@@ -2,7 +2,11 @@
   import { config, loadingIndicatorVisible } from "../../../ts/admin/stores";
 </script>
 
-<div style:border-color={$config["custom-properties"]["--border-color"]} style:border-top-color={$config["custom-properties"]["--accent-color"]} style:display={$loadingIndicatorVisible ? "block" : "none"} />
+<div
+  style:border-color={$config["custom-properties"]["--border-color"]}
+  style:border-top-color={$config["custom-properties"]["--accent-color"]}
+  style:display={$loadingIndicatorVisible ? "block" : "none"}
+/>
 
 <style>
   div {

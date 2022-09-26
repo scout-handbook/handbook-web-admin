@@ -4,9 +4,20 @@
 
   import { ActionQueue } from "../../../ts/admin/tools/ActionQueue";
   import { default as EasyMDE } from "easymde";
-  import { changed, editor, editorDiscard, editorOnChange, populateEditorCache, setChanged, setEditor } from "../../../ts/admin/lessonEditor/editor";
+  import {
+    changed,
+    editor,
+    editorDiscard,
+    editorOnChange,
+    populateEditorCache,
+    setChanged,
+    setEditor,
+  } from "../../../ts/admin/lessonEditor/editor";
   import { lessonSettings } from "../../../ts/admin/lessonEditor/settings";
-  import { prepareImageSelector, toggleImageSelector } from "../../../ts/admin/lessonEditor/imageSelector";
+  import {
+    prepareImageSelector,
+    toggleImageSelector,
+  } from "../../../ts/admin/lessonEditor/imageSelector";
   import { refreshPreview } from "../../../ts/admin/lessonEditor/refreshPreview";
 
   export let lessonName: string;
@@ -25,7 +36,7 @@
       navigate("/admin/lessons");
       discardActionQueue.defaultDispatch(false);
     }
-  };
+  }
 
   populateEditorCache(id);
   setChanged(false);
@@ -33,70 +44,72 @@
   prepareImageSelector();
 
   onMount(() => {
-    setEditor(new EasyMDE({
-      autoDownloadFontAwesome: false,
-      autofocus: true,
-      element: editorArea,
-      indentWithTabs: false,
-      parsingConfig: {
-        allowAtxHeaderWithoutSpace: true,
-      },
-      spellChecker: false,
-      status: false,
-      tabSize: 4,
-      toolbar: [
-        {
-          name: "bold",
-          action: EasyMDE.toggleBold,
-          className: "icon-bold",
-          title: "Tučné",
+    setEditor(
+      new EasyMDE({
+        autoDownloadFontAwesome: false,
+        autofocus: true,
+        element: editorArea,
+        indentWithTabs: false,
+        parsingConfig: {
+          allowAtxHeaderWithoutSpace: true,
         },
-        {
-          name: "italic",
-          action: EasyMDE.toggleItalic,
-          className: "icon-italic",
-          title: "Kurzíva",
-        },
-        {
-          name: "heading",
-          action: EasyMDE.toggleHeadingSmaller,
-          className: "icon-header",
-          title: "Nadpis",
-        },
-        "|",
-        {
-          name: "unordered-list",
-          action: EasyMDE.toggleUnorderedList,
-          className: "icon-list-bullet",
-          title: "Seznam s odrážkami",
-        },
-        {
-          name: "ordered-list",
-          action: EasyMDE.toggleOrderedList,
-          className: "icon-list-numbered",
-          title: "Číslovaný seznam",
-        },
-        "|",
-        {
-          name: "link",
-          action: EasyMDE.drawLink,
-          className: "icon-link",
-          title: "Vložit odkaz",
-        },
-        {
-          name: "image",
-          action: toggleImageSelector,
-          className: "icon-picture",
-          title: "Vložit obrázek",
-        },
-        {
-          name: "table",
-          action: EasyMDE.drawTable,
-          className: "icon-table",
-          title: "Vložit tabulku",
-        },
-      ],
-    }));
+        spellChecker: false,
+        status: false,
+        tabSize: 4,
+        toolbar: [
+          {
+            name: "bold",
+            action: EasyMDE.toggleBold,
+            className: "icon-bold",
+            title: "Tučné",
+          },
+          {
+            name: "italic",
+            action: EasyMDE.toggleItalic,
+            className: "icon-italic",
+            title: "Kurzíva",
+          },
+          {
+            name: "heading",
+            action: EasyMDE.toggleHeadingSmaller,
+            className: "icon-header",
+            title: "Nadpis",
+          },
+          "|",
+          {
+            name: "unordered-list",
+            action: EasyMDE.toggleUnorderedList,
+            className: "icon-list-bullet",
+            title: "Seznam s odrážkami",
+          },
+          {
+            name: "ordered-list",
+            action: EasyMDE.toggleOrderedList,
+            className: "icon-list-numbered",
+            title: "Číslovaný seznam",
+          },
+          "|",
+          {
+            name: "link",
+            action: EasyMDE.drawLink,
+            className: "icon-link",
+            title: "Vložit odkaz",
+          },
+          {
+            name: "image",
+            action: toggleImageSelector,
+            className: "icon-picture",
+            title: "Vložit obrázek",
+          },
+          {
+            name: "table",
+            action: EasyMDE.drawTable,
+            className: "icon-table",
+            title: "Vložit tabulku",
+          },
+        ],
+      })
+    );
     editor.value(body);
     editor.codemirror.getDoc().clearHistory();
     editor.codemirror.on("change", function (): void {
@@ -105,43 +118,71 @@
   });
 </script>
 
-<div id="side-panel"></div>
-<div id="side-panel-overlay"></div>
+<div id="side-panel" />
+<div id="side-panel-overlay" />
 <header>
-  <div class="button yellow-button" id="discard" on:click={() => {editorDiscard(discardActionQueue);}}>
-    <i class="icon-cancel"></i>
+  <div
+    id="discard"
+    class="button yellow-button"
+    on:click={() => {
+      editorDiscard(discardActionQueue);
+    }}
+  >
+    <i class="icon-cancel" />
     Zrušit
   </div>
   <form>
-    <input type="text" class="form-text form-name" id="name" value={lessonName} autocomplete="off" on:input={() => {editorOnChange(refreshAction);}} on:change={() => {editorOnChange(refreshAction);}}>
+    <input
+      id="name"
+      class="form-text form-name"
+      autocomplete="off"
+      type="text"
+      value={lessonName}
+      on:input={() => {
+        editorOnChange(refreshAction);
+      }}
+      on:change={() => {
+        editorOnChange(refreshAction);
+      }}
+    />
   </form>
-  <div class="button green-button" id="save" on:click={saveCallback}>
-    <i class="icon-floppy"></i>
+  <div id="save" class="button green-button" on:click={saveCallback}>
+    <i class="icon-floppy" />
     Uložit
   </div>
-  <div class="button" id="lesson-settings" on:click={() => {lessonSettings(id, saveActionQueue, false);}}>
-    <i class="icon-cog"></i>
+  <div
+    id="lesson-settings"
+    class="button"
+    on:click={() => {
+      lessonSettings(id, saveActionQueue, false);
+    }}
+  >
+    <i class="icon-cog" />
     Nastavení
   </div>
 </header>
 <div id="image-selector">
   <div id="image-scroller">
-    <div class="button yellow-button" id="close-image-selector" on:click={toggleImageSelector}>
-      <i class="icon-up-open"></i>
+    <div
+      id="close-image-selector"
+      class="button yellow-button"
+      on:click={toggleImageSelector}
+    >
+      <i class="icon-up-open" />
       Zavřít
     </div>
     <!-- TODO: Re-enable uploads in editor without discarding its contents
     <div class="button green-button" on:click={() => {addImage(true);}}>
-      <i class="icon-plus"></i>
+      <i class="icon-plus" />
       Nahrát
     </div>
     -->
-    <div id="image-wrapper"></div>
+    <div id="image-wrapper" />
   </div>
 </div>
 <div id="editor">
-  <textarea bind:this={editorArea}></textarea>
+  <textarea bind:this={editorArea} />
 </div>
 <div id="preview">
-  <div id="preview-inner"></div>
+  <div id="preview-inner" />
 </div>

@@ -83,7 +83,9 @@
     lessonBody = markdown;
     loadingIndicatorVisible.set(false);
     // TODO: Remove this horrible hack
-    setTimeout(() => {document.getElementById("save")!.dataset.id = id;}, 100);
+    setTimeout(() => {
+      document.getElementById("save")!.dataset.id = id;
+    }, 100);
 
     window.onbeforeunload = function (): void {
       sendBeacon(id);
@@ -126,5 +128,14 @@
 </script>
 
 {#if !$loadingIndicatorVisible}
-  <LessonEditor {lessonName} body={lessonBody} {saveActionQueue} id={lessonID} {discardActionQueue} refreshAction={() => {lessonEditMutexExtend(lessonID)}} />
+  <LessonEditor
+    id={lessonID}
+    body={lessonBody}
+    {discardActionQueue}
+    {lessonName}
+    refreshAction={() => {
+      lessonEditMutexExtend(lessonID);
+    }}
+    {saveActionQueue}
+  />
 {/if}

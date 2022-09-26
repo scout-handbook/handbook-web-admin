@@ -16,7 +16,8 @@
   export let version: string;
 
   const routerLocation = useLocation();
-  const lessonName = (new URLSearchParams($routerLocation.search)).get("name") ?? "Obnovená lekce";
+  const lessonName =
+    new URLSearchParams($routerLocation.search).get("name") ?? "Obnovená lekce";
   let body = "";
 
   const saveActionQueue = new ActionQueue([
@@ -26,7 +27,7 @@
       restoreLessonPayloadBuilder,
       [ActionCallback.FillID]
     ),
-    ]);
+  ]);
 
   function restoreLessonPayloadBuilder(): Payload {
     return {
@@ -39,19 +40,25 @@
 
   loadingIndicatorVisible.set(true);
   request(
-    $config["api-uri"] + "/v1.0/deleted-lesson/" + lessonID + "/history/" + version,
+    $config["api-uri"] +
+      "/v1.0/deleted-lesson/" +
+      lessonID +
+      "/history/" +
+      version,
     "GET",
     {},
     function (response: RequestResponse): void {
       body = response as string;
       loadingIndicatorVisible.set(false);
       // TODO: Remove this horrible hack
-      setTimeout(() => {setChanged();}, 100);
+      setTimeout(() => {
+        setChanged();
+      }, 100);
     },
     authFailHandler
   );
 </script>
 
 {#if !$loadingIndicatorVisible}
-  <LessonEditor {lessonName} {body} {saveActionQueue} id={null} />
+  <LessonEditor id={null} {body} {lessonName} {saveActionQueue} />
 {/if}

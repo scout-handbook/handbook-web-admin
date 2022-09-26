@@ -1,28 +1,32 @@
 <script lang="ts">
-import { onMount } from "svelte";
+  import { onMount } from "svelte";
 
-import TopBar from "./components/TopBar.svelte";
-import { config } from "../../ts/admin/stores";
-import { mainPageTab, setMainPageTab, showMainView } from "../../ts/admin/views/main";
+  import TopBar from "./components/TopBar.svelte";
+  import { config } from "../../ts/admin/stores";
+  import {
+    mainPageTab,
+    setMainPageTab,
+    showMainView,
+  } from "../../ts/admin/views/main";
 
-import { MainPageTab } from "../../ts/admin/interfaces/MainPageTab";
+  import { MainPageTab } from "../../ts/admin/interfaces/MainPageTab";
 
-if (window.location.pathname.substring(7)) {
-setMainPageTab(window.location.pathname.substring(7) as MainPageTab);
-}
-// TODO: Do directly
-onMount(() => {
-  showMainView(false);
-});
+  if (window.location.pathname.substring(7)) {
+    setMainPageTab(window.location.pathname.substring(7) as MainPageTab);
+  }
+  // TODO: Do directly
+  onMount(() => {
+    showMainView(false);
+  });
 </script>
 
-<div id="side-panel"></div>
-<div id="side-panel-overlay"></div>
+<div id="side-panel" />
+<div id="side-panel-overlay" />
 <TopBar />
 <div id="main-page-container">
   <div id="main-page">
     <h1>
-      {$config["site-name"]} - 
+      {$config["site-name"]} -
       {#if mainPageTab === "competences"}
         Kompetence
       {:else if mainPageTab === "images"}
@@ -35,6 +39,6 @@ onMount(() => {
         Lekce
       {/if}
     </h1>
-    <div id="embedded-spinner"></div>
+    <div id="embedded-spinner" />
   </div>
 </div>
