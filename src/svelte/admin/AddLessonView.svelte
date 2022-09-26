@@ -7,7 +7,7 @@
   import { ActionCallback } from "../../ts/admin/tools/ActionCallback";
   import { ActionQueue } from "../../ts/admin/tools/ActionQueue";
   import { defaultBody, defaultName } from "../../ts/admin/lessonEditor/defaultContent";
-  import LessonEditor from "./LessonEditor.svelte";
+  import LessonEditor from "./components/LessonEditor.svelte";
   import { Payload } from "../../ts/admin/interfaces/Payload";
   import { editor, setChanged } from "../../ts/admin/lessonEditor/editor";
 
