@@ -5,6 +5,7 @@ import { Field } from "./interfaces/Field";
 import { Group } from "./interfaces/Group";
 import { IDList } from "./IDList";
 import { Lesson } from "./interfaces/Lesson";
+import { loginstate } from "./stores";
 import { Loginstate } from "./interfaces/Loginstate";
 import { rawRequest, request } from "./tools/request";
 
@@ -143,6 +144,7 @@ export function refreshMetadata(): void {
           ) > -1
         ) {
           LOGINSTATE = response.response as Loginstate;
+          loginstate.set(Promise.resolve(LOGINSTATE));
           metadataEvent.trigger();
         } else {
           window.location.replace(CONFIG["frontend-uri"]);
