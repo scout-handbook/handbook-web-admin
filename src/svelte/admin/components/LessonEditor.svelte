@@ -33,7 +33,7 @@
   </div>
 </div>
 <div id="editor">
-  <textarea></textarea>
+  <textarea bind:this={editorArea}></textarea>
 </div>
 <div id="preview">
   <div id="preview-inner"></div>
@@ -43,12 +43,12 @@
   import { onMount } from "svelte";
   import { navigate } from "svelte-navigator";
 
-  import { ActionQueue } from "../../ts/admin/tools/ActionQueue";
+  import { ActionQueue } from "../../../ts/admin/tools/ActionQueue";
   import { default as EasyMDE } from "easymde";
-  import { changed, editor, editorDiscard, editorOnChange, populateEditorCache, setChanged, setEditor } from "../../ts/admin/lessonEditor/editor";
-  import { lessonSettings } from "../../ts/admin/lessonEditor/settings";
-  import { prepareImageSelector, toggleImageSelector } from "../../ts/admin/lessonEditor/imageSelector";
-  import { refreshPreview } from "../../ts/admin/lessonEditor/refreshPreview";
+  import { changed, editor, editorDiscard, editorOnChange, populateEditorCache, setChanged, setEditor } from "../../../ts/admin/lessonEditor/editor";
+  import { lessonSettings } from "../../../ts/admin/lessonEditor/settings";
+  import { prepareImageSelector, toggleImageSelector } from "../../../ts/admin/lessonEditor/imageSelector";
+  import { refreshPreview } from "../../../ts/admin/lessonEditor/refreshPreview";
 
   export let name: string;
   export let body: string;
@@ -57,9 +57,7 @@
   export let discardActionQueue: ActionQueue = new ActionQueue();
   export let refreshAction: (() => void) | null = null;
 
-  populateEditorCache(id);
-  setChanged(false);
-  refreshPreview(name, body, "preview-inner");
+  let editorArea: HTMLElement;
 
   function saveCallback(): void {
     if (changed) {
@@ -70,11 +68,16 @@
     }
   };
 
+  populateEditorCache(id);
+  setChanged(false);
+  refreshPreview(name, body, "preview-inner");
+  prepareImageSelector();
+
   onMount(() => {
     setEditor(new EasyMDE({
       autoDownloadFontAwesome: false,
       autofocus: true,
-      element: document.getElementById("editor")!.firstChild as HTMLElement,
+      element: editorArea,
       indentWithTabs: false,
       parsingConfig: {
         allowAtxHeaderWithoutSpace: true,
@@ -141,6 +144,4 @@
       editorOnChange(refreshAction);
     });
   });
-
-  prepareImageSelector();
 </script>

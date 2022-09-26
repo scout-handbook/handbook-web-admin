@@ -9,7 +9,7 @@
   import { APIResponse } from "../../ts/admin/interfaces/APIResponse";
   import { dialog } from "../../ts/admin/UI/dialog";
   import { editor } from "../../ts/admin/lessonEditor/editor";
-  import LessonEditor from "./LessonEditor.svelte";
+  import LessonEditor from "./components/LessonEditor.svelte";
   import { LESSONS, metadataEvent } from "../../ts/admin/metadata";
   import { loadingIndicatorVisible } from "../../ts/admin/stores";
   import { Payload } from "../../ts/admin/interfaces/Payload";

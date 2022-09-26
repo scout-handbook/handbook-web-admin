@@ -10,7 +10,7 @@
   import { ActionQueue } from "../../ts/admin/tools/ActionQueue";
   import { authFailHandler, request } from "../../ts/admin/tools/request";
   import { editor, setChanged } from "../../ts/admin/lessonEditor/editor";
-  import LessonEditor from "./LessonEditor.svelte";
+  import LessonEditor from "./components/LessonEditor.svelte";
   import { loadingIndicatorVisible } from "../../ts/admin/stores";
   import { Payload } from "../../ts/admin/interfaces/Payload";
   import { RequestResponse } from "../../ts/admin/interfaces/RequestResponse";
