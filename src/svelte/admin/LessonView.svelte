@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Link } from "svelte-navigator";
+  import { Link, navigate } from "svelte-navigator";
 
   import { addField } from "../../ts/admin/actions/addField";
   import { addOnClicks } from "../../ts/admin/tools/addOnClicks";
@@ -8,13 +8,19 @@
   import { config } from "../../ts/admin/stores";
   import { deleteFieldOnClick } from "../../ts/admin/actions/deleteField";
   import { deleteLessonOnClick } from "../../ts/admin/actions/deleteLesson";
+  import { Field } from "../../ts/admin/interfaces/Field";
   import { getElementsByClassName } from "../../ts/admin/tools/getElementsByClassName";
+  import { IDList } from "../../ts/admin/IDList";
+  import { Lesson } from "../../ts/admin/interfaces/Lesson";
   import { Loginstate } from "../../ts/admin/interfaces/Loginstate";
   import { refreshLogin } from "../../ts/admin/tools/refreshLogin";
-  import { renderLessonList } from "../../ts/admin/views/mainSubviews/lesson";
+  import { renderLessonListLesson } from "../../ts/admin/views/mainSubviews/lesson";
   import { restoreLesson } from "../../ts/admin/actions/restoreLesson";
 
+  export let fields: IDList<Field>;
+  export let lessons: IDList<Lesson>;
   export let loginstate: Loginstate;
+
   $: adminPermissions = loginstate.role === "administrator" || loginstate.role === "superuser";
 
   const nodes = getElementsByClassName("top-bar-tab");
@@ -42,7 +48,7 @@
 
 <h1>{$config["site-name"] + " - Lekce"}</h1>
 {#if adminPermissions}
-  <div class="button green-button" id="add-field" on:click={addField}>
+  <div class="button green-button" id="add-field" on:click={() => {addField();}}>
     <i class="icon-plus" />
     Přidat oblast
   </div>
@@ -57,4 +63,33 @@
     Smazané lekce
   </div>
 {/if}
-{@html renderLessonList()}
+{#each lessons.asArray() as {id, value: lesson}}
+  {#if (fields.filter(function (_, field) {
+    return field.lessons.indexOf(id) >= 0;
+  }).empty())}
+    {@html renderLessonListLesson(id, lesson, "")}
+  {/if}
+{/each}
+{#each fields.asArray() as {id, value: field}}
+  <br>
+  <h2 class="main-page">{field.name}</h2>
+  {#if adminPermissions}
+    <div class="button cyan-button changeField" data-id={id}>
+      <i class="icon-pencil" />
+      Upravit
+    </div>
+    <div class="button red-button deleteField" data-id={id}>
+      <i class="icon-trash-empty" />
+      Smazat
+    </div>
+  {/if}
+  <div class="button green-button addLessonInField" data-id={id}>
+    <i class="icon-plus" />
+    Přidat lekci
+  </div>
+  {#each lessons.asArray() as {id: lessonId, value: lesson}}
+    {#if field.lessons.indexOf(lessonId) >= 0}
+      {@html renderLessonListLesson(lessonId, lesson, " second-level")}
+    {/if}
+  {/each}
+{/each}
