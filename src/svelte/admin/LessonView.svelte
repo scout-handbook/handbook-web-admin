@@ -29,18 +29,6 @@
   }
   document.getElementById("lesson-manager")!.className += " active-top-bar-tab";
 
-  addOnClicks("changeField", changeFieldOnClick);
-  addOnClicks("deleteField", deleteFieldOnClick);
-  const nodes2 = getElementsByClassName(
-    "addLessonInField",
-    document.getElementsByTagName("main")[0]
-  );
-  for (let i = 0; i < nodes2.length; i++) {
-    (nodes2[i] as HTMLElement).onclick = () => {
-      const fieldId = (nodes2[i] as HTMLElement).dataset.id!;
-      navigate("/admin/lessons/add?field=" + fieldId);
-    };
-  }
   addOnClicks("changeLesson", changeLessonOnClick);
   addOnClicks("deleteLesson", deleteLessonOnClick);
   refreshLogin(true);
@@ -64,6 +52,7 @@
   </div>
 {/if}
 {#each lessons.asArray() as {id, value: lesson}}
+  <!-- TODO: Precompute -->
   {#if (fields.filter(function (_, field) {
     return field.lessons.indexOf(id) >= 0;
   }).empty())}
@@ -74,19 +63,19 @@
   <br>
   <h2 class="main-page">{field.name}</h2>
   {#if adminPermissions}
-    <div class="button cyan-button changeField" data-id={id}>
+    <div class="button cyan-button changeField" data-id={id} on:click={changeFieldOnClick}>
       <i class="icon-pencil" />
       Upravit
     </div>
-    <div class="button red-button deleteField" data-id={id}>
+    <div class="button red-button deleteField" data-id={id} on:click={deleteFieldOnClick}>
       <i class="icon-trash-empty" />
       Smazat
     </div>
   {/if}
-  <div class="button green-button addLessonInField" data-id={id}>
+  <Link class="button green-button addLessonInField" data-id={id} to={"/lessons/add?field=" + id}>
     <i class="icon-plus" />
     Přidat lekci
-  </div>
+  </Link>
   {#each lessons.asArray() as {id: lessonId, value: lesson}}
     {#if field.lessons.indexOf(lessonId) >= 0}
       {@html renderLessonListLesson(lessonId, lesson, " second-level")}
