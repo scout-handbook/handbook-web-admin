@@ -14,7 +14,13 @@
 </script>
 
 <h1>{$config["site-name"] + " - Obrázky"}</h1>
-<div class="button green-button" id="addImage" on:click={() => {addImage(false);}}>
+<div
+  id="addImage"
+  class="button green-button"
+  on:click={() => {
+    addImage(false);
+  }}
+>
   <i class="icon-plus" />
   Nahrát
 </div>
