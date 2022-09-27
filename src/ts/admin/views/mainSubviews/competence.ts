@@ -1,13 +1,6 @@
-import { addCompetence } from "../../actions/addCompetence";
-import { addOnClicks } from "../../tools/addOnClicks";
-import { changeCompetenceOnClick } from "../../actions/changeCompetence";
 import { COMPETENCES, LOGINSTATE } from "../../metadata";
-import { deleteCompetenceOnClick } from "../../actions/deleteCompetence";
-import { getElementsByClassName } from "../../tools/getElementsByClassName";
-import { refreshLogin } from "../../tools/refreshLogin";
-import { setMainPageTab } from "../main";
 
-function renderCompetenceList(): string {
+export function renderCompetenceList(): string {
   let html = "";
   COMPETENCES.iterate(function (id, competence) {
     html +=
@@ -35,33 +28,4 @@ function renderCompetenceList(): string {
       "</span><br>";
   });
   return html;
-}
-
-export function showCompetenceSubview(noHistory: boolean): void {
-  setMainPageTab("competences");
-  const nodes = getElementsByClassName("top-bar-tab");
-  for (let i = 0; i < nodes.length; i++) {
-    nodes[i].className = "top-bar-tab";
-  }
-  document.getElementById("competence-manager")!.className +=
-    " active-top-bar-tab";
-  let html = "<h1>" + CONFIG["site-name"] + " - Kompetence</h1>";
-  if (LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser") {
-    html +=
-      '<div class="button green-button" id="addCompetence"><i class="icon-plus"></i>Přidat</div><br>';
-  }
-  html += renderCompetenceList();
-  document.getElementById("main-page")!.innerHTML = html;
-  document.getElementById("main-page-container")!.scrollTop = 0;
-
-  if (LOGINSTATE.role === "administrator" || LOGINSTATE.role === "superuser") {
-    document.getElementById("addCompetence")!.onclick = addCompetence;
-  }
-
-  addOnClicks("change-competence", changeCompetenceOnClick);
-  addOnClicks("delete-competence", deleteCompetenceOnClick);
-  if (!noHistory) {
-    history.pushState({ page: "competences" }, "title", "/admin/competences");
-  }
-  refreshLogin(true);
 }
