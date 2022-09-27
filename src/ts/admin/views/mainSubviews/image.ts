@@ -1,7 +1,6 @@
-import { addImage } from "../../actions/addImage";
 import { deleteImageOnClick } from "../../actions/deleteImage";
 import { getElementsByClassName } from "../../tools/getElementsByClassName";
-import { mainPageTab, setMainPageTab } from "../main";
+import { mainPageTab } from "../main";
 import { reAuthHandler, request } from "../../tools/request";
 import { refreshLogin } from "../../tools/refreshLogin";
 import { renderPagination } from "../../UI/pagination";
@@ -72,7 +71,7 @@ function showImageList(
   }
 }
 
-function downloadImageList(page: number, perPage: number): void {
+export function downloadImageList(page: number, perPage: number): void {
   document.getElementById("imageList")!.innerHTML =
     '<div id="embedded-spinner"></div>';
   request(
@@ -85,26 +84,4 @@ function downloadImageList(page: number, perPage: number): void {
     reAuthHandler
   );
   refreshLogin(true);
-}
-
-export function showImageSubview(noHistory: boolean): void {
-  setMainPageTab("images");
-  const nodes = getElementsByClassName("top-bar-tab");
-  for (let i = 0; i < nodes.length; i++) {
-    nodes[i].className = "top-bar-tab";
-  }
-  document.getElementById("image-manager")!.className += " active-top-bar-tab";
-  let html = "<h1>" + CONFIG["site-name"] + " - Obrázky</h1>";
-  html +=
-    '<div class="button green-button" id="addImage"><i class="icon-plus"></i>Nahrát</div>';
-  html += '<div id="imageList"></div>';
-  document.getElementById("main-page")!.innerHTML = html;
-
-  document.getElementById("addImage")!.onclick = function (): void {
-    addImage(false);
-  };
-  downloadImageList(1, 15);
-  if (!noHistory) {
-    history.pushState({ page: "images" }, "title", "/admin/images");
-  }
 }

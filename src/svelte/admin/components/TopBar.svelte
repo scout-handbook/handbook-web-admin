@@ -3,7 +3,6 @@
 
   import UserAccountBox from "./UserAccountBox.svelte";
   import { showGroupSubview } from "../../../ts/admin/views/mainSubviews/group";
-  import { showImageSubview } from "../../../ts/admin/views/mainSubviews/image";
   import { showUserSubview } from "../../../ts/admin/views/mainSubviews/user";
 </script>
 
@@ -17,15 +16,13 @@
   >
     Kompetence
   </Link>
-  <div
+  <Link
     id="image-manager"
     class="top-bar-tab"
-    on:click={() => {
-      showImageSubview(false);
-    }}
+    to="/images"
   >
     Obrázky
-  </div>
+  </Link>
   <div
     id="user-manager"
     class="top-bar-tab"
