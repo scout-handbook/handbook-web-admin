@@ -9,20 +9,10 @@
 <div id="top-bar">
   <UserAccountBox />
   <Link id="lesson-manager" class="top-bar-tab" to="/lessons">Lekce</Link>
-  <Link
-    id="competence-manager"
-    class="top-bar-tab"
-    to="/competences"
-  >
+  <Link id="competence-manager" class="top-bar-tab" to="/competences">
     Kompetence
   </Link>
-  <Link
-    id="image-manager"
-    class="top-bar-tab"
-    to="/images"
-  >
-    Obrázky
-  </Link>
+  <Link id="image-manager" class="top-bar-tab" to="/images">Obrázky</Link>
   <div
     id="user-manager"
     class="top-bar-tab"
