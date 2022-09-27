@@ -42,8 +42,16 @@
       <TopBar />
       <div id="main-page-container">
         <div id="main-page">
-          <!-- TODO -->
-          <div id="embedded-spinner" />
+          {#await Promise.all([$competences, $fields, $lessons, $loginstate])}
+            <div id="embedded-spinner" />
+          {:then [competencesValue, fieldsValue, lessonsValue, loginstateValue]}
+            <LessonView
+              competences={competencesValue}
+              fields={fieldsValue}
+              lessons={lessonsValue}
+              loginstate={loginstateValue}
+            />
+          {/await}
         </div>
       </div>
     </Route>
