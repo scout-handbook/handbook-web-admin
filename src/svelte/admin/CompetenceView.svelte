@@ -9,7 +9,6 @@
   import { IDList } from "../../ts/admin/IDList";
   import { Loginstate } from "../../ts/admin/interfaces/Loginstate";
   import { refreshLogin } from "../../ts/admin/tools/refreshLogin";
-  import { renderCompetenceList } from "../../ts/admin/views/mainSubviews/competence";
 
   export let competences: IDList<Competence>;
   export let loginstate: Loginstate;
@@ -40,4 +39,20 @@
   </div>
   <br />
 {/if}
-{@html renderCompetenceList()}
+{#each competences.asArray() as {id, value: competence}}
+  <h3 class = "main-page">{competence.number.toString() + ": " + competence.name}</h3>
+  <br />
+  {#if adminPermissions}
+    <div class="button cyan-button change-competence" data-id={id}>
+      <i class="icon-pencil"/>
+      Upravit
+    </div>
+    <div class="button red-button delete-competence" data-id={id}>
+      <i class="icon-trash-empty" />
+      Smazat
+    </div>
+    <br />
+  {/if}
+  <span class="main-page competence-description">{competence.description}</span>
+  <br />
+{/each}
