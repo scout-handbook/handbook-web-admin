@@ -2,7 +2,6 @@
   import { Link } from "svelte-navigator";
 
   import UserAccountBox from "./UserAccountBox.svelte";
-  import { showCompetenceSubview } from "../../../ts/admin/views/mainSubviews/competence";
   import { showGroupSubview } from "../../../ts/admin/views/mainSubviews/group";
   import { showImageSubview } from "../../../ts/admin/views/mainSubviews/image";
   import { showUserSubview } from "../../../ts/admin/views/mainSubviews/user";
@@ -11,15 +10,13 @@
 <div id="top-bar">
   <UserAccountBox />
   <Link id="lesson-manager" class="top-bar-tab" to="/lessons">Lekce</Link>
-  <div
+  <Link
     id="competence-manager"
     class="top-bar-tab"
-    on:click={() => {
-      showCompetenceSubview(false);
-    }}
+    to="/competences"
   >
     Kompetence
-  </div>
+  </Link>
   <div
     id="image-manager"
     class="top-bar-tab"
