@@ -1,6 +1,5 @@
 <script lang="ts">
   import { addCompetence } from "../../ts/admin/actions/addCompetence";
-  import { addOnClicks } from "../../ts/admin/tools/addOnClicks";
   import { changeCompetenceOnClick } from "../../ts/admin/actions/changeCompetence";
   import { Competence } from "../../ts/admin/interfaces/Competence";
   import { config } from "../../ts/admin/stores";
@@ -22,18 +21,12 @@
   document.getElementById("competence-manager")!.className +=
     " active-top-bar-tab";
 
-  if (adminPermissions) {
-    document.getElementById("addCompetence")!.onclick = addCompetence;
-  }
-
-  addOnClicks("change-competence", changeCompetenceOnClick);
-  addOnClicks("delete-competence", deleteCompetenceOnClick);
   refreshLogin(true);
 </script>
 
 <h1>{$config["site-name"] + " - Kompetence"}</h1>
 {#if adminPermissions}
-  <div class="button green-button" id="addCompetence">
+  <div class="button green-button" id="addCompetence" on:click={addCompetence}>
     <i class="icon-plus" />
     Přidat
   </div>
@@ -43,11 +36,11 @@
   <h3 class = "main-page">{competence.number.toString() + ": " + competence.name}</h3>
   <br />
   {#if adminPermissions}
-    <div class="button cyan-button change-competence" data-id={id}>
+    <div class="button cyan-button change-competence" data-id={id} on:click={changeCompetenceOnClick}>
       <i class="icon-pencil"/>
       Upravit
     </div>
-    <div class="button red-button delete-competence" data-id={id}>
+    <div class="button red-button delete-competence" data-id={id} on:click={deleteCompetenceOnClick}>
       <i class="icon-trash-empty" />
       Smazat
     </div>
