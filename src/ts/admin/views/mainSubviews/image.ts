@@ -1,12 +1,4 @@
-import { deleteImageOnClick } from "../../actions/deleteImage";
-import { getElementsByClassName } from "../../tools/getElementsByClassName";
-import { mainPageTab } from "../main";
-import { reAuthHandler, request } from "../../tools/request";
-import { refreshLogin } from "../../tools/refreshLogin";
-import { renderPagination } from "../../UI/pagination";
-import { RequestResponse } from "../../interfaces/RequestResponse";
-
-function showImagePreview(event: MouseEvent): void {
+export function showImagePreview(event: MouseEvent): void {
   const overlay = document.getElementById("overlay")!;
   overlay.style.display = "inline";
   overlay.style.cursor = "pointer";
@@ -23,65 +15,4 @@ function showImagePreview(event: MouseEvent): void {
     overlay.innerHTML = "";
     overlay.onclick = null;
   };
-}
-
-function showImageList(
-  list: Array<string>,
-  page: number,
-  perPage: number
-): void {
-  if (mainPageTab !== "images") {
-    return;
-  }
-  let html = "";
-  const start = perPage * (page - 1);
-  for (let i = start; i < Math.min(list.length, start + perPage); i++) {
-    html +=
-      '<div class="thumbnail-container"><div class="button-container"><img src="' +
-      CONFIG["api-uri"] +
-      "/v1.0/image/" +
-      list[i] +
-      '?quality=thumbnail" class="thumbnail-image" data-id="' +
-      list[i] +
-      '"><div class="button red-button delete-image" data-id="' +
-      list[i] +
-      '"><i class="icon-trash-empty"></i>Smazat</div></div></div>';
-  }
-  html += renderPagination(Math.ceil(list.length / perPage), page);
-  document.getElementById("imageList")!.innerHTML = html;
-
-  const ImageNodes = document
-    .getElementById("imageList")!
-    .getElementsByTagName("img");
-  for (let i = 0; i < ImageNodes.length; i++) {
-    ImageNodes[i].onclick = showImagePreview;
-  }
-  const deleteNodes = getElementsByClassName("delete-image");
-  for (let i = 0; i < deleteNodes.length; i++) {
-    (deleteNodes[i] as HTMLElement).onclick = deleteImageOnClick;
-  }
-  const paginationNodes = getElementsByClassName("pagination-button");
-  for (let i = 0; i < paginationNodes.length; i++) {
-    (paginationNodes[i] as HTMLElement).onclick = function (event): void {
-      downloadImageList(
-        parseInt((event.target as HTMLElement).dataset.page!, 10),
-        perPage
-      );
-    };
-  }
-}
-
-export function downloadImageList(page: number, perPage: number): void {
-  document.getElementById("imageList")!.innerHTML =
-    '<div id="embedded-spinner"></div>';
-  request(
-    CONFIG["api-uri"] + "/v1.0/image",
-    "GET",
-    {},
-    function (response: RequestResponse): void {
-      showImageList(response as Array<string>, page, perPage);
-    },
-    reAuthHandler
-  );
-  refreshLogin(true);
 }
