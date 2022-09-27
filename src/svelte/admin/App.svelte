@@ -4,6 +4,7 @@
   import AddLessonView from "./AddLessonView.svelte";
   import CompetenceView from "./CompetenceView.svelte";
   import EditLessonView from "./EditLessonView.svelte";
+  import ImageView from "./ImageView.svelte";
   import LessonView from "./LessonView.svelte";
   import LoadingIndicator from "./components/LoadingIndicator.svelte";
   import {
@@ -98,7 +99,7 @@
       <TopBar />
       <div id="main-page-container">
         <div id="main-page">
-          <div id="embedded-spinner" />
+          <ImageView />
         </div>
       </div>
     </Route>
