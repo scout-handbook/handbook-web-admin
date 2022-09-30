@@ -13,7 +13,9 @@ export function refreshLogin(
         AuthenticationException: function (): void {
           if (forceRelogin) {
             window.location.replace(
-              CONFIG["api-uri"] + "/v1.0/login?return-uri=" + window.location.pathname
+              CONFIG["api-uri"] +
+                "/v1.0/login?return-uri=" +
+                window.location.pathname
             );
           }
         },
