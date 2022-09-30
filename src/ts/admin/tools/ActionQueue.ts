@@ -2,7 +2,6 @@ import { Action } from "./Action";
 import { ActionCallback } from "./ActionCallback";
 import { deserializeAction, serializeAction } from "./Action";
 import { dialog } from "../UI/dialog";
-import { mainPageTab } from "../views/main";
 import { request } from "../tools/request";
 import { SerializedAction } from "../interfaces/SerializedAction";
 import { sidePanelClose } from "../UI/sidePanel";
@@ -77,7 +76,7 @@ export class ActionQueue {
         JSON.stringify(this.actions.map(serializeAction))
       );
       window.location.replace(
-        CONFIG["api-uri"] + "/v1.0/login?return-uri=/admin/" + mainPageTab
+        CONFIG["api-uri"] + "/v1.0/login?return-uri=" + window.location.pathname
       );
     } else {
       dialog(
