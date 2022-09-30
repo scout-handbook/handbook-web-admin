@@ -11,7 +11,7 @@ import {
 } from "./lessonEditor/imageSelector";
 import { metadataEvent } from "./metadata";
 import { sidePanelClose, sidePanelState } from "./UI/sidePanel";
-import { setMainPageTab, showMainView } from "./views/main";
+import { setMainPageTab } from "./views/main";
 
 function popback(): void {
   if (history.state) {
@@ -30,9 +30,6 @@ function popback(): void {
       }
     } else if (state.page) {
       setMainPageTab(state.page);
-      showMainView(true);
-    } else {
-      showMainView(false);
     }
   }
 }
