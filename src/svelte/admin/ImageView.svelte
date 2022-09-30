@@ -9,7 +9,6 @@
   import { refreshLogin } from "../../ts/admin/tools/refreshLogin";
   import { RequestResponse } from "../../ts/admin/interfaces/RequestResponse";
   import { renderPagination } from "../../ts/admin/UI/pagination";
-  import { showImagePreview } from "../../ts/admin/views/mainSubviews/image";
 
   let page = 1;
   const perPage = 15;
@@ -51,6 +50,25 @@
         }
       }, 100);
     });
+  }
+
+  function showImagePreview(event: MouseEvent): void {
+    const overlay = document.getElementById("overlay")!;
+    overlay.style.display = "inline";
+    overlay.style.cursor = "pointer";
+    const html =
+      '<img src="' +
+      CONFIG["api-uri"] +
+      "/v1.0/image/" +
+      (event.target as HTMLElement).dataset.id! +
+      '" class="preview-image">';
+    overlay.innerHTML = html;
+    overlay.onclick = function (): void {
+      overlay.style.display = "none";
+      overlay.style.cursor = "auto";
+      overlay.innerHTML = "";
+      overlay.onclick = null;
+    };
   }
 
   fixNavigation();
