@@ -1,3 +1,5 @@
+import { navigate } from "svelte-navigator";
+
 import { ActionCallback } from "./ActionCallback";
 import { ActionQueue, ActionQueueRetry } from "./ActionQueue";
 import { dialog } from "../UI/dialog";
@@ -7,7 +9,6 @@ import { Payload } from "../interfaces/Payload";
 import { refreshMetadata } from "../metadata";
 import { RequestResponse } from "../interfaces/RequestResponse";
 import { SerializedAction } from "../interfaces/SerializedAction";
-import { showMainView } from "../views/main";
 
 export class Action {
   public url: string;
@@ -55,7 +56,7 @@ export class Action {
     dialog("Akce byla úspěšná.", "OK");
     refreshMetadata();
     if (ActionQueueRetry) {
-      showMainView(false);
+      navigate("/admin/");
     } else {
       history.back();
     }
