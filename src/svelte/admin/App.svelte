@@ -10,11 +10,13 @@
   import {
     competences,
     fields,
+    groups,
     lessons,
     loginstate,
   } from "../../ts/admin/stores";
   import RestoreLessonView from "./RestoreLessonView.svelte";
   import TopBar from "./components/TopBar.svelte";
+  import UserView from "./UserView.svelte";
 </script>
 
 <div id="overlay" />
@@ -109,7 +111,11 @@
       <TopBar />
       <div id="main-page-container">
         <div id="main-page">
-          <div id="embedded-spinner" />
+          {#await Promise.all([$groups, $loginstate])}
+            <div id="embedded-spinner" />
+          {:then [groupsValue, loginstateValue]}
+            <UserView groups={groupsValue} loginstate={loginstateValue} />
+          {/await}
         </div>
       </div>
     </Route>
