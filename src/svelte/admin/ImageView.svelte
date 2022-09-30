@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { onMount } from "svelte";
-
   import { addImage } from "../../ts/admin/actions/addImage";
   import { config } from "../../ts/admin/stores";
   import { deleteImageOnClick } from "../../ts/admin/actions/deleteImage";
@@ -25,16 +23,6 @@
       },
       reAuthHandler
     );
-  });
-
-  // TODO: Remove this horrible hack
-  onMount(() => {
-    const nodes = getElementsByClassName("top-bar-tab");
-    for (let i = 0; i < nodes.length; i++) {
-      nodes[i].className = "top-bar-tab";
-    }
-    document.getElementById("image-manager")!.className +=
-      " active-top-bar-tab";
   });
 
   // TODO: Remove this horrible hack

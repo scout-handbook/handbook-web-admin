@@ -7,7 +7,6 @@
   import { config } from "../../ts/admin/stores";
   import { deleteFieldOnClick } from "../../ts/admin/actions/deleteField";
   import { Field } from "../../ts/admin/interfaces/Field";
-  import { getElementsByClassName } from "../../ts/admin/tools/getElementsByClassName";
   import { IDList } from "../../ts/admin/IDList";
   import { Lesson } from "../../ts/admin/interfaces/Lesson";
   import LessonViewLesson from "./LessonViewLesson.svelte";
@@ -22,12 +21,6 @@
 
   $: adminPermissions =
     loginstate.role === "administrator" || loginstate.role === "superuser";
-
-  const nodes = getElementsByClassName("top-bar-tab");
-  for (let i = 0; i < nodes.length; i++) {
-    nodes[i].className = "top-bar-tab";
-  }
-  document.getElementById("lesson-manager")!.className += " active-top-bar-tab";
 
   refreshLogin(true);
 </script>

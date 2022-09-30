@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { onMount } from "svelte";
-
   import { changeUserGroupsOnClick } from "../../ts/admin/actions/changeUserGroups";
   import { changeUserRoleOnClick } from "../../ts/admin/actions/changeUserRole";
   import { config } from "../../ts/admin/stores";
@@ -28,15 +26,6 @@
   let group = "00000000-0000-0000-0000-000000000000";
 
   let userListPromise: Promise<UserListResponse>;
-
-  // TODO: Remove this horrible hack
-  onMount(() => {
-    const nodes = getElementsByClassName("top-bar-tab");
-    for (let i = 0; i < nodes.length; i++) {
-      nodes[i].className = "top-bar-tab";
-    }
-    document.getElementById("user-manager")!.className += " active-top-bar-tab";
-  });
 
   function reload() {
     userListPromise = new Promise((resolve) => {
