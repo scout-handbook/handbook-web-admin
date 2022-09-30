@@ -40,7 +40,7 @@
 
   // TODO: Remove this horrible hack
   function fixNavigation() {
-    imageListPromise.then(() => {
+    void imageListPromise.then(() => {
       setTimeout(() => {
         const paginationNodes = getElementsByClassName("pagination-button");
         for (let i = 0; i < paginationNodes.length; i++) {
