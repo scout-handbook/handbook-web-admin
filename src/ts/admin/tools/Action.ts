@@ -6,7 +6,6 @@ import { ExceptionHandler } from "../interfaces/ExceptionHandler";
 import { Payload } from "../interfaces/Payload";
 import { refreshMetadata } from "../metadata";
 import { RequestResponse } from "../interfaces/RequestResponse";
-import { removeBeacon } from "../views/editLesson";
 import { SerializedAction } from "../interfaces/SerializedAction";
 import { showMainView } from "../views/main";
 
@@ -46,7 +45,7 @@ export class Action {
           actionQueue.fillID(response as string);
           break;
         case ActionCallback.RemoveBeacon:
-          removeBeacon();
+          window.onbeforeunload = null;
           break;
       }
     }
