@@ -4,7 +4,6 @@
   import { Competence } from "../../ts/admin/interfaces/Competence";
   import { config } from "../../ts/admin/stores";
   import { deleteCompetenceOnClick } from "../../ts/admin/actions/deleteCompetence";
-  import { getElementsByClassName } from "../../ts/admin/tools/getElementsByClassName";
   import { IDList } from "../../ts/admin/IDList";
   import { Loginstate } from "../../ts/admin/interfaces/Loginstate";
   import { refreshLogin } from "../../ts/admin/tools/refreshLogin";
@@ -14,13 +13,6 @@
 
   $: adminPermissions =
     loginstate.role === "administrator" || loginstate.role === "superuser";
-
-  const nodes = getElementsByClassName("top-bar-tab");
-  for (let i = 0; i < nodes.length; i++) {
-    nodes[i].className = "top-bar-tab";
-  }
-  document.getElementById("competence-manager")!.className +=
-    " active-top-bar-tab";
 
   refreshLogin(true);
 </script>
