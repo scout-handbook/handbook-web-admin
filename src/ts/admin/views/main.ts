@@ -1,6 +1,5 @@
 import { metadataEvent } from "../metadata";
 import { MainPageTab } from "../interfaces/MainPageTab";
-import { showGroupSubview } from "./mainSubviews/group";
 
 export let mainPageTab: MainPageTab = "lessons";
 
@@ -8,7 +7,7 @@ export function setMainPageTab(val: MainPageTab): void {
   mainPageTab = val;
 }
 
-function renderMainView(noHistory: boolean): void {
+function renderMainView(_: boolean): void {
   if (mainPageTab === "competences") {
     //showCompetenceSubview(noHistory);
   } else if (mainPageTab === "images") {
@@ -16,7 +15,7 @@ function renderMainView(noHistory: boolean): void {
   } else if (mainPageTab === "users") {
     //showUserSubview(noHistory);
   } else if (mainPageTab === "groups") {
-    showGroupSubview(noHistory);
+    //showGroupSubview(noHistory);
   } else {
     //showLessonSubview(noHistory);
   }

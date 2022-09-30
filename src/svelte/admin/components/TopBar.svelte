@@ -2,7 +2,6 @@
   import { Link } from "svelte-navigator";
 
   import UserAccountBox from "./UserAccountBox.svelte";
-  import { showGroupSubview } from "../../../ts/admin/views/mainSubviews/group";
 </script>
 
 <div id="top-bar">
@@ -13,13 +12,7 @@
   </Link>
   <Link id="image-manager" class="top-bar-tab" to="/images">Obrázky</Link>
   <Link id="user-manager" class="top-bar-tab" to="/users">Uživatelé</Link>
-  <div
-    id="group-manager"
-    class="top-bar-tab"
-    on:click={() => {
-      showGroupSubview(false);
-    }}
-  >
+  <Link id="group-manager" class="top-bar-tab" to="/groups">
     Uživatelské skupiny
-  </div>
+  </Link>
 </div>
