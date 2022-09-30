@@ -33,16 +33,28 @@
     <h3 class="main-page">{group.name}</h3>
   {/if}
   {#if adminPermissions}
-    <div class="button cyan-button changeGroup" data-id={id} on:click={changeGroupOnClick}>
+    <div
+      class="button cyan-button changeGroup"
+      data-id={id}
+      on:click={changeGroupOnClick}
+    >
       <i class="icon-pencil" />
       Upravit
     </div>
     {#if id !== "00000000-0000-0000-0000-000000000000"}
-      <div class="button red-button deleteGroup" data-id={id} on:click={deleteGroupOnClick}>
+      <div
+        class="button red-button deleteGroup"
+        data-id={id}
+        on:click={deleteGroupOnClick}
+      >
         <i class="icon-trash-empty" />
         Smazat
       </div>
-      <div class="button importGroup" data-id={id} on:click={importGroupOnClick}>
+      <div
+        class="button importGroup"
+        data-id={id}
+        on:click={importGroupOnClick}
+      >
         <i class="icon-user-plus" />
         Importovat ze SkautISu
       </div>

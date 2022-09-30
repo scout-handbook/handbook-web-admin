@@ -46,7 +46,7 @@
     overlay.style.cursor = "pointer";
     const html =
       '<img src="' +
-      CONFIG["api-uri"] +
+      $config["api-uri"] +
       "/v1.0/image/" +
       (event.target as HTMLElement).dataset.id! +
       '" class="preview-image">';
