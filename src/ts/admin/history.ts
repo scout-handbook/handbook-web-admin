@@ -11,7 +11,6 @@ import {
 } from "./lessonEditor/imageSelector";
 import { metadataEvent } from "./metadata";
 import { sidePanelClose, sidePanelState } from "./UI/sidePanel";
-import { setMainPageTab } from "./views/main";
 
 function popback(): void {
   if (history.state) {
@@ -28,8 +27,6 @@ function popback(): void {
           navigate("/admin/lessons/" + state.id! + "/edit");
         });
       }
-    } else if (state.page) {
-      setMainPageTab(state.page);
     }
   }
 }
