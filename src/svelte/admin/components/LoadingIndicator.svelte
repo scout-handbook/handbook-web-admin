@@ -3,11 +3,14 @@
     customProperties,
     loadingIndicatorVisible,
   } from "../../../ts/admin/stores";
+
+  $: ({ "--accent-color": accentColor, "--border-color": borderColor } =
+    $customProperties);
 </script>
 
 <div
-  style:border-color={$customProperties["--border-color"]}
-  style:border-top-color={$customProperties["--accent-color"]}
+  style:border-color={borderColor}
+  style:border-top-color={accentColor}
   style:display={$loadingIndicatorVisible ? "block" : "none"}
 />
 
