@@ -1,13 +1,13 @@
 <script lang="ts">
   import { addGroup } from "../../../ts/admin/actions/addGroup";
   import { changeGroupOnClick } from "../../../ts/admin/actions/changeGroup";
-  import { config } from "../../../ts/admin/stores";
   import { deleteGroupOnClick } from "../../../ts/admin/actions/deleteGroup";
   import { Group } from "../../../ts/admin/interfaces/Group";
   import { IDList } from "../../../ts/admin/IDList";
   import { importGroupOnClick } from "../../../ts/admin/actions/importGroup";
   import { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
+  import { siteName } from "../../../ts/admin/stores";
 
   export let groups: IDList<Group>;
   export let loginstate: Loginstate;
@@ -17,7 +17,7 @@
   refreshLogin(true);
 </script>
 
-<h1>{$config["site-name"] + " - Uživatelské skupiny"}</h1>
+<h1>{$siteName + " - Uživatelské skupiny"}</h1>
 {#if adminPermissions}
   <div id="addGroup" class="button green-button" on:click={addGroup}>
     <i class="icon-plus" />

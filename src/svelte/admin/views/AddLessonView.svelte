@@ -4,7 +4,7 @@
   import { Action } from "../../../ts/admin/tools/Action";
   import { ActionCallback } from "../../../ts/admin/tools/ActionCallback";
   import { ActionQueue } from "../../../ts/admin/tools/ActionQueue";
-  import { config } from "../../../ts/admin/stores";
+  import { apiUri } from "../../../ts/admin/stores";
   import {
     defaultBody,
     defaultName,
@@ -26,17 +26,14 @@
   }
 
   const aq = new ActionQueue([
-    new Action(
-      $config["api-uri"] + "/v1.0/lesson",
-      "POST",
-      addLessonPayloadBuilder,
-      [ActionCallback.FillID]
-    ),
+    new Action($apiUri + "/v1.0/lesson", "POST", addLessonPayloadBuilder, [
+      ActionCallback.FillID,
+    ]),
   ]);
   if (fieldID) {
     aq.actions.push(
       new Action(
-        $config["api-uri"] + "/v1.0/lesson/{id}/field",
+        $apiUri + "/v1.0/lesson/{id}/field",
         "PUT",
         function (): Payload {
           return { field: encodeURIComponent(fieldID) };

@@ -3,7 +3,7 @@
   import { ActionCallback } from "../../../ts/admin/tools/ActionCallback";
   import { ActionQueue } from "../../../ts/admin/tools/ActionQueue";
   import { APIResponse } from "../../../ts/admin/interfaces/APIResponse";
-  import { config } from "../../../ts/admin/stores";
+  import { apiUri } from "../../../ts/admin/stores";
   import { dialog } from "../../../ts/admin/UI/dialog";
   import { editor } from "../../../ts/admin/lessonEditor/editor";
   import LessonEditor from "../components/LessonEditor.svelte";
@@ -30,7 +30,7 @@
 
   const saveActionQueue = new ActionQueue([
     new Action(
-      $config["api-uri"] + "/v1.0/lesson/" + encodeURIComponent(lessonID),
+      $apiUri + "/v1.0/lesson/" + encodeURIComponent(lessonID),
       "PUT",
       saveLessonPayloadBuilder,
       [ActionCallback.RemoveBeacon],
@@ -40,7 +40,7 @@
 
   const discardActionQueue = new ActionQueue([
     new Action(
-      $config["api-uri"] + "/v1.0/mutex/" + encodeURIComponent(lessonID),
+      $apiUri + "/v1.0/mutex/" + encodeURIComponent(lessonID),
       "DELETE",
       undefined,
       [ActionCallback.RemoveBeacon, ActionCallback.DismissSpinner],
@@ -61,7 +61,7 @@
     const exceptionHandler = { NotFoundException: null };
     const actionQueue = new ActionQueue([
       new Action(
-        $config["api-uri"] + "/v1.0/mutex/" + encodeURIComponent(id),
+        $apiUri + "/v1.0/mutex/" + encodeURIComponent(id),
         "PUT",
         undefined,
         undefined,
@@ -74,7 +74,7 @@
   function sendBeacon(id: string): void {
     if (navigator.sendBeacon) {
       navigator.sendBeacon(
-        $config["api-uri"] + "/v1.0/mutex-beacon/" + encodeURIComponent(id)
+        $apiUri + "/v1.0/mutex-beacon/" + encodeURIComponent(id)
       );
     }
   }
@@ -94,7 +94,7 @@
 
   function getLessonEditView(id: string): void {
     request(
-      $config["api-uri"] + "/v1.0/lesson/" + encodeURIComponent(id),
+      $apiUri + "/v1.0/lesson/" + encodeURIComponent(id),
       "GET",
       {},
       function (response: RequestResponse): void {
@@ -117,7 +117,7 @@
     );
   };
   request(
-    $config["api-uri"] + "/v1.0/mutex/" + encodeURIComponent(lessonID),
+    $apiUri + "/v1.0/mutex/" + encodeURIComponent(lessonID),
     "POST",
     {},
     function (): void {

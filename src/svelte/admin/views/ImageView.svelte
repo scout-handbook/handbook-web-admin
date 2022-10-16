@@ -1,6 +1,6 @@
 <script lang="ts">
   import { addImage } from "../../../ts/admin/actions/addImage";
-  import { config } from "../../../ts/admin/stores";
+  import { apiUri, siteName } from "../../../ts/admin/stores";
   import { deleteImageOnClick } from "../../../ts/admin/actions/deleteImage";
   import { getElementsByClassName } from "../../../ts/admin/tools/getElementsByClassName";
   import { reAuthHandler, request } from "../../../ts/admin/tools/request";
@@ -15,7 +15,7 @@
 
   const imageListPromise: Promise<Array<string>> = new Promise((resolve) => {
     request(
-      $config["api-uri"] + "/v1.0/image",
+      $apiUri + "/v1.0/image",
       "GET",
       {},
       function (response: RequestResponse): void {
@@ -46,7 +46,7 @@
     overlay.style.cursor = "pointer";
     const html =
       '<img src="' +
-      $config["api-uri"] +
+      $apiUri +
       "/v1.0/image/" +
       (event.target as HTMLElement).dataset.id! +
       '" class="preview-image">';
@@ -63,7 +63,7 @@
   refreshLogin(true);
 </script>
 
-<h1>{$config["site-name"] + " - Obrázky"}</h1>
+<h1>{$siteName + " - Obrázky"}</h1>
 <div
   id="addImage"
   class="button green-button"
@@ -85,10 +85,7 @@
             class="thumbnail-image"
             alt={"Image " + image}
             data-id={image}
-            src={$config["api-uri"] +
-              "/v1.0/image/" +
-              image +
-              "?quality=thumbnail"}
+            src={$apiUri + "/v1.0/image/" + image + "?quality=thumbnail"}
             on:click={showImagePreview}
           />
           <div

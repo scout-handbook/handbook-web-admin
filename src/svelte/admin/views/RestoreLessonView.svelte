@@ -4,8 +4,8 @@
   import { Action } from "../../../ts/admin/tools/Action";
   import { ActionCallback } from "../../../ts/admin/tools/ActionCallback";
   import { ActionQueue } from "../../../ts/admin/tools/ActionQueue";
+  import { apiUri } from "../../../ts/admin/stores";
   import { authFailHandler, request } from "../../../ts/admin/tools/request";
-  import { config } from "../../../ts/admin/stores";
   import { editor, setChanged } from "../../../ts/admin/lessonEditor/editor";
   import LessonEditor from "../components/LessonEditor.svelte";
   import { loadingIndicatorVisible } from "../../../ts/admin/stores";
@@ -21,12 +21,9 @@
   let body = "";
 
   const saveActionQueue = new ActionQueue([
-    new Action(
-      $config["api-uri"] + "/v1.0/lesson",
-      "POST",
-      restoreLessonPayloadBuilder,
-      [ActionCallback.FillID]
-    ),
+    new Action($apiUri + "/v1.0/lesson", "POST", restoreLessonPayloadBuilder, [
+      ActionCallback.FillID,
+    ]),
   ]);
 
   function restoreLessonPayloadBuilder(): Payload {
@@ -40,11 +37,7 @@
 
   loadingIndicatorVisible.set(true);
   request(
-    $config["api-uri"] +
-      "/v1.0/deleted-lesson/" +
-      lessonID +
-      "/history/" +
-      version,
+    $apiUri + "/v1.0/deleted-lesson/" + lessonID + "/history/" + version,
     "GET",
     {},
     function (response: RequestResponse): void {

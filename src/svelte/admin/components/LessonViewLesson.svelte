@@ -1,8 +1,8 @@
 <script lang="ts">
   import { Link } from "svelte-navigator";
 
+  import { adminUri } from "../../../ts/admin/stores";
   import { Competence } from "../../../ts/admin/interfaces/Competence";
-  import { config } from "../../../ts/admin/stores";
   import { deleteLessonOnClick } from "../../../ts/admin/actions/deleteLesson";
   import { IDList } from "../../../ts/admin/IDList";
   import { Lesson } from "../../../ts/admin/interfaces/Lesson";
@@ -53,7 +53,7 @@
 {/if}
 <a
   class="button exportLesson"
-  href={$config["admin-uri"] + "/lesson/" + id}
+  href={$adminUri + "/lesson/" + id}
   rel="noopener noreferrer"
   target="_blank"
 >
