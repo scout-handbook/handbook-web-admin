@@ -1,20 +1,20 @@
 <script lang="ts">
-  import { changeUserGroupsOnClick } from "../../ts/admin/actions/changeUserGroups";
-  import { changeUserRoleOnClick } from "../../ts/admin/actions/changeUserRole";
-  import { config } from "../../ts/admin/stores";
-  import { getElementsByClassName } from "../../ts/admin/tools/getElementsByClassName";
-  import { Group } from "../../ts/admin/interfaces/Group";
-  import { IDList } from "../../ts/admin/IDList";
-  import { Loginstate } from "../../ts/admin/interfaces/Loginstate";
-  import { Payload } from "../../ts/admin/interfaces/Payload";
-  import { reAuthHandler, request } from "../../ts/admin/tools/request";
-  import { refreshLogin } from "../../ts/admin/tools/refreshLogin";
-  import { renderPagination } from "../../ts/admin/UI/pagination";
-  import { RequestResponse } from "../../ts/admin/interfaces/RequestResponse";
-  import { Role } from "../../ts/admin/interfaces/Role";
-  import { User } from "../../ts/admin/interfaces/User";
-  import { UserListResponse } from "../../ts/admin/interfaces/UserListResponse";
-  import { UserSearchQuery } from "../../ts/admin/interfaces/UserSearchQuery";
+  import { changeUserGroupsOnClick } from "../../../ts/admin/actions/changeUserGroups";
+  import { changeUserRoleOnClick } from "../../../ts/admin/actions/changeUserRole";
+  import { config } from "../../../ts/admin/stores";
+  import { getElementsByClassName } from "../../../ts/admin/tools/getElementsByClassName";
+  import { Group } from "../../../ts/admin/interfaces/Group";
+  import { IDList } from "../../../ts/admin/IDList";
+  import { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
+  import { Payload } from "../../../ts/admin/interfaces/Payload";
+  import { reAuthHandler, request } from "../../../ts/admin/tools/request";
+  import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
+  import { renderPagination } from "../../../ts/admin/UI/pagination";
+  import { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
+  import { Role } from "../../../ts/admin/interfaces/Role";
+  import { User } from "../../../ts/admin/interfaces/User";
+  import { UserListResponse } from "../../../ts/admin/interfaces/UserListResponse";
+  import { UserSearchQuery } from "../../../ts/admin/interfaces/UserSearchQuery";
 
   export let groups: IDList<Group>;
   export let loginstate: Loginstate;

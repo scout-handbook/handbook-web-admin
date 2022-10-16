@@ -1,18 +1,18 @@
 <script lang="ts">
   import { Link } from "svelte-navigator";
 
-  import { addField } from "../../ts/admin/actions/addField";
-  import { changeFieldOnClick } from "../../ts/admin/actions/changeField";
-  import { Competence } from "../../ts/admin/interfaces/Competence";
-  import { config } from "../../ts/admin/stores";
-  import { deleteFieldOnClick } from "../../ts/admin/actions/deleteField";
-  import { Field } from "../../ts/admin/interfaces/Field";
-  import { IDList } from "../../ts/admin/IDList";
-  import { Lesson } from "../../ts/admin/interfaces/Lesson";
-  import LessonViewLesson from "./LessonViewLesson.svelte";
-  import { Loginstate } from "../../ts/admin/interfaces/Loginstate";
-  import { refreshLogin } from "../../ts/admin/tools/refreshLogin";
-  import { restoreLesson } from "../../ts/admin/actions/restoreLesson";
+  import { addField } from "../../../ts/admin/actions/addField";
+  import { changeFieldOnClick } from "../../../ts/admin/actions/changeField";
+  import { Competence } from "../../../ts/admin/interfaces/Competence";
+  import { config } from "../../../ts/admin/stores";
+  import { deleteFieldOnClick } from "../../../ts/admin/actions/deleteField";
+  import { Field } from "../../../ts/admin/interfaces/Field";
+  import { IDList } from "../../../ts/admin/IDList";
+  import { Lesson } from "../../../ts/admin/interfaces/Lesson";
+  import LessonViewLesson from "../components/LessonViewLesson.svelte";
+  import { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
+  import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
+  import { restoreLesson } from "../../../ts/admin/actions/restoreLesson";
 
   export let competences: IDList<Competence>;
   export let fields: IDList<Field>;
