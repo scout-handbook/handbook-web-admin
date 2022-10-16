@@ -1,10 +1,13 @@
 <script lang="ts">
-  import { config, loadingIndicatorVisible } from "../../../ts/admin/stores";
+  import {
+    customProperties,
+    loadingIndicatorVisible,
+  } from "../../../ts/admin/stores";
 </script>
 
 <div
-  style:border-color={$config["custom-properties"]["--border-color"]}
-  style:border-top-color={$config["custom-properties"]["--accent-color"]}
+  style:border-color={$customProperties["--border-color"]}
+  style:border-top-color={$customProperties["--accent-color"]}
   style:display={$loadingIndicatorVisible ? "block" : "none"}
 />
 

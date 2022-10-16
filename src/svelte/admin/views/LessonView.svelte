@@ -4,7 +4,6 @@
   import { addField } from "../../../ts/admin/actions/addField";
   import { changeFieldOnClick } from "../../../ts/admin/actions/changeField";
   import { Competence } from "../../../ts/admin/interfaces/Competence";
-  import { config } from "../../../ts/admin/stores";
   import { deleteFieldOnClick } from "../../../ts/admin/actions/deleteField";
   import { Field } from "../../../ts/admin/interfaces/Field";
   import { IDList } from "../../../ts/admin/IDList";
@@ -13,6 +12,7 @@
   import { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import { restoreLesson } from "../../../ts/admin/actions/restoreLesson";
+  import { siteName } from "../../../ts/admin/stores";
 
   export let competences: IDList<Competence>;
   export let fields: IDList<Field>;
@@ -25,7 +25,7 @@
   refreshLogin(true);
 </script>
 
-<h1>{$config["site-name"] + " - Lekce"}</h1>
+<h1>{$siteName + " - Lekce"}</h1>
 {#if adminPermissions}
   <div
     id="add-field"

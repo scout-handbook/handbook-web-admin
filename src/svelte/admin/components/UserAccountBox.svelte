@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { config, loginstate } from "../../../ts/admin/stores";
+  import { adminUri, frontendUri, loginstate } from "../../../ts/admin/stores";
 </script>
 
 <div id="user-account">
@@ -7,7 +7,7 @@
     <img
       id="user-avatar"
       alt="Account avatar"
-      src={$config["admin-uri"] + "/avatar.png"}
+      src={$adminUri + "/avatar.png"}
     />
     <div id="user-name">&nbsp;</div>
   {:then state}
@@ -21,16 +21,16 @@
       <img
         id="user-avatar"
         alt="Account avatar"
-        src={$config["admin-uri"] + "/avatar.png"}
+        src={$adminUri + "/avatar.png"}
       />
     {/if}
     <div id="user-name">{state.name}</div>
   {/await}
   <div id="log-link">
     <a
-      href={$config["admin-uri"] +
+      href={$adminUri +
         "/v1.0/logout?redirect-uri=" +
-        encodeURIComponent($config["frontend-uri"])}
+        encodeURIComponent($frontendUri)}
     >
       Odhlásit
     </a>

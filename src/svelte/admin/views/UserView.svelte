@@ -1,7 +1,7 @@
 <script lang="ts">
+  import { apiUri, siteName } from "../../../ts/admin/stores";
   import { changeUserGroupsOnClick } from "../../../ts/admin/actions/changeUserGroups";
   import { changeUserRoleOnClick } from "../../../ts/admin/actions/changeUserRole";
-  import { config } from "../../../ts/admin/stores";
   import { getElementsByClassName } from "../../../ts/admin/tools/getElementsByClassName";
   import { Group } from "../../../ts/admin/interfaces/Group";
   import { IDList } from "../../../ts/admin/IDList";
@@ -41,7 +41,7 @@
         payload.group = group;
       }
       request(
-        $config["api-uri"] + "/v1.0/user",
+        $apiUri + "/v1.0/user",
         "GET",
         payload as unknown as Payload,
         function (response: RequestResponse): void {
@@ -89,7 +89,7 @@
   }
 </script>
 
-<h1>{$config["site-name"] + " - Uživatelé"}</h1>
+<h1>{$siteName + " - Uživatelé"}</h1>
 <div id="userList">
   {#await userListPromise}
     <div id="embedded-spinner" />
