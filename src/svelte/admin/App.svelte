@@ -1,12 +1,12 @@
 <script lang="ts">
   import { Router, Route } from "svelte-navigator";
 
-  import AddLessonView from "./AddLessonView.svelte";
-  import CompetenceView from "./CompetenceView.svelte";
-  import EditLessonView from "./EditLessonView.svelte";
-  import GroupView from "./GroupView.svelte";
-  import ImageView from "./ImageView.svelte";
-  import LessonView from "./LessonView.svelte";
+  import AddLessonView from "./views/AddLessonView.svelte";
+  import CompetenceView from "./views/CompetenceView.svelte";
+  import EditLessonView from "./views/EditLessonView.svelte";
+  import GroupView from "./views/GroupView.svelte";
+  import ImageView from "./views/ImageView.svelte";
+  import LessonView from "./views/LessonView.svelte";
   import LoadingIndicator from "./components/LoadingIndicator.svelte";
   import {
     competences,
@@ -15,9 +15,9 @@
     lessons,
     loginstate,
   } from "../../ts/admin/stores";
-  import RestoreLessonView from "./RestoreLessonView.svelte";
+  import RestoreLessonView from "./views/RestoreLessonView.svelte";
   import TopBar from "./components/TopBar.svelte";
-  import UserView from "./UserView.svelte";
+  import UserView from "./views/UserView.svelte";
 </script>
 
 <div id="overlay" />

@@ -1,12 +1,12 @@
 <script lang="ts">
-  import { addCompetence } from "../../ts/admin/actions/addCompetence";
-  import { changeCompetenceOnClick } from "../../ts/admin/actions/changeCompetence";
-  import { Competence } from "../../ts/admin/interfaces/Competence";
-  import { config } from "../../ts/admin/stores";
-  import { deleteCompetenceOnClick } from "../../ts/admin/actions/deleteCompetence";
-  import { IDList } from "../../ts/admin/IDList";
-  import { Loginstate } from "../../ts/admin/interfaces/Loginstate";
-  import { refreshLogin } from "../../ts/admin/tools/refreshLogin";
+  import { addCompetence } from "../../../ts/admin/actions/addCompetence";
+  import { changeCompetenceOnClick } from "../../../ts/admin/actions/changeCompetence";
+  import { Competence } from "../../../ts/admin/interfaces/Competence";
+  import { config } from "../../../ts/admin/stores";
+  import { deleteCompetenceOnClick } from "../../../ts/admin/actions/deleteCompetence";
+  import { IDList } from "../../../ts/admin/IDList";
+  import { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
+  import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
 
   export let competences: IDList<Competence>;
   export let loginstate: Loginstate;

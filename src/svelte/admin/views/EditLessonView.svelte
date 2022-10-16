@@ -1,17 +1,17 @@
 <script lang="ts">
-  import { Action } from "../../ts/admin/tools/Action";
-  import { ActionCallback } from "../../ts/admin/tools/ActionCallback";
-  import { ActionQueue } from "../../ts/admin/tools/ActionQueue";
-  import { APIResponse } from "../../ts/admin/interfaces/APIResponse";
-  import { config } from "../../ts/admin/stores";
-  import { dialog } from "../../ts/admin/UI/dialog";
-  import { editor } from "../../ts/admin/lessonEditor/editor";
-  import LessonEditor from "./components/LessonEditor.svelte";
-  import { LESSONS, metadataEvent } from "../../ts/admin/metadata";
-  import { loadingIndicatorVisible } from "../../ts/admin/stores";
-  import { Payload } from "../../ts/admin/interfaces/Payload";
-  import { reAuthHandler, request } from "../../ts/admin/tools/request";
-  import { RequestResponse } from "../../ts/admin/interfaces/RequestResponse";
+  import { Action } from "../../../ts/admin/tools/Action";
+  import { ActionCallback } from "../../../ts/admin/tools/ActionCallback";
+  import { ActionQueue } from "../../../ts/admin/tools/ActionQueue";
+  import { APIResponse } from "../../../ts/admin/interfaces/APIResponse";
+  import { config } from "../../../ts/admin/stores";
+  import { dialog } from "../../../ts/admin/UI/dialog";
+  import { editor } from "../../../ts/admin/lessonEditor/editor";
+  import LessonEditor from "../components/LessonEditor.svelte";
+  import { LESSONS, metadataEvent } from "../../../ts/admin/metadata";
+  import { loadingIndicatorVisible } from "../../../ts/admin/stores";
+  import { Payload } from "../../../ts/admin/interfaces/Payload";
+  import { reAuthHandler, request } from "../../../ts/admin/tools/request";
+  import { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
 
   export let lessonID: string;
 

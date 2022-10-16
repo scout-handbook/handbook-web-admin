@@ -1,11 +1,11 @@
 <script lang="ts">
   import { Link } from "svelte-navigator";
 
-  import { Competence } from "../../ts/admin/interfaces/Competence";
-  import { config } from "../../ts/admin/stores";
-  import { deleteLessonOnClick } from "../../ts/admin/actions/deleteLesson";
-  import { IDList } from "../../ts/admin/IDList";
-  import { Lesson } from "../../ts/admin/interfaces/Lesson";
+  import { Competence } from "../../../ts/admin/interfaces/Competence";
+  import { config } from "../../../ts/admin/stores";
+  import { deleteLessonOnClick } from "../../../ts/admin/actions/deleteLesson";
+  import { IDList } from "../../../ts/admin/IDList";
+  import { Lesson } from "../../../ts/admin/interfaces/Lesson";
 
   export let competences: IDList<Competence>;
   export let adminPermissions: boolean;

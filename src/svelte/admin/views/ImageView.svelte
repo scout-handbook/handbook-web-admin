@@ -1,12 +1,12 @@
 <script lang="ts">
-  import { addImage } from "../../ts/admin/actions/addImage";
-  import { config } from "../../ts/admin/stores";
-  import { deleteImageOnClick } from "../../ts/admin/actions/deleteImage";
-  import { getElementsByClassName } from "../../ts/admin/tools/getElementsByClassName";
-  import { reAuthHandler, request } from "../../ts/admin/tools/request";
-  import { refreshLogin } from "../../ts/admin/tools/refreshLogin";
-  import { RequestResponse } from "../../ts/admin/interfaces/RequestResponse";
-  import { renderPagination } from "../../ts/admin/UI/pagination";
+  import { addImage } from "../../../ts/admin/actions/addImage";
+  import { config } from "../../../ts/admin/stores";
+  import { deleteImageOnClick } from "../../../ts/admin/actions/deleteImage";
+  import { getElementsByClassName } from "../../../ts/admin/tools/getElementsByClassName";
+  import { reAuthHandler, request } from "../../../ts/admin/tools/request";
+  import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
+  import { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
+  import { renderPagination } from "../../../ts/admin/UI/pagination";
 
   let page = 1;
   const perPage = 15;
