@@ -1,14 +1,10 @@
 import { Action } from "../tools/Action";
 import { ActionQueue } from "../tools/ActionQueue";
-import { APIResponse } from "../interfaces/APIResponse";
 import { dialog } from "../UI/dialog";
-import { getAttribute } from "../UI/button";
 import { LESSONS } from "../metadata";
-import { reAuthHandler, request } from "../tools/request";
 import { refreshLogin } from "../tools/refreshLogin";
-import { spinner } from "../UI/spinner";
 
-function deleteLessonDialog(id: string): void {
+export function deleteLessonDialog(id: string): void {
   const name = LESSONS.get(id)!.name;
 
   const saveExceptionHandler = {
@@ -50,25 +46,4 @@ function deleteLessonDialog(id: string): void {
   );
   history.pushState({ sidePanel: "open" }, "title", "/admin/lessons");
   refreshLogin();
-}
-
-export function deleteLessonOnClick(event: MouseEvent): void {
-  const id = getAttribute(event, "id");
-  spinner();
-  const exceptionHandler = reAuthHandler;
-  exceptionHandler["LockedException"] = function (response: APIResponse): void {
-    dialog(
-      "Nelze smazat lekci, protože ji právě upravuje " + response.holder! + ".",
-      "OK"
-    );
-  };
-  request(
-    CONFIG["api-uri"] + "/v1.0/mutex/" + encodeURIComponent(id),
-    "POST",
-    {},
-    function (): void {
-      deleteLessonDialog(id);
-    },
-    exceptionHandler
-  );
 }

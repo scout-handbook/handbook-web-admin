@@ -3,7 +3,6 @@
 
   import { adminUri } from "../../../ts/admin/stores";
   import { Competence } from "../../../ts/admin/interfaces/Competence";
-  import { deleteLessonOnClick } from "../../../ts/admin/actions/deleteLesson";
   import { IDList } from "../../../ts/admin/IDList";
   import { Lesson } from "../../../ts/admin/interfaces/Lesson";
 
@@ -42,14 +41,15 @@
   Upravit
 </Link>
 {#if adminPermissions}
-  <div
+  <Link
     class="button red-button deleteLesson"
     data-id={id}
-    on:click={deleteLessonOnClick}
+    state={{ action: "delete-lesson", actionPayload: { lessonId: id } }}
+    to="/lessons"
   >
     <i class="icon-trash-empty" />
     Smazat
-  </div>
+  </Link>
 {/if}
 <a
   class="button exportLesson"
