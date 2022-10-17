@@ -1,0 +1,69 @@
+<script lang="ts">
+  import { customProperties } from "../../../ts/admin/stores";
+
+  export let body: string;
+  export let dismissButtonText: string;
+  export let confirmButtonText: string;
+  export let dismissCallback: () => void;
+  export let confirmCallback: () => void;
+
+  $: ({ "--overlay-color": overlayColor } = $customProperties);
+
+  function keypressHandler(event: KeyboardEvent): void {
+    if (event.key === "Enter") {
+      confirmCallback();
+    }
+  }
+</script>
+
+<svelte:window on:keypress={keypressHandler} />
+
+<div style:background-color={overlayColor} class="overlay" />
+<div class="dialog">
+  <div class="dialogText">
+    {body}
+  </div>
+  <div class="dismiss-text button yellow-button" on:click={dismissCallback}>
+    <i class="icon-cancel" />
+    {dismissButtonText}
+  </div>
+  <div class="confirm-text button" on:click={confirmCallback}>
+    <i class="icon-ok" />
+    {confirmButtonText}
+  </div>
+</div>
+
+<style>
+  .overlay {
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 9;
+  }
+
+  .dialog {
+    background-color: #fff;
+    border-radius: 5px;
+    height: 150px;
+    left: 50%;
+    padding: 40px;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 450px;
+    z-index: 9;
+  }
+
+  .dismiss-text,
+  .confirm-text {
+    bottom: 30px;
+    position: absolute;
+    right: 10px;
+  }
+
+  .dismiss-text {
+    right: 100px;
+  }
+</style>

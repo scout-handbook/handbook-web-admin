@@ -31,7 +31,7 @@
 </script>
 
 {#if action !== undefined}
-  <DeleteLessonDialog payload={actionPayload} />
+  <DeleteLessonDialog {lessons} payload={actionPayload} />
 {/if}
 
 <h1>{$siteName + " - Lekce"}</h1>
