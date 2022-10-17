@@ -4,16 +4,15 @@
   $: ({
     "--accent-color": accentColor,
     "--background-darker": backgroundDarker,
-    "--border-color": borderColor,
     "--overlay-color": overlayColor,
   } = $customProperties);
 </script>
 
-<div class="overlay" style:background-color={overlayColor} />
+<div style:background-color={overlayColor} class="overlay" />
 <div
-  class="spinner"
   style:border-color={backgroundDarker}
   style:border-top-color={accentColor}
+  class="spinner"
 />
 
 <style>
