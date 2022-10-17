@@ -1,10 +1,11 @@
 <script lang="ts">
-  import { Link } from "svelte-navigator";
+  import { Link, useLocation } from "svelte-navigator";
 
   import { addField } from "../../../ts/admin/actions/addField";
   import { changeFieldOnClick } from "../../../ts/admin/actions/changeField";
   import { Competence } from "../../../ts/admin/interfaces/Competence";
   import { deleteFieldOnClick } from "../../../ts/admin/actions/deleteField";
+  import DeleteLessonDialog from "../components/action-modals/DeleteLessonDialog.svelte";
   import { Field } from "../../../ts/admin/interfaces/Field";
   import { IDList } from "../../../ts/admin/IDList";
   import { Lesson } from "../../../ts/admin/interfaces/Lesson";
@@ -19,11 +20,19 @@
   export let lessons: IDList<Lesson>;
   export let loginstate: Loginstate;
 
+  const location = useLocation();
+  $: action = $location.state?.action as string;
+  $: actionPayload = $location.state?.actionPayload ?? {};
+
   $: adminPermissions =
     loginstate.role === "administrator" || loginstate.role === "superuser";
 
   refreshLogin(true);
 </script>
+
+{#if action !== undefined}
+  <DeleteLessonDialog payload={actionPayload} />
+{/if}
 
 <h1>{$siteName + " - Lekce"}</h1>
 {#if adminPermissions}
