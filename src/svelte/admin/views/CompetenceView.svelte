@@ -1,5 +1,7 @@
 <script lang="ts">
-  import { addCompetence } from "../../../ts/admin/actions/addCompetence";
+  import { Link, useLocation } from "svelte-navigator";
+
+  import AddCompetencePanel from "../components/action-modals/AddCompetencePanel.svelte";
   import { changeCompetenceOnClick } from "../../../ts/admin/actions/changeCompetence";
   import { Competence } from "../../../ts/admin/interfaces/Competence";
   import { deleteCompetenceOnClick } from "../../../ts/admin/actions/deleteCompetence";
@@ -11,18 +13,29 @@
   export let competences: IDList<Competence>;
   export let loginstate: Loginstate;
 
+  const location = useLocation();
+
   $: adminPermissions =
     loginstate.role === "administrator" || loginstate.role === "superuser";
 
   refreshLogin(true);
 </script>
 
+{#if $location.state?.action === "add-competence"}
+  <AddCompetencePanel />
+{/if}
+
 <h1>{$siteName + " - Kompetence"}</h1>
 {#if adminPermissions}
-  <div id="addCompetence" class="button green-button" on:click={addCompetence}>
+  <Link
+    id="addCompetence"
+    class="button green-button"
+    state={{ action: "add-competence" }}
+    to="/competences"
+  >
     <i class="icon-plus" />
     Přidat
-  </div>
+  </Link>
   <br />
 {/if}
 {#each competences.asArray() as { id, value: competence }}
