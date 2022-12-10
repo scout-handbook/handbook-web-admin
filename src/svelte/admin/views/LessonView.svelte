@@ -30,7 +30,7 @@
   refreshLogin(true);
 </script>
 
-{#if action !== undefined}
+{#if action === "delete-lesson"}
   <DeleteLessonDialog {lessons} payload={actionPayload} />
 {/if}
 
