@@ -21,7 +21,6 @@
         addCompetencePayloadBuilder
       ),
     ]).defaultDispatch(false);
-    navigate(-1);
   }
 
   function addCompetencePayloadBuilder(): Payload {
