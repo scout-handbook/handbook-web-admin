@@ -2,11 +2,9 @@ import { Action } from "../tools/Action";
 import { ActionQueue } from "../tools/ActionQueue";
 import { COMPETENCES } from "../metadata";
 import { dialog } from "../UI/dialog";
-import { getAttribute } from "../UI/button";
 import { refreshLogin } from "../tools/refreshLogin";
 
-export function deleteCompetenceOnClick(event: MouseEvent): void {
-  const id = getAttribute(event, "id");
+export function deleteCompetenceOnClick(id: string): void {
   const competence = COMPETENCES.get(id)!;
   const aq = new ActionQueue([
     new Action(

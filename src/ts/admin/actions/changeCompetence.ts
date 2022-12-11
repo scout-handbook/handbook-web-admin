@@ -2,7 +2,6 @@ import { Action } from "../tools/Action";
 import { ActionQueue } from "../tools/ActionQueue";
 import { COMPETENCES } from "../metadata";
 import { dispatchIfChanged } from "../tools/dispatchIfChanged";
-import { getAttribute } from "../UI/button";
 import { Payload } from "../interfaces/Payload";
 import { refreshLogin } from "../tools/refreshLogin";
 import { sidePanelOpen } from "../UI/sidePanel";
@@ -24,7 +23,7 @@ function changeCompetencePayloadBuilder(): Payload {
   };
 }
 
-export function changeCompetenceOnClick(event: MouseEvent): void {
+export function changeCompetenceOnClick(id: string): void {
   competenceChanged = false;
   sidePanelOpen();
   let html =
@@ -33,7 +32,7 @@ export function changeCompetenceOnClick(event: MouseEvent): void {
     '<div class="button green-button" id="changeCompetenceSave"><i class="icon-floppy"></i>Uložit</div>';
   html +=
     '<h3 class="side-panel-title">Upravit kompetenci</h3><form id="side-panel-form">';
-  const competence = COMPETENCES.get(getAttribute(event, "id"))!;
+  const competence = COMPETENCES.get(id)!;
   html +=
     '<span class="competence-heading">Kompetence</span> <input type="text" class="form-text form-name" id="competence-number" value="' +
     competence.number.toString() +
@@ -57,7 +56,7 @@ export function changeCompetenceOnClick(event: MouseEvent): void {
     new Action(
       CONFIG["api-uri"] +
         "/v1.0/competence/" +
-        encodeURIComponent(getAttribute(event, "id")),
+        encodeURIComponent(id),
       "PUT",
       changeCompetencePayloadBuilder
     ),
