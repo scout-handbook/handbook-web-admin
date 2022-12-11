@@ -41,7 +41,7 @@
     });
   }
 
-  function showImagePreview(event: MouseEvent): void {
+  function showImagePreview(id: string): void {
     const overlay = document.getElementById("overlay")!;
     overlay.style.display = "inline";
     overlay.style.cursor = "pointer";
@@ -49,7 +49,7 @@
       '<img src="' +
       $apiUri +
       "/v1.0/image/" +
-      (event.target as HTMLElement).dataset.id! +
+      id +
       '" class="preview-image">';
     overlay.innerHTML = html;
     overlay.onclick = function (): void {
@@ -84,10 +84,9 @@
           <img
             class="thumbnail-image"
             alt={"Image " + image}
-            data-id={image}
             src={$apiUri + "/v1.0/image/" + image + "?quality=thumbnail"}
-            on:click={showImagePreview}
-            on:keypress={showImagePreview}
+            on:click={() => {showImagePreview(image);}}
+            on:keypress={() => {showImagePreview(image);}}
           />
           <Button
             icon="trash-empty"

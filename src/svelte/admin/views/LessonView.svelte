@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Link, useLocation, useNavigate } from "svelte-navigator";
+  import { useLocation, useNavigate } from "svelte-navigator";
 
   import { addField } from "../../../ts/admin/actions/addField";
   import Button from "../components/Button.svelte";
