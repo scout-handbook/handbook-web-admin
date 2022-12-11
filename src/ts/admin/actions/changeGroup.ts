@@ -1,7 +1,6 @@
 import { Action } from "../tools/Action";
 import { ActionQueue } from "../tools/ActionQueue";
 import { dispatchIfChanged } from "../tools/dispatchIfChanged";
-import { getAttribute } from "../UI/button";
 import { GROUPS } from "../metadata";
 import { Payload } from "../interfaces/Payload";
 import { refreshLogin } from "../tools/refreshLogin";
@@ -17,7 +16,7 @@ function changeGrouPayloadBuilder(): Payload {
   };
 }
 
-export function changeGroupOnClick(event: MouseEvent): void {
+export function changeGroupOnClick(id: string): void {
   groupChanged = false;
   sidePanelOpen();
   let html =
@@ -29,7 +28,7 @@ export function changeGroupOnClick(event: MouseEvent): void {
   html += '<legend for="fieldName">Název:</legend>';
   html +=
     '<input type="text" class="form-text" id="group-name" value="' +
-    GROUPS.get(getAttribute(event, "id"))!.name +
+    GROUPS.get(id)!.name +
     '" autocomplete="off"><br>';
   html += "</form>";
   document.getElementById("side-panel")!.innerHTML = html;
@@ -42,7 +41,7 @@ export function changeGroupOnClick(event: MouseEvent): void {
     new Action(
       CONFIG["api-uri"] +
         "/v1.0/group/" +
-        encodeURIComponent(getAttribute(event, "id")),
+        encodeURIComponent(id),
       "PUT",
       changeGrouPayloadBuilder
     ),

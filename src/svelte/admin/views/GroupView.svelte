@@ -1,5 +1,6 @@
 <script lang="ts">
   import { addGroup } from "../../../ts/admin/actions/addGroup";
+  import Button from "../components/Button.svelte";
   import { changeGroupOnClick } from "../../../ts/admin/actions/changeGroup";
   import { deleteGroupOnClick } from "../../../ts/admin/actions/deleteGroup";
   import { Group } from "../../../ts/admin/interfaces/Group";
@@ -19,10 +20,9 @@
 
 <h1>{$siteName + " - Uživatelské skupiny"}</h1>
 {#if adminPermissions}
-  <div id="addGroup" class="button green-button" on:click={addGroup}>
-    <i class="icon-plus" />
+  <Button icon="plus" green on:click={addGroup}>
     Přidat
-  </div>
+  </Button>
 {/if}
 {#each groups.asArray() as { id, value: group }}
   {#if id === "00000000-0000-0000-0000-000000000000"}
@@ -33,31 +33,27 @@
     <h3 class="main-page">{group.name}</h3>
   {/if}
   {#if adminPermissions}
-    <div
-      class="button cyan-button changeGroup"
-      data-id={id}
-      on:click={changeGroupOnClick}
+    <Button
+      icon="pencil"
+      cyan
+      on:click={() => {changeGroupOnClick(id);}}
     >
-      <i class="icon-pencil" />
       Upravit
-    </div>
+    </Button>
     {#if id !== "00000000-0000-0000-0000-000000000000"}
-      <div
-        class="button red-button deleteGroup"
-        data-id={id}
-        on:click={deleteGroupOnClick}
+      <Button
+        icon="trash-empty"
+        red
+        on:click={() => {deleteGroupOnClick(id);}}
       >
-        <i class="icon-trash-empty" />
         Smazat
-      </div>
-      <div
-        class="button importGroup"
-        data-id={id}
-        on:click={importGroupOnClick}
+      </Button>
+      <Button
+        icon="user-plus"
+        on:click={() => {importGroupOnClick(id);}}
       >
-        <i class="icon-user-plus" />
         Importovat ze SkautISu
-      </div>
+      </Button>
     {/if}
   {/if}
   {#if id !== "00000000-0000-0000-0000-000000000000"}
