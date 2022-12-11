@@ -2,7 +2,6 @@ import { AfterLoadEvent } from "../AfterLoadEvent";
 import { authFailHandler, reAuthHandler, request } from "../tools/request";
 import { dialog } from "../UI/dialog";
 import { Event } from "../interfaces/Event";
-import { getAttribute } from "../UI/button";
 import { GROUPS, refreshMetadata } from "../metadata";
 import { Participant } from "../interfaces/Participant";
 import { parseBoolForm } from "../tools/parseBoolForm";
@@ -188,7 +187,7 @@ function importGroupSelectEventRender(id: string, events: Array<Event>): void {
   };
 }
 
-export function importGroupOnClick(event: MouseEvent): void {
+export function importGroupOnClick(id: string): void {
   sidePanelOpen();
   let html =
     '<div class="button yellow-button" id="side-panel-cancel"><i class="icon-cancel"></i>Zrušit</div>';
@@ -196,7 +195,7 @@ export function importGroupOnClick(event: MouseEvent): void {
     '<div class="button green-button" id="importGroupNext"><i class="icon-fast-fw"></i>Pokračovat</div>';
   html +=
     '<h3 class="side-panel-title">Importovat ze SkautISu: ' +
-    GROUPS.get(getAttribute(event, "id"))!.name +
+    GROUPS.get(id)!.name +
     "</h3>";
   html += '<div id="importList"><div id="embedded-spinner"></div></div>';
   document.getElementById("side-panel")!.innerHTML = html;
@@ -209,7 +208,7 @@ export function importGroupOnClick(event: MouseEvent): void {
     {},
     function (response: RequestResponse): void {
       importGroupSelectEventRender(
-        getAttribute(event, "id"),
+        id,
         response as Array<Event>
       );
     },
