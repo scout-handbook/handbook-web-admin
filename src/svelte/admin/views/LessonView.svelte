@@ -2,6 +2,7 @@
   import { useLocation, useNavigate } from "svelte-navigator";
 
   import { addField } from "../../../ts/admin/actions/addField";
+  import AddFieldPanel from "../components/action-modals/AddFieldPanel.svelte";
   import Button from "../components/Button.svelte";
   import { changeFieldOnClick } from "../../../ts/admin/actions/changeField";
   import { Competence } from "../../../ts/admin/interfaces/Competence";
@@ -32,7 +33,9 @@
   refreshLogin(true);
 </script>
 
-{#if action === "delete-lesson"}
+{#if action === "add-field"}
+  <AddFieldPanel />
+{:else if action === "delete-lesson"}
   <DeleteLessonDialog {lessons} payload={actionPayload} />
 {/if}
 
@@ -42,7 +45,7 @@
     green
     icon="plus"
     on:click={() => {
-      addField();
+      navigate("/lessons", { state: { action: "add-field" } });
     }}
   >
     Přidat oblast
