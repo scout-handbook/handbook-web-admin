@@ -1,7 +1,6 @@
 import { Action } from "../tools/Action";
 import { ActionQueue } from "../tools/ActionQueue";
 import { dispatchIfChanged } from "../tools/dispatchIfChanged";
-import { getAttribute } from "../UI/button";
 import { GROUPS } from "../metadata";
 import { parseBoolForm } from "../tools/parseBoolForm";
 import { Payload } from "../interfaces/Payload";
@@ -23,7 +22,12 @@ function userGroupsOnclick(): void {
   groupsChanged = true;
 }
 
-export function changeUserGroupsOnClick(event: MouseEvent): void {
+// TODO: groups are passed JSON-stringified for no reason.
+export function changeUserGroupsOnClick(
+  id: string,
+  name: string,
+  groups: string
+): void {
   groupsChanged = false;
   sidePanelOpen();
   let html =
@@ -32,10 +36,10 @@ export function changeUserGroupsOnClick(event: MouseEvent): void {
     '<div class="button green-button" id="changeUserGroupsSave"><i class="icon-floppy"></i>Uložit</div>';
   html +=
     '<h3 class="side-panel-title">Změnit skupiny: ' +
-    getAttribute(event, "name") +
+    name +
     '</h3><form id="side-panel-form">';
   const currentGroups = JSON.parse(
-    getAttribute(event, "groups")
+    groups
   ) as Array<string>;
   let publicName = "";
   GROUPS.iterate(function (id, group) {
@@ -67,7 +71,7 @@ export function changeUserGroupsOnClick(event: MouseEvent): void {
     new Action(
       CONFIG["api-uri"] +
         "/v1.0/user/" +
-        encodeURIComponent(getAttribute(event, "id")) +
+        encodeURIComponent(id) +
         "/group",
       "PUT",
       changeUserPayloadBuilder

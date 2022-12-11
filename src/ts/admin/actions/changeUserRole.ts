@@ -1,7 +1,6 @@
 import { Action } from "../tools/Action";
 import { ActionQueue } from "../tools/ActionQueue";
 import { dispatchIfChanged } from "../tools/dispatchIfChanged";
-import { getAttribute } from "../UI/button";
 import { LOGINSTATE } from "../metadata";
 import { Payload } from "../interfaces/Payload";
 import { refreshLogin } from "../tools/refreshLogin";
@@ -14,7 +13,11 @@ function changeUserRolePayloadBuilder(): Payload {
   return { role: encodeURIComponent(sel.options[sel.selectedIndex].value) };
 }
 
-export function changeUserRoleOnClick(event: MouseEvent): void {
+export function changeUserRoleOnClick(
+  id: string,
+  name: string,
+  role: string
+): void {
   roleChanged = false;
   sidePanelOpen();
   let html =
@@ -23,7 +26,7 @@ export function changeUserRoleOnClick(event: MouseEvent): void {
     '<div class="button green-button" id="changeUserRoleSave"><i class="icon-floppy"></i>Uložit</div>';
   html +=
     '<h3 class="side-panel-title">Změnit roli: ' +
-    getAttribute(event, "name") +
+    name +
     '</h3><form id="side-panel-form">';
   html +=
     '<span class="role-text">Role: </span><select class="form-select" id="role-select">';
@@ -50,7 +53,7 @@ export function changeUserRoleOnClick(event: MouseEvent): void {
 
   (
     document.getElementById("role-select") as HTMLSelectElement
-  ).options.namedItem(getAttribute(event, "role"))!.selected = true;
+  ).options.namedItem(role)!.selected = true;
 
   document.getElementById("side-panel-cancel")!.onclick = function (): void {
     history.back();
@@ -60,7 +63,7 @@ export function changeUserRoleOnClick(event: MouseEvent): void {
     new Action(
       CONFIG["api-uri"] +
         "/v1.0/user/" +
-        encodeURIComponent(getAttribute(event, "id")) +
+        encodeURIComponent(id) +
         "/role",
       "PUT",
       changeUserRolePayloadBuilder
