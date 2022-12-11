@@ -2,6 +2,7 @@
   import { Link, useLocation } from "svelte-navigator";
 
   import AddCompetencePanel from "../components/action-modals/AddCompetencePanel.svelte";
+  import Button from "../components/Button.svelte";
   import { changeCompetenceOnClick } from "../../../ts/admin/actions/changeCompetence";
   import { Competence } from "../../../ts/admin/interfaces/Competence";
   import { deleteCompetenceOnClick } from "../../../ts/admin/actions/deleteCompetence";
@@ -42,26 +43,22 @@
   <h3 class="main-page">
     {competence.number.toString() + ": " + competence.name}
   </h3>
-  <br />
   {#if adminPermissions}
-    <div
-      class="button cyan-button change-competence"
-      data-id={id}
-      on:click={changeCompetenceOnClick}
-    >
-      <i class="icon-pencil" />
-      Upravit
+    <div class="buttons">
+      <Button icon="pencil" cyan on:click={() => {changeCompetenceOnClick(id);}}>
+        Upravit
+      </Button>
+      <Button icon="trash-empty" red on:click={() => {deleteCompetenceOnClick(id);}}>
+        Smazat
+      </Button>
     </div>
-    <div
-      class="button red-button delete-competence"
-      data-id={id}
-      on:click={deleteCompetenceOnClick}
-    >
-      <i class="icon-trash-empty" />
-      Smazat
-    </div>
-    <br />
   {/if}
   <span class="main-page competence-description">{competence.description}</span>
   <br />
 {/each}
+
+<style>
+  .buttons {
+    margin-bottom: 10px;
+  }
+</style>
