@@ -3,19 +3,19 @@
 </script>
 
 <div id="user-account">
-  {#await $loginstate}
+  {#if $loginstate === null}
     <img
       id="user-avatar"
       alt="Account avatar"
       src={$adminUri + "/avatar.png"}
     />
     <div id="user-name">&nbsp;</div>
-  {:then state}
-    {#if state.avatar}
+  {:else}
+    {#if $loginstate.avatar}
       <img
         id="user-avatar"
         alt="Account avatar"
-        src={"data:image/png;base64," + state.avatar}
+        src={"data:image/png;base64," + $loginstate.avatar}
       />
     {:else}
       <img
@@ -24,8 +24,8 @@
         src={$adminUri + "/avatar.png"}
       />
     {/if}
-    <div id="user-name">{state.name}</div>
-  {/await}
+    <div id="user-name">{$loginstate.name}</div>
+  {/if}
   <div id="log-link">
     <a
       href={$adminUri +

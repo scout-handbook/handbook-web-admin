@@ -16,12 +16,10 @@ export const customProperties = readable<ConfigCustomProperties>(
 export const frontendUri = readable<string>(CONFIG["frontend-uri"]);
 export const siteName = readable<string>(CONFIG["site-name"]);
 
-export const fields = writable<Promise<IDList<Field>>>(new Promise(() => {}));
-export const competences = writable<Promise<IDList<Competence>>>(
-  new Promise(() => {})
-);
-export const groups = writable<Promise<IDList<Group>>>(new Promise(() => {}));
-export const lessons = writable<Promise<IDList<Lesson>>>(new Promise(() => {}));
-export const loginstate = writable<Promise<Loginstate>>(new Promise(() => {}));
+export const fields = writable<IDList<Field> | null>(null);
+export const competences = writable<IDList<Competence> | null>(null);
+export const groups = writable<IDList<Group> | null>(null);
+export const lessons = writable<IDList<Lesson> | null>(null);
+export const loginstate = writable<Loginstate | null>(null);
 
 export const loadingIndicatorVisible = writable<boolean>(false);
