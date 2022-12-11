@@ -1,14 +1,14 @@
 <script lang="ts">
   import { customProperties } from "../../../ts/admin/stores";
+  import Overlay from "./Overlay.svelte";
 
   $: ({
     "--accent-color": accentColor,
     "--background-darker": backgroundDarker,
-    "--overlay-color": overlayColor,
   } = $customProperties);
 </script>
 
-<div style:background-color={overlayColor} class="overlay" />
+<Overlay />
 <div
   style:border-color={backgroundDarker}
   style:border-top-color={accentColor}
@@ -16,14 +16,6 @@
 />
 
 <style>
-  .overlay {
-    height: 100%;
-    left: 0;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 9;
-  }
   .spinner {
     animation: spin 2s linear infinite;
     border-radius: 50%;
