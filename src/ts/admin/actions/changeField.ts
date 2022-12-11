@@ -2,7 +2,6 @@ import { Action } from "../tools/Action";
 import { ActionQueue } from "../tools/ActionQueue";
 import { dispatchIfChanged } from "../tools/dispatchIfChanged";
 import { FIELDS } from "../metadata";
-import { getAttribute } from "../UI/button";
 import { openSidePanelImageSelector } from "../UI/sidePanelImageSelector";
 import { Payload } from "../interfaces/Payload";
 import { refreshLogin } from "../tools/refreshLogin";
@@ -130,8 +129,7 @@ export function changeField(
   refreshLogin();
 }
 
-export function changeFieldOnClick(event: MouseEvent): void {
-  const id = getAttribute(event, "id");
+export function changeFieldOnClick(id: string): void {
   const field = FIELDS.get(id)!;
   changeField({
     id: id,
