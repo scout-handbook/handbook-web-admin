@@ -4,6 +4,7 @@
   import { Action } from "../../../../ts/admin/tools/Action";
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
   import { apiUri } from "../../../../ts/admin/stores";
+  import Button from "../Button.svelte";
   import { Payload } from "../../../../ts/admin/interfaces/Payload";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import SidePanel from "../SidePanel.svelte";
@@ -41,24 +42,22 @@
 </script>
 
 <SidePanel>
-  <div
-    id="side-panel-cancel"
-    class="button yellow-button"
+  <Button
+    icon="cancel"
+    yellow
     on:click={() => {
       navigate(-1);
     }}
   >
-    <i class="icon-cancel" />
     Zrušit
-  </div>
-  <div
-    id="addCompetenceSave"
-    class="button green-button"
+  </Button>
+  <Button
+    icon="floppy"
+    green
     on:click={saveCallback}
   >
-    <i class="icon-floppy" />
     Uložit
-  </div>
+  </Button>
   <h3 class="side-panel-title">Přidat kompetenci</h3>
   <form id="side-panel-form">
     <span class="competence-heading">Kompetence</span>
