@@ -19,7 +19,7 @@
         "POST",
         addCompetencePayloadBuilder
       ),
-    ]).defaultDispatch();
+    ]).defaultDispatch(false);
     navigate(-1);
   }
 

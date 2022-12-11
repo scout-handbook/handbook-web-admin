@@ -58,7 +58,7 @@
           },
         }
       ),
-    ]).defaultDispatch();
+    ]).defaultDispatch(false);
     navigate(-1);
   }
 
