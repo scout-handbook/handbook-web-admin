@@ -54,9 +54,7 @@ export function changeCompetenceOnClick(id: string): void {
 
   const aq = new ActionQueue([
     new Action(
-      CONFIG["api-uri"] +
-        "/v1.0/competence/" +
-        encodeURIComponent(id),
+      CONFIG["api-uri"] + "/v1.0/competence/" + encodeURIComponent(id),
       "PUT",
       changeCompetencePayloadBuilder
     ),

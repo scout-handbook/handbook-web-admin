@@ -20,9 +20,7 @@
 
 <h1>{$siteName + " - Uživatelské skupiny"}</h1>
 {#if adminPermissions}
-  <Button icon="plus" green on:click={addGroup}>
-    Přidat
-  </Button>
+  <Button green icon="plus" on:click={addGroup}>Přidat</Button>
 {/if}
 {#each groups.asArray() as { id, value: group }}
   {#if id === "00000000-0000-0000-0000-000000000000"}
@@ -34,9 +32,11 @@
   {/if}
   {#if adminPermissions}
     <Button
-      icon="pencil"
       cyan
-      on:click={() => {changeGroupOnClick(id);}}
+      icon="pencil"
+      on:click={() => {
+        changeGroupOnClick(id);
+      }}
     >
       Upravit
     </Button>
@@ -44,13 +44,17 @@
       <Button
         icon="trash-empty"
         red
-        on:click={() => {deleteGroupOnClick(id);}}
+        on:click={() => {
+          deleteGroupOnClick(id);
+        }}
       >
         Smazat
       </Button>
       <Button
         icon="user-plus"
-        on:click={() => {importGroupOnClick(id);}}
+        on:click={() => {
+          importGroupOnClick(id);
+        }}
       >
         Importovat ze SkautISu
       </Button>

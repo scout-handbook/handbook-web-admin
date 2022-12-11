@@ -46,11 +46,7 @@
     overlay.style.display = "inline";
     overlay.style.cursor = "pointer";
     const html =
-      '<img src="' +
-      $apiUri +
-      "/v1.0/image/" +
-      id +
-      '" class="preview-image">';
+      '<img src="' + $apiUri + "/v1.0/image/" + id + '" class="preview-image">';
     overlay.innerHTML = html;
     overlay.onclick = function (): void {
       overlay.style.display = "none";
@@ -66,8 +62,8 @@
 
 <h1>{$siteName + " - Obrázky"}</h1>
 <Button
-  icon="plus"
   green
+  icon="plus"
   on:click={() => {
     addImage(false);
   }}
@@ -85,13 +81,19 @@
             class="thumbnail-image"
             alt={"Image " + image}
             src={$apiUri + "/v1.0/image/" + image + "?quality=thumbnail"}
-            on:click={() => {showImagePreview(image);}}
-            on:keypress={() => {showImagePreview(image);}}
+            on:click={() => {
+              showImagePreview(image);
+            }}
+            on:keypress={() => {
+              showImagePreview(image);
+            }}
           />
           <Button
             icon="trash-empty"
             red
-            on:click={() => {deleteImageOnClick(image);}}
+            on:click={() => {
+              deleteImageOnClick(image);
+            }}
           >
             Smazat
           </Button>

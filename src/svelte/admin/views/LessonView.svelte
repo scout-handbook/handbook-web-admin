@@ -39,8 +39,8 @@
 <h1>{$siteName + " - Lekce"}</h1>
 {#if adminPermissions}
   <Button
-    icon="plus"
     green
+    icon="plus"
     on:click={() => {
       addField();
     }}
@@ -48,13 +48,17 @@
     Přidat oblast
   </Button>
 {/if}
-<Button icon="plus" green on:click={() => {navigate("/lessons/add");}}>
+<Button
+  green
+  icon="plus"
+  on:click={() => {
+    navigate("/lessons/add");
+  }}
+>
   Přidat lekci
 </Button>
 {#if adminPermissions}
-  <Button icon="history" on:click={restoreLesson}>
-    Smazané lekce
-  </Button>
+  <Button icon="history" on:click={restoreLesson}>Smazané lekce</Button>
 {/if}
 {#each lessons.asArray() as { id, value: lesson }}
   <!-- TODO: Precompute -->
@@ -71,24 +75,30 @@
   <h2 class="main-page">{field.name}</h2>
   {#if adminPermissions}
     <Button
-      icon="pencil"
       cyan
-      on:click={() => {changeFieldOnClick(id);}}
+      icon="pencil"
+      on:click={() => {
+        changeFieldOnClick(id);
+      }}
     >
       Upravit
     </Button>
     <Button
       icon="trash-empty"
       red
-      on:click={() => {deleteFieldOnClick(id);}}
+      on:click={() => {
+        deleteFieldOnClick(id);
+      }}
     >
       Smazat
     </Button>
   {/if}
   <Button
-    icon="plus"
     green
-    on:click={() => {navigate("/lessons/add?field=" + id);}}
+    icon="plus"
+    on:click={() => {
+      navigate("/lessons/add?field=" + id);
+    }}
   >
     Přidat lekci
   </Button>

@@ -207,10 +207,7 @@ export function importGroupOnClick(id: string): void {
     "GET",
     {},
     function (response: RequestResponse): void {
-      importGroupSelectEventRender(
-        id,
-        response as Array<Event>
-      );
+      importGroupSelectEventRender(id, response as Array<Event>);
     },
     reAuthHandler
   );

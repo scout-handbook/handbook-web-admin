@@ -39,9 +39,7 @@ export function changeGroupOnClick(id: string): void {
 
   const aq = new ActionQueue([
     new Action(
-      CONFIG["api-uri"] +
-        "/v1.0/group/" +
-        encodeURIComponent(id),
+      CONFIG["api-uri"] + "/v1.0/group/" + encodeURIComponent(id),
       "PUT",
       changeGrouPayloadBuilder
     ),

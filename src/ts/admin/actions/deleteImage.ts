@@ -6,9 +6,7 @@ import { refreshLogin } from "../tools/refreshLogin";
 export function deleteImageOnClick(id: string): void {
   const aq = new ActionQueue([
     new Action(
-      CONFIG["api-uri"] +
-        "/v1.0/image/" +
-        encodeURIComponent(id),
+      CONFIG["api-uri"] + "/v1.0/image/" + encodeURIComponent(id),
       "DELETE"
     ),
   ]);
