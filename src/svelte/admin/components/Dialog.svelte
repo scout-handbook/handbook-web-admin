@@ -1,6 +1,8 @@
 <script lang="ts">
   import { customProperties } from "../../../ts/admin/stores";
 
+  import Button from "./Button.svelte";
+
   export let body: string;
   export let dismissButtonText: string;
   export let confirmButtonText: string;
@@ -23,13 +25,13 @@
   <div class="dialogText">
     {body}
   </div>
-  <div class="dismiss-text button yellow-button" on:click={dismissCallback}>
-    <i class="icon-cancel" />
-    {dismissButtonText}
-  </div>
-  <div class="confirm-text button" on:click={confirmCallback}>
-    <i class="icon-ok" />
-    {confirmButtonText}
+  <div class="buttons">
+    <Button icon="cancel" yellow on:click={dismissCallback}>
+      {dismissButtonText}
+    </Button>
+    <Button icon="ok" on:click={confirmCallback}>
+      {confirmButtonText}
+    </Button>
   </div>
 </div>
 
@@ -56,14 +58,9 @@
     z-index: 9;
   }
 
-  .dismiss-text,
-  .confirm-text {
-    bottom: 30px;
+  .buttons {
+    bottom: 25px;
     position: absolute;
     right: 10px;
-  }
-
-  .dismiss-text {
-    right: 100px;
   }
 </style>
