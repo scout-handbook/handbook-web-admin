@@ -1,6 +1,7 @@
 <script lang="ts">
   import { addImage } from "../../../ts/admin/actions/addImage";
   import { apiUri, siteName } from "../../../ts/admin/stores";
+  import Button from "../components/Button.svelte";
   import { deleteImageOnClick } from "../../../ts/admin/actions/deleteImage";
   import { getElementsByClassName } from "../../../ts/admin/tools/getElementsByClassName";
   import { reAuthHandler, request } from "../../../ts/admin/tools/request";
@@ -64,16 +65,15 @@
 </script>
 
 <h1>{$siteName + " - Obrázky"}</h1>
-<div
-  id="addImage"
-  class="button green-button"
+<Button
+  icon="plus"
+  green
   on:click={() => {
     addImage(false);
   }}
 >
-  <i class="icon-plus" />
   Nahrát
-</div>
+</Button>
 <div id="imageList">
   {#await imageListPromise}
     <div id="embedded-spinner" />
@@ -87,15 +87,15 @@
             data-id={image}
             src={$apiUri + "/v1.0/image/" + image + "?quality=thumbnail"}
             on:click={showImagePreview}
+            on:keypress={showImagePreview}
           />
-          <div
-            class="button red-button delete-image"
-            data-id={image}
-            on:click={deleteImageOnClick}
+          <Button
+            icon="trash-empty"
+            red
+            on:click={() => {deleteImageOnClick(image);}}
           >
-            <i class="icon-trash-empty" />
             Smazat
-          </div>
+          </Button>
         </div>
       </div>
     {/each}
