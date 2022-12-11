@@ -61,10 +61,7 @@ export function changeUserRoleOnClick(
 
   const aq = new ActionQueue([
     new Action(
-      CONFIG["api-uri"] +
-        "/v1.0/user/" +
-        encodeURIComponent(id) +
-        "/role",
+      CONFIG["api-uri"] + "/v1.0/user/" + encodeURIComponent(id) + "/role",
       "PUT",
       changeUserRolePayloadBuilder
     ),

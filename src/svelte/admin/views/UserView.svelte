@@ -187,9 +187,15 @@
             {#if loginstate.role === "administrator" || loginstate.role === "superuser"}
               <br />
               <Button
-                icon="pencil"
                 cyan
-                on:click={() => {changeUserRoleOnClick(user.id.toString(), user.name, user.role);}}
+                icon="pencil"
+                on:click={() => {
+                  changeUserRoleOnClick(
+                    user.id.toString(),
+                    user.name,
+                    user.role
+                  );
+                }}
               >
                 Upravit
               </Button>
@@ -202,9 +208,15 @@
               <br />
             {/if}
             <Button
-              icon="pencil"
               cyan
-              on:click={() => {changeUserGroupsOnClick(user.id.toString(), user.name, JSON.stringify(user.groups));}}
+              icon="pencil"
+              on:click={() => {
+                changeUserGroupsOnClick(
+                  user.id.toString(),
+                  user.name,
+                  JSON.stringify(user.groups)
+                );
+              }}
             >
               Upravit
             </Button>

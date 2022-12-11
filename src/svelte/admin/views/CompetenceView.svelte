@@ -45,10 +45,22 @@
   </h3>
   {#if adminPermissions}
     <div class="buttons">
-      <Button icon="pencil" cyan on:click={() => {changeCompetenceOnClick(id);}}>
+      <Button
+        cyan
+        icon="pencil"
+        on:click={() => {
+          changeCompetenceOnClick(id);
+        }}
+      >
         Upravit
       </Button>
-      <Button icon="trash-empty" red on:click={() => {deleteCompetenceOnClick(id);}}>
+      <Button
+        icon="trash-empty"
+        red
+        on:click={() => {
+          deleteCompetenceOnClick(id);
+        }}
+      >
         Smazat
       </Button>
     </div>

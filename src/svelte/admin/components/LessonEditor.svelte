@@ -180,7 +180,8 @@
 </div>
 
 <style>
-  .buttons-left, .buttons-right {
+  .buttons-left,
+  .buttons-right {
     bottom: 0;
     height: min-content;
     margin: auto 0;

@@ -38,9 +38,7 @@ export function changeUserGroupsOnClick(
     '<h3 class="side-panel-title">Změnit skupiny: ' +
     name +
     '</h3><form id="side-panel-form">';
-  const currentGroups = JSON.parse(
-    groups
-  ) as Array<string>;
+  const currentGroups = JSON.parse(groups) as Array<string>;
   let publicName = "";
   GROUPS.iterate(function (id, group) {
     if (id === "00000000-0000-0000-0000-000000000000") {
@@ -69,10 +67,7 @@ export function changeUserGroupsOnClick(
 
   const aq = new ActionQueue([
     new Action(
-      CONFIG["api-uri"] +
-        "/v1.0/user/" +
-        encodeURIComponent(id) +
-        "/group",
+      CONFIG["api-uri"] + "/v1.0/user/" + encodeURIComponent(id) + "/group",
       "PUT",
       changeUserPayloadBuilder
     ),
