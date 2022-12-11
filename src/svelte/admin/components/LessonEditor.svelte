@@ -3,6 +3,7 @@
   import { navigate } from "svelte-navigator";
 
   import { ActionQueue } from "../../../ts/admin/tools/ActionQueue";
+  import Button from "../components/Button.svelte";
   import { default as EasyMDE } from "easymde";
   import {
     changed,
@@ -121,56 +122,47 @@
 <div id="side-panel" />
 <div id="side-panel-overlay" />
 <header>
-  <div
-    id="discard"
-    class="button yellow-button"
-    on:click={() => {
-      editorDiscard(discardActionQueue);
-    }}
-  >
-    <i class="icon-cancel" />
-    Zrušit
-  </div>
-  <form>
-    <input
-      id="name"
-      class="form-text form-name"
-      autocomplete="off"
-      type="text"
-      value={lessonName}
-      on:input={() => {
-        editorOnChange(refreshAction);
+  <div class="buttons-left">
+    <Button
+      icon="cancel"
+      yellow
+      on:click={() => {
+        editorDiscard(discardActionQueue);
       }}
-      on:change={() => {
-        editorOnChange(refreshAction);
-      }}
-    />
-  </form>
-  <div id="save" class="button green-button" on:click={saveCallback}>
-    <i class="icon-floppy" />
-    Uložit
+    >
+      Zrušit
+    </Button>
+    <form class="name">
+      <input
+        id="name"
+        class="form-text form-name"
+        autocomplete="off"
+        type="text"
+        value={lessonName}
+        on:input={() => {
+          editorOnChange(refreshAction);
+        }}
+        on:change={() => {
+          editorOnChange(refreshAction);
+        }}
+      />
+    </form>
   </div>
-  <div
-    id="lesson-settings"
-    class="button"
-    on:click={() => {
-      lessonSettings(id, saveActionQueue, false);
-    }}
-  >
-    <i class="icon-cog" />
-    Nastavení
+  <div class="buttons-right">
+    <Button
+      icon="cog"
+      on:click={() => {
+        lessonSettings(id, saveActionQueue, false);
+      }}
+    >
+      Nastavení
+    </Button>
+    <Button green icon="floppy" on:click={saveCallback}>Uložit</Button>
   </div>
 </header>
 <div id="image-selector">
   <div id="image-scroller">
-    <div
-      id="close-image-selector"
-      class="button yellow-button"
-      on:click={toggleImageSelector}
-    >
-      <i class="icon-up-open" />
-      Zavřít
-    </div>
+    <Button icon="up-open" yellow on:click={toggleImageSelector}>Zavřít</Button>
     <!-- TODO: Re-enable uploads in editor without discarding its contents
     <div class="button green-button" on:click={() => {addImage(true);}}>
       <i class="icon-plus" />
@@ -186,3 +178,25 @@
 <div id="preview">
   <div id="preview-inner" />
 </div>
+
+<style>
+  .buttons-left, .buttons-right {
+    bottom: 0;
+    height: min-content;
+    margin: auto 0;
+    position: absolute;
+    top: 0;
+  }
+
+  .buttons-left {
+    left: 15px;
+  }
+
+  .buttons-right {
+    right: 0;
+  }
+
+  .name {
+    display: inline-block;
+  }
+</style>
