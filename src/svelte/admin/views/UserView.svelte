@@ -1,5 +1,6 @@
 <script lang="ts">
   import { apiUri, siteName } from "../../../ts/admin/stores";
+  import Button from "../components/Button.svelte";
   import { changeUserGroupsOnClick } from "../../../ts/admin/actions/changeUserGroups";
   import { changeUserRoleOnClick } from "../../../ts/admin/actions/changeUserRole";
   import { getElementsByClassName } from "../../../ts/admin/tools/getElementsByClassName";
@@ -139,21 +140,19 @@
           <option {id} value={id}>{group.name}</option>
         {/each}
       </select>
-      <div
-        id="user-search-button"
-        class="button"
+      <Button
+        icon="search"
         on:click={() => {
           page = 1;
           reload();
         }}
       >
-        <i class="icon-search" />
         Vyhledat
-      </div>
+      </Button>
       {#if searchName || role !== "all" || group !== "00000000-0000-0000-0000-000000000000"}
-        <div
-          id="user-search-cancel"
-          class="button yellow-button"
+        <Button
+          icon="cancel"
+          yellow
           on:click={() => {
             page = 1;
             role = "all";
@@ -162,9 +161,8 @@
             reload();
           }}
         >
-          <i class="icon-cancel" />
           Zrušit
-        </div>
+        </Button>
       {/if}
     </form>
     <table class="user-table">
@@ -188,16 +186,13 @@
             {/if}
             {#if loginstate.role === "administrator" || loginstate.role === "superuser"}
               <br />
-              <div
-                class="button cyan-button changeUserRole"
-                data-id={user.id.toString()}
-                data-name={user.name}
-                data-role={user.role}
-                on:click={changeUserRoleOnClick}
+              <Button
+                icon="pencil"
+                cyan
+                on:click={() => {changeUserRoleOnClick(user.id.toString(), user.name, user.role);}}
               >
-                <i class="icon-pencil" />
                 Upravit
-              </div>
+              </Button>
               <br />
             {/if}
           </td>
@@ -206,16 +201,13 @@
             {#if user.groups.length > 0}
               <br />
             {/if}
-            <div
-              class="button cyan-button changeUserGroups"
-              data-groups={JSON.stringify(user.groups)}
-              data-id={user.id.toString()}
-              data-name={user.name}
-              on:click={changeUserGroupsOnClick}
+            <Button
+              icon="pencil"
+              cyan
+              on:click={() => {changeUserGroupsOnClick(user.id.toString(), user.name, JSON.stringify(user.groups));}}
             >
-              <i class="icon-pencil" />
               Upravit
-            </div>
+            </Button>
           </td>
         </tr>
       {/each}
