@@ -1,7 +1,8 @@
 <script lang="ts">
-  import { Link, useLocation } from "svelte-navigator";
+  import { Link, useLocation, useNavigate } from "svelte-navigator";
 
   import { addField } from "../../../ts/admin/actions/addField";
+  import Button from "../components/Button.svelte";
   import { changeFieldOnClick } from "../../../ts/admin/actions/changeField";
   import { Competence } from "../../../ts/admin/interfaces/Competence";
   import { deleteFieldOnClick } from "../../../ts/admin/actions/deleteField";
@@ -20,6 +21,7 @@
   export let lessons: IDList<Lesson>;
   export let loginstate: Loginstate;
 
+  const navigate = useNavigate();
   const location = useLocation();
   $: action = $location.state?.action as string;
   $: actionPayload = $location.state?.actionPayload ?? {};
@@ -36,26 +38,23 @@
 
 <h1>{$siteName + " - Lekce"}</h1>
 {#if adminPermissions}
-  <div
-    id="add-field"
-    class="button green-button"
+  <Button
+    icon="plus"
+    green
     on:click={() => {
       addField();
     }}
   >
-    <i class="icon-plus" />
     Přidat oblast
-  </div>
+  </Button>
 {/if}
-<Link id="add-lesson" class="button green-button" to="/lessons/add">
-  <i class="icon-plus" />
+<Button icon="plus" green on:click={() => {navigate("/lessons/add");}}>
   Přidat lekci
-</Link>
+</Button>
 {#if adminPermissions}
-  <div id="restore-lesson" class="button" on:click={restoreLesson}>
-    <i class="icon-history" />
+  <Button icon="history" on:click={restoreLesson}>
     Smazané lekce
-  </div>
+  </Button>
 {/if}
 {#each lessons.asArray() as { id, value: lesson }}
   <!-- TODO: Precompute -->
@@ -71,31 +70,28 @@
   <br />
   <h2 class="main-page">{field.name}</h2>
   {#if adminPermissions}
-    <div
-      class="button cyan-button changeField"
-      data-id={id}
-      on:click={changeFieldOnClick}
+    <Button
+      icon="pencil"
+      cyan
+      on:click={() => {changeFieldOnClick(id);}}
     >
-      <i class="icon-pencil" />
       Upravit
-    </div>
-    <div
-      class="button red-button deleteField"
-      data-id={id}
-      on:click={deleteFieldOnClick}
+    </Button>
+    <Button
+      icon="trash-empty"
+      red
+      on:click={() => {deleteFieldOnClick(id);}}
     >
-      <i class="icon-trash-empty" />
       Smazat
-    </div>
+    </Button>
   {/if}
-  <Link
-    class="button green-button addLessonInField"
-    data-id={id}
-    to={"/lessons/add?field=" + id}
+  <Button
+    icon="plus"
+    green
+    on:click={() => {navigate("/lessons/add?field=" + id);}}
   >
-    <i class="icon-plus" />
     Přidat lekci
-  </Link>
+  </Button>
   {#each lessons.asArray() as { id: lessonId, value: lesson }}
     {#if field.lessons.indexOf(lessonId) >= 0}
       <LessonViewLesson
