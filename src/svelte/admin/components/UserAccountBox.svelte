@@ -1,31 +1,21 @@
 <script lang="ts">
   import { adminUri, frontendUri, loginstate } from "../../../ts/admin/stores";
+
+  $: avatar = $loginstate
+    ? "data:image/png;base64," + $loginstate.avatar
+    : $adminUri + "/avatar.png";
+  $: name = $loginstate?.name;
 </script>
 
 <div id="user-account">
-  {#if $loginstate === null}
-    <img
-      id="user-avatar"
-      alt="Account avatar"
-      src={$adminUri + "/avatar.png"}
-    />
-    <div id="user-name">&nbsp;</div>
-  {:else}
-    {#if $loginstate.avatar}
-      <img
-        id="user-avatar"
-        alt="Account avatar"
-        src={"data:image/png;base64," + $loginstate.avatar}
-      />
+  <img id="user-avatar" alt="Account avatar" src={avatar} />
+  <div id="user-name">
+    {#if name}
+      {name}
     {:else}
-      <img
-        id="user-avatar"
-        alt="Account avatar"
-        src={$adminUri + "/avatar.png"}
-      />
+      &nbsp;
     {/if}
-    <div id="user-name">{$loginstate.name}</div>
-  {/if}
+  </div>
   <div id="log-link">
     <a
       href={$adminUri +
