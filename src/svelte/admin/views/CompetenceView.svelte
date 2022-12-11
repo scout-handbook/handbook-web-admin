@@ -15,6 +15,7 @@
   export let loginstate: Loginstate;
 
   const location = useLocation();
+  $: action = $location.state?.action;
 
   $: adminPermissions =
     loginstate.role === "administrator" || loginstate.role === "superuser";
@@ -22,7 +23,7 @@
   refreshLogin(true);
 </script>
 
-{#if $location.state?.action === "add-competence"}
+{#if action === "add-competence"}
   <AddCompetencePanel />
 {/if}
 
