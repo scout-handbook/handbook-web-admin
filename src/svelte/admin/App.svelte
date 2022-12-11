@@ -47,16 +47,16 @@
       <TopBar />
       <div id="main-page-container">
         <div id="main-page">
-          {#await Promise.all([$competences, $fields, $lessons, $loginstate])}
+          {#if $fields === null || $competences === null || $lessons === null || $loginstate === null}
             <div id="embedded-spinner" />
-          {:then [competencesValue, fieldsValue, lessonsValue, loginstateValue]}
+          {:else}
             <LessonView
-              competences={competencesValue}
-              fields={fieldsValue}
-              lessons={lessonsValue}
-              loginstate={loginstateValue}
+              competences={$competences}
+              fields={$fields}
+              lessons={$lessons}
+              loginstate={$loginstate}
             />
-          {/await}
+          {/if}
         </div>
       </div>
     </Route>
@@ -66,16 +66,16 @@
       <TopBar />
       <div id="main-page-container">
         <div id="main-page">
-          {#await Promise.all([$competences, $fields, $lessons, $loginstate])}
+          {#if $fields === null || $competences === null || $lessons === null || $loginstate === null}
             <div id="embedded-spinner" />
-          {:then [competencesValue, fieldsValue, lessonsValue, loginstateValue]}
+          {:else}
             <LessonView
-              competences={competencesValue}
-              fields={fieldsValue}
-              lessons={lessonsValue}
-              loginstate={loginstateValue}
+              competences={$competences}
+              fields={$fields}
+              lessons={$lessons}
+              loginstate={$loginstate}
             />
-          {/await}
+          {/if}
         </div>
       </div>
     </Route>
@@ -85,14 +85,14 @@
       <TopBar />
       <div id="main-page-container">
         <div id="main-page">
-          {#await Promise.all([$competences, $loginstate])}
+          {#if $competences === null || $loginstate === null}
             <div id="embedded-spinner" />
-          {:then [competencesValue, loginstateValue]}
+          {:else}
             <CompetenceView
-              competences={competencesValue}
-              loginstate={loginstateValue}
+              competences={$competences}
+              loginstate={$loginstate}
             />
-          {/await}
+          {/if}
         </div>
       </div>
     </Route>
@@ -112,11 +112,11 @@
       <TopBar />
       <div id="main-page-container">
         <div id="main-page">
-          {#await Promise.all([$groups, $loginstate])}
+          {#if $groups === null || $loginstate === null}
             <div id="embedded-spinner" />
-          {:then [groupsValue, loginstateValue]}
-            <UserView groups={groupsValue} loginstate={loginstateValue} />
-          {/await}
+          {:else}
+            <UserView groups={$groups} loginstate={$loginstate} />
+          {/if}
         </div>
       </div>
     </Route>
@@ -126,11 +126,11 @@
       <TopBar />
       <div id="main-page-container">
         <div id="main-page">
-          {#await Promise.all([$groups, $loginstate])}
+          {#if $groups === null || $loginstate === null}
             <div id="embedded-spinner" />
-          {:then [groupsValue, loginstateValue]}
-            <GroupView groups={groupsValue} loginstate={loginstateValue} />
-          {/await}
+          {:else}
+            <GroupView groups={$groups} loginstate={$loginstate} />
+          {/if}
         </div>
       </div>
     </Route>
