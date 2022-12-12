@@ -1,4 +1,3 @@
-import { addField } from "../actions/addField";
 import { changeField } from "../actions/changeField";
 import { getElementsByClassName } from "../tools/getElementsByClassName";
 import { reAuthHandler, request } from "../tools/request";
@@ -44,9 +43,6 @@ export function openSidePanelImageSelector(
 
 export function closeSidePanelImageSelector(): void {
   switch (sidePanelImageSelectorState!.action) {
-    case "addField":
-      addField(sidePanelImageSelectorState!.state, true);
-      break;
     case "changeField":
       changeField(sidePanelImageSelectorState!.state, true, true);
       break;
