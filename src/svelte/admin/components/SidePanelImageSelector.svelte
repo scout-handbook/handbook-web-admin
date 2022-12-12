@@ -1,6 +1,6 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
-  import { fade, fly } from "svelte/transition";
+  import { fly } from "svelte/transition";
 
   import { apiUri } from "../../../ts/admin/stores";
   import Button from "./Button.svelte";
@@ -14,8 +14,7 @@
   let page = 1;
   const perPage = 15;
 
-  $: ({ "--border-color": borderColor, "--overlay-color": overlayColor } =
-    $customProperties);
+  $: ({ "--border-color": borderColor } = $customProperties);
 
   let imageListPromise: Promise<Array<string>>;
 
@@ -42,11 +41,6 @@
   refreshLogin();
 </script>
 
-<div
-  style:background-color={overlayColor}
-  class="overlay"
-  transition:fade={{ duration: 300 }}
-/>
 <div
   style:border-left={borderColor}
   class="panel"
@@ -179,15 +173,6 @@
 </div>
 
 <style>
-  .overlay {
-    height: 100%;
-    left: 0;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 9;
-  }
-
   .panel {
     background: white;
     bottom: 0;
