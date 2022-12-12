@@ -5,10 +5,10 @@
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
   import { apiUri } from "../../../../ts/admin/stores";
   import Button from "../Button.svelte";
-  import { openSidePanelImageSelector } from "../../../../ts/admin/UI/sidePanelImageSelector";
   import { Payload } from "../../../../ts/admin/interfaces/Payload";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import SidePanel from "../SidePanel.svelte";
+  import SidePanelImageSelector from "../SidePanelImageSelector.svelte";
 
   export let name = "Nová oblast";
   export let description = "Popis nové oblasti";
@@ -16,6 +16,9 @@
   export let icon = "00000000-0000-0000-0000-000000000000";
 
   const navigate = useNavigate();
+
+  let imageSelectorOpen = false;
+  let iconSelectorOpen = false;
 
   refreshLogin();
 
@@ -37,28 +40,6 @@
     };
   }
 
-  function fieldImageChange(): void {
-    openSidePanelImageSelector("addField", "image", {
-      name: (document.getElementById("fieldName") as HTMLInputElement).value,
-      description: (
-        document.getElementById("field-description") as HTMLInputElement
-      ).value,
-      image,
-      icon,
-    });
-  }
-
-  function fieldIconChange(): void {
-    openSidePanelImageSelector("addField", "icon", {
-      name: (document.getElementById("fieldName") as HTMLInputElement).value,
-      description: (
-        document.getElementById("field-description") as HTMLInputElement
-      ).value,
-      image,
-      icon,
-    });
-  }
-
   function saveCallback(): void {
     new ActionQueue([
       new Action($apiUri + "/v1.0/field", "POST", addFieldPayloadBuilder),
@@ -66,6 +47,28 @@
   }
 </script>
 
+{#if imageSelectorOpen}
+  <SidePanelImageSelector
+    on:cancel={() => {
+      imageSelectorOpen = false;
+    }}
+    on:select={(event) => {
+      image = event.detail;
+      imageSelectorOpen = false;
+    }}
+  />
+{/if}
+{#if iconSelectorOpen}
+  <SidePanelImageSelector
+    on:cancel={() => {
+      iconSelectorOpen = false;
+    }}
+    on:select={(event) => {
+      icon = event.detail;
+      iconSelectorOpen = false;
+    }}
+  />
+{/if}
 <SidePanel>
   <Button
     icon="cancel"
@@ -98,7 +101,12 @@
       src={$apiUri + "/v1.0/image/" + image + "?quality=thumbnail"}
     />
     <br />
-    <Button icon="pencil" on:click={fieldImageChange}>Změnit</Button>
+    <Button
+      icon="pencil"
+      on:click={() => {
+        imageSelectorOpen = true;
+      }}>Změnit</Button
+    >
     <legend for="fieldIcon">Ikona:</legend>
     <input id="fieldIcon" type="hidden" value={icon} />
     <img
@@ -106,6 +114,11 @@
       src={$apiUri + "/v1.0/image/" + icon + "?quality=thumbnail"}
     />
     <br />
-    <Button icon="pencil" on:click={fieldIconChange}>Změnit</Button>
+    <Button
+      icon="pencil"
+      on:click={() => {
+        iconSelectorOpen = true;
+      }}>Změnit</Button
+    >
   </form>
 </SidePanel>

@@ -15,7 +15,7 @@
 <div
   style:border-left={borderColor}
   class="panel"
-  transition:fly={{ x: 600, duration: 300 }}
+  transition:fly={{ x: 539, duration: 300 }}
 >
   <slot />
 </div>
@@ -33,6 +33,7 @@
   .panel {
     background: white;
     bottom: 0;
+    overflow-y: auto;
     padding: 30px;
     position: fixed;
     right: 0;
