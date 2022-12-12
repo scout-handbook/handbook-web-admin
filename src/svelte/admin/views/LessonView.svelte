@@ -1,7 +1,6 @@
 <script lang="ts">
   import { useLocation, useNavigate } from "svelte-navigator";
 
-  import { addField } from "../../../ts/admin/actions/addField";
   import AddFieldPanel from "../components/action-modals/AddFieldPanel.svelte";
   import Button from "../components/Button.svelte";
   import { changeFieldOnClick } from "../../../ts/admin/actions/changeField";

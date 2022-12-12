@@ -89,8 +89,8 @@
       id="field-description"
       class="form-text"
       autocomplete="off"
-      rows="5"
-    >{description}</textarea>
+      rows="5">{description}</textarea
+    >
     <legend for="fieldImage">Náhledový obrázek:</legend>
     <input id="fieldImage" type="hidden" value={image} />
     <img
