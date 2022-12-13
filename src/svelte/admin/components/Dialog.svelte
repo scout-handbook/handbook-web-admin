@@ -1,16 +1,17 @@
 <script lang="ts">
+  import { createEventDispatcher } from "svelte";
+
   import Button from "./Button.svelte";
   import Overlay from "./Overlay.svelte";
 
-  export let body: string;
-  export let dismissButtonText: string;
+  export let dismissButtonText = "";
   export let confirmButtonText: string;
-  export let dismissCallback: () => void;
-  export let confirmCallback: () => void;
+
+  const dispatch = createEventDispatcher();
 
   function keypressHandler(event: KeyboardEvent): void {
     if (event.key === "Enter") {
-      confirmCallback();
+      dispatch("confirm");
     }
   }
 </script>
@@ -20,13 +21,26 @@
 <Overlay />
 <div class="dialog">
   <div class="dialogText">
-    {body}
+    <slot />
   </div>
   <div class="buttons">
-    <Button icon="cancel" yellow on:click={dismissCallback}>
-      {dismissButtonText}
-    </Button>
-    <Button icon="ok" on:click={confirmCallback}>
+    {#if dismissButtonText !== ""}
+      <Button
+        icon="cancel"
+        yellow
+        on:click={() => {
+          dispatch("dismiss");
+        }}
+      >
+        {dismissButtonText}
+      </Button>
+    {/if}
+    <Button
+      icon="ok"
+      on:click={() => {
+        dispatch("confirm");
+      }}
+    >
       {confirmButtonText}
     </Button>
   </div>
