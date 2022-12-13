@@ -1,7 +1,8 @@
 <script lang="ts">
-  import { Link } from "svelte-navigator";
+  import { useNavigate } from "svelte-navigator";
 
   import { adminUri } from "../../../ts/admin/stores";
+  import Button from "./Button.svelte";
   import { Competence } from "../../../ts/admin/interfaces/Competence";
   import { IDList } from "../../../ts/admin/IDList";
   import { Lesson } from "../../../ts/admin/interfaces/Lesson";
@@ -11,6 +12,8 @@
   export let id: string;
   export let lesson: Lesson;
   export let secondLevel = false;
+
+  const navigate = useNavigate();
 
   function lessonCompetenceList(): string {
     let output = "";
@@ -32,34 +35,36 @@
 
 <br />
 <h3 class="main-page" class:second-level={secondLevel}>{lesson.name}</h3>
-<Link
-  class="button cyan-button changeLesson"
-  data-id={id}
-  to={"/lessons/" + id + "/edit"}
+<Button
+  cyan
+  icon="pencil"
+  on:click={() => {
+    navigate("/lessons/" + id + "/edit");
+  }}
 >
-  <i class="icon-pencil" />
   Upravit
-</Link>
+</Button>
 {#if adminPermissions}
-  <Link
-    class="button red-button deleteLesson"
-    data-id={id}
-    state={{ action: "delete-lesson", actionPayload: { lessonId: id } }}
-    to="/lessons"
+  <Button
+    icon="trash-empty"
+    red
+    on:click={() => {
+      navigate("/lessons", {
+        state: { action: "delete-lesson", actionPayload: { lessonId: id } },
+      });
+    }}
   >
-    <i class="icon-trash-empty" />
     Smazat
-  </Link>
+  </Button>
 {/if}
-<a
-  class="button exportLesson"
-  href={$adminUri + "/lesson/" + id}
-  rel="noopener noreferrer"
-  target="_blank"
+<Button
+  icon="file-pdf"
+  on:click={() => {
+    window.open($adminUri + "/lesson/" + id, "_blank", "noopener,noreferrer");
+  }}
 >
-  <i class="icon-file-pdf" />
   PDF
-</a>
+</Button>
 <br />
 <span class="main-page" class:second-level={secondLevel}>
   {lessonCompetenceList()}

@@ -20,7 +20,9 @@
   import UserView from "./views/UserView.svelte";
 </script>
 
+<!-- TODO: Remove legacy overlay -->
 <div id="overlay" />
+<!-- TODO: Remove legacy dialog -->
 <div id="dialog">
   <div id="dialogText" />
   <div id="dismiss-text" class="button yellow-button" />

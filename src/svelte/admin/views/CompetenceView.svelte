@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Link, useLocation } from "svelte-navigator";
+  import { useLocation, useNavigate } from "svelte-navigator";
 
   import AddCompetencePanel from "../components/action-modals/AddCompetencePanel.svelte";
   import Button from "../components/Button.svelte";
@@ -15,6 +15,7 @@
   export let loginstate: Loginstate;
 
   const location = useLocation();
+  const navigate = useNavigate();
   $: action = $location.state?.action;
 
   $: adminPermissions =
@@ -29,15 +30,15 @@
 
 <h1>{$siteName + " - Kompetence"}</h1>
 {#if adminPermissions}
-  <Link
-    id="addCompetence"
-    class="button green-button"
-    state={{ action: "add-competence" }}
-    to="/competences"
+  <Button
+    green
+    icon="plus"
+    on:click={() => {
+      navigate("/competences", { state: { action: "add-competence" } });
+    }}
   >
-    <i class="icon-plus" />
     Přidat
-  </Link>
+  </Button>
   <br />
 {/if}
 {#each competences.asArray() as { id, value: competence }}
