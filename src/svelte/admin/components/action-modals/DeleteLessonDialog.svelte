@@ -80,10 +80,11 @@
   <OverlayLoadingIndicator />
 {:then _}
   <Dialog
-    body={'Opravdu si přejete smazat lekci "' + name + '"?'}
     confirmButtonText="Ano"
-    {confirmCallback}
     dismissButtonText="Ne"
-    {dismissCallback}
-  />
+    on:confirm={confirmCallback}
+    on:dismiss={dismissCallback}
+  >
+    Opravdu si přejete smazat lekci "{name}"?
+  </Dialog>
 {/await}
