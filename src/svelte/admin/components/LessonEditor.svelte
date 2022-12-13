@@ -164,10 +164,14 @@
   <div id="image-scroller">
     <Button icon="up-open" yellow on:click={toggleImageSelector}>Zavřít</Button>
     <!-- TODO: Re-enable uploads in editor without discarding its contents
-    <div class="button green-button" on:click={() => {addImage(true);}}>
-      <i class="icon-plus" />
+    <Button
+      icon="plus"
+      green
+      on:click={() => {
+        addImage(true);
+      }}>
       Nahrát
-    </div>
+    </Button>
     -->
     <div id="image-wrapper" />
   </div>
