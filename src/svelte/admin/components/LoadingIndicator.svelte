@@ -1,7 +1,5 @@
 <script lang="ts">
-  import {
-    customProperties,
-  } from "../../../ts/admin/stores";
+  import { customProperties } from "../../../ts/admin/stores";
 
   $: ({
     "--accent-color": accentColor,
@@ -14,10 +12,7 @@
   $: indicatorColor = darkBackground ? backgroundDarker : borderColor;
 </script>
 
-<div
-  style:border-color={indicatorColor}
-  style:border-top-color={accentColor}
-/>
+<div style:border-color={indicatorColor} style:border-top-color={accentColor} />
 
 <style>
   div {
