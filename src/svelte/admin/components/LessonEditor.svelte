@@ -168,7 +168,7 @@
       icon="plus"
       green
       on:click={() => {
-        addImage(true);
+        addImage(true); // Removed
       }}>
       Nahrát
     </Button>
