@@ -3,7 +3,7 @@
 
   import AddFieldPanel from "../components/action-modals/AddFieldPanel.svelte";
   import Button from "../components/Button.svelte";
-  import { changeFieldOnClick } from "../../../ts/admin/actions/changeField";
+  import ChangeFieldPanel from "../components/action-modals/ChangeFieldPanel.svelte";
   import { Competence } from "../../../ts/admin/interfaces/Competence";
   import { deleteFieldOnClick } from "../../../ts/admin/actions/deleteField";
   import DeleteLessonDialog from "../components/action-modals/DeleteLessonDialog.svelte";
@@ -34,6 +34,8 @@
 
 {#if action === "add-field"}
   <AddFieldPanel />
+{:else if action === "change-field"}
+  <ChangeFieldPanel {fields} payload={actionPayload} />
 {:else if action === "delete-lesson"}
   <DeleteLessonDialog {lessons} payload={actionPayload} />
 {/if}
@@ -80,7 +82,9 @@
       cyan
       icon="pencil"
       on:click={() => {
-        changeFieldOnClick(id);
+        navigate("/lessons", {
+          state: { action: "change-field", actionPayload: { fieldId: id } },
+        });
       }}
     >
       Upravit
