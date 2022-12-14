@@ -3,7 +3,7 @@
 
   import AddCompetencePanel from "../components/action-modals/AddCompetencePanel.svelte";
   import Button from "../components/Button.svelte";
-  import { changeCompetenceOnClick } from "../../../ts/admin/actions/changeCompetence";
+  import ChangeCompetencePanel from "../components/action-modals/ChangeCompetencePanel.svelte";
   import { Competence } from "../../../ts/admin/interfaces/Competence";
   import { deleteCompetenceOnClick } from "../../../ts/admin/actions/deleteCompetence";
   import { IDList } from "../../../ts/admin/IDList";
@@ -17,6 +17,7 @@
   const location = useLocation();
   const navigate = useNavigate();
   $: action = $location.state?.action;
+  $: actionPayload = $location.state?.actionPayload ?? {};
 
   $: adminPermissions =
     loginstate.role === "administrator" || loginstate.role === "superuser";
@@ -26,6 +27,8 @@
 
 {#if action === "add-competence"}
   <AddCompetencePanel />
+{:else if action === "change-competence"}
+  <ChangeCompetencePanel {competences} payload={actionPayload} />
 {/if}
 
 <h1>{$siteName + " - Kompetence"}</h1>
@@ -51,7 +54,12 @@
         cyan
         icon="pencil"
         on:click={() => {
-          changeCompetenceOnClick(id);
+          navigate("/competences", {
+            state: {
+              action: "change-competence",
+              actionPayload: { competenceId: id },
+            },
+          });
         }}
       >
         Upravit

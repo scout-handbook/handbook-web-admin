@@ -23,7 +23,7 @@
 
   const navigate = useNavigate();
   const location = useLocation();
-  $: action = $location.state?.action as string;
+  $: action = $location.state?.action;
   $: actionPayload = $location.state?.actionPayload ?? {};
 
   $: adminPermissions =
