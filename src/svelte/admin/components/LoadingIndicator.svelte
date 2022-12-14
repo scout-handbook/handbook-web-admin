@@ -1,17 +1,22 @@
 <script lang="ts">
   import {
     customProperties,
-    loadingIndicatorVisible,
   } from "../../../ts/admin/stores";
 
-  $: ({ "--accent-color": accentColor, "--border-color": borderColor } =
-    $customProperties);
+  $: ({
+    "--accent-color": accentColor,
+    "--background-darker": backgroundDarker,
+    "--border-color": borderColor,
+  } = $customProperties);
+
+  export let darkBackground = false;
+
+  $: indicatorColor = darkBackground ? backgroundDarker : borderColor;
 </script>
 
 <div
-  style:border-color={borderColor}
+  style:border-color={indicatorColor}
   style:border-top-color={accentColor}
-  style:display={$loadingIndicatorVisible ? "block" : "none"}
 />
 
 <style>

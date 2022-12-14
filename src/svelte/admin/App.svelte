@@ -3,18 +3,19 @@
 
   import AddLessonView from "./views/AddLessonView.svelte";
   import CompetenceView from "./views/CompetenceView.svelte";
-  import EditLessonView from "./views/EditLessonView.svelte";
-  import GroupView from "./views/GroupView.svelte";
-  import ImageView from "./views/ImageView.svelte";
-  import LessonView from "./views/LessonView.svelte";
-  import LoadingIndicator from "./components/LoadingIndicator.svelte";
   import {
     competences,
     fields,
     groups,
     lessons,
+    loadingIndicatorVisible,
     loginstate,
   } from "../../ts/admin/stores";
+  import EditLessonView from "./views/EditLessonView.svelte";
+  import GroupView from "./views/GroupView.svelte";
+  import ImageView from "./views/ImageView.svelte";
+  import LessonView from "./views/LessonView.svelte";
+  import LoadingIndicator from "./components/LoadingIndicator.svelte";
   import RestoreLessonView from "./views/RestoreLessonView.svelte";
   import TopBar from "./components/TopBar.svelte";
   import UserView from "./views/UserView.svelte";
@@ -28,7 +29,9 @@
   <div id="dismiss-text" class="button yellow-button" />
   <div id="confirm-text" class="button" />
 </div>
-<LoadingIndicator />
+{#if $loadingIndicatorVisible}
+  <LoadingIndicator />
+{/if}
 <!-- TODO: Remove legacy spinner -->
 <div id="spinner" />
 <!-- TODO: Remove main -->
