@@ -9,7 +9,8 @@
   import Dialog from "../Dialog.svelte";
   import { IDList } from "../../../../ts/admin/IDList";
   import { Lesson } from "../../../../ts/admin/interfaces/Lesson";
-  import OverlayLoadingIndicator from "../OverlayLoadingIndicator.svelte";
+  import LoadingIndicator from "../LoadingIndicator.svelte";
+  import Overlay from "../Overlay.svelte";
   import { reAuthHandler, request } from "../../../../ts/admin/tools/request";
 
   export let lessons: IDList<Lesson>;
@@ -77,7 +78,8 @@
 </script>
 
 {#await mutexPromise}
-  <OverlayLoadingIndicator />
+  <Overlay />
+  <LoadingIndicator darkBackground />
 {:then _}
   <Dialog
     confirmButtonText="Ano"
