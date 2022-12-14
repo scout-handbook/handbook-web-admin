@@ -1,5 +1,7 @@
 <script lang="ts">
-  import { addImage } from "../../../ts/admin/actions/addImage";
+  import { useLocation, useNavigate } from "svelte-navigator";
+
+  import AddImagePanel from "../components/action-modals/AddImagePanel.svelte";
   import { apiUri, siteName } from "../../../ts/admin/stores";
   import Button from "../components/Button.svelte";
   import { deleteImageOnClick } from "../../../ts/admin/actions/deleteImage";
@@ -8,6 +10,10 @@
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
   import { renderPagination } from "../../../ts/admin/UI/pagination";
+
+  const location = useLocation();
+  const navigate = useNavigate();
+  $: action = $location.state?.action;
 
   let page = 1;
   const perPage = 15;
@@ -60,12 +66,16 @@
   refreshLogin(true);
 </script>
 
+{#if action === "add-image"}
+  <AddImagePanel />
+{/if}
+
 <h1>{$siteName + " - Obrázky"}</h1>
 <Button
   green
   icon="plus"
   on:click={() => {
-    addImage(false);
+    navigate("/images", { state: { action: "add-image" } });
   }}
 >
   Nahrát
