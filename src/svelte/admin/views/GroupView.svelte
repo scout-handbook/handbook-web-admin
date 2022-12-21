@@ -3,7 +3,7 @@
 
   import AddGroupPanel from "../components/action-modals/AddGroupPanel.svelte";
   import Button from "../components/Button.svelte";
-  import { changeGroupOnClick } from "../../../ts/admin/actions/changeGroup";
+  import ChangeGroupPanel from "../components/action-modals/ChangeGroupPanel.svelte";
   import { deleteGroupOnClick } from "../../../ts/admin/actions/deleteGroup";
   import { Group } from "../../../ts/admin/interfaces/Group";
   import { IDList } from "../../../ts/admin/IDList";
@@ -18,6 +18,7 @@
   const location = useLocation();
   const navigate = useNavigate();
   $: action = $location.state?.action;
+  $: actionPayload = $location.state?.actionPayload ?? {};
 
   $: adminPermissions =
     loginstate.role === "administrator" || loginstate.role === "superuser";
@@ -27,6 +28,8 @@
 
 {#if action === "add-group"}
   <AddGroupPanel />
+{:else if action === "change-group"}
+  <ChangeGroupPanel {groups} payload={actionPayload} />
 {/if}
 
 <h1>{$siteName + " - Uživatelské skupiny"}</h1>
@@ -54,7 +57,9 @@
       cyan
       icon="pencil"
       on:click={() => {
-        changeGroupOnClick(id);
+        navigate("/groups", {
+          state: { action: "change-group", actionPayload: { groupId: id } },
+        });
       }}
     >
       Upravit
