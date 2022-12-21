@@ -1,7 +1,9 @@
 <script lang="ts">
+  import { useLocation, useNavigate } from "svelte-navigator";
+
   import { apiUri, siteName } from "../../../ts/admin/stores";
   import Button from "../components/Button.svelte";
-  import { changeUserGroupsOnClick } from "../../../ts/admin/actions/changeUserGroups";
+  import ChangeUserGroupsPanel from "../components/action-modals/ChangeUserGroupsPanel.svelte";
   import { changeUserRoleOnClick } from "../../../ts/admin/actions/changeUserRole";
   import { getElementsByClassName } from "../../../ts/admin/tools/getElementsByClassName";
   import { Group } from "../../../ts/admin/interfaces/Group";
@@ -19,6 +21,11 @@
 
   export let groups: IDList<Group>;
   export let loginstate: Loginstate;
+
+  const location = useLocation();
+  const navigate = useNavigate();
+  $: action = $location.state?.action;
+  $: actionPayload = $location.state?.actionPayload ?? {};
 
   let page = 1;
   const perPage = 25;
@@ -89,6 +96,10 @@
     return output;
   }
 </script>
+
+{#if action === "change-user-groups"}
+  <ChangeUserGroupsPanel {groups} payload={actionPayload} />
+{/if}
 
 <h1>{$siteName + " - Uživatelé"}</h1>
 <div id="userList">
@@ -211,11 +222,12 @@
               cyan
               icon="pencil"
               on:click={() => {
-                changeUserGroupsOnClick(
-                  user.id.toString(),
-                  user.name,
-                  JSON.stringify(user.groups)
-                );
+                navigate("/users", {
+                  state: {
+                    action: "change-user-groups",
+                    actionPayload: { user },
+                  },
+                });
               }}
             >
               Upravit
