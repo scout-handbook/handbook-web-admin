@@ -4,7 +4,7 @@
   import AddGroupPanel from "../components/action-modals/AddGroupPanel.svelte";
   import Button from "../components/Button.svelte";
   import ChangeGroupPanel from "../components/action-modals/ChangeGroupPanel.svelte";
-  import { deleteGroupOnClick } from "../../../ts/admin/actions/deleteGroup";
+  import DeleteGroupDialog from "../components/action-modals/DeleteGroupDialog.svelte";
   import { Group } from "../../../ts/admin/interfaces/Group";
   import { IDList } from "../../../ts/admin/IDList";
   import { importGroupOnClick } from "../../../ts/admin/actions/importGroup";
@@ -30,6 +30,8 @@
   <AddGroupPanel />
 {:else if action === "change-group"}
   <ChangeGroupPanel {groups} payload={actionPayload} />
+{:else if action === "delete-group"}
+  <DeleteGroupDialog {groups} payload={actionPayload} />
 {/if}
 
 <h1>{$siteName + " - Uživatelské skupiny"}</h1>
@@ -69,7 +71,9 @@
         icon="trash-empty"
         red
         on:click={() => {
-          deleteGroupOnClick(id);
+          navigate("/groups", {
+            state: { action: "delete-group", actionPayload: { groupId: id } },
+          });
         }}
       >
         Smazat
