@@ -4,7 +4,7 @@
   import AddImagePanel from "../components/action-modals/AddImagePanel.svelte";
   import { apiUri, siteName } from "../../../ts/admin/stores";
   import Button from "../components/Button.svelte";
-  import { deleteImageOnClick } from "../../../ts/admin/actions/deleteImage";
+  import DeleteImageDialog from "../components/action-modals/DeleteImageDialog.svelte";
   import { getElementsByClassName } from "../../../ts/admin/tools/getElementsByClassName";
   import { reAuthHandler, request } from "../../../ts/admin/tools/request";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
@@ -14,6 +14,7 @@
   const location = useLocation();
   const navigate = useNavigate();
   $: action = $location.state?.action;
+  $: actionPayload = $location.state?.actionPayload ?? {};
 
   let page = 1;
   const perPage = 15;
@@ -68,6 +69,8 @@
 
 {#if action === "add-image"}
   <AddImagePanel />
+{:else if action === "delete-image"}
+  <DeleteImageDialog payload={actionPayload} />
 {/if}
 
 <h1>{$siteName + " - Obrázky"}</h1>
@@ -102,7 +105,9 @@
             icon="trash-empty"
             red
             on:click={() => {
-              deleteImageOnClick(image);
+              navigate("/images", {
+                state: { actionPayload: { imageId: image } }
+              });
             }}
           >
             Smazat
