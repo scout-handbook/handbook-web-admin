@@ -4,7 +4,7 @@
   import { apiUri, siteName } from "../../../ts/admin/stores";
   import Button from "../components/Button.svelte";
   import ChangeUserGroupsPanel from "../components/action-modals/ChangeUserGroupsPanel.svelte";
-  import { changeUserRoleOnClick } from "../../../ts/admin/actions/changeUserRole";
+  import ChangeUserRolePanel from "../components/action-modals/ChangeUserRolePanel.svelte";
   import { getElementsByClassName } from "../../../ts/admin/tools/getElementsByClassName";
   import { Group } from "../../../ts/admin/interfaces/Group";
   import { IDList } from "../../../ts/admin/IDList";
@@ -99,6 +99,8 @@
 
 {#if action === "change-user-groups"}
   <ChangeUserGroupsPanel {groups} payload={actionPayload} />
+{:else if action === "change-user-role"}
+  <ChangeUserRolePanel {loginstate} payload={actionPayload} />
 {/if}
 
 <h1>{$siteName + " - Uživatelé"}</h1>
@@ -201,11 +203,12 @@
                 cyan
                 icon="pencil"
                 on:click={() => {
-                  changeUserRoleOnClick(
-                    user.id.toString(),
-                    user.name,
-                    user.role
-                  );
+                  navigate("/users", {
+                    state: {
+                      action: "change-user-role",
+                      actionPayload: { user },
+                    },
+                  });
                 }}
               >
                 Upravit
