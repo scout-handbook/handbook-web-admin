@@ -5,7 +5,7 @@
   import Button from "../components/Button.svelte";
   import ChangeCompetencePanel from "../components/action-modals/ChangeCompetencePanel.svelte";
   import { Competence } from "../../../ts/admin/interfaces/Competence";
-  import { deleteCompetenceOnClick } from "../../../ts/admin/actions/deleteCompetence";
+  import DeleteCompetenceDialog from "../components/action-modals/DeleteCompetenceDialog.svelte";
   import { IDList } from "../../../ts/admin/IDList";
   import { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
@@ -29,6 +29,8 @@
   <AddCompetencePanel />
 {:else if action === "change-competence"}
   <ChangeCompetencePanel {competences} payload={actionPayload} />
+{:else if action === "delete-competence"}
+  <DeleteCompetenceDialog {competences} payload={actionPayload} />
 {/if}
 
 <h1>{$siteName + " - Kompetence"}</h1>
@@ -68,7 +70,12 @@
         icon="trash-empty"
         red
         on:click={() => {
-          deleteCompetenceOnClick(id);
+          navigate("/competences", {
+            state: {
+              action: "delete-competence",
+              actionPayload: { competenceId: id },
+            },
+          });
         }}
       >
         Smazat
