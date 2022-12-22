@@ -5,7 +5,7 @@
   import Button from "../components/Button.svelte";
   import ChangeFieldPanel from "../components/action-modals/ChangeFieldPanel.svelte";
   import { Competence } from "../../../ts/admin/interfaces/Competence";
-  import { deleteFieldOnClick } from "../../../ts/admin/actions/deleteField";
+  import DeleteFieldDialog from "../components/action-modals/DeleteFieldDialog.svelte";
   import DeleteLessonDialog from "../components/action-modals/DeleteLessonDialog.svelte";
   import { Field } from "../../../ts/admin/interfaces/Field";
   import { IDList } from "../../../ts/admin/IDList";
@@ -36,6 +36,8 @@
   <AddFieldPanel />
 {:else if action === "change-field"}
   <ChangeFieldPanel {fields} payload={actionPayload} />
+{:else if action === "delete-field"}
+  <DeleteFieldDialog {fields} payload={actionPayload} />
 {:else if action === "delete-lesson"}
   <DeleteLessonDialog {lessons} payload={actionPayload} />
 {/if}
@@ -93,7 +95,9 @@
       icon="trash-empty"
       red
       on:click={() => {
-        deleteFieldOnClick(id);
+        navigate("/lessons", {
+          state: { action: "delete-field", actionPayload: { fieldId: id } },
+        });
       }}
     >
       Smazat
