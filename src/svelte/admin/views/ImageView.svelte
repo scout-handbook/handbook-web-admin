@@ -106,7 +106,7 @@
             red
             on:click={() => {
               navigate("/images", {
-                state: { actionPayload: { imageId: image } }
+                state: { actionPayload: { imageId: image } },
               });
             }}
           >
