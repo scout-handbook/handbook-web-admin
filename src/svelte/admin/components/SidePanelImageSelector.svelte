@@ -1,10 +1,9 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
-  import { fly } from "svelte/transition";
 
   import { apiUri } from "../../../ts/admin/stores";
   import Button from "./Button.svelte";
-  import { customProperties } from "../../../ts/admin/stores";
+  import DoubleSidePanel from "./DoubleSidePanel.svelte";
   import { reAuthHandler, request } from "../../../ts/admin/tools/request";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
@@ -13,8 +12,6 @@
 
   let page = 1;
   const perPage = 15;
-
-  $: ({ "--border-color": borderColor } = $customProperties);
 
   let imageListPromise: Promise<Array<string>>;
 
@@ -41,11 +38,7 @@
   refreshLogin();
 </script>
 
-<div
-  style:border-left={borderColor}
-  class="panel"
-  transition:fly={{ x: 939, duration: 300 }}
->
+<DoubleSidePanel>
   {#await imageListPromise}
     <div id="embedded-spinner" />
   {:then imageList}
@@ -170,18 +163,4 @@
       {/if}
     </div>
   {/await}
-</div>
-
-<style>
-  .panel {
-    background: white;
-    bottom: 0;
-    overflow-y: auto;
-    padding: 30px;
-    position: fixed;
-    right: 0;
-    top: 0;
-    width: 939px;
-    z-index: 11;
-  }
-</style>
+</DoubleSidePanel>
