@@ -7,7 +7,7 @@
   import DeleteGroupDialog from "../components/action-modals/DeleteGroupDialog.svelte";
   import { Group } from "../../../ts/admin/interfaces/Group";
   import { IDList } from "../../../ts/admin/IDList";
-  import { importGroupOnClick } from "../../../ts/admin/actions/importGroup";
+  import ImportGroupMembersPanel from "../components/action-modals/ImportGroupMembersPanel.svelte";
   import { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import { siteName } from "../../../ts/admin/stores";
@@ -32,6 +32,8 @@
   <ChangeGroupPanel {groups} payload={actionPayload} />
 {:else if action === "delete-group"}
   <DeleteGroupDialog {groups} payload={actionPayload} />
+{:else if action === "import-group-members"}
+  <ImportGroupMembersPanel {groups} payload={actionPayload} />
 {/if}
 
 <h1>{$siteName + " - Uživatelské skupiny"}</h1>
@@ -81,7 +83,12 @@
       <Button
         icon="user-plus"
         on:click={() => {
-          importGroupOnClick(id);
+          navigate("/groups", {
+            state: {
+              action: "import-group-members",
+              actionPayload: { groupId: id },
+            },
+          });
         }}
       >
         Importovat ze SkautISu
