@@ -13,7 +13,7 @@
   import LessonViewLesson from "../components/LessonViewLesson.svelte";
   import { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
-  import { restoreLesson } from "../../../ts/admin/actions/restoreLesson";
+  import RestoreLessonPanel from "../components/action-modals/RestoreLessonPanel.svelte";
   import { siteName } from "../../../ts/admin/stores";
 
   export let competences: IDList<Competence>;
@@ -40,6 +40,8 @@
   <DeleteFieldDialog {fields} payload={actionPayload} />
 {:else if action === "delete-lesson"}
   <DeleteLessonDialog {lessons} payload={actionPayload} />
+{:else if action === "restore-lesson"}
+  <RestoreLessonPanel />
 {/if}
 
 <h1>{$siteName + " - Lekce"}</h1>
@@ -64,7 +66,14 @@
   Přidat lekci
 </Button>
 {#if adminPermissions}
-  <Button icon="history" on:click={restoreLesson}>Smazané lekce</Button>
+  <Button
+    icon="history"
+    on:click={() => {
+      navigate("/lessons", { state: { action: "restore-lesson" } });
+    }}
+  >
+    Smazané lekce
+  </Button>
 {/if}
 {#each lessons.asArray() as { id, value: lesson }}
   <!-- TODO: Precompute -->
