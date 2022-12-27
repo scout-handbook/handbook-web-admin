@@ -41,8 +41,6 @@
   });
 
   refreshLogin();
-
-  //document.getElementById("change-groups")!.style.display = "inline-block";
 </script>
 
 <SidePanel>
