@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { navigate } from "svelte-navigator";
+  import { useLocation, useNavigate } from "svelte-navigator";
 
   import { ActionQueue } from "../../../ts/admin/tools/ActionQueue";
   import Button from "../components/Button.svelte";
@@ -14,7 +14,7 @@
     setChanged,
     setEditor,
   } from "../../../ts/admin/lessonEditor/editor";
-  import { lessonSettings } from "../../../ts/admin/lessonEditor/settings";
+  import LessonSettingsPanel from "./LessonEditor/LessonSettingsPanel.svelte";
   import {
     prepareImageSelector,
     toggleImageSelector,
@@ -28,13 +28,17 @@
   export let discardActionQueue: ActionQueue = new ActionQueue();
   export let refreshAction: (() => void) | null = null;
 
+  const location = useLocation();
+  const navigate = useNavigate();
+  $: action = $location.state?.action;
+
   let editorArea: HTMLElement;
 
   function saveCallback(): void {
     if (changed) {
       saveActionQueue.defaultDispatch(false);
     } else {
-      navigate("/admin/lessons");
+      navigate("/lessons");
       discardActionQueue.defaultDispatch(false);
     }
   }
@@ -119,6 +123,10 @@
   });
 </script>
 
+{#if action === "lesson-settings"}
+  <LessonSettingsPanel lessonId={id} {saveActionQueue} />
+{/if}
+
 <div id="side-panel" />
 <div id="side-panel-overlay" />
 <header>
@@ -152,7 +160,9 @@
     <Button
       icon="cog"
       on:click={() => {
-        lessonSettings(id, saveActionQueue, false);
+        navigate($location.pathname + $location.search, {
+          state: { action: "lesson-settings" },
+        });
       }}
     >
       Nastavení
