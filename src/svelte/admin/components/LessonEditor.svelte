@@ -30,7 +30,7 @@
 
   const location = useLocation();
   const navigate = useNavigate();
-  $: action = $location.state?.action;
+  $: view = $location.state?.view;
 
   let editorArea: HTMLElement;
 
@@ -123,7 +123,7 @@
   });
 </script>
 
-{#if action === "lesson-settings"}
+{#if view === "lesson-settings"}
   <LessonSettingsPanel lessonId={id} {saveActionQueue} />
 {/if}
 
@@ -161,7 +161,7 @@
       icon="cog"
       on:click={() => {
         navigate($location.pathname + $location.search, {
-          state: { action: "lesson-settings" },
+          state: { view: "lesson-settings" },
         });
       }}
     >
