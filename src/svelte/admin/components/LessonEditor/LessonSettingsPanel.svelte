@@ -1,6 +1,7 @@
 <script lang="ts">
   import { useLocation } from "svelte-navigator";
 
+  import ChangeLessonField from "./ChangeLessonField.svelte";
   import LessonSettingsOverview from "./LessonSettingsOverview.svelte";
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
@@ -16,5 +17,9 @@
 </script>
 
 <SidePanel>
-  <LessonSettingsOverview {lessonId} {saveActionQueue} />
+  {#if action === "change-lesson-field"}
+    <ChangeLessonField {lessonId} {saveActionQueue} />
+  {:else}
+    <LessonSettingsOverview {lessonId} {saveActionQueue} />
+  {/if}
 </SidePanel>
