@@ -1,10 +1,9 @@
 <script lang="ts">
-  import { useNavigate } from "svelte-navigator";
+  import { useLocation, useNavigate } from "svelte-navigator";
 
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
   import Button from "../Button.svelte";
   import { changeLessonCompetencesOnClick } from "../../../../ts/admin/actions/changeLessonCompetences";
-  import { changeLessonFieldOnClick } from "../../../../ts/admin/actions/changeLessonField";
   import { changeLessonGroupsOnClick } from "../../../../ts/admin/actions/changeLessonGroups";
   import { competences, fields, groups } from "../../../../ts/admin/stores";
   import { Group } from "../../../../ts/admin/interfaces/Group";
@@ -19,7 +18,7 @@
   export let lessonId: string | null;
   export let saveActionQueue: ActionQueue;
 
-  //const location = useLocation();
+  const location = useLocation();
   const navigate = useNavigate();
 
   $: lessonCompetences = $competences!
@@ -65,10 +64,9 @@
   cyan
   icon="pencil"
   on:click={() => {
-    //navigate($location.pathname + $location.search, {
-    //state: { action: "change-lesson-field", view: "lesson-settings" },
-    //});
-    changeLessonFieldOnClick(lessonId, saveActionQueue);
+    navigate($location.pathname + $location.search, {
+      state: { action: "change-lesson-field", view: "lesson-settings" },
+    });
   }}
 >
   Upravit
