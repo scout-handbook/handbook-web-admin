@@ -3,7 +3,6 @@
 
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
   import Button from "../Button.svelte";
-  import { changeLessonCompetencesOnClick } from "../../../../ts/admin/actions/changeLessonCompetences";
   import { changeLessonGroupsOnClick } from "../../../../ts/admin/actions/changeLessonGroups";
   import { competences, fields, groups } from "../../../../ts/admin/stores";
   import { Group } from "../../../../ts/admin/interfaces/Group";
@@ -83,7 +82,9 @@
   cyan
   icon="pencil"
   on:click={() => {
-    changeLessonCompetencesOnClick(lessonId, saveActionQueue);
+    navigate($location.pathname + $location.search, {
+      state: { action: "change-lesson-competences", view: "lesson-settings" },
+    });
   }}
 >
   Upravit
