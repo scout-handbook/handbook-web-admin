@@ -1,6 +1,7 @@
 <script lang="ts">
   import { useLocation } from "svelte-navigator";
 
+  import ChangeLessonCompetences from "./ChangeLessonCompetences.svelte";
   import ChangeLessonField from "./ChangeLessonField.svelte";
   import LessonSettingsOverview from "./LessonSettingsOverview.svelte";
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
@@ -17,7 +18,9 @@
 </script>
 
 <SidePanel>
-  {#if action === "change-lesson-field"}
+  {#if action === "change-lesson-competences"}
+    <ChangeLessonCompetences {lessonId} {saveActionQueue} />
+  {:else if action === "change-lesson-field"}
     <ChangeLessonField {lessonId} {saveActionQueue} />
   {:else}
     <LessonSettingsOverview {lessonId} {saveActionQueue} />
