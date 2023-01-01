@@ -3,6 +3,7 @@
 
   import ChangeLessonCompetences from "./ChangeLessonCompetences.svelte";
   import ChangeLessonField from "./ChangeLessonField.svelte";
+  import ChangeLessonGroups from "./ChangeLessonGroups.svelte";
   import LessonSettingsOverview from "./LessonSettingsOverview.svelte";
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
@@ -22,6 +23,8 @@
     <ChangeLessonCompetences {lessonId} {saveActionQueue} />
   {:else if action === "change-lesson-field"}
     <ChangeLessonField {lessonId} {saveActionQueue} />
+  {:else if action === "change-lesson-groups"}
+    <ChangeLessonGroups {lessonId} {saveActionQueue} />
   {:else}
     <LessonSettingsOverview {lessonId} {saveActionQueue} />
   {/if}
