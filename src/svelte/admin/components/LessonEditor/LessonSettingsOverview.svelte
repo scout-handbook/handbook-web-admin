@@ -1,12 +1,10 @@
 <script lang="ts">
   import { useLocation, useNavigate } from "svelte-navigator";
 
-  import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
   import Button from "../Button.svelte";
   import { competences, fields, groups } from "../../../../ts/admin/stores";
   import { Group } from "../../../../ts/admin/interfaces/Group";
   import { IDList } from "../../../../ts/admin/IDList";
-  import { lessonHistoryOpen } from "../../../../ts/admin/lessonEditor/history";
   import {
     lessonSettingsCache,
     lessonSettingsCacheEvent,
@@ -14,7 +12,6 @@
   import LoadingIndicator from "../LoadingIndicator.svelte";
 
   export let lessonId: string | null;
-  export let saveActionQueue: ActionQueue;
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -50,7 +47,9 @@
   <Button
     icon="history"
     on:click={() => {
-      lessonHistoryOpen(lessonId ?? "", saveActionQueue);
+      navigate($location.pathname + $location.search, {
+        state: { action: "restore-version", view: "lesson-settings" },
+      });
     }}
   >
     Historie lekce
