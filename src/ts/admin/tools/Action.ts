@@ -58,7 +58,7 @@ export class Action {
     if (ActionQueueRetry) {
       navigate("/admin/");
     } else {
-      history.back();
+      navigate(-1);
     }
   }
 
