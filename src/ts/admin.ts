@@ -3,7 +3,6 @@
 /// <reference path="../d.ts/CONFIG.d.ts" />
 
 import { ActionQueueSetup } from "./admin/tools/ActionQueue";
-import { historySetup } from "./admin/history";
 import { metadataSetup } from "./admin/metadata";
 import { refreshPreviewSetup } from "./admin/lessonEditor/refreshPreview";
 import App from "../svelte/admin/App.svelte";
@@ -11,7 +10,6 @@ import App from "../svelte/admin/App.svelte";
 function main(): void {
   refreshPreviewSetup();
   metadataSetup();
-  historySetup();
   ActionQueueSetup();
   new App({
     target: document.getElementsByTagName("body")[0],
