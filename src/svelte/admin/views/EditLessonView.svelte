@@ -82,11 +82,6 @@
   function renderLessonEditView(id: string, markdown: string): void {
     lessonBody = markdown;
     loadingIndicatorVisible.set(false);
-    // TODO: Remove this horrible hack
-    setTimeout(() => {
-      document.getElementById("save")!.dataset.id = id;
-    }, 100);
-
     window.onbeforeunload = function (): void {
       sendBeacon(id);
     };
