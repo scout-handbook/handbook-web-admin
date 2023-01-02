@@ -52,6 +52,7 @@
     "svelte": {
       "ignoreWarnings": [
         "@typescript-eslint/explicit-function-return-type",
+        "@typescript-eslint/no-unsafe-assignment",
         "@typescript-eslint/no-unsafe-member-access"
       ]
     }
