@@ -48,7 +48,11 @@
       resolve(editor.value());
     } else {
       request(
-        $apiUri + "/v1.0/lesson/" + lessonId! + "/history/" + selectedVersion,
+        $apiUri +
+          "/v1.0/lesson/" +
+          lessonId! +
+          "/history/" +
+          selectedVersion.toString(),
         "GET",
         {},
         (response: RequestResponse): void => {
@@ -148,6 +152,7 @@
       <LoadingIndicator />
     {:then content}
       <h1>{name}</h1>
+      <!-- eslint-disable-next-line svelte/no-at-html-tags -->
       {@html process(content)}
     {/await}
   </div>

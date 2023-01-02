@@ -173,7 +173,7 @@
               "/lessons/" +
                 selectedLesson +
                 "/versions/" +
-                selectedVersion +
+                selectedVersion.toString() +
                 "/restore?name=" +
                 name
             );
@@ -214,6 +214,7 @@
           <LoadingIndicator />
         {:then content}
           <h1>{name}</h1>
+          <!-- eslint-disable-next-line svelte/no-at-html-tags -->
           {@html content}
         {/await}
       {/if}
