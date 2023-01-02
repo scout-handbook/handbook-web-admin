@@ -1,11 +1,11 @@
+import { navigate } from "svelte-navigator";
+
 import { ActionQueue } from "../tools/ActionQueue";
 import { AfterLoadEvent } from "../AfterLoadEvent";
 import { dialog } from "../UI/dialog";
 import { default as EasyMDE } from "easymde";
 import { FIELDS, LESSONS } from "../metadata";
-import { lessonSettings } from "./settings";
 import { LessonSettingsCache } from "../interfaces/LessonSettingsCache";
-import { prepareImageSelector, toggleImageSelector } from "./imageSelector";
 import { reAuthHandler, request } from "../tools/request";
 import { refreshLogin } from "../tools/refreshLogin";
 import { refreshPreview } from "./refreshPreview";
@@ -20,11 +20,15 @@ export const lessonSettingsCache: LessonSettingsCache = {
 export let lessonSettingsCacheEvent: AfterLoadEvent;
 export let editor: EasyMDE;
 
-export function setChanged(): void {
-  changed = true;
+export function setEditor(value: EasyMDE): void {
+  editor = value;
 }
 
-function populateEditorCache(id: string | null): void {
+export function setChanged(value = true): void {
+  changed = value;
+}
+
+export function populateEditorCache(id: string | null): void {
   lessonSettingsCacheEvent = new AfterLoadEvent(1);
   if (!id) {
     lessonSettingsCache["field"] = "";
@@ -52,11 +56,11 @@ function populateEditorCache(id: string | null): void {
 }
 
 function editorDiscardNow(actionQueue: ActionQueue): void {
-  history.back();
+  navigate("/admin/lessons");
   actionQueue.dispatch(true);
 }
 
-function editorDiscard(actionQueue: ActionQueue): void {
+export function editorDiscard(actionQueue: ActionQueue): void {
   if (!changed) {
     editorDiscardNow(actionQueue);
   } else {
@@ -72,7 +76,7 @@ function editorDiscard(actionQueue: ActionQueue): void {
   refreshLogin();
 }
 
-function editorOnChange(afterAction: (() => void) | null): void {
+export function editorOnChange(afterAction: (() => void) | null): void {
   changed = true;
   refreshPreview(
     (document.getElementById("name") as HTMLInputElement).value,
@@ -80,148 +84,4 @@ function editorOnChange(afterAction: (() => void) | null): void {
     "preview-inner"
   );
   refreshLogin(false, afterAction);
-}
-
-export function showLessonEditor(
-  name: string,
-  body: string,
-  saveActionQueue: ActionQueue,
-  id: string | null,
-  discardActionQueue = new ActionQueue(),
-  refreshAction: (() => void) | null = null
-): void {
-  populateEditorCache(id);
-  changed = false;
-  const html =
-    '\
-<div id="side-panel"></div><div id="side-panel-overlay"></div>\
-<header>\
-	<div class="button yellow-button" id="discard">\
-		<i class="icon-cancel"></i>Zrušit\
-	</div>\
-	<form>\
-		<input type="text" class="form-text form-name" id="name" value="' +
-    name +
-    '" autocomplete="off">\
-	</form>\
-	<div class="button green-button" id="save">\
-		<i class="icon-floppy"></i>Uložit\
-	</div>\
-	<div class="button" id="lesson-settings">\
-		<i class="icon-cog"></i>Nastavení\
-	</div>\
-</header>\
-<div id="image-selector">\
-	<div id="image-scroller">\
-		<div class="button yellow-button" id="close-image-selector">\
-			<i class="icon-up-open"></i> Zavřít\
-		</div>\
-		<div class="button green-button" id="imageSelectorAdd">\
-			<i class="icon-plus"></i> Nahrát\
-		</div>\
-		<div id="image-wrapper"></div>\
-	</div>\
-</div>\
-<div id="editor"><textarea></textarea></div><div id="preview"><div id="preview-inner"></div></div>';
-
-  document.getElementsByTagName("main")[0].innerHTML = html;
-  refreshPreview(name, body, "preview-inner");
-
-  document.getElementById("discard")!.onclick = function (): void {
-    editorDiscard(discardActionQueue);
-  };
-  document.getElementById("save")!.onclick = function (): void {
-    if (changed) {
-      saveActionQueue.defaultDispatch(false);
-    } else {
-      history.back();
-      discardActionQueue.defaultDispatch(false);
-    }
-  };
-  document.getElementById("lesson-settings")!.onclick = function (): void {
-    lessonSettings(id, saveActionQueue, false);
-  };
-  document.getElementById("close-image-selector")!.onclick =
-    toggleImageSelector;
-  //document.getElementById("imageSelectorAdd")!.onclick = function(): void {addImage(true);};
-  document.getElementById("imageSelectorAdd")!.style.display = "none"; // TODO: Re-enable uploads in editor without discarding its contents
-
-  editor = new EasyMDE({
-    autoDownloadFontAwesome: false,
-    autofocus: true,
-    element: document.getElementById("editor")!.firstChild as HTMLElement,
-    indentWithTabs: false,
-    parsingConfig: {
-      allowAtxHeaderWithoutSpace: true,
-    },
-    spellChecker: false,
-    status: false,
-    tabSize: 4,
-    toolbar: [
-      {
-        name: "bold",
-        action: EasyMDE.toggleBold,
-        className: "icon-bold",
-        title: "Tučné",
-      },
-      {
-        name: "italic",
-        action: EasyMDE.toggleItalic,
-        className: "icon-italic",
-        title: "Kurzíva",
-      },
-      {
-        name: "heading",
-        action: EasyMDE.toggleHeadingSmaller,
-        className: "icon-header",
-        title: "Nadpis",
-      },
-      "|",
-      {
-        name: "unordered-list",
-        action: EasyMDE.toggleUnorderedList,
-        className: "icon-list-bullet",
-        title: "Seznam s odrážkami",
-      },
-      {
-        name: "ordered-list",
-        action: EasyMDE.toggleOrderedList,
-        className: "icon-list-numbered",
-        title: "Číslovaný seznam",
-      },
-      "|",
-      {
-        name: "link",
-        action: EasyMDE.drawLink,
-        className: "icon-link",
-        title: "Vložit odkaz",
-      },
-      {
-        name: "image",
-        action: toggleImageSelector,
-        className: "icon-picture",
-        title: "Vložit obrázek",
-      },
-      {
-        name: "table",
-        action: EasyMDE.drawTable,
-        className: "icon-table",
-        title: "Vložit tabulku",
-      },
-    ],
-  });
-  editor.value(body);
-  editor.codemirror.getDoc().clearHistory();
-  editor.codemirror.on("change", function (): void {
-    editorOnChange(refreshAction);
-  });
-
-  document.getElementById("name")!.oninput = function (): void {
-    editorOnChange(refreshAction);
-  };
-  document.getElementById("name")!.onchange = function (): void {
-    editorOnChange(refreshAction);
-  };
-
-  prepareImageSelector();
 }

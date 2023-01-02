@@ -58,4 +58,8 @@ export class IDList<T> {
   public push(key: string, value: T): void {
     this.list.push({ k: key, v: value });
   }
+
+  public asArray(): Array<{ id: string; value: T }> {
+    return this.list.map((item) => ({ id: item.k, value: item.v }));
+  }
 }
