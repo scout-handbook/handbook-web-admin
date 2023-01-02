@@ -97,6 +97,17 @@
       reAuthHandler
     );
   }
+
+  function selectVersionCallback() {
+    navigate(
+      "/lessons/" +
+        selectedLesson +
+        "/versions/" +
+        selectedVersion!.toString() +
+        "/restore?name=" +
+        name
+    );
+  }
 </script>
 
 {#if error !== ""}
@@ -166,22 +177,9 @@
         Zrušit
       </Button>
       {#if selectedVersion !== null}
-        <Button
-          green
-          icon="history"
-          on:click={() => {
-            navigate(
-              "/lessons/" +
-                selectedLesson +
-                "/versions/" +
-                selectedVersion.toString() +
-                "/restore?name=" +
-                name
-            );
-          }}
+        <Button green icon="history" on:click={selectVersionCallback}
+          >Obnovit</Button
         >
-          Obnovit
-        </Button>
       {/if}
       <h3 class="side-panel-title">Obnovit smazanou lekci</h3>
       {#if step === "version-selection-loading"}
