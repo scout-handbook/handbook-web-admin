@@ -17,8 +17,11 @@
 
   const location = useLocation();
   const navigate = useNavigate();
-  $: action = $location.state?.action;
-  $: actionPayload = $location.state?.actionPayload ?? {};
+  $: action = $location.state?.action as string;
+  $: actionPayload = ($location.state?.actionPayload ?? {}) as Record<
+    string,
+    string
+  >;
 
   $: adminPermissions =
     loginstate.role === "administrator" || loginstate.role === "superuser";
