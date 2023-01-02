@@ -206,6 +206,7 @@
 
   .buttons-left {
     left: 15px;
+    width: calc(100% - 150px);
   }
 
   .buttons-right {
@@ -214,5 +215,6 @@
 
   .name {
     display: inline-block;
+    width: calc(100% - 120px);
   }
 </style>
