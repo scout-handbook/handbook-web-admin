@@ -15,7 +15,7 @@
   export let saveActionQueue: ActionQueue;
 
   const location = useLocation();
-  $: action = $location.state?.action;
+  $: action = $location.state?.action as string;
 
   refreshLogin();
 </script>

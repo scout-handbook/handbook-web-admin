@@ -30,7 +30,8 @@
 
   const location = useLocation();
   const navigate = useNavigate();
-  $: view = $location.state?.view;
+  $: view = $location.state?.view as string;
+  $: currentUri = $location.pathname + $location.search;
 
   let editorArea: HTMLElement;
 
@@ -160,7 +161,7 @@
     <Button
       icon="cog"
       on:click={() => {
-        navigate($location.pathname + $location.search, {
+        navigate(currentUri, {
           state: { view: "lesson-settings" },
         });
       }}

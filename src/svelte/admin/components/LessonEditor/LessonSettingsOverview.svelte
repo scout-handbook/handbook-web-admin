@@ -22,6 +22,7 @@
     })
     .asArray();
   $: lessonField = $fields!.get(lessonSettingsCache.field)!;
+  $: currentUri = $location.pathname + $location.search;
 
   const groupsPromise = new Promise<IDList<Group>>((resolve) => {
     lessonSettingsCacheEvent.addCallback(() => {
@@ -47,7 +48,7 @@
   <Button
     icon="history"
     on:click={() => {
-      navigate($location.pathname + $location.search, {
+      navigate(currentUri, {
         state: { action: "restore-version", view: "lesson-settings" },
       });
     }}
@@ -61,7 +62,7 @@
   cyan
   icon="pencil"
   on:click={() => {
-    navigate($location.pathname + $location.search, {
+    navigate(currentUri, {
       state: { action: "change-lesson-field", view: "lesson-settings" },
     });
   }}
@@ -80,7 +81,7 @@
   cyan
   icon="pencil"
   on:click={() => {
-    navigate($location.pathname + $location.search, {
+    navigate(currentUri, {
       state: { action: "change-lesson-competences", view: "lesson-settings" },
     });
   }}
@@ -98,7 +99,7 @@
   cyan
   icon="pencil"
   on:click={() => {
-    navigate($location.pathname + $location.search, {
+    navigate(currentUri, {
       state: { action: "change-lesson-groups", view: "lesson-settings" },
     });
   }}

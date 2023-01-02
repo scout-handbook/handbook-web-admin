@@ -34,11 +34,13 @@
   }
 </script>
 
+<!-- eslint-disable svelte/require-optimized-style-attribute -->
 <div
   style={"--accent-color: " + accentColor}
   on:click={callback}
   on:keypress={callback}
 >
+  <!-- eslint-enable svelte/require-optimized-style-attribute -->
   {#if icon !== ""}
     <i class={"icon-" + icon} />
   {/if}
