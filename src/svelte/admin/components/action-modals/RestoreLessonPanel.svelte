@@ -37,32 +37,33 @@
     selectedVersion === null
       ? ""
       : versionList.find((x) => x.version === selectedVersion)!.name;
-  $: contentPromise =
-    selectedVersion === null
-      ? null
-      : new Promise<string>((resolve) => {
-          request(
-            $apiUri +
-              "/v1.0/deleted-lesson/" +
-              selectedLesson +
-              "/history/" +
-              selectedVersion!.toString(),
-            "GET",
-            {},
-            (response: RequestResponse) => {
-              let converter = new Converter({
-                extensions: ["HandbookMarkdown"],
-              });
-              converter.setOption("noHeaderId", "true");
-              converter.setOption("tables", "true");
-              converter.setOption("smoothLivePreview", "true");
-              resolve(
-                filterXSS(converter.makeHtml(response as string), xssOptions())
-              );
-            },
-            authFailHandler
-          );
+  $: contentPromise = new Promise<string>((resolve) => {
+    if (selectedVersion === null) {
+      resolve("");
+      return;
+    }
+    request(
+      $apiUri +
+        "/v1.0/deleted-lesson/" +
+        selectedLesson +
+        "/history/" +
+        selectedVersion.toString(),
+      "GET",
+      {},
+      (response: RequestResponse) => {
+        let converter = new Converter({
+          extensions: ["HandbookMarkdown"],
         });
+        converter.setOption("noHeaderId", "true");
+        converter.setOption("tables", "true");
+        converter.setOption("smoothLivePreview", "true");
+        resolve(
+          filterXSS(converter.makeHtml(response as string), xssOptions())
+        );
+      },
+      authFailHandler
+    );
+  });
 
   refreshLogin();
 
@@ -209,15 +210,13 @@
       {/if}
     </div>
     <div id="restore-lesson-preview">
-      {#if contentPromise !== null}
-        {#await contentPromise}
-          <LoadingIndicator />
-        {:then content}
-          <h1>{name}</h1>
-          <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-          {@html content}
-        {/await}
-      {/if}
+      {#await contentPromise}
+        <LoadingIndicator />
+      {:then content}
+        <h1>{name}</h1>
+        <!-- eslint-disable-next-line svelte/no-at-html-tags -->
+        {@html content}
+      {/await}
     </div>
   </DoubleSidePanel>
 {/if}
