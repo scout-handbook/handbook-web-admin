@@ -13,8 +13,11 @@
 
   const location = useLocation();
   const navigate = useNavigate();
-  $: action = $location.state?.action;
-  $: actionPayload = $location.state?.actionPayload ?? {};
+  $: action = $location.state?.action as string;
+  $: actionPayload = ($location.state?.actionPayload ?? {}) as Record<
+    string,
+    string
+  >;
 
   let page = 1;
   const perPage = 15;
