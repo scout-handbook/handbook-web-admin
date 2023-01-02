@@ -23,11 +23,11 @@
 
   const navigate = useNavigate();
   const location = useLocation();
-  $: action = $location.state?.action as string;
-  $: actionPayload = ($location.state?.actionPayload ?? {}) as Record<
-    string,
-    string
-  >;
+  $: action = $location.state.action as string;
+  $: actionPayload = $location.state.actionPayload as {
+    fieldId: string;
+    lessonId: string;
+  };
 
   $: adminPermissions =
     loginstate.role === "administrator" || loginstate.role === "superuser";
