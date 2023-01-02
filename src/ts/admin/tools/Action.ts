@@ -1,3 +1,5 @@
+import { navigate } from "svelte-navigator";
+
 import { ActionCallback } from "./ActionCallback";
 import { ActionQueue, ActionQueueRetry } from "./ActionQueue";
 import { dialog } from "../UI/dialog";
@@ -6,9 +8,7 @@ import { ExceptionHandler } from "../interfaces/ExceptionHandler";
 import { Payload } from "../interfaces/Payload";
 import { refreshMetadata } from "../metadata";
 import { RequestResponse } from "../interfaces/RequestResponse";
-import { removeBeacon } from "../views/editLesson";
 import { SerializedAction } from "../interfaces/SerializedAction";
-import { showMainView } from "../views/main";
 
 export class Action {
   public url: string;
@@ -46,7 +46,7 @@ export class Action {
           actionQueue.fillID(response as string);
           break;
         case ActionCallback.RemoveBeacon:
-          removeBeacon();
+          window.onbeforeunload = null;
           break;
       }
     }
@@ -56,9 +56,9 @@ export class Action {
     dialog("Akce byla úspěšná.", "OK");
     refreshMetadata();
     if (ActionQueueRetry) {
-      showMainView(false);
+      navigate("/admin/");
     } else {
-      history.back();
+      navigate(-1);
     }
   }
 

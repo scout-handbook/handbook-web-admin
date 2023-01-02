@@ -1,4 +1,3 @@
-import { mainPageTab } from "../views/main";
 import { request } from "./request";
 
 export function refreshLogin(
@@ -14,7 +13,9 @@ export function refreshLogin(
         AuthenticationException: function (): void {
           if (forceRelogin) {
             window.location.replace(
-              CONFIG["api-uri"] + "/v1.0/login?return-uri=/admin/" + mainPageTab
+              CONFIG["api-uri"] +
+                "/v1.0/login?return-uri=" +
+                window.location.pathname
             );
           }
         },

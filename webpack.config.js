@@ -5,8 +5,10 @@ const path = require("path");
 const sveltePreprocess = require("svelte-preprocess");
 const TerserPlugin = require("terser-webpack-plugin");
 
+const mode = "production";
+
 module.exports = {
-  mode: "production",
+  mode,
   devtool: "source-map",
   module: {
     rules: [
@@ -15,6 +17,9 @@ module.exports = {
         use: {
           loader: "svelte-loader",
           options: {
+            compilerOptions: {
+              dev: mode === "development",
+            },
             preprocess: sveltePreprocess({
               tsconfigFile: "./tsconfig.json",
             }),
@@ -49,7 +54,7 @@ module.exports = {
     xss: "filterXSS",
   },
   optimization: {
-    minimize: true,
+    minimize: mode === "production",
     minimizer: [
       new TerserPlugin({
         extractComments: false,
