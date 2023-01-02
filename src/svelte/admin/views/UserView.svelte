@@ -9,10 +9,10 @@
   import { Group } from "../../../ts/admin/interfaces/Group";
   import { IDList } from "../../../ts/admin/IDList";
   import { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
+  import Pagination from "../components/Pagination.svelte";
   import { Payload } from "../../../ts/admin/interfaces/Payload";
   import { reAuthHandler, request } from "../../../ts/admin/tools/request";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
-  import { renderPagination } from "../../../ts/admin/UI/pagination";
   import { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
   import { Role } from "../../../ts/admin/interfaces/Role";
   import { User } from "../../../ts/admin/interfaces/User";
@@ -242,6 +242,6 @@
         </tr>
       {/each}
     </table>
-    {@html renderPagination(Math.ceil(userList.count / perPage), page)}
+    <Pagination current={page} total={Math.ceil(userList.count / perPage)} />
   {/await}
 </div>

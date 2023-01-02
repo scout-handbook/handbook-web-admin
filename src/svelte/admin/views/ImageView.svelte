@@ -6,10 +6,10 @@
   import Button from "../components/Button.svelte";
   import DeleteImageDialog from "../components/action-modals/DeleteImageDialog.svelte";
   import { getElementsByClassName } from "../../../ts/admin/tools/getElementsByClassName";
+  import Pagination from "../components/Pagination.svelte";
   import { reAuthHandler, request } from "../../../ts/admin/tools/request";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
-  import { renderPagination } from "../../../ts/admin/UI/pagination";
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -118,6 +118,6 @@
         </div>
       </div>
     {/each}
-    {@html renderPagination(Math.ceil(list.length / perPage), page)}
+    <Pagination current={page} total={Math.ceil(list.length / perPage)} />
   {/await}
 </div>
