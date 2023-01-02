@@ -208,6 +208,7 @@
       {/if}
     </div>
     <div id="restore-lesson-preview">
+      <!-- eslint-disable no-undef ota-meshi/eslint-plugin-svelte#335 -->
       {#await contentPromise}
         <LoadingIndicator />
       {:then content}
@@ -215,6 +216,7 @@
         <!-- eslint-disable-next-line svelte/no-at-html-tags -->
         {@html content}
       {/await}
+      <!-- eslint-enable no-undef -->
     </div>
   </DoubleSidePanel>
 {/if}
