@@ -32,7 +32,7 @@
           "PUT",
           () => ({ name })
         ),
-      ]).defaultDispatch(false);
+      ]).defaultDispatch();
     }
   }
 </script>

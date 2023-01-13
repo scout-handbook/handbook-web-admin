@@ -40,7 +40,7 @@
           "PUT",
           () => ({ name, description, image, icon })
         ),
-      ]).defaultDispatch(false);
+      ]).defaultDispatch();
     }
   }
 </script>

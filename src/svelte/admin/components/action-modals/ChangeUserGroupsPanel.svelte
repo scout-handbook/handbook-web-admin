@@ -43,7 +43,7 @@
           "PUT",
           () => ({ group: selectedGroups.map(encodeURIComponent) })
         ),
-      ]).defaultDispatch(false);
+      ]).defaultDispatch();
     }
   }
 </script>

@@ -26,7 +26,7 @@
           encodeURIComponent(payload.competenceId),
         "DELETE"
       ),
-    ]).defaultDispatch(false);
+    ]).defaultDispatch();
   }
 </script>
 

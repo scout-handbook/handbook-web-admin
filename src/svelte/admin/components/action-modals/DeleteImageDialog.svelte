@@ -19,7 +19,7 @@
         $apiUri + "/v1.0/image/" + encodeURIComponent(payload.imageId),
         "DELETE"
       ),
-    ]).defaultDispatch(false);
+    ]).defaultDispatch();
   }
 </script>
 

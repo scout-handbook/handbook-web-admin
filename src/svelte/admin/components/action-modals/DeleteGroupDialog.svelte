@@ -24,7 +24,7 @@
         $apiUri + "/v1.0/group/" + encodeURIComponent(payload.groupId),
         "DELETE"
       ),
-    ]).defaultDispatch(false);
+    ]).defaultDispatch();
   }
 </script>
 

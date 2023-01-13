@@ -37,10 +37,10 @@
 
   function saveCallback(): void {
     if (changed) {
-      saveActionQueue.defaultDispatch(false);
+      saveActionQueue.defaultDispatch();
     } else {
       navigate("/lessons");
-      discardActionQueue.defaultDispatch(false);
+      discardActionQueue.defaultDispatch();
     }
   }
 
