@@ -43,7 +43,7 @@
   function saveCallback(): void {
     new ActionQueue([
       new Action($apiUri + "/v1.0/field", "POST", addFieldPayloadBuilder),
-    ]).defaultDispatch(false);
+    ]).defaultDispatch();
   }
 </script>
 

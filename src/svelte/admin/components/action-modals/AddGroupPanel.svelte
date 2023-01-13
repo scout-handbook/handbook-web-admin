@@ -25,7 +25,7 @@
   function saveCallback(): void {
     new ActionQueue([
       new Action($apiUri + "/v1.0/group", "POST", addGroupPayloadBuilder),
-    ]).defaultDispatch(false);
+    ]).defaultDispatch();
   }
 </script>
 

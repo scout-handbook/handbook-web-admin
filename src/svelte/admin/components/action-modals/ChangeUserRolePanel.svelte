@@ -34,7 +34,7 @@
           "PUT",
           () => ({ role: selectedRole })
         ),
-      ]).defaultDispatch(false);
+      ]).defaultDispatch();
     }
   }
 </script>

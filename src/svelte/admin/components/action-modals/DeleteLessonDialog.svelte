@@ -59,7 +59,7 @@
           },
         }
       ),
-    ]).defaultDispatch(false);
+    ]).defaultDispatch();
     navigate(-1);
   }
 

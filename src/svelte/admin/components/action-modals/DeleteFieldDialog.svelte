@@ -23,7 +23,7 @@
         $apiUri + "/v1.0/field/" + encodeURIComponent(payload.fieldId),
         "DELETE"
       ),
-    ]).defaultDispatch(false);
+    ]).defaultDispatch();
   }
 </script>
 

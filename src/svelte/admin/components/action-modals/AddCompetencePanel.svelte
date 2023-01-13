@@ -20,7 +20,7 @@
         "POST",
         addCompetencePayloadBuilder
       ),
-    ]).defaultDispatch(false);
+    ]).defaultDispatch();
   }
 
   function addCompetencePayloadBuilder(): Payload {

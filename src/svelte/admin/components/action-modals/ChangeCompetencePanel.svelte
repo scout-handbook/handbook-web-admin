@@ -38,7 +38,7 @@
           "PUT",
           () => ({ number, name, description })
         ),
-      ]).defaultDispatch(false);
+      ]).defaultDispatch();
     }
   }
 </script>

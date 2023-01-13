@@ -28,9 +28,9 @@ export class ActionQueue {
     }
   }
 
-  public defaultDispatch(background: boolean): void {
+  public defaultDispatch(): void {
     this.addDefaultCallback();
-    this.dispatch(background);
+    this.dispatch(false);
   }
 
   private addDefaultCallback(): void {
