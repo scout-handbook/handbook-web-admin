@@ -4,7 +4,6 @@ import { deserializeAction, serializeAction } from "./Action";
 import { dialog } from "../UI/dialog";
 import { request } from "../tools/request";
 import { SerializedAction } from "../interfaces/SerializedAction";
-import { sidePanelClose } from "../UI/sidePanel";
 import { spinner } from "../UI/spinner";
 
 export let ActionQueueRetry = false;
@@ -32,11 +31,6 @@ export class ActionQueue {
   public defaultDispatch(background: boolean): void {
     this.addDefaultCallback();
     this.dispatch(background);
-  }
-
-  public closeDispatch(): void {
-    sidePanelClose();
-    this.defaultDispatch(false);
   }
 
   private addDefaultCallback(): void {
