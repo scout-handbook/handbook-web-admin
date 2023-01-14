@@ -5,7 +5,6 @@
   import { apiUri, siteName } from "../../../ts/admin/stores";
   import Button from "../components/Button.svelte";
   import DeleteImageDialog from "../components/action-modals/DeleteImageDialog.svelte";
-  import { getElementsByClassName } from "../../../ts/admin/tools/getElementsByClassName";
   import Pagination from "../components/Pagination.svelte";
   import { reAuthHandler, request } from "../../../ts/admin/tools/request";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
@@ -33,21 +32,6 @@
     );
   });
 
-  // TODO: Remove this horrible hack
-  function fixNavigation() {
-    void imageListPromise.then(() => {
-      setTimeout(() => {
-        const paginationNodes = getElementsByClassName("pagination-button");
-        for (let i = 0; i < paginationNodes.length; i++) {
-          (paginationNodes[i] as HTMLElement).onclick = function (event): void {
-            page = parseInt((event.target as HTMLElement).dataset.page!, 10);
-            fixNavigation();
-          };
-        }
-      }, 100);
-    });
-  }
-
   function showImagePreview(id: string): void {
     const overlay = document.getElementById("overlay")!;
     overlay.style.display = "inline";
@@ -63,7 +47,6 @@
     };
   }
 
-  fixNavigation();
   refreshLogin(true);
 </script>
 
@@ -115,6 +98,6 @@
         </div>
       </div>
     {/each}
-    <Pagination current={page} total={Math.ceil(list.length / perPage)} />
+    <Pagination total={Math.ceil(list.length / perPage)} bind:current={page} />
   {/await}
 </div>
