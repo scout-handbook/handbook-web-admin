@@ -27,7 +27,7 @@
   $: actionPayload = $location.state?.actionPayload as {
     fieldId: string;
     lessonId: string;
-  } | null;
+  };
 
   $: adminPermissions =
     loginstate.role === "administrator" || loginstate.role === "superuser";
