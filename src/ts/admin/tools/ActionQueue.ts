@@ -1,12 +1,12 @@
-import { Action } from "./Action";
-import { ActionCallback } from "./ActionCallback";
-import { deserializeAction, serializeAction } from "./Action";
-import { dialog } from "../UI/dialog";
-import { mainPageTab } from "../views/main";
-import { request } from "../tools/request";
 import { SerializedAction } from "../interfaces/SerializedAction";
+import { request } from "../tools/request";
+import { dialog } from "../UI/dialog";
 import { sidePanelClose } from "../UI/sidePanel";
 import { spinner } from "../UI/spinner";
+import { mainPageTab } from "../views/main";
+import { Action } from "./Action";
+import { deserializeAction, serializeAction } from "./Action";
+import { ActionCallback } from "./ActionCallback";
 
 export let ActionQueueRetry = false;
 

@@ -1,14 +1,14 @@
+import { APIResponse } from "../interfaces/APIResponse";
+import { Payload } from "../interfaces/Payload";
+import { RequestResponse } from "../interfaces/RequestResponse";
+import { editor, showLessonEditor } from "../lessonEditor/editor";
+import { LESSONS, metadataEvent } from "../metadata";
 import { Action } from "../tools/Action";
 import { ActionCallback } from "../tools/ActionCallback";
 import { ActionQueue } from "../tools/ActionQueue";
-import { APIResponse } from "../interfaces/APIResponse";
+import { reAuthHandler, request } from "../tools/request";
 import { dialog } from "../UI/dialog";
 import { dismissSpinner } from "../UI/spinner";
-import { editor, showLessonEditor } from "../lessonEditor/editor";
-import { LESSONS, metadataEvent } from "../metadata";
-import { Payload } from "../interfaces/Payload";
-import { reAuthHandler, request } from "../tools/request";
-import { RequestResponse } from "../interfaces/RequestResponse";
 import { spinner } from "../UI/spinner";
 
 function saveLessonPayloadBuilder(): Payload {

@@ -1,18 +1,18 @@
-import { addOnClicks } from "../../tools/addOnClicks";
 import { changeUserGroupsOnClick } from "../../actions/changeUserGroups";
 import { changeUserRoleOnClick } from "../../actions/changeUserRole";
-import { getElementsByClassName } from "../../tools/getElementsByClassName";
-import { GROUPS, LOGINSTATE } from "../../metadata";
-import { mainPageTab, setMainPageTab } from "../main";
 import { Payload } from "../../interfaces/Payload";
-import { reAuthHandler, request } from "../../tools/request";
-import { refreshLogin } from "../../tools/refreshLogin";
-import { renderPagination } from "../../UI/pagination";
 import { RequestResponse } from "../../interfaces/RequestResponse";
 import { Role } from "../../interfaces/Role";
 import { User } from "../../interfaces/User";
 import { UserListResponse } from "../../interfaces/UserListResponse";
 import { UserSearchQuery } from "../../interfaces/UserSearchQuery";
+import { GROUPS, LOGINSTATE } from "../../metadata";
+import { addOnClicks } from "../../tools/addOnClicks";
+import { getElementsByClassName } from "../../tools/getElementsByClassName";
+import { refreshLogin } from "../../tools/refreshLogin";
+import { reAuthHandler, request } from "../../tools/request";
+import { renderPagination } from "../../UI/pagination";
+import { mainPageTab, setMainPageTab } from "../main";
 
 function renderRoleSelector(): string {
   let html = "";

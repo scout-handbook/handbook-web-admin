@@ -1,10 +1,10 @@
 import { addGroup } from "../../actions/addGroup";
-import { addOnClicks } from "../../tools/addOnClicks";
 import { changeGroupOnClick } from "../../actions/changeGroup";
 import { deleteGroupOnClick } from "../../actions/deleteGroup";
-import { getElementsByClassName } from "../../tools/getElementsByClassName";
-import { GROUPS, LOGINSTATE } from "../../metadata";
 import { importGroupOnClick } from "../../actions/importGroup";
+import { GROUPS, LOGINSTATE } from "../../metadata";
+import { addOnClicks } from "../../tools/addOnClicks";
+import { getElementsByClassName } from "../../tools/getElementsByClassName";
 import { refreshLogin } from "../../tools/refreshLogin";
 import { setMainPageTab } from "../main";
 

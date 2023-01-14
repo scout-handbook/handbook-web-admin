@@ -1,8 +1,8 @@
-import { editor } from "./editor";
+import { RequestResponse } from "../interfaces/RequestResponse";
 import { getElementsByClassName } from "../tools/getElementsByClassName";
 import { refreshLogin } from "../tools/refreshLogin";
 import { reAuthHandler, request } from "../tools/request";
-import { RequestResponse } from "../interfaces/RequestResponse";
+import { editor } from "./editor";
 
 export let imageSelectorOpen = false;
 

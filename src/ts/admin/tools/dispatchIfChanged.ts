@@ -1,6 +1,6 @@
-import { ActionQueue } from "./ActionQueue";
 import { dialog } from "../UI/dialog";
 import { sidePanelClose } from "../UI/sidePanel";
+import { ActionQueue } from "./ActionQueue";
 
 export function dispatchIfChanged(
   actionQueue: ActionQueue,

@@ -1,21 +1,21 @@
-import { authFailHandler, reAuthHandler, request } from "../tools/request";
-import { DeletedLesson } from "../interfaces/DeletedLesson";
-import { dialog } from "../UI/dialog";
 import { IDList } from "../IDList";
+import { DeletedLesson } from "../interfaces/DeletedLesson";
 import { LessonVersion } from "../interfaces/LessonVersion";
+import { RequestResponse } from "../interfaces/RequestResponse";
+import { refreshPreview } from "../lessonEditor/refreshPreview";
+import { refreshMetadata } from "../metadata";
 import { parseBoolForm } from "../tools/parseBoolForm";
 import { parseVersion } from "../tools/parseVersion";
 import { refreshLogin } from "../tools/refreshLogin";
-import { refreshMetadata } from "../metadata";
-import { refreshPreview } from "../lessonEditor/refreshPreview";
-import { RequestResponse } from "../interfaces/RequestResponse";
-import { showLessonRestoreView } from "../views/restoreLesson";
+import { authFailHandler, reAuthHandler, request } from "../tools/request";
+import { dialog } from "../UI/dialog";
 import {
   sidePanelClose,
   sidePanelDoubleOpen,
   sidePanelOpen,
 } from "../UI/sidePanel";
 import { spinner } from "../UI/spinner";
+import { showLessonRestoreView } from "../views/restoreLesson";
 
 function restoreLessonRenderVersion(name: string, body: string): void {
   refreshPreview(name, body, "restore-lesson-preview");
