@@ -1,11 +1,17 @@
 import { AfterLoadEvent } from "./AfterLoadEvent";
 import { Competence } from "./interfaces/Competence";
-import { dialog } from "./UI/dialog";
 import { Field } from "./interfaces/Field";
 import { Group } from "./interfaces/Group";
 import { IDList } from "./IDList";
 import { Lesson } from "./interfaces/Lesson";
-import { fields, competences, groups, lessons, loginstate } from "./stores";
+import {
+  fields,
+  competences,
+  globalDialogMessage,
+  groups,
+  lessons,
+  loginstate,
+} from "./stores";
 import { Loginstate } from "./interfaces/Loginstate";
 import { rawRequest, request } from "./tools/request";
 
@@ -159,9 +165,8 @@ export function refreshMetadata(): void {
           "/v1.0/login?return-uri=" +
           encodeURIComponent(window.location.href);
       } else {
-        dialog(
-          "Nastala neznámá chyba. Chybová hláška:<br>" + response.message!,
-          "OK"
+        globalDialogMessage.set(
+          "Nastala neznámá chyba. Chybová hláška: " + response.message!
         );
       }
     }
