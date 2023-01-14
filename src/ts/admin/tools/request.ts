@@ -1,6 +1,6 @@
 import { APIResponse } from "../interfaces/APIResponse";
-import { dialog } from "../UI/dialog";
 import { ExceptionHandler } from "../interfaces/ExceptionHandler";
+import { globalDialogMessage } from "../stores";
 import { Payload } from "../interfaces/Payload";
 import { RequestResponse } from "../interfaces/RequestResponse";
 
@@ -12,9 +12,8 @@ export const reAuthHandler: ExceptionHandler = {
 
 export const authFailHandler = {
   AuthenticationException: function (): void {
-    dialog(
-      "Proběhlo automatické odhlášení. Přihlašte se prosím a zkuste to znovu.",
-      "OK"
+    globalDialogMessage.set(
+      "Proběhlo automatické odhlášení. Přihlašte se prosím a zkuste to znovu."
     );
   },
 };
@@ -102,10 +101,8 @@ export function request(
     ) {
       exceptionHandler[response.type!]!(response);
     } else {
-      dialog(
-        "Nastala neznámá chyba. Chybová hláška:<br>" +
-          (response.message as string),
-        "OK"
+      globalDialogMessage.set(
+        "Nastala neznámá chyba. Chybová hláška: " + (response.message as string)
       );
     }
   });
