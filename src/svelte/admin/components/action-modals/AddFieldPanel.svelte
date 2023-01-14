@@ -5,7 +5,6 @@
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
   import { apiUri } from "../../../../ts/admin/stores";
   import Button from "../Button.svelte";
-  import { Payload } from "../../../../ts/admin/interfaces/Payload";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import SidePanel from "../SidePanel.svelte";
   import SidePanelImageSelector from "../SidePanelImageSelector.svelte";
@@ -22,27 +21,14 @@
 
   refreshLogin();
 
-  function addFieldPayloadBuilder(): Payload {
-    // TODO: Svelte-ify
-    return {
-      name: encodeURIComponent(
-        (document.getElementById("fieldName") as HTMLInputElement).value
-      ),
-      description: encodeURIComponent(
-        (document.getElementById("field-description") as HTMLInputElement).value
-      ),
-      image: encodeURIComponent(
-        (document.getElementById("fieldImage") as HTMLInputElement).value
-      ),
-      icon: encodeURIComponent(
-        (document.getElementById("fieldIcon") as HTMLInputElement).value
-      ),
-    };
-  }
-
   function saveCallback(): void {
     new ActionQueue([
-      new Action($apiUri + "/v1.0/field", "POST", addFieldPayloadBuilder),
+      new Action($apiUri + "/v1.0/field", "POST", () => ({
+        name: encodeURIComponent(name),
+        description: encodeURIComponent(description),
+        image: encodeURIComponent(image),
+        icon: encodeURIComponent(icon),
+      })),
     ]).defaultDispatch();
   }
 </script>
@@ -86,16 +72,18 @@
       class="form-text form-name"
       autocomplete="off"
       type="text"
-      value={name}
+      bind:value={name}
     />
     <textarea
       id="field-description"
       class="form-text"
       autocomplete="off"
-      rows="5">{description}</textarea
+      rows="5"
+      bind:value={description}
+    />
     >
     <legend for="fieldImage">Náhledový obrázek:</legend>
-    <input id="fieldImage" type="hidden" value={image} />
+    <input id="fieldImage" type="hidden" bind:value={image} />
     <img
       alt="Náhledový obrázek"
       src={$apiUri + "/v1.0/image/" + image + "?quality=thumbnail"}
@@ -108,7 +96,7 @@
       }}>Změnit</Button
     >
     <legend for="fieldIcon">Ikona:</legend>
-    <input id="fieldIcon" type="hidden" value={icon} />
+    <input id="fieldIcon" type="hidden" bind:value={icon} />
     <img
       alt="Ikona"
       src={$apiUri + "/v1.0/image/" + icon + "?quality=thumbnail"}
