@@ -13,8 +13,8 @@
 
   const location = useLocation();
   const navigate = useNavigate();
-  $: action = $location.state.action as string;
-  $: actionPayload = $location.state.actionPayload as { imageId: string };
+  $: action = $location.state?.action as string | null;
+  $: actionPayload = $location.state?.actionPayload as { imageId: string } | null;
 
   let page = 1;
   const perPage = 15;
