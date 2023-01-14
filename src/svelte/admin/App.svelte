@@ -6,11 +6,13 @@
   import {
     competences,
     fields,
+    globalDialogMessage,
     groups,
     lessons,
     loadingIndicatorVisible,
     loginstate,
   } from "../../ts/admin/stores";
+  import Dialog from "./components/Dialog.svelte";
   import EditLessonView from "./views/EditLessonView.svelte";
   import GroupView from "./views/GroupView.svelte";
   import ImageView from "./views/ImageView.svelte";
@@ -31,6 +33,16 @@
 </div>
 {#if $loadingIndicatorVisible}
   <LoadingIndicator />
+{/if}
+{#if $globalDialogMessage !== null}
+  <Dialog
+    confirmButtonText="OK"
+    on:confirm={() => {
+      globalDialogMessage.set(null);
+    }}
+  >
+    {$globalDialogMessage}
+  </Dialog>
 {/if}
 <!-- TODO: Remove legacy spinner -->
 <div id="spinner" />
