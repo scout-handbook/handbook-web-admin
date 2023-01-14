@@ -5,38 +5,25 @@
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
   import { apiUri } from "../../../../ts/admin/stores";
   import Button from "../Button.svelte";
-  import { Payload } from "../../../../ts/admin/interfaces/Payload";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import SidePanel from "../SidePanel.svelte";
 
   const navigate = useNavigate();
 
+  let number = "00";
+  let name = "Nová kompetence";
+  let description = "Popis nové kompetence";
+
   refreshLogin();
 
   function saveCallback() {
     new ActionQueue([
-      new Action(
-        $apiUri + "/v1.0/competence",
-        "POST",
-        addCompetencePayloadBuilder
-      ),
+      new Action($apiUri + "/v1.0/competence", "POST", () => ({
+        number: encodeURIComponent(number),
+        name: encodeURIComponent(name),
+        description: encodeURIComponent(description),
+      })),
     ]).defaultDispatch();
-  }
-
-  function addCompetencePayloadBuilder(): Payload {
-    // TODO: Bind values
-    return {
-      number: encodeURIComponent(
-        (document.getElementById("competence-number") as HTMLInputElement).value
-      ),
-      name: encodeURIComponent(
-        (document.getElementById("competence-name") as HTMLInputElement).value
-      ),
-      description: encodeURIComponent(
-        (document.getElementById("competence-description") as HTMLInputElement)
-          .value
-      ),
-    };
   }
 </script>
 
@@ -59,7 +46,7 @@
       class="form-text form-name"
       autocomplete="off"
       type="text"
-      value="00"
+      bind:value={number}
     />
     <br />
     <input
@@ -67,14 +54,15 @@
       class="form-text"
       autocomplete="off"
       type="text"
-      value="Nová kompetence"
+      bind:value={name}
     />
     <br />
     <textarea
       id="competence-description"
       class="form-text"
       autocomplete="off"
-      rows="5">Popis nové kompetence</textarea
-    >
+      rows="5"
+      bind:value={description}
+    />
   </form>
 </SidePanel>
