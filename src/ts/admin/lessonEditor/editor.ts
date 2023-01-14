@@ -5,6 +5,7 @@ import { AfterLoadEvent } from "../AfterLoadEvent";
 import { dialog } from "../UI/dialog";
 import { default as EasyMDE } from "easymde";
 import { FIELDS, LESSONS } from "../metadata";
+
 import { LessonSettingsCache } from "../interfaces/LessonSettingsCache";
 import { reAuthHandler, request } from "../tools/request";
 import { refreshLogin } from "../tools/refreshLogin";

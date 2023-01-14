@@ -6,9 +6,9 @@ import { dialog } from "../UI/dialog";
 import { dismissSpinner } from "../UI/spinner";
 import { ExceptionHandler } from "../interfaces/ExceptionHandler";
 import { Payload } from "../interfaces/Payload";
-import { refreshMetadata } from "../metadata";
 import { RequestResponse } from "../interfaces/RequestResponse";
 import { SerializedAction } from "../interfaces/SerializedAction";
+import { refreshMetadata } from "../metadata";
 
 export class Action {
   public url: string;

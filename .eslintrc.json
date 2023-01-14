@@ -7,7 +7,7 @@
     "browser": true,
     "node": false
   },
-  "plugins": ["compat", "deprecation", "@typescript-eslint"],
+  "plugins": ["compat", "deprecation", "simple-import-sort", "@typescript-eslint"],
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
@@ -20,6 +20,8 @@
     "compat/compat": "warn",
     "deprecation/deprecation": "warn",
     "no-warning-comments": "warn",
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
     "strict": ["error", "never"],
     "@typescript-eslint/array-type": ["error", { "default": "generic" }],
     "@typescript-eslint/member-ordering": "error",

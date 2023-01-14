@@ -1,8 +1,8 @@
 import { AfterLoadEvent } from "./AfterLoadEvent";
+import { IDList } from "./IDList";
 import { Competence } from "./interfaces/Competence";
 import { Field } from "./interfaces/Field";
 import { Group } from "./interfaces/Group";
-import { IDList } from "./IDList";
 import { Lesson } from "./interfaces/Lesson";
 import {
   fields,
