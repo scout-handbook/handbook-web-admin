@@ -5,7 +5,6 @@
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
   import { APIResponse } from "../../../../ts/admin/interfaces/APIResponse";
   import { apiUri } from "../../../../ts/admin/stores";
-  import { dialog } from "../../../../ts/admin/UI/dialog";
   import Dialog from "../Dialog.svelte";
   import { IDList } from "../../../../ts/admin/IDList";
   import { Lesson } from "../../../../ts/admin/interfaces/Lesson";
@@ -20,6 +19,7 @@
 
   const name = lessons.get(payload.lessonId)!.name;
   let lockedError: string | null = null;
+  let expiredError = false;
   const mutexPromise = new Promise<void>((resolve) => {
     const exceptionHandler = reAuthHandler;
     exceptionHandler["LockedException"] = function (
@@ -46,11 +46,8 @@
         undefined,
         [],
         {
-          NotLockedException: function (): void {
-            dialog(
-              "Kvůli příliš malé aktivitě byla lekce odemknuta a již ji upravil někdo jiný. Zkuste to prosím znovu.",
-              "OK"
-            );
+          NotLockedException: () => {
+            expiredError = true;
           },
         }
       ),
@@ -72,20 +69,30 @@
   }
 </script>
 
-{#await mutexPromise}
-  <Overlay />
-  <LoadingIndicator darkBackground />
-{:then _}
-  {#if lockedError !== null}
-    <Dialog
-      confirmButtonText="OK"
-      on:confirm={() => {
-        navigate(-1);
-      }}
-    >
-      Nelze smazat lekci, protože ji právě upravuje {lockedError}.
-    </Dialog>
-  {:else}
+{#if lockedError !== null}
+  <Dialog
+    confirmButtonText="OK"
+    on:confirm={() => {
+      navigate(-1);
+    }}
+  >
+    Nelze smazat lekci, protože ji právě upravuje {lockedError}.
+  </Dialog>
+{:else if expiredError}
+  <Dialog
+    confirmButtonText="OK"
+    on:confirm={() => {
+      navigate(-1);
+    }}
+  >
+    Kvůli příliš malé aktivitě byla lekce odemknuta a již ji upravil někdo jiný.
+    Zkuste to prosím znovu.
+  </Dialog>
+{:else}
+  {#await mutexPromise}
+    <Overlay />
+    <LoadingIndicator darkBackground />
+  {:then _}
     <Dialog
       confirmButtonText="Ano"
       dismissButtonText="Ne"
@@ -94,5 +101,5 @@
     >
       Opravdu si přejete smazat lekci "{name}"?
     </Dialog>
-  {/if}
-{/await}
+  {/await}
+{/if}
