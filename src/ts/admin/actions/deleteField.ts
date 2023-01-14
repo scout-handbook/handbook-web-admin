@@ -1,9 +1,9 @@
+import { FIELDS } from "../metadata";
 import { Action } from "../tools/Action";
 import { ActionQueue } from "../tools/ActionQueue";
-import { dialog } from "../UI/dialog";
-import { FIELDS } from "../metadata";
-import { getAttribute } from "../UI/button";
 import { refreshLogin } from "../tools/refreshLogin";
+import { getAttribute } from "../UI/button";
+import { dialog } from "../UI/dialog";
 
 export function deleteFieldOnClick(event: MouseEvent): void {
   const id = getAttribute(event, "id");

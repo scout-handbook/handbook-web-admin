@@ -1,12 +1,12 @@
+import { Payload } from "../interfaces/Payload";
+import { lessonSettingsCache } from "../lessonEditor/editor";
+import { setChanged } from "../lessonEditor/editor";
+import { lessonSettings } from "../lessonEditor/settings";
+import { GROUPS } from "../metadata";
 import { Action } from "../tools/Action";
 import { ActionQueue } from "../tools/ActionQueue";
-import { GROUPS } from "../metadata";
-import { lessonSettings } from "../lessonEditor/settings";
-import { lessonSettingsCache } from "../lessonEditor/editor";
 import { parseBoolForm } from "../tools/parseBoolForm";
-import { Payload } from "../interfaces/Payload";
 import { refreshLogin } from "../tools/refreshLogin";
-import { setChanged } from "../lessonEditor/editor";
 
 let lessonGroupsChanged = false;
 

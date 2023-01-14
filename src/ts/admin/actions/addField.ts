@@ -1,9 +1,9 @@
+import { Payload } from "../interfaces/Payload";
 import { Action } from "../tools/Action";
 import { ActionQueue } from "../tools/ActionQueue";
-import { openSidePanelImageSelector } from "../UI/sidePanelImageSelector";
-import { Payload } from "../interfaces/Payload";
 import { refreshLogin } from "../tools/refreshLogin";
 import { sidePanelOpen } from "../UI/sidePanel";
+import { openSidePanelImageSelector } from "../UI/sidePanelImageSelector";
 
 function addFieldPayloadBuilder(): Payload {
   return {

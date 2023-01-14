@@ -1,12 +1,12 @@
 import { AfterLoadEvent } from "./AfterLoadEvent";
+import { IDList } from "./IDList";
 import { Competence } from "./interfaces/Competence";
-import { dialog } from "./UI/dialog";
 import { Field } from "./interfaces/Field";
 import { Group } from "./interfaces/Group";
-import { IDList } from "./IDList";
 import { Lesson } from "./interfaces/Lesson";
 import { Loginstate } from "./interfaces/Loginstate";
 import { rawRequest, request } from "./tools/request";
+import { dialog } from "./UI/dialog";
 
 export let metadataEvent: AfterLoadEvent;
 export let FIELDS: IDList<Field>;

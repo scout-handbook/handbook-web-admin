@@ -1,8 +1,8 @@
 import { addCompetence } from "../../actions/addCompetence";
-import { addOnClicks } from "../../tools/addOnClicks";
 import { changeCompetenceOnClick } from "../../actions/changeCompetence";
-import { COMPETENCES, LOGINSTATE } from "../../metadata";
 import { deleteCompetenceOnClick } from "../../actions/deleteCompetence";
+import { COMPETENCES, LOGINSTATE } from "../../metadata";
+import { addOnClicks } from "../../tools/addOnClicks";
 import { getElementsByClassName } from "../../tools/getElementsByClassName";
 import { refreshLogin } from "../../tools/refreshLogin";
 import { setMainPageTab } from "../main";

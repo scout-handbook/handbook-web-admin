@@ -1,7 +1,7 @@
+import { refreshMetadata } from "../metadata";
+import { refreshLogin } from "../tools/refreshLogin";
 import { authFailHandler, request } from "../tools/request";
 import { dialog } from "../UI/dialog";
-import { refreshLogin } from "../tools/refreshLogin";
-import { refreshMetadata } from "../metadata";
 import { sidePanelClose, sidePanelOpen } from "../UI/sidePanel";
 import { spinner } from "../UI/spinner";
 

@@ -1,15 +1,15 @@
 import { HistoryState } from "./interfaces/HistoryState";
-import {
-  closeSidePanelImageSelector,
-  sidePanelImageSelectorState,
-} from "./UI/sidePanelImageSelector";
+import { MainPageTab } from "./interfaces/MainPageTab";
 import {
   imageSelectorOpen,
   prepareImageSelector,
 } from "./lessonEditor/imageSelector";
-import { MainPageTab } from "./interfaces/MainPageTab";
 import { metadataEvent } from "./metadata";
 import { sidePanelClose, sidePanelState } from "./UI/sidePanel";
+import {
+  closeSidePanelImageSelector,
+  sidePanelImageSelectorState,
+} from "./UI/sidePanelImageSelector";
 import { showLessonEditView } from "./views/editLesson";
 import { setMainPageTab, showMainView } from "./views/main";
 

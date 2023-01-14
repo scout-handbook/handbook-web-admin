@@ -1,5 +1,5 @@
-import { LOGINSTATE, metadataEvent } from "../metadata";
 import { MainPageTab } from "../interfaces/MainPageTab";
+import { LOGINSTATE, metadataEvent } from "../metadata";
 import { showCompetenceSubview } from "./mainSubviews/competence";
 import { showGroupSubview } from "./mainSubviews/group";
 import { showImageSubview } from "./mainSubviews/image";
