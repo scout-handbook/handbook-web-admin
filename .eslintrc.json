@@ -26,6 +26,7 @@
     "@typescript-eslint/no-extraneous-class": "error",
     "@typescript-eslint/no-namespace": ["error", { "allowDeclarations": true }],
     "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
     "svelte/no-store-async": "error",
     "svelte/no-target-blank": "error",
     "svelte/button-has-type": "error",
