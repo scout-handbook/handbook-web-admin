@@ -2,10 +2,10 @@
 // eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference path="../d.ts/CONFIG.d.ts" />
 
-import { ActionQueueSetup } from "./admin/tools/ActionQueue";
-import { metadataSetup } from "./admin/metadata";
-import { refreshPreviewSetup } from "./admin/lessonEditor/refreshPreview";
 import App from "../svelte/admin/App.svelte";
+import { refreshPreviewSetup } from "./admin/lessonEditor/refreshPreview";
+import { metadataSetup } from "./admin/metadata";
+import { ActionQueueSetup } from "./admin/tools/ActionQueue";
 
 function main(): void {
   refreshPreviewSetup();

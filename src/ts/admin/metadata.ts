@@ -4,15 +4,15 @@ import { Competence } from "./interfaces/Competence";
 import { Field } from "./interfaces/Field";
 import { Group } from "./interfaces/Group";
 import { Lesson } from "./interfaces/Lesson";
+import { Loginstate } from "./interfaces/Loginstate";
 import {
-  fields,
   competences,
+  fields,
   globalDialogMessage,
   groups,
   lessons,
   loginstate,
 } from "./stores";
-import { Loginstate } from "./interfaces/Loginstate";
 import { rawRequest, request } from "./tools/request";
 
 export let metadataEvent: AfterLoadEvent;

@@ -1,16 +1,15 @@
+import { default as EasyMDE } from "easymde";
 import { navigate } from "svelte-navigator";
 
-import { ActionQueue } from "../tools/ActionQueue";
 import { AfterLoadEvent } from "../AfterLoadEvent";
-import { dialog } from "../UI/dialog";
-import { default as EasyMDE } from "easymde";
-import { FIELDS, LESSONS } from "../metadata";
-
 import { LessonSettingsCache } from "../interfaces/LessonSettingsCache";
-import { reAuthHandler, request } from "../tools/request";
-import { refreshLogin } from "../tools/refreshLogin";
-import { refreshPreview } from "./refreshPreview";
 import { RequestResponse } from "../interfaces/RequestResponse";
+import { FIELDS, LESSONS } from "../metadata";
+import { ActionQueue } from "../tools/ActionQueue";
+import { refreshLogin } from "../tools/refreshLogin";
+import { reAuthHandler, request } from "../tools/request";
+import { dialog } from "../UI/dialog";
+import { refreshPreview } from "./refreshPreview";
 
 export let changed: boolean;
 export const lessonSettingsCache: LessonSettingsCache = {

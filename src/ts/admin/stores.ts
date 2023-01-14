@@ -1,10 +1,10 @@
 import { readable, writable } from "svelte/store";
 
+import { IDList } from "./IDList";
 import { Competence } from "./interfaces/Competence";
 import { ConfigCustomProperties } from "./interfaces/ConfigV2";
 import { Field } from "./interfaces/Field";
 import { Group } from "./interfaces/Group";
-import { IDList } from "./IDList";
 import { Lesson } from "./interfaces/Lesson";
 import { Loginstate } from "./interfaces/Loginstate";
 
