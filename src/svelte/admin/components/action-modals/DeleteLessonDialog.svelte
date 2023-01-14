@@ -19,18 +19,13 @@
   const navigate = useNavigate();
 
   const name = lessons.get(payload.lessonId)!.name;
+  let lockedError: string | null = null;
   const mutexPromise = new Promise<void>((resolve) => {
     const exceptionHandler = reAuthHandler;
     exceptionHandler["LockedException"] = function (
       response: APIResponse
     ): void {
-      // TODO: Svelte-ify
-      dialog(
-        "Nelze smazat lekci, protože ji právě upravuje " +
-          response.holder! +
-          ".",
-        "OK"
-      );
+      lockedError = response.holder!;
     };
     request(
       $apiUri + "/v1.0/mutex/" + encodeURIComponent(payload.lessonId),
@@ -81,12 +76,23 @@
   <Overlay />
   <LoadingIndicator darkBackground />
 {:then _}
-  <Dialog
-    confirmButtonText="Ano"
-    dismissButtonText="Ne"
-    on:confirm={confirmCallback}
-    on:dismiss={dismissCallback}
-  >
-    Opravdu si přejete smazat lekci "{name}"?
-  </Dialog>
+  {#if lockedError !== null}
+    <Dialog
+      confirmButtonText="OK"
+      on:confirm={() => {
+        navigate(-1);
+      }}
+    >
+      Nelze smazat lekci, protože ji právě upravuje {lockedError}.
+    </Dialog>
+  {:else}
+    <Dialog
+      confirmButtonText="Ano"
+      dismissButtonText="Ne"
+      on:confirm={confirmCallback}
+      on:dismiss={dismissCallback}
+    >
+      Opravdu si přejete smazat lekci "{name}"?
+    </Dialog>
+  {/if}
 {/await}
