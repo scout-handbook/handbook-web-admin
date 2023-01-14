@@ -1,6 +1,6 @@
+import { Payload } from "../interfaces/Payload";
 import { Action } from "../tools/Action";
 import { ActionQueue } from "../tools/ActionQueue";
-import { Payload } from "../interfaces/Payload";
 import { refreshLogin } from "../tools/refreshLogin";
 import { sidePanelOpen } from "../UI/sidePanel";
 

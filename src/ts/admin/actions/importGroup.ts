@@ -1,18 +1,18 @@
 import { AfterLoadEvent } from "../AfterLoadEvent";
-import { authFailHandler, reAuthHandler, request } from "../tools/request";
-import { dialog } from "../UI/dialog";
 import { Event } from "../interfaces/Event";
-import { getAttribute } from "../UI/button";
-import { GROUPS, refreshMetadata } from "../metadata";
 import { Participant } from "../interfaces/Participant";
-import { parseBoolForm } from "../tools/parseBoolForm";
 import { Payload } from "../interfaces/Payload";
-import { refreshLogin } from "../tools/refreshLogin";
 import { RequestResponse } from "../interfaces/RequestResponse";
-import { sidePanelClose, sidePanelOpen } from "../UI/sidePanel";
-import { spinner } from "../UI/spinner";
 import { User } from "../interfaces/User";
 import { UserListResponse } from "../interfaces/UserListResponse";
+import { GROUPS, refreshMetadata } from "../metadata";
+import { parseBoolForm } from "../tools/parseBoolForm";
+import { refreshLogin } from "../tools/refreshLogin";
+import { authFailHandler, reAuthHandler, request } from "../tools/request";
+import { getAttribute } from "../UI/button";
+import { dialog } from "../UI/dialog";
+import { sidePanelClose, sidePanelOpen } from "../UI/sidePanel";
+import { spinner } from "../UI/spinner";
 
 let participantEvent: AfterLoadEvent;
 let addEvent: AfterLoadEvent;

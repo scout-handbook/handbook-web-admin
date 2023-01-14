@@ -1,8 +1,8 @@
 import { APIResponse } from "../interfaces/APIResponse";
-import { dialog } from "../UI/dialog";
 import { ExceptionHandler } from "../interfaces/ExceptionHandler";
 import { Payload } from "../interfaces/Payload";
 import { RequestResponse } from "../interfaces/RequestResponse";
+import { dialog } from "../UI/dialog";
 
 export const reAuthHandler: ExceptionHandler = {
   AuthenticationException: function (): void {

@@ -1,10 +1,10 @@
+import { Payload } from "../interfaces/Payload";
+import { defaultBody, defaultName } from "../lessonEditor/defaultContent";
+import { editor, setChanged, showLessonEditor } from "../lessonEditor/editor";
 import { Action } from "../tools/Action";
 import { ActionCallback } from "../tools/ActionCallback";
 import { ActionQueue } from "../tools/ActionQueue";
-import { defaultBody, defaultName } from "../lessonEditor/defaultContent";
-import { editor, setChanged, showLessonEditor } from "../lessonEditor/editor";
 import { getAttribute } from "../UI/button";
-import { Payload } from "../interfaces/Payload";
 
 function addLessonPayloadBuilder(): Payload {
   return {
