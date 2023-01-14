@@ -17,7 +17,7 @@
   const location = useLocation();
   const navigate = useNavigate();
   $: action = $location.state?.action as string | null;
-  $: actionPayload = $location.state?.actionPayload as { competenceId: string } | null;
+  $: actionPayload = $location.state?.actionPayload as { competenceId: string };
 
   $: adminPermissions =
     loginstate.role === "administrator" || loginstate.role === "superuser";
