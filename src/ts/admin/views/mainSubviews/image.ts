@@ -1,11 +1,11 @@
 import { addImage } from "../../actions/addImage";
 import { deleteImageOnClick } from "../../actions/deleteImage";
-import { getElementsByClassName } from "../../tools/getElementsByClassName";
-import { mainPageTab, setMainPageTab } from "../main";
-import { reAuthHandler, request } from "../../tools/request";
-import { refreshLogin } from "../../tools/refreshLogin";
-import { renderPagination } from "../../UI/pagination";
 import { RequestResponse } from "../../interfaces/RequestResponse";
+import { getElementsByClassName } from "../../tools/getElementsByClassName";
+import { refreshLogin } from "../../tools/refreshLogin";
+import { reAuthHandler, request } from "../../tools/request";
+import { renderPagination } from "../../UI/pagination";
+import { mainPageTab, setMainPageTab } from "../main";
 
 function showImagePreview(event: MouseEvent): void {
   const overlay = document.getElementById("overlay")!;

@@ -1,18 +1,18 @@
 import { addField } from "../../actions/addField";
-import { addLessonInFieldOnClick } from "../addLesson";
-import { addOnClicks } from "../../tools/addOnClicks";
 import { changeFieldOnClick } from "../../actions/changeField";
-import { COMPETENCES, FIELDS, LESSONS, LOGINSTATE } from "../../metadata";
 import { deleteFieldOnClick } from "../../actions/deleteField";
 import { deleteLessonOnClick } from "../../actions/deleteLesson";
-import { getAttribute } from "../../UI/button";
-import { getElementsByClassName } from "../../tools/getElementsByClassName";
-import { Lesson } from "../../interfaces/Lesson";
-import { refreshLogin } from "../../tools/refreshLogin";
 import { restoreLesson } from "../../actions/restoreLesson";
-import { setMainPageTab } from "../main";
+import { Lesson } from "../../interfaces/Lesson";
+import { COMPETENCES, FIELDS, LESSONS, LOGINSTATE } from "../../metadata";
+import { addOnClicks } from "../../tools/addOnClicks";
+import { getElementsByClassName } from "../../tools/getElementsByClassName";
+import { refreshLogin } from "../../tools/refreshLogin";
+import { getAttribute } from "../../UI/button";
+import { addLessonInFieldOnClick } from "../addLesson";
 import { showLessonAddView } from "../addLesson";
 import { showLessonEditView } from "../editLesson";
+import { setMainPageTab } from "../main";
 
 function renderLessonListLesson(
   id: string,

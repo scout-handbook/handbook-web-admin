@@ -1,8 +1,8 @@
+import { Payload } from "../interfaces/Payload";
+import { editor, setChanged, showLessonEditor } from "../lessonEditor/editor";
 import { Action } from "../tools/Action";
 import { ActionCallback } from "../tools/ActionCallback";
 import { ActionQueue } from "../tools/ActionQueue";
-import { editor, showLessonEditor, setChanged } from "../lessonEditor/editor";
-import { Payload } from "../interfaces/Payload";
 
 function restoreLessonPayloadBuilder(): Payload {
   return {

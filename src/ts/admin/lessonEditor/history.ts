@@ -1,15 +1,15 @@
-import { ActionQueue } from "../tools/ActionQueue";
-import { authFailHandler, request } from "../tools/request";
-import { editor } from "./editor";
-import { LESSONS } from "../metadata";
-import { lessonSettings } from "./settings";
 import { LessonVersion } from "../interfaces/LessonVersion";
+import { RequestResponse } from "../interfaces/RequestResponse";
+import { LESSONS } from "../metadata";
+import { ActionQueue } from "../tools/ActionQueue";
 import { parseVersion } from "../tools/parseVersion";
 import { refreshLogin } from "../tools/refreshLogin";
-import { refreshPreview } from "./refreshPreview";
-import { RequestResponse } from "../interfaces/RequestResponse";
-import { setChanged } from "./editor";
+import { authFailHandler, request } from "../tools/request";
 import { sidePanelDoubleOpen } from "../UI/sidePanel";
+import { editor } from "./editor";
+import { setChanged } from "./editor";
+import { refreshPreview } from "./refreshPreview";
+import { lessonSettings } from "./settings";
 
 function lessonHistoryPreviewShowCurrent(): void {
   document.getElementById("lesson-history-preview")!.innerHTML =

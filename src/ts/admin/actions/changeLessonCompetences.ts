@@ -1,10 +1,10 @@
+import { Payload } from "../interfaces/Payload";
+import { lessonSettingsCache, setChanged } from "../lessonEditor/editor";
+import { lessonSettings } from "../lessonEditor/settings";
+import { COMPETENCES } from "../metadata";
 import { Action } from "../tools/Action";
 import { ActionQueue } from "../tools/ActionQueue";
-import { COMPETENCES } from "../metadata";
-import { lessonSettings } from "../lessonEditor/settings";
-import { lessonSettingsCache, setChanged } from "../lessonEditor/editor";
 import { parseBoolForm } from "../tools/parseBoolForm";
-import { Payload } from "../interfaces/Payload";
 import { refreshLogin } from "../tools/refreshLogin";
 
 let lessonCompetencesChanged = false;

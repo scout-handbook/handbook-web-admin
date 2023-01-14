@@ -1,14 +1,14 @@
-import { ActionCallback } from "./ActionCallback";
-import { ActionQueue, ActionQueueRetry } from "./ActionQueue";
-import { dialog } from "../UI/dialog";
-import { dismissSpinner } from "../UI/spinner";
 import { ExceptionHandler } from "../interfaces/ExceptionHandler";
 import { Payload } from "../interfaces/Payload";
-import { refreshMetadata } from "../metadata";
 import { RequestResponse } from "../interfaces/RequestResponse";
-import { removeBeacon } from "../views/editLesson";
 import { SerializedAction } from "../interfaces/SerializedAction";
+import { refreshMetadata } from "../metadata";
+import { dialog } from "../UI/dialog";
+import { dismissSpinner } from "../UI/spinner";
+import { removeBeacon } from "../views/editLesson";
 import { showMainView } from "../views/main";
+import { ActionCallback } from "./ActionCallback";
+import { ActionQueue, ActionQueueRetry } from "./ActionQueue";
 
 export class Action {
   public url: string;

@@ -1,10 +1,10 @@
+import { Payload } from "../interfaces/Payload";
+import { LOGINSTATE } from "../metadata";
 import { Action } from "../tools/Action";
 import { ActionQueue } from "../tools/ActionQueue";
 import { dispatchIfChanged } from "../tools/dispatchIfChanged";
-import { getAttribute } from "../UI/button";
-import { LOGINSTATE } from "../metadata";
-import { Payload } from "../interfaces/Payload";
 import { refreshLogin } from "../tools/refreshLogin";
+import { getAttribute } from "../UI/button";
 import { sidePanelOpen } from "../UI/sidePanel";
 
 let roleChanged = false;

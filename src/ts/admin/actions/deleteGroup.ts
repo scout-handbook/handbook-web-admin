@@ -1,9 +1,9 @@
+import { GROUPS } from "../metadata";
 import { Action } from "../tools/Action";
 import { ActionQueue } from "../tools/ActionQueue";
-import { dialog } from "../UI/dialog";
-import { getAttribute } from "../UI/button";
-import { GROUPS } from "../metadata";
 import { refreshLogin } from "../tools/refreshLogin";
+import { getAttribute } from "../UI/button";
+import { dialog } from "../UI/dialog";
 
 export function deleteGroupOnClick(event: MouseEvent): void {
   const id = getAttribute(event, "id");

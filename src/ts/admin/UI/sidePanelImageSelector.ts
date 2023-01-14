@@ -1,11 +1,11 @@
 import { addField } from "../actions/addField";
 import { changeField } from "../actions/changeField";
-import { getElementsByClassName } from "../tools/getElementsByClassName";
-import { reAuthHandler, request } from "../tools/request";
-import { refreshLogin } from "../tools/refreshLogin";
 import { RequestResponse } from "../interfaces/RequestResponse";
-import { sidePanelDoubleOpen } from "./sidePanel";
 import { SidePanelImageSelectorGlobalState } from "../interfaces/SidePanelImageSelectorGlobalState";
+import { getElementsByClassName } from "../tools/getElementsByClassName";
+import { refreshLogin } from "../tools/refreshLogin";
+import { reAuthHandler, request } from "../tools/request";
+import { sidePanelDoubleOpen } from "./sidePanel";
 
 export let sidePanelImageSelectorState:
   | SidePanelImageSelectorGlobalState

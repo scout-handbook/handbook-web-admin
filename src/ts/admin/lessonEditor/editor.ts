@@ -1,15 +1,16 @@
-import { ActionQueue } from "../tools/ActionQueue";
-import { AfterLoadEvent } from "../AfterLoadEvent";
-import { dialog } from "../UI/dialog";
 import { default as EasyMDE } from "easymde";
-import { FIELDS, LESSONS } from "../metadata";
-import { lessonSettings } from "./settings";
+
+import { AfterLoadEvent } from "../AfterLoadEvent";
 import { LessonSettingsCache } from "../interfaces/LessonSettingsCache";
-import { prepareImageSelector, toggleImageSelector } from "./imageSelector";
-import { reAuthHandler, request } from "../tools/request";
-import { refreshLogin } from "../tools/refreshLogin";
-import { refreshPreview } from "./refreshPreview";
 import { RequestResponse } from "../interfaces/RequestResponse";
+import { FIELDS, LESSONS } from "../metadata";
+import { ActionQueue } from "../tools/ActionQueue";
+import { refreshLogin } from "../tools/refreshLogin";
+import { reAuthHandler, request } from "../tools/request";
+import { dialog } from "../UI/dialog";
+import { prepareImageSelector, toggleImageSelector } from "./imageSelector";
+import { refreshPreview } from "./refreshPreview";
+import { lessonSettings } from "./settings";
 
 export let changed: boolean;
 export const lessonSettingsCache: LessonSettingsCache = {

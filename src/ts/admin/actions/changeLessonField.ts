@@ -1,10 +1,10 @@
-import { Action } from "../tools/Action";
-import { ActionQueue } from "../tools/ActionQueue";
-import { FIELDS } from "../metadata";
+import { Payload } from "../interfaces/Payload";
 import { lessonSettingsCache, setChanged } from "../lessonEditor/editor";
 import { lessonSettings } from "../lessonEditor/settings";
+import { FIELDS } from "../metadata";
+import { Action } from "../tools/Action";
+import { ActionQueue } from "../tools/ActionQueue";
 import { parseBoolForm } from "../tools/parseBoolForm";
-import { Payload } from "../interfaces/Payload";
 import { refreshLogin } from "../tools/refreshLogin";
 
 let lessonFieldChanged = false;

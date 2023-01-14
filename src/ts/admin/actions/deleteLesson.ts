@@ -1,11 +1,11 @@
+import { APIResponse } from "../interfaces/APIResponse";
+import { LESSONS } from "../metadata";
 import { Action } from "../tools/Action";
 import { ActionQueue } from "../tools/ActionQueue";
-import { APIResponse } from "../interfaces/APIResponse";
-import { dialog } from "../UI/dialog";
-import { getAttribute } from "../UI/button";
-import { LESSONS } from "../metadata";
-import { reAuthHandler, request } from "../tools/request";
 import { refreshLogin } from "../tools/refreshLogin";
+import { reAuthHandler, request } from "../tools/request";
+import { getAttribute } from "../UI/button";
+import { dialog } from "../UI/dialog";
 import { spinner } from "../UI/spinner";
 
 function deleteLessonDialog(id: string): void {

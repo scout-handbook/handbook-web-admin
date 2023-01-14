@@ -1,12 +1,12 @@
+import { Payload } from "../interfaces/Payload";
+import { FIELDS } from "../metadata";
 import { Action } from "../tools/Action";
 import { ActionQueue } from "../tools/ActionQueue";
 import { dispatchIfChanged } from "../tools/dispatchIfChanged";
-import { FIELDS } from "../metadata";
-import { getAttribute } from "../UI/button";
-import { openSidePanelImageSelector } from "../UI/sidePanelImageSelector";
-import { Payload } from "../interfaces/Payload";
 import { refreshLogin } from "../tools/refreshLogin";
+import { getAttribute } from "../UI/button";
 import { sidePanelOpen } from "../UI/sidePanel";
+import { openSidePanelImageSelector } from "../UI/sidePanelImageSelector";
 
 let fieldChanged = false;
 
