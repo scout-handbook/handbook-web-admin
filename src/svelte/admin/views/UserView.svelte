@@ -5,7 +5,6 @@
   import Button from "../components/Button.svelte";
   import ChangeUserGroupsPanel from "../components/action-modals/ChangeUserGroupsPanel.svelte";
   import ChangeUserRolePanel from "../components/action-modals/ChangeUserRolePanel.svelte";
-  import { getElementsByClassName } from "../../../ts/admin/tools/getElementsByClassName";
   import { Group } from "../../../ts/admin/interfaces/Group";
   import { IDList } from "../../../ts/admin/IDList";
   import { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
@@ -35,48 +34,29 @@
 
   let userListPromise: Promise<UserListResponse>;
 
-  function reload() {
-    userListPromise = new Promise((resolve) => {
-      const payload: UserSearchQuery = {
-        name: searchName,
-        page: page,
-        "per-page": perPage,
-      };
-      if (role !== "all") {
-        payload.role = role;
-      }
-      if (group !== "00000000-0000-0000-0000-000000000000") {
-        payload.group = group;
-      }
-      request(
-        $apiUri + "/v1.0/user",
-        "GET",
-        payload as unknown as Payload,
-        function (response: RequestResponse): void {
-          resolve(response as UserListResponse);
-        },
-        reAuthHandler
-      );
-    });
-    fixNavigation();
-  }
+  $: userListPromise = new Promise((resolve) => {
+    const payload: UserSearchQuery = {
+      name: searchName,
+      page: page,
+      "per-page": perPage,
+    };
+    if (role !== "all") {
+      payload.role = role;
+    }
+    if (group !== "00000000-0000-0000-0000-000000000000") {
+      payload.group = group;
+    }
+    request(
+      $apiUri + "/v1.0/user",
+      "GET",
+      payload as unknown as Payload,
+      function (response: RequestResponse): void {
+        resolve(response as UserListResponse);
+      },
+      reAuthHandler
+    );
+  });
 
-  // TODO: Remove this horrible hack
-  function fixNavigation() {
-    void userListPromise.then(() => {
-      setTimeout(() => {
-        const paginationNodes = getElementsByClassName("pagination-button");
-        for (let i = 0; i < paginationNodes.length; i++) {
-          (paginationNodes[i] as HTMLElement).onclick = function (event): void {
-            page = parseInt((event.target as HTMLElement).dataset.page!, 10);
-            reload();
-          };
-        }
-      }, 100);
-    });
-  }
-
-  reload();
   refreshLogin(true);
 
   function groupsList(user: User) {
@@ -112,7 +92,6 @@
       id="user-search-form"
       on:submit={() => {
         page = 1;
-        reload();
       }}
     >
       <input
@@ -157,7 +136,6 @@
         icon="search"
         on:click={() => {
           page = 1;
-          reload();
         }}
       >
         Vyhledat
@@ -171,7 +149,6 @@
             role = "all";
             searchName = "";
             group = "00000000-0000-0000-0000-000000000000";
-            reload();
           }}
         >
           Zrušit
@@ -239,6 +216,9 @@
         </tr>
       {/each}
     </table>
-    <Pagination current={page} total={Math.ceil(userList.count / perPage)} />
+    <Pagination
+      total={Math.ceil(userList.count / perPage)}
+      bind:current={page}
+    />
   {/await}
 </div>
