@@ -5,26 +5,20 @@
   import Button from "../Button.svelte";
   import { Action } from "../../../../ts/admin/tools/Action";
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
-  import { Payload } from "../../../../ts/admin/interfaces/Payload";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import SidePanel from "../SidePanel.svelte";
 
   const navigate = useNavigate();
 
-  refreshLogin();
+  let name = "Nová skupina";
 
-  function addGroupPayloadBuilder(): Payload {
-    // TODO: Svelte-ify
-    return {
-      name: encodeURIComponent(
-        (document.getElementById("group-name") as HTMLInputElement).value
-      ),
-    };
-  }
+  refreshLogin();
 
   function saveCallback(): void {
     new ActionQueue([
-      new Action($apiUri + "/v1.0/group", "POST", addGroupPayloadBuilder),
+      new Action($apiUri + "/v1.0/group", "POST", () => ({
+        name: encodeURIComponent(name),
+      })),
     ]).defaultDispatch();
   }
 </script>
@@ -48,7 +42,7 @@
       class="form-text"
       autocomplete="off"
       type="text"
-      value="Nová skupina"
+      bind:value={name}
     />
     <br />
   </form>
