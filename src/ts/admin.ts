@@ -3,12 +3,12 @@
 /// <reference path="../d.ts/CONFIG.d.ts" />
 
 import App from "../svelte/admin/App.svelte";
-import { refreshPreviewSetup } from "./admin/lessonEditor/refreshPreview";
 import { metadataSetup } from "./admin/metadata";
 import { ActionQueueSetup } from "./admin/tools/ActionQueue";
+import { compileMarkdownSetup } from "./admin/tools/compileMarkdown";
 
 function main(): void {
-  refreshPreviewSetup();
+  compileMarkdownSetup();
   metadataSetup();
   ActionQueueSetup();
   new App({

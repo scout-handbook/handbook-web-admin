@@ -1,23 +1,35 @@
 <script lang="ts">
+  import { compileMarkdown } from "../../../../ts/admin/tools/compileMarkdown";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
-  import { refreshPreview } from "../../../../ts/admin/lessonEditor/refreshPreview";
   import { setChanged } from "../../../../ts/admin/lessonEditor/editor";
 
   export let name: string;
   export let body: string;
   export let refreshAction: (() => void) | null = null;
 
+  let html = "";
+
   $: name && body && onChange();
 
-  refreshPreview(name, body, "preview-inner");
+  refreshPreview();
+
+  function refreshPreview() {
+    void compileMarkdown(body).then((compiled) => {
+      html = compiled;
+    });
+  }
 
   function onChange(): void {
     setChanged(true);
-    refreshPreview(name, body, "preview-inner");
     refreshLogin(false, refreshAction);
+    refreshPreview();
   }
 </script>
 
 <div id="preview">
-  <div id="preview-inner" />
+  <div id="preview-inner">
+    <h1>{name}</h1>
+    <!-- eslint-disable-next-line svelte/no-at-html-tags -->
+    {@html html}
+  </div>
 </div>
