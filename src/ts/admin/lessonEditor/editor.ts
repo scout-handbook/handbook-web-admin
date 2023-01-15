@@ -76,11 +76,15 @@ export function editorDiscard(actionQueue: ActionQueue): void {
   refreshLogin();
 }
 
-export function editorOnChange(afterAction: (() => void) | null): void {
+export function editorOnChange(
+  name: string,
+  body: string,
+  afterAction: (() => void) | null
+): void {
   changed = true;
   refreshPreview(
-    (document.getElementById("name") as HTMLInputElement).value,
-    editor.value(),
+    name,
+    body,
     "preview-inner"
   );
   refreshLogin(false, afterAction);
