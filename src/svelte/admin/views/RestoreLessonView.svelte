@@ -7,6 +7,7 @@
   import { apiUri } from "../../../ts/admin/stores";
   import { authFailHandler, request } from "../../../ts/admin/tools/request";
   import { editor, setChanged } from "../../../ts/admin/lessonEditor/editor";
+  import { getQueryField } from "../../../ts/admin/tools/getQueryField";
   import LessonEditor from "../components/LessonEditor.svelte";
   import { loadingIndicatorVisible } from "../../../ts/admin/stores";
   import { Payload } from "../../../ts/admin/interfaces/Payload";
@@ -15,9 +16,9 @@
   export let lessonID: string;
   export let version: string;
 
-  const routerLocation = useLocation();
+  const location = useLocation();
   const lessonName =
-    new URLSearchParams($routerLocation.search).get("name") ?? "Obnovená lekce";
+    getQueryField($location.search, "name") ?? "Obnovená lekce";
   let body = "";
 
   const saveActionQueue = new ActionQueue([
