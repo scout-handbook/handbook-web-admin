@@ -1,9 +1,7 @@
 <script lang="ts">
-  import { Converter } from "showdown";
-  import { filterXSS } from "xss";
+  import { compileMarkdown } from "../../../../ts/admin/tools/compileMarkdown";
   import { useNavigate } from "svelte-navigator";
 
-  //import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
   import { apiUri, lessons } from "../../../../ts/admin/stores";
   import { authFailHandler, request } from "../../../../ts/admin/tools/request";
   import Button from "../Button.svelte";
@@ -14,7 +12,6 @@
   import { parseVersion } from "../../../../ts/admin/tools/parseVersion";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import { RequestResponse } from "../../../../ts/admin/interfaces/RequestResponse";
-  import { xssOptions } from "../../../../ts/common/xssOptions";
 
   export let lessonId: string | null;
   export let lessonName: string | null;
@@ -45,7 +42,7 @@
   $: contentPromise = new Promise<string>((resolve) => {
     refreshLogin();
     if (selectedVersion === null) {
-      resolve(editor.value());
+      void compileMarkdown(editor.value()).then(resolve);
     } else {
       request(
         $apiUri +
@@ -56,22 +53,12 @@
         "GET",
         {},
         (response: RequestResponse): void => {
-          resolve(response as string);
+          void compileMarkdown(response as string).then(resolve);
         },
         authFailHandler
       );
     }
   });
-
-  function process(markdown: string): string {
-    let converter = new Converter({
-      extensions: ["HandbookMarkdown"],
-    });
-    converter.setOption("noHeaderId", "true");
-    converter.setOption("tables", "true");
-    converter.setOption("smoothLivePreview", "true");
-    return filterXSS(converter.makeHtml(markdown), xssOptions());
-  }
 
   function saveCallback(markdown: string) {
     (document.getElementById("name") as HTMLInputElement).value = name;
@@ -153,7 +140,7 @@
     {:then content}
       <h1>{name}</h1>
       <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-      {@html process(content)}
+      {@html content}
     {/await}
   </div>
 </DoubleSidePanel>
