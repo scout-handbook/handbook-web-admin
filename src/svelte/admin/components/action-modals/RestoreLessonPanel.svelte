@@ -1,6 +1,5 @@
 <script lang="ts">
-  import { Converter } from "showdown";
-  import { filterXSS } from "xss";
+  import { compileMarkdown } from "../../../../ts/admin/tools/compileMarkdown";
   import { useNavigate } from "svelte-navigator";
 
   import { apiUri } from "../../../../ts/admin/stores";
@@ -21,8 +20,6 @@
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import { RequestResponse } from "../../../../ts/admin/interfaces/RequestResponse";
   import SidePanel from "../SidePanel.svelte";
-  import { xssOptions } from "../../../../ts/common/xssOptions";
-  import "../../../../ts/common/HandbookMarkdown";
 
   const navigate = useNavigate();
 
@@ -51,15 +48,7 @@
       "GET",
       {},
       (response: RequestResponse) => {
-        let converter = new Converter({
-          extensions: ["HandbookMarkdown"],
-        });
-        converter.setOption("noHeaderId", "true");
-        converter.setOption("tables", "true");
-        converter.setOption("smoothLivePreview", "true");
-        resolve(
-          filterXSS(converter.makeHtml(response as string), xssOptions())
-        );
+        void compileMarkdown(response as string).then(resolve);
       },
       authFailHandler
     );
