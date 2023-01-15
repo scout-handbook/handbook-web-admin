@@ -9,7 +9,6 @@ import { ActionQueue } from "../tools/ActionQueue";
 import { refreshLogin } from "../tools/refreshLogin";
 import { reAuthHandler, request } from "../tools/request";
 import { dialog } from "../UI/dialog";
-import { refreshPreview } from "./refreshPreview";
 
 export let changed: boolean;
 export const lessonSettingsCache: LessonSettingsCache = {
@@ -74,18 +73,4 @@ export function editorDiscard(actionQueue: ActionQueue): void {
     );
   }
   refreshLogin();
-}
-
-export function editorOnChange(
-  name: string,
-  body: string,
-  afterAction: (() => void) | null
-): void {
-  changed = true;
-  refreshPreview(
-    name,
-    body,
-    "preview-inner"
-  );
-  refreshLogin(false, afterAction);
 }

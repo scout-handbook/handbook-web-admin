@@ -6,7 +6,6 @@
   import {
     changed,
     editorDiscard,
-    editorOnChange,
     populateEditorCache,
     setChanged,
   } from "../../../ts/admin/lessonEditor/editor";
@@ -16,7 +15,7 @@
     prepareImageSelector,
     toggleImageSelector,
   } from "../../../ts/admin/lessonEditor/imageSelector";
-  import { refreshPreview } from "../../../ts/admin/lessonEditor/refreshPreview";
+  import PreviewPane from "./LessonEditor/PreviewPane.svelte";
 
   export let lessonName: string;
   export let body: string;
@@ -30,8 +29,6 @@
   $: view = $location.state?.view as string;
   $: currentUri = $location.pathname + $location.search;
 
-  $: body && editorOnChange(lessonName, body, refreshAction);
-
   function saveCallback(): void {
     if (changed) {
       saveActionQueue.defaultDispatch();
@@ -43,7 +40,6 @@
 
   populateEditorCache(id);
   setChanged(false);
-  refreshPreview(lessonName, body, "preview-inner");
   prepareImageSelector();
 </script>
 
@@ -70,13 +66,7 @@
         class="form-text form-name"
         autocomplete="off"
         type="text"
-        value={lessonName}
-        on:input={() => {
-          editorOnChange(lessonName, body, refreshAction);
-        }}
-        on:change={() => {
-          editorOnChange(lessonName, body, refreshAction);
-        }}
+        bind:value={lessonName}
       />
     </form>
   </div>
@@ -111,9 +101,7 @@
   </div>
 </div>
 <EditorPane bind:value={body} />
-<div id="preview">
-  <div id="preview-inner" />
-</div>
+<PreviewPane name={lessonName} {body} {refreshAction} />
 
 <style>
   .buttons-left,
