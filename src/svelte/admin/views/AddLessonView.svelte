@@ -9,12 +9,13 @@
     defaultBody,
     defaultName,
   } from "../../../ts/admin/lessonEditor/defaultContent";
+  import { getQueryField } from "../../../ts/admin/tools/getQueryField";
   import LessonEditor from "../components/LessonEditor.svelte";
   import { Payload } from "../../../ts/admin/interfaces/Payload";
   import { editor, setChanged } from "../../../ts/admin/lessonEditor/editor";
 
-  const routerLocation = useLocation();
-  const fieldID = new URLSearchParams($routerLocation.search).get("field");
+  const location = useLocation();
+  const fieldID = getQueryField($location.search, "field");
 
   function addLessonPayloadBuilder(): Payload {
     return {
@@ -30,7 +31,7 @@
       ActionCallback.FillID,
     ]),
   ]);
-  if (fieldID) {
+  if (fieldID !== null) {
     aq.actions.push(
       new Action(
         $apiUri + "/v1.0/lesson/{id}/field",
