@@ -52,7 +52,11 @@ export class Action {
     }
   }
 
-  public dialogConfirm(): void {
+  public fillID(id: string): void {
+    this.url = this.url.replace("{id}", encodeURIComponent(id));
+  }
+
+  private dialogConfirm(): void {
     dialog("Akce byla úspěšná.", "OK");
     refreshMetadata();
     if (ActionQueueRetry) {
@@ -60,10 +64,6 @@ export class Action {
     } else {
       navigate(-1);
     }
-  }
-
-  public fillID(id: string): void {
-    this.url = this.url.replace("{id}", encodeURIComponent(id));
   }
 }
 
