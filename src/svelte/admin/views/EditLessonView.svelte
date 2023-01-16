@@ -5,18 +5,16 @@
   import { APIResponse } from "../../../ts/admin/interfaces/APIResponse";
   import { apiUri } from "../../../ts/admin/stores";
   import { dialog } from "../../../ts/admin/UI/dialog";
-  import { editor } from "../../../ts/admin/lessonEditor/editor";
   import LessonEditor from "../components/LessonEditor.svelte";
   import { LESSONS, metadataEvent } from "../../../ts/admin/metadata";
   import { loadingIndicatorVisible } from "../../../ts/admin/stores";
-  import { Payload } from "../../../ts/admin/interfaces/Payload";
   import { reAuthHandler, request } from "../../../ts/admin/tools/request";
   import { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
 
   export let lessonID: string;
 
-  $: lessonName = LESSONS.get(lessonID)?.name ?? "";
-  let lessonBody = "";
+  let name = LESSONS.get(lessonID)?.name ?? "";
+  let body = "";
 
   const saveExceptionHandler = {
     NotLockedException: function (): void {
@@ -32,7 +30,10 @@
     new Action(
       $apiUri + "/v1.0/lesson/" + encodeURIComponent(lessonID),
       "PUT",
-      saveLessonPayloadBuilder,
+      () => ({
+        name: encodeURIComponent(name),
+        body: encodeURIComponent(body),
+      }),
       [ActionCallback.RemoveBeacon],
       saveExceptionHandler
     ),
@@ -47,15 +48,6 @@
       discardExceptionHandler
     ),
   ]);
-
-  function saveLessonPayloadBuilder(): Payload {
-    return {
-      name: encodeURIComponent(
-        (document.getElementById("name") as HTMLInputElement).value
-      ),
-      body: encodeURIComponent(editor.value()),
-    };
-  }
 
   function lessonEditMutexExtend(id: string): void {
     const exceptionHandler = { NotFoundException: null };
@@ -80,7 +72,7 @@
   }
 
   function renderLessonEditView(id: string, markdown: string): void {
-    lessonBody = markdown;
+    body = markdown;
     loadingIndicatorVisible.set(false);
     window.onbeforeunload = function (): void {
       sendBeacon(id);
@@ -125,12 +117,12 @@
 {#if !$loadingIndicatorVisible}
   <LessonEditor
     id={lessonID}
-    body={lessonBody}
     {discardActionQueue}
-    {lessonName}
     refreshAction={() => {
       lessonEditMutexExtend(lessonID);
     }}
     {saveActionQueue}
+    bind:body
+    bind:lessonName={name}
   />
 {/if}
