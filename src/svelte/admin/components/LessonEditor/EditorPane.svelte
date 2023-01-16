@@ -7,9 +7,7 @@
 
   export let value: string;
 
-  $: editor !== undefined &&
-    value !== editor.value() &&
-    editor.value(value);
+  $: editor !== undefined && value !== editor.value() && editor.value(value);
 
   let editorArea: HTMLElement;
 
