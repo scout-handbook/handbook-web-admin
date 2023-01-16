@@ -12,24 +12,23 @@
   import { getQueryField } from "../../../ts/admin/tools/getQueryField";
   import LessonEditor from "../components/LessonEditor.svelte";
   import { Payload } from "../../../ts/admin/interfaces/Payload";
-  import { editor, setChanged } from "../../../ts/admin/lessonEditor/editor";
+  import { setChanged } from "../../../ts/admin/lessonEditor/editor";
 
   const location = useLocation();
   const fieldID = getQueryField($location.search, "field");
-
-  function addLessonPayloadBuilder(): Payload {
-    return {
-      name: encodeURIComponent(
-        (document.getElementById("name") as HTMLInputElement).value
-      ),
-      body: encodeURIComponent(editor.value()),
-    };
-  }
+  let name = defaultName;
+  let body = defaultBody;
 
   const aq = new ActionQueue([
-    new Action($apiUri + "/v1.0/lesson", "POST", addLessonPayloadBuilder, [
-      ActionCallback.FillID,
-    ]),
+    new Action(
+      $apiUri + "/v1.0/lesson",
+      "POST",
+      () => ({
+        name: encodeURIComponent(name),
+        body: encodeURIComponent(body),
+      }),
+      [ActionCallback.FillID]
+    ),
   ]);
   if (fieldID !== null) {
     aq.actions.push(
@@ -49,9 +48,4 @@
   }, 100);
 </script>
 
-<LessonEditor
-  id={null}
-  body={defaultBody}
-  lessonName={defaultName}
-  saveActionQueue={aq}
-/>
+<LessonEditor id={null} saveActionQueue={aq} bind:body bind:lessonName={name} />
