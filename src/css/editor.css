@@ -69,13 +69,6 @@ header {
   margin-left: 19px;
 }
 
-#name {
-  float: left;
-  margin-left: 22px;
-  margin-top: 10px;
-  width: 50%;
-}
-
 #image-selector {
   background-color: #fff;
   height: 100%;
