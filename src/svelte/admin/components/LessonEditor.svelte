@@ -55,6 +55,7 @@
       icon="cancel"
       yellow
       on:click={() => {
+        discardActionQueue.background = true;
         editorDiscard(discardActionQueue);
       }}
     >

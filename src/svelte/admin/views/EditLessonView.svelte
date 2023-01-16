@@ -51,16 +51,19 @@
 
   function lessonEditMutexExtend(id: string): void {
     const exceptionHandler = { NotFoundException: null };
-    const actionQueue = new ActionQueue([
-      new Action(
-        $apiUri + "/v1.0/mutex/" + encodeURIComponent(id),
-        "PUT",
-        undefined,
-        undefined,
-        exceptionHandler
-      ),
-    ]);
-    actionQueue.dispatch(true);
+    const actionQueue = new ActionQueue(
+      [
+        new Action(
+          $apiUri + "/v1.0/mutex/" + encodeURIComponent(id),
+          "PUT",
+          undefined,
+          undefined,
+          exceptionHandler
+        ),
+      ],
+      true
+    );
+    actionQueue.dispatch();
   }
 
   function sendBeacon(id: string): void {

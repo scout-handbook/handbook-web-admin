@@ -10,9 +10,15 @@ export let ActionQueueRetry = false;
 
 export class ActionQueue {
   public actions: Array<Action>;
+  public background: boolean;
 
-  public constructor(actions: Array<Action> = [], retry = false) {
+  public constructor(
+    actions: Array<Action> = [],
+    background = false,
+    retry = false
+  ) {
     this.actions = actions;
+    this.background = background;
     ActionQueueRetry = retry;
   }
 
@@ -22,15 +28,15 @@ export class ActionQueue {
     }
   }
 
-  public dispatch(background: boolean): void {
+  public dispatch(): void {
     if (this.actions.length > 0) {
-      this.pop(true, background);
+      this.pop(true);
     }
   }
 
   public defaultDispatch(): void {
     this.addDefaultCallback();
-    this.dispatch(false);
+    this.dispatch();
   }
 
   private addDefaultCallback(): void {
@@ -39,11 +45,11 @@ export class ActionQueue {
     );
   }
 
-  private pop(propagate: boolean, background: boolean): void {
+  private pop(propagate: boolean): void {
     if (this.actions.length <= 1) {
       propagate = false;
     }
-    if (!background) {
+    if (!this.background) {
       spinner();
     }
     this.actions[0].exceptionHandler["AuthenticationException"] = (): void =>
@@ -56,7 +62,7 @@ export class ActionQueue {
         this.actions[0].callback(response, this);
         this.actions.shift();
         if (propagate) {
-          this.pop(true, background);
+          this.pop(true);
         }
       },
       this.actions[0].exceptionHandler
@@ -89,10 +95,11 @@ export function ActionQueueSetup(): void {
           sessionStorage.getItem("ActionQueue")!
         ) as Array<SerializedAction>
       ).map(deserializeAction),
+      false,
       false
     );
     ActionQueueRetry = true;
     sessionStorage.clear();
-    aq.dispatch(false);
+    aq.dispatch();
   }
 }
