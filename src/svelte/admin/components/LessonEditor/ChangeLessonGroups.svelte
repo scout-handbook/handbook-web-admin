@@ -9,7 +9,6 @@
     lessonSettingsCache,
     setChanged,
   } from "../../../../ts/admin/lessonEditor/editor";
-  import { Payload } from "../../../../ts/admin/interfaces/Payload";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
 
   export let lessonId: string | null;
@@ -31,7 +30,7 @@
         new Action(
           $apiUri + "/v1.0/lesson/" + (lessonId ?? "{id}") + "/group",
           "PUT",
-          (): Payload => ({ group: selectedGroups.map(encodeURIComponent) })
+          { group: selectedGroups.map(encodeURIComponent) }
         )
       );
       lessonSettingsCache.groups = selectedGroups;

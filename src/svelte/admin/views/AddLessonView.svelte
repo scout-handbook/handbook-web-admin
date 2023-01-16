@@ -11,7 +11,6 @@
   } from "../../../ts/admin/lessonEditor/defaultContent";
   import { getQueryField } from "../../../ts/admin/tools/getQueryField";
   import LessonEditor from "../components/LessonEditor.svelte";
-  import { Payload } from "../../../ts/admin/interfaces/Payload";
   import { setChanged } from "../../../ts/admin/lessonEditor/editor";
 
   const location = useLocation();
@@ -19,26 +18,22 @@
   let name = defaultName;
   let body = defaultBody;
 
-  const aq = new ActionQueue([
+  $: aq = new ActionQueue([
     new Action(
       $apiUri + "/v1.0/lesson",
       "POST",
-      () => ({
+      {
         name: encodeURIComponent(name),
         body: encodeURIComponent(body),
-      }),
+      },
       [ActionCallback.FillID]
     ),
   ]);
   if (fieldID !== null) {
     aq.actions.push(
-      new Action(
-        $apiUri + "/v1.0/lesson/{id}/field",
-        "PUT",
-        function (): Payload {
-          return { field: encodeURIComponent(fieldID) };
-        }
-      )
+      new Action($apiUri + "/v1.0/lesson/{id}/field", "PUT", {
+        field: encodeURIComponent(fieldID),
+      })
     );
   }
 

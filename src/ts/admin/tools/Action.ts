@@ -13,22 +13,20 @@ import { ActionQueue, ActionQueueRetry } from "./ActionQueue";
 export class Action {
   public url: string;
   public method: string;
-  public payloadBuilder: () => Payload;
+  public payload: Payload;
   public callbacks: Array<ActionCallback>;
   public exceptionHandler: ExceptionHandler;
 
   public constructor(
     url: string,
     method: string,
-    payloadBuilder: () => Payload = function (): Payload {
-      return {};
-    },
+    payload: Payload = {},
     callbacks: Array<ActionCallback> = [],
     exceptionHandler: ExceptionHandler = {}
   ) {
     this.url = url;
     this.method = method;
-    this.payloadBuilder = payloadBuilder;
+    this.payload = payload;
     this.callbacks = callbacks;
     this.exceptionHandler = exceptionHandler;
   }
@@ -71,7 +69,7 @@ export function serializeAction(action: Action): SerializedAction {
   return {
     url: action.url,
     method: action.method,
-    payload: action.payloadBuilder(),
+    payload: action.payload,
     callbacks: action.callbacks,
   };
 }
@@ -80,9 +78,7 @@ export function deserializeAction(action: SerializedAction): Action {
   return new Action(
     action.url,
     action.method,
-    function (): Payload {
-      return action.payload;
-    },
+    action.payload,
     action.callbacks,
     undefined
   );

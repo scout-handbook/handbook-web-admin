@@ -32,7 +32,7 @@
             encodeURIComponent(payload.user.id) +
             "/role",
           "PUT",
-          () => ({ role: selectedRole })
+          { role: selectedRole }
         ),
       ]).defaultDispatch();
     }
