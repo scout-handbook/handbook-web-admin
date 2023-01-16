@@ -90,7 +90,7 @@
     <Button green icon="floppy" on:click={saveCallback}>Uložit</Button>
     <h3 class="side-panel-title">Upravit oblast</h3>
     <form id="side-panel-form">
-      <legend for="fieldName">Název:</legend>
+      <label for="fieldName">Název:</label>
       <input
         id="fieldName"
         class="form-text form-name"
@@ -105,7 +105,7 @@
         rows="5"
         bind:value={description}
       />
-      <legend for="fieldImage">Náhledový obrázek:</legend>
+      <label for="fieldImage">Náhledový obrázek:</label>
       <input id="fieldImage" type="hidden" bind:value={image} />
       <img
         alt="Náhledový obrázek"
@@ -120,7 +120,7 @@
       >
         Změnit
       </Button>
-      <legend for="fieldIcon">Ikona:</legend>
+      <label for="fieldIcon">Ikona:</label>
       <input id="fieldIcon" type="hidden" bind:value={icon} />
       <img
         alt="Ikona"

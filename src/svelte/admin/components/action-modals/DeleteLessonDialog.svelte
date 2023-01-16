@@ -92,7 +92,7 @@
   {#await mutexPromise}
     <Overlay />
     <LoadingIndicator darkBackground />
-  {:then _}
+  {:then}
     <Dialog
       confirmButtonText="Ano"
       dismissButtonText="Ne"
