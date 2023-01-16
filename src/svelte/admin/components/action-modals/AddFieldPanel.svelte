@@ -23,12 +23,12 @@
 
   function saveCallback(): void {
     new ActionQueue([
-      new Action($apiUri + "/v1.0/field", "POST", () => ({
+      new Action($apiUri + "/v1.0/field", "POST", {
         name: encodeURIComponent(name),
         description: encodeURIComponent(description),
         image: encodeURIComponent(image),
         icon: encodeURIComponent(icon),
-      })),
+      }),
     ]).defaultDispatch();
   }
 </script>

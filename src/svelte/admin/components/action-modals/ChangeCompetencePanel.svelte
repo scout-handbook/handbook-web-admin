@@ -36,7 +36,7 @@
             "/v1.0/competence/" +
             encodeURIComponent(payload.competenceId),
           "PUT",
-          () => ({ number, name, description })
+          { number, name, description }
         ),
       ]).defaultDispatch();
     }

@@ -30,7 +30,7 @@
         new Action(
           $apiUri + "/v1.0/group/" + encodeURIComponent(payload.groupId),
           "PUT",
-          () => ({ name })
+          { name }
         ),
       ]).defaultDispatch();
     }

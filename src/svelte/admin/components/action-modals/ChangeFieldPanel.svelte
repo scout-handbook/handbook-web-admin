@@ -38,7 +38,7 @@
         new Action(
           $apiUri + "/v1.0/field/" + encodeURIComponent(payload.fieldId),
           "PUT",
-          () => ({ name, description, image, icon })
+          { name, description, image, icon }
         ),
       ]).defaultDispatch();
     }

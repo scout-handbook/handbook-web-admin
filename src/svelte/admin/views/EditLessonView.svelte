@@ -26,14 +26,14 @@
   };
   const discardExceptionHandler = { NotFoundException: null };
 
-  const saveActionQueue = new ActionQueue([
+  $: saveActionQueue = new ActionQueue([
     new Action(
       $apiUri + "/v1.0/lesson/" + encodeURIComponent(lessonID),
       "PUT",
-      () => ({
+      {
         name: encodeURIComponent(name),
         body: encodeURIComponent(body),
-      }),
+      },
       [ActionCallback.RemoveBeacon],
       saveExceptionHandler
     ),

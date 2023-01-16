@@ -51,7 +51,7 @@ export class ActionQueue {
     request(
       this.actions[0].url,
       this.actions[0].method,
-      this.actions[0].payloadBuilder(),
+      this.actions[0].payload,
       (response) => {
         this.actions[0].callback(response, this);
         this.actions.shift();

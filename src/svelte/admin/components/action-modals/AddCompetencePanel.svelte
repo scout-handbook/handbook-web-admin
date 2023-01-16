@@ -18,11 +18,11 @@
 
   function saveCallback() {
     new ActionQueue([
-      new Action($apiUri + "/v1.0/competence", "POST", () => ({
+      new Action($apiUri + "/v1.0/competence", "POST", {
         number: encodeURIComponent(number),
         name: encodeURIComponent(name),
         description: encodeURIComponent(description),
-      })),
+      }),
     ]).defaultDispatch();
   }
 </script>

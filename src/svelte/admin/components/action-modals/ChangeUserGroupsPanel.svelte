@@ -41,7 +41,7 @@
             encodeURIComponent(payload.user.id) +
             "/group",
           "PUT",
-          () => ({ group: selectedGroups.map(encodeURIComponent) })
+          { group: selectedGroups.map(encodeURIComponent) }
         ),
       ]).defaultDispatch();
     }
