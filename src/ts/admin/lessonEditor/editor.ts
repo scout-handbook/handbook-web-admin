@@ -56,7 +56,7 @@ export function populateEditorCache(id: string | null): void {
 
 function editorDiscardNow(actionQueue: ActionQueue): void {
   navigate("/admin/lessons");
-  actionQueue.dispatch(true);
+  actionQueue.dispatch();
 }
 
 export function editorDiscard(actionQueue: ActionQueue): void {
