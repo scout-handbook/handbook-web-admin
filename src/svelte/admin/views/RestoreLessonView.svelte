@@ -6,35 +6,30 @@
   import { ActionQueue } from "../../../ts/admin/tools/ActionQueue";
   import { apiUri } from "../../../ts/admin/stores";
   import { authFailHandler, request } from "../../../ts/admin/tools/request";
-  import { editor, setChanged } from "../../../ts/admin/lessonEditor/editor";
+  import { setChanged } from "../../../ts/admin/lessonEditor/editor";
   import { getQueryField } from "../../../ts/admin/tools/getQueryField";
   import LessonEditor from "../components/LessonEditor.svelte";
   import { loadingIndicatorVisible } from "../../../ts/admin/stores";
-  import { Payload } from "../../../ts/admin/interfaces/Payload";
   import { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
 
   export let lessonID: string;
   export let version: string;
 
   const location = useLocation();
-  const lessonName =
-    getQueryField($location.search, "name") ?? "Obnovená lekce";
+  let name = getQueryField($location.search, "name") ?? "Obnovená lekce";
   let body = "";
 
   const saveActionQueue = new ActionQueue([
-    new Action($apiUri + "/v1.0/lesson", "POST", restoreLessonPayloadBuilder, [
-      ActionCallback.FillID,
-    ]),
+    new Action(
+      $apiUri + "/v1.0/lesson",
+      "POST",
+      () => ({
+        name: encodeURIComponent(name),
+        body: encodeURIComponent(body),
+      }),
+      [ActionCallback.FillID]
+    ),
   ]);
-
-  function restoreLessonPayloadBuilder(): Payload {
-    return {
-      name: encodeURIComponent(
-        (document.getElementById("name") as HTMLInputElement).value
-      ),
-      body: encodeURIComponent(editor.value()),
-    };
-  }
 
   loadingIndicatorVisible.set(true);
   request(
@@ -54,5 +49,5 @@
 </script>
 
 {#if !$loadingIndicatorVisible}
-  <LessonEditor id={null} {body} {lessonName} {saveActionQueue} />
+  <LessonEditor id={null} {saveActionQueue} bind:body bind:lessonName={name} />
 {/if}
