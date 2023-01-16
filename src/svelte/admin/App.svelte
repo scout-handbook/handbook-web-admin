@@ -52,7 +52,11 @@
   <Router basepath="/admin">
     <Route component={AddLessonView} path="/lessons/add" />
     <Route path="/lessons/:id/edit" let:params>
-      <EditLessonView lessonID={params.id} />
+      {#if $lessons === null}
+        <div id="embedded-spinner" />
+      {:else}
+        <EditLessonView lessonID={params.id} />
+      {/if}
     </Route>
     <Route path="/lessons/:id/versions/:version/restore" let:params>
       <RestoreLessonView lessonID={params.id} version={params.version} />
