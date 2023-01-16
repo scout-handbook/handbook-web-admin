@@ -1,3 +1,5 @@
+import { navigate } from "svelte-navigator";
+
 import { ExceptionHandler } from "../interfaces/ExceptionHandler";
 import { Payload } from "../interfaces/Payload";
 import { RequestResponse } from "../interfaces/RequestResponse";
@@ -5,8 +7,6 @@ import { SerializedAction } from "../interfaces/SerializedAction";
 import { refreshMetadata } from "../metadata";
 import { dialog } from "../UI/dialog";
 import { dismissSpinner } from "../UI/spinner";
-import { removeBeacon } from "../views/editLesson";
-import { showMainView } from "../views/main";
 import { ActionCallback } from "./ActionCallback";
 import { ActionQueue, ActionQueueRetry } from "./ActionQueue";
 
@@ -46,24 +46,24 @@ export class Action {
           actionQueue.fillID(response as string);
           break;
         case ActionCallback.RemoveBeacon:
-          removeBeacon();
+          window.onbeforeunload = null;
           break;
       }
     }
   }
 
-  public dialogConfirm(): void {
+  public fillID(id: string): void {
+    this.url = this.url.replace("{id}", encodeURIComponent(id));
+  }
+
+  private dialogConfirm(): void {
     dialog("Akce byla úspěšná.", "OK");
     refreshMetadata();
     if (ActionQueueRetry) {
-      showMainView(false);
+      navigate("/admin/");
     } else {
-      history.back();
+      navigate(-1);
     }
-  }
-
-  public fillID(id: string): void {
-    this.url = this.url.replace("{id}", encodeURIComponent(id));
   }
 }
 

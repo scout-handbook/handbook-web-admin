@@ -5,8 +5,15 @@ import { Field } from "./interfaces/Field";
 import { Group } from "./interfaces/Group";
 import { Lesson } from "./interfaces/Lesson";
 import { Loginstate } from "./interfaces/Loginstate";
+import {
+  competences,
+  fields,
+  globalDialogMessage,
+  groups,
+  lessons,
+  loginstate,
+} from "./stores";
 import { rawRequest, request } from "./tools/request";
-import { dialog } from "./UI/dialog";
 
 export let metadataEvent: AfterLoadEvent;
 export let FIELDS: IDList<Field>;
@@ -73,6 +80,9 @@ export function refreshMetadata(): void {
       return value;
     });
     FIELDS.sort(fieldComparator);
+    competences.set(COMPETENCES);
+    lessons.set(LESSONS);
+    fields.set(FIELDS);
     metadataEvent.trigger();
   });
   request(
@@ -127,6 +137,7 @@ export function refreshMetadata(): void {
       GROUPS.sort(function (first: Group, second: Group): number {
         return first.name.localeCompare(second.name);
       });
+      groups.set(GROUPS);
       metadataEvent.trigger();
     },
     groupExceptionHandler
@@ -143,6 +154,7 @@ export function refreshMetadata(): void {
           ) > -1
         ) {
           LOGINSTATE = response.response as Loginstate;
+          loginstate.set(LOGINSTATE);
           metadataEvent.trigger();
         } else {
           window.location.replace(CONFIG["frontend-uri"]);
@@ -153,9 +165,8 @@ export function refreshMetadata(): void {
           "/v1.0/login?return-uri=" +
           encodeURIComponent(window.location.href);
       } else {
-        dialog(
-          "Nastala neznámá chyba. Chybová hláška:<br>" + response.message!,
-          "OK"
+        globalDialogMessage.set(
+          "Nastala neznámá chyba. Chybová hláška: " + response.message!
         );
       }
     }

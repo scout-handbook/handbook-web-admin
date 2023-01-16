@@ -1,9 +1,7 @@
 import { SerializedAction } from "../interfaces/SerializedAction";
 import { request } from "../tools/request";
 import { dialog } from "../UI/dialog";
-import { sidePanelClose } from "../UI/sidePanel";
 import { spinner } from "../UI/spinner";
-import { mainPageTab } from "../views/main";
 import { Action } from "./Action";
 import { deserializeAction, serializeAction } from "./Action";
 import { ActionCallback } from "./ActionCallback";
@@ -30,14 +28,9 @@ export class ActionQueue {
     }
   }
 
-  public defaultDispatch(background: boolean): void {
+  public defaultDispatch(): void {
     this.addDefaultCallback();
-    this.dispatch(background);
-  }
-
-  public closeDispatch(): void {
-    sidePanelClose();
-    this.defaultDispatch(false);
+    this.dispatch(false);
   }
 
   private addDefaultCallback(): void {
@@ -77,7 +70,7 @@ export class ActionQueue {
         JSON.stringify(this.actions.map(serializeAction))
       );
       window.location.replace(
-        CONFIG["api-uri"] + "/v1.0/login?return-uri=/admin/" + mainPageTab
+        CONFIG["api-uri"] + "/v1.0/login?return-uri=" + window.location.pathname
       );
     } else {
       dialog(

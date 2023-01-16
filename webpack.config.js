@@ -1,12 +1,31 @@
 /* eslint-env node */
 
+const path = require("path");
+
+const sveltePreprocess = require("svelte-preprocess");
 const TerserPlugin = require("terser-webpack-plugin");
 
+const mode = "production";
+
 module.exports = {
-  mode: "production",
+  mode,
   devtool: "source-map",
   module: {
     rules: [
+      {
+        test: /\.svelte$/,
+        use: {
+          loader: "svelte-loader",
+          options: {
+            compilerOptions: {
+              dev: mode === "development",
+            },
+            preprocess: sveltePreprocess({
+              tsconfigFile: "./tsconfig.json",
+            }),
+          },
+        },
+      },
       {
         test: /\.ts$/,
         use: {
@@ -19,7 +38,11 @@ module.exports = {
     ],
   },
   resolve: {
+    alias: {
+      svelte: path.resolve("node_modules", "svelte"),
+    },
     extensions: [".ts", ".js", ".svelte"],
+    mainFields: ["svelte", "browser", "module", "main"],
   },
   output: {
     filename: "[name].js",
@@ -31,7 +54,7 @@ module.exports = {
     xss: "filterXSS",
   },
   optimization: {
-    minimize: true,
+    minimize: mode === "production",
     minimizer: [
       new TerserPlugin({
         extractComments: false,
