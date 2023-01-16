@@ -13,6 +13,7 @@
   export let lessonId: string | null;
   export let lessonName: string | null;
   export let saveActionQueue: ActionQueue;
+  export let body: string;
 
   const location = useLocation();
   $: action = $location.state?.action as string;
@@ -21,7 +22,7 @@
 </script>
 
 {#if action === "restore-version"}
-  <RestoreLessonVersion {lessonId} {lessonName} />
+  <RestoreLessonVersion {lessonId} {lessonName} bind:body />
 {:else}
   <SidePanel>
     {#if action === "change-lesson-competences"}

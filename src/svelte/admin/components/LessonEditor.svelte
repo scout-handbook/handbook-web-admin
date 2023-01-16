@@ -44,7 +44,7 @@
 </script>
 
 {#if view === "lesson-settings"}
-  <LessonSettingsPanel lessonId={id} {lessonName} {saveActionQueue} />
+  <LessonSettingsPanel lessonId={id} {lessonName} {saveActionQueue} bind:body />
 {/if}
 
 <div id="side-panel" />

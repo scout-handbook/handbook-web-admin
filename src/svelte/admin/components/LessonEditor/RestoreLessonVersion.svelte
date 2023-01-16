@@ -6,7 +6,7 @@
   import { authFailHandler, request } from "../../../../ts/admin/tools/request";
   import Button from "../Button.svelte";
   import DoubleSidePanel from "../DoubleSidePanel.svelte";
-  import { editor, setChanged } from "../../../../ts/admin/lessonEditor/editor";
+  import { setChanged } from "../../../../ts/admin/lessonEditor/editor";
   import { LessonVersion } from "../../../../ts/admin/interfaces/LessonVersion";
   import LoadingIndicator from "../LoadingIndicator.svelte";
   import { parseVersion } from "../../../../ts/admin/tools/parseVersion";
@@ -15,6 +15,7 @@
 
   export let lessonId: string | null;
   export let lessonName: string | null;
+  export let body: string;
 
   const navigate = useNavigate();
 
@@ -42,7 +43,7 @@
   $: contentPromise = new Promise<string>((resolve) => {
     refreshLogin();
     if (selectedVersion === null) {
-      void compileMarkdown(editor.value()).then(resolve);
+      void compileMarkdown(body).then(resolve);
     } else {
       request(
         $apiUri +
@@ -62,7 +63,7 @@
 
   function saveCallback(markdown: string) {
     (document.getElementById("name") as HTMLInputElement).value = name;
-    editor.value(markdown);
+    body = markdown;
     setChanged();
     navigate(-1);
   }
