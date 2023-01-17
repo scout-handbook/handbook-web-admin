@@ -38,10 +38,10 @@
       exceptionHandler
     );
   });
-  let confirmPromise: Promise<void> | null = null;
+  let donePromise: Promise<void> | null = null;
 
   function confirmCallback() {
-    confirmPromise = new ActionQueue([
+    donePromise = new ActionQueue([
       new Action(
         $apiUri + "/v1.0/lesson/" + encodeURIComponent(payload.lessonId),
         "DELETE",
@@ -92,8 +92,8 @@
     Kvůli příliš malé aktivitě byla lekce odemknuta a již ji upravil někdo jiný.
     Zkuste to prosím znovu.
   </Dialog>
-{:else if confirmPromise !== null}
-  <DoneDialog {confirmPromise} />
+{:else if donePromise !== null}
+  <DoneDialog {donePromise} />
 {:else}
   {#await mutexPromise}
     <Overlay />

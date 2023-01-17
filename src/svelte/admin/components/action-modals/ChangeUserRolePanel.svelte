@@ -17,17 +17,17 @@
   const navigate = useNavigate();
 
   let selectedRole = payload.user.role;
-  let confirmPromise: Promise<void> | null = null;
+  let donePromise: Promise<void> | null = null;
 
   refreshLogin();
 
   function saveCallback() {
     if (selectedRole === payload.user.role) {
-      confirmPromise = new Promise((resolve) => {
+      donePromise = new Promise((resolve) => {
         resolve();
       });
     } else {
-      confirmPromise = new ActionQueue([
+      donePromise = new ActionQueue([
         new Action(
           $apiUri +
             "/v1.0/user/" +
@@ -41,8 +41,8 @@
   }
 </script>
 
-{#if confirmPromise !== null}
-  <DoneDialog {confirmPromise} />
+{#if donePromise !== null}
+  <DoneDialog {donePromise} />
 {:else}
   <SidePanel>
     <Button

@@ -16,12 +16,12 @@
   const navigate = useNavigate();
 
   const group = groups.get(payload.groupId)!;
-  let confirmPromise: Promise<void> | null = null;
+  let donePromise: Promise<void> | null = null;
 
   refreshLogin();
 
   function confirmCallback() {
-    confirmPromise = new ActionQueue([
+    donePromise = new ActionQueue([
       new Action(
         $apiUri + "/v1.0/group/" + encodeURIComponent(payload.groupId),
         "DELETE"
@@ -30,8 +30,8 @@
   }
 </script>
 
-{#if confirmPromise !== null}
-  <DoneDialog {confirmPromise} />
+{#if donePromise !== null}
+  <DoneDialog {donePromise} />
 {:else}
   <Dialog
     confirmButtonText="Ano"
