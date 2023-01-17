@@ -14,6 +14,7 @@
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import Button from "../components/Button.svelte";
   import Dialog from "./Dialog.svelte";
+  import DoneDialog from "./DoneDialog.svelte";
   import EditorPane from "./LessonEditor/EditorPane.svelte";
   import LessonSettingsPanel from "./LessonEditor/LessonSettingsPanel.svelte";
   import PreviewPane from "./LessonEditor/PreviewPane.svelte";
@@ -31,10 +32,11 @@
   $: currentUri = $location.pathname + $location.search;
 
   let discardConfirmation = false;
+  let donePromise: Promise<void> | null = null;
 
   function saveCallback(): void {
     if (changed) {
-      saveActionQueue.defaultDispatch();
+      donePromise = saveActionQueue.dispatch();
     } else {
       discardNow();
     }
@@ -77,62 +79,68 @@
   </Dialog>
 {/if}
 
-<div id="side-panel" />
-<div id="side-panel-overlay" />
-<header>
-  <div class="buttons-left">
-    <Button
-      icon="cancel"
-      yellow
-      on:click={() => {
-        discardActionQueue.background = true;
-        discard();
-      }}
-    >
-      Zrušit
-    </Button>
-    <form class="name">
-      <input
-        id="name"
-        class="form-text form-name"
-        autocomplete="off"
-        type="text"
-        bind:value={lessonName}
-      />
-    </form>
+{#if donePromise !== null}
+  <DoneDialog {donePromise} />
+{:else}
+  <div id="side-panel" />
+  <div id="side-panel-overlay" />
+  <header>
+    <div class="buttons-left">
+      <Button
+        icon="cancel"
+        yellow
+        on:click={() => {
+          discardActionQueue.background = true;
+          discard();
+        }}
+      >
+        Zrušit
+      </Button>
+      <form class="name">
+        <input
+          id="name"
+          class="form-text form-name"
+          autocomplete="off"
+          type="text"
+          bind:value={lessonName}
+        />
+      </form>
+    </div>
+    <div class="buttons-right">
+      <Button
+        icon="cog"
+        on:click={() => {
+          navigate(currentUri, {
+            state: { view: "lesson-settings" },
+          });
+        }}
+      >
+        Nastavení
+      </Button>
+      <Button green icon="floppy" on:click={saveCallback}>Uložit</Button>
+    </div>
+  </header>
+  <div id="image-selector">
+    <div id="image-scroller">
+      <Button icon="up-open" yellow on:click={toggleImageSelector}
+        >Zavřít</Button
+      >
+      <!-- TODO: Re-enable uploads in editor without discarding its contents
+      <Button
+        icon="plus"
+        green
+        on:click={() => {
+          addImage(true); // Removed
+        }}>
+        Nahrát
+      </Button>
+      -->
+      <div id="image-wrapper" />
+    </div>
   </div>
-  <div class="buttons-right">
-    <Button
-      icon="cog"
-      on:click={() => {
-        navigate(currentUri, {
-          state: { view: "lesson-settings" },
-        });
-      }}
-    >
-      Nastavení
-    </Button>
-    <Button green icon="floppy" on:click={saveCallback}>Uložit</Button>
-  </div>
-</header>
-<div id="image-selector">
-  <div id="image-scroller">
-    <Button icon="up-open" yellow on:click={toggleImageSelector}>Zavřít</Button>
-    <!-- TODO: Re-enable uploads in editor without discarding its contents
-    <Button
-      icon="plus"
-      green
-      on:click={() => {
-        addImage(true); // Removed
-      }}>
-      Nahrát
-    </Button>
-    -->
-    <div id="image-wrapper" />
-  </div>
-</div>
-<EditorPane bind:value={body} />
-<PreviewPane name={lessonName} {body} {refreshAction} />
+  <EditorPane bind:value={body} />
+  <PreviewPane name={lessonName} {body} {refreshAction} />
+{/if}
 
 <style>
   .buttons-left,
