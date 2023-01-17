@@ -1,14 +1,14 @@
 <script lang="ts">
   import { useLocation, useNavigate } from "svelte-navigator";
 
-  import AddImagePanel from "../components/action-modals/AddImagePanel.svelte";
-  import { apiUri, siteName } from "../../../ts/admin/stores";
-  import Button from "../components/Button.svelte";
-  import DeleteImageDialog from "../components/action-modals/DeleteImageDialog.svelte";
-  import Pagination from "../components/Pagination.svelte";
-  import { reAuthHandler, request } from "../../../ts/admin/tools/request";
-  import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
+  import { apiUri, siteName } from "../../../ts/admin/stores";
+  import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
+  import { reAuthHandler, request } from "../../../ts/admin/tools/request";
+  import AddImagePanel from "../components/action-modals/AddImagePanel.svelte";
+  import DeleteImageDialog from "../components/action-modals/DeleteImageDialog.svelte";
+  import Button from "../components/Button.svelte";
+  import Pagination from "../components/Pagination.svelte";
 
   const location = useLocation();
   const navigate = useNavigate();

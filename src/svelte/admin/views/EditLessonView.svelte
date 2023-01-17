@@ -1,15 +1,15 @@
 <script lang="ts">
+  import { APIResponse } from "../../../ts/admin/interfaces/APIResponse";
+  import { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
+  import { LESSONS, metadataEvent } from "../../../ts/admin/metadata";
+  import { apiUri } from "../../../ts/admin/stores";
+  import { loadingIndicatorVisible } from "../../../ts/admin/stores";
   import { Action } from "../../../ts/admin/tools/Action";
   import { ActionCallback } from "../../../ts/admin/tools/ActionCallback";
   import { ActionQueue } from "../../../ts/admin/tools/ActionQueue";
-  import { APIResponse } from "../../../ts/admin/interfaces/APIResponse";
-  import { apiUri } from "../../../ts/admin/stores";
+  import { reAuthHandler, request } from "../../../ts/admin/tools/request";
   import { dialog } from "../../../ts/admin/UI/dialog";
   import LessonEditor from "../components/LessonEditor.svelte";
-  import { LESSONS, metadataEvent } from "../../../ts/admin/metadata";
-  import { loadingIndicatorVisible } from "../../../ts/admin/stores";
-  import { reAuthHandler, request } from "../../../ts/admin/tools/request";
-  import { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
 
   export let lessonID: string;
 

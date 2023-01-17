@@ -1,14 +1,14 @@
 <script lang="ts">
   import { useLocation } from "svelte-navigator";
 
+  import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
+  import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
+  import SidePanel from "../SidePanel.svelte";
   import ChangeLessonCompetences from "./ChangeLessonCompetences.svelte";
   import ChangeLessonField from "./ChangeLessonField.svelte";
   import ChangeLessonGroups from "./ChangeLessonGroups.svelte";
   import LessonSettingsOverview from "./LessonSettingsOverview.svelte";
   import RestoreLessonVersion from "./RestoreLessonVersion.svelte";
-  import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
-  import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
-  import SidePanel from "../SidePanel.svelte";
 
   export let lessonId: string | null;
   export let lessonName: string | null;
