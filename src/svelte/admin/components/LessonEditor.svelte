@@ -3,7 +3,6 @@
 
   import {
     changed,
-    editorDiscard,
     populateEditorCache,
     setChanged,
   } from "../../../ts/admin/lessonEditor/editor";
@@ -12,7 +11,9 @@
     toggleImageSelector,
   } from "../../../ts/admin/lessonEditor/imageSelector";
   import { ActionQueue } from "../../../ts/admin/tools/ActionQueue";
+  import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import Button from "../components/Button.svelte";
+  import Dialog from "./Dialog.svelte";
   import EditorPane from "./LessonEditor/EditorPane.svelte";
   import LessonSettingsPanel from "./LessonEditor/LessonSettingsPanel.svelte";
   import PreviewPane from "./LessonEditor/PreviewPane.svelte";
@@ -29,22 +30,51 @@
   $: view = $location.state?.view as string;
   $: currentUri = $location.pathname + $location.search;
 
+  let discardConfirmation = false;
+
   function saveCallback(): void {
     if (changed) {
       saveActionQueue.defaultDispatch();
     } else {
-      navigate("/lessons");
-      discardActionQueue.defaultDispatch();
+      discardNow();
     }
   }
 
   populateEditorCache(id);
   setChanged(false);
   prepareImageSelector();
+
+  function discardNow(): void {
+    void discardActionQueue.dispatch();
+    navigate("/lessons");
+  }
+
+  function discard(): void {
+    // TODO: Broken. Maybe remove altogether.
+    if (!changed) {
+      discardNow();
+    } else {
+      discardConfirmation = true;
+    }
+    refreshLogin();
+  }
 </script>
 
 {#if view === "lesson-settings"}
   <LessonSettingsPanel lessonId={id} {lessonName} {saveActionQueue} bind:body />
+{/if}
+
+{#if discardConfirmation}
+  <Dialog
+    confirmButtonText="Ano"
+    dismissButtonText="Ne"
+    on:confirm={discardNow}
+    on:dismiss={() => {
+      discardConfirmation = false;
+    }}
+  >
+    Opravdu si přejete zahodit všechny změny?
+  </Dialog>
 {/if}
 
 <div id="side-panel" />
@@ -56,7 +86,7 @@
       yellow
       on:click={() => {
         discardActionQueue.background = true;
-        editorDiscard(discardActionQueue);
+        discard();
       }}
     >
       Zrušit
