@@ -18,7 +18,7 @@
   const navigate = useNavigate();
 
   let selectedGroups = payload.user.groups;
-  let confirmPromise: Promise<void> | null = null;
+  let donePromise: Promise<void> | null = null;
 
   $: publicName =
     groups.get("00000000-0000-0000-0000-000000000000")?.name ?? "";
@@ -32,11 +32,11 @@
         (value, index) => value === payload.user.groups[index]
       )
     ) {
-      confirmPromise = new Promise((resolve) => {
+      donePromise = new Promise((resolve) => {
         resolve();
       });
     } else {
-      confirmPromise = new ActionQueue([
+      donePromise = new ActionQueue([
         new Action(
           $apiUri +
             "/v1.0/user/" +
@@ -50,8 +50,8 @@
   }
 </script>
 
-{#if confirmPromise !== null}
-  <DoneDialog {confirmPromise} />
+{#if donePromise !== null}
+  <DoneDialog {donePromise} />
 {:else}
   <SidePanel>
     <Button

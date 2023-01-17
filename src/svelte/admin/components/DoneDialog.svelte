@@ -5,12 +5,12 @@
   import LoadingIndicator from "./LoadingIndicator.svelte";
   import Overlay from "./Overlay.svelte";
 
-  export let confirmPromise: Promise<void>;
+  export let donePromise: Promise<void>;
 
   const navigate = useNavigate();
 </script>
 
-{#await confirmPromise}
+{#await donePromise}
   <Overlay />
   <LoadingIndicator darkBackground />
 {:then}
