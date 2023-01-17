@@ -86,16 +86,7 @@
   <div id="side-panel-overlay" />
   <header>
     <div class="buttons-left">
-      <Button
-        icon="cancel"
-        yellow
-        on:click={() => {
-          discardActionQueue.background = true;
-          discard();
-        }}
-      >
-        Zrušit
-      </Button>
+      <Button icon="cancel" yellow on:click={discard}>Zrušit</Button>
       <form class="name">
         <input
           id="name"
