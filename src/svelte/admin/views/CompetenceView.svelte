@@ -1,15 +1,15 @@
 <script lang="ts">
   import { useLocation, useNavigate } from "svelte-navigator";
 
-  import AddCompetencePanel from "../components/action-modals/AddCompetencePanel.svelte";
-  import Button from "../components/Button.svelte";
-  import ChangeCompetencePanel from "../components/action-modals/ChangeCompetencePanel.svelte";
-  import { Competence } from "../../../ts/admin/interfaces/Competence";
-  import DeleteCompetenceDialog from "../components/action-modals/DeleteCompetenceDialog.svelte";
   import { IDList } from "../../../ts/admin/IDList";
+  import { Competence } from "../../../ts/admin/interfaces/Competence";
   import { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
-  import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import { siteName } from "../../../ts/admin/stores";
+  import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
+  import AddCompetencePanel from "../components/action-modals/AddCompetencePanel.svelte";
+  import ChangeCompetencePanel from "../components/action-modals/ChangeCompetencePanel.svelte";
+  import DeleteCompetenceDialog from "../components/action-modals/DeleteCompetenceDialog.svelte";
+  import Button from "../components/Button.svelte";
 
   export let competences: IDList<Competence>;
   export let loginstate: Loginstate;

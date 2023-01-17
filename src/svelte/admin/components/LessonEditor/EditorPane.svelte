@@ -1,7 +1,7 @@
 <script lang="ts">
+  import { default as EasyMDE } from "easymde";
   import { onMount } from "svelte";
 
-  import { default as EasyMDE } from "easymde";
   import { editor, setEditor } from "../../../../ts/admin/lessonEditor/editor";
   import { toggleImageSelector } from "../../../../ts/admin/lessonEditor/imageSelector";
 

@@ -1,13 +1,13 @@
 <script lang="ts">
   import { useNavigate } from "svelte-navigator";
 
-  import { Action } from "../../../../ts/admin/tools/Action";
-  import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
-  import { apiUri } from "../../../../ts/admin/stores";
-  import Dialog from "../Dialog.svelte";
   import { IDList } from "../../../../ts/admin/IDList";
   import { Field } from "../../../../ts/admin/interfaces/Field";
+  import { apiUri } from "../../../../ts/admin/stores";
+  import { Action } from "../../../../ts/admin/tools/Action";
+  import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
+  import Dialog from "../Dialog.svelte";
 
   export let fields: IDList<Field>;
   export let payload: { fieldId: string };
