@@ -2,10 +2,10 @@
   import { useNavigate } from "svelte-navigator";
 
   import { apiUri } from "../../../../ts/admin/stores";
-  import Button from "../Button.svelte";
   import { Action } from "../../../../ts/admin/tools/Action";
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
+  import Button from "../Button.svelte";
   import SidePanel from "../SidePanel.svelte";
 
   const navigate = useNavigate();

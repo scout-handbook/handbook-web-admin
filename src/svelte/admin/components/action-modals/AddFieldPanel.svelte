@@ -1,11 +1,11 @@
 <script lang="ts">
   import { useNavigate } from "svelte-navigator";
 
+  import { apiUri } from "../../../../ts/admin/stores";
   import { Action } from "../../../../ts/admin/tools/Action";
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
-  import { apiUri } from "../../../../ts/admin/stores";
-  import Button from "../Button.svelte";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
+  import Button from "../Button.svelte";
   import SidePanel from "../SidePanel.svelte";
   import SidePanelImageSelector from "../SidePanelImageSelector.svelte";
 

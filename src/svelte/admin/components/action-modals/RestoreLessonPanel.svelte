@@ -1,24 +1,24 @@
 <script lang="ts">
-  import { compileMarkdown } from "../../../../ts/admin/tools/compileMarkdown";
   import { useNavigate } from "svelte-navigator";
 
+  import { IDList } from "../../../../ts/admin/IDList";
+  import { DeletedLesson } from "../../../../ts/admin/interfaces/DeletedLesson";
+  import { LessonVersion } from "../../../../ts/admin/interfaces/LessonVersion";
+  import { RequestResponse } from "../../../../ts/admin/interfaces/RequestResponse";
   import { apiUri } from "../../../../ts/admin/stores";
+  import { compileMarkdown } from "../../../../ts/admin/tools/compileMarkdown";
+  import { parseVersion } from "../../../../ts/admin/tools/parseVersion";
+  import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import {
     authFailHandler,
     reAuthHandler,
     request,
   } from "../../../../ts/admin/tools/request";
   import Button from "../Button.svelte";
-  import { DeletedLesson } from "../../../../ts/admin/interfaces/DeletedLesson";
   import Dialog from "../Dialog.svelte";
   import DoubleSidePanel from "../DoubleSidePanel.svelte";
-  import { IDList } from "../../../../ts/admin/IDList";
-  import { LessonVersion } from "../../../../ts/admin/interfaces/LessonVersion";
-  import { parseVersion } from "../../../../ts/admin/tools/parseVersion";
   import LoadingIndicator from "../LoadingIndicator.svelte";
   import Overlay from "../Overlay.svelte";
-  import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
-  import { RequestResponse } from "../../../../ts/admin/interfaces/RequestResponse";
   import SidePanel from "../SidePanel.svelte";
 
   const navigate = useNavigate();

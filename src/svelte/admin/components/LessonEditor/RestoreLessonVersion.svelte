@@ -1,17 +1,17 @@
 <script lang="ts">
-  import { compileMarkdown } from "../../../../ts/admin/tools/compileMarkdown";
   import { useNavigate } from "svelte-navigator";
 
+  import { LessonVersion } from "../../../../ts/admin/interfaces/LessonVersion";
+  import { RequestResponse } from "../../../../ts/admin/interfaces/RequestResponse";
+  import { setChanged } from "../../../../ts/admin/lessonEditor/editor";
   import { apiUri, lessons } from "../../../../ts/admin/stores";
+  import { compileMarkdown } from "../../../../ts/admin/tools/compileMarkdown";
+  import { parseVersion } from "../../../../ts/admin/tools/parseVersion";
+  import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import { authFailHandler, request } from "../../../../ts/admin/tools/request";
   import Button from "../Button.svelte";
   import DoubleSidePanel from "../DoubleSidePanel.svelte";
-  import { setChanged } from "../../../../ts/admin/lessonEditor/editor";
-  import { LessonVersion } from "../../../../ts/admin/interfaces/LessonVersion";
   import LoadingIndicator from "../LoadingIndicator.svelte";
-  import { parseVersion } from "../../../../ts/admin/tools/parseVersion";
-  import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
-  import { RequestResponse } from "../../../../ts/admin/interfaces/RequestResponse";
 
   export let lessonId: string | null;
   export let lessonName: string | null;
