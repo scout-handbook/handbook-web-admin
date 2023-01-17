@@ -44,7 +44,7 @@
       $apiUri + "/v1.0/mutex/" + encodeURIComponent(lessonID),
       "DELETE",
       undefined,
-      [ActionCallback.RemoveBeacon, ActionCallback.DismissSpinner],
+      [ActionCallback.RemoveBeacon],
       discardExceptionHandler
     ),
   ]);
