@@ -1,7 +1,8 @@
 import { SerializedAction } from "../interfaces/SerializedAction";
+import { refreshMetadata } from "../metadata";
+import { globalDialogMessage, globalLoadingIndicator } from "../stores";
 import { request } from "../tools/request";
 import { dialog } from "../UI/dialog";
-import { spinner } from "../UI/spinner";
 import { Action } from "./Action";
 import { deserializeAction, serializeAction } from "./Action";
 import { ActionCallback } from "./ActionCallback";
@@ -10,6 +11,7 @@ export let ActionQueueRetry = false;
 
 export class ActionQueue {
   public actions: Array<Action>;
+  // TODO: This is probably obsolete
   public background: boolean;
 
   public constructor(
@@ -53,9 +55,6 @@ export class ActionQueue {
   private pop(resolve: () => void, propagate: boolean): void {
     if (this.actions.length <= 1) {
       propagate = false;
-    }
-    if (!this.background) {
-      spinner();
     }
     this.actions[0].exceptionHandler["AuthenticationException"] = (): void =>
       this.authException();
@@ -107,6 +106,11 @@ export function ActionQueueSetup(): void {
     );
     ActionQueueRetry = true;
     sessionStorage.clear();
-    aq.dispatch();
+    globalLoadingIndicator.set(true);
+    void aq.dispatch().then(() => {
+      globalLoadingIndicator.set(false);
+      globalDialogMessage.set("Akce byla úspěšná");
+      refreshMetadata();
+    });
   }
 }
