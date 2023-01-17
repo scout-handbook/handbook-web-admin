@@ -57,18 +57,15 @@
   }
 
   function dismissCallback() {
-    void new ActionQueue(
-      [
-        new Action(
-          $apiUri + "/v1.0/mutex/" + encodeURIComponent(payload.lessonId),
-          "DELETE",
-          undefined,
-          [],
-          { NotFoundException: null }
-        ),
-      ],
-      true
-    ).dispatch();
+    void new ActionQueue([
+      new Action(
+        $apiUri + "/v1.0/mutex/" + encodeURIComponent(payload.lessonId),
+        "DELETE",
+        undefined,
+        [],
+        { NotFoundException: null }
+      ),
+    ]).dispatch();
     navigate(-1);
   }
 </script>
