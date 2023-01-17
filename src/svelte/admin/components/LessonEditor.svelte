@@ -46,7 +46,7 @@
 
   function discardNow(): void {
     void discardActionQueue.dispatch();
-    navigate("/lessons");
+    navigate(-1);
   }
 
   function discard(): void {
