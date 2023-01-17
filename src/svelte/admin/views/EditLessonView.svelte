@@ -50,20 +50,18 @@
   ]);
 
   function lessonEditMutexExtend(id: string): void {
-    const exceptionHandler = { NotFoundException: null };
-    const actionQueue = new ActionQueue(
+    void new ActionQueue(
       [
         new Action(
           $apiUri + "/v1.0/mutex/" + encodeURIComponent(id),
           "PUT",
           undefined,
           undefined,
-          exceptionHandler
+          { NotFoundException: null }
         ),
       ],
       true
-    );
-    actionQueue.dispatch();
+    ).dispatch();
   }
 
   function sendBeacon(id: string): void {
