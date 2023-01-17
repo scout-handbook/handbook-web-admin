@@ -1,7 +1,16 @@
 <script lang="ts">
   import { useNavigate } from "svelte-navigator";
 
+  import { IDList } from "../../../../ts/admin/IDList";
+  import { Event } from "../../../../ts/admin/interfaces/Event";
+  import { Group } from "../../../../ts/admin/interfaces/Group";
+  import { Participant } from "../../../../ts/admin/interfaces/Participant";
+  import { Payload } from "../../../../ts/admin/interfaces/Payload";
+  import { RequestResponse } from "../../../../ts/admin/interfaces/RequestResponse";
+  import { User } from "../../../../ts/admin/interfaces/User";
+  import { UserListResponse } from "../../../../ts/admin/interfaces/UserListResponse";
   import { apiUri } from "../../../../ts/admin/stores";
+  import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import {
     authFailHandler,
     reAuthHandler,
@@ -9,17 +18,8 @@
   } from "../../../../ts/admin/tools/request";
   import Button from "../Button.svelte";
   import Dialog from "../Dialog.svelte";
-  import { Event } from "../../../../ts/admin/interfaces/Event";
-  import { Group } from "../../../../ts/admin/interfaces/Group";
-  import { IDList } from "../../../../ts/admin/IDList";
   import LoadingIndicator from "../LoadingIndicator.svelte";
-  import { Participant } from "../../../../ts/admin/interfaces/Participant";
-  import { Payload } from "../../../../ts/admin/interfaces/Payload";
-  import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
-  import { RequestResponse } from "../../../../ts/admin/interfaces/RequestResponse";
   import SidePanel from "../SidePanel.svelte";
-  import { User } from "../../../../ts/admin/interfaces/User";
-  import { UserListResponse } from "../../../../ts/admin/interfaces/UserListResponse";
 
   export let groups: IDList<Group>;
   export let payload: { groupId: string };

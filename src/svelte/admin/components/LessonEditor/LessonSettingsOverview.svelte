@@ -1,14 +1,14 @@
 <script lang="ts">
   import { useLocation, useNavigate } from "svelte-navigator";
 
-  import Button from "../Button.svelte";
-  import { competences, fields, groups } from "../../../../ts/admin/stores";
-  import { Group } from "../../../../ts/admin/interfaces/Group";
   import { IDList } from "../../../../ts/admin/IDList";
+  import { Group } from "../../../../ts/admin/interfaces/Group";
   import {
     lessonSettingsCache,
     lessonSettingsCacheEvent,
   } from "../../../../ts/admin/lessonEditor/editor";
+  import { competences, fields, groups } from "../../../../ts/admin/stores";
+  import Button from "../Button.svelte";
   import LoadingIndicator from "../LoadingIndicator.svelte";
 
   export let lessonId: string | null;

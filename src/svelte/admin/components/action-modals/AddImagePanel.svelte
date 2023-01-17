@@ -1,14 +1,14 @@
 <script lang="ts">
   import { useNavigate } from "svelte-navigator";
 
+  import { refreshMetadata } from "../../../../ts/admin/metadata";
   import { apiUri } from "../../../../ts/admin/stores";
+  import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import { authFailHandler, request } from "../../../../ts/admin/tools/request";
   import Button from "../Button.svelte";
   import Dialog from "../Dialog.svelte";
   import LoadingIndicator from "../LoadingIndicator.svelte";
   import Overlay from "../Overlay.svelte";
-  import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
-  import { refreshMetadata } from "../../../../ts/admin/metadata";
   import SidePanel from "../SidePanel.svelte";
 
   const navigate = useNavigate();

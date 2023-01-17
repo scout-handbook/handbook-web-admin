@@ -1,7 +1,7 @@
 <script lang="ts">
+  import { setChanged } from "../../../../ts/admin/lessonEditor/editor";
   import { compileMarkdown } from "../../../../ts/admin/tools/compileMarkdown";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
-  import { setChanged } from "../../../../ts/admin/lessonEditor/editor";
 
   export let name: string;
   export let body: string;

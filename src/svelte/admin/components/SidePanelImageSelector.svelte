@@ -1,12 +1,12 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
 
+  import { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
   import { apiUri } from "../../../ts/admin/stores";
+  import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
+  import { reAuthHandler, request } from "../../../ts/admin/tools/request";
   import Button from "./Button.svelte";
   import DoubleSidePanel from "./DoubleSidePanel.svelte";
-  import { reAuthHandler, request } from "../../../ts/admin/tools/request";
-  import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
-  import { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
 
   const dispatch = createEventDispatcher();
 
