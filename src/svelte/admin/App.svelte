@@ -25,8 +25,6 @@
   import UserView from "./views/UserView.svelte";
 </script>
 
-<!-- TODO: Remove legacy overlay -->
-<div id="overlay" />
 {#if $loadingIndicatorVisible}
   <LoadingIndicator />
 {/if}
@@ -44,8 +42,6 @@
     {$globalDialogMessage}
   </Dialog>
 {/if}
-<!-- TODO: Remove legacy spinner -->
-<div id="spinner" />
 <!-- TODO: Remove main -->
 <main>
   <!-- TODO: Extract from config -->
