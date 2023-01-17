@@ -28,15 +28,20 @@ export class ActionQueue {
     }
   }
 
-  public dispatch(): void {
-    if (this.actions.length > 0) {
-      this.pop(true);
+  public dispatch(): Promise<void> {
+    if (this.actions.length == 0) {
+      return new Promise((resolve) => {
+        resolve();
+      });
     }
+    return new Promise((resolve) => {
+      this.pop(resolve, true);
+    });
   }
 
-  public defaultDispatch(): void {
+  public defaultDispatch(): Promise<void> {
     this.addDefaultCallback();
-    this.dispatch();
+    return this.dispatch();
   }
 
   private addDefaultCallback(): void {
@@ -45,7 +50,7 @@ export class ActionQueue {
     );
   }
 
-  private pop(propagate: boolean): void {
+  private pop(resolve: () => void, propagate: boolean): void {
     if (this.actions.length <= 1) {
       propagate = false;
     }
@@ -62,7 +67,9 @@ export class ActionQueue {
         this.actions[0].callback(response, this);
         this.actions.shift();
         if (propagate) {
-          this.pop(true);
+          this.pop(resolve, true);
+        } else {
+          resolve();
         }
       },
       this.actions[0].exceptionHandler
