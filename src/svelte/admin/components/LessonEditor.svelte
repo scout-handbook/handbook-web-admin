@@ -1,20 +1,20 @@
 <script lang="ts">
   import { useLocation, useNavigate } from "svelte-navigator";
 
-  import { ActionQueue } from "../../../ts/admin/tools/ActionQueue";
-  import Button from "../components/Button.svelte";
   import {
     changed,
     editorDiscard,
     populateEditorCache,
     setChanged,
   } from "../../../ts/admin/lessonEditor/editor";
-  import EditorPane from "./LessonEditor/EditorPane.svelte";
-  import LessonSettingsPanel from "./LessonEditor/LessonSettingsPanel.svelte";
   import {
     prepareImageSelector,
     toggleImageSelector,
   } from "../../../ts/admin/lessonEditor/imageSelector";
+  import { ActionQueue } from "../../../ts/admin/tools/ActionQueue";
+  import Button from "../components/Button.svelte";
+  import EditorPane from "./LessonEditor/EditorPane.svelte";
+  import LessonSettingsPanel from "./LessonEditor/LessonSettingsPanel.svelte";
   import PreviewPane from "./LessonEditor/PreviewPane.svelte";
 
   export let lessonName: string;

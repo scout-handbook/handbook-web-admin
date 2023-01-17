@@ -1,18 +1,18 @@
 <script lang="ts">
   import { useLocation } from "svelte-navigator";
 
-  import { Action } from "../../../ts/admin/tools/Action";
-  import { ActionCallback } from "../../../ts/admin/tools/ActionCallback";
-  import { ActionQueue } from "../../../ts/admin/tools/ActionQueue";
-  import { apiUri } from "../../../ts/admin/stores";
+  import { Payload } from "../../../ts/admin/interfaces/Payload";
   import {
     defaultBody,
     defaultName,
   } from "../../../ts/admin/lessonEditor/defaultContent";
+  import { setChanged } from "../../../ts/admin/lessonEditor/editor";
+  import { apiUri } from "../../../ts/admin/stores";
+  import { Action } from "../../../ts/admin/tools/Action";
+  import { ActionCallback } from "../../../ts/admin/tools/ActionCallback";
+  import { ActionQueue } from "../../../ts/admin/tools/ActionQueue";
   import { getQueryField } from "../../../ts/admin/tools/getQueryField";
   import LessonEditor from "../components/LessonEditor.svelte";
-  import { Payload } from "../../../ts/admin/interfaces/Payload";
-  import { setChanged } from "../../../ts/admin/lessonEditor/editor";
 
   const location = useLocation();
   const fieldID = getQueryField($location.search, "field");

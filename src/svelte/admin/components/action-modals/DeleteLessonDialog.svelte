@@ -1,16 +1,16 @@
 <script lang="ts">
   import { useNavigate } from "svelte-navigator";
 
+  import { IDList } from "../../../../ts/admin/IDList";
+  import { APIResponse } from "../../../../ts/admin/interfaces/APIResponse";
+  import { Lesson } from "../../../../ts/admin/interfaces/Lesson";
+  import { apiUri } from "../../../../ts/admin/stores";
   import { Action } from "../../../../ts/admin/tools/Action";
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
-  import { APIResponse } from "../../../../ts/admin/interfaces/APIResponse";
-  import { apiUri } from "../../../../ts/admin/stores";
+  import { reAuthHandler, request } from "../../../../ts/admin/tools/request";
   import Dialog from "../Dialog.svelte";
-  import { IDList } from "../../../../ts/admin/IDList";
-  import { Lesson } from "../../../../ts/admin/interfaces/Lesson";
   import LoadingIndicator from "../LoadingIndicator.svelte";
   import Overlay from "../Overlay.svelte";
-  import { reAuthHandler, request } from "../../../../ts/admin/tools/request";
 
   export let lessons: IDList<Lesson>;
   export let payload: { lessonId: string };

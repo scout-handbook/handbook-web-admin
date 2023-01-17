@@ -1,14 +1,14 @@
 <script lang="ts">
   import { useNavigate } from "svelte-navigator";
 
+  import { IDList } from "../../../../ts/admin/IDList";
+  import { Field } from "../../../../ts/admin/interfaces/Field";
+  import { apiUri } from "../../../../ts/admin/stores";
   import { Action } from "../../../../ts/admin/tools/Action";
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
-  import { apiUri } from "../../../../ts/admin/stores";
+  import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Button from "../Button.svelte";
   import Dialog from "../Dialog.svelte";
-  import { Field } from "../../../../ts/admin/interfaces/Field";
-  import { IDList } from "../../../../ts/admin/IDList";
-  import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import SidePanel from "../SidePanel.svelte";
   import SidePanelImageSelector from "../SidePanelImageSelector.svelte";
 

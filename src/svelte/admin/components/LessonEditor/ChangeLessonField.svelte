@@ -1,16 +1,16 @@
 <script lang="ts">
   import { useNavigate } from "svelte-navigator";
 
-  import { Action } from "../../../../ts/admin/tools/Action";
-  import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
-  import { apiUri, fields } from "../../../../ts/admin/stores";
-  import Button from "../Button.svelte";
+  import { Payload } from "../../../../ts/admin/interfaces/Payload";
   import {
     lessonSettingsCache,
     setChanged,
   } from "../../../../ts/admin/lessonEditor/editor";
-  import { Payload } from "../../../../ts/admin/interfaces/Payload";
+  import { apiUri, fields } from "../../../../ts/admin/stores";
+  import { Action } from "../../../../ts/admin/tools/Action";
+  import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
+  import Button from "../Button.svelte";
 
   export let lessonId: string | null;
   export let saveActionQueue: ActionQueue;
