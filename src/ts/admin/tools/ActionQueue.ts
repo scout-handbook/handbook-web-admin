@@ -11,16 +11,9 @@ export let ActionQueueRetry = false;
 
 export class ActionQueue {
   public actions: Array<Action>;
-  // TODO: This is probably obsolete
-  public background: boolean;
 
-  public constructor(
-    actions: Array<Action> = [],
-    background = false,
-    retry = false
-  ) {
+  public constructor(actions: Array<Action> = [], retry = false) {
     this.actions = actions;
-    this.background = background;
     ActionQueueRetry = retry;
   }
 
@@ -101,7 +94,6 @@ export function ActionQueueSetup(): void {
           sessionStorage.getItem("ActionQueue")!
         ) as Array<SerializedAction>
       ).map(deserializeAction),
-      false,
       false
     );
     ActionQueueRetry = true;
