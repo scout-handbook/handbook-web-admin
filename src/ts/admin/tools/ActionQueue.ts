@@ -2,7 +2,6 @@ import { SerializedAction } from "../interfaces/SerializedAction";
 import { refreshMetadata } from "../metadata";
 import { globalDialogMessage, globalLoadingIndicator } from "../stores";
 import { request } from "../tools/request";
-import { dialog } from "../UI/dialog";
 import { Action } from "./Action";
 import { deserializeAction, serializeAction } from "./Action";
 
@@ -65,9 +64,8 @@ export class ActionQueue {
         CONFIG["api-uri"] + "/v1.0/login?return-uri=" + window.location.pathname
       );
     } else {
-      dialog(
-        "Byl jste odhlášen a akce se nepodařila. Přihlašte se prosím a zkuste to znovu.",
-        "OK"
+      globalDialogMessage.set(
+        "Byl jste odhlášen a akce se nepodařila. Přihlašte se prosím a zkuste to znovu."
       );
     }
   }
