@@ -8,7 +8,7 @@
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Button from "../Button.svelte";
-  import Dialog from "../Dialog.svelte";
+  import ConfirmationDialog from "../ConfirmationDialog.svelte";
   import SidePanel from "../SidePanel.svelte";
 
   export let loginstate: Loginstate;
@@ -16,16 +16,18 @@
 
   const navigate = useNavigate();
 
-  let done = false;
   let selectedRole = payload.user.role;
+  let confirmPromise: Promise<void> | null = null;
 
   refreshLogin();
 
   function saveCallback() {
     if (selectedRole === payload.user.role) {
-      done = true;
+      confirmPromise = new Promise((resolve) => {
+        resolve();
+      });
     } else {
-      new ActionQueue([
+      confirmPromise = new ActionQueue([
         new Action(
           $apiUri +
             "/v1.0/user/" +
@@ -34,20 +36,13 @@
           "PUT",
           { role: selectedRole }
         ),
-      ]).defaultDispatch();
+      ]).dispatch();
     }
   }
 </script>
 
-{#if done}
-  <Dialog
-    confirmButtonText="OK"
-    on:confirm={() => {
-      navigate(-1);
-    }}
-  >
-    Akce byla úspěšná.
-  </Dialog>
+{#if confirmPromise !== null}
+  <ConfirmationDialog {confirmPromise} />
 {:else}
   <SidePanel>
     <Button
