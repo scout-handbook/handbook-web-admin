@@ -3,7 +3,6 @@
 
   import {
     changed,
-    editorDiscard,
     populateEditorCache,
     setChanged,
   } from "../../../ts/admin/lessonEditor/editor";
@@ -12,7 +11,10 @@
     toggleImageSelector,
   } from "../../../ts/admin/lessonEditor/imageSelector";
   import { ActionQueue } from "../../../ts/admin/tools/ActionQueue";
+  import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import Button from "../components/Button.svelte";
+  import Dialog from "./Dialog.svelte";
+  import DoneDialog from "./DoneDialog.svelte";
   import EditorPane from "./LessonEditor/EditorPane.svelte";
   import LessonSettingsPanel from "./LessonEditor/LessonSettingsPanel.svelte";
   import PreviewPane from "./LessonEditor/PreviewPane.svelte";
@@ -29,79 +31,107 @@
   $: view = $location.state?.view as string;
   $: currentUri = $location.pathname + $location.search;
 
+  let discardConfirmation = false;
+  let donePromise: Promise<void> | null = null;
+
   function saveCallback(): void {
     if (changed) {
-      saveActionQueue.defaultDispatch();
+      donePromise = saveActionQueue.dispatch();
     } else {
-      navigate("/lessons");
-      discardActionQueue.defaultDispatch();
+      discardNow();
     }
   }
 
   populateEditorCache(id);
   setChanged(false);
   prepareImageSelector();
+
+  function discardNow(): void {
+    void discardActionQueue.dispatch();
+    navigate(-1);
+  }
+
+  function discard(): void {
+    // TODO: Broken. Maybe remove altogether.
+    if (!changed) {
+      discardNow();
+    } else {
+      discardConfirmation = true;
+    }
+    refreshLogin();
+  }
 </script>
 
 {#if view === "lesson-settings"}
   <LessonSettingsPanel lessonId={id} {lessonName} {saveActionQueue} bind:body />
 {/if}
 
-<div id="side-panel" />
-<div id="side-panel-overlay" />
-<header>
-  <div class="buttons-left">
-    <Button
-      icon="cancel"
-      yellow
-      on:click={() => {
-        editorDiscard(discardActionQueue);
-      }}
-    >
-      Zrušit
-    </Button>
-    <form class="name">
-      <input
-        id="name"
-        class="form-text form-name"
-        autocomplete="off"
-        type="text"
-        bind:value={lessonName}
-      />
-    </form>
+{#if discardConfirmation}
+  <Dialog
+    confirmButtonText="Ano"
+    dismissButtonText="Ne"
+    on:confirm={discardNow}
+    on:dismiss={() => {
+      discardConfirmation = false;
+    }}
+  >
+    Opravdu si přejete zahodit všechny změny?
+  </Dialog>
+{/if}
+
+{#if donePromise !== null}
+  <DoneDialog {donePromise} />
+{:else}
+  <div id="side-panel" />
+  <div id="side-panel-overlay" />
+  <header>
+    <div class="buttons-left">
+      <Button icon="cancel" yellow on:click={discard}>Zrušit</Button>
+      <form class="name">
+        <input
+          id="name"
+          class="form-text form-name"
+          autocomplete="off"
+          type="text"
+          bind:value={lessonName}
+        />
+      </form>
+    </div>
+    <div class="buttons-right">
+      <Button
+        icon="cog"
+        on:click={() => {
+          navigate(currentUri, {
+            state: { view: "lesson-settings" },
+          });
+        }}
+      >
+        Nastavení
+      </Button>
+      <Button green icon="floppy" on:click={saveCallback}>Uložit</Button>
+    </div>
+  </header>
+  <div id="image-selector">
+    <div id="image-scroller">
+      <Button icon="up-open" yellow on:click={toggleImageSelector}
+        >Zavřít</Button
+      >
+      <!-- TODO: Re-enable uploads in editor without discarding its contents
+      <Button
+        icon="plus"
+        green
+        on:click={() => {
+          addImage(true); // Removed
+        }}>
+        Nahrát
+      </Button>
+      -->
+      <div id="image-wrapper" />
+    </div>
   </div>
-  <div class="buttons-right">
-    <Button
-      icon="cog"
-      on:click={() => {
-        navigate(currentUri, {
-          state: { view: "lesson-settings" },
-        });
-      }}
-    >
-      Nastavení
-    </Button>
-    <Button green icon="floppy" on:click={saveCallback}>Uložit</Button>
-  </div>
-</header>
-<div id="image-selector">
-  <div id="image-scroller">
-    <Button icon="up-open" yellow on:click={toggleImageSelector}>Zavřít</Button>
-    <!-- TODO: Re-enable uploads in editor without discarding its contents
-    <Button
-      icon="plus"
-      green
-      on:click={() => {
-        addImage(true); // Removed
-      }}>
-      Nahrát
-    </Button>
-    -->
-    <div id="image-wrapper" />
-  </div>
-</div>
-<EditorPane bind:value={body} />
-<PreviewPane name={lessonName} {body} {refreshAction} />
+  <EditorPane bind:value={body} />
+  <PreviewPane name={lessonName} {body} {refreshAction} />
+{/if}
 
 <style>
   .buttons-left,

@@ -19,14 +19,14 @@
   let name = getQueryField($location.search, "name") ?? "Obnovená lekce";
   let body = "";
 
-  const saveActionQueue = new ActionQueue([
+  $: saveActionQueue = new ActionQueue([
     new Action(
       $apiUri + "/v1.0/lesson",
       "POST",
-      () => ({
+      {
         name: encodeURIComponent(name),
         body: encodeURIComponent(body),
-      }),
+      },
       [ActionCallback.FillID]
     ),
   ]);

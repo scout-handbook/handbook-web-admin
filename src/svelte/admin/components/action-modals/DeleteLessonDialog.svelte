@@ -9,6 +9,7 @@
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
   import { reAuthHandler, request } from "../../../../ts/admin/tools/request";
   import Dialog from "../Dialog.svelte";
+  import DoneDialog from "../DoneDialog.svelte";
   import LoadingIndicator from "../LoadingIndicator.svelte";
   import Overlay from "../Overlay.svelte";
 
@@ -37,9 +38,10 @@
       exceptionHandler
     );
   });
+  let donePromise: Promise<void> | null = null;
 
   function confirmCallback() {
-    new ActionQueue([
+    donePromise = new ActionQueue([
       new Action(
         $apiUri + "/v1.0/lesson/" + encodeURIComponent(payload.lessonId),
         "DELETE",
@@ -51,12 +53,11 @@
           },
         }
       ),
-    ]).defaultDispatch();
-    navigate(-1);
+    ]).dispatch();
   }
 
   function dismissCallback() {
-    new ActionQueue([
+    void new ActionQueue([
       new Action(
         $apiUri + "/v1.0/mutex/" + encodeURIComponent(payload.lessonId),
         "DELETE",
@@ -64,7 +65,7 @@
         [],
         { NotFoundException: null }
       ),
-    ]).dispatch(true);
+    ]).dispatch();
     navigate(-1);
   }
 </script>
@@ -88,6 +89,8 @@
     Kvůli příliš malé aktivitě byla lekce odemknuta a již ji upravil někdo jiný.
     Zkuste to prosím znovu.
   </Dialog>
+{:else if donePromise !== null}
+  <DoneDialog {donePromise} />
 {:else}
   {#await mutexPromise}
     <Overlay />

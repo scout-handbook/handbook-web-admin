@@ -8,7 +8,7 @@
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Button from "../Button.svelte";
-  import Dialog from "../Dialog.svelte";
+  import DoneDialog from "../DoneDialog.svelte";
   import SidePanel from "../SidePanel.svelte";
 
   export let groups: IDList<Group>;
@@ -16,36 +16,31 @@
 
   const navigate = useNavigate();
 
-  let done = false;
   const group = groups.get(payload.groupId)!;
   let { name } = group;
+  let donePromise: Promise<void> | null = null;
 
   refreshLogin();
 
   function saveCallback() {
     if (group.name === name) {
-      done = true;
+      donePromise = new Promise((resolve) => {
+        resolve();
+      });
     } else {
-      new ActionQueue([
+      donePromise = new ActionQueue([
         new Action(
           $apiUri + "/v1.0/group/" + encodeURIComponent(payload.groupId),
           "PUT",
-          () => ({ name })
+          { name }
         ),
-      ]).defaultDispatch();
+      ]).dispatch();
     }
   }
 </script>
 
-{#if done}
-  <Dialog
-    confirmButtonText="OK"
-    on:confirm={() => {
-      navigate(-1);
-    }}
-  >
-    Akce byla úspěšná.
-  </Dialog>
+{#if donePromise !== null}
+  <DoneDialog {donePromise} />
 {:else}
   <SidePanel>
     <Button

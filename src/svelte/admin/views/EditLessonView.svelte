@@ -26,14 +26,14 @@
   };
   const discardExceptionHandler = { NotFoundException: null };
 
-  const saveActionQueue = new ActionQueue([
+  $: saveActionQueue = new ActionQueue([
     new Action(
       $apiUri + "/v1.0/lesson/" + encodeURIComponent(lessonID),
       "PUT",
-      () => ({
+      {
         name: encodeURIComponent(name),
         body: encodeURIComponent(body),
-      }),
+      },
       [ActionCallback.RemoveBeacon],
       saveExceptionHandler
     ),
@@ -44,23 +44,21 @@
       $apiUri + "/v1.0/mutex/" + encodeURIComponent(lessonID),
       "DELETE",
       undefined,
-      [ActionCallback.RemoveBeacon, ActionCallback.DismissSpinner],
+      [ActionCallback.RemoveBeacon],
       discardExceptionHandler
     ),
   ]);
 
   function lessonEditMutexExtend(id: string): void {
-    const exceptionHandler = { NotFoundException: null };
-    const actionQueue = new ActionQueue([
+    void new ActionQueue([
       new Action(
         $apiUri + "/v1.0/mutex/" + encodeURIComponent(id),
         "PUT",
         undefined,
         undefined,
-        exceptionHandler
+        { NotFoundException: null }
       ),
-    ]);
-    actionQueue.dispatch(true);
+    ]).dispatch();
   }
 
   function sendBeacon(id: string): void {

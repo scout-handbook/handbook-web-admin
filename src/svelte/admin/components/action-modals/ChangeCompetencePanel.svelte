@@ -8,7 +8,7 @@
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Button from "../Button.svelte";
-  import Dialog from "../Dialog.svelte";
+  import DoneDialog from "../DoneDialog.svelte";
   import SidePanel from "../SidePanel.svelte";
 
   export let competences: IDList<Competence>;
@@ -16,9 +16,9 @@
 
   const navigate = useNavigate();
 
-  let done = false;
   const competence = competences.get(payload.competenceId)!;
   let { number, name, description } = competence;
+  let donePromise: Promise<void> | null = null;
 
   refreshLogin();
 
@@ -28,30 +28,25 @@
       competence.name === name &&
       competence.description === description
     ) {
-      done = true;
+      donePromise = new Promise((resolve) => {
+        resolve();
+      });
     } else {
-      new ActionQueue([
+      donePromise = new ActionQueue([
         new Action(
           $apiUri +
             "/v1.0/competence/" +
             encodeURIComponent(payload.competenceId),
           "PUT",
-          () => ({ number, name, description })
+          { number, name, description }
         ),
-      ]).defaultDispatch();
+      ]).dispatch();
     }
   }
 </script>
 
-{#if done}
-  <Dialog
-    confirmButtonText="OK"
-    on:confirm={() => {
-      navigate(-1);
-    }}
-  >
-    Akce byla úspěšná.
-  </Dialog>
+{#if donePromise !== null}
+  <DoneDialog {donePromise} />
 {:else}
   <SidePanel>
     <Button
