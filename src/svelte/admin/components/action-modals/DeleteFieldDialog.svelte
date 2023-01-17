@@ -7,33 +7,40 @@
   import { Action } from "../../../../ts/admin/tools/Action";
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
+import ConfirmationDialog from "../ConfirmationDialog.svelte";
   import Dialog from "../Dialog.svelte";
 
   export let fields: IDList<Field>;
   export let payload: { fieldId: string };
 
-  const field = fields.get(payload.fieldId)!;
   const navigate = useNavigate();
+
+  const field = fields.get(payload.fieldId)!;
+  let confirmPromise: Promise<void> | null = null;
 
   refreshLogin();
 
   function confirmCallback() {
-    new ActionQueue([
+    confirmPromise = new ActionQueue([
       new Action(
         $apiUri + "/v1.0/field/" + encodeURIComponent(payload.fieldId),
         "DELETE"
       ),
-    ]).defaultDispatch();
+    ]).dispatch();
   }
 </script>
 
-<Dialog
-  confirmButtonText="Ano"
-  dismissButtonText="Ne"
-  on:confirm={confirmCallback}
-  on:dismiss={() => {
-    navigate(-1);
-  }}
->
-  Opravdu si přejete smazat oblast "{field.name}"?
-</Dialog>
+{#if confirmPromise !== null}
+  <ConfirmationDialog {confirmPromise} />
+{:else}
+  <Dialog
+    confirmButtonText="Ano"
+    dismissButtonText="Ne"
+    on:confirm={confirmCallback}
+    on:dismiss={() => {
+      navigate(-1);
+    }}
+  >
+    Opravdu si přejete smazat oblast "{field.name}"?
+  </Dialog>
+{/if}
