@@ -1,19 +1,17 @@
 import { SerializedAction } from "../interfaces/SerializedAction";
+import { refreshMetadata } from "../metadata";
+import { globalDialogMessage, globalLoadingIndicator } from "../stores";
 import { request } from "../tools/request";
-import { dialog } from "../UI/dialog";
-import { spinner } from "../UI/spinner";
 import { Action } from "./Action";
 import { deserializeAction, serializeAction } from "./Action";
-import { ActionCallback } from "./ActionCallback";
-
-export let ActionQueueRetry = false;
 
 export class ActionQueue {
   public actions: Array<Action>;
+  private isRetryAfterLogin: boolean;
 
-  public constructor(actions: Array<Action> = [], retry = false) {
+  public constructor(actions: Array<Action> = [], isRetryAfterLogin = false) {
     this.actions = actions;
-    ActionQueueRetry = retry;
+    this.isRetryAfterLogin = isRetryAfterLogin;
   }
 
   public fillID(id: string): void {
@@ -22,41 +20,34 @@ export class ActionQueue {
     }
   }
 
-  public dispatch(background: boolean): void {
-    if (this.actions.length > 0) {
-      this.pop(true, background);
+  public dispatch(): Promise<void> {
+    if (this.actions.length == 0) {
+      return new Promise((resolve) => {
+        resolve();
+      });
     }
+    return new Promise((resolve) => {
+      this.pop(resolve, true);
+    });
   }
 
-  public defaultDispatch(): void {
-    this.addDefaultCallback();
-    this.dispatch(false);
-  }
-
-  private addDefaultCallback(): void {
-    this.actions[this.actions.length - 1].callbacks.push(
-      ActionCallback.DialogConfirm
-    );
-  }
-
-  private pop(propagate: boolean, background: boolean): void {
+  private pop(resolve: () => void, propagate: boolean): void {
     if (this.actions.length <= 1) {
       propagate = false;
-    }
-    if (!background) {
-      spinner();
     }
     this.actions[0].exceptionHandler["AuthenticationException"] = (): void =>
       this.authException();
     request(
       this.actions[0].url,
       this.actions[0].method,
-      this.actions[0].payloadBuilder(),
+      this.actions[0].payload,
       (response) => {
         this.actions[0].callback(response, this);
         this.actions.shift();
         if (propagate) {
-          this.pop(true, background);
+          this.pop(resolve, true);
+        } else {
+          resolve();
         }
       },
       this.actions[0].exceptionHandler
@@ -64,7 +55,7 @@ export class ActionQueue {
   }
 
   private authException(): void {
-    if (!ActionQueueRetry && window.sessionStorage) {
+    if (!this.isRetryAfterLogin && window.sessionStorage) {
       sessionStorage.setItem(
         "ActionQueue",
         JSON.stringify(this.actions.map(serializeAction))
@@ -73,9 +64,8 @@ export class ActionQueue {
         CONFIG["api-uri"] + "/v1.0/login?return-uri=" + window.location.pathname
       );
     } else {
-      dialog(
-        "Byl jste odhlášen a akce se nepodařila. Přihlašte se prosím a zkuste to znovu.",
-        "OK"
+      globalDialogMessage.set(
+        "Byl jste odhlášen a akce se nepodařila. Přihlašte se prosím a zkuste to znovu."
       );
     }
   }
@@ -89,10 +79,14 @@ export function ActionQueueSetup(): void {
           sessionStorage.getItem("ActionQueue")!
         ) as Array<SerializedAction>
       ).map(deserializeAction),
-      false
+      true
     );
-    ActionQueueRetry = true;
     sessionStorage.clear();
-    aq.dispatch(false);
+    globalLoadingIndicator.set(true);
+    void aq.dispatch().then(() => {
+      globalLoadingIndicator.set(false);
+      globalDialogMessage.set("Akce byla úspěšná");
+      refreshMetadata();
+    });
   }
 }

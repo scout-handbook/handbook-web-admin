@@ -9,7 +9,7 @@
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Button from "../Button.svelte";
-  import Dialog from "../Dialog.svelte";
+  import DoneDialog from "../DoneDialog.svelte";
   import SidePanel from "../SidePanel.svelte";
 
   export let groups: IDList<Group>;
@@ -17,8 +17,8 @@
 
   const navigate = useNavigate();
 
-  let done = false;
   let selectedGroups = payload.user.groups;
+  let donePromise: Promise<void> | null = null;
 
   $: publicName =
     groups.get("00000000-0000-0000-0000-000000000000")?.name ?? "";
@@ -32,31 +32,26 @@
         (value, index) => value === payload.user.groups[index]
       )
     ) {
-      done = true;
+      donePromise = new Promise((resolve) => {
+        resolve();
+      });
     } else {
-      new ActionQueue([
+      donePromise = new ActionQueue([
         new Action(
           $apiUri +
             "/v1.0/user/" +
             encodeURIComponent(payload.user.id) +
             "/group",
           "PUT",
-          () => ({ group: selectedGroups.map(encodeURIComponent) })
+          { group: selectedGroups.map(encodeURIComponent) }
         ),
-      ]).defaultDispatch();
+      ]).dispatch();
     }
   }
 </script>
 
-{#if done}
-  <Dialog
-    confirmButtonText="OK"
-    on:confirm={() => {
-      navigate(-1);
-    }}
-  >
-    Akce byla úspěšná.
-  </Dialog>
+{#if donePromise !== null}
+  <DoneDialog {donePromise} />
 {:else}
   <SidePanel>
     <Button

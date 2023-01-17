@@ -8,6 +8,7 @@
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Dialog from "../Dialog.svelte";
+  import DoneDialog from "../DoneDialog.svelte";
 
   export let groups: IDList<Group>;
   export let payload: { groupId: string };
@@ -15,26 +16,31 @@
   const navigate = useNavigate();
 
   const group = groups.get(payload.groupId)!;
+  let donePromise: Promise<void> | null = null;
 
   refreshLogin();
 
   function confirmCallback() {
-    new ActionQueue([
+    donePromise = new ActionQueue([
       new Action(
         $apiUri + "/v1.0/group/" + encodeURIComponent(payload.groupId),
         "DELETE"
       ),
-    ]).defaultDispatch();
+    ]).dispatch();
   }
 </script>
 
-<Dialog
-  confirmButtonText="Ano"
-  dismissButtonText="Ne"
-  on:confirm={confirmCallback}
-  on:dismiss={() => {
-    navigate(-1);
-  }}
->
-  Opravdu si přejete smazat skupinu "{group.name}"?
-</Dialog>
+{#if donePromise !== null}
+  <DoneDialog {donePromise} />
+{:else}
+  <Dialog
+    confirmButtonText="Ano"
+    dismissButtonText="Ne"
+    on:confirm={confirmCallback}
+    on:dismiss={() => {
+      navigate(-1);
+    }}
+  >
+    Opravdu si přejete smazat skupinu "{group.name}"?
+  </Dialog>
+{/if}

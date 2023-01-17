@@ -1,7 +1,6 @@
 <script lang="ts">
   import { useLocation } from "svelte-navigator";
 
-  import { Payload } from "../../../ts/admin/interfaces/Payload";
   import {
     defaultBody,
     defaultName,
@@ -19,26 +18,22 @@
   let name = defaultName;
   let body = defaultBody;
 
-  const aq = new ActionQueue([
+  $: aq = new ActionQueue([
     new Action(
       $apiUri + "/v1.0/lesson",
       "POST",
-      () => ({
+      {
         name: encodeURIComponent(name),
         body: encodeURIComponent(body),
-      }),
+      },
       [ActionCallback.FillID]
     ),
   ]);
   if (fieldID !== null) {
     aq.actions.push(
-      new Action(
-        $apiUri + "/v1.0/lesson/{id}/field",
-        "PUT",
-        function (): Payload {
-          return { field: encodeURIComponent(fieldID) };
-        }
-      )
+      new Action($apiUri + "/v1.0/lesson/{id}/field", "PUT", {
+        field: encodeURIComponent(fieldID),
+      })
     );
   }
 
