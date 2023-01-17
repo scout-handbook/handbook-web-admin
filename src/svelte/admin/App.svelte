@@ -13,6 +13,7 @@
   } from "../../ts/admin/stores";
   import Dialog from "./components/Dialog.svelte";
   import LoadingIndicator from "./components/LoadingIndicator.svelte";
+  import Overlay from "./components/Overlay.svelte";
   import TopBar from "./components/TopBar.svelte";
   import AddLessonView from "./views/AddLessonView.svelte";
   import CompetenceView from "./views/CompetenceView.svelte";
@@ -36,7 +37,8 @@
   <LoadingIndicator />
 {/if}
 {#if $globalLoadingIndicator}
-  <LoadingIndicator />
+  <Overlay />
+  <LoadingIndicator darkBackground />
 {/if}
 {#if $globalDialogMessage !== null}
   <Dialog
