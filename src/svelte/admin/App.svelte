@@ -1,8 +1,6 @@
 <script lang="ts">
-  import { Router, Route } from "svelte-navigator";
+  import { Route, Router } from "svelte-navigator";
 
-  import AddLessonView from "./views/AddLessonView.svelte";
-  import CompetenceView from "./views/CompetenceView.svelte";
   import {
     competences,
     fields,
@@ -13,13 +11,15 @@
     loginstate,
   } from "../../ts/admin/stores";
   import Dialog from "./components/Dialog.svelte";
+  import LoadingIndicator from "./components/LoadingIndicator.svelte";
+  import TopBar from "./components/TopBar.svelte";
+  import AddLessonView from "./views/AddLessonView.svelte";
+  import CompetenceView from "./views/CompetenceView.svelte";
   import EditLessonView from "./views/EditLessonView.svelte";
   import GroupView from "./views/GroupView.svelte";
   import ImageView from "./views/ImageView.svelte";
   import LessonView from "./views/LessonView.svelte";
-  import LoadingIndicator from "./components/LoadingIndicator.svelte";
   import RestoreLessonView from "./views/RestoreLessonView.svelte";
-  import TopBar from "./components/TopBar.svelte";
   import UserView from "./views/UserView.svelte";
 </script>
 

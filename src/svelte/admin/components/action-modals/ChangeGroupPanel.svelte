@@ -1,14 +1,14 @@
 <script lang="ts">
   import { useNavigate } from "svelte-navigator";
 
+  import { IDList } from "../../../../ts/admin/IDList";
+  import { Group } from "../../../../ts/admin/interfaces/Group";
+  import { apiUri } from "../../../../ts/admin/stores";
   import { Action } from "../../../../ts/admin/tools/Action";
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
-  import { apiUri } from "../../../../ts/admin/stores";
+  import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Button from "../Button.svelte";
   import Dialog from "../Dialog.svelte";
-  import { Group } from "../../../../ts/admin/interfaces/Group";
-  import { IDList } from "../../../../ts/admin/IDList";
-  import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import SidePanel from "../SidePanel.svelte";
 
   export let groups: IDList<Group>;

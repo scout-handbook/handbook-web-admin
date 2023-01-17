@@ -1,16 +1,16 @@
 <script lang="ts">
   import { useLocation, useNavigate } from "svelte-navigator";
 
+  import { IDList } from "../../../ts/admin/IDList";
+  import { Group } from "../../../ts/admin/interfaces/Group";
+  import { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
+  import { siteName } from "../../../ts/admin/stores";
+  import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import AddGroupPanel from "../components/action-modals/AddGroupPanel.svelte";
-  import Button from "../components/Button.svelte";
   import ChangeGroupPanel from "../components/action-modals/ChangeGroupPanel.svelte";
   import DeleteGroupDialog from "../components/action-modals/DeleteGroupDialog.svelte";
-  import { Group } from "../../../ts/admin/interfaces/Group";
-  import { IDList } from "../../../ts/admin/IDList";
   import ImportGroupMembersPanel from "../components/action-modals/ImportGroupMembersPanel.svelte";
-  import { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
-  import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
-  import { siteName } from "../../../ts/admin/stores";
+  import Button from "../components/Button.svelte";
 
   export let groups: IDList<Group>;
   export let loginstate: Loginstate;

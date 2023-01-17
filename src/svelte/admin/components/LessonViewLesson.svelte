@@ -1,11 +1,11 @@
 <script lang="ts">
   import { useNavigate } from "svelte-navigator";
 
+  import { IDList } from "../../../ts/admin/IDList";
+  import { Competence } from "../../../ts/admin/interfaces/Competence";
+  import { Lesson } from "../../../ts/admin/interfaces/Lesson";
   import { adminUri } from "../../../ts/admin/stores";
   import Button from "./Button.svelte";
-  import { Competence } from "../../../ts/admin/interfaces/Competence";
-  import { IDList } from "../../../ts/admin/IDList";
-  import { Lesson } from "../../../ts/admin/interfaces/Lesson";
 
   export let competences: IDList<Competence>;
   export let adminPermissions: boolean;

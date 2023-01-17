@@ -1,20 +1,20 @@
 <script lang="ts">
   import { useLocation, useNavigate } from "svelte-navigator";
 
-  import AddFieldPanel from "../components/action-modals/AddFieldPanel.svelte";
-  import Button from "../components/Button.svelte";
-  import ChangeFieldPanel from "../components/action-modals/ChangeFieldPanel.svelte";
+  import { IDList } from "../../../ts/admin/IDList";
   import { Competence } from "../../../ts/admin/interfaces/Competence";
+  import { Field } from "../../../ts/admin/interfaces/Field";
+  import { Lesson } from "../../../ts/admin/interfaces/Lesson";
+  import { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
+  import { siteName } from "../../../ts/admin/stores";
+  import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
+  import AddFieldPanel from "../components/action-modals/AddFieldPanel.svelte";
+  import ChangeFieldPanel from "../components/action-modals/ChangeFieldPanel.svelte";
   import DeleteFieldDialog from "../components/action-modals/DeleteFieldDialog.svelte";
   import DeleteLessonDialog from "../components/action-modals/DeleteLessonDialog.svelte";
-  import { Field } from "../../../ts/admin/interfaces/Field";
-  import { IDList } from "../../../ts/admin/IDList";
-  import { Lesson } from "../../../ts/admin/interfaces/Lesson";
-  import LessonViewLesson from "../components/LessonViewLesson.svelte";
-  import { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
-  import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import RestoreLessonPanel from "../components/action-modals/RestoreLessonPanel.svelte";
-  import { siteName } from "../../../ts/admin/stores";
+  import Button from "../components/Button.svelte";
+  import LessonViewLesson from "../components/LessonViewLesson.svelte";
 
   export let competences: IDList<Competence>;
   export let fields: IDList<Field>;
