@@ -27,12 +27,6 @@
 
 <!-- TODO: Remove legacy overlay -->
 <div id="overlay" />
-<!-- TODO: Remove legacy dialog -->
-<div id="dialog">
-  <div id="dialogText" />
-  <div id="dismiss-text" class="button yellow-button" />
-  <div id="confirm-text" class="button" />
-</div>
 {#if $loadingIndicatorVisible}
   <LoadingIndicator />
 {/if}
