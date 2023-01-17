@@ -8,7 +8,7 @@
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Button from "../Button.svelte";
-  import ConfirmationDialog from "../ConfirmationDialog.svelte";
+  import DoneDialog from "../DoneDialog.svelte";
   import SidePanel from "../SidePanel.svelte";
 
   export let loginstate: Loginstate;
@@ -42,7 +42,7 @@
 </script>
 
 {#if confirmPromise !== null}
-  <ConfirmationDialog {confirmPromise} />
+  <DoneDialog {confirmPromise} />
 {:else}
   <SidePanel>
     <Button

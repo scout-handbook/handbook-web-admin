@@ -7,8 +7,8 @@
   import { Action } from "../../../../ts/admin/tools/Action";
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
-  import ConfirmationDialog from "../ConfirmationDialog.svelte";
   import Dialog from "../Dialog.svelte";
+  import DoneDialog from "../DoneDialog.svelte";
 
   export let fields: IDList<Field>;
   export let payload: { fieldId: string };
@@ -31,7 +31,7 @@
 </script>
 
 {#if confirmPromise !== null}
-  <ConfirmationDialog {confirmPromise} />
+  <DoneDialog {confirmPromise} />
 {:else}
   <Dialog
     confirmButtonText="Ano"

@@ -8,8 +8,8 @@
   import { Action } from "../../../../ts/admin/tools/Action";
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
   import { reAuthHandler, request } from "../../../../ts/admin/tools/request";
-  import ConfirmationDialog from "../ConfirmationDialog.svelte";
   import Dialog from "../Dialog.svelte";
+  import DoneDialog from "../DoneDialog.svelte";
   import LoadingIndicator from "../LoadingIndicator.svelte";
   import Overlay from "../Overlay.svelte";
 
@@ -93,7 +93,7 @@
     Zkuste to prosím znovu.
   </Dialog>
 {:else if confirmPromise !== null}
-  <ConfirmationDialog {confirmPromise} />
+  <DoneDialog {confirmPromise} />
 {:else}
   {#await mutexPromise}
     <Overlay />
