@@ -1,14 +1,10 @@
 import { default as EasyMDE } from "easymde";
-import { navigate } from "svelte-navigator";
 
 import { AfterLoadEvent } from "../AfterLoadEvent";
 import { LessonSettingsCache } from "../interfaces/LessonSettingsCache";
 import { RequestResponse } from "../interfaces/RequestResponse";
 import { FIELDS, LESSONS } from "../metadata";
-import { ActionQueue } from "../tools/ActionQueue";
-import { refreshLogin } from "../tools/refreshLogin";
 import { reAuthHandler, request } from "../tools/request";
-import { dialog } from "../UI/dialog";
 
 export let changed: boolean;
 export const lessonSettingsCache: LessonSettingsCache = {
@@ -52,25 +48,4 @@ export function populateEditorCache(id: string | null): void {
     lessonSettingsCache["field"] = fieldId;
   });
   lessonSettingsCache["competences"] = LESSONS.get(id)!.competences;
-}
-
-function editorDiscardNow(actionQueue: ActionQueue): void {
-  navigate("/admin/lessons");
-  actionQueue.dispatch();
-}
-
-export function editorDiscard(actionQueue: ActionQueue): void {
-  if (!changed) {
-    editorDiscardNow(actionQueue);
-  } else {
-    dialog(
-      "Opravdu si přejete zahodit všechny změny?",
-      "Ano",
-      function (): void {
-        editorDiscardNow(actionQueue);
-      },
-      "Ne"
-    );
-  }
-  refreshLogin();
 }
