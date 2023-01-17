@@ -1,11 +1,7 @@
-import { navigate } from "svelte-navigator";
-
 import { ExceptionHandler } from "../interfaces/ExceptionHandler";
 import { Payload } from "../interfaces/Payload";
 import { RequestResponse } from "../interfaces/RequestResponse";
 import { SerializedAction } from "../interfaces/SerializedAction";
-import { refreshMetadata } from "../metadata";
-import { dialog } from "../UI/dialog";
 import { dismissSpinner } from "../UI/spinner";
 import { ActionCallback } from "./ActionCallback";
 import { ActionQueue, ActionQueueRetry } from "./ActionQueue";
@@ -34,9 +30,6 @@ export class Action {
   public callback(response: RequestResponse, actionQueue: ActionQueue): void {
     for (let i = 0; i < this.callbacks.length; i++) {
       switch (this.callbacks[i]) {
-        case ActionCallback.DialogConfirm:
-          this.dialogConfirm();
-          break;
         case ActionCallback.DismissSpinner:
           dismissSpinner();
           break;
@@ -52,16 +45,6 @@ export class Action {
 
   public fillID(id: string): void {
     this.url = this.url.replace("{id}", encodeURIComponent(id));
-  }
-
-  private dialogConfirm(): void {
-    dialog("Akce byla úspěšná.", "OK");
-    refreshMetadata();
-    if (ActionQueueRetry) {
-      navigate("/admin/");
-    } else {
-      navigate(-1);
-    }
   }
 }
 
