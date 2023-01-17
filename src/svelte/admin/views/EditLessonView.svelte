@@ -2,13 +2,12 @@
   import { APIResponse } from "../../../ts/admin/interfaces/APIResponse";
   import { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
   import { LESSONS, metadataEvent } from "../../../ts/admin/metadata";
-  import { apiUri } from "../../../ts/admin/stores";
+  import { apiUri, globalDialogMessage } from "../../../ts/admin/stores";
   import { loadingIndicatorVisible } from "../../../ts/admin/stores";
   import { Action } from "../../../ts/admin/tools/Action";
   import { ActionCallback } from "../../../ts/admin/tools/ActionCallback";
   import { ActionQueue } from "../../../ts/admin/tools/ActionQueue";
   import { reAuthHandler, request } from "../../../ts/admin/tools/request";
-  import { dialog } from "../../../ts/admin/UI/dialog";
   import LessonEditor from "../components/LessonEditor.svelte";
 
   export let lessonID: string;
@@ -18,9 +17,8 @@
 
   const saveExceptionHandler = {
     NotLockedException: function (): void {
-      dialog(
-        "Kvůli příliš malé aktivitě byla lekce odemknuta a již ji upravil někdo jiný. Zkuste to prosím znovu.",
-        "OK"
+      globalDialogMessage.set(
+        "Kvůli příliš malé aktivitě byla lekce odemknuta a již ji upravil někdo jiný. Zkuste to prosím znovu."
       );
     },
   };
@@ -94,11 +92,10 @@
   loadingIndicatorVisible.set(true);
   const exceptionHandler = reAuthHandler;
   exceptionHandler["LockedException"] = function (response: APIResponse): void {
-    dialog(
+    globalDialogMessage.set(
       "Nelze upravovat lekci, protože ji právě upravuje " +
         response.holder! +
-        ".",
-      "OK"
+        "."
     );
   };
   request(
