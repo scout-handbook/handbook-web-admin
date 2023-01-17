@@ -8,6 +8,7 @@
   import { Action } from "../../../../ts/admin/tools/Action";
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
   import { reAuthHandler, request } from "../../../../ts/admin/tools/request";
+  import ConfirmationDialog from "../ConfirmationDialog.svelte";
   import Dialog from "../Dialog.svelte";
   import LoadingIndicator from "../LoadingIndicator.svelte";
   import Overlay from "../Overlay.svelte";
@@ -37,9 +38,10 @@
       exceptionHandler
     );
   });
+  let confirmPromise: Promise<void> | null = null;
 
   function confirmCallback() {
-    new ActionQueue([
+    confirmPromise = new ActionQueue([
       new Action(
         $apiUri + "/v1.0/lesson/" + encodeURIComponent(payload.lessonId),
         "DELETE",
@@ -51,12 +53,11 @@
           },
         }
       ),
-    ]).defaultDispatch();
-    navigate(-1);
+    ]).dispatch();
   }
 
   function dismissCallback() {
-    new ActionQueue(
+    void new ActionQueue(
       [
         new Action(
           $apiUri + "/v1.0/mutex/" + encodeURIComponent(payload.lessonId),
@@ -91,6 +92,8 @@
     Kvůli příliš malé aktivitě byla lekce odemknuta a již ji upravil někdo jiný.
     Zkuste to prosím znovu.
   </Dialog>
+{:else if confirmPromise !== null}
+  <ConfirmationDialog {confirmPromise} />
 {:else}
   {#await mutexPromise}
     <Overlay />
