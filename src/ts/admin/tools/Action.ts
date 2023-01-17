@@ -2,9 +2,8 @@ import { ExceptionHandler } from "../interfaces/ExceptionHandler";
 import { Payload } from "../interfaces/Payload";
 import { RequestResponse } from "../interfaces/RequestResponse";
 import { SerializedAction } from "../interfaces/SerializedAction";
-import { dismissSpinner } from "../UI/spinner";
 import { ActionCallback } from "./ActionCallback";
-import { ActionQueue, ActionQueueRetry } from "./ActionQueue";
+import { ActionQueue } from "./ActionQueue";
 
 export class Action {
   public url: string;
@@ -30,9 +29,6 @@ export class Action {
   public callback(response: RequestResponse, actionQueue: ActionQueue): void {
     for (let i = 0; i < this.callbacks.length; i++) {
       switch (this.callbacks[i]) {
-        case ActionCallback.DismissSpinner:
-          dismissSpinner();
-          break;
         case ActionCallback.FillID:
           actionQueue.fillID(response as string);
           break;
