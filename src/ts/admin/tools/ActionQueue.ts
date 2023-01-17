@@ -6,14 +6,13 @@ import { dialog } from "../UI/dialog";
 import { Action } from "./Action";
 import { deserializeAction, serializeAction } from "./Action";
 
-export let ActionQueueRetry = false;
-
 export class ActionQueue {
   public actions: Array<Action>;
+  private isRetryAfterLogin: boolean;
 
-  public constructor(actions: Array<Action> = [], retry = false) {
+  public constructor(actions: Array<Action> = [], isRetryAfterLogin = false) {
     this.actions = actions;
-    ActionQueueRetry = retry;
+    this.isRetryAfterLogin = isRetryAfterLogin;
   }
 
   public fillID(id: string): void {
@@ -57,7 +56,7 @@ export class ActionQueue {
   }
 
   private authException(): void {
-    if (!ActionQueueRetry && window.sessionStorage) {
+    if (!this.isRetryAfterLogin && window.sessionStorage) {
       sessionStorage.setItem(
         "ActionQueue",
         JSON.stringify(this.actions.map(serializeAction))
@@ -82,9 +81,8 @@ export function ActionQueueSetup(): void {
           sessionStorage.getItem("ActionQueue")!
         ) as Array<SerializedAction>
       ).map(deserializeAction),
-      false
+      true
     );
-    ActionQueueRetry = true;
     sessionStorage.clear();
     globalLoadingIndicator.set(true);
     void aq.dispatch().then(() => {
