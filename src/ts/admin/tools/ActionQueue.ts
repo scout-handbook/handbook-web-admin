@@ -5,7 +5,6 @@ import { request } from "../tools/request";
 import { dialog } from "../UI/dialog";
 import { Action } from "./Action";
 import { deserializeAction, serializeAction } from "./Action";
-import { ActionCallback } from "./ActionCallback";
 
 export let ActionQueueRetry = false;
 
@@ -32,17 +31,6 @@ export class ActionQueue {
     return new Promise((resolve) => {
       this.pop(resolve, true);
     });
-  }
-
-  public defaultDispatch(): Promise<void> {
-    this.addDefaultCallback();
-    return this.dispatch();
-  }
-
-  private addDefaultCallback(): void {
-    this.actions[this.actions.length - 1].callbacks.push(
-      ActionCallback.DialogConfirm
-    );
   }
 
   private pop(resolve: () => void, propagate: boolean): void {
