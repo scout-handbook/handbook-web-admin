@@ -5,6 +5,7 @@
     competences,
     fields,
     globalDialogMessage,
+    globalLoadingIndicator,
     groups,
     lessons,
     loadingIndicatorVisible,
@@ -32,6 +33,9 @@
   <div id="confirm-text" class="button" />
 </div>
 {#if $loadingIndicatorVisible}
+  <LoadingIndicator />
+{/if}
+{#if $globalLoadingIndicator}
   <LoadingIndicator />
 {/if}
 {#if $globalDialogMessage !== null}
