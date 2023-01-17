@@ -23,4 +23,5 @@ export const lessons = writable<IDList<Lesson> | null>(null);
 export const loginstate = writable<Loginstate | null>(null);
 
 export const loadingIndicatorVisible = writable<boolean>(false);
+export const globalLoadingIndicator = writable<boolean>(false);
 export const globalDialogMessage = writable<string | null>(null);
