@@ -8,6 +8,7 @@
   import AddImagePanel from "../components/action-modals/AddImagePanel.svelte";
   import DeleteImageDialog from "../components/action-modals/DeleteImageDialog.svelte";
   import Button from "../components/Button.svelte";
+  import LoadingIndicator from "../components/LoadingIndicator.svelte";
   import Pagination from "../components/Pagination.svelte";
 
   const location = useLocation();
@@ -68,7 +69,7 @@
 </Button>
 <div id="imageList">
   {#await imageListPromise}
-    <div id="embedded-spinner" />
+    <LoadingIndicator />
   {:then list}
     {#each list.slice(pageStart, pageEnd) as image}
       <div class="thumbnail-container">

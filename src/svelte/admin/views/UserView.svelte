@@ -16,6 +16,7 @@
   import ChangeUserGroupsPanel from "../components/action-modals/ChangeUserGroupsPanel.svelte";
   import ChangeUserRolePanel from "../components/action-modals/ChangeUserRolePanel.svelte";
   import Button from "../components/Button.svelte";
+  import LoadingIndicator from "../components/LoadingIndicator.svelte";
   import Pagination from "../components/Pagination.svelte";
 
   export let groups: IDList<Group>;
@@ -86,7 +87,7 @@
 <h1>{$siteName + " - Uživatelé"}</h1>
 <div id="userList">
   {#await userListPromise}
-    <div id="embedded-spinner" />
+    <LoadingIndicator />
   {:then userList}
     <form
       id="user-search-form"
