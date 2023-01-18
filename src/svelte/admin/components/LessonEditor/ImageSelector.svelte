@@ -1,6 +1,7 @@
 <script lang="ts">
+  import { createEventDispatcher } from "svelte";
+
   import { RequestResponse } from "../../../../ts/admin/interfaces/RequestResponse";
-  import { editor } from "../../../../ts/admin/lessonEditor/editor";
   import { apiUri } from "../../../../ts/admin/stores";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import { reAuthHandler, request } from "../../../../ts/admin/tools/request";
@@ -9,6 +10,8 @@
   import Pagination from "../Pagination.svelte";
 
   export let imageSelectorOpen: boolean;
+
+  const dispatch = createEventDispatcher();
 
   let page = 1;
   const perPage = 15;
@@ -28,15 +31,6 @@
   });
 
   refreshLogin();
-
-  function insertImage(id: string): void {
-    const markdown =
-      "![Text po najetí kurzorem](" + $apiUri + "/v1.0/image/" + id + ")";
-    const doc = editor.codemirror.getDoc();
-    doc.replaceRange(markdown, doc.getCursor());
-    imageSelectorOpen = false;
-    refreshLogin();
-  }
 </script>
 
 <div id="image-selector" style:top={imageSelectorOpen ? "-76px" : "-100%"}>
@@ -69,10 +63,12 @@
               alt={"Image " + image}
               src={$apiUri + "/v1.0/image/" + image + "?quality=thumbnail"}
               on:click={() => {
-                insertImage(image);
+                dispatch("insert", { image });
+                imageSelectorOpen = false;
               }}
               on:keypress={() => {
-                insertImage(image);
+                dispatch("insert", { image });
+                imageSelectorOpen = false;
               }}
             />
           </div>

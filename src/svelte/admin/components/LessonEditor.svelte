@@ -6,6 +6,7 @@
     populateEditorCache,
     setChanged,
   } from "../../../ts/admin/lessonEditor/editor";
+  import { apiUri } from "../../../ts/admin/stores";
   import { ActionQueue } from "../../../ts/admin/tools/ActionQueue";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import Dialog from "./Dialog.svelte";
@@ -30,6 +31,9 @@
   let imageSelectorOpen = false;
   let discardConfirmation = false;
   let donePromise: Promise<void> | null = null;
+  let insertAtCursor: (content: string) => void;
+
+  populateEditorCache(id);
 
   function saveCallback(): void {
     if (changed) {
@@ -38,8 +42,6 @@
       discardNow();
     }
   }
-
-  populateEditorCache(id);
   setChanged(false);
 
   function discardNow(): void {
@@ -55,6 +57,16 @@
       discardConfirmation = true;
     }
     refreshLogin();
+  }
+
+  function insertImage(event: CustomEvent<{ image: string }>) {
+    insertAtCursor(
+      "![Text po najetí kurzorem](" +
+        $apiUri +
+        "/v1.0/image/" +
+        event.detail.image +
+        ")"
+    );
   }
 </script>
 
@@ -79,7 +91,7 @@
   <DoneDialog {donePromise} />
 {:else}
   <EditorHeader bind:lessonName on:discard={discard} on:save={saveCallback} />
-  <ImageSelector bind:imageSelectorOpen />
-  <EditorPane bind:imageSelectorOpen bind:value={body} />
+  <ImageSelector bind:imageSelectorOpen on:insert={insertImage} />
+  <EditorPane bind:imageSelectorOpen bind:insertAtCursor bind:value={body} />
   <PreviewPane name={lessonName} {body} {refreshAction} />
 {/if}
