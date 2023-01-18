@@ -8,7 +8,6 @@
     globalLoadingIndicator,
     groups,
     lessons,
-    loadingIndicatorVisible,
     loginstate,
   } from "../../ts/admin/stores";
   import Dialog from "./components/Dialog.svelte";
@@ -25,17 +24,6 @@
   import UserView from "./views/UserView.svelte";
 </script>
 
-<!-- TODO: Remove legacy overlay -->
-<div id="overlay" />
-<!-- TODO: Remove legacy dialog -->
-<div id="dialog">
-  <div id="dialogText" />
-  <div id="dismiss-text" class="button yellow-button" />
-  <div id="confirm-text" class="button" />
-</div>
-{#if $loadingIndicatorVisible}
-  <LoadingIndicator />
-{/if}
 {#if $globalLoadingIndicator}
   <Overlay />
   <LoadingIndicator darkBackground />
@@ -50,8 +38,6 @@
     {$globalDialogMessage}
   </Dialog>
 {/if}
-<!-- TODO: Remove legacy spinner -->
-<div id="spinner" />
 <!-- TODO: Remove main -->
 <main>
   <!-- TODO: Extract from config -->
@@ -59,7 +45,7 @@
     <Route component={AddLessonView} path="/lessons/add" />
     <Route path="/lessons/:id/edit" let:params>
       {#if $lessons === null}
-        <div id="embedded-spinner" />
+        <LoadingIndicator />
       {:else}
         <EditLessonView lessonID={params.id} />
       {/if}
@@ -75,7 +61,7 @@
       <div id="main-page-container">
         <div id="main-page">
           {#if $fields === null || $competences === null || $lessons === null || $loginstate === null}
-            <div id="embedded-spinner" />
+            <LoadingIndicator />
           {:else}
             <LessonView
               competences={$competences}
@@ -94,7 +80,7 @@
       <div id="main-page-container">
         <div id="main-page">
           {#if $fields === null || $competences === null || $lessons === null || $loginstate === null}
-            <div id="embedded-spinner" />
+            <LoadingIndicator />
           {:else}
             <LessonView
               competences={$competences}
@@ -113,7 +99,7 @@
       <div id="main-page-container">
         <div id="main-page">
           {#if $competences === null || $loginstate === null}
-            <div id="embedded-spinner" />
+            <LoadingIndicator />
           {:else}
             <CompetenceView
               competences={$competences}
@@ -140,7 +126,7 @@
       <div id="main-page-container">
         <div id="main-page">
           {#if $groups === null || $loginstate === null}
-            <div id="embedded-spinner" />
+            <LoadingIndicator />
           {:else}
             <UserView groups={$groups} loginstate={$loginstate} />
           {/if}
@@ -154,7 +140,7 @@
       <div id="main-page-container">
         <div id="main-page">
           {#if $groups === null || $loginstate === null}
-            <div id="embedded-spinner" />
+            <LoadingIndicator />
           {:else}
             <GroupView groups={$groups} loginstate={$loginstate} />
           {/if}

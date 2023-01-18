@@ -2,14 +2,13 @@
   import { APIResponse } from "../../../ts/admin/interfaces/APIResponse";
   import { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
   import { LESSONS, metadataEvent } from "../../../ts/admin/metadata";
-  import { apiUri } from "../../../ts/admin/stores";
-  import { loadingIndicatorVisible } from "../../../ts/admin/stores";
+  import { apiUri, globalDialogMessage } from "../../../ts/admin/stores";
   import { Action } from "../../../ts/admin/tools/Action";
   import { ActionCallback } from "../../../ts/admin/tools/ActionCallback";
   import { ActionQueue } from "../../../ts/admin/tools/ActionQueue";
   import { reAuthHandler, request } from "../../../ts/admin/tools/request";
-  import { dialog } from "../../../ts/admin/UI/dialog";
   import LessonEditor from "../components/LessonEditor.svelte";
+  import LoadingIndicator from "../components/LoadingIndicator.svelte";
 
   export let lessonID: string;
 
@@ -18,9 +17,8 @@
 
   const saveExceptionHandler = {
     NotLockedException: function (): void {
-      dialog(
-        "Kvůli příliš malé aktivitě byla lekce odemknuta a již ji upravil někdo jiný. Zkuste to prosím znovu.",
-        "OK"
+      globalDialogMessage.set(
+        "Kvůli příliš malé aktivitě byla lekce odemknuta a již ji upravil někdo jiný. Zkuste to prosím znovu."
       );
     },
   };
@@ -49,6 +47,46 @@
     ),
   ]);
 
+  let bodyPromise = Promise.all([
+    new Promise<void>((resolve) => {
+      request(
+        $apiUri + "/v1.0/mutex/" + encodeURIComponent(lessonID),
+        "POST",
+        {},
+        () => {
+          window.onbeforeunload = function (): void {
+            sendBeacon(lessonID);
+          };
+          resolve();
+        },
+        {
+          ...reAuthHandler,
+          LockedException: (response: APIResponse): void => {
+            globalDialogMessage.set(
+              "Nelze upravovat lekci, protože ji právě upravuje " +
+                response.holder! +
+                "."
+            );
+          },
+        }
+      );
+    }),
+    new Promise<void>((resolve) => {
+      request(
+        $apiUri + "/v1.0/lesson/" + encodeURIComponent(lessonID),
+        "GET",
+        {},
+        (response: RequestResponse): void => {
+          metadataEvent.addCallback(function (): void {
+            body = response as string;
+            resolve();
+          });
+        },
+        reAuthHandler
+      );
+    }),
+  ]);
+
   function lessonEditMutexExtend(id: string): void {
     void new ActionQueue([
       new Action(
@@ -68,51 +106,11 @@
       );
     }
   }
-
-  function renderLessonEditView(id: string, markdown: string): void {
-    body = markdown;
-    loadingIndicatorVisible.set(false);
-    window.onbeforeunload = function (): void {
-      sendBeacon(id);
-    };
-  }
-
-  function getLessonEditView(id: string): void {
-    request(
-      $apiUri + "/v1.0/lesson/" + encodeURIComponent(id),
-      "GET",
-      {},
-      function (response: RequestResponse): void {
-        metadataEvent.addCallback(function (): void {
-          renderLessonEditView(id, response as string);
-        });
-      },
-      reAuthHandler
-    );
-  }
-
-  loadingIndicatorVisible.set(true);
-  const exceptionHandler = reAuthHandler;
-  exceptionHandler["LockedException"] = function (response: APIResponse): void {
-    dialog(
-      "Nelze upravovat lekci, protože ji právě upravuje " +
-        response.holder! +
-        ".",
-      "OK"
-    );
-  };
-  request(
-    $apiUri + "/v1.0/mutex/" + encodeURIComponent(lessonID),
-    "POST",
-    {},
-    function (): void {
-      getLessonEditView(lessonID);
-    },
-    exceptionHandler
-  );
 </script>
 
-{#if !$loadingIndicatorVisible}
+{#await bodyPromise}
+  <LoadingIndicator />
+{:then}
   <LessonEditor
     id={lessonID}
     {discardActionQueue}
@@ -123,4 +121,4 @@
     bind:body
     bind:lessonName={name}
   />
-{/if}
+{/await}
