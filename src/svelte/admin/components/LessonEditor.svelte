@@ -15,6 +15,7 @@
   import Button from "../components/Button.svelte";
   import Dialog from "./Dialog.svelte";
   import DoneDialog from "./DoneDialog.svelte";
+  import EditorHeader from "./LessonEditor/EditorHeader.svelte";
   import EditorPane from "./LessonEditor/EditorPane.svelte";
   import LessonSettingsPanel from "./LessonEditor/LessonSettingsPanel.svelte";
   import PreviewPane from "./LessonEditor/PreviewPane.svelte";
@@ -29,7 +30,6 @@
   const location = useLocation();
   const navigate = useNavigate();
   $: view = $location.state?.view as string;
-  $: currentUri = $location.pathname + $location.search;
 
   let discardConfirmation = false;
   let donePromise: Promise<void> | null = null;
@@ -84,33 +84,7 @@
 {:else}
   <div id="side-panel" />
   <div id="side-panel-overlay" />
-  <header>
-    <div class="buttons-left">
-      <Button icon="cancel" yellow on:click={discard}>Zrušit</Button>
-      <form class="name">
-        <input
-          id="name"
-          class="form-text form-name"
-          autocomplete="off"
-          type="text"
-          bind:value={lessonName}
-        />
-      </form>
-    </div>
-    <div class="buttons-right">
-      <Button
-        icon="cog"
-        on:click={() => {
-          navigate(currentUri, {
-            state: { view: "lesson-settings" },
-          });
-        }}
-      >
-        Nastavení
-      </Button>
-      <Button green icon="floppy" on:click={saveCallback}>Uložit</Button>
-    </div>
-  </header>
+  <EditorHeader bind:lessonName on:discard={discard} on:save={saveCallback} />
   <div id="image-selector">
     <div id="image-scroller">
       <Button icon="up-open" yellow on:click={toggleImageSelector}
@@ -132,32 +106,3 @@
   <EditorPane bind:value={body} />
   <PreviewPane name={lessonName} {body} {refreshAction} />
 {/if}
-
-<style>
-  .buttons-left,
-  .buttons-right {
-    bottom: 0;
-    height: min-content;
-    margin: auto 0;
-    position: absolute;
-    top: 0;
-  }
-
-  .buttons-left {
-    left: 15px;
-    width: calc(100% - 250px);
-  }
-
-  .buttons-right {
-    right: 0;
-  }
-
-  .name {
-    display: inline-block;
-    width: calc(100% - 180px);
-  }
-
-  .name input {
-    width: 100%;
-  }
-</style>
