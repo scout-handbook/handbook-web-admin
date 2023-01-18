@@ -3,8 +3,8 @@
   import { onMount } from "svelte";
 
   import { editor, setEditor } from "../../../../ts/admin/lessonEditor/editor";
-  import { toggleImageSelector } from "../../../../ts/admin/lessonEditor/imageSelector";
 
+  export let imageSelectorOpen: boolean;
   export let value: string;
 
   $: editor !== undefined && value !== editor.value() && editor.value(value);
@@ -66,7 +66,9 @@
           },
           {
             name: "image",
-            action: toggleImageSelector,
+            action: () => {
+              imageSelectorOpen = true;
+            },
             className: "icon-picture",
             title: "Vložit obrázek",
           },
