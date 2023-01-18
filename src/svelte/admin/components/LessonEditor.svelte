@@ -6,17 +6,13 @@
     populateEditorCache,
     setChanged,
   } from "../../../ts/admin/lessonEditor/editor";
-  import {
-    prepareImageSelector,
-    toggleImageSelector,
-  } from "../../../ts/admin/lessonEditor/imageSelector";
   import { ActionQueue } from "../../../ts/admin/tools/ActionQueue";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
-  import Button from "../components/Button.svelte";
   import Dialog from "./Dialog.svelte";
   import DoneDialog from "./DoneDialog.svelte";
   import EditorHeader from "./LessonEditor/EditorHeader.svelte";
   import EditorPane from "./LessonEditor/EditorPane.svelte";
+  import ImageSelector from "./LessonEditor/ImageSelector.svelte";
   import LessonSettingsPanel from "./LessonEditor/LessonSettingsPanel.svelte";
   import PreviewPane from "./LessonEditor/PreviewPane.svelte";
 
@@ -44,7 +40,6 @@
 
   populateEditorCache(id);
   setChanged(false);
-  prepareImageSelector();
 
   function discardNow(): void {
     void discardActionQueue.dispatch();
@@ -85,24 +80,7 @@
   <div id="side-panel" />
   <div id="side-panel-overlay" />
   <EditorHeader bind:lessonName on:discard={discard} on:save={saveCallback} />
-  <div id="image-selector">
-    <div id="image-scroller">
-      <Button icon="up-open" yellow on:click={toggleImageSelector}
-        >Zavřít</Button
-      >
-      <!-- TODO: Re-enable uploads in editor without discarding its contents
-      <Button
-        icon="plus"
-        green
-        on:click={() => {
-          addImage(true); // Removed
-        }}>
-        Nahrát
-      </Button>
-      -->
-      <div id="image-wrapper" />
-    </div>
-  </div>
+  <ImageSelector />
   <EditorPane bind:value={body} />
   <PreviewPane name={lessonName} {body} {refreshAction} />
 {/if}
