@@ -1,5 +1,3 @@
-import { default as EasyMDE } from "easymde";
-
 import { AfterLoadEvent } from "../AfterLoadEvent";
 import { LessonSettingsCache } from "../interfaces/LessonSettingsCache";
 import { RequestResponse } from "../interfaces/RequestResponse";
@@ -13,11 +11,6 @@ export const lessonSettingsCache: LessonSettingsCache = {
   groups: [],
 };
 export let lessonSettingsCacheEvent: AfterLoadEvent;
-export let editor: EasyMDE;
-
-export function setEditor(value: EasyMDE): void {
-  editor = value;
-}
 
 export function setChanged(value = true): void {
   changed = value;
