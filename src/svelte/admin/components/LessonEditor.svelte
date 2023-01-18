@@ -77,8 +77,6 @@
 {#if donePromise !== null}
   <DoneDialog {donePromise} />
 {:else}
-  <div id="side-panel" />
-  <div id="side-panel-overlay" />
   <EditorHeader bind:lessonName on:discard={discard} on:save={saveCallback} />
   <ImageSelector />
   <EditorPane bind:value={body} />
