@@ -27,6 +27,7 @@
   const navigate = useNavigate();
   $: view = $location.state?.view as string;
 
+  let imageSelectorOpen = false;
   let discardConfirmation = false;
   let donePromise: Promise<void> | null = null;
 
@@ -78,7 +79,7 @@
   <DoneDialog {donePromise} />
 {:else}
   <EditorHeader bind:lessonName on:discard={discard} on:save={saveCallback} />
-  <ImageSelector />
-  <EditorPane bind:value={body} />
+  <ImageSelector bind:imageSelectorOpen />
+  <EditorPane bind:imageSelectorOpen bind:value={body} />
   <PreviewPane name={lessonName} {body} {refreshAction} />
 {/if}
