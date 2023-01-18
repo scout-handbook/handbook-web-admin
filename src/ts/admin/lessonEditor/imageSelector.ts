@@ -1,5 +1,4 @@
 import { RequestResponse } from "../interfaces/RequestResponse";
-import { getElementsByClassName } from "../tools/getElementsByClassName";
 import { refreshLogin } from "../tools/refreshLogin";
 import { reAuthHandler, request } from "../tools/request";
 import { editor } from "./editor";
@@ -129,4 +128,30 @@ function renderImageSelector(
       );
     };
   }
+}
+
+function getElementsByClassName(
+  className: string,
+  context: Document | Element = document
+): HTMLCollection {
+  if (context.getElementsByClassName) {
+    return context.getElementsByClassName(className);
+  }
+  if (context.querySelectorAll) {
+    return context.querySelectorAll(
+      "." + className
+    ) as unknown as HTMLCollection;
+  }
+  const all = context.getElementsByTagName("*");
+  const ret = [];
+  for (let i = 1; i < all.length; i++) {
+    if (
+      all[i].className &&
+      (" " + all[i].className + " ").indexOf(" " + className + " ") >= 0 &&
+      ret.indexOf(all[i]) < 0
+    ) {
+      ret.push(all[i]);
+    }
+  }
+  return ret as unknown as HTMLCollection;
 }
