@@ -7,6 +7,7 @@
   import { reAuthHandler, request } from "../../../ts/admin/tools/request";
   import Button from "./Button.svelte";
   import DoubleSidePanel from "./DoubleSidePanel.svelte";
+  import LoadingIndicator from "./LoadingIndicator.svelte";
 
   const dispatch = createEventDispatcher();
 
@@ -40,7 +41,7 @@
 
 <DoubleSidePanel>
   {#await imageListPromise}
-    <div id="embedded-spinner" />
+    <LoadingIndicator />
   {:then imageList}
     <Button
       icon="cancel"
