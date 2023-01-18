@@ -3,9 +3,15 @@
   import { onMount } from "svelte";
 
   import { editor, setEditor } from "../../../../ts/admin/lessonEditor/editor";
+  import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
 
   export let imageSelectorOpen: boolean;
   export let value: string;
+  export const insertAtCursor = (content: string) => {
+    const doc = editor.codemirror.getDoc();
+    doc.replaceRange(content, doc.getCursor());
+    refreshLogin();
+  };
 
   $: editor !== undefined && value !== editor.value() && editor.value(value);
 
