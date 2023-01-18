@@ -8,7 +8,6 @@
     globalLoadingIndicator,
     groups,
     lessons,
-    loadingIndicatorVisible,
     loginstate,
   } from "../../ts/admin/stores";
   import Dialog from "./components/Dialog.svelte";
@@ -25,9 +24,6 @@
   import UserView from "./views/UserView.svelte";
 </script>
 
-{#if $loadingIndicatorVisible}
-  <LoadingIndicator />
-{/if}
 {#if $globalLoadingIndicator}
   <Overlay />
   <LoadingIndicator darkBackground />
