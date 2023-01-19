@@ -2,11 +2,7 @@
   import { createEventDispatcher } from "svelte";
   import { useLocation } from "svelte-navigator";
 
-  import {
-    changed,
-    populateEditorCache,
-    setChanged,
-  } from "../../../ts/admin/lessonEditor/editor";
+  import { changed, setChanged } from "../../../ts/admin/lessonEditor/editor";
   import { apiUri } from "../../../ts/admin/stores";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import Dialog from "./Dialog.svelte";
@@ -32,7 +28,6 @@
   let discardConfirmation = false;
   let insertAtCursor: (content: string) => void;
 
-  populateEditorCache(id);
   setChanged(false);
 
   function saveCallback(): void {

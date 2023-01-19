@@ -140,6 +140,7 @@
         )
       );
     }
+    // TODO: Fix Array comparison
     if (initialCompetences !== competences) {
       saveActionQueue.actions.push(
         new Action(
@@ -154,6 +155,7 @@
         )
       );
     }
+    // TODO: Fix Array comparison
     if (initialGroups !== groups) {
       saveActionQueue.actions.push(
         new Action(
