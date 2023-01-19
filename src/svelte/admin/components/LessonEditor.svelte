@@ -60,7 +60,7 @@
 </script>
 
 {#if view === "lesson-settings"}
-  <LessonSettingsPanel {name} lessonId={id} {saveActionQueue} bind:body />
+  <LessonSettingsPanel {id} {name} {saveActionQueue} bind:body />
 {/if}
 
 {#if discardConfirmation}
