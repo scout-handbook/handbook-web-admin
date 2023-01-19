@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { setChanged } from "../../../../ts/admin/lessonEditor/editor";
   import { compileMarkdown } from "../../../../ts/admin/tools/compileMarkdown";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
 
@@ -20,7 +19,6 @@
   }
 
   function onChange(): void {
-    setChanged(true);
     refreshLogin(false, refreshAction);
     refreshPreview();
   }

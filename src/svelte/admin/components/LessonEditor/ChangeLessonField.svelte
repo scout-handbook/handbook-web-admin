@@ -1,67 +1,47 @@
 <script lang="ts">
   import { useNavigate } from "svelte-navigator";
 
-  import {
-    lessonSettingsCache,
-    setChanged,
-  } from "../../../../ts/admin/lessonEditor/editor";
-  import { apiUri, fields } from "../../../../ts/admin/stores";
-  import { Action } from "../../../../ts/admin/tools/Action";
-  import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
+  import { fields } from "../../../../ts/admin/stores";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Button from "../Button.svelte";
 
-  export let lessonId: string | null;
-  export let saveActionQueue: ActionQueue;
+  export let field: string | null;
 
   const navigate = useNavigate();
 
-  let selectedField = lessonSettingsCache.field;
+  const initialField = field;
   $: fieldsArray = $fields?.asArray() ?? [];
 
   refreshLogin();
-
-  function saveCallback() {
-    if (selectedField !== lessonSettingsCache.field) {
-      setChanged();
-      saveActionQueue.actions.push(
-        new Action(
-          $apiUri + "/v1.0/lesson/" + (lessonId ?? "{id}") + "/field",
-          "PUT",
-          { field: encodeURIComponent(selectedField) }
-        )
-      );
-      lessonSettingsCache.field = selectedField;
-    }
-    navigate(-1);
-  }
 </script>
 
 <Button
   icon="cancel"
   yellow
   on:click={() => {
+    field = initialField;
     navigate(-1);
   }}
 >
   Zrušit
 </Button>
-<Button green icon="floppy" on:click={saveCallback}>Uložit</Button>
+<Button
+  green
+  icon="floppy"
+  on:click={() => {
+    navigate(-1);
+  }}>Uložit</Button
+>
 <h3 class="side-panel-title">Změnit oblast</h3>
 <form id="side-panel-form">
-  {#each fieldsArray as { id, value: field }}
+  {#each fieldsArray as { id, value }}
     <div class="form-row">
       <label class="form-switch">
-        <input
-          name="field"
-          type="radio"
-          value={id ?? ""}
-          bind:group={selectedField}
-        />
+        <input name="field" type="radio" value={id} bind:group={field} />
         <span class="form-custom form-radio" />
       </label>
       {#if id}
-        {field.name}
+        {value.name}
       {:else}
         <span class="anonymous-field">Nezařazeno</span>
       {/if}
