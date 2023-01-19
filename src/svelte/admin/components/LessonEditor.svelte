@@ -17,10 +17,11 @@
   import LessonSettingsPanel from "./LessonEditor/LessonSettingsPanel.svelte";
   import PreviewPane from "./LessonEditor/PreviewPane.svelte";
 
+  export let id: string | null;
   export let name: string;
   export let body: string;
+  export let field: string | null;
   export let saveActionQueue: ActionQueue;
-  export let id: string | null;
   export let refreshAction: (() => void) | null = null;
 
   const dispatch = createEventDispatcher();
@@ -69,7 +70,7 @@
 {/if}
 
 {#if view === "lesson-settings"}
-  <LessonSettingsPanel {id} {name} {saveActionQueue} bind:body />
+  <LessonSettingsPanel {id} {name} {saveActionQueue} bind:body bind:field />
 {/if}
 
 <EditorHeader

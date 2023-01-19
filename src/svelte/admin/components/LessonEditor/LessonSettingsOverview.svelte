@@ -12,6 +12,7 @@
   import LoadingIndicator from "../LoadingIndicator.svelte";
 
   export let id: string | null;
+  export let field: string | null;
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -21,7 +22,7 @@
       return lessonSettingsCache.competences.indexOf(id) >= 0;
     })
     .asArray();
-  $: lessonField = $fields!.get(lessonSettingsCache.field)!;
+  $: fieldName = field !== null ? $fields?.get(field)?.name : undefined;
   $: currentUri = $location.pathname + $location.search;
 
   const groupsPromise = new Promise<IDList<Group>>((resolve) => {
@@ -70,10 +71,10 @@
   Upravit
 </Button>
 <br />
-{#if !lessonSettingsCache.field}
-  <span class="anonymous-field">Nezařazeno</span>
+{#if fieldName}
+  {fieldName}
 {:else}
-  {lessonField.name}
+  <span class="anonymous-field">Nezařazeno</span>
 {/if}
 <br />
 <h3 class="side-panel-title no-newline">Kompetence</h3>
