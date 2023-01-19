@@ -4,6 +4,10 @@ import { apiUri } from "../stores";
 import { Action } from "./Action";
 import { ActionQueue } from "./ActionQueue";
 
+function arrayEquals<T>(a: Array<T>, b: Array<T>): boolean {
+  return a.length === b.length && a.every((v, i) => v === b[i]);
+}
+
 export function populateField(
   actionQueue: ActionQueue,
   lessonID: string | null,
@@ -33,8 +37,7 @@ export function populateCompetences(
   competences: Array<string>,
   initialCompetences: Array<string> = []
 ) {
-  // TODO: Fix Array comparison
-  if (initialCompetences === competences) {
+  if (arrayEquals(initialCompetences, competences)) {
     return;
   }
   const encodedID = lessonID !== null ? encodeURIComponent(lessonID) : "{id}";
@@ -55,8 +58,7 @@ export function populateGroups(
   groups: Array<string>,
   initialGroups: Array<string> = []
 ) {
-  // TODO: Fix Array comparison
-  if (initialGroups === groups) {
+  if (arrayEquals(initialGroups, groups)) {
     return;
   }
   const encodedID = lessonID !== null ? encodeURIComponent(lessonID) : "{id}";
