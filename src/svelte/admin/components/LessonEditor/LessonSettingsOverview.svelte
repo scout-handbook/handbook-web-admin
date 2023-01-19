@@ -7,19 +7,24 @@
     lessonSettingsCache,
     lessonSettingsCacheEvent,
   } from "../../../../ts/admin/lessonEditor/editor";
-  import { competences, fields, groups } from "../../../../ts/admin/stores";
+  import {
+    competences as allCompetences,
+    fields,
+    groups,
+  } from "../../../../ts/admin/stores";
   import Button from "../Button.svelte";
   import LoadingIndicator from "../LoadingIndicator.svelte";
 
   export let id: string | null;
   export let field: string | null;
+  export let competences: Array<string>;
 
   const location = useLocation();
   const navigate = useNavigate();
 
-  $: lessonCompetences = $competences!
+  $: lessonCompetences = $allCompetences!
     .filter(function (id) {
-      return lessonSettingsCache.competences.indexOf(id) >= 0;
+      return competences.indexOf(id) >= 0;
     })
     .asArray();
   $: fieldName = field !== null ? $fields?.get(field)?.name : undefined;

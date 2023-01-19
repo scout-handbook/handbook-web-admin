@@ -20,6 +20,7 @@
   let donePromise: Promise<void> | null = null;
   let name = defaultName;
   let body = defaultBody;
+  let competences: Array<string> = [];
   let field: string | null = getQueryField($location.search, "field");
 
   $: saveActionQueue = new ActionQueue([
@@ -47,6 +48,13 @@
         })
       );
     }
+    if (competences.length > 0) {
+      saveActionQueue.actions.push(
+        new Action($apiUri + "/v1.0/lesson/{id}/competence", "PUT", {
+          competence: competences.map(encodeURIComponent),
+        })
+      );
+    }
     donePromise = saveActionQueue.dispatch();
   }
 </script>
@@ -59,6 +67,7 @@
     {saveActionQueue}
     bind:body
     bind:name
+    bind:competences
     bind:field
     on:discard={() => {
       navigate(-1);
