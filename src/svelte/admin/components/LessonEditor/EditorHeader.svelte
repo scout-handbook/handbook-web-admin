@@ -4,7 +4,7 @@
 
   import Button from "../../components/Button.svelte";
 
-  export let lessonName: string;
+  export let name: string;
 
   const dispatch = createEventDispatcher();
   const location = useLocation();
@@ -27,7 +27,7 @@
         class="form-text form-name"
         autocomplete="off"
         type="text"
-        bind:value={lessonName}
+        bind:value={name}
       />
     </form>
   </div>

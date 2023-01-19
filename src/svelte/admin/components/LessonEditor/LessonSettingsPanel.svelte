@@ -11,7 +11,7 @@
   import RestoreLessonVersion from "./RestoreLessonVersion.svelte";
 
   export let lessonId: string | null;
-  export let lessonName: string | null;
+  export let name: string | null;
   export let saveActionQueue: ActionQueue;
   export let body: string;
 
@@ -22,7 +22,7 @@
 </script>
 
 {#if action === "restore-version"}
-  <RestoreLessonVersion {lessonId} {lessonName} bind:body />
+  <RestoreLessonVersion {lessonId} lessonName={name} bind:body />
 {:else}
   <SidePanel>
     {#if action === "change-lesson-competences"}
