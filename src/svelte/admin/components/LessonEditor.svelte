@@ -38,12 +38,8 @@
     if (changed) {
       dispatch("save");
     } else {
-      discard();
+      dispatch("discard");
     }
-  }
-
-  function discard(): void {
-    dispatch("discard");
   }
 
   function insertImage(event: CustomEvent<{ image: string }>) {
@@ -61,7 +57,9 @@
   <Dialog
     confirmButtonText="Ano"
     dismissButtonText="Ne"
-    on:confirm={discard}
+    on:confirm={() => {
+      dispatch("discard");
+    }}
     on:dismiss={() => {
       discardConfirmation = false;
     }}
