@@ -20,6 +20,7 @@
   export let id: string | null;
   export let name: string;
   export let body: string;
+  export let competences: Array<string>;
   export let field: string | null;
   export let saveActionQueue: ActionQueue;
   export let refreshAction: (() => void) | null = null;
@@ -70,7 +71,14 @@
 {/if}
 
 {#if view === "lesson-settings"}
-  <LessonSettingsPanel {id} {name} {saveActionQueue} bind:body bind:field />
+  <LessonSettingsPanel
+    {id}
+    {name}
+    {saveActionQueue}
+    bind:body
+    bind:competences
+    bind:field
+  />
 {/if}
 
 <EditorHeader

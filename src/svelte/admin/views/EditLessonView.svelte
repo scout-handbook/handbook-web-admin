@@ -20,11 +20,13 @@
   let donePromise: Promise<void> | null = null;
   let name = LESSONS.get(lessonID)?.name ?? "";
   let body = "";
+  let competences: Array<string> = LESSONS.get(lessonID)?.competences ?? [];
   let field: string | null =
     FIELDS.asArray().find((field) => {
       return field.value.lessons.indexOf(lessonID) >= 0;
     })?.id ?? null;
 
+  const initialCompetences = competences;
   const initialField = field;
 
   const saveExceptionHandler = {
@@ -123,6 +125,17 @@
         )
       );
     }
+    if (initialCompetences !== competences) {
+      saveActionQueue.actions.push(
+        new Action(
+          $apiUri + "/v1.0/lesson/" + lessonID + "/competence",
+          "PUT",
+          {
+            competence: competences.map(encodeURIComponent),
+          }
+        )
+      );
+    }
     donePromise = saveActionQueue.dispatch();
   }
 
@@ -154,6 +167,7 @@
       {saveActionQueue}
       bind:body
       bind:name
+      bind:competences
       bind:field
       on:discard={discard}
       on:save={save}

@@ -12,6 +12,7 @@
 
   export let id: string | null;
   export let name: string | null;
+  export let competences: Array<string>;
   export let field: string | null;
   export let saveActionQueue: ActionQueue;
   export let body: string;
@@ -27,13 +28,13 @@
 {:else}
   <SidePanel>
     {#if action === "change-lesson-competences"}
-      <ChangeLessonCompetences {id} {saveActionQueue} />
+      <ChangeLessonCompetences bind:competences />
     {:else if action === "change-lesson-field"}
       <ChangeLessonField bind:field />
     {:else if action === "change-lesson-groups"}
       <ChangeLessonGroups {id} {saveActionQueue} />
     {:else}
-      <LessonSettingsOverview {id} {field} />
+      <LessonSettingsOverview {id} {competences} {field} />
     {/if}
   </SidePanel>
 {/if}
