@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { useLocation } from "svelte-navigator";
+  import { useLocation, useNavigate } from "svelte-navigator";
 
   import {
     defaultBody,
@@ -14,6 +14,7 @@
   import LessonEditor from "../components/LessonEditor.svelte";
 
   const location = useLocation();
+  const navigate = useNavigate();
   const fieldID = getQueryField($location.search, "field");
   let name = defaultName;
   let body = defaultBody;
@@ -43,4 +44,12 @@
   }, 100);
 </script>
 
-<LessonEditor id={null} saveActionQueue={aq} bind:body bind:lessonName={name} />
+<LessonEditor
+  id={null}
+  saveActionQueue={aq}
+  bind:body
+  bind:lessonName={name}
+  on:discard={() => {
+    navigate(-1);
+  }}
+/>

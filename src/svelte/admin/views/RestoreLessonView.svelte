@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { useLocation } from "svelte-navigator";
+  import { useLocation, useNavigate } from "svelte-navigator";
 
   import { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
   import { setChanged } from "../../../ts/admin/lessonEditor/editor";
@@ -16,6 +16,7 @@
   export let version: string;
 
   const location = useLocation();
+  const navigate = useNavigate();
   let name = getQueryField($location.search, "name") ?? "Obnovená lekce";
   let body = "";
 
@@ -52,5 +53,13 @@
 {#await bodyPromise}
   <LoadingIndicator />
 {:then}
-  <LessonEditor id={null} {saveActionQueue} bind:body bind:lessonName={name} />
+  <LessonEditor
+    id={null}
+    {saveActionQueue}
+    bind:body
+    bind:lessonName={name}
+    on:discard={() => {
+      navigate(-1);
+    }}
+  />
 {/await}
