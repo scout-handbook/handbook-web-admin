@@ -18,9 +18,9 @@
   const navigate = useNavigate();
 
   let donePromise: Promise<void> | null = null;
-  const fieldID = getQueryField($location.search, "field");
   let name = defaultName;
   let body = defaultBody;
+  let field: string | null = getQueryField($location.search, "field");
 
   $: aq = new ActionQueue([
     new Action(
@@ -33,13 +33,6 @@
       [ActionCallback.FillID]
     ),
   ]);
-  if (fieldID !== null) {
-    aq.actions.push(
-      new Action($apiUri + "/v1.0/lesson/{id}/field", "PUT", {
-        field: encodeURIComponent(fieldID),
-      })
-    );
-  }
 
   // TODO: Remove this horrible hack
   setTimeout(() => {
@@ -47,6 +40,13 @@
   }, 100);
 
   function save() {
+    if (field !== null) {
+      aq.actions.push(
+        new Action($apiUri + "/v1.0/lesson/{id}/field", "PUT", {
+          field: encodeURIComponent(field),
+        })
+      );
+    }
     donePromise = aq.dispatch();
   }
 </script>
@@ -59,6 +59,7 @@
     saveActionQueue={aq}
     bind:body
     bind:name
+    bind:field
     on:discard={() => {
       navigate(-1);
     }}

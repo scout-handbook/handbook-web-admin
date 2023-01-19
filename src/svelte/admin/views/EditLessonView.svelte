@@ -3,7 +3,7 @@
 
   import { APIResponse } from "../../../ts/admin/interfaces/APIResponse";
   import { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
-  import { LESSONS, metadataEvent } from "../../../ts/admin/metadata";
+  import { FIELDS, LESSONS, metadataEvent } from "../../../ts/admin/metadata";
   import { apiUri, globalDialogMessage } from "../../../ts/admin/stores";
   import { Action } from "../../../ts/admin/tools/Action";
   import { ActionCallback } from "../../../ts/admin/tools/ActionCallback";
@@ -20,6 +20,12 @@
   let donePromise: Promise<void> | null = null;
   let name = LESSONS.get(lessonID)?.name ?? "";
   let body = "";
+  let field: string | null =
+    FIELDS.asArray().find((field) => {
+      return field.value.lessons.indexOf(lessonID) >= 0;
+    })?.id ?? null;
+
+  const initialField = field;
 
   const saveExceptionHandler = {
     NotLockedException: function (): void {
@@ -104,6 +110,19 @@
   }
 
   function save() {
+    if (field !== initialField) {
+      saveActionQueue.actions.push(
+        new Action(
+          $apiUri + "/v1.0/lesson/" + lessonID + "/field",
+          "PUT",
+          field !== null
+            ? {
+                field: encodeURIComponent(field),
+              }
+            : {}
+        )
+      );
+    }
     donePromise = saveActionQueue.dispatch();
   }
 
@@ -135,6 +154,7 @@
       {saveActionQueue}
       bind:body
       bind:name
+      bind:field
       on:discard={discard}
       on:save={save}
     />

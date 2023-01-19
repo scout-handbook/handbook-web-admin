@@ -22,6 +22,7 @@
   let donePromise: Promise<void> | null = null;
   let name = getQueryField($location.search, "name") ?? "Obnovená lekce";
   let body = "";
+  let field: string | null = null;
 
   $: saveActionQueue = new ActionQueue([
     new Action(
@@ -53,6 +54,13 @@
   });
 
   function save() {
+    if (field !== null) {
+      saveActionQueue.actions.push(
+        new Action($apiUri + "/v1.0/lesson/{id}/field", "PUT", {
+          field: encodeURIComponent(field),
+        })
+      );
+    }
     donePromise = saveActionQueue.dispatch();
   }
 </script>
@@ -68,6 +76,7 @@
       {saveActionQueue}
       bind:body
       bind:name
+      bind:field
       on:discard={() => {
         navigate(-1);
       }}
