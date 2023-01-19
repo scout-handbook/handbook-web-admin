@@ -33,7 +33,7 @@
   let groups: Array<string> = [];
 
   const initialName = name;
-  const initialBody = body;
+  let initialBody = "";
   const initialCompetences = competences;
   const initialField = field;
   let initialGroups: Array<string> = [];
@@ -92,6 +92,7 @@
         (response: RequestResponse): void => {
           metadataEvent.addCallback(function (): void {
             body = response as string;
+            initialBody = body;
             resolve();
           });
         },
