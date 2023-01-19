@@ -9,6 +9,7 @@
   import { ActionQueue } from "../../../ts/admin/tools/ActionQueue";
   import { getQueryField } from "../../../ts/admin/tools/getQueryField";
   import { authFailHandler, request } from "../../../ts/admin/tools/request";
+  import DoneDialog from "../components/DoneDialog.svelte";
   import LessonEditor from "../components/LessonEditor.svelte";
   import LoadingIndicator from "../components/LoadingIndicator.svelte";
 
@@ -17,6 +18,8 @@
 
   const location = useLocation();
   const navigate = useNavigate();
+
+  let donePromise: Promise<void> | null = null;
   let name = getQueryField($location.search, "name") ?? "Obnovená lekce";
   let body = "";
 
@@ -48,18 +51,27 @@
       authFailHandler
     );
   });
+
+  function save() {
+    donePromise = saveActionQueue.dispatch();
+  }
 </script>
 
-{#await bodyPromise}
-  <LoadingIndicator />
-{:then}
-  <LessonEditor
-    id={null}
-    {saveActionQueue}
-    bind:body
-    bind:name
-    on:discard={() => {
-      navigate(-1);
-    }}
-  />
-{/await}
+{#if donePromise !== null}
+  <DoneDialog {donePromise} />
+{:else}
+  {#await bodyPromise}
+    <LoadingIndicator />
+  {:then}
+    <LessonEditor
+      id={null}
+      {saveActionQueue}
+      bind:body
+      bind:name
+      on:discard={() => {
+        navigate(-1);
+      }}
+      on:save={save}
+    />
+  {/await}
+{/if}

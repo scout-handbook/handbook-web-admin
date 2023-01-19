@@ -11,7 +11,6 @@
   import { ActionQueue } from "../../../ts/admin/tools/ActionQueue";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import Dialog from "./Dialog.svelte";
-  import DoneDialog from "./DoneDialog.svelte";
   import EditorHeader from "./LessonEditor/EditorHeader.svelte";
   import EditorPane from "./LessonEditor/EditorPane.svelte";
   import ImageSelector from "./LessonEditor/ImageSelector.svelte";
@@ -30,7 +29,6 @@
 
   let imageSelectorOpen = false;
   let discardConfirmation = false;
-  let donePromise: Promise<void> | null = null;
   let insertAtCursor: (content: string) => void;
 
   populateEditorCache(id);
@@ -38,7 +36,7 @@
 
   function saveCallback(): void {
     if (changed) {
-      donePromise = saveActionQueue.dispatch();
+      dispatch("save");
     } else {
       discard();
     }
@@ -59,10 +57,6 @@
   }
 </script>
 
-{#if view === "lesson-settings"}
-  <LessonSettingsPanel {id} {name} {saveActionQueue} bind:body />
-{/if}
-
 {#if discardConfirmation}
   <Dialog
     confirmButtonText="Ano"
@@ -76,18 +70,18 @@
   </Dialog>
 {/if}
 
-{#if donePromise !== null}
-  <DoneDialog {donePromise} />
-{:else}
-  <EditorHeader
-    bind:name
-    on:discard={() => {
-      discardConfirmation = true;
-      refreshLogin();
-    }}
-    on:save={saveCallback}
-  />
-  <ImageSelector bind:imageSelectorOpen on:insert={insertImage} />
-  <EditorPane bind:imageSelectorOpen bind:insertAtCursor bind:value={body} />
-  <PreviewPane {name} {body} {refreshAction} />
+{#if view === "lesson-settings"}
+  <LessonSettingsPanel {id} {name} {saveActionQueue} bind:body />
 {/if}
+
+<EditorHeader
+  bind:name
+  on:discard={() => {
+    discardConfirmation = true;
+    refreshLogin();
+  }}
+  on:save={saveCallback}
+/>
+<ImageSelector bind:imageSelectorOpen on:insert={insertImage} />
+<EditorPane bind:imageSelectorOpen bind:insertAtCursor bind:value={body} />
+<PreviewPane {name} {body} {refreshAction} />

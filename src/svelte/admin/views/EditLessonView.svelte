@@ -9,6 +9,7 @@
   import { ActionCallback } from "../../../ts/admin/tools/ActionCallback";
   import { ActionQueue } from "../../../ts/admin/tools/ActionQueue";
   import { reAuthHandler, request } from "../../../ts/admin/tools/request";
+  import DoneDialog from "../components/DoneDialog.svelte";
   import LessonEditor from "../components/LessonEditor.svelte";
   import LoadingIndicator from "../components/LoadingIndicator.svelte";
 
@@ -16,6 +17,7 @@
 
   const navigate = useNavigate();
 
+  let donePromise: Promise<void> | null = null;
   let name = LESSONS.get(lessonID)?.name ?? "";
   let body = "";
 
@@ -101,6 +103,10 @@
     }
   }
 
+  function save() {
+    donePromise = saveActionQueue.dispatch();
+  }
+
   function discard() {
     void new ActionQueue([
       new Action(
@@ -115,17 +121,22 @@
   }
 </script>
 
-{#await bodyPromise}
-  <LoadingIndicator />
-{:then}
-  <LessonEditor
-    id={lessonID}
-    refreshAction={() => {
-      lessonEditMutexExtend(lessonID);
-    }}
-    {saveActionQueue}
-    bind:body
-    bind:name
-    on:discard={discard}
-  />
-{/await}
+{#if donePromise !== null}
+  <DoneDialog {donePromise} />
+{:else}
+  {#await bodyPromise}
+    <LoadingIndicator />
+  {:then}
+    <LessonEditor
+      id={lessonID}
+      refreshAction={() => {
+        lessonEditMutexExtend(lessonID);
+      }}
+      {saveActionQueue}
+      bind:body
+      bind:name
+      on:discard={discard}
+      on:save={save}
+    />
+  {/await}
+{/if}

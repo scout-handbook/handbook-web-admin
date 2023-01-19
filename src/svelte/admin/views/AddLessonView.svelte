@@ -11,10 +11,13 @@
   import { ActionCallback } from "../../../ts/admin/tools/ActionCallback";
   import { ActionQueue } from "../../../ts/admin/tools/ActionQueue";
   import { getQueryField } from "../../../ts/admin/tools/getQueryField";
+  import DoneDialog from "../components/DoneDialog.svelte";
   import LessonEditor from "../components/LessonEditor.svelte";
 
   const location = useLocation();
   const navigate = useNavigate();
+
+  let donePromise: Promise<void> | null = null;
   const fieldID = getQueryField($location.search, "field");
   let name = defaultName;
   let body = defaultBody;
@@ -42,14 +45,23 @@
   setTimeout(() => {
     setChanged();
   }, 100);
+
+  function save() {
+    donePromise = aq.dispatch();
+  }
 </script>
 
-<LessonEditor
-  id={null}
-  saveActionQueue={aq}
-  bind:body
-  bind:name
-  on:discard={() => {
-    navigate(-1);
-  }}
-/>
+{#if donePromise !== null}
+  <DoneDialog {donePromise} />
+{:else}
+  <LessonEditor
+    id={null}
+    saveActionQueue={aq}
+    bind:body
+    bind:name
+    on:discard={() => {
+      navigate(-1);
+    }}
+    on:save={save}
+  />
+{/if}
