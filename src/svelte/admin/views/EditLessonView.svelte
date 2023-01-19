@@ -32,6 +32,8 @@
     })?.id ?? null;
   let groups: Array<string> = [];
 
+  const initialName = name;
+  const initialBody = body;
   const initialCompetences = competences;
   const initialField = field;
   let initialGroups: Array<string> = [];
@@ -44,19 +46,6 @@
     },
   };
   const discardExceptionHandler = { NotFoundException: null };
-
-  $: saveActionQueue = new ActionQueue([
-    new Action(
-      $apiUri + "/v1.0/lesson/" + encodeURIComponent(lessonID),
-      "PUT",
-      {
-        name: encodeURIComponent(name),
-        body: encodeURIComponent(body),
-      },
-      [ActionCallback.RemoveBeacon],
-      saveExceptionHandler
-    ),
-  ]);
 
   let lessonDataPromise = Promise.all([
     new Promise<void>((resolve) => {
@@ -132,6 +121,31 @@
   }
 
   function save() {
+    const saveActionQueue = new ActionQueue([]);
+    if (initialName !== name || initialBody !== body) {
+      saveActionQueue.actions.push(
+        new Action(
+          $apiUri + "/v1.0/lesson/" + encodeURIComponent(lessonID),
+          "PUT",
+          {
+            name: encodeURIComponent(name),
+            body: encodeURIComponent(body),
+          },
+          [ActionCallback.RemoveBeacon],
+          saveExceptionHandler
+        )
+      );
+    } else {
+      saveActionQueue.actions.push(
+        new Action(
+          $apiUri + "/v1.0/mutex/" + encodeURIComponent(lessonID),
+          "DELETE",
+          undefined,
+          [ActionCallback.RemoveBeacon],
+          discardExceptionHandler
+        )
+      );
+    }
     populateCompetences(
       saveActionQueue,
       lessonID,
