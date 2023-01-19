@@ -22,6 +22,7 @@
   let body = defaultBody;
   let competences: Array<string> = [];
   let field: string | null = getQueryField($location.search, "field");
+  let groups: Array<string> = [];
 
   $: saveActionQueue = new ActionQueue([
     new Action(
@@ -55,6 +56,13 @@
         })
       );
     }
+    if (groups.length > 0) {
+      saveActionQueue.actions.push(
+        new Action($apiUri + "/v1.0/lesson/{id}/group", "PUT", {
+          group: groups.map(encodeURIComponent),
+        })
+      );
+    }
     donePromise = saveActionQueue.dispatch();
   }
 </script>
@@ -64,11 +72,11 @@
 {:else}
   <LessonEditor
     id={null}
-    {saveActionQueue}
     bind:body
     bind:name
     bind:competences
     bind:field
+    bind:groups
     on:discard={() => {
       navigate(-1);
     }}

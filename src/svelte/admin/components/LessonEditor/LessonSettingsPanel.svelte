@@ -1,7 +1,6 @@
 <script lang="ts">
   import { useLocation } from "svelte-navigator";
 
-  import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import SidePanel from "../SidePanel.svelte";
   import ChangeLessonCompetences from "./ChangeLessonCompetences.svelte";
@@ -14,7 +13,7 @@
   export let name: string | null;
   export let competences: Array<string>;
   export let field: string | null;
-  export let saveActionQueue: ActionQueue;
+  export let groups: Array<string>;
   export let body: string;
 
   const location = useLocation();
@@ -32,9 +31,9 @@
     {:else if action === "change-lesson-field"}
       <ChangeLessonField bind:field />
     {:else if action === "change-lesson-groups"}
-      <ChangeLessonGroups {id} {saveActionQueue} />
+      <ChangeLessonGroups bind:groups />
     {:else}
-      <LessonSettingsOverview {id} {competences} {field} />
+      <LessonSettingsOverview {id} {competences} {field} {groups} />
     {/if}
   </SidePanel>
 {/if}
