@@ -9,6 +9,7 @@
 
   const navigate = useNavigate();
 
+  const initialCompetences = competences;
   $: competencesArray = $allCompetences?.asArray() ?? [];
 
   refreshLogin();
@@ -18,7 +19,7 @@
   icon="cancel"
   yellow
   on:click={() => {
-    // TODO: Fix not returning to previous state
+    competences = initialCompetences;
     navigate(-1);
   }}
 >

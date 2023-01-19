@@ -9,6 +9,7 @@
 
   const navigate = useNavigate();
 
+  const initialGroups = groups;
   $: groupsArray = $allGroups?.asArray() ?? [];
   $: publicName =
     $allGroups?.get("00000000-0000-0000-0000-000000000000")?.name ?? "";
@@ -20,7 +21,7 @@
   icon="cancel"
   yellow
   on:click={() => {
-    // TODO: Restore previous value
+    groups = initialGroups;
     navigate(-1);
   }}
 >
