@@ -10,7 +10,7 @@
   import LessonSettingsOverview from "./LessonSettingsOverview.svelte";
   import RestoreLessonVersion from "./RestoreLessonVersion.svelte";
 
-  export let lessonId: string | null;
+  export let id: string | null;
   export let name: string | null;
   export let saveActionQueue: ActionQueue;
   export let body: string;
@@ -22,17 +22,17 @@
 </script>
 
 {#if action === "restore-version"}
-  <RestoreLessonVersion {lessonId} lessonName={name} bind:body />
+  <RestoreLessonVersion lessonId={id} lessonName={name} bind:body />
 {:else}
   <SidePanel>
     {#if action === "change-lesson-competences"}
-      <ChangeLessonCompetences {lessonId} {saveActionQueue} />
+      <ChangeLessonCompetences {id} {saveActionQueue} />
     {:else if action === "change-lesson-field"}
-      <ChangeLessonField {lessonId} {saveActionQueue} />
+      <ChangeLessonField {id} {saveActionQueue} />
     {:else if action === "change-lesson-groups"}
-      <ChangeLessonGroups {lessonId} {saveActionQueue} />
+      <ChangeLessonGroups {id} {saveActionQueue} />
     {:else}
-      <LessonSettingsOverview {lessonId} />
+      <LessonSettingsOverview {id} />
     {/if}
   </SidePanel>
 {/if}

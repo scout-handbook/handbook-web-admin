@@ -11,7 +11,7 @@
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Button from "../Button.svelte";
 
-  export let lessonId: string | null;
+  export let id: string | null;
   export let saveActionQueue: ActionQueue;
 
   const navigate = useNavigate();
@@ -26,7 +26,7 @@
       setChanged();
       saveActionQueue.actions.push(
         new Action(
-          $apiUri + "/v1.0/lesson/" + (lessonId ?? "{id}") + "/competence",
+          $apiUri + "/v1.0/lesson/" + (id ?? "{id}") + "/competence",
           "PUT",
           {
             competence: selectedCompetences.map(encodeURIComponent),

@@ -11,7 +11,7 @@
   import Button from "../Button.svelte";
   import LoadingIndicator from "../LoadingIndicator.svelte";
 
-  export let lessonId: string | null;
+  export let id: string | null;
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -44,7 +44,7 @@
 >
   Zavřít
 </Button>
-{#if lessonId !== null}
+{#if id !== null}
   <Button
     icon="history"
     on:click={() => {
