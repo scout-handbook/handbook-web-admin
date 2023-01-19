@@ -40,23 +40,13 @@
     if (changed) {
       donePromise = saveActionQueue.dispatch();
     } else {
-      discardNow();
+      discard();
     }
-  }
-
-  function discardNow(): void {
-    void discardActionQueue.dispatch();
-    navigate(-1);
   }
 
   function discard(): void {
-    // TODO: Broken. Maybe remove altogether.
-    if (!changed) {
-      discardNow();
-    } else {
-      discardConfirmation = true;
-    }
-    refreshLogin();
+    void discardActionQueue.dispatch();
+    navigate(-1);
   }
 
   function insertImage(event: CustomEvent<{ image: string }>) {
@@ -78,7 +68,7 @@
   <Dialog
     confirmButtonText="Ano"
     dismissButtonText="Ne"
-    on:confirm={discardNow}
+    on:confirm={discard}
     on:dismiss={() => {
       discardConfirmation = false;
     }}
@@ -90,7 +80,14 @@
 {#if donePromise !== null}
   <DoneDialog {donePromise} />
 {:else}
-  <EditorHeader bind:lessonName on:discard={discard} on:save={saveCallback} />
+  <EditorHeader
+    bind:lessonName
+    on:discard={() => {
+      discardConfirmation = true;
+      refreshLogin();
+    }}
+    on:save={saveCallback}
+  />
   <ImageSelector bind:imageSelectorOpen on:insert={insertImage} />
   <EditorPane bind:imageSelectorOpen bind:insertAtCursor bind:value={body} />
   <PreviewPane name={lessonName} {body} {refreshAction} />
