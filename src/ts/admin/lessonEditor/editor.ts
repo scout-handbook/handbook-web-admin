@@ -1,13 +1,12 @@
 import { AfterLoadEvent } from "../AfterLoadEvent";
 import { LessonSettingsCache } from "../interfaces/LessonSettingsCache";
 import { RequestResponse } from "../interfaces/RequestResponse";
-import { FIELDS, LESSONS } from "../metadata";
+import { LESSONS } from "../metadata";
 import { reAuthHandler, request } from "../tools/request";
 
 export let changed: boolean;
 export const lessonSettingsCache: LessonSettingsCache = {
   competences: [],
-  field: "",
   groups: [],
 };
 export let lessonSettingsCacheEvent: AfterLoadEvent;
@@ -19,7 +18,6 @@ export function setChanged(value = true): void {
 export function populateEditorCache(id: string | null): void {
   lessonSettingsCacheEvent = new AfterLoadEvent(1);
   if (!id) {
-    lessonSettingsCache["field"] = "";
     lessonSettingsCache["competences"] = [];
     lessonSettingsCache["groups"] = [];
     lessonSettingsCacheEvent.trigger();
@@ -35,10 +33,5 @@ export function populateEditorCache(id: string | null): void {
     },
     reAuthHandler
   );
-  FIELDS.filter(function (_, field): boolean {
-    return field.lessons.indexOf(id) >= 0;
-  }).iterate(function (fieldId) {
-    lessonSettingsCache["field"] = fieldId;
-  });
   lessonSettingsCache["competences"] = LESSONS.get(id)!.competences;
 }
