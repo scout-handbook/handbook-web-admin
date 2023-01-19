@@ -121,6 +121,18 @@
     }
   }
 
+  function destroyMutex() {
+    void new ActionQueue([
+      new Action(
+        $apiUri + "/v1.0/mutex/" + encodeURIComponent(lessonID),
+        "DELETE",
+        undefined,
+        [ActionCallback.RemoveBeacon],
+        discardExceptionHandler
+      ),
+    ]).dispatch();
+  }
+
   function save() {
     const saveActionQueue = new ActionQueue([]);
     if (initialName !== name || initialBody !== body) {
@@ -137,15 +149,7 @@
         )
       );
     } else {
-      saveActionQueue.actions.push(
-        new Action(
-          $apiUri + "/v1.0/mutex/" + encodeURIComponent(lessonID),
-          "DELETE",
-          undefined,
-          [ActionCallback.RemoveBeacon],
-          discardExceptionHandler
-        )
-      );
+      destroyMutex();
     }
     populateCompetences(
       saveActionQueue,
@@ -159,15 +163,7 @@
   }
 
   function discard() {
-    void new ActionQueue([
-      new Action(
-        $apiUri + "/v1.0/mutex/" + encodeURIComponent(lessonID),
-        "DELETE",
-        undefined,
-        [ActionCallback.RemoveBeacon],
-        discardExceptionHandler
-      ),
-    ]).dispatch();
+    destroyMutex();
     navigate(-1);
   }
 </script>
