@@ -2,7 +2,6 @@
   import { useLocation, useNavigate } from "svelte-navigator";
 
   import { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
-  import { setChanged } from "../../../ts/admin/lessonEditor/editor";
   import { apiUri } from "../../../ts/admin/stores";
   import { Action } from "../../../ts/admin/tools/Action";
   import { ActionCallback } from "../../../ts/admin/tools/ActionCallback";
@@ -39,10 +38,6 @@
       function (response: RequestResponse): void {
         body = response as string;
         resolve();
-        // TODO: Remove this horrible hack
-        setTimeout(() => {
-          setChanged();
-        }, 100);
       },
       authFailHandler
     );
