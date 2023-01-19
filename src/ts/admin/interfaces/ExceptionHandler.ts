@@ -1,4 +1,4 @@
-import { APIResponse } from "./APIResponse";
+import type { APIResponse } from "./APIResponse";
 
 export interface ExceptionHandler {
   readonly [key: string]: ((response: APIResponse) => void) | null | undefined;

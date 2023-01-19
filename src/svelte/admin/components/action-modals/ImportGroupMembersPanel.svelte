@@ -1,14 +1,14 @@
 <script lang="ts">
   import { useNavigate } from "svelte-navigator";
 
-  import { IDList } from "../../../../ts/admin/IDList";
-  import { Event } from "../../../../ts/admin/interfaces/Event";
-  import { Group } from "../../../../ts/admin/interfaces/Group";
-  import { Participant } from "../../../../ts/admin/interfaces/Participant";
-  import { Payload } from "../../../../ts/admin/interfaces/Payload";
-  import { RequestResponse } from "../../../../ts/admin/interfaces/RequestResponse";
-  import { User } from "../../../../ts/admin/interfaces/User";
-  import { UserListResponse } from "../../../../ts/admin/interfaces/UserListResponse";
+  import type { IDList } from "../../../../ts/admin/IDList";
+  import type { Event } from "../../../../ts/admin/interfaces/Event";
+  import type { Group } from "../../../../ts/admin/interfaces/Group";
+  import type { Participant } from "../../../../ts/admin/interfaces/Participant";
+  import type { Payload } from "../../../../ts/admin/interfaces/Payload";
+  import type { RequestResponse } from "../../../../ts/admin/interfaces/RequestResponse";
+  import type { User } from "../../../../ts/admin/interfaces/User";
+  import type { UserListResponse } from "../../../../ts/admin/interfaces/UserListResponse";
   import { apiUri } from "../../../../ts/admin/stores";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import {
@@ -56,7 +56,7 @@
     });
     const result = [];
     for (let i = 0; i < a.length; i++) {
-      if (bArr.indexOf(a[i].id) < 0) {
+      if (!bArr.includes(a[i].id)) {
         result.push(a[i]);
       }
     }
@@ -112,7 +112,7 @@
     }
     step = "importing";
     void Promise.all(
-      selectedParticipants.map((participant) =>
+      selectedParticipants.map(async (participant) =>
         new Promise<void>((resolve) => {
           request(
             $apiUri + "/v1.0/user",
@@ -127,7 +127,7 @@
             authFailHandler
           );
         }).then(
-          () =>
+          async () =>
             new Promise<void>((resolve) => {
               request(
                 $apiUri + "/v1.0/user/" + participant.toString() + "/group",

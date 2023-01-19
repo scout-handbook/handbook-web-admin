@@ -1,6 +1,6 @@
 export type MainPageTab =
-  | "lessons"
   | "competences"
+  | "groups"
   | "images"
-  | "users"
-  | "groups";
+  | "lessons"
+  | "users";

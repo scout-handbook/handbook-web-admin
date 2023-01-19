@@ -1,7 +1,7 @@
-import { APIResponse } from "../interfaces/APIResponse";
-import { ExceptionHandler } from "../interfaces/ExceptionHandler";
-import { Payload } from "../interfaces/Payload";
-import { RequestResponse } from "../interfaces/RequestResponse";
+import type { APIResponse } from "../interfaces/APIResponse";
+import type { ExceptionHandler } from "../interfaces/ExceptionHandler";
+import type { Payload } from "../interfaces/Payload";
+import type { RequestResponse } from "../interfaces/RequestResponse";
 import { globalDialogMessage } from "../stores";
 
 export const reAuthHandler: ExceptionHandler = {
@@ -47,7 +47,7 @@ function requestQueryBuilder(payload: Payload): string {
 export function rawRequest(
   url: string,
   method: string,
-  payload: Payload | FormData = {},
+  payload: FormData | Payload = {},
   callback: (response: APIResponse) => void
 ): void {
   const xhr = new XMLHttpRequest();
@@ -89,7 +89,7 @@ export function rawRequest(
 export function request(
   url: string,
   method: string,
-  payload: Payload | FormData,
+  payload: FormData | Payload,
   callback: (response: RequestResponse) => void,
   exceptionHandler: ExceptionHandler = {}
 ): void {
@@ -102,7 +102,7 @@ export function request(
       exceptionHandler[response.type!]!(response);
     } else {
       globalDialogMessage.set(
-        "Nastala neznámá chyba. Chybová hláška: " + (response.message as string)
+        "Nastala neznámá chyba. Chybová hláška: " + response.message!
       );
     }
   });

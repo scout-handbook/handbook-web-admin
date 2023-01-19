@@ -1,11 +1,11 @@
 <script lang="ts">
   import { useLocation, useNavigate } from "svelte-navigator";
 
-  import { IDList } from "../../../ts/admin/IDList";
-  import { Competence } from "../../../ts/admin/interfaces/Competence";
-  import { Field } from "../../../ts/admin/interfaces/Field";
-  import { Lesson } from "../../../ts/admin/interfaces/Lesson";
-  import { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
+  import type { IDList } from "../../../ts/admin/IDList";
+  import type { Competence } from "../../../ts/admin/interfaces/Competence";
+  import type { Field } from "../../../ts/admin/interfaces/Field";
+  import type { Lesson } from "../../../ts/admin/interfaces/Lesson";
+  import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
   import { siteName } from "../../../ts/admin/stores";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import AddFieldPanel from "../components/action-modals/AddFieldPanel.svelte";
@@ -23,8 +23,8 @@
 
   const navigate = useNavigate();
   const location = useLocation();
-  $: action = $location.state?.action as string | null;
-  $: actionPayload = $location.state?.actionPayload as {
+  $: action = $location.state.action as string | null;
+  $: actionPayload = $location.state.actionPayload as {
     fieldId: string;
     lessonId: string;
   };
@@ -82,7 +82,7 @@
   <!-- TODO: Precompute -->
   {#if fields
     .filter(function (_, field) {
-      return field.lessons.indexOf(id) >= 0;
+      return field.lessons.includes(id);
     })
     .empty()}
     <LessonViewLesson {id} {adminPermissions} {competences} {lesson} />
@@ -125,7 +125,7 @@
     Přidat lekci
   </Button>
   {#each lessons.asArray() as { id: lessonId, value: lesson }}
-    {#if field.lessons.indexOf(lessonId) >= 0}
+    {#if field.lessons.includes(lessonId)}
       <LessonViewLesson
         id={lessonId}
         {adminPermissions}

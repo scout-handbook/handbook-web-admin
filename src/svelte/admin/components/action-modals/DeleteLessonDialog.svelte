@@ -1,9 +1,9 @@
 <script lang="ts">
   import { useNavigate } from "svelte-navigator";
 
-  import { IDList } from "../../../../ts/admin/IDList";
-  import { APIResponse } from "../../../../ts/admin/interfaces/APIResponse";
-  import { Lesson } from "../../../../ts/admin/interfaces/Lesson";
+  import type { IDList } from "../../../../ts/admin/IDList";
+  import type { APIResponse } from "../../../../ts/admin/interfaces/APIResponse";
+  import type { Lesson } from "../../../../ts/admin/interfaces/Lesson";
   import { apiUri } from "../../../../ts/admin/stores";
   import { Action } from "../../../../ts/admin/tools/Action";
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";

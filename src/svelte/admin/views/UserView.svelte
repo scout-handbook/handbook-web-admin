@@ -1,15 +1,15 @@
 <script lang="ts">
   import { useLocation, useNavigate } from "svelte-navigator";
 
-  import { IDList } from "../../../ts/admin/IDList";
-  import { Group } from "../../../ts/admin/interfaces/Group";
-  import { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
-  import { Payload } from "../../../ts/admin/interfaces/Payload";
-  import { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
-  import { Role } from "../../../ts/admin/interfaces/Role";
-  import { User } from "../../../ts/admin/interfaces/User";
-  import { UserListResponse } from "../../../ts/admin/interfaces/UserListResponse";
-  import { UserSearchQuery } from "../../../ts/admin/interfaces/UserSearchQuery";
+  import type { IDList } from "../../../ts/admin/IDList";
+  import type { Group } from "../../../ts/admin/interfaces/Group";
+  import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
+  import type { Payload } from "../../../ts/admin/interfaces/Payload";
+  import type { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
+  import type { Role } from "../../../ts/admin/interfaces/Role";
+  import type { User } from "../../../ts/admin/interfaces/User";
+  import type { UserListResponse } from "../../../ts/admin/interfaces/UserListResponse";
+  import type { UserSearchQuery } from "../../../ts/admin/interfaces/UserSearchQuery";
   import { apiUri, siteName } from "../../../ts/admin/stores";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import { reAuthHandler, request } from "../../../ts/admin/tools/request";
@@ -24,8 +24,8 @@
 
   const location = useLocation();
   const navigate = useNavigate();
-  $: action = $location.state?.action as string | null;
-  $: actionPayload = $location.state?.actionPayload as { user: User };
+  $: action = $location.state.action as string | null;
+  $: actionPayload = $location.state.actionPayload as { user: User };
 
   let page = 1;
   const perPage = 25;
@@ -65,7 +65,7 @@
     let output = "";
     groups
       .filter(function (id) {
-        return user.groups.indexOf(id) >= 0;
+        return user.groups.includes(id);
       })
       .iterate(function (_, group) {
         if (!first) {

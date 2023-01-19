@@ -1,12 +1,12 @@
 import { readable, writable } from "svelte/store";
 
-import { IDList } from "./IDList";
-import { Competence } from "./interfaces/Competence";
-import { ConfigCustomProperties } from "./interfaces/Config";
-import { Field } from "./interfaces/Field";
-import { Group } from "./interfaces/Group";
-import { Lesson } from "./interfaces/Lesson";
-import { Loginstate } from "./interfaces/Loginstate";
+import type { IDList } from "./IDList";
+import type { Competence } from "./interfaces/Competence";
+import type { ConfigCustomProperties } from "./interfaces/Config";
+import type { Field } from "./interfaces/Field";
+import type { Group } from "./interfaces/Group";
+import type { Lesson } from "./interfaces/Lesson";
+import type { Loginstate } from "./interfaces/Loginstate";
 
 export const adminUri = readable<string>(CONFIG["admin-uri"]);
 export const apiUri = readable<string>(CONFIG["api-uri"]);

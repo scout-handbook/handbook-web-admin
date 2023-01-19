@@ -17,7 +17,7 @@
   export let body: string;
 
   const location = useLocation();
-  $: action = $location.state?.action as string;
+  $: action = $location.state.action as string;
 
   refreshLogin();
 </script>
