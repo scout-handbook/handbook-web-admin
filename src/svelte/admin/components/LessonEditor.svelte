@@ -18,7 +18,7 @@
   import LessonSettingsPanel from "./LessonEditor/LessonSettingsPanel.svelte";
   import PreviewPane from "./LessonEditor/PreviewPane.svelte";
 
-  export let lessonName: string;
+  export let name: string;
   export let body: string;
   export let saveActionQueue: ActionQueue;
   export let id: string | null;
@@ -60,7 +60,7 @@
 </script>
 
 {#if view === "lesson-settings"}
-  <LessonSettingsPanel lessonId={id} {lessonName} {saveActionQueue} bind:body />
+  <LessonSettingsPanel {name} lessonId={id} {saveActionQueue} bind:body />
 {/if}
 
 {#if discardConfirmation}
@@ -80,7 +80,7 @@
   <DoneDialog {donePromise} />
 {:else}
   <EditorHeader
-    bind:lessonName
+    bind:name
     on:discard={() => {
       discardConfirmation = true;
       refreshLogin();
@@ -89,5 +89,5 @@
   />
   <ImageSelector bind:imageSelectorOpen on:insert={insertImage} />
   <EditorPane bind:imageSelectorOpen bind:insertAtCursor bind:value={body} />
-  <PreviewPane name={lessonName} {body} {refreshAction} />
+  <PreviewPane {name} {body} {refreshAction} />
 {/if}

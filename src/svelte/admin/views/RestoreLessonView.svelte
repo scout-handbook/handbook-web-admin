@@ -57,7 +57,7 @@
     id={null}
     {saveActionQueue}
     bind:body
-    bind:lessonName={name}
+    bind:name
     on:discard={() => {
       navigate(-1);
     }}

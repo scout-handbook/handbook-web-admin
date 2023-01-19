@@ -125,7 +125,7 @@
     }}
     {saveActionQueue}
     bind:body
-    bind:lessonName={name}
+    bind:name
     on:discard={discard}
   />
 {/await}
