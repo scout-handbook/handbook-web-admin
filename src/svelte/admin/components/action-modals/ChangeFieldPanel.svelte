@@ -1,8 +1,8 @@
 <script lang="ts">
   import { useNavigate } from "svelte-navigator";
 
-  import { IDList } from "../../../../ts/admin/IDList";
-  import { Field } from "../../../../ts/admin/interfaces/Field";
+  import type { IDList } from "../../../../ts/admin/IDList";
+  import type { Field } from "../../../../ts/admin/interfaces/Field";
   import { apiUri } from "../../../../ts/admin/stores";
   import { Action } from "../../../../ts/admin/tools/Action";
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";

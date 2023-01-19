@@ -21,7 +21,7 @@
 
   const dispatch = createEventDispatcher();
   const location = useLocation();
-  $: view = $location.state?.view as string;
+  $: view = $location.state.view as string;
 
   let imageSelectorOpen = false;
   let discardConfirmation = false;

@@ -1,10 +1,10 @@
 import { AfterLoadEvent } from "./AfterLoadEvent";
 import { IDList } from "./IDList";
-import { Competence } from "./interfaces/Competence";
-import { Field } from "./interfaces/Field";
-import { Group } from "./interfaces/Group";
-import { Lesson } from "./interfaces/Lesson";
-import { Loginstate } from "./interfaces/Loginstate";
+import type { Competence } from "./interfaces/Competence";
+import type { Field } from "./interfaces/Field";
+import type { Group } from "./interfaces/Group";
+import type { Lesson } from "./interfaces/Lesson";
+import type { Loginstate } from "./interfaces/Loginstate";
 import {
   competences,
   fields,
@@ -149,9 +149,9 @@ export function refreshMetadata(): void {
     function (response): void {
       if (response.status === 200) {
         if (
-          ["editor", "administrator", "superuser"].indexOf(
+          ["editor", "administrator", "superuser"].includes(
             (response.response as Loginstate).role
-          ) > -1
+          )
         ) {
           LOGINSTATE = response.response as Loginstate;
           loginstate.set(LOGINSTATE);

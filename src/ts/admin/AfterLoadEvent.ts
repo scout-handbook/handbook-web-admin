@@ -1,8 +1,8 @@
 export class AfterLoadEvent {
   private triggered: boolean;
-  private threshold: number;
+  private readonly threshold: number;
   private count: number;
-  private callbacks: Array<(...args: Array<string>) => void>;
+  private readonly callbacks: Array<(...args: Array<string>) => void>;
 
   public constructor(threshold: number) {
     this.triggered = false;

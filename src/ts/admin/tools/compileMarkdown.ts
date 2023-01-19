@@ -3,7 +3,7 @@ import "../../common/HandbookMarkdown";
 import { Converter } from "showdown";
 import { filterXSS } from "xss";
 
-import { WorkerPayload } from "../../common/WorkerPayload";
+import type { WorkerPayload } from "../../common/WorkerPayload";
 import { xssOptions } from "../../common/xssOptions";
 
 let converter: showdown.Converter | undefined;
@@ -33,7 +33,7 @@ export function compileMarkdownSetup(): void {
   }
 }
 
-export function compileMarkdown(markdown: string): Promise<string> {
+export async function compileMarkdown(markdown: string): Promise<string> {
   if (Worker) {
     let id = "";
     const characters =

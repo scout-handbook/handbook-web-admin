@@ -1,4 +1,4 @@
-import { RequestResponse } from "./RequestResponse";
+import type { RequestResponse } from "./RequestResponse";
 
 export interface APIResponse {
   status: number;

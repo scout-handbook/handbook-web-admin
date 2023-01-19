@@ -13,7 +13,7 @@
 
   const navigate = useNavigate();
 
-  let stage: "select" | "upload" | "done" | "error" = "select";
+  let stage: "done" | "error" | "select" | "upload" = "select";
   let files: FileList;
 
   function addImageSave(): void {

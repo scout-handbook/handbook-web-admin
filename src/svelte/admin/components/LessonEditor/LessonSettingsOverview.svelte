@@ -18,13 +18,13 @@
 
   $: lessonCompetences = $allCompetences!
     .filter(function (id) {
-      return competences.indexOf(id) >= 0;
+      return competences.includes(id);
     })
     .asArray();
   $: fieldName = field !== null ? $fields?.get(field)?.name : undefined;
   $: lessonGroups = $allGroups!
     .filter(function (id) {
-      return groups.indexOf(id) >= 0;
+      return groups.includes(id);
     })
     .asArray();
   $: currentUri = $location.pathname + $location.search;

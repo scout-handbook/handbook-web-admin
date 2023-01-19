@@ -1,13 +1,13 @@
-import { SerializedAction } from "../interfaces/SerializedAction";
+import type { SerializedAction } from "../interfaces/SerializedAction";
 import { refreshMetadata } from "../metadata";
 import { globalDialogMessage, globalLoadingIndicator } from "../stores";
 import { request } from "../tools/request";
-import { Action } from "./Action";
+import type { Action } from "./Action";
 import { deserializeAction, serializeAction } from "./Action";
 
 export class ActionQueue {
   public actions: Array<Action>;
-  private isRetryAfterLogin: boolean;
+  private readonly isRetryAfterLogin: boolean;
 
   public constructor(actions: Array<Action> = [], isRetryAfterLogin = false) {
     this.actions = actions;
@@ -20,7 +20,7 @@ export class ActionQueue {
     }
   }
 
-  public dispatch(): Promise<void> {
+  public async dispatch(): Promise<void> {
     if (this.actions.length == 0) {
       return new Promise((resolve) => {
         resolve();
@@ -35,8 +35,9 @@ export class ActionQueue {
     if (this.actions.length <= 1) {
       propagate = false;
     }
-    this.actions[0].exceptionHandler["AuthenticationException"] = (): void =>
+    this.actions[0].exceptionHandler["AuthenticationException"] = (): void => {
       this.authException();
+    };
     request(
       this.actions[0].url,
       this.actions[0].method,
