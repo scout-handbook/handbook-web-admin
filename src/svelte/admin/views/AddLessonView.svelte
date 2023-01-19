@@ -29,24 +29,23 @@
   let field: string | null = getQueryField($location.search, "field");
   let groups: Array<string> = [];
 
-  $: saveActionQueue = new ActionQueue([
-    new Action(
-      $apiUri + "/v1.0/lesson",
-      "POST",
-      {
-        name: encodeURIComponent(name),
-        body: encodeURIComponent(body),
-      },
-      [ActionCallback.FillID]
-    ),
-  ]);
-
   // TODO: Remove this horrible hack
   setTimeout(() => {
     setChanged();
   }, 100);
 
   function save() {
+    const saveActionQueue = new ActionQueue([
+      new Action(
+        $apiUri + "/v1.0/lesson",
+        "POST",
+        {
+          name: encodeURIComponent(name),
+          body: encodeURIComponent(body),
+        },
+        [ActionCallback.FillID]
+      ),
+    ]);
     populateCompetences(saveActionQueue, null, competences);
     populateField(saveActionQueue, null, field);
     populateGroups(saveActionQueue, null, groups);

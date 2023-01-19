@@ -31,18 +31,6 @@
   let field: string | null = null;
   let groups: Array<string> = [];
 
-  $: saveActionQueue = new ActionQueue([
-    new Action(
-      $apiUri + "/v1.0/lesson",
-      "POST",
-      {
-        name: encodeURIComponent(name),
-        body: encodeURIComponent(body),
-      },
-      [ActionCallback.FillID]
-    ),
-  ]);
-
   let bodyPromise = new Promise<void>((resolve) => {
     request(
       $apiUri + "/v1.0/deleted-lesson/" + lessonID + "/history/" + version,
@@ -61,6 +49,17 @@
   });
 
   function save() {
+    const saveActionQueue = new ActionQueue([
+      new Action(
+        $apiUri + "/v1.0/lesson",
+        "POST",
+        {
+          name: encodeURIComponent(name),
+          body: encodeURIComponent(body),
+        },
+        [ActionCallback.FillID]
+      ),
+    ]);
     populateCompetences(saveActionQueue, null, competences);
     populateField(saveActionQueue, null, field);
     populateGroups(saveActionQueue, null, groups);
