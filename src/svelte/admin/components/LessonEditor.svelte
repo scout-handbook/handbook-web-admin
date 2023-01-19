@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { useLocation, useNavigate } from "svelte-navigator";
+  import { createEventDispatcher } from "svelte";
+  import { useLocation } from "svelte-navigator";
 
   import {
     changed,
@@ -21,11 +22,10 @@
   export let body: string;
   export let saveActionQueue: ActionQueue;
   export let id: string | null;
-  export let discardActionQueue: ActionQueue = new ActionQueue();
   export let refreshAction: (() => void) | null = null;
 
+  const dispatch = createEventDispatcher();
   const location = useLocation();
-  const navigate = useNavigate();
   $: view = $location.state?.view as string;
 
   let imageSelectorOpen = false;
@@ -45,8 +45,7 @@
   }
 
   function discard(): void {
-    void discardActionQueue.dispatch();
-    navigate(-1);
+    dispatch("discard");
   }
 
   function insertImage(event: CustomEvent<{ image: string }>) {

@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { useNavigate } from "svelte-navigator";
+
   import { APIResponse } from "../../../ts/admin/interfaces/APIResponse";
   import { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
   import { LESSONS, metadataEvent } from "../../../ts/admin/metadata";
@@ -11,6 +13,8 @@
   import LoadingIndicator from "../components/LoadingIndicator.svelte";
 
   export let lessonID: string;
+
+  const navigate = useNavigate();
 
   let name = LESSONS.get(lessonID)?.name ?? "";
   let body = "";
@@ -34,16 +38,6 @@
       },
       [ActionCallback.RemoveBeacon],
       saveExceptionHandler
-    ),
-  ]);
-
-  const discardActionQueue = new ActionQueue([
-    new Action(
-      $apiUri + "/v1.0/mutex/" + encodeURIComponent(lessonID),
-      "DELETE",
-      undefined,
-      [ActionCallback.RemoveBeacon],
-      discardExceptionHandler
     ),
   ]);
 
@@ -106,6 +100,19 @@
       );
     }
   }
+
+  function discard() {
+    void new ActionQueue([
+      new Action(
+        $apiUri + "/v1.0/mutex/" + encodeURIComponent(lessonID),
+        "DELETE",
+        undefined,
+        [ActionCallback.RemoveBeacon],
+        discardExceptionHandler
+      ),
+    ]).dispatch();
+    navigate(-1);
+  }
 </script>
 
 {#await bodyPromise}
@@ -113,12 +120,12 @@
 {:then}
   <LessonEditor
     id={lessonID}
-    {discardActionQueue}
     refreshAction={() => {
       lessonEditMutexExtend(lessonID);
     }}
     {saveActionQueue}
     bind:body
     bind:lessonName={name}
+    on:discard={discard}
   />
 {/await}
