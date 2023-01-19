@@ -2,7 +2,6 @@
   import { createEventDispatcher } from "svelte";
   import { useLocation } from "svelte-navigator";
 
-  import { changed, setChanged } from "../../../ts/admin/lessonEditor/editor";
   import { apiUri } from "../../../ts/admin/stores";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import Dialog from "./Dialog.svelte";
@@ -27,16 +26,6 @@
   let imageSelectorOpen = false;
   let discardConfirmation = false;
   let insertAtCursor: (content: string) => void;
-
-  setChanged(false);
-
-  function saveCallback(): void {
-    if (changed) {
-      dispatch("save");
-    } else {
-      dispatch("discard");
-    }
-  }
 
   function insertImage(event: CustomEvent<{ image: string }>) {
     insertAtCursor(
@@ -81,7 +70,9 @@
     discardConfirmation = true;
     refreshLogin();
   }}
-  on:save={saveCallback}
+  on:save={() => {
+    dispatch("save");
+  }}
 />
 <ImageSelector bind:imageSelectorOpen on:insert={insertImage} />
 <EditorPane bind:imageSelectorOpen bind:insertAtCursor bind:value={body} />

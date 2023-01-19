@@ -5,7 +5,6 @@
     defaultBody,
     defaultName,
   } from "../../../ts/admin/lessonEditor/defaultContent";
-  import { setChanged } from "../../../ts/admin/lessonEditor/editor";
   import { apiUri } from "../../../ts/admin/stores";
   import { Action } from "../../../ts/admin/tools/Action";
   import { ActionCallback } from "../../../ts/admin/tools/ActionCallback";
@@ -28,11 +27,6 @@
   let competences: Array<string> = [];
   let field: string | null = getQueryField($location.search, "field");
   let groups: Array<string> = [];
-
-  // TODO: Remove this horrible hack
-  setTimeout(() => {
-    setChanged();
-  }, 100);
 
   function save() {
     const saveActionQueue = new ActionQueue([

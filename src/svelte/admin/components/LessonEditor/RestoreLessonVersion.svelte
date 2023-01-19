@@ -3,7 +3,6 @@
 
   import { LessonVersion } from "../../../../ts/admin/interfaces/LessonVersion";
   import { RequestResponse } from "../../../../ts/admin/interfaces/RequestResponse";
-  import { setChanged } from "../../../../ts/admin/lessonEditor/editor";
   import { apiUri, lessons } from "../../../../ts/admin/stores";
   import { compileMarkdown } from "../../../../ts/admin/tools/compileMarkdown";
   import { parseVersion } from "../../../../ts/admin/tools/parseVersion";
@@ -65,7 +64,6 @@
     (document.getElementById("name") as HTMLInputElement).value =
       selectedVersionName;
     body = markdown;
-    setChanged();
     navigate(-1);
   }
 </script>
