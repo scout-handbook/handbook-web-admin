@@ -1,76 +1,50 @@
 <script lang="ts">
-  import { useLocation, useNavigate } from "svelte-navigator";
+  import { createEventDispatcher } from "svelte";
+  import { useLocation } from "svelte-navigator";
 
-  import {
-    changed,
-    populateEditorCache,
-    setChanged,
-  } from "../../../ts/admin/lessonEditor/editor";
-  import {
-    prepareImageSelector,
-    toggleImageSelector,
-  } from "../../../ts/admin/lessonEditor/imageSelector";
-  import { ActionQueue } from "../../../ts/admin/tools/ActionQueue";
+  import { apiUri } from "../../../ts/admin/stores";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
-  import Button from "../components/Button.svelte";
   import Dialog from "./Dialog.svelte";
-  import DoneDialog from "./DoneDialog.svelte";
+  import EditorHeader from "./LessonEditor/EditorHeader.svelte";
   import EditorPane from "./LessonEditor/EditorPane.svelte";
+  import ImageSelector from "./LessonEditor/ImageSelector.svelte";
   import LessonSettingsPanel from "./LessonEditor/LessonSettingsPanel.svelte";
   import PreviewPane from "./LessonEditor/PreviewPane.svelte";
 
-  export let lessonName: string;
-  export let body: string;
-  export let saveActionQueue: ActionQueue;
   export let id: string | null;
-  export let discardActionQueue: ActionQueue = new ActionQueue();
+  export let name: string;
+  export let body: string;
+  export let competences: Array<string>;
+  export let field: string | null;
+  export let groups: Array<string>;
   export let refreshAction: (() => void) | null = null;
 
+  const dispatch = createEventDispatcher();
   const location = useLocation();
-  const navigate = useNavigate();
   $: view = $location.state?.view as string;
-  $: currentUri = $location.pathname + $location.search;
 
+  let imageSelectorOpen = false;
   let discardConfirmation = false;
-  let donePromise: Promise<void> | null = null;
+  let insertAtCursor: (content: string) => void;
 
-  function saveCallback(): void {
-    if (changed) {
-      donePromise = saveActionQueue.dispatch();
-    } else {
-      discardNow();
-    }
-  }
-
-  populateEditorCache(id);
-  setChanged(false);
-  prepareImageSelector();
-
-  function discardNow(): void {
-    void discardActionQueue.dispatch();
-    navigate(-1);
-  }
-
-  function discard(): void {
-    // TODO: Broken. Maybe remove altogether.
-    if (!changed) {
-      discardNow();
-    } else {
-      discardConfirmation = true;
-    }
-    refreshLogin();
+  function insertImage(event: CustomEvent<{ image: string }>) {
+    insertAtCursor(
+      "![Text po najetí kurzorem](" +
+        $apiUri +
+        "/v1.0/image/" +
+        event.detail.image +
+        ")"
+    );
   }
 </script>
-
-{#if view === "lesson-settings"}
-  <LessonSettingsPanel lessonId={id} {lessonName} {saveActionQueue} bind:body />
-{/if}
 
 {#if discardConfirmation}
   <Dialog
     confirmButtonText="Ano"
     dismissButtonText="Ne"
-    on:confirm={discardNow}
+    on:confirm={() => {
+      dispatch("discard");
+    }}
     on:dismiss={() => {
       discardConfirmation = false;
     }}
@@ -79,85 +53,27 @@
   </Dialog>
 {/if}
 
-{#if donePromise !== null}
-  <DoneDialog {donePromise} />
-{:else}
-  <div id="side-panel" />
-  <div id="side-panel-overlay" />
-  <header>
-    <div class="buttons-left">
-      <Button icon="cancel" yellow on:click={discard}>Zrušit</Button>
-      <form class="name">
-        <input
-          id="name"
-          class="form-text form-name"
-          autocomplete="off"
-          type="text"
-          bind:value={lessonName}
-        />
-      </form>
-    </div>
-    <div class="buttons-right">
-      <Button
-        icon="cog"
-        on:click={() => {
-          navigate(currentUri, {
-            state: { view: "lesson-settings" },
-          });
-        }}
-      >
-        Nastavení
-      </Button>
-      <Button green icon="floppy" on:click={saveCallback}>Uložit</Button>
-    </div>
-  </header>
-  <div id="image-selector">
-    <div id="image-scroller">
-      <Button icon="up-open" yellow on:click={toggleImageSelector}
-        >Zavřít</Button
-      >
-      <!-- TODO: Re-enable uploads in editor without discarding its contents
-      <Button
-        icon="plus"
-        green
-        on:click={() => {
-          addImage(true); // Removed
-        }}>
-        Nahrát
-      </Button>
-      -->
-      <div id="image-wrapper" />
-    </div>
-  </div>
-  <EditorPane bind:value={body} />
-  <PreviewPane name={lessonName} {body} {refreshAction} />
+{#if view === "lesson-settings"}
+  <LessonSettingsPanel
+    {id}
+    {name}
+    bind:body
+    bind:competences
+    bind:field
+    bind:groups
+  />
 {/if}
 
-<style>
-  .buttons-left,
-  .buttons-right {
-    bottom: 0;
-    height: min-content;
-    margin: auto 0;
-    position: absolute;
-    top: 0;
-  }
-
-  .buttons-left {
-    left: 15px;
-    width: calc(100% - 250px);
-  }
-
-  .buttons-right {
-    right: 0;
-  }
-
-  .name {
-    display: inline-block;
-    width: calc(100% - 180px);
-  }
-
-  .name input {
-    width: 100%;
-  }
-</style>
+<EditorHeader
+  bind:name
+  on:discard={() => {
+    discardConfirmation = true;
+    refreshLogin();
+  }}
+  on:save={() => {
+    dispatch("save");
+  }}
+/>
+<ImageSelector bind:imageSelectorOpen on:insert={insertImage} />
+<EditorPane bind:imageSelectorOpen bind:insertAtCursor bind:value={body} />
+<PreviewPane {name} {body} {refreshAction} />

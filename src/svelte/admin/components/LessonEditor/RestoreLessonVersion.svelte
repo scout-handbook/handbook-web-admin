@@ -3,7 +3,6 @@
 
   import { LessonVersion } from "../../../../ts/admin/interfaces/LessonVersion";
   import { RequestResponse } from "../../../../ts/admin/interfaces/RequestResponse";
-  import { setChanged } from "../../../../ts/admin/lessonEditor/editor";
   import { apiUri, lessons } from "../../../../ts/admin/stores";
   import { compileMarkdown } from "../../../../ts/admin/tools/compileMarkdown";
   import { parseVersion } from "../../../../ts/admin/tools/parseVersion";
@@ -22,7 +21,7 @@
   let selectedVersion: number | null = null;
   let versionList: Array<LessonVersion> | null = null;
   $: currentVersion = $lessons?.get(lessonId!)?.version ?? 0;
-  $: name =
+  $: selectedVersionName =
     selectedVersion === null || versionList === null
       ? lessonName!
       : versionList.find((x) => x.version === selectedVersion)!.name;
@@ -62,9 +61,9 @@
   });
 
   function saveCallback(markdown: string) {
-    (document.getElementById("name") as HTMLInputElement).value = name;
+    (document.getElementById("name") as HTMLInputElement).value =
+      selectedVersionName;
     body = markdown;
-    setChanged();
     navigate(-1);
   }
 </script>
@@ -139,7 +138,7 @@
     {#await contentPromise}
       <LoadingIndicator />
     {:then content}
-      <h1>{name}</h1>
+      <h1>{selectedVersionName}</h1>
       <!-- eslint-disable-next-line svelte/no-at-html-tags -->
       {@html content}
     {/await}

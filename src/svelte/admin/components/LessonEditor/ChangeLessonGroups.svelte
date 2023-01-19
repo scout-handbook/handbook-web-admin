@@ -1,60 +1,45 @@
 <script lang="ts">
   import { useNavigate } from "svelte-navigator";
 
-  import {
-    lessonSettingsCache,
-    setChanged,
-  } from "../../../../ts/admin/lessonEditor/editor";
-  import { apiUri, groups } from "../../../../ts/admin/stores";
-  import { Action } from "../../../../ts/admin/tools/Action";
-  import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
+  import { groups as allGroups } from "../../../../ts/admin/stores";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Button from "../Button.svelte";
 
-  export let lessonId: string | null;
-  export let saveActionQueue: ActionQueue;
+  export let groups: Array<string>;
 
   const navigate = useNavigate();
 
-  let selectedGroups = lessonSettingsCache.groups;
-  $: groupsArray = $groups?.asArray() ?? [];
+  const initialGroups = groups;
+  $: groupsArray = $allGroups?.asArray() ?? [];
   $: publicName =
-    $groups?.get("00000000-0000-0000-0000-000000000000")?.name ?? "";
+    $allGroups?.get("00000000-0000-0000-0000-000000000000")?.name ?? "";
 
   refreshLogin();
-
-  function saveCallback() {
-    if (selectedGroups !== lessonSettingsCache.groups) {
-      setChanged();
-      saveActionQueue.actions.push(
-        new Action(
-          $apiUri + "/v1.0/lesson/" + (lessonId ?? "{id}") + "/group",
-          "PUT",
-          { group: selectedGroups.map(encodeURIComponent) }
-        )
-      );
-      lessonSettingsCache.groups = selectedGroups;
-    }
-    navigate(-1);
-  }
 </script>
 
 <Button
   icon="cancel"
   yellow
   on:click={() => {
+    groups = initialGroups;
     navigate(-1);
   }}
 >
   Zrušit
 </Button>
-<Button green icon="floppy" on:click={saveCallback}>Uložit</Button>
+<Button
+  green
+  icon="floppy"
+  on:click={() => {
+    navigate(-1);
+  }}>Uložit</Button
+>
 <h3 class="side-panel-title">Změnit skupiny</h3>
 <form id="side-panel-form">
   {#each groupsArray as { id, value: group }}
     <div class="form-row">
       <label class="form-switch">
-        <input type="checkbox" value={id} bind:group={selectedGroups} />
+        <input type="checkbox" value={id} bind:group={groups} />
         <span class="form-custom form-checkbox" />
       </label>
       {#if id === "00000000-0000-0000-0000-000000000000"}
