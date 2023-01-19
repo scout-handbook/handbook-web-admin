@@ -34,6 +34,7 @@
   let insertAtCursor: (content: string) => void;
 
   populateEditorCache(id);
+  setChanged(false);
 
   function saveCallback(): void {
     if (changed) {
@@ -42,7 +43,6 @@
       discardNow();
     }
   }
-  setChanged(false);
 
   function discardNow(): void {
     void discardActionQueue.dispatch();
