@@ -25,9 +25,11 @@
     FIELDS.asArray().find((field) => {
       return field.value.lessons.indexOf(lessonID) >= 0;
     })?.id ?? null;
+  let groups: Array<string> = [];
 
   const initialCompetences = competences;
   const initialField = field;
+  let initialGroups: Array<string> = [];
 
   const saveExceptionHandler = {
     NotLockedException: function (): void {
@@ -51,7 +53,7 @@
     ),
   ]);
 
-  let bodyPromise = Promise.all([
+  let lessonDataPromise = Promise.all([
     new Promise<void>((resolve) => {
       request(
         $apiUri + "/v1.0/mutex/" + encodeURIComponent(lessonID),
@@ -73,6 +75,19 @@
             );
           },
         }
+      );
+    }),
+    new Promise<void>((resolve) => {
+      request(
+        $apiUri + "/v1.0/lesson/" + encodeURIComponent(lessonID) + "/group",
+        "GET",
+        {},
+        (response: RequestResponse) => {
+          groups = response as Array<string>;
+          initialGroups = groups;
+          resolve();
+        },
+        reAuthHandler
       );
     }),
     new Promise<void>((resolve) => {
@@ -112,10 +127,10 @@
   }
 
   function save() {
-    if (field !== initialField) {
+    if (initialField !== field) {
       saveActionQueue.actions.push(
         new Action(
-          $apiUri + "/v1.0/lesson/" + lessonID + "/field",
+          $apiUri + "/v1.0/lesson/" + encodeURIComponent(lessonID) + "/field",
           "PUT",
           field !== null
             ? {
@@ -128,11 +143,23 @@
     if (initialCompetences !== competences) {
       saveActionQueue.actions.push(
         new Action(
-          $apiUri + "/v1.0/lesson/" + lessonID + "/competence",
+          $apiUri +
+            "/v1.0/lesson/" +
+            encodeURIComponent(lessonID) +
+            "/competence",
           "PUT",
           {
             competence: competences.map(encodeURIComponent),
           }
+        )
+      );
+    }
+    if (initialGroups !== groups) {
+      saveActionQueue.actions.push(
+        new Action(
+          $apiUri + "/v1.0/lesson/" + encodeURIComponent(lessonID) + "/group",
+          "PUT",
+          { group: groups.map(encodeURIComponent) }
         )
       );
     }
@@ -156,7 +183,7 @@
 {#if donePromise !== null}
   <DoneDialog {donePromise} />
 {:else}
-  {#await bodyPromise}
+  {#await lessonDataPromise}
     <LoadingIndicator />
   {:then}
     <LessonEditor
@@ -164,11 +191,11 @@
       refreshAction={() => {
         lessonEditMutexExtend(lessonID);
       }}
-      {saveActionQueue}
       bind:body
       bind:name
       bind:competences
       bind:field
+      bind:groups
       on:discard={discard}
       on:save={save}
     />

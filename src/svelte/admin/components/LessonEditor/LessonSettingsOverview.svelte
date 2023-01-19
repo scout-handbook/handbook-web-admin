@@ -1,23 +1,17 @@
 <script lang="ts">
   import { useLocation, useNavigate } from "svelte-navigator";
 
-  import { IDList } from "../../../../ts/admin/IDList";
-  import { Group } from "../../../../ts/admin/interfaces/Group";
-  import {
-    lessonSettingsCache,
-    lessonSettingsCacheEvent,
-  } from "../../../../ts/admin/lessonEditor/editor";
   import {
     competences as allCompetences,
     fields,
-    groups,
+    groups as allGroups,
   } from "../../../../ts/admin/stores";
   import Button from "../Button.svelte";
-  import LoadingIndicator from "../LoadingIndicator.svelte";
 
   export let id: string | null;
   export let field: string | null;
   export let competences: Array<string>;
+  export let groups: Array<string>;
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -28,17 +22,12 @@
     })
     .asArray();
   $: fieldName = field !== null ? $fields?.get(field)?.name : undefined;
+  $: lessonGroups = $allGroups!
+    .filter(function (id) {
+      return groups.indexOf(id) >= 0;
+    })
+    .asArray();
   $: currentUri = $location.pathname + $location.search;
-
-  const groupsPromise = new Promise<IDList<Group>>((resolve) => {
-    lessonSettingsCacheEvent.addCallback(() => {
-      resolve(
-        $groups!.filter(function (id) {
-          return lessonSettingsCache.groups.indexOf(id) >= 0;
-        })
-      );
-    });
-  });
 </script>
 
 <Button
@@ -114,17 +103,13 @@
 </Button>
 <br />
 <div id="settingsGroupList">
-  {#await groupsPromise}
-    <LoadingIndicator />
-  {:then groups}
-    {#each groups.asArray() as { id, value: group }}
-      {#if id === "00000000-0000-0000-0000-000000000000"}
-        <span class="public-group">{group.name}</span>
-        <br />
-      {:else}
-        {group.name}
-        <br />
-      {/if}
-    {/each}
-  {/await}
+  {#each lessonGroups as { id, value: group }}
+    {#if id === "00000000-0000-0000-0000-000000000000"}
+      <span class="public-group">{group.name}</span>
+      <br />
+    {:else}
+      {group.name}
+      <br />
+    {/if}
+  {/each}
 </div>

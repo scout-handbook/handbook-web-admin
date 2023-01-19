@@ -12,25 +12,6 @@
   $: competencesArray = $allCompetences?.asArray() ?? [];
 
   refreshLogin();
-
-  /*
-  function saveCallback() {
-    if (selectedCompetences !== lessonSettingsCache.competences) {
-      setChanged();
-      saveActionQueue.actions.push(
-        new Action(
-          $apiUri + "/v1.0/lesson/" + (id ?? "{id}") + "/competence",
-          "PUT",
-          {
-            competence: selectedCompetences.map(encodeURIComponent),
-          }
-        )
-      );
-      lessonSettingsCache.competences = selectedCompetences;
-    }
-    navigate(-1);
-  }
-  */
 </script>
 
 <Button

@@ -8,7 +8,6 @@
     setChanged,
   } from "../../../ts/admin/lessonEditor/editor";
   import { apiUri } from "../../../ts/admin/stores";
-  import { ActionQueue } from "../../../ts/admin/tools/ActionQueue";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import Dialog from "./Dialog.svelte";
   import EditorHeader from "./LessonEditor/EditorHeader.svelte";
@@ -22,7 +21,7 @@
   export let body: string;
   export let competences: Array<string>;
   export let field: string | null;
-  export let saveActionQueue: ActionQueue;
+  export let groups: Array<string>;
   export let refreshAction: (() => void) | null = null;
 
   const dispatch = createEventDispatcher();
@@ -74,10 +73,10 @@
   <LessonSettingsPanel
     {id}
     {name}
-    {saveActionQueue}
     bind:body
     bind:competences
     bind:field
+    bind:groups
   />
 {/if}
 
