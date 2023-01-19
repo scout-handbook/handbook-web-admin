@@ -8,6 +8,11 @@
   import { Action } from "../../../ts/admin/tools/Action";
   import { ActionCallback } from "../../../ts/admin/tools/ActionCallback";
   import { ActionQueue } from "../../../ts/admin/tools/ActionQueue";
+  import {
+    populateCompetences,
+    populateField,
+    populateGroups,
+  } from "../../../ts/admin/tools/populateLessonActionQueue";
   import { reAuthHandler, request } from "../../../ts/admin/tools/request";
   import DoneDialog from "../components/DoneDialog.svelte";
   import LessonEditor from "../components/LessonEditor.svelte";
@@ -127,44 +132,14 @@
   }
 
   function save() {
-    if (initialField !== field) {
-      saveActionQueue.actions.push(
-        new Action(
-          $apiUri + "/v1.0/lesson/" + encodeURIComponent(lessonID) + "/field",
-          "PUT",
-          field !== null
-            ? {
-                field: encodeURIComponent(field),
-              }
-            : {}
-        )
-      );
-    }
-    // TODO: Fix Array comparison
-    if (initialCompetences !== competences) {
-      saveActionQueue.actions.push(
-        new Action(
-          $apiUri +
-            "/v1.0/lesson/" +
-            encodeURIComponent(lessonID) +
-            "/competence",
-          "PUT",
-          {
-            competence: competences.map(encodeURIComponent),
-          }
-        )
-      );
-    }
-    // TODO: Fix Array comparison
-    if (initialGroups !== groups) {
-      saveActionQueue.actions.push(
-        new Action(
-          $apiUri + "/v1.0/lesson/" + encodeURIComponent(lessonID) + "/group",
-          "PUT",
-          { group: groups.map(encodeURIComponent) }
-        )
-      );
-    }
+    populateCompetences(
+      saveActionQueue,
+      lessonID,
+      competences,
+      initialCompetences
+    );
+    populateField(saveActionQueue, lessonID, field, initialField);
+    populateGroups(saveActionQueue, lessonID, groups, initialGroups);
     donePromise = saveActionQueue.dispatch();
   }
 

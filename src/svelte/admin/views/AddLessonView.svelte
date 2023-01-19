@@ -11,6 +11,11 @@
   import { ActionCallback } from "../../../ts/admin/tools/ActionCallback";
   import { ActionQueue } from "../../../ts/admin/tools/ActionQueue";
   import { getQueryField } from "../../../ts/admin/tools/getQueryField";
+  import {
+    populateCompetences,
+    populateField,
+    populateGroups,
+  } from "../../../ts/admin/tools/populateLessonActionQueue";
   import DoneDialog from "../components/DoneDialog.svelte";
   import LessonEditor from "../components/LessonEditor.svelte";
 
@@ -42,27 +47,9 @@
   }, 100);
 
   function save() {
-    if (field !== null) {
-      saveActionQueue.actions.push(
-        new Action($apiUri + "/v1.0/lesson/{id}/field", "PUT", {
-          field: encodeURIComponent(field),
-        })
-      );
-    }
-    if (competences.length > 0) {
-      saveActionQueue.actions.push(
-        new Action($apiUri + "/v1.0/lesson/{id}/competence", "PUT", {
-          competence: competences.map(encodeURIComponent),
-        })
-      );
-    }
-    if (groups.length > 0) {
-      saveActionQueue.actions.push(
-        new Action($apiUri + "/v1.0/lesson/{id}/group", "PUT", {
-          group: groups.map(encodeURIComponent),
-        })
-      );
-    }
+    populateCompetences(saveActionQueue, null, competences);
+    populateField(saveActionQueue, null, field);
+    populateGroups(saveActionQueue, null, groups);
     donePromise = saveActionQueue.dispatch();
   }
 </script>
