@@ -22,7 +22,7 @@
   let body = defaultBody;
   let field: string | null = getQueryField($location.search, "field");
 
-  $: aq = new ActionQueue([
+  $: saveActionQueue = new ActionQueue([
     new Action(
       $apiUri + "/v1.0/lesson",
       "POST",
@@ -41,13 +41,13 @@
 
   function save() {
     if (field !== null) {
-      aq.actions.push(
+      saveActionQueue.actions.push(
         new Action($apiUri + "/v1.0/lesson/{id}/field", "PUT", {
           field: encodeURIComponent(field),
         })
       );
     }
-    donePromise = aq.dispatch();
+    donePromise = saveActionQueue.dispatch();
   }
 </script>
 
@@ -56,7 +56,7 @@
 {:else}
   <LessonEditor
     id={null}
-    saveActionQueue={aq}
+    {saveActionQueue}
     bind:body
     bind:name
     bind:field
