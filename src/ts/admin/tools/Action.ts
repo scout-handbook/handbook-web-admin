@@ -27,8 +27,8 @@ export class Action {
   }
 
   public callback(response: RequestResponse, actionQueue: ActionQueue): void {
-    for (let i = 0; i < this.callbacks.length; i++) {
-      switch (this.callbacks[i]) {
+    for (const callback of this.callbacks) {
+      switch (callback) {
         case ActionCallback.FillID:
           actionQueue.fillID(response as string);
           break;

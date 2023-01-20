@@ -36,12 +36,11 @@ function parseArgumentString(
   argumentString: string
 ): Record<string, boolean | string> {
   const output: Record<string, boolean | string> = {};
-  const list = argumentString.split(",");
-  for (let i = 0; i < list.length; ++i) {
-    if (list[i] === "") {
+  for (const argument of argumentString.split(",")) {
+    if (argument === "") {
       continue;
     }
-    const tuple = list[i].split("=");
+    const tuple = argument.split("=");
     if (tuple.length !== 2) {
       output[tuple[0]] = true;
     } else {

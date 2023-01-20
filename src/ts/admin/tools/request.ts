@@ -26,11 +26,11 @@ function requestQueryBuilder(payload: Payload): string {
       continue;
     }
     if (Array.isArray(payload[key])) {
-      for (let i = 0; i < (payload[key] as Array<string>).length; i++) {
+      for (const instance of payload[key] as Array<string>) {
         if (!first) {
           query += "&";
         }
-        query += key + "[]=" + (payload[key] as Array<string>)[i];
+        query += key + "[]=" + instance;
         first = false;
       }
     } else {

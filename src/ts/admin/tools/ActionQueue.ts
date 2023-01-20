@@ -15,8 +15,8 @@ export class ActionQueue {
   }
 
   public fillID(id: string): void {
-    for (let i = 0; i < this.actions.length; i++) {
-      this.actions[i].fillID(id);
+    for (const action of this.actions) {
+      action.fillID(id);
     }
   }
 
