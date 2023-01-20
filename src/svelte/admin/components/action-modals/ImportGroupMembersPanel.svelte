@@ -55,9 +55,9 @@
       return x.id;
     });
     const result = [];
-    for (let i = 0; i < a.length; i++) {
-      if (!bArr.includes(a[i].id)) {
-        result.push(a[i]);
+    for (const aItem of a) {
+      if (!bArr.includes(aItem.id)) {
+        result.push(aItem);
       }
     }
     return result;
