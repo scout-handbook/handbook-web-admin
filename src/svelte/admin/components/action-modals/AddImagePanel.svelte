@@ -20,7 +20,7 @@
     if (files.length === 0) {
       return;
     }
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions
     if (!FormData) {
       stage = "error";
       return;
