@@ -28,7 +28,7 @@
   let field: string | null = getQueryField($location.search, "field");
   let groups: Array<string> = [];
 
-  function save() {
+  function save(): void {
     const saveActionQueue = new ActionQueue([
       new Action(
         $apiUri + "/v1.0/lesson",

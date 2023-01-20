@@ -1,8 +1,8 @@
 <script lang="ts">
   import { useNavigate } from "svelte-navigator";
 
-  import { APIResponse } from "../../../ts/admin/interfaces/APIResponse";
-  import { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
+  import type { APIResponse } from "../../../ts/admin/interfaces/APIResponse";
+  import type { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
   import { FIELDS, LESSONS, metadataEvent } from "../../../ts/admin/metadata";
   import { apiUri, globalDialogMessage } from "../../../ts/admin/stores";
   import { Action } from "../../../ts/admin/tools/Action";
@@ -28,7 +28,7 @@
   let competences: Array<string> = LESSONS.get(lessonID)?.competences ?? [];
   let field: string | null =
     FIELDS.asArray().find((field) => {
-      return field.value.lessons.indexOf(lessonID) >= 0;
+      return field.value.lessons.includes(lessonID);
     })?.id ?? null;
   let groups: Array<string> = [];
 
@@ -114,6 +114,7 @@
   }
 
   function sendBeacon(id: string): void {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions
     if (navigator.sendBeacon) {
       navigator.sendBeacon(
         $apiUri + "/v1.0/mutex-beacon/" + encodeURIComponent(id)
@@ -121,7 +122,7 @@
     }
   }
 
-  function destroyMutex() {
+  function destroyMutex(): void {
     void new ActionQueue([
       new Action(
         $apiUri + "/v1.0/mutex/" + encodeURIComponent(lessonID),
@@ -133,7 +134,7 @@
     ]).dispatch();
   }
 
-  function save() {
+  function save(): void {
     const saveActionQueue = new ActionQueue([]);
     if (initialName !== name || initialBody !== body) {
       saveActionQueue.actions.push(
@@ -162,7 +163,7 @@
     donePromise = saveActionQueue.dispatch();
   }
 
-  function discard() {
+  function discard(): void {
     destroyMutex();
     navigate(-1);
   }

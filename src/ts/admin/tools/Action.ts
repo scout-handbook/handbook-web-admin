@@ -1,9 +1,9 @@
-import { ExceptionHandler } from "../interfaces/ExceptionHandler";
-import { Payload } from "../interfaces/Payload";
-import { RequestResponse } from "../interfaces/RequestResponse";
-import { SerializedAction } from "../interfaces/SerializedAction";
+import type { ExceptionHandler } from "../interfaces/ExceptionHandler";
+import type { Payload } from "../interfaces/Payload";
+import type { RequestResponse } from "../interfaces/RequestResponse";
+import type { SerializedAction } from "../interfaces/SerializedAction";
 import { ActionCallback } from "./ActionCallback";
-import { ActionQueue } from "./ActionQueue";
+import type { ActionQueue } from "./ActionQueue";
 
 export class Action {
   public url: string;
@@ -27,8 +27,8 @@ export class Action {
   }
 
   public callback(response: RequestResponse, actionQueue: ActionQueue): void {
-    for (let i = 0; i < this.callbacks.length; i++) {
-      switch (this.callbacks[i]) {
+    for (const callback of this.callbacks) {
+      switch (callback) {
         case ActionCallback.FillID:
           actionQueue.fillID(response as string);
           break;

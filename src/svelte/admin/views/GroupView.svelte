@@ -1,9 +1,9 @@
 <script lang="ts">
   import { useLocation, useNavigate } from "svelte-navigator";
 
-  import { IDList } from "../../../ts/admin/IDList";
-  import { Group } from "../../../ts/admin/interfaces/Group";
-  import { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
+  import type { IDList } from "../../../ts/admin/IDList";
+  import type { Group } from "../../../ts/admin/interfaces/Group";
+  import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
   import { siteName } from "../../../ts/admin/stores";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import AddGroupPanel from "../components/action-modals/AddGroupPanel.svelte";
@@ -17,8 +17,8 @@
 
   const location = useLocation();
   const navigate = useNavigate();
-  $: action = $location.state?.action as string | null;
-  $: actionPayload = $location.state?.actionPayload as { groupId: string };
+  $: action = $location.state.action as string | null;
+  $: actionPayload = $location.state.actionPayload as { groupId: string };
 
   $: adminPermissions =
     loginstate.role === "administrator" || loginstate.role === "superuser";

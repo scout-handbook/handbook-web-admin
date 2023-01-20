@@ -1,7 +1,7 @@
 <script lang="ts">
   import { useLocation, useNavigate } from "svelte-navigator";
 
-  import { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
+  import type { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
   import { apiUri, siteName } from "../../../ts/admin/stores";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import { reAuthHandler, request } from "../../../ts/admin/tools/request";
@@ -13,8 +13,8 @@
 
   const location = useLocation();
   const navigate = useNavigate();
-  $: action = $location.state?.action as string | null;
-  $: actionPayload = $location.state?.actionPayload as { imageId: string };
+  $: action = $location.state.action as string | null;
+  $: actionPayload = $location.state.actionPayload as { imageId: string };
 
   let page = 1;
   const perPage = 15;

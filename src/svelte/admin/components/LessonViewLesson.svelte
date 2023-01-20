@@ -1,9 +1,9 @@
 <script lang="ts">
   import { useNavigate } from "svelte-navigator";
 
-  import { IDList } from "../../../ts/admin/IDList";
-  import { Competence } from "../../../ts/admin/interfaces/Competence";
-  import { Lesson } from "../../../ts/admin/interfaces/Lesson";
+  import type { IDList } from "../../../ts/admin/IDList";
+  import type { Competence } from "../../../ts/admin/interfaces/Competence";
+  import type { Lesson } from "../../../ts/admin/interfaces/Lesson";
   import { adminUri } from "../../../ts/admin/stores";
   import Button from "./Button.svelte";
 
@@ -20,7 +20,7 @@
     let first = true;
     competences
       .filter(function (competenceId) {
-        return lesson.competences.indexOf(competenceId) >= 0;
+        return lesson.competences.includes(competenceId);
       })
       .iterate(function (_, competence) {
         if (!first) {

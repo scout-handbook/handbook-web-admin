@@ -2,9 +2,9 @@
   import { useNavigate } from "svelte-navigator";
 
   import { IDList } from "../../../../ts/admin/IDList";
-  import { DeletedLesson } from "../../../../ts/admin/interfaces/DeletedLesson";
-  import { LessonVersion } from "../../../../ts/admin/interfaces/LessonVersion";
-  import { RequestResponse } from "../../../../ts/admin/interfaces/RequestResponse";
+  import type { DeletedLesson } from "../../../../ts/admin/interfaces/DeletedLesson";
+  import type { LessonVersion } from "../../../../ts/admin/interfaces/LessonVersion";
+  import type { RequestResponse } from "../../../../ts/admin/interfaces/RequestResponse";
   import { apiUri } from "../../../../ts/admin/stores";
   import { compileMarkdown } from "../../../../ts/admin/tools/compileMarkdown";
   import { parseVersion } from "../../../../ts/admin/tools/parseVersion";
@@ -70,7 +70,7 @@
     reAuthHandler
   );
 
-  function loadVersionList() {
+  function loadVersionList(): void {
     if (!selectedLesson) {
       return;
     }
@@ -87,7 +87,7 @@
     );
   }
 
-  function selectVersionCallback() {
+  function selectVersionCallback(): void {
     navigate(
       "/lessons/" +
         selectedLesson +

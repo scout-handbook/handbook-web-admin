@@ -1,8 +1,8 @@
 <script lang="ts">
   import { useNavigate } from "svelte-navigator";
 
-  import { Loginstate } from "../../../../ts/admin/interfaces/Loginstate";
-  import { User } from "../../../../ts/admin/interfaces/User";
+  import type { Loginstate } from "../../../../ts/admin/interfaces/Loginstate";
+  import type { User } from "../../../../ts/admin/interfaces/User";
   import { apiUri } from "../../../../ts/admin/stores";
   import { Action } from "../../../../ts/admin/tools/Action";
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
@@ -21,7 +21,7 @@
 
   refreshLogin();
 
-  function saveCallback() {
+  function saveCallback(): void {
     if (selectedRole === payload.user.role) {
       donePromise = new Promise((resolve) => {
         resolve();

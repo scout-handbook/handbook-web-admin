@@ -1,9 +1,9 @@
 <script lang="ts">
   import { useNavigate } from "svelte-navigator";
 
-  import { IDList } from "../../../../ts/admin/IDList";
-  import { APIResponse } from "../../../../ts/admin/interfaces/APIResponse";
-  import { Lesson } from "../../../../ts/admin/interfaces/Lesson";
+  import type { IDList } from "../../../../ts/admin/IDList";
+  import type { APIResponse } from "../../../../ts/admin/interfaces/APIResponse";
+  import type { Lesson } from "../../../../ts/admin/interfaces/Lesson";
   import { apiUri } from "../../../../ts/admin/stores";
   import { Action } from "../../../../ts/admin/tools/Action";
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
@@ -40,7 +40,7 @@
   });
   let donePromise: Promise<void> | null = null;
 
-  function confirmCallback() {
+  function confirmCallback(): void {
     donePromise = new ActionQueue([
       new Action(
         $apiUri + "/v1.0/lesson/" + encodeURIComponent(payload.lessonId),
@@ -48,7 +48,7 @@
         undefined,
         [],
         {
-          NotLockedException: () => {
+          NotLockedException: (): void => {
             expiredError = true;
           },
         }
@@ -56,7 +56,7 @@
     ]).dispatch();
   }
 
-  function dismissCallback() {
+  function dismissCallback(): void {
     void new ActionQueue([
       new Action(
         $apiUri + "/v1.0/mutex/" + encodeURIComponent(payload.lessonId),

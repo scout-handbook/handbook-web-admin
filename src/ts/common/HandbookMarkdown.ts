@@ -1,4 +1,5 @@
-import { extension, ShowdownExtension } from "showdown";
+import type { ShowdownExtension } from "showdown";
+import { extension } from "showdown";
 
 function getArgumentString(
   lines: Array<string>,
@@ -33,14 +34,13 @@ function getArgumentString(
 
 function parseArgumentString(
   argumentString: string
-): Record<string, string | boolean> {
-  const output: Record<string, string | boolean> = {};
-  const list = argumentString.split(",");
-  for (let i = 0; i < list.length; ++i) {
-    if (list[i] === "") {
+): Record<string, boolean | string> {
+  const output: Record<string, boolean | string> = {};
+  for (const argument of argumentString.split(",")) {
+    if (argument === "") {
       continue;
     }
-    const tuple = list[i].split("=");
+    const tuple = argument.split("=");
     if (tuple.length !== 2) {
       output[tuple[0]] = true;
     } else {
@@ -55,15 +55,12 @@ function parseArgumentString(
 function filterCommand(
   text: string,
   commandName: string,
-  command: (args: Record<string, string | boolean>) => string
+  command: (args: Record<string, boolean | string>) => string
 ): string {
   const lines = text.split("\n");
   let ret = "";
   for (let i = 0; i < lines.length; i++) {
-    if (
-      lines[i].trim().substring(0, commandName.length + 1) ===
-      "!" + commandName
-    ) {
+    if (lines[i].trim().startsWith("!" + commandName)) {
       const arr = getArgumentString(lines, i, commandName);
       i = arr[1];
       ret += command(parseArgumentString(arr[0])) + "\n";

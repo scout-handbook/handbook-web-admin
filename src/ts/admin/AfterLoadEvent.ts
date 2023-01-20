@@ -1,8 +1,8 @@
 export class AfterLoadEvent {
   private triggered: boolean;
-  private threshold: number;
+  private readonly threshold: number;
   private count: number;
-  private callbacks: Array<(...args: Array<string>) => void>;
+  private readonly callbacks: Array<(...args: Array<string>) => void>;
 
   public constructor(threshold: number) {
     this.triggered = false;
@@ -26,8 +26,8 @@ export class AfterLoadEvent {
   public retrigger(...args: Array<string>): void {
     if (this.count >= this.threshold) {
       this.triggered = true;
-      for (let i = 0; i < this.callbacks.length; i++) {
-        this.callbacks[i].apply(null, args);
+      for (const callback of this.callbacks) {
+        callback(...args);
       }
     }
   }
