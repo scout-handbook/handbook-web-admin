@@ -60,10 +60,7 @@ function filterCommand(
   const lines = text.split("\n");
   let ret = "";
   for (let i = 0; i < lines.length; i++) {
-    if (
-      lines[i].trim().substring(0, commandName.length + 1) ===
-      "!" + commandName
-    ) {
+    if (lines[i].trim().startsWith("!" + commandName)) {
       const arr = getArgumentString(lines, i, commandName);
       i = arr[1];
       ret += command(parseArgumentString(arr[0])) + "\n";
