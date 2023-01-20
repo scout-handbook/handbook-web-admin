@@ -70,7 +70,7 @@
     reAuthHandler
   );
 
-  function loadVersionList() {
+  function loadVersionList(): void {
     if (!selectedLesson) {
       return;
     }
@@ -87,7 +87,7 @@
     );
   }
 
-  function selectVersionCallback() {
+  function selectVersionCallback(): void {
     navigate(
       "/lessons/" +
         selectedLesson +

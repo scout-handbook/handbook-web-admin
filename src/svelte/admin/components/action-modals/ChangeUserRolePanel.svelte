@@ -21,7 +21,7 @@
 
   refreshLogin();
 
-  function saveCallback() {
+  function saveCallback(): void {
     if (selectedRole === payload.user.role) {
       donePromise = new Promise((resolve) => {
         resolve();

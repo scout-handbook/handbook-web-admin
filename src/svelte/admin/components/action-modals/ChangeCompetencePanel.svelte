@@ -22,7 +22,7 @@
 
   refreshLogin();
 
-  function saveCallback() {
+  function saveCallback(): void {
     if (
       competence.number === number &&
       competence.name === name &&

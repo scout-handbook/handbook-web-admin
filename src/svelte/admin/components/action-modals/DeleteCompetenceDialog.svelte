@@ -20,7 +20,7 @@
 
   refreshLogin();
 
-  function confirmCallback() {
+  function confirmCallback(): void {
     donePromise = new ActionQueue([
       new Action(
         $apiUri +

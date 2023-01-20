@@ -40,7 +40,7 @@
   });
   let donePromise: Promise<void> | null = null;
 
-  function confirmCallback() {
+  function confirmCallback(): void {
     donePromise = new ActionQueue([
       new Action(
         $apiUri + "/v1.0/lesson/" + encodeURIComponent(payload.lessonId),
@@ -48,7 +48,7 @@
         undefined,
         [],
         {
-          NotLockedException: () => {
+          NotLockedException: (): void => {
             expiredError = true;
           },
         }
@@ -56,7 +56,7 @@
     ]).dispatch();
   }
 
-  function dismissCallback() {
+  function dismissCallback(): void {
     void new ActionQueue([
       new Action(
         $apiUri + "/v1.0/mutex/" + encodeURIComponent(payload.lessonId),

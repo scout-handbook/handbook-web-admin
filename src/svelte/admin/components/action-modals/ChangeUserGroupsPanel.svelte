@@ -25,7 +25,7 @@
 
   refreshLogin();
 
-  function saveCallback() {
+  function saveCallback(): void {
     if (
       selectedGroups.length === payload.user.groups.length &&
       selectedGroups.every(

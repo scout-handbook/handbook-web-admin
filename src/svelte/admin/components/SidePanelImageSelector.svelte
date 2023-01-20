@@ -16,7 +16,7 @@
 
   let imageListPromise: Promise<Array<string>>;
 
-  function reload() {
+  function reload(): void {
     imageListPromise = new Promise((resolve) => {
       request(
         $apiUri + "/v1.0/image",

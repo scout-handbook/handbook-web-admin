@@ -43,7 +43,7 @@
     );
   });
 
-  function save() {
+  function save(): void {
     const saveActionQueue = new ActionQueue([
       new Action(
         $apiUri + "/v1.0/lesson",

@@ -121,7 +121,7 @@
     }
   }
 
-  function destroyMutex() {
+  function destroyMutex(): void {
     void new ActionQueue([
       new Action(
         $apiUri + "/v1.0/mutex/" + encodeURIComponent(lessonID),
@@ -133,7 +133,7 @@
     ]).dispatch();
   }
 
-  function save() {
+  function save(): void {
     const saveActionQueue = new ActionQueue([]);
     if (initialName !== name || initialBody !== body) {
       saveActionQueue.actions.push(
@@ -162,7 +162,7 @@
     donePromise = saveActionQueue.dispatch();
   }
 
-  function discard() {
+  function discard(): void {
     destroyMutex();
     navigate(-1);
   }

@@ -25,7 +25,7 @@
 
   refreshLogin();
 
-  function saveCallback() {
+  function saveCallback(): void {
     if (
       field.name === name &&
       field.description === description &&

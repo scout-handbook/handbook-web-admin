@@ -60,7 +60,7 @@
     }
   });
 
-  function saveCallback(markdown: string) {
+  function saveCallback(markdown: string): void {
     (document.getElementById("name") as HTMLInputElement).value =
       selectedVersionName;
     body = markdown;
