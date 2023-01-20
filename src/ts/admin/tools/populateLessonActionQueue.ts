@@ -13,7 +13,7 @@ export function populateField(
   lessonID: string | null,
   field: string | null,
   initialField: string | null = null
-) {
+): void {
   if (initialField === field) {
     return;
   }
@@ -36,7 +36,7 @@ export function populateCompetences(
   lessonID: string | null,
   competences: Array<string>,
   initialCompetences: Array<string> = []
-) {
+): void {
   if (arrayEquals(initialCompetences, competences)) {
     return;
   }
@@ -57,7 +57,7 @@ export function populateGroups(
   lessonID: string | null,
   groups: Array<string>,
   initialGroups: Array<string> = []
-) {
+): void {
   if (arrayEquals(initialGroups, groups)) {
     return;
   }

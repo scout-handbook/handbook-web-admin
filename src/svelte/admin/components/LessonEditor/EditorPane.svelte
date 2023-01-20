@@ -6,7 +6,7 @@
 
   export let imageSelectorOpen: boolean;
   export let value: string;
-  export const insertAtCursor = (content: string) => {
+  export const insertAtCursor = (content: string): void => {
     const doc = editor!.codemirror.getDoc();
     doc.replaceRange(content, doc.getCursor());
     refreshLogin();
