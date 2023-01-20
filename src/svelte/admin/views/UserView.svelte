@@ -60,7 +60,7 @@
 
   refreshLogin(true);
 
-  function groupsList(user: User) {
+  function groupsList(user: User): string {
     let first = true;
     let output = "";
     groups

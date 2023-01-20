@@ -71,7 +71,7 @@
         },
         {
           name: "image",
-          action: () => {
+          action: (): void => {
             imageSelectorOpen = true;
           },
           className: "icon-picture",

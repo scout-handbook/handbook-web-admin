@@ -18,7 +18,7 @@
 
   refreshLogin();
 
-  function saveCallback() {
+  function saveCallback(): void {
     donePromise = new ActionQueue([
       new Action($apiUri + "/v1.0/competence", "POST", {
         number: encodeURIComponent(number),

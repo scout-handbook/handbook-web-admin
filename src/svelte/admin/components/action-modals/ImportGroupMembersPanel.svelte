@@ -63,7 +63,7 @@
     return result;
   }
 
-  function getParticipantList() {
+  function getParticipantList(): void {
     if (!selectedEvent) {
       return;
     }
@@ -105,7 +105,7 @@
     );
   }
 
-  function importParticipants() {
+  function importParticipants(): void {
     if (selectedParticipants.length < 1) {
       step = "done";
       return;

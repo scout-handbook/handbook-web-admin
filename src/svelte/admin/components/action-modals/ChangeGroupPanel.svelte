@@ -22,7 +22,7 @@
 
   refreshLogin();
 
-  function saveCallback() {
+  function saveCallback(): void {
     if (group.name === name) {
       donePromise = new Promise((resolve) => {
         resolve();
