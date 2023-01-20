@@ -1,9 +1,9 @@
 <script lang="ts">
   import { useNavigate } from "svelte-navigator";
 
-  import { IDList } from "../../../../ts/admin/IDList";
-  import { Group } from "../../../../ts/admin/interfaces/Group";
-  import { User } from "../../../../ts/admin/interfaces/User";
+  import type { IDList } from "../../../../ts/admin/IDList";
+  import type { Group } from "../../../../ts/admin/interfaces/Group";
+  import type { User } from "../../../../ts/admin/interfaces/User";
   import { apiUri } from "../../../../ts/admin/stores";
   import { Action } from "../../../../ts/admin/tools/Action";
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
@@ -25,7 +25,7 @@
 
   refreshLogin();
 
-  function saveCallback() {
+  function saveCallback(): void {
     if (
       selectedGroups.length === payload.user.groups.length &&
       selectedGroups.every(

@@ -16,7 +16,7 @@
 
   refreshLogin();
 
-  function confirmCallback() {
+  function confirmCallback(): void {
     donePromise = new ActionQueue([
       new Action(
         $apiUri + "/v1.0/image/" + encodeURIComponent(payload.imageId),

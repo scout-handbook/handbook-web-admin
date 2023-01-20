@@ -1,8 +1,8 @@
 <script lang="ts">
   import { useNavigate } from "svelte-navigator";
 
-  import { IDList } from "../../../../ts/admin/IDList";
-  import { Competence } from "../../../../ts/admin/interfaces/Competence";
+  import type { IDList } from "../../../../ts/admin/IDList";
+  import type { Competence } from "../../../../ts/admin/interfaces/Competence";
   import { apiUri } from "../../../../ts/admin/stores";
   import { Action } from "../../../../ts/admin/tools/Action";
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
@@ -20,7 +20,7 @@
 
   refreshLogin();
 
-  function confirmCallback() {
+  function confirmCallback(): void {
     donePromise = new ActionQueue([
       new Action(
         $apiUri +

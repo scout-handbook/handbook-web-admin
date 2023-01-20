@@ -21,13 +21,13 @@
 
   const dispatch = createEventDispatcher();
   const location = useLocation();
-  $: view = $location.state?.view as string;
+  $: view = $location.state.view as string;
 
   let imageSelectorOpen = false;
   let discardConfirmation = false;
   let insertAtCursor: (content: string) => void;
 
-  function insertImage(event: CustomEvent<{ image: string }>) {
+  function insertImage(event: CustomEvent<{ image: string }>): void {
     insertAtCursor(
       "![Text po najetí kurzorem](" +
         $apiUri +

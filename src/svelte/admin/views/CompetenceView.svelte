@@ -1,9 +1,9 @@
 <script lang="ts">
   import { useLocation, useNavigate } from "svelte-navigator";
 
-  import { IDList } from "../../../ts/admin/IDList";
-  import { Competence } from "../../../ts/admin/interfaces/Competence";
-  import { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
+  import type { IDList } from "../../../ts/admin/IDList";
+  import type { Competence } from "../../../ts/admin/interfaces/Competence";
+  import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
   import { siteName } from "../../../ts/admin/stores";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import AddCompetencePanel from "../components/action-modals/AddCompetencePanel.svelte";
@@ -16,8 +16,8 @@
 
   const location = useLocation();
   const navigate = useNavigate();
-  $: action = $location.state?.action as string | null;
-  $: actionPayload = $location.state?.actionPayload as { competenceId: string };
+  $: action = $location.state.action as string | null;
+  $: actionPayload = $location.state.actionPayload as { competenceId: string };
 
   $: adminPermissions =
     loginstate.role === "administrator" || loginstate.role === "superuser";

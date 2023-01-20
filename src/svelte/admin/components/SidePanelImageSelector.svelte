@@ -1,7 +1,7 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
 
-  import { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
+  import type { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
   import { apiUri } from "../../../ts/admin/stores";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import { reAuthHandler, request } from "../../../ts/admin/tools/request";
@@ -16,7 +16,7 @@
 
   let imageListPromise: Promise<Array<string>>;
 
-  function reload() {
+  function reload(): void {
     imageListPromise = new Promise((resolve) => {
       request(
         $apiUri + "/v1.0/image",

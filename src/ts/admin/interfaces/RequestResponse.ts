@@ -1,22 +1,22 @@
-import { Competence } from "./Competence";
-import { DeletedLesson } from "./DeletedLesson";
-import { Field } from "./Field";
-import { Group } from "./Group";
-import { Lesson } from "./Lesson";
-import { LessonVersion } from "./LessonVersion";
-import { Loginstate } from "./Loginstate";
-import { Participant } from "./Participant";
-import { UserListResponse } from "./UserListResponse";
+import type { Competence } from "./Competence";
+import type { DeletedLesson } from "./DeletedLesson";
+import type { Field } from "./Field";
+import type { Group } from "./Group";
+import type { Lesson } from "./Lesson";
+import type { LessonVersion } from "./LessonVersion";
+import type { Loginstate } from "./Loginstate";
+import type { Participant } from "./Participant";
+import type { UserListResponse } from "./UserListResponse";
 
 export type RequestResponse =
-  | string
+  | Array<LessonVersion>
+  | Array<Participant>
+  | Array<string>
   | Loginstate
-  | UserListResponse
   | Record<string, Competence>
   | Record<string, DeletedLesson>
   | Record<string, Field>
   | Record<string, Group>
   | Record<string, Lesson>
-  | Array<string>
-  | Array<LessonVersion>
-  | Array<Participant>;
+  | UserListResponse
+  | string;

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { useLocation, useNavigate } from "svelte-navigator";
 
-  import { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
+  import type { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
   import { apiUri } from "../../../ts/admin/stores";
   import { Action } from "../../../ts/admin/tools/Action";
   import { ActionCallback } from "../../../ts/admin/tools/ActionCallback";
@@ -43,7 +43,7 @@
     );
   });
 
-  function save() {
+  function save(): void {
     const saveActionQueue = new ActionQueue([
       new Action(
         $apiUri + "/v1.0/lesson",

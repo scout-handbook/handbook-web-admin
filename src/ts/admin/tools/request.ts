@@ -1,7 +1,7 @@
-import { APIResponse } from "../interfaces/APIResponse";
-import { ExceptionHandler } from "../interfaces/ExceptionHandler";
-import { Payload } from "../interfaces/Payload";
-import { RequestResponse } from "../interfaces/RequestResponse";
+import type { APIResponse } from "../interfaces/APIResponse";
+import type { ExceptionHandler } from "../interfaces/ExceptionHandler";
+import type { Payload } from "../interfaces/Payload";
+import type { RequestResponse } from "../interfaces/RequestResponse";
 import { globalDialogMessage } from "../stores";
 
 export const reAuthHandler: ExceptionHandler = {
@@ -26,11 +26,11 @@ function requestQueryBuilder(payload: Payload): string {
       continue;
     }
     if (Array.isArray(payload[key])) {
-      for (let i = 0; i < (payload[key] as Array<string>).length; i++) {
+      for (const instance of payload[key] as Array<string>) {
         if (!first) {
           query += "&";
         }
-        query += key + "[]=" + (payload[key] as Array<string>)[i];
+        query += key + "[]=" + instance;
         first = false;
       }
     } else {
@@ -47,7 +47,7 @@ function requestQueryBuilder(payload: Payload): string {
 export function rawRequest(
   url: string,
   method: string,
-  payload: Payload | FormData = {},
+  payload: FormData | Payload = {},
   callback: (response: APIResponse) => void
 ): void {
   const xhr = new XMLHttpRequest();
@@ -57,17 +57,15 @@ export function rawRequest(
     }
   };
   let query = "";
-  if (payload) {
-    if (
-      method === "GET" ||
-      method === "DELETE" ||
-      payload.toString() !== "[object FormData]"
-    ) {
-      query = requestQueryBuilder(payload as Payload);
-    }
-    if ((method === "GET" || method === "DELETE") && query) {
-      url += "?" + query;
-    }
+  if (
+    method === "GET" ||
+    method === "DELETE" ||
+    payload.toString() !== "[object FormData]"
+  ) {
+    query = requestQueryBuilder(payload as Payload);
+  }
+  if ((method === "GET" || method === "DELETE") && query) {
+    url += "?" + query;
   }
   xhr.open(method, url, true);
   if (
@@ -89,7 +87,7 @@ export function rawRequest(
 export function request(
   url: string,
   method: string,
-  payload: Payload | FormData,
+  payload: FormData | Payload,
   callback: (response: RequestResponse) => void,
   exceptionHandler: ExceptionHandler = {}
 ): void {
@@ -102,7 +100,7 @@ export function request(
       exceptionHandler[response.type!]!(response);
     } else {
       globalDialogMessage.set(
-        "Nastala neznámá chyba. Chybová hláška: " + (response.message as string)
+        "Nastala neznámá chyba. Chybová hláška: " + response.message!
       );
     }
   });

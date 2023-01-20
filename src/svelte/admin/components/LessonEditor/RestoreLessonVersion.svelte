@@ -1,8 +1,8 @@
 <script lang="ts">
   import { useNavigate } from "svelte-navigator";
 
-  import { LessonVersion } from "../../../../ts/admin/interfaces/LessonVersion";
-  import { RequestResponse } from "../../../../ts/admin/interfaces/RequestResponse";
+  import type { LessonVersion } from "../../../../ts/admin/interfaces/LessonVersion";
+  import type { RequestResponse } from "../../../../ts/admin/interfaces/RequestResponse";
   import { apiUri, lessons } from "../../../../ts/admin/stores";
   import { compileMarkdown } from "../../../../ts/admin/tools/compileMarkdown";
   import { parseVersion } from "../../../../ts/admin/tools/parseVersion";
@@ -60,7 +60,7 @@
     }
   });
 
-  function saveCallback(markdown: string) {
+  function saveCallback(markdown: string): void {
     (document.getElementById("name") as HTMLInputElement).value =
       selectedVersionName;
     body = markdown;

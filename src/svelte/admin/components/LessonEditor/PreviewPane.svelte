@@ -12,7 +12,7 @@
 
   refreshPreview();
 
-  function refreshPreview() {
+  function refreshPreview(): void {
     void compileMarkdown(body).then((compiled) => {
       html = compiled;
     });
