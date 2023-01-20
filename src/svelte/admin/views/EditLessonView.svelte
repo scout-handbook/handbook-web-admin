@@ -114,6 +114,7 @@
   }
 
   function sendBeacon(id: string): void {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (navigator.sendBeacon) {
       navigator.sendBeacon(
         $apiUri + "/v1.0/mutex-beacon/" + encodeURIComponent(id)

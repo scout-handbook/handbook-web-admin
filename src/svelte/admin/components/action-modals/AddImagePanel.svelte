@@ -20,6 +20,7 @@
     if (files.length === 0) {
       return;
     }
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (!FormData) {
       stage = "error";
       return;
@@ -59,7 +60,7 @@
         <label class="form-file">
           <input class="form-file" type="file" bind:files />
           <Button icon="upload">
-            {#if !files || files.length === 0}
+            {#if files.length === 0}
               Vybrat soubor
             {:else}
               {files[0].name}
