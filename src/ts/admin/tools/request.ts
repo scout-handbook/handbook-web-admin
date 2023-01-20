@@ -57,17 +57,15 @@ export function rawRequest(
     }
   };
   let query = "";
-  if (payload) {
-    if (
-      method === "GET" ||
-      method === "DELETE" ||
-      payload.toString() !== "[object FormData]"
-    ) {
-      query = requestQueryBuilder(payload as Payload);
-    }
-    if ((method === "GET" || method === "DELETE") && query) {
-      url += "?" + query;
-    }
+  if (
+    method === "GET" ||
+    method === "DELETE" ||
+    payload.toString() !== "[object FormData]"
+  ) {
+    query = requestQueryBuilder(payload as Payload);
+  }
+  if ((method === "GET" || method === "DELETE") && query) {
+    url += "?" + query;
   }
   xhr.open(method, url, true);
   if (

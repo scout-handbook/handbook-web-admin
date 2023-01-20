@@ -56,6 +56,7 @@ export class ActionQueue {
   }
 
   private authException(): void {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (!this.isRetryAfterLogin && window.sessionStorage) {
       sessionStorage.setItem(
         "ActionQueue",
@@ -73,6 +74,7 @@ export class ActionQueue {
 }
 
 export function ActionQueueSetup(): void {
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (window.sessionStorage && sessionStorage.getItem("ActionQueue")) {
     const aq = new ActionQueue(
       (
