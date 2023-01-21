@@ -3,6 +3,7 @@ import type { ExceptionHandler } from "../interfaces/ExceptionHandler";
 import type { Payload } from "../interfaces/Payload";
 import type { RequestResponse } from "../interfaces/RequestResponse";
 import { globalDialogMessage } from "../stores";
+import { constructQuery } from "./constructURL";
 
 export const reAuthHandler: ExceptionHandler = {
   AuthenticationException: function (): void {
@@ -17,32 +18,6 @@ export const authFailHandler = {
     );
   },
 };
-
-function requestQueryBuilder(payload: Payload): string {
-  let query = "";
-  let first = true;
-  for (const key in payload) {
-    if (!Object.prototype.hasOwnProperty.call(payload, key)) {
-      continue;
-    }
-    if (Array.isArray(payload[key])) {
-      for (const instance of payload[key] as Array<string>) {
-        if (!first) {
-          query += "&";
-        }
-        query += key + "[]=" + instance;
-        first = false;
-      }
-    } else {
-      if (!first) {
-        query += "&";
-      }
-      query += key + "=" + (payload[key] as string);
-    }
-    first = false;
-  }
-  return query;
-}
 
 export function rawRequest(
   url: string,
@@ -62,7 +37,7 @@ export function rawRequest(
     method === "DELETE" ||
     payload.toString() !== "[object FormData]"
   ) {
-    query = requestQueryBuilder(payload as Payload);
+    query = constructQuery(payload as Payload);
   }
   if ((method === "GET" || method === "DELETE") && query) {
     url += "?" + query;
