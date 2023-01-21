@@ -15,10 +15,15 @@
   export let groups: IDList<Group>;
   export let loginstate: Loginstate;
 
-  const location = useLocation();
+  const location = useLocation<{
+    action: string;
+    actionPayload: { groupId: string };
+  }>();
   const navigate = useNavigate();
-  $: action = $location.state.action as string | null;
-  $: actionPayload = $location.state.actionPayload as { groupId: string };
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  $: action = $location.state?.action;
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  $: actionPayload = $location.state?.actionPayload;
 
   $: adminPermissions =
     loginstate.role === "administrator" || loginstate.role === "superuser";
