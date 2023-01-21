@@ -9,15 +9,15 @@
     "scout",
     "skaut"
   ],
-  "homepage": "https://gitlab.com/skaut-handbook/handbook-web-admin",
+  "homepage": "https://github.com/scout-handbook/handbook-web-admin",
   "bugs": {
-    "url": "https://gitlab.com/skaut-handbook/handbook-web-admin/issues"
+    "url": "https://github.com/scout-handbook/handbook-web-admin/issues"
   },
   "license": "MIT",
-  "author": "GenaBitu",
+  "author": "Marek Dědič",
   "repository": {
     "type": "git",
-    "url": "git+https://gitlab.com/skaut-handbook/handbook-web-admin.git"
+    "url": "git+https://github.com/scout-handbook/handbook-web-admin.git"
   },
   "dependencies": {
     "easymde": "^2.14.0",
