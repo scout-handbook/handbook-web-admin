@@ -11,10 +11,15 @@
   import LoadingIndicator from "../components/LoadingIndicator.svelte";
   import Pagination from "../components/Pagination.svelte";
 
-  const location = useLocation();
+  const location = useLocation<{
+    action: string;
+    actionPayload: { imageId: string };
+  }>();
   const navigate = useNavigate();
-  $: action = $location.state.action as string | null;
-  $: actionPayload = $location.state.actionPayload as { imageId: string };
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  $: action = $location.state?.action;
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  $: actionPayload = $location.state?.actionPayload;
 
   let page = 1;
   const perPage = 15;

@@ -22,12 +22,17 @@
   export let loginstate: Loginstate;
 
   const navigate = useNavigate();
-  const location = useLocation();
-  $: action = $location.state.action as string | null;
-  $: actionPayload = $location.state.actionPayload as {
-    fieldId: string;
-    lessonId: string;
-  };
+  const location = useLocation<{
+    action: string;
+    actionPayload: {
+      fieldId: string;
+      lessonId: string;
+    };
+  }>();
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  $: action = $location.state?.action;
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  $: actionPayload = $location.state?.actionPayload;
 
   $: adminPermissions =
     loginstate.role === "administrator" || loginstate.role === "superuser";
