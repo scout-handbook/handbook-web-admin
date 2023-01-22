@@ -1,4 +1,4 @@
-<script lang="ts">
+<script lang="ts" strictEvents>
   import { useNavigate } from "svelte-navigator";
 
   import { refreshMetadata } from "../../../../ts/admin/metadata";

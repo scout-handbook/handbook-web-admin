@@ -1,4 +1,4 @@
-<script lang="ts">
+<script lang="ts" strictEvents>
   import { compileMarkdown } from "../../../../ts/admin/tools/compileMarkdown";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
 
