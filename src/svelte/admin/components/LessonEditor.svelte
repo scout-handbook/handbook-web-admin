@@ -19,7 +19,7 @@
   export let groups: Array<string>;
   export let refreshAction: (() => void) | null = null;
 
-  const dispatch = createEventDispatcher();
+  const dispatch = createEventDispatcher<{ discard: never; save: never }>();
   const location = useLocation();
   $: view = $location.state.view as string;
 
