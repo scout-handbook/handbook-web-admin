@@ -7,7 +7,6 @@ export function SWRSetup(): void {
   createDefaultSWR({
     fetcher: async (url: string): Promise<RequestResponse> =>
       new Promise((resolve) => {
-        console.log(url);
         request(url, "GET", {}, resolve, reAuthHandler);
       }),
   });
