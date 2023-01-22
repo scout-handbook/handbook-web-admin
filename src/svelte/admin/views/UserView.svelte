@@ -1,18 +1,16 @@
 <script lang="ts">
+  import { useSWR } from "sswr";
   import { useLocation, useNavigate } from "svelte-navigator";
 
   import type { IDList } from "../../../ts/admin/IDList";
   import type { Group } from "../../../ts/admin/interfaces/Group";
   import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
-  import type { Payload } from "../../../ts/admin/interfaces/Payload";
-  import type { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
   import type { Role } from "../../../ts/admin/interfaces/Role";
   import type { User } from "../../../ts/admin/interfaces/User";
   import type { UserListResponse } from "../../../ts/admin/interfaces/UserListResponse";
-  import type { UserSearchQuery } from "../../../ts/admin/interfaces/UserSearchQuery";
-  import { apiUri, siteName } from "../../../ts/admin/stores";
+  import { siteName } from "../../../ts/admin/stores";
+  import { constructURL } from "../../../ts/admin/tools/constructURL";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
-  import { reAuthHandler, request } from "../../../ts/admin/tools/request";
   import ChangeUserGroupsPanel from "../components/action-modals/ChangeUserGroupsPanel.svelte";
   import ChangeUserRolePanel from "../components/action-modals/ChangeUserRolePanel.svelte";
   import Button from "../components/Button.svelte";
@@ -38,30 +36,19 @@
   let searchName = "";
   let group = "00000000-0000-0000-0000-000000000000";
 
-  let userListPromise: Promise<UserListResponse>;
-
-  $: userListPromise = new Promise((resolve) => {
-    const payload: UserSearchQuery = {
-      name: searchName,
-      page: page,
-      "per-page": perPage,
-    };
-    if (role !== "all") {
-      payload.role = role;
-    }
-    if (group !== "00000000-0000-0000-0000-000000000000") {
-      payload.group = group;
-    }
-    request(
-      $apiUri + "/v1.0/user",
-      "GET",
-      payload as unknown as Payload,
-      function (response: RequestResponse): void {
-        resolve(response as UserListResponse);
-      },
-      reAuthHandler
-    );
-  });
+  $: payload = {
+    name: searchName,
+    page: page,
+    "per-page": perPage,
+    role: role !== "all" ? role : undefined,
+    group: group !== "00000000-0000-0000-0000-000000000000" ? group : undefined,
+  };
+  $: ({ data: userList } = useSWR<UserListResponse>(() =>
+    constructURL("v1.0/user", payload)
+  ));
+  $: userListCount = $userList?.count;
+  let users: Array<User> | undefined;
+  $: users = $userList?.users;
 
   refreshLogin(true);
 
@@ -91,83 +78,75 @@
 
 <h1>{$siteName + " - Uživatelé"}</h1>
 <div id="userList">
-  {#await userListPromise}
-    <LoadingIndicator />
-  {:then userList}
-    <form
-      id="user-search-form"
-      on:submit={() => {
-        page = 1;
-      }}
-    >
-      <input
-        id="user-search-box"
-        class="form-text"
-        placeholder="Jméno uživatele"
-        type="text"
-        bind:value={searchName}
-      />
-      {#if loginstate.role === "administrator" || loginstate.role === "superuser"}
-        <select id="role-search-filter" class="form-select" bind:value={role}>
-          <option id="all" class="select-filter-special" value="all">
-            Všechny role
-          </option>
-          <option id="user" value="user">Uživatel</option>
-          <option id="editor" value="editor">Editor</option>
-          {#if loginstate.role === "superuser"}
-            <option id="administrator" value="administrator">
-              Administrátor
-            </option>
-            <option id="superuser" value="superuser">Superuser</option>
-          {/if}
-        </select>
-      {/if}
-      <select id="group-search-filter" class="form-select" bind:value={group}>
-        <option
-          id="00000000-0000-0000-0000-000000000000"
-          class="select-filter-special"
-          value="00000000-0000-0000-0000-000000000000"
-        >
-          Všechny skupiny
+  <form
+    id="user-search-form"
+    on:input={() => {
+      page = 1;
+    }}
+  >
+    <input
+      id="user-search-box"
+      class="form-text"
+      placeholder="Jméno uživatele"
+      type="text"
+      bind:value={searchName}
+    />
+    {#if loginstate.role === "administrator" || loginstate.role === "superuser"}
+      <select id="role-search-filter" class="form-select" bind:value={role}>
+        <option id="all" class="select-filter-special" value="all">
+          Všechny role
         </option>
-        {#each groups
-          .filter(function (id) {
-            return id !== "00000000-0000-0000-0000-000000000000";
-          })
-          .asArray() as { id, value: group }}
-          <option {id} value={id}>{group.name}</option>
-        {/each}
+        <option id="user" value="user">Uživatel</option>
+        <option id="editor" value="editor">Editor</option>
+        {#if loginstate.role === "superuser"}
+          <option id="administrator" value="administrator">
+            Administrátor
+          </option>
+          <option id="superuser" value="superuser">Superuser</option>
+        {/if}
       </select>
+    {/if}
+    <select id="group-search-filter" class="form-select" bind:value={group}>
+      <option
+        id="00000000-0000-0000-0000-000000000000"
+        class="select-filter-special"
+        value="00000000-0000-0000-0000-000000000000"
+      >
+        Všechny skupiny
+      </option>
+      {#each groups
+        .filter(function (id) {
+          return id !== "00000000-0000-0000-0000-000000000000";
+        })
+        .asArray() as { id, value: group }}
+        <option {id} value={id}>{group.name}</option>
+      {/each}
+    </select>
+    {#if searchName || role !== "all" || group !== "00000000-0000-0000-0000-000000000000"}
       <Button
-        icon="search"
+        icon="cancel"
+        yellow
         on:click={() => {
           page = 1;
+          role = "all";
+          searchName = "";
+          group = "00000000-0000-0000-0000-000000000000";
         }}
       >
-        Vyhledat
+        Zrušit
       </Button>
-      {#if searchName || role !== "all" || group !== "00000000-0000-0000-0000-000000000000"}
-        <Button
-          icon="cancel"
-          yellow
-          on:click={() => {
-            page = 1;
-            role = "all";
-            searchName = "";
-            group = "00000000-0000-0000-0000-000000000000";
-          }}
-        >
-          Zrušit
-        </Button>
-      {/if}
-    </form>
+    {/if}
+  </form>
+  {#if users === undefined || userListCount === undefined}
+    <LoadingIndicator />
+  {:else}
     <table class="user-table">
       <tr>
         <th>Jméno</th>
         <th>Role</th>
         <th>Skupiny</th>
       </tr>
-      {#each userList.users as user}
+      {#each users as user}
         <tr>
           <td>{user.name}</td>
           <td>
@@ -223,8 +202,8 @@
       {/each}
     </table>
     <Pagination
-      total={Math.ceil(userList.count / perPage)}
+      total={Math.ceil(userListCount / perPage)}
       bind:current={page}
     />
-  {/await}
+  {/if}
 </div>
