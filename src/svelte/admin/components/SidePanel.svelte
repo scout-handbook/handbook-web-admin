@@ -3,6 +3,10 @@
 
   import { customProperties } from "../../../ts/admin/stores";
 
+  interface $$Slots {
+    default: Record<string, never>;
+  }
+
   $: ({ "--border-color": borderColor, "--overlay-color": overlayColor } =
     $customProperties);
 </script>
