@@ -11,7 +11,6 @@ import {
   globalDialogMessage,
   groups,
   lessons,
-  loginstate,
 } from "./stores";
 import { rawRequest, request } from "./tools/request";
 
@@ -154,7 +153,6 @@ export function refreshMetadata(): void {
           )
         ) {
           LOGINSTATE = response.response as Loginstate;
-          loginstate.set(LOGINSTATE);
           metadataEvent.trigger();
         } else {
           window.location.replace(CONFIG["frontend-uri"]);
