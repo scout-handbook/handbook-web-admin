@@ -4,6 +4,10 @@
   import Button from "./Button.svelte";
   import Overlay from "./Overlay.svelte";
 
+  interface $$Slots {
+    default: Record<string, never>;
+  }
+
   export let dismissButtonText = "";
   export let confirmButtonText: string;
 
