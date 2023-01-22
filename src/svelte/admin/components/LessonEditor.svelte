@@ -27,12 +27,12 @@
   let discardConfirmation = false;
   let insertAtCursor: (content: string) => void;
 
-  function insertImage(event: CustomEvent<{ image: string }>): void {
+  function insertImage(event: CustomEvent<string>): void {
     insertAtCursor(
       "![Text po najetí kurzorem](" +
         $apiUri +
         "/v1.0/image/" +
-        event.detail.image +
+        event.detail +
         ")"
     );
   }

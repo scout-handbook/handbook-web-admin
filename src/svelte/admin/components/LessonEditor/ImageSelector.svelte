@@ -63,11 +63,11 @@
               alt={"Image " + image}
               src={$apiUri + "/v1.0/image/" + image + "?quality=thumbnail"}
               on:click={() => {
-                dispatch("insert", { image });
+                dispatch("insert", image);
                 imageSelectorOpen = false;
               }}
               on:keypress={() => {
-                dispatch("insert", { image });
+                dispatch("insert", image);
                 imageSelectorOpen = false;
               }}
             />
