@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { useSWR } from "sswr";
   import { useLocation, useNavigate } from "svelte-navigator";
 
   import type { IDList } from "../../../ts/admin/IDList";
@@ -11,6 +12,7 @@
   import type { UserListResponse } from "../../../ts/admin/interfaces/UserListResponse";
   import type { UserSearchQuery } from "../../../ts/admin/interfaces/UserSearchQuery";
   import { apiUri, siteName } from "../../../ts/admin/stores";
+  import { constructURL } from "../../../ts/admin/tools/constructURL";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import { reAuthHandler, request } from "../../../ts/admin/tools/request";
   import ChangeUserGroupsPanel from "../components/action-modals/ChangeUserGroupsPanel.svelte";
@@ -20,7 +22,6 @@
   import Pagination from "../components/Pagination.svelte";
 
   export let groups: IDList<Group>;
-  export let loginstate: Loginstate;
 
   const location = useLocation<{
     action: string;
@@ -31,6 +32,10 @@
   $: action = $location.state?.action;
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   $: actionPayload = $location.state?.actionPayload;
+
+  const { data: loginstate } = useSWR<Loginstate>(constructURL("v1.0/account"));
+  $: isSuperuser = $loginstate?.role === "superuser";
+  $: adminOrSuperuser = $loginstate?.role === "administrator" || isSuperuser;
 
   let page = 1;
   const perPage = 25;
@@ -86,7 +91,7 @@
 {#if action === "change-user-groups"}
   <ChangeUserGroupsPanel {groups} payload={actionPayload} />
 {:else if action === "change-user-role"}
-  <ChangeUserRolePanel {loginstate} payload={actionPayload} />
+  <ChangeUserRolePanel payload={actionPayload} />
 {/if}
 
 <h1>{$siteName + " - Uživatelé"}</h1>
@@ -107,14 +112,14 @@
         type="text"
         bind:value={searchName}
       />
-      {#if loginstate.role === "administrator" || loginstate.role === "superuser"}
+      {#if adminOrSuperuser}
         <select id="role-search-filter" class="form-select" bind:value={role}>
           <option id="all" class="select-filter-special" value="all">
             Všechny role
           </option>
           <option id="user" value="user">Uživatel</option>
           <option id="editor" value="editor">Editor</option>
-          {#if loginstate.role === "superuser"}
+          {#if isSuperuser}
             <option id="administrator" value="administrator">
               Administrátor
             </option>
@@ -180,7 +185,7 @@
             {:else}
               Uživatel
             {/if}
-            {#if loginstate.role === "administrator" || loginstate.role === "superuser"}
+            {#if adminOrSuperuser}
               <br />
               <Button
                 cyan
