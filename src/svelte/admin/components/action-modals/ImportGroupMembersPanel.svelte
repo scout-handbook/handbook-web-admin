@@ -183,7 +183,6 @@
         if (step === "event-selection") {
           getParticipantList();
         } else if (step === "participant-selection") {
-          console.log(selectedParticipants);
           importParticipants();
         }
       }}
