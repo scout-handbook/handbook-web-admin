@@ -139,10 +139,10 @@
       <TopBar />
       <div id="main-page-container">
         <div id="main-page">
-          {#if $groups === null || $loginstate === null}
+          {#if $groups === null}
             <LoadingIndicator />
           {:else}
-            <GroupView groups={$groups} loginstate={$loginstate} />
+            <GroupView groups={$groups} />
           {/if}
         </div>
       </div>
