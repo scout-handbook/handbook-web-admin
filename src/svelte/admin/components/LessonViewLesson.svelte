@@ -1,19 +1,25 @@
 <script lang="ts">
+  import { useSWR } from "sswr";
   import { useNavigate } from "svelte-navigator";
 
   import type { IDList } from "../../../ts/admin/IDList";
   import type { Competence } from "../../../ts/admin/interfaces/Competence";
   import type { Lesson } from "../../../ts/admin/interfaces/Lesson";
+  import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
   import { adminUri } from "../../../ts/admin/stores";
+  import { constructURL } from "../../../ts/admin/tools/constructURL";
   import Button from "./Button.svelte";
 
   export let competences: IDList<Competence>;
-  export let adminPermissions: boolean;
   export let id: string;
   export let lesson: Lesson;
   export let secondLevel = false;
 
   const navigate = useNavigate();
+
+  const { data: loginstate } = useSWR<Loginstate>(constructURL("v1.0/account"));
+  $: adminOrSuperuser =
+    $loginstate?.role === "administrator" || $loginstate?.role === "superuser";
 
   function lessonCompetenceList(): string {
     let output = "";
@@ -44,7 +50,7 @@
 >
   Upravit
 </Button>
-{#if adminPermissions}
+{#if adminOrSuperuser}
   <Button
     icon="trash-empty"
     red

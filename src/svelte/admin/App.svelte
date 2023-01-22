@@ -60,14 +60,13 @@
       <TopBar />
       <div id="main-page-container">
         <div id="main-page">
-          {#if $fields === null || $competences === null || $lessons === null || $loginstate === null}
+          {#if $fields === null || $competences === null || $lessons === null}
             <LoadingIndicator />
           {:else}
             <LessonView
               competences={$competences}
               fields={$fields}
               lessons={$lessons}
-              loginstate={$loginstate}
             />
           {/if}
         </div>
@@ -79,14 +78,13 @@
       <TopBar />
       <div id="main-page-container">
         <div id="main-page">
-          {#if $fields === null || $competences === null || $lessons === null || $loginstate === null}
+          {#if $fields === null || $competences === null || $lessons === null}
             <LoadingIndicator />
           {:else}
             <LessonView
               competences={$competences}
               fields={$fields}
               lessons={$lessons}
-              loginstate={$loginstate}
             />
           {/if}
         </div>

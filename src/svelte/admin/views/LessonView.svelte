@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { useSWR } from "sswr";
   import { useLocation, useNavigate } from "svelte-navigator";
 
   import type { IDList } from "../../../ts/admin/IDList";
@@ -7,6 +8,7 @@
   import type { Lesson } from "../../../ts/admin/interfaces/Lesson";
   import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
   import { siteName } from "../../../ts/admin/stores";
+  import { constructURL } from "../../../ts/admin/tools/constructURL";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import AddFieldPanel from "../components/action-modals/AddFieldPanel.svelte";
   import ChangeFieldPanel from "../components/action-modals/ChangeFieldPanel.svelte";
@@ -19,7 +21,6 @@
   export let competences: IDList<Competence>;
   export let fields: IDList<Field>;
   export let lessons: IDList<Lesson>;
-  export let loginstate: Loginstate;
 
   const navigate = useNavigate();
   const location = useLocation<{
@@ -34,8 +35,9 @@
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   $: actionPayload = $location.state?.actionPayload;
 
-  $: adminPermissions =
-    loginstate.role === "administrator" || loginstate.role === "superuser";
+  const { data: loginstate } = useSWR<Loginstate>(constructURL("v1.0/account"));
+  $: adminOrSuperuser =
+    $loginstate?.role === "administrator" || $loginstate?.role === "superuser";
 
   refreshLogin(true);
 </script>
@@ -53,7 +55,7 @@
 {/if}
 
 <h1>{$siteName + " - Lekce"}</h1>
-{#if adminPermissions}
+{#if adminOrSuperuser}
   <Button
     green
     icon="plus"
@@ -73,7 +75,7 @@
 >
   Přidat lekci
 </Button>
-{#if adminPermissions}
+{#if adminOrSuperuser}
   <Button
     icon="history"
     on:click={() => {
@@ -90,13 +92,13 @@
       return field.lessons.includes(id);
     })
     .empty()}
-    <LessonViewLesson {id} {adminPermissions} {competences} {lesson} />
+    <LessonViewLesson {id} {competences} {lesson} />
   {/if}
 {/each}
 {#each fields.asArray() as { id, value: field }}
   <br />
   <h2 class="main-page">{field.name}</h2>
-  {#if adminPermissions}
+  {#if adminOrSuperuser}
     <Button
       cyan
       icon="pencil"
@@ -133,7 +135,6 @@
     {#if field.lessons.includes(lessonId)}
       <LessonViewLesson
         id={lessonId}
-        {adminPermissions}
         {competences}
         {lesson}
         secondLevel={true}
