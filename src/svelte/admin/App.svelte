@@ -8,7 +8,6 @@
     globalLoadingIndicator,
     groups,
     lessons,
-    loginstate,
   } from "../../ts/admin/stores";
   import Dialog from "./components/Dialog.svelte";
   import LoadingIndicator from "./components/LoadingIndicator.svelte";
@@ -96,13 +95,10 @@
       <TopBar />
       <div id="main-page-container">
         <div id="main-page">
-          {#if $competences === null || $loginstate === null}
+          {#if $competences === null}
             <LoadingIndicator />
           {:else}
-            <CompetenceView
-              competences={$competences}
-              loginstate={$loginstate}
-            />
+            <CompetenceView competences={$competences} />
           {/if}
         </div>
       </div>

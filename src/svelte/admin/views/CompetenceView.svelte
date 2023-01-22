@@ -1,10 +1,12 @@
 <script lang="ts">
+  import { useSWR } from "sswr";
   import { useLocation, useNavigate } from "svelte-navigator";
 
   import type { IDList } from "../../../ts/admin/IDList";
   import type { Competence } from "../../../ts/admin/interfaces/Competence";
   import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
   import { siteName } from "../../../ts/admin/stores";
+  import { constructURL } from "../../../ts/admin/tools/constructURL";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import AddCompetencePanel from "../components/action-modals/AddCompetencePanel.svelte";
   import ChangeCompetencePanel from "../components/action-modals/ChangeCompetencePanel.svelte";
@@ -12,7 +14,6 @@
   import Button from "../components/Button.svelte";
 
   export let competences: IDList<Competence>;
-  export let loginstate: Loginstate;
 
   const location = useLocation<{
     action: string;
@@ -24,8 +25,9 @@
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   $: actionPayload = $location.state?.actionPayload;
 
-  $: adminPermissions =
-    loginstate.role === "administrator" || loginstate.role === "superuser";
+  const { data: loginstate } = useSWR<Loginstate>(constructURL("v1.0/account"));
+  $: adminOrSuperuser =
+    $loginstate?.role === "administrator" || $loginstate?.role === "superuser";
 
   refreshLogin(true);
 </script>
@@ -39,7 +41,7 @@
 {/if}
 
 <h1>{$siteName + " - Kompetence"}</h1>
-{#if adminPermissions}
+{#if adminOrSuperuser}
   <Button
     green
     icon="plus"
@@ -55,7 +57,7 @@
   <h3 class="main-page">
     {competence.number.toString() + ": " + competence.name}
   </h3>
-  {#if adminPermissions}
+  {#if adminOrSuperuser}
     <div class="buttons">
       <Button
         cyan
