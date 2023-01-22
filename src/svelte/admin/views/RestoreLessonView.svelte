@@ -1,4 +1,4 @@
-<script lang="ts">
+<script lang="ts" strictEvents>
   import { useLocation, useNavigate } from "svelte-navigator";
 
   import type { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";

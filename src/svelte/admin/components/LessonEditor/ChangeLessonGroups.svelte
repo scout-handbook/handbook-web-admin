@@ -1,4 +1,4 @@
-<script lang="ts">
+<script lang="ts" strictEvents>
   import { useNavigate } from "svelte-navigator";
 
   import { groups as allGroups } from "../../../../ts/admin/stores";

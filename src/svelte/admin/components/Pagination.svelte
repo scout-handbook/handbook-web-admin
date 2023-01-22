@@ -1,4 +1,4 @@
-<script lang="ts">
+<script lang="ts" strictEvents>
   export let current: number;
   export let total: number;
 </script>

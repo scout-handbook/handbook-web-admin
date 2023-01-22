@@ -1,4 +1,4 @@
-<script lang="ts">
+<script lang="ts" strictEvents>
   import { createEventDispatcher } from "svelte";
   import { useLocation, useNavigate } from "svelte-navigator";
 

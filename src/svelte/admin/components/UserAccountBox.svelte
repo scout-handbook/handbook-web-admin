@@ -1,4 +1,4 @@
-<script lang="ts">
+<script lang="ts" strictEvents>
   import { adminUri, frontendUri, loginstate } from "../../../ts/admin/stores";
 
   $: avatar = $loginstate
