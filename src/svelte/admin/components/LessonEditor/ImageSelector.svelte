@@ -1,4 +1,4 @@
-<script lang="ts">
+<script lang="ts" strictEvents>
   import { createEventDispatcher } from "svelte";
 
   import type { RequestResponse } from "../../../../ts/admin/interfaces/RequestResponse";
@@ -11,7 +11,7 @@
 
   export let imageSelectorOpen: boolean;
 
-  const dispatch = createEventDispatcher();
+  const dispatch = createEventDispatcher<{ insert: string }>();
 
   let page = 1;
   const perPage = 15;

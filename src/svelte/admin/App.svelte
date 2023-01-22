@@ -1,4 +1,4 @@
-<script lang="ts">
+<script lang="ts" strictEvents>
   import { Route, Router } from "svelte-navigator";
 
   import {

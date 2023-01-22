@@ -1,4 +1,4 @@
-<script lang="ts">
+<script lang="ts" strictEvents>
   import { useNavigate } from "svelte-navigator";
 
   import type { LessonVersion } from "../../../../ts/admin/interfaces/LessonVersion";

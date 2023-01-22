@@ -1,4 +1,4 @@
-<script lang="ts">
+<script lang="ts" strictEvents>
   import { useLocation } from "svelte-navigator";
 
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";

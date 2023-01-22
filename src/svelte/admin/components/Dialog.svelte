@@ -1,4 +1,4 @@
-<script lang="ts">
+<script lang="ts" strictEvents>
   import { createEventDispatcher } from "svelte";
 
   import Button from "./Button.svelte";
@@ -7,7 +7,7 @@
   export let dismissButtonText = "";
   export let confirmButtonText: string;
 
-  const dispatch = createEventDispatcher();
+  const dispatch = createEventDispatcher<{ confirm: never; dismiss: never }>();
 
   function keypressHandler(event: KeyboardEvent): void {
     if (event.key === "Enter") {
