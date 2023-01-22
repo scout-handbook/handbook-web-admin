@@ -9,7 +9,7 @@
   import DoubleSidePanel from "./DoubleSidePanel.svelte";
   import LoadingIndicator from "./LoadingIndicator.svelte";
 
-  const dispatch = createEventDispatcher();
+  const dispatch = createEventDispatcher<{ cancel: never; select: string }>();
 
   let page = 1;
   const perPage = 15;
