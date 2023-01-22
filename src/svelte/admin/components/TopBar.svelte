@@ -1,4 +1,4 @@
-<script lang="ts">
+<script lang="ts" strictEvents>
   import { Link, useMatch } from "svelte-navigator";
 
   import UserAccountBox from "./UserAccountBox.svelte";

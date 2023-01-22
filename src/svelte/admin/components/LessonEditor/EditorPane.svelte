@@ -1,4 +1,4 @@
-<script lang="ts">
+<script lang="ts" strictEvents>
   import { default as EasyMDE } from "easymde";
   import { onMount } from "svelte";
 
