@@ -3,6 +3,10 @@
 
   import { customProperties } from "../../../ts/admin/stores";
 
+  interface $$Slots {
+    default: Record<string, never>;
+  }
+
   export let cyan = false;
   export let green = false;
   export let red = false;
