@@ -1,10 +1,12 @@
 <script lang="ts">
+  import { useSWR } from "sswr";
   import { useLocation, useNavigate } from "svelte-navigator";
 
   import type { IDList } from "../../../ts/admin/IDList";
   import type { Group } from "../../../ts/admin/interfaces/Group";
   import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
   import { siteName } from "../../../ts/admin/stores";
+  import { constructURL } from "../../../ts/admin/tools/constructURL";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import AddGroupPanel from "../components/action-modals/AddGroupPanel.svelte";
   import ChangeGroupPanel from "../components/action-modals/ChangeGroupPanel.svelte";
@@ -13,7 +15,6 @@
   import Button from "../components/Button.svelte";
 
   export let groups: IDList<Group>;
-  export let loginstate: Loginstate;
 
   const location = useLocation<{
     action: string;
@@ -25,8 +26,9 @@
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   $: actionPayload = $location.state?.actionPayload;
 
+  const { data: loginstate } = useSWR<Loginstate>(constructURL("v1.0/account"));
   $: adminPermissions =
-    loginstate.role === "administrator" || loginstate.role === "superuser";
+    $loginstate?.role === "administrator" || $loginstate?.role === "superuser";
 
   refreshLogin(true);
 </script>
