@@ -27,7 +27,7 @@
   $: actionPayload = $location.state?.actionPayload;
 
   const { data: loginstate } = useSWR<Loginstate>(constructURL("v1.0/account"));
-  $: adminPermissions =
+  $: adminOrSuperuser =
     $loginstate?.role === "administrator" || $loginstate?.role === "superuser";
 
   refreshLogin(true);
@@ -44,7 +44,7 @@
 {/if}
 
 <h1>{$siteName + " - Uživatelské skupiny"}</h1>
-{#if adminPermissions}
+{#if adminOrSuperuser}
   <Button
     green
     icon="plus"
@@ -63,7 +63,7 @@
     <br />
     <h3 class="main-page">{group.name}</h3>
   {/if}
-  {#if adminPermissions}
+  {#if adminOrSuperuser}
     <Button
       cyan
       icon="pencil"
