@@ -11,6 +11,7 @@
   import Button from "../Button.svelte";
   import DoneDialog from "../DoneDialog.svelte";
   import SidePanel from "../SidePanel.svelte";
+  import { get } from "../../../../ts/admin/tools/arrayTools"
 
   export let groups: IDList<Group>;
   export let payload: { user: User };
@@ -21,7 +22,7 @@
   let donePromise: Promise<void> | null = null;
 
   $: publicName =
-    groups.get("00000000-0000-0000-0000-000000000000")?.name ?? "";
+    get(groups.entries(), "00000000-0000-0000-0000-000000000000"))?.name ?? "";
 
   refreshLogin();
 
