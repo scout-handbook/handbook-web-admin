@@ -53,7 +53,7 @@
     Přidat
   </Button>
 {/if}
-{#each groups.asArray() as { id, value: group }}
+{#each groups.entries() as [ id, group ]}
   {#if id === "00000000-0000-0000-0000-000000000000"}
     <br />
     <h3 class="main-page public-group">{group.name}</h3>
