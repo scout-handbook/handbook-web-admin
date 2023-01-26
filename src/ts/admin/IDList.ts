@@ -22,16 +22,6 @@ export class IDList<T> {
     });
   }
 
-  public filter(filter: (key: string, value: T) => boolean): IDList<T> {
-    const ret = new IDList<T>();
-    this.iterate(function (key, value) {
-      if (filter(key, value)) {
-        ret.push(key, value);
-      }
-    });
-    return ret;
-  }
-
   public get(key: string): T | undefined {
     for (const item of this.list) {
       if (item.id === key) {
@@ -47,11 +37,5 @@ export class IDList<T> {
 
   public entries(): Array<[string, T]> {
     return this.list.map(({ id, value }) => [id, value]);
-  }
-
-  private iterate(iterator: (key: string, value: T) => void): void {
-    for (const item of this.list) {
-      iterator(item.id, item.value);
-    }
   }
 }
