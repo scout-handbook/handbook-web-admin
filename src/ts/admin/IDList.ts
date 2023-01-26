@@ -53,10 +53,6 @@ export class IDList<T> {
     this.list.push({ id: key, value });
   }
 
-  public asArray(): Array<{ id: string; value: T }> {
-    return this.list;
-  }
-
   public entries(): Array<[string, T]> {
     return this.list.map(({ id, value }) => [id, value]);
   }
