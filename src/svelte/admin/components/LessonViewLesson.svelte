@@ -16,20 +16,14 @@
   const navigate = useNavigate();
 
   function lessonCompetenceList(): string {
-    let output = "";
-    let first = true;
-    competences
-      .filter(function (competenceId) {
-        return lesson.competences.includes(competenceId);
-      })
-      .iterate(function (_, competence) {
-        if (!first) {
-          output += ", ";
-        }
-        output += competence.number.toString();
-        first = false;
-      });
-    return "Kompetence: " + output;
+    return (
+      "Kompetence: " +
+      competences
+        .filter((competenceId) => lesson.competences.includes(competenceId))
+        .asArray()
+        .map(({ value }) => value.number)
+        .join(", ")
+    );
   }
 </script>
 
