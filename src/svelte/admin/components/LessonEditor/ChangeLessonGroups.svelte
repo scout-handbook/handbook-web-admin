@@ -2,6 +2,7 @@
   import { useNavigate } from "svelte-navigator";
 
   import { groups as allGroups } from "../../../../ts/admin/stores";
+  import { get } from "../../../../ts/admin/tools/arrayTools";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Button from "../Button.svelte";
 
@@ -12,7 +13,10 @@
   const initialGroups = groups;
   $: groupsArray = $allGroups?.entries() ?? [];
   $: publicName =
-    $allGroups?.get("00000000-0000-0000-0000-000000000000")?.name ?? "";
+    $allGroups !== null
+      ? get($allGroups.entries(), "00000000-0000-0000-0000-000000000000")
+          ?.name ?? ""
+      : "";
 
   refreshLogin();
 </script>

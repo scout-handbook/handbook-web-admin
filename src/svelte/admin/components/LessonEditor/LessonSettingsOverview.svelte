@@ -6,6 +6,7 @@
     fields,
     groups as allGroups,
   } from "../../../../ts/admin/stores";
+  import { get } from "../../../../ts/admin/tools/arrayTools";
   import Button from "../Button.svelte";
 
   export let id: string | null;
@@ -19,7 +20,10 @@
   $: lessonCompetences = $allCompetences!
     .entries()
     .filter(([id, _]) => competences.includes(id));
-  $: fieldName = field !== null ? $fields?.get(field)?.name : undefined;
+  $: fieldName =
+    field !== null && $fields !== null
+      ? get($fields.entries(), field)?.name
+      : undefined;
   $: lessonGroups = $allGroups!
     .entries()
     .filter(([id, _]) => groups.includes(id));

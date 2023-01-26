@@ -10,6 +10,7 @@
   import type { User } from "../../../../ts/admin/interfaces/User";
   import type { UserListResponse } from "../../../../ts/admin/interfaces/UserListResponse";
   import { apiUri } from "../../../../ts/admin/stores";
+  import { get } from "../../../../ts/admin/tools/arrayTools";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import {
     authFailHandler,
@@ -28,7 +29,7 @@
 
   let error = "";
   let step = "event-selection-loading";
-  const group = groups.get(payload.groupId)!;
+  const group = get(groups.entries(), payload.groupId)!;
   let eventList: Array<Event> = [];
   let selectedEvent: string;
   let participantList: Array<Participant> = [];
