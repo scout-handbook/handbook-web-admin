@@ -10,12 +10,6 @@ export class IDList<T> {
     }
   }
 
-  public iterate(iterator: (key: string, value: T) => void): void {
-    for (const item of this.list) {
-      iterator(item.id, item.value);
-    }
-  }
-
   public map(transform: (value: T) => T): void {
     for (const item of this.list) {
       item.value = transform(item.value);
@@ -61,5 +55,11 @@ export class IDList<T> {
 
   public asArray(): Array<{ id: string; value: T }> {
     return this.list;
+  }
+
+  private iterate(iterator: (key: string, value: T) => void): void {
+    for (const item of this.list) {
+      iterator(item.id, item.value);
+    }
   }
 }
