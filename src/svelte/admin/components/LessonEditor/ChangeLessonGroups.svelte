@@ -10,7 +10,7 @@
   const navigate = useNavigate();
 
   const initialGroups = groups;
-  $: groupsArray = $allGroups?.asArray() ?? [];
+  $: groupsArray = $allGroups?.entries() ?? [];
   $: publicName =
     $allGroups?.get("00000000-0000-0000-0000-000000000000")?.name ?? "";
 
@@ -36,7 +36,7 @@
 >
 <h3 class="side-panel-title">Změnit skupiny</h3>
 <form id="side-panel-form">
-  {#each groupsArray as { id, value: group }}
+  {#each groupsArray as [ id, group ]}
     <div class="form-row">
       <label class="form-switch">
         <input type="checkbox" value={id} bind:group={groups} />
