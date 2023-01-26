@@ -89,7 +89,7 @@
     .filter(function (_, field) {
       return field.lessons.includes(lessonId);
     })
-    .empty()}
+    .entries().length === 0}
     <LessonViewLesson id={lessonId} {adminPermissions} {competences} {lesson} />
   {/if}
 {/each}
