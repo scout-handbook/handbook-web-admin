@@ -1,5 +1,5 @@
 export class IDList<T> {
-  private readonly list: Array<{ k: string; v: T }>;
+  private readonly list: Array<{ id: string; value: T }>;
 
   public constructor(list: Record<string, T> = {}) {
     this.list = [];
@@ -12,19 +12,19 @@ export class IDList<T> {
 
   public iterate(iterator: (key: string, value: T) => void): void {
     for (const item of this.list) {
-      iterator(item.k, item.v);
+      iterator(item.id, item.value);
     }
   }
 
   public map(transform: (value: T) => T): void {
     for (const item of this.list) {
-      item.v = transform(item.v);
+      item.value = transform(item.value);
     }
   }
 
   public sort(comparator: (first: T, second: T) => number): void {
     this.list.sort(function (first, second): number {
-      return comparator(first.v, second.v);
+      return comparator(first.value, second.value);
     });
   }
 
@@ -48,18 +48,18 @@ export class IDList<T> {
 
   public get(key: string): T | undefined {
     for (const item of this.list) {
-      if (item.k === key) {
-        return item.v;
+      if (item.id === key) {
+        return item.value;
       }
     }
     return undefined;
   }
 
   public push(key: string, value: T): void {
-    this.list.push({ k: key, v: value });
+    this.list.push({ id: key, value });
   }
 
   public asArray(): Array<{ id: string; value: T }> {
-    return this.list.map((item) => ({ id: item.k, value: item.v }));
+    return this.list;
   }
 }
