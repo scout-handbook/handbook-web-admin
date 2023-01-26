@@ -21,7 +21,7 @@
       competences
         .filter((competenceId) => lesson.competences.includes(competenceId))
         .entries()
-        .map(([_, competence ]) => competence.number)
+        .map(([_, competence]) => competence.number)
         .join(", ")
     );
   }

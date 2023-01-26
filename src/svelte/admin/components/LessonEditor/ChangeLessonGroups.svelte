@@ -36,7 +36,7 @@
 >
 <h3 class="side-panel-title">Změnit skupiny</h3>
 <form id="side-panel-form">
-  {#each groupsArray as [ id, group ]}
+  {#each groupsArray as [id, group]}
     <div class="form-row">
       <label class="form-switch">
         <input type="checkbox" value={id} bind:group={groups} />
