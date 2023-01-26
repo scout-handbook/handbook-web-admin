@@ -34,7 +34,7 @@
 >
 <h3 class="side-panel-title">Změnit oblast</h3>
 <form id="side-panel-form">
-  {#each fieldsArray as [ id, field ]}
+  {#each fieldsArray as [id, field]}
     <div class="form-row">
       <label class="form-switch">
         <input name="field" type="radio" value={id} bind:group={field} />

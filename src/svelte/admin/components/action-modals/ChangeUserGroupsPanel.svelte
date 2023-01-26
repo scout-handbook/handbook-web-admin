@@ -66,7 +66,7 @@
     <Button green icon="floppy" on:click={saveCallback}>Uložit</Button>
     <h3 class="side-panel-title">Změnit skupiny: {payload.user.name}</h3>
     <form id="side-panel-form">
-      {#each groups.entries() as [ id, group ]}
+      {#each groups.entries() as [id, group]}
         {#if id !== "00000000-0000-0000-0000-000000000000"}
           <div class="form-row">
             <label class="form-switch">

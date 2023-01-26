@@ -51,7 +51,7 @@
   </Button>
   <br />
 {/if}
-{#each competences.entries() as [ id, competence ]}
+{#each competences.entries() as [id, competence]}
   <h3 class="main-page">
     {competence.number.toString() + ": " + competence.name}
   </h3>

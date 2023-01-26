@@ -83,7 +83,7 @@
     Smazané lekce
   </Button>
 {/if}
-{#each lessons.entries() as [ lessonId, lesson ]}
+{#each lessons.entries() as [lessonId, lesson]}
   <!-- TODO: Precompute -->
   {#if fields
     .filter(function (_, field) {
@@ -93,7 +93,7 @@
     <LessonViewLesson id={lessonId} {adminPermissions} {competences} {lesson} />
   {/if}
 {/each}
-{#each fields.entries() as [ fieldId, field ]}
+{#each fields.entries() as [fieldId, field]}
   <br />
   <h2 class="main-page">{field.name}</h2>
   {#if adminPermissions}
@@ -129,7 +129,7 @@
   >
     Přidat lekci
   </Button>
-  {#each lessons.entries() as [ lessonId, lesson ]}
+  {#each lessons.entries() as [lessonId, lesson]}
     {#if field.lessons.includes(lessonId)}
       <LessonViewLesson
         id={lessonId}

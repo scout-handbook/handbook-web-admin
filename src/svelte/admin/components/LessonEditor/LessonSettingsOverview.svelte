@@ -83,7 +83,7 @@
 >
   Upravit
 </Button>
-{#each lessonCompetences as [ _, competence ]}
+{#each lessonCompetences as [_, competence]}
   <br />
   <span class="competence-number">{competence.number}:</span>
   {competence.name}
@@ -103,7 +103,7 @@
 </Button>
 <br />
 <div id="settingsGroupList">
-  {#each lessonGroups as [ id, group ]}
+  {#each lessonGroups as [id, group]}
     {#if id === "00000000-0000-0000-0000-000000000000"}
       <span class="public-group">{group.name}</span>
       <br />

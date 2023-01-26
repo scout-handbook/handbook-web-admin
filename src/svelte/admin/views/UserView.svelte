@@ -69,7 +69,7 @@
     return groups
       .filter((id) => user.groups.includes(id))
       .entries()
-      .map(([_, group ]) => group.name)
+      .map(([_, group]) => group.name)
       .join(", ");
   }
 </script>
@@ -125,7 +125,7 @@
           .filter(function (id) {
             return id !== "00000000-0000-0000-0000-000000000000";
           })
-          .entries() as [ id, group ]}
+          .entries() as [id, group]}
           <option {id} value={id}>{group.name}</option>
         {/each}
       </select>

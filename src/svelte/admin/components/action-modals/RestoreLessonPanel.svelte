@@ -134,7 +134,7 @@
         <LoadingIndicator />
       {:else if step === "lesson-selection"}
         <form id="side-panel-form">
-          {#each lessonList.entries() as [ id, lesson ]}
+          {#each lessonList.entries() as [id, lesson]}
             <div class="form-row">
               <label class="form-switch">
                 <input
