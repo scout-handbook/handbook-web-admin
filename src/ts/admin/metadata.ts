@@ -14,6 +14,7 @@ import {
   loginstate,
 } from "./stores";
 import { rawRequest, request } from "./tools/request";
+import { get } from "./tools/arrayTools";
 
 export let metadataEvent: AfterLoadEvent;
 export let FIELDS: IDList<Field>;
@@ -37,8 +38,8 @@ function lessonComparator(first: Lesson, second: Lesson): number {
     return -1;
   }
   return competenceComparator(
-    COMPETENCES.get(first.competences[0])!,
-    COMPETENCES.get(second.competences[0])!
+    get(COMPETENCES.entries(), first.competences[0])!,
+    get(COMPETENCES.entries(), second.competences[0])!
   );
 }
 
@@ -53,8 +54,8 @@ function fieldComparator(first: Field, second: Field): number {
     return -1;
   }
   return lessonComparator(
-    LESSONS.get(first.lessons[0])!,
-    LESSONS.get(second.lessons[0])!
+    get(LESSONS.entries(), first.lessons[0])!,
+    get(LESSONS.entries(), second.lessons[0])!
   );
 }
 
@@ -66,8 +67,8 @@ export function refreshMetadata(): void {
     LESSONS.map(function (value: Lesson): Lesson {
       value.competences.sort(function (first: string, second: string): number {
         return competenceComparator(
-          COMPETENCES.get(first)!,
-          COMPETENCES.get(second)!
+          get(COMPETENCES.entries(), first)!,
+          get(COMPETENCES.entries(), second)!
         );
       });
       return value;
@@ -75,7 +76,10 @@ export function refreshMetadata(): void {
     LESSONS.sort(lessonComparator);
     FIELDS.map(function (value: Field): Field {
       value.lessons.sort(function (first: string, second: string): number {
-        return lessonComparator(LESSONS.get(first)!, LESSONS.get(second)!);
+        return lessonComparator(
+          get(LESSONS.entries(), first)!,
+          get(LESSONS.entries(), second)!
+        );
       });
       return value;
     });
