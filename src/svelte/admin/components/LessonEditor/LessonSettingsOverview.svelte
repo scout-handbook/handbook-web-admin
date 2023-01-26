@@ -20,13 +20,13 @@
     .filter(function (id) {
       return competences.includes(id);
     })
-    .asArray();
+    .entries();
   $: fieldName = field !== null ? $fields?.get(field)?.name : undefined;
   $: lessonGroups = $allGroups!
     .filter(function (id) {
       return groups.includes(id);
     })
-    .asArray();
+    .entries();
   $: currentUri = $location.pathname + $location.search;
 </script>
 
@@ -83,7 +83,7 @@
 >
   Upravit
 </Button>
-{#each lessonCompetences as { id: _, value: competence }}
+{#each lessonCompetences as [ _, competence ]}
   <br />
   <span class="competence-number">{competence.number}:</span>
   {competence.name}
@@ -103,7 +103,7 @@
 </Button>
 <br />
 <div id="settingsGroupList">
-  {#each lessonGroups as { id, value: group }}
+  {#each lessonGroups as [ id, group ]}
     {#if id === "00000000-0000-0000-0000-000000000000"}
       <span class="public-group">{group.name}</span>
       <br />
