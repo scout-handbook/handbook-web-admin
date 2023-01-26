@@ -83,17 +83,17 @@
     Smazané lekce
   </Button>
 {/if}
-{#each lessons.asArray() as { id, value: lesson }}
+{#each lessons.entries() as [ lessonId, lesson ]}
   <!-- TODO: Precompute -->
   {#if fields
     .filter(function (_, field) {
-      return field.lessons.includes(id);
+      return field.lessons.includes(lessonId);
     })
     .empty()}
-    <LessonViewLesson {id} {adminPermissions} {competences} {lesson} />
+    <LessonViewLesson id={lessonId} {adminPermissions} {competences} {lesson} />
   {/if}
 {/each}
-{#each fields.asArray() as { id, value: field }}
+{#each fields.entries() as [ fieldId, field ]}
   <br />
   <h2 class="main-page">{field.name}</h2>
   {#if adminPermissions}
@@ -102,7 +102,7 @@
       icon="pencil"
       on:click={() => {
         navigate("/lessons", {
-          state: { action: "change-field", actionPayload: { fieldId: id } },
+          state: { action: "change-field", actionPayload: { fieldId } },
         });
       }}
     >
@@ -113,7 +113,7 @@
       red
       on:click={() => {
         navigate("/lessons", {
-          state: { action: "delete-field", actionPayload: { fieldId: id } },
+          state: { action: "delete-field", actionPayload: { fieldId } },
         });
       }}
     >
@@ -124,12 +124,12 @@
     green
     icon="plus"
     on:click={() => {
-      navigate("/lessons/add?field=" + id);
+      navigate("/lessons/add?field=" + fieldId);
     }}
   >
     Přidat lekci
   </Button>
-  {#each lessons.asArray() as { id: lessonId, value: lesson }}
+  {#each lessons.entries() as [ lessonId, lesson ]}
     {#if field.lessons.includes(lessonId)}
       <LessonViewLesson
         id={lessonId}
