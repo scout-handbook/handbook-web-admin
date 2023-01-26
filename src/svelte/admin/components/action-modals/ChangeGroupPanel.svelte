@@ -6,6 +6,7 @@
   import { apiUri } from "../../../../ts/admin/stores";
   import { Action } from "../../../../ts/admin/tools/Action";
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
+  import { get } from "../../../../ts/admin/tools/arrayTools";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Button from "../Button.svelte";
   import DoneDialog from "../DoneDialog.svelte";
@@ -16,7 +17,7 @@
 
   const navigate = useNavigate();
 
-  const group = groups.get(payload.groupId)!;
+  const group = get(groups.entries(), payload.groupId)!;
   let { name } = group;
   let donePromise: Promise<void> | null = null;
 

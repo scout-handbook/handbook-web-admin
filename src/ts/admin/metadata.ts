@@ -13,8 +13,8 @@ import {
   lessons,
   loginstate,
 } from "./stores";
-import { rawRequest, request } from "./tools/request";
 import { get } from "./tools/arrayTools";
+import { rawRequest, request } from "./tools/request";
 
 export let metadataEvent: AfterLoadEvent;
 export let FIELDS: IDList<Field>;

@@ -8,6 +8,7 @@
   import { Action } from "../../../ts/admin/tools/Action";
   import { ActionCallback } from "../../../ts/admin/tools/ActionCallback";
   import { ActionQueue } from "../../../ts/admin/tools/ActionQueue";
+  import { get } from "../../../ts/admin/tools/arrayTools";
   import {
     populateCompetences,
     populateField,
@@ -23,9 +24,10 @@
   const navigate = useNavigate();
 
   let donePromise: Promise<void> | null = null;
-  let name = LESSONS.get(lessonID)?.name ?? "";
+  let name = get(LESSONS.entries(), lessonID)?.name ?? "";
   let body = "";
-  let competences: Array<string> = LESSONS.get(lessonID)?.competences ?? [];
+  let competences: Array<string> =
+    get(LESSONS.entries(), lessonID)?.competences ?? [];
   let field: string | null =
     FIELDS.entries().find(([_, field]) => {
       return field.lessons.includes(lessonID);
