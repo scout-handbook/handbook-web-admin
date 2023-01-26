@@ -20,8 +20,8 @@
       "Kompetence: " +
       competences
         .filter((competenceId) => lesson.competences.includes(competenceId))
-        .asArray()
-        .map(({ value }) => value.number)
+        .entries()
+        .map(([_, competence ]) => competence.number)
         .join(", ")
     );
   }
