@@ -62,7 +62,7 @@
     {},
     (response: RequestResponse) => {
       lessonList = new IDList(response as Record<string, DeletedLesson>);
-      if (lessonList.empty()) {
+      if (lessonList.entries().length === 0) {
         error = "Nejsou žádné smazané lekce.";
       }
       step = "lesson-selection";

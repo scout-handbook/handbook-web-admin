@@ -32,14 +32,6 @@ export class IDList<T> {
     return ret;
   }
 
-  public empty(): boolean {
-    let ret = true;
-    this.iterate(function () {
-      ret = false;
-    });
-    return ret;
-  }
-
   public get(key: string): T | undefined {
     for (const item of this.list) {
       if (item.id === key) {
