@@ -22,7 +22,7 @@
   let donePromise: Promise<void> | null = null;
 
   $: publicName =
-    get(groups.entries(), "00000000-0000-0000-0000-000000000000"))?.name ?? "";
+    get(groups.entries(), "00000000-0000-0000-0000-000000000000")?.name ?? "";
 
   refreshLogin();
 
