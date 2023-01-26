@@ -66,20 +66,11 @@
   refreshLogin(true);
 
   function groupsList(user: User): string {
-    let first = true;
-    let output = "";
-    groups
-      .filter(function (id) {
-        return user.groups.includes(id);
-      })
-      .iterate(function (_, group) {
-        if (!first) {
-          output += ", ";
-        }
-        output += group.name;
-        first = false;
-      });
-    return output;
+    return groups
+      .filter((id) => user.groups.includes(id))
+      .asArray()
+      .map(({ value }) => value.name)
+      .join(", ");
   }
 </script>
 
