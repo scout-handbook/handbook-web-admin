@@ -27,9 +27,9 @@
   let body = "";
   let competences: Array<string> = LESSONS.get(lessonID)?.competences ?? [];
   let field: string | null =
-    FIELDS.asArray().find((field) => {
-      return field.value.lessons.includes(lessonID);
-    })?.id ?? null;
+    FIELDS.entries().find(([_, field]) => {
+      return field.lessons.includes(lessonID);
+    })?.[0] ?? null;
   let groups: Array<string> = [];
 
   const initialName = name;
