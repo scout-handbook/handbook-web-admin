@@ -16,17 +16,11 @@
   const location = useLocation();
   const navigate = useNavigate();
 
-  $: lessonCompetences = $allCompetences!
-    .filter(function (id) {
-      return competences.includes(id);
-    })
-    .entries();
+  $: lessonCompetences = $allCompetences!.entries()
+    .filter(([id, _]) => competences.includes(id));
   $: fieldName = field !== null ? $fields?.get(field)?.name : undefined;
-  $: lessonGroups = $allGroups!
-    .filter(function (id) {
-      return groups.includes(id);
-    })
-    .entries();
+  $: lessonGroups = $allGroups!.entries()
+    .filter(([id, _]) => groups.includes(id));
   $: currentUri = $location.pathname + $location.search;
 </script>
 
