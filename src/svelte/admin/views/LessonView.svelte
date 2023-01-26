@@ -85,9 +85,9 @@
 {/if}
 {#each lessons.entries() as [lessonId, lesson]}
   <!-- TODO: Precompute -->
-  {#if fields.entries()
-    .filter(([_, field]) => field.lessons.includes(lessonId))
-    .length === 0}
+  {#if fields
+    .entries()
+    .filter(([_, field]) => field.lessons.includes(lessonId)).length === 0}
     <LessonViewLesson id={lessonId} {adminPermissions} {competences} {lesson} />
   {/if}
 {/each}

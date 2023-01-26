@@ -121,9 +121,9 @@
         >
           Všechny skupiny
         </option>
-        {#each groups.entries()
-          .filter(([id, _]) => id !== "00000000-0000-0000-0000-000000000000")
-           as [id, group]}
+        {#each groups
+          .entries()
+          .filter(([id, _]) => id !== "00000000-0000-0000-0000-000000000000") as [id, group]}
           <option {id} value={id}>{group.name}</option>
         {/each}
       </select>
