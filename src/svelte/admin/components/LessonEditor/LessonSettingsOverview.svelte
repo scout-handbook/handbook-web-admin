@@ -16,10 +16,12 @@
   const location = useLocation();
   const navigate = useNavigate();
 
-  $: lessonCompetences = $allCompetences!.entries()
+  $: lessonCompetences = $allCompetences!
+    .entries()
     .filter(([id, _]) => competences.includes(id));
   $: fieldName = field !== null ? $fields?.get(field)?.name : undefined;
-  $: lessonGroups = $allGroups!.entries()
+  $: lessonGroups = $allGroups!
+    .entries()
     .filter(([id, _]) => groups.includes(id));
   $: currentUri = $location.pathname + $location.search;
 </script>
