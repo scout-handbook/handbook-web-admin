@@ -57,6 +57,10 @@ export class IDList<T> {
     return this.list;
   }
 
+  public entries(): Array<[string, T]> {
+    return this.list.map(({ id, value }) => [id, value]);
+  }
+
   private iterate(iterator: (key: string, value: T) => void): void {
     for (const item of this.list) {
       iterator(item.id, item.value);
