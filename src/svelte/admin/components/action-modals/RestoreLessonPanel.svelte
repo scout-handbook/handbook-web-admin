@@ -3,7 +3,6 @@
 
   import type { DeletedLesson } from "../../../../ts/admin/interfaces/DeletedLesson";
   import type { LessonVersion } from "../../../../ts/admin/interfaces/LessonVersion";
-  import type { RequestResponse } from "../../../../ts/admin/interfaces/RequestResponse";
   import { apiUri } from "../../../../ts/admin/stores";
   import { compileMarkdown } from "../../../../ts/admin/tools/compileMarkdown";
   import { parseVersion } from "../../../../ts/admin/tools/parseVersion";
@@ -46,8 +45,8 @@
         selectedVersion.toString(),
       "GET",
       {},
-      (response: RequestResponse) => {
-        void compileMarkdown(response as string).then(resolve);
+      (response: string) => {
+        void compileMarkdown(response).then(resolve);
       },
       authFailHandler
     );
@@ -59,8 +58,8 @@
     $apiUri + "/v1.0/deleted-lesson",
     "GET",
     {},
-    (response: RequestResponse) => {
-      lessonList = Object.entries(response as Record<string, DeletedLesson>);
+    (response: Record<string, DeletedLesson>) => {
+      lessonList = Object.entries(response);
       if (lessonList.length === 0) {
         error = "Nejsou žádné smazané lekce.";
       }
@@ -78,8 +77,8 @@
       $apiUri + "/v1.0/deleted-lesson/" + selectedLesson + "/history",
       "GET",
       {},
-      (response: RequestResponse) => {
-        versionList = response as Array<LessonVersion>;
+      (response: Array<LessonVersion>) => {
+        versionList = response;
         step = "version-selection";
       },
       reAuthHandler

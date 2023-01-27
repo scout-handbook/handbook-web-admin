@@ -115,8 +115,8 @@ export function refreshMetadata(): void {
     CONFIG["api-uri"] + "/v1.0/lesson?override-group=true",
     "GET",
     {},
-    function (response): void {
-      LESSONS = Object.entries(response as Record<string, Lesson>);
+    function (response: Record<string, Lesson>): void {
+      LESSONS = Object.entries(response);
       metadataSortEvent.trigger();
     },
     undefined
@@ -125,8 +125,8 @@ export function refreshMetadata(): void {
     CONFIG["api-uri"] + "/v1.0/field?override-group=true",
     "GET",
     {},
-    function (response): void {
-      FIELDS = Object.entries(response as Record<string, Field>);
+    function (response: Record<string, Field>): void {
+      FIELDS = Object.entries(response);
       metadataSortEvent.trigger();
     },
     undefined
@@ -135,8 +135,8 @@ export function refreshMetadata(): void {
     CONFIG["api-uri"] + "/v1.0/competence",
     "GET",
     {},
-    function (response): void {
-      COMPETENCES = Object.entries(response as Record<string, Competence>);
+    function (response: Record<string, Competence>): void {
+      COMPETENCES = Object.entries(response);
       metadataSortEvent.trigger();
     },
     undefined
@@ -156,8 +156,8 @@ export function refreshMetadata(): void {
     CONFIG["api-uri"] + "/v1.0/group",
     "GET",
     {},
-    function (response): void {
-      GROUPS = processGroups(response as Record<string, Group>);
+    function (response: Record<string, Group>): void {
+      GROUPS = processGroups(response);
       groups.set(GROUPS);
       metadataEvent.trigger();
     },

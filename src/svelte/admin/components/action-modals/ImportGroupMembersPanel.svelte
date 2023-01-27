@@ -5,7 +5,6 @@
   import type { Group } from "../../../../ts/admin/interfaces/Group";
   import type { Participant } from "../../../../ts/admin/interfaces/Participant";
   import type { Payload } from "../../../../ts/admin/interfaces/Payload";
-  import type { RequestResponse } from "../../../../ts/admin/interfaces/RequestResponse";
   import type { User } from "../../../../ts/admin/interfaces/User";
   import type { UserListResponse } from "../../../../ts/admin/interfaces/UserListResponse";
   import { apiUri } from "../../../../ts/admin/stores";
@@ -40,8 +39,8 @@
     $apiUri + "/v1.0/event",
     "GET",
     {},
-    (response: RequestResponse) => {
-      eventList = response as Array<Event>;
+    (response: Array<Event>) => {
+      eventList = response;
       if (eventList.length < 1) {
         error = "Nejste instruktorem na žádné akci.";
       }
@@ -77,8 +76,8 @@
         $apiUri + "/v1.0/event/" + selectedEvent + "/participant",
         "GET",
         {},
-        (response: RequestResponse) => {
-          resolve(response as Array<Participant>);
+        (response: Array<Participant>) => {
+          resolve(response);
         },
         exceptionHandler
       );
@@ -88,8 +87,8 @@
         $apiUri + "/v1.0/user",
         "GET",
         { page: 1, "per-page": 1000, group: payload.groupId },
-        (response: RequestResponse) => {
-          resolve((response as UserListResponse).users);
+        (response: UserListResponse) => {
+          resolve(response.users);
         },
         reAuthHandler
       );
