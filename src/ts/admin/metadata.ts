@@ -1,4 +1,5 @@
 import { AfterLoadEvent } from "./AfterLoadEvent";
+import type { APIResponse } from "./interfaces/APIResponse";
 import type { Competence } from "./interfaces/Competence";
 import type { Field } from "./interfaces/Field";
 import type { Group } from "./interfaces/Group";
@@ -167,14 +168,14 @@ export function refreshMetadata(): void {
     CONFIG["api-uri"] + "/v1.0/account",
     "GET",
     undefined,
-    function (response): void {
+    function (response: APIResponse<Loginstate>): void {
       if (response.status === 200) {
         if (
           ["editor", "administrator", "superuser"].includes(
-            (response.response as Loginstate).role
+            response.response!.role
           )
         ) {
-          LOGINSTATE = response.response as Loginstate;
+          LOGINSTATE = response.response!;
           loginstate.set(LOGINSTATE);
           metadataEvent.trigger();
         } else {
