@@ -3,6 +3,7 @@
 
   import type { APIResponse } from "../../../../ts/admin/interfaces/APIResponse";
   import type { Lesson } from "../../../../ts/admin/interfaces/Lesson";
+  import type { RequestResponse } from "../../../../ts/admin/interfaces/RequestResponse";
   import { apiUri } from "../../../../ts/admin/stores";
   import { Action } from "../../../../ts/admin/tools/Action";
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
@@ -22,11 +23,11 @@
   let lockedError: string | null = null;
   let expiredError = false;
   const mutexPromise = new Promise<void>((resolve) => {
-    const exceptionHandler = reAuthHandler;
-    exceptionHandler["LockedException"] = function (
-      response: APIResponse
-    ): void {
-      lockedError = response.holder!;
+    const exceptionHandler = {
+      ...reAuthHandler,
+      LockedException: (response: APIResponse<RequestResponse>): void => {
+        lockedError = response.holder!;
+      },
     };
     request(
       $apiUri + "/v1.0/mutex/" + encodeURIComponent(payload.lessonId),

@@ -2,6 +2,7 @@
   import { useNavigate } from "svelte-navigator";
 
   import type { APIResponse } from "../../../ts/admin/interfaces/APIResponse";
+  import type { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
   import { FIELDS, LESSONS, metadataEvent } from "../../../ts/admin/metadata";
   import { apiUri, globalDialogMessage } from "../../../ts/admin/stores";
   import { Action } from "../../../ts/admin/tools/Action";
@@ -61,7 +62,7 @@
         },
         {
           ...reAuthHandler,
-          LockedException: (response: APIResponse): void => {
+          LockedException: (response: APIResponse<RequestResponse>): void => {
             globalDialogMessage.set(
               "Nelze upravovat lekci, protože ji právě upravuje " +
                 response.holder! +

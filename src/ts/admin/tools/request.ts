@@ -10,7 +10,7 @@ export const reAuthHandler: ExceptionHandler = {
   },
 };
 
-export const authFailHandler = {
+export const authFailHandler: ExceptionHandler = {
   AuthenticationException: function (): void {
     globalDialogMessage.set(
       "Proběhlo automatické odhlášení. Přihlašte se prosím a zkuste to znovu."
@@ -44,16 +44,16 @@ function requestQueryBuilder(payload: Payload): string {
   return query;
 }
 
-export function rawRequest(
+export function rawRequest<T extends RequestResponse>(
   url: string,
   method: string,
   payload: FormData | Payload = {},
-  callback: (response: APIResponse) => void
+  callback: (response: APIResponse<T>) => void
 ): void {
   const xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function (): void {
     if (this.readyState === 4) {
-      callback(JSON.parse(this.responseText) as APIResponse);
+      callback(JSON.parse(this.responseText) as APIResponse<T>);
     }
   };
   let query = "";
@@ -91,9 +91,9 @@ export function request<T extends RequestResponse>(
   callback: (response: T) => void,
   exceptionHandler: ExceptionHandler = {}
 ): void {
-  rawRequest(url, method, payload, function (response): void {
+  rawRequest(url, method, payload, function (response: APIResponse<T>): void {
     if (Math.floor(response.status / 100) === 2) {
-      callback(response.response! as T);
+      callback(response.response!);
     } else if (
       Object.prototype.hasOwnProperty.call(exceptionHandler, response.type!)
     ) {
