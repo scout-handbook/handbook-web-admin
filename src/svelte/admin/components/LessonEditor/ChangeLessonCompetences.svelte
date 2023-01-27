@@ -10,7 +10,7 @@
   const navigate = useNavigate();
 
   const initialCompetences = competences;
-  $: competencesArray = $allCompetences?.entries() ?? [];
+  $: competencesArray = $allCompetences ?? [];
 
   refreshLogin();
 </script>

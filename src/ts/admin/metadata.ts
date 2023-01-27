@@ -18,7 +18,7 @@ import { rawRequest, request } from "./tools/request";
 
 export let metadataEvent: AfterLoadEvent;
 export let FIELDS: IDList<Field>;
-export let COMPETENCES: IDList<Competence>;
+export let COMPETENCES: Array<[string, Competence]>;
 export let GROUPS: Array<[string, Group]>;
 export let LESSONS: IDList<Lesson>;
 export let LOGINSTATE: Loginstate = { avatar: "", name: "", role: "guest" };
@@ -38,8 +38,8 @@ function lessonComparator(first: Lesson, second: Lesson): number {
     return -1;
   }
   return competenceComparator(
-    get(COMPETENCES.entries(), first.competences[0])!,
-    get(COMPETENCES.entries(), second.competences[0])!
+    get(COMPETENCES, first.competences[0])!,
+    get(COMPETENCES, second.competences[0])!
   );
 }
 
@@ -63,12 +63,14 @@ export function refreshMetadata(): void {
   metadataEvent = new AfterLoadEvent(3);
   const metadataSortEvent = new AfterLoadEvent(3);
   metadataSortEvent.addCallback(function (): void {
-    COMPETENCES.sort(competenceComparator);
+    COMPETENCES.sort(([_1, first], [_2, second]) =>
+      competenceComparator(first, second)
+    );
     LESSONS.map(function (value: Lesson): Lesson {
       value.competences.sort(function (first: string, second: string): number {
         return competenceComparator(
-          get(COMPETENCES.entries(), first)!,
-          get(COMPETENCES.entries(), second)!
+          get(COMPETENCES, first)!,
+          get(COMPETENCES, second)!
         );
       });
       return value;
@@ -114,9 +116,7 @@ export function refreshMetadata(): void {
     "GET",
     {},
     function (response): void {
-      COMPETENCES = new IDList<Competence>(
-        response as Record<string, Competence>
-      );
+      COMPETENCES = Object.entries(response as Record<string, Competence>);
       metadataSortEvent.trigger();
     },
     undefined

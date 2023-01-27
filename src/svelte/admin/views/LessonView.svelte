@@ -16,7 +16,7 @@
   import Button from "../components/Button.svelte";
   import LessonViewLesson from "../components/LessonViewLesson.svelte";
 
-  export let competences: IDList<Competence>;
+  export let competences: Array<[string, Competence]>;
   export let fields: IDList<Field>;
   export let lessons: IDList<Lesson>;
   export let loginstate: Loginstate;
