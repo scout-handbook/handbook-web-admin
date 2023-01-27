@@ -21,9 +21,7 @@
     competences.includes(id)
   );
   $: fieldName =
-    field !== null && $fields !== null
-      ? get($fields.entries(), field)?.name
-      : undefined;
+    field !== null && $fields !== null ? get($fields, field)?.name : undefined;
   $: lessonGroups = $allGroups!.filter(([id, _]) => groups.includes(id));
   $: currentUri = $location.pathname + $location.search;
 </script>

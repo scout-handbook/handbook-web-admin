@@ -17,7 +17,7 @@ import { get } from "./tools/arrayTools";
 import { rawRequest, request } from "./tools/request";
 
 export let metadataEvent: AfterLoadEvent;
-export let FIELDS: IDList<Field>;
+export let FIELDS: Array<[string, Field]>;
 export let COMPETENCES: Array<[string, Competence]>;
 export let GROUPS: Array<[string, Group]>;
 export let LESSONS: IDList<Lesson>;
@@ -76,16 +76,16 @@ export function refreshMetadata(): void {
       return value;
     });
     LESSONS.sort(lessonComparator);
-    FIELDS.map(function (value: Field): Field {
-      value.lessons.sort(function (first: string, second: string): number {
+    FIELDS.map(([id, field]): [string, Field] => {
+      field.lessons.sort(function (first: string, second: string): number {
         return lessonComparator(
           get(LESSONS.entries(), first)!,
           get(LESSONS.entries(), second)!
         );
       });
-      return value;
+      return [id, field];
     });
-    FIELDS.sort(fieldComparator);
+    FIELDS.sort(([_1, first], [_2, second]) => fieldComparator(first, second));
     competences.set(COMPETENCES);
     lessons.set(LESSONS);
     fields.set(FIELDS);
@@ -106,7 +106,7 @@ export function refreshMetadata(): void {
     "GET",
     {},
     function (response): void {
-      FIELDS = new IDList<Field>(response as Record<string, Field>);
+      FIELDS = Object.entries(response as Record<string, Field>);
       metadataSortEvent.trigger();
     },
     undefined

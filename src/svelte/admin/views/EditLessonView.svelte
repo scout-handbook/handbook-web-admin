@@ -29,7 +29,7 @@
   let competences: Array<string> =
     get(LESSONS.entries(), lessonID)?.competences ?? [];
   let field: string | null =
-    FIELDS.entries().find(([_, field]) => {
+    FIELDS.find(([_, field]) => {
       return field.lessons.includes(lessonID);
     })?.[0] ?? null;
   let groups: Array<string> = [];

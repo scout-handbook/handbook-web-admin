@@ -17,7 +17,7 @@
   import LessonViewLesson from "../components/LessonViewLesson.svelte";
 
   export let competences: Array<[string, Competence]>;
-  export let fields: IDList<Field>;
+  export let fields: Array<[string, Field]>;
   export let lessons: IDList<Lesson>;
   export let loginstate: Loginstate;
 
@@ -85,13 +85,11 @@
 {/if}
 {#each lessons.entries() as [lessonId, lesson]}
   <!-- TODO: Precompute -->
-  {#if fields
-    .entries()
-    .filter(([_, field]) => field.lessons.includes(lessonId)).length === 0}
+  {#if fields.filter( ([_, field]) => field.lessons.includes(lessonId) ).length === 0}
     <LessonViewLesson id={lessonId} {adminPermissions} {competences} {lesson} />
   {/if}
 {/each}
-{#each fields.entries() as [fieldId, field]}
+{#each fields as [fieldId, field]}
   <br />
   <h2 class="main-page">{field.name}</h2>
   {#if adminPermissions}
