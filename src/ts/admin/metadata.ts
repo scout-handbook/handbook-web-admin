@@ -26,7 +26,11 @@ function competenceComparator(first: Competence, second: Competence): number {
   return first.number - second.number;
 }
 
-function lessonComparator(first: Lesson, second: Lesson): number {
+function lessonComparator(
+  first: Lesson,
+  second: Lesson,
+  competences: Array<[string, Competence]>
+): number {
   if (first.competences.length === 0) {
     if (second.competences.length === 0) {
       return 0;
@@ -37,12 +41,17 @@ function lessonComparator(first: Lesson, second: Lesson): number {
     return -1;
   }
   return competenceComparator(
-    get(COMPETENCES, first.competences[0])!,
-    get(COMPETENCES, second.competences[0])!
+    get(competences, first.competences[0])!,
+    get(competences, second.competences[0])!
   );
 }
 
-function fieldComparator(first: Field, second: Field): number {
+function fieldComparator(
+  first: Field,
+  second: Field,
+  lessons: Array<[string, Lesson]>,
+  competences: Array<[string, Competence]>
+): number {
   if (first.lessons.length === 0) {
     if (second.lessons.length === 0) {
       return 0;
@@ -53,8 +62,9 @@ function fieldComparator(first: Field, second: Field): number {
     return -1;
   }
   return lessonComparator(
-    get(LESSONS, first.lessons[0])!,
-    get(LESSONS, second.lessons[0])!
+    get(lessons, first.lessons[0])!,
+    get(lessons, second.lessons[0])!,
+    competences
   );
 }
 
@@ -72,14 +82,22 @@ export function refreshMetadata(): void {
       );
       return lesson;
     });
-    sort(LESSONS, lessonComparator);
+    sort(LESSONS, (first, second) =>
+      lessonComparator(first, second, COMPETENCES)
+    );
     map(FIELDS, (field) => {
       field.lessons.sort((first: string, second: string): number =>
-        lessonComparator(get(LESSONS, first)!, get(LESSONS, second)!)
+        lessonComparator(
+          get(LESSONS, first)!,
+          get(LESSONS, second)!,
+          COMPETENCES
+        )
       );
       return field;
     });
-    sort(FIELDS, fieldComparator);
+    sort(FIELDS, (first, second) =>
+      fieldComparator(first, second, LESSONS, COMPETENCES)
+    );
     competences.set(COMPETENCES);
     lessons.set(LESSONS);
     fields.set(FIELDS);
