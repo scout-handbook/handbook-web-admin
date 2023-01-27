@@ -19,7 +19,7 @@ import { rawRequest, request } from "./tools/request";
 export let metadataEvent: AfterLoadEvent;
 export let FIELDS: IDList<Field>;
 export let COMPETENCES: IDList<Competence>;
-export let GROUPS: IDList<Group>;
+export let GROUPS: Array<[string, Group]>;
 export let LESSONS: IDList<Lesson>;
 export let LOGINSTATE: Loginstate = { avatar: "", name: "", role: "guest" };
 
@@ -137,10 +137,10 @@ export function refreshMetadata(): void {
     "GET",
     {},
     function (response): void {
-      GROUPS = new IDList<Group>(response as Record<string, Group>);
-      GROUPS.sort(function (first: Group, second: Group): number {
-        return first.name.localeCompare(second.name);
-      });
+      GROUPS = Object.entries(response as Record<string, Group>);
+      GROUPS.sort(([_1, first], [_2, second]): number =>
+        first.name.localeCompare(second.name)
+      );
       groups.set(GROUPS);
       metadataEvent.trigger();
     },

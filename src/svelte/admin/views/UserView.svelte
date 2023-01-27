@@ -1,7 +1,6 @@
 <script lang="ts" strictEvents>
   import { useLocation, useNavigate } from "svelte-navigator";
 
-  import type { IDList } from "../../../ts/admin/IDList";
   import type { Group } from "../../../ts/admin/interfaces/Group";
   import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
   import type { Payload } from "../../../ts/admin/interfaces/Payload";
@@ -19,7 +18,7 @@
   import LoadingIndicator from "../components/LoadingIndicator.svelte";
   import Pagination from "../components/Pagination.svelte";
 
-  export let groups: IDList<Group>;
+  export let groups: Array<[string, Group]>;
   export let loginstate: Loginstate;
 
   const location = useLocation<{
@@ -67,7 +66,6 @@
 
   function groupsList(user: User): string {
     return groups
-      .entries()
       .filter(([id, _]) => user.groups.includes(id))
       .map(([_, group]) => group.name)
       .join(", ");
@@ -121,9 +119,7 @@
         >
           Všechny skupiny
         </option>
-        {#each groups
-          .entries()
-          .filter(([id, _]) => id !== "00000000-0000-0000-0000-000000000000") as [id, group]}
+        {#each groups.filter(([id, _]) => id !== "00000000-0000-0000-0000-000000000000") as [id, group]}
           <option {id} value={id}>{group.name}</option>
         {/each}
       </select>

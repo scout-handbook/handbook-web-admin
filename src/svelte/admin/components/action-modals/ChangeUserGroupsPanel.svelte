@@ -1,7 +1,6 @@
 <script lang="ts" strictEvents>
   import { useNavigate } from "svelte-navigator";
 
-  import type { IDList } from "../../../../ts/admin/IDList";
   import type { Group } from "../../../../ts/admin/interfaces/Group";
   import type { User } from "../../../../ts/admin/interfaces/User";
   import { apiUri } from "../../../../ts/admin/stores";
@@ -13,7 +12,7 @@
   import DoneDialog from "../DoneDialog.svelte";
   import SidePanel from "../SidePanel.svelte";
 
-  export let groups: IDList<Group>;
+  export let groups: Array<[string, Group]>;
   export let payload: { user: User };
 
   const navigate = useNavigate();
@@ -22,7 +21,7 @@
   let donePromise: Promise<void> | null = null;
 
   $: publicName =
-    get(groups.entries(), "00000000-0000-0000-0000-000000000000")?.name ?? "";
+    get(groups, "00000000-0000-0000-0000-000000000000")?.name ?? "";
 
   refreshLogin();
 
@@ -67,7 +66,7 @@
     <Button green icon="floppy" on:click={saveCallback}>Uložit</Button>
     <h3 class="side-panel-title">Změnit skupiny: {payload.user.name}</h3>
     <form id="side-panel-form">
-      {#each groups.entries() as [id, group]}
+      {#each groups as [id, group]}
         {#if id !== "00000000-0000-0000-0000-000000000000"}
           <div class="form-row">
             <label class="form-switch">
