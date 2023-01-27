@@ -1,7 +1,6 @@
 <script lang="ts" strictEvents>
   import { useNavigate } from "svelte-navigator";
 
-  import { IDList } from "../../../../ts/admin/IDList";
   import type { DeletedLesson } from "../../../../ts/admin/interfaces/DeletedLesson";
   import type { LessonVersion } from "../../../../ts/admin/interfaces/LessonVersion";
   import type { RequestResponse } from "../../../../ts/admin/interfaces/RequestResponse";
@@ -25,7 +24,7 @@
 
   let error = "";
   let step = "lesson-selection-loading";
-  let lessonList: IDList<DeletedLesson>;
+  let lessonList: Array<[string, DeletedLesson]>;
   let selectedLesson = "";
   let versionList: Array<LessonVersion> = [];
   let selectedVersion: number | null = null;
@@ -61,8 +60,8 @@
     "GET",
     {},
     (response: RequestResponse) => {
-      lessonList = new IDList(response as Record<string, DeletedLesson>);
-      if (lessonList.entries().length === 0) {
+      lessonList = Object.entries(response as Record<string, DeletedLesson>);
+      if (lessonList.length === 0) {
         error = "Nejsou žádné smazané lekce.";
       }
       step = "lesson-selection";
@@ -134,7 +133,7 @@
         <LoadingIndicator />
       {:else if step === "lesson-selection"}
         <form id="side-panel-form">
-          {#each lessonList.entries() as [id, lesson]}
+          {#each lessonList as [id, lesson]}
             <div class="form-row">
               <label class="form-switch">
                 <input
