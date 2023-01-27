@@ -68,6 +68,14 @@ function fieldComparator(
   );
 }
 
+function processGroups(
+  rawGroups: Record<string, Group>
+): Array<[string, Group]> {
+  return sort(Object.entries(rawGroups), (first, second) =>
+    first.name.localeCompare(second.name)
+  );
+}
+
 export function refreshMetadata(): void {
   metadataEvent = new AfterLoadEvent(3);
   const metadataSortEvent = new AfterLoadEvent(3);
@@ -149,8 +157,7 @@ export function refreshMetadata(): void {
     "GET",
     {},
     function (response): void {
-      GROUPS = Object.entries(response as Record<string, Group>);
-      sort(GROUPS, (first, second) => first.name.localeCompare(second.name));
+      GROUPS = processGroups(response as Record<string, Group>);
       groups.set(GROUPS);
       metadataEvent.trigger();
     },
