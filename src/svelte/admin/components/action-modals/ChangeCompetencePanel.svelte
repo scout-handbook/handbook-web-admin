@@ -1,7 +1,6 @@
 <script lang="ts" strictEvents>
   import { useNavigate } from "svelte-navigator";
 
-  import type { IDList } from "../../../../ts/admin/IDList";
   import type { Competence } from "../../../../ts/admin/interfaces/Competence";
   import { apiUri } from "../../../../ts/admin/stores";
   import { Action } from "../../../../ts/admin/tools/Action";
@@ -12,12 +11,12 @@
   import DoneDialog from "../DoneDialog.svelte";
   import SidePanel from "../SidePanel.svelte";
 
-  export let competences: IDList<Competence>;
+  export let competences: Array<[string, Competence]>;
   export let payload: { competenceId: string };
 
   const navigate = useNavigate();
 
-  const competence = get(competences.entries(), payload.competenceId)!;
+  const competence = get(competences, payload.competenceId)!;
   let { number, name, description } = competence;
   let donePromise: Promise<void> | null = null;
 

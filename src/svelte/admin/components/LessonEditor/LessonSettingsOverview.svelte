@@ -17,9 +17,9 @@
   const location = useLocation();
   const navigate = useNavigate();
 
-  $: lessonCompetences = $allCompetences!
-    .entries()
-    .filter(([id, _]) => competences.includes(id));
+  $: lessonCompetences = $allCompetences!.filter(([id, _]) =>
+    competences.includes(id)
+  );
   $: fieldName =
     field !== null && $fields !== null
       ? get($fields.entries(), field)?.name

@@ -1,7 +1,6 @@
 <script lang="ts" strictEvents>
   import { useLocation, useNavigate } from "svelte-navigator";
 
-  import type { IDList } from "../../../ts/admin/IDList";
   import type { Competence } from "../../../ts/admin/interfaces/Competence";
   import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
   import { siteName } from "../../../ts/admin/stores";
@@ -11,7 +10,7 @@
   import DeleteCompetenceDialog from "../components/action-modals/DeleteCompetenceDialog.svelte";
   import Button from "../components/Button.svelte";
 
-  export let competences: IDList<Competence>;
+  export let competences: Array<[string, Competence]>;
   export let loginstate: Loginstate;
 
   const location = useLocation<{
@@ -51,7 +50,7 @@
   </Button>
   <br />
 {/if}
-{#each competences.entries() as [id, competence]}
+{#each competences as [id, competence]}
   <h3 class="main-page">
     {competence.number.toString() + ": " + competence.name}
   </h3>
