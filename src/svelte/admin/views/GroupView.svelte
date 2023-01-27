@@ -1,7 +1,6 @@
 <script lang="ts" strictEvents>
   import { useLocation, useNavigate } from "svelte-navigator";
 
-  import type { IDList } from "../../../ts/admin/IDList";
   import type { Group } from "../../../ts/admin/interfaces/Group";
   import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
   import { siteName } from "../../../ts/admin/stores";
@@ -12,7 +11,7 @@
   import ImportGroupMembersPanel from "../components/action-modals/ImportGroupMembersPanel.svelte";
   import Button from "../components/Button.svelte";
 
-  export let groups: IDList<Group>;
+  export let groups: Array<[string, Group]>;
   export let loginstate: Loginstate;
 
   const location = useLocation<{
@@ -53,7 +52,7 @@
     Přidat
   </Button>
 {/if}
-{#each groups.asArray() as { id, value: group }}
+{#each groups as [id, group]}
   {#if id === "00000000-0000-0000-0000-000000000000"}
     <br />
     <h3 class="main-page public-group">{group.name}</h3>

@@ -1,13 +1,12 @@
 <script lang="ts" strictEvents>
   import { useNavigate } from "svelte-navigator";
 
-  import type { IDList } from "../../../ts/admin/IDList";
   import type { Competence } from "../../../ts/admin/interfaces/Competence";
   import type { Lesson } from "../../../ts/admin/interfaces/Lesson";
   import { adminUri } from "../../../ts/admin/stores";
   import Button from "./Button.svelte";
 
-  export let competences: IDList<Competence>;
+  export let competences: Array<[string, Competence]>;
   export let adminPermissions: boolean;
   export let id: string;
   export let lesson: Lesson;
@@ -16,20 +15,15 @@
   const navigate = useNavigate();
 
   function lessonCompetenceList(): string {
-    let output = "";
-    let first = true;
-    competences
-      .filter(function (competenceId) {
-        return lesson.competences.includes(competenceId);
-      })
-      .iterate(function (_, competence) {
-        if (!first) {
-          output += ", ";
-        }
-        output += competence.number.toString();
-        first = false;
-      });
-    return "Kompetence: " + output;
+    return (
+      "Kompetence: " +
+      competences
+        .filter(([competenceId, _]) =>
+          lesson.competences.includes(competenceId)
+        )
+        .map(([_, competence]) => competence.number)
+        .join(", ")
+    );
   }
 </script>
 

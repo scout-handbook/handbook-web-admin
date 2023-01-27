@@ -4,6 +4,7 @@
   import type { LessonVersion } from "../../../../ts/admin/interfaces/LessonVersion";
   import type { RequestResponse } from "../../../../ts/admin/interfaces/RequestResponse";
   import { apiUri, lessons } from "../../../../ts/admin/stores";
+  import { get } from "../../../../ts/admin/tools/arrayTools";
   import { compileMarkdown } from "../../../../ts/admin/tools/compileMarkdown";
   import { parseVersion } from "../../../../ts/admin/tools/parseVersion";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
@@ -20,7 +21,8 @@
 
   let selectedVersion: number | null = null;
   let versionList: Array<LessonVersion> | null = null;
-  $: currentVersion = $lessons?.get(lessonId!)?.version ?? 0;
+  $: currentVersion =
+    $lessons !== null ? get($lessons, lessonId!)?.version ?? 0 : 0;
   $: selectedVersionName =
     selectedVersion === null || versionList === null
       ? lessonName!
