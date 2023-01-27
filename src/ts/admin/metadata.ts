@@ -12,7 +12,7 @@ import {
   lessons,
   loginstate,
 } from "./stores";
-import { get, sort } from "./tools/arrayTools";
+import { get, map, sort } from "./tools/arrayTools";
 import { rawRequest, request } from "./tools/request";
 
 export let metadataEvent: AfterLoadEvent;
@@ -63,21 +63,21 @@ export function refreshMetadata(): void {
   const metadataSortEvent = new AfterLoadEvent(3);
   metadataSortEvent.addCallback((): void => {
     sort(COMPETENCES, competenceComparator);
-    LESSONS.map(([id, lesson]): [string, Lesson] => {
+    map(LESSONS, (lesson) => {
       lesson.competences.sort((first: string, second: string): number =>
         competenceComparator(
           get(COMPETENCES, first)!,
           get(COMPETENCES, second)!
         )
       );
-      return [id, lesson];
+      return lesson;
     });
     sort(LESSONS, lessonComparator);
-    FIELDS.map(([id, field]): [string, Field] => {
+    map(FIELDS, (field) => {
       field.lessons.sort((first: string, second: string): number =>
         lessonComparator(get(LESSONS, first)!, get(LESSONS, second)!)
       );
-      return [id, field];
+      return field;
     });
     sort(FIELDS, fieldComparator);
     competences.set(COMPETENCES);
