@@ -1,7 +1,6 @@
 <script lang="ts" strictEvents>
   import { useNavigate } from "svelte-navigator";
 
-  import type { IDList } from "../../../../ts/admin/IDList";
   import type { Field } from "../../../../ts/admin/interfaces/Field";
   import { apiUri } from "../../../../ts/admin/stores";
   import { Action } from "../../../../ts/admin/tools/Action";
@@ -11,12 +10,12 @@
   import Dialog from "../Dialog.svelte";
   import DoneDialog from "../DoneDialog.svelte";
 
-  export let fields: IDList<Field>;
+  export let fields: Array<[string, Field]>;
   export let payload: { fieldId: string };
 
   const navigate = useNavigate();
 
-  const field = get(fields.entries(), payload.fieldId)!;
+  const field = get(fields, payload.fieldId)!;
   let donePromise: Promise<void> | null = null;
 
   refreshLogin();

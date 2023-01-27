@@ -1,7 +1,6 @@
 <script lang="ts" strictEvents>
   import { useNavigate } from "svelte-navigator";
 
-  import type { IDList } from "../../../../ts/admin/IDList";
   import type { Field } from "../../../../ts/admin/interfaces/Field";
   import { apiUri } from "../../../../ts/admin/stores";
   import { Action } from "../../../../ts/admin/tools/Action";
@@ -13,12 +12,12 @@
   import SidePanel from "../SidePanel.svelte";
   import SidePanelImageSelector from "../SidePanelImageSelector.svelte";
 
-  export let fields: IDList<Field>;
+  export let fields: Array<[string, Field]>;
   export let payload: { fieldId: string };
 
   const navigate = useNavigate();
 
-  const field = get(fields.entries(), payload.fieldId)!;
+  const field = get(fields, payload.fieldId)!;
   let { name, description, image, icon } = field;
   let imageSelectorOpen = false;
   let iconSelectorOpen = false;

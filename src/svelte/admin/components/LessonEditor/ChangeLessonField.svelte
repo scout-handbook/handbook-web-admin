@@ -10,7 +10,7 @@
   const navigate = useNavigate();
 
   const initialField = field;
-  $: fieldsArray = $fields?.entries() ?? [];
+  $: fieldsArray = $fields ?? [];
 
   refreshLogin();
 </script>
