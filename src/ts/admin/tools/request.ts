@@ -84,16 +84,16 @@ export function rawRequest(
   }
 }
 
-export function request(
+export function request<T extends RequestResponse>(
   url: string,
   method: string,
   payload: FormData | Payload,
-  callback: (response: RequestResponse) => void,
+  callback: (response: T) => void,
   exceptionHandler: ExceptionHandler = {}
 ): void {
   rawRequest(url, method, payload, function (response): void {
     if (Math.floor(response.status / 100) === 2) {
-      callback(response.response!);
+      callback(response.response! as T);
     } else if (
       Object.prototype.hasOwnProperty.call(exceptionHandler, response.type!)
     ) {
