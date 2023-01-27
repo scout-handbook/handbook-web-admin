@@ -24,10 +24,9 @@
   const navigate = useNavigate();
 
   let donePromise: Promise<void> | null = null;
-  let name = get(LESSONS.entries(), lessonID)?.name ?? "";
+  let name = get(LESSONS, lessonID)?.name ?? "";
   let body = "";
-  let competences: Array<string> =
-    get(LESSONS.entries(), lessonID)?.competences ?? [];
+  let competences: Array<string> = get(LESSONS, lessonID)?.competences ?? [];
   let field: string | null =
     FIELDS.find(([_, field]) => {
       return field.lessons.includes(lessonID);

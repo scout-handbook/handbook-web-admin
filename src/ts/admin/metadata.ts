@@ -1,5 +1,4 @@
 import { AfterLoadEvent } from "./AfterLoadEvent";
-import { IDList } from "./IDList";
 import type { Competence } from "./interfaces/Competence";
 import type { Field } from "./interfaces/Field";
 import type { Group } from "./interfaces/Group";
@@ -20,7 +19,7 @@ export let metadataEvent: AfterLoadEvent;
 export let FIELDS: Array<[string, Field]>;
 export let COMPETENCES: Array<[string, Competence]>;
 export let GROUPS: Array<[string, Group]>;
-export let LESSONS: IDList<Lesson>;
+export let LESSONS: Array<[string, Lesson]>;
 export let LOGINSTATE: Loginstate = { avatar: "", name: "", role: "guest" };
 
 function competenceComparator(first: Competence, second: Competence): number {
@@ -54,8 +53,8 @@ function fieldComparator(first: Field, second: Field): number {
     return -1;
   }
   return lessonComparator(
-    get(LESSONS.entries(), first.lessons[0])!,
-    get(LESSONS.entries(), second.lessons[0])!
+    get(LESSONS, first.lessons[0])!,
+    get(LESSONS, second.lessons[0])!
   );
 }
 
@@ -66,22 +65,21 @@ export function refreshMetadata(): void {
     COMPETENCES.sort(([_1, first], [_2, second]) =>
       competenceComparator(first, second)
     );
-    LESSONS.map(function (value: Lesson): Lesson {
-      value.competences.sort(function (first: string, second: string): number {
+    LESSONS.map(([id, lesson]): [string, Lesson] => {
+      lesson.competences.sort(function (first: string, second: string): number {
         return competenceComparator(
           get(COMPETENCES, first)!,
           get(COMPETENCES, second)!
         );
       });
-      return value;
+      return [id, lesson];
     });
-    LESSONS.sort(lessonComparator);
+    LESSONS.sort(([_1, first], [_2, second]) =>
+      lessonComparator(first, second)
+    );
     FIELDS.map(([id, field]): [string, Field] => {
       field.lessons.sort(function (first: string, second: string): number {
-        return lessonComparator(
-          get(LESSONS.entries(), first)!,
-          get(LESSONS.entries(), second)!
-        );
+        return lessonComparator(get(LESSONS, first)!, get(LESSONS, second)!);
       });
       return [id, field];
     });
@@ -96,7 +94,7 @@ export function refreshMetadata(): void {
     "GET",
     {},
     function (response): void {
-      LESSONS = new IDList<Lesson>(response as Record<string, Lesson>);
+      LESSONS = Object.entries(response as Record<string, Lesson>);
       metadataSortEvent.trigger();
     },
     undefined
