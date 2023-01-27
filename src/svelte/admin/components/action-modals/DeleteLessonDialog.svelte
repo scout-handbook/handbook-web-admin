@@ -1,7 +1,6 @@
 <script lang="ts" strictEvents>
   import { useNavigate } from "svelte-navigator";
 
-  import type { IDList } from "../../../../ts/admin/IDList";
   import type { APIResponse } from "../../../../ts/admin/interfaces/APIResponse";
   import type { Lesson } from "../../../../ts/admin/interfaces/Lesson";
   import { apiUri } from "../../../../ts/admin/stores";
@@ -14,12 +13,12 @@
   import LoadingIndicator from "../LoadingIndicator.svelte";
   import Overlay from "../Overlay.svelte";
 
-  export let lessons: IDList<Lesson>;
+  export let lessons: Array<[string, Lesson]>;
   export let payload: { lessonId: string };
 
   const navigate = useNavigate();
 
-  const name = get(lessons.entries(), payload.lessonId)!.name;
+  const name = get(lessons, payload.lessonId)!.name;
   let lockedError: string | null = null;
   let expiredError = false;
   const mutexPromise = new Promise<void>((resolve) => {

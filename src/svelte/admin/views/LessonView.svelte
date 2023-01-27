@@ -1,7 +1,6 @@
 <script lang="ts" strictEvents>
   import { useLocation, useNavigate } from "svelte-navigator";
 
-  import type { IDList } from "../../../ts/admin/IDList";
   import type { Competence } from "../../../ts/admin/interfaces/Competence";
   import type { Field } from "../../../ts/admin/interfaces/Field";
   import type { Lesson } from "../../../ts/admin/interfaces/Lesson";
@@ -18,7 +17,7 @@
 
   export let competences: Array<[string, Competence]>;
   export let fields: Array<[string, Field]>;
-  export let lessons: IDList<Lesson>;
+  export let lessons: Array<[string, Lesson]>;
   export let loginstate: Loginstate;
 
   const navigate = useNavigate();
@@ -83,7 +82,7 @@
     Smazané lekce
   </Button>
 {/if}
-{#each lessons.entries() as [lessonId, lesson]}
+{#each lessons as [lessonId, lesson]}
   <!-- TODO: Precompute -->
   {#if fields.filter( ([_, field]) => field.lessons.includes(lessonId) ).length === 0}
     <LessonViewLesson id={lessonId} {adminPermissions} {competences} {lesson} />
@@ -125,7 +124,7 @@
   >
     Přidat lekci
   </Button>
-  {#each lessons.entries() as [lessonId, lesson]}
+  {#each lessons as [lessonId, lesson]}
     {#if field.lessons.includes(lessonId)}
       <LessonViewLesson
         id={lessonId}

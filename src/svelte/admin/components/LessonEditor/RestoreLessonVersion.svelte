@@ -22,7 +22,7 @@
   let selectedVersion: number | null = null;
   let versionList: Array<LessonVersion> | null = null;
   $: currentVersion =
-    $lessons !== null ? get($lessons.entries(), lessonId!)?.version ?? 0 : 0;
+    $lessons !== null ? get($lessons, lessonId!)?.version ?? 0 : 0;
   $: selectedVersionName =
     selectedVersion === null || versionList === null
       ? lessonName!

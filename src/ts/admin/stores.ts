@@ -1,6 +1,5 @@
 import { readable, writable } from "svelte/store";
 
-import type { IDList } from "./IDList";
 import type { Competence } from "./interfaces/Competence";
 import type { ConfigCustomProperties } from "./interfaces/Config";
 import type { Field } from "./interfaces/Field";
@@ -19,7 +18,7 @@ export const siteName = readable<string>(CONFIG["site-name"]);
 export const fields = writable<Array<[string, Field]> | null>(null);
 export const competences = writable<Array<[string, Competence]> | null>(null);
 export const groups = writable<Array<[string, Group]> | null>(null);
-export const lessons = writable<IDList<Lesson> | null>(null);
+export const lessons = writable<Array<[string, Lesson]> | null>(null);
 export const loginstate = writable<Loginstate | null>(null);
 
 export const globalLoadingIndicator = writable<boolean>(false);
