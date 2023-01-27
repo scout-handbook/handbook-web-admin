@@ -12,7 +12,7 @@ import {
   lessons,
   loginstate,
 } from "./stores";
-import { get } from "./tools/arrayTools";
+import { get, sort } from "./tools/arrayTools";
 import { rawRequest, request } from "./tools/request";
 
 export let metadataEvent: AfterLoadEvent;
@@ -61,29 +61,25 @@ function fieldComparator(first: Field, second: Field): number {
 export function refreshMetadata(): void {
   metadataEvent = new AfterLoadEvent(3);
   const metadataSortEvent = new AfterLoadEvent(3);
-  metadataSortEvent.addCallback(function (): void {
-    COMPETENCES.sort(([_1, first], [_2, second]) =>
-      competenceComparator(first, second)
-    );
+  metadataSortEvent.addCallback((): void => {
+    sort(COMPETENCES, competenceComparator);
     LESSONS.map(([id, lesson]): [string, Lesson] => {
-      lesson.competences.sort(function (first: string, second: string): number {
-        return competenceComparator(
+      lesson.competences.sort((first: string, second: string): number =>
+        competenceComparator(
           get(COMPETENCES, first)!,
           get(COMPETENCES, second)!
-        );
-      });
+        )
+      );
       return [id, lesson];
     });
-    LESSONS.sort(([_1, first], [_2, second]) =>
-      lessonComparator(first, second)
-    );
+    sort(LESSONS, lessonComparator);
     FIELDS.map(([id, field]): [string, Field] => {
-      field.lessons.sort(function (first: string, second: string): number {
-        return lessonComparator(get(LESSONS, first)!, get(LESSONS, second)!);
-      });
+      field.lessons.sort((first: string, second: string): number =>
+        lessonComparator(get(LESSONS, first)!, get(LESSONS, second)!)
+      );
       return [id, field];
     });
-    FIELDS.sort(([_1, first], [_2, second]) => fieldComparator(first, second));
+    sort(FIELDS, fieldComparator);
     competences.set(COMPETENCES);
     lessons.set(LESSONS);
     fields.set(FIELDS);
@@ -136,9 +132,7 @@ export function refreshMetadata(): void {
     {},
     function (response): void {
       GROUPS = Object.entries(response as Record<string, Group>);
-      GROUPS.sort(([_1, first], [_2, second]): number =>
-        first.name.localeCompare(second.name)
-      );
+      sort(GROUPS, (first, second) => first.name.localeCompare(second.name));
       groups.set(GROUPS);
       metadataEvent.trigger();
     },
