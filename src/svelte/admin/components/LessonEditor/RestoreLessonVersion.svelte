@@ -2,7 +2,6 @@
   import { useNavigate } from "svelte-navigator";
 
   import type { LessonVersion } from "../../../../ts/admin/interfaces/LessonVersion";
-  import type { RequestResponse } from "../../../../ts/admin/interfaces/RequestResponse";
   import { apiUri, lessons } from "../../../../ts/admin/stores";
   import { get } from "../../../../ts/admin/tools/arrayTools";
   import { compileMarkdown } from "../../../../ts/admin/tools/compileMarkdown";
@@ -33,8 +32,8 @@
       $apiUri + "/v1.0/lesson/" + lessonId! + "/history",
       "GET",
       {},
-      (response: RequestResponse): void => {
-        versionList = response as Array<LessonVersion>;
+      (response: Array<LessonVersion>): void => {
+        versionList = response;
         resolve(versionList);
       },
       authFailHandler
@@ -54,8 +53,8 @@
           selectedVersion.toString(),
         "GET",
         {},
-        (response: RequestResponse): void => {
-          void compileMarkdown(response as string).then(resolve);
+        (response: string): void => {
+          void compileMarkdown(response).then(resolve);
         },
         authFailHandler
       );

@@ -4,7 +4,6 @@
   import type { Group } from "../../../ts/admin/interfaces/Group";
   import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
   import type { Payload } from "../../../ts/admin/interfaces/Payload";
-  import type { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
   import type { Role } from "../../../ts/admin/interfaces/Role";
   import type { User } from "../../../ts/admin/interfaces/User";
   import type { UserListResponse } from "../../../ts/admin/interfaces/UserListResponse";
@@ -55,8 +54,8 @@
       $apiUri + "/v1.0/user",
       "GET",
       payload as unknown as Payload,
-      function (response: RequestResponse): void {
-        resolve(response as UserListResponse);
+      function (response: UserListResponse): void {
+        resolve(response);
       },
       reAuthHandler
     );
