@@ -24,9 +24,7 @@
     field !== null && $fields !== null
       ? get($fields.entries(), field)?.name
       : undefined;
-  $: lessonGroups = $allGroups!
-    .entries()
-    .filter(([id, _]) => groups.includes(id));
+  $: lessonGroups = $allGroups!.filter(([id, _]) => groups.includes(id));
   $: currentUri = $location.pathname + $location.search;
 </script>
 

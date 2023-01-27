@@ -18,7 +18,7 @@ export const siteName = readable<string>(CONFIG["site-name"]);
 
 export const fields = writable<IDList<Field> | null>(null);
 export const competences = writable<IDList<Competence> | null>(null);
-export const groups = writable<IDList<Group> | null>(null);
+export const groups = writable<Array<[string, Group]> | null>(null);
 export const lessons = writable<IDList<Lesson> | null>(null);
 export const loginstate = writable<Loginstate | null>(null);
 

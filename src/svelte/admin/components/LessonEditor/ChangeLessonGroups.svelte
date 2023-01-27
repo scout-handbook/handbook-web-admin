@@ -11,11 +11,10 @@
   const navigate = useNavigate();
 
   const initialGroups = groups;
-  $: groupsArray = $allGroups?.entries() ?? [];
+  $: groupsArray = $allGroups ?? [];
   $: publicName =
     $allGroups !== null
-      ? get($allGroups.entries(), "00000000-0000-0000-0000-000000000000")
-          ?.name ?? ""
+      ? get($allGroups, "00000000-0000-0000-0000-000000000000")?.name ?? ""
       : "";
 
   refreshLogin();
