@@ -22,15 +22,6 @@ export class IDList<T> {
     });
   }
 
-  public get(key: string): T | undefined {
-    for (const item of this.list) {
-      if (item.id === key) {
-        return item.value;
-      }
-    }
-    return undefined;
-  }
-
   public push(key: string, value: T): void {
     this.list.push({ id: key, value });
   }
