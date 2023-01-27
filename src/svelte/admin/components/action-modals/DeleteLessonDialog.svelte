@@ -1,24 +1,24 @@
 <script lang="ts" strictEvents>
   import { useNavigate } from "svelte-navigator";
 
-  import type { IDList } from "../../../../ts/admin/IDList";
   import type { APIResponse } from "../../../../ts/admin/interfaces/APIResponse";
   import type { Lesson } from "../../../../ts/admin/interfaces/Lesson";
   import { apiUri } from "../../../../ts/admin/stores";
   import { Action } from "../../../../ts/admin/tools/Action";
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
+  import { get } from "../../../../ts/admin/tools/arrayTools";
   import { reAuthHandler, request } from "../../../../ts/admin/tools/request";
   import Dialog from "../Dialog.svelte";
   import DoneDialog from "../DoneDialog.svelte";
   import LoadingIndicator from "../LoadingIndicator.svelte";
   import Overlay from "../Overlay.svelte";
 
-  export let lessons: IDList<Lesson>;
+  export let lessons: Array<[string, Lesson]>;
   export let payload: { lessonId: string };
 
   const navigate = useNavigate();
 
-  const name = lessons.get(payload.lessonId)!.name;
+  const name = get(lessons, payload.lessonId)!.name;
   let lockedError: string | null = null;
   let expiredError = false;
   const mutexPromise = new Promise<void>((resolve) => {

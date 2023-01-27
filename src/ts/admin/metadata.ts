@@ -1,5 +1,4 @@
 import { AfterLoadEvent } from "./AfterLoadEvent";
-import { IDList } from "./IDList";
 import type { Competence } from "./interfaces/Competence";
 import type { Field } from "./interfaces/Field";
 import type { Group } from "./interfaces/Group";
@@ -13,20 +12,25 @@ import {
   lessons,
   loginstate,
 } from "./stores";
+import { get, map, sort } from "./tools/arrayTools";
 import { rawRequest, request } from "./tools/request";
 
 export let metadataEvent: AfterLoadEvent;
-export let FIELDS: IDList<Field>;
-export let COMPETENCES: IDList<Competence>;
-export let GROUPS: IDList<Group>;
-export let LESSONS: IDList<Lesson>;
+export let FIELDS: Array<[string, Field]>;
+export let COMPETENCES: Array<[string, Competence]>;
+export let GROUPS: Array<[string, Group]>;
+export let LESSONS: Array<[string, Lesson]>;
 export let LOGINSTATE: Loginstate = { avatar: "", name: "", role: "guest" };
 
 function competenceComparator(first: Competence, second: Competence): number {
   return first.number - second.number;
 }
 
-function lessonComparator(first: Lesson, second: Lesson): number {
+function lessonComparator(
+  first: Lesson,
+  second: Lesson,
+  competences: Array<[string, Competence]>
+): number {
   if (first.competences.length === 0) {
     if (second.competences.length === 0) {
       return 0;
@@ -37,12 +41,17 @@ function lessonComparator(first: Lesson, second: Lesson): number {
     return -1;
   }
   return competenceComparator(
-    COMPETENCES.get(first.competences[0])!,
-    COMPETENCES.get(second.competences[0])!
+    get(competences, first.competences[0])!,
+    get(competences, second.competences[0])!
   );
 }
 
-function fieldComparator(first: Field, second: Field): number {
+function fieldComparator(
+  first: Field,
+  second: Field,
+  lessons: Array<[string, Lesson]>,
+  competences: Array<[string, Competence]>
+): number {
   if (first.lessons.length === 0) {
     if (second.lessons.length === 0) {
       return 0;
@@ -53,33 +62,50 @@ function fieldComparator(first: Field, second: Field): number {
     return -1;
   }
   return lessonComparator(
-    LESSONS.get(first.lessons[0])!,
-    LESSONS.get(second.lessons[0])!
+    get(lessons, first.lessons[0])!,
+    get(lessons, second.lessons[0])!,
+    competences
+  );
+}
+
+function processGroups(
+  rawGroups: Record<string, Group>
+): Array<[string, Group]> {
+  return sort(Object.entries(rawGroups), (first, second) =>
+    first.name.localeCompare(second.name)
   );
 }
 
 export function refreshMetadata(): void {
   metadataEvent = new AfterLoadEvent(3);
   const metadataSortEvent = new AfterLoadEvent(3);
-  metadataSortEvent.addCallback(function (): void {
-    COMPETENCES.sort(competenceComparator);
-    LESSONS.map(function (value: Lesson): Lesson {
-      value.competences.sort(function (first: string, second: string): number {
-        return competenceComparator(
-          COMPETENCES.get(first)!,
-          COMPETENCES.get(second)!
-        );
-      });
-      return value;
+  metadataSortEvent.addCallback((): void => {
+    sort(COMPETENCES, competenceComparator);
+    map(LESSONS, (lesson) => {
+      lesson.competences.sort((first: string, second: string): number =>
+        competenceComparator(
+          get(COMPETENCES, first)!,
+          get(COMPETENCES, second)!
+        )
+      );
+      return lesson;
     });
-    LESSONS.sort(lessonComparator);
-    FIELDS.map(function (value: Field): Field {
-      value.lessons.sort(function (first: string, second: string): number {
-        return lessonComparator(LESSONS.get(first)!, LESSONS.get(second)!);
-      });
-      return value;
+    sort(LESSONS, (first, second) =>
+      lessonComparator(first, second, COMPETENCES)
+    );
+    map(FIELDS, (field) => {
+      field.lessons.sort((first: string, second: string): number =>
+        lessonComparator(
+          get(LESSONS, first)!,
+          get(LESSONS, second)!,
+          COMPETENCES
+        )
+      );
+      return field;
     });
-    FIELDS.sort(fieldComparator);
+    sort(FIELDS, (first, second) =>
+      fieldComparator(first, second, LESSONS, COMPETENCES)
+    );
     competences.set(COMPETENCES);
     lessons.set(LESSONS);
     fields.set(FIELDS);
@@ -90,7 +116,7 @@ export function refreshMetadata(): void {
     "GET",
     {},
     function (response): void {
-      LESSONS = new IDList<Lesson>(response as Record<string, Lesson>);
+      LESSONS = Object.entries(response as Record<string, Lesson>);
       metadataSortEvent.trigger();
     },
     undefined
@@ -100,7 +126,7 @@ export function refreshMetadata(): void {
     "GET",
     {},
     function (response): void {
-      FIELDS = new IDList<Field>(response as Record<string, Field>);
+      FIELDS = Object.entries(response as Record<string, Field>);
       metadataSortEvent.trigger();
     },
     undefined
@@ -110,9 +136,7 @@ export function refreshMetadata(): void {
     "GET",
     {},
     function (response): void {
-      COMPETENCES = new IDList<Competence>(
-        response as Record<string, Competence>
-      );
+      COMPETENCES = Object.entries(response as Record<string, Competence>);
       metadataSortEvent.trigger();
     },
     undefined
@@ -133,10 +157,7 @@ export function refreshMetadata(): void {
     "GET",
     {},
     function (response): void {
-      GROUPS = new IDList<Group>(response as Record<string, Group>);
-      GROUPS.sort(function (first: Group, second: Group): number {
-        return first.name.localeCompare(second.name);
-      });
+      GROUPS = processGroups(response as Record<string, Group>);
       groups.set(GROUPS);
       metadataEvent.trigger();
     },

@@ -1,7 +1,6 @@
 <script lang="ts" strictEvents>
   import { useNavigate } from "svelte-navigator";
 
-  import type { IDList } from "../../../../ts/admin/IDList";
   import type { Event } from "../../../../ts/admin/interfaces/Event";
   import type { Group } from "../../../../ts/admin/interfaces/Group";
   import type { Participant } from "../../../../ts/admin/interfaces/Participant";
@@ -10,6 +9,7 @@
   import type { User } from "../../../../ts/admin/interfaces/User";
   import type { UserListResponse } from "../../../../ts/admin/interfaces/UserListResponse";
   import { apiUri } from "../../../../ts/admin/stores";
+  import { get } from "../../../../ts/admin/tools/arrayTools";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import {
     authFailHandler,
@@ -21,14 +21,14 @@
   import LoadingIndicator from "../LoadingIndicator.svelte";
   import SidePanel from "../SidePanel.svelte";
 
-  export let groups: IDList<Group>;
+  export let groups: Array<[string, Group]>;
   export let payload: { groupId: string };
 
   const navigate = useNavigate();
 
   let error = "";
   let step = "event-selection-loading";
-  const group = groups.get(payload.groupId)!;
+  const group = get(groups, payload.groupId)!;
   let eventList: Array<Event> = [];
   let selectedEvent: string;
   let participantList: Array<Participant> = [];

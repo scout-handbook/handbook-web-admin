@@ -1,7 +1,6 @@
 <script lang="ts" strictEvents>
   import { useLocation, useNavigate } from "svelte-navigator";
 
-  import type { IDList } from "../../../ts/admin/IDList";
   import type { Competence } from "../../../ts/admin/interfaces/Competence";
   import type { Field } from "../../../ts/admin/interfaces/Field";
   import type { Lesson } from "../../../ts/admin/interfaces/Lesson";
@@ -16,9 +15,9 @@
   import Button from "../components/Button.svelte";
   import LessonViewLesson from "../components/LessonViewLesson.svelte";
 
-  export let competences: IDList<Competence>;
-  export let fields: IDList<Field>;
-  export let lessons: IDList<Lesson>;
+  export let competences: Array<[string, Competence]>;
+  export let fields: Array<[string, Field]>;
+  export let lessons: Array<[string, Lesson]>;
   export let loginstate: Loginstate;
 
   const navigate = useNavigate();
@@ -83,17 +82,13 @@
     Smazané lekce
   </Button>
 {/if}
-{#each lessons.asArray() as { id, value: lesson }}
+{#each lessons as [lessonId, lesson]}
   <!-- TODO: Precompute -->
-  {#if fields
-    .filter(function (_, field) {
-      return field.lessons.includes(id);
-    })
-    .empty()}
-    <LessonViewLesson {id} {adminPermissions} {competences} {lesson} />
+  {#if fields.filter( ([_, field]) => field.lessons.includes(lessonId) ).length === 0}
+    <LessonViewLesson id={lessonId} {adminPermissions} {competences} {lesson} />
   {/if}
 {/each}
-{#each fields.asArray() as { id, value: field }}
+{#each fields as [fieldId, field]}
   <br />
   <h2 class="main-page">{field.name}</h2>
   {#if adminPermissions}
@@ -102,7 +97,7 @@
       icon="pencil"
       on:click={() => {
         navigate("/lessons", {
-          state: { action: "change-field", actionPayload: { fieldId: id } },
+          state: { action: "change-field", actionPayload: { fieldId } },
         });
       }}
     >
@@ -113,7 +108,7 @@
       red
       on:click={() => {
         navigate("/lessons", {
-          state: { action: "delete-field", actionPayload: { fieldId: id } },
+          state: { action: "delete-field", actionPayload: { fieldId } },
         });
       }}
     >
@@ -124,12 +119,12 @@
     green
     icon="plus"
     on:click={() => {
-      navigate("/lessons/add?field=" + id);
+      navigate("/lessons/add?field=" + fieldId);
     }}
   >
     Přidat lekci
   </Button>
-  {#each lessons.asArray() as { id: lessonId, value: lesson }}
+  {#each lessons as [lessonId, lesson]}
     {#if field.lessons.includes(lessonId)}
       <LessonViewLesson
         id={lessonId}

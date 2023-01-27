@@ -1,22 +1,22 @@
 <script lang="ts" strictEvents>
   import { useNavigate } from "svelte-navigator";
 
-  import type { IDList } from "../../../../ts/admin/IDList";
   import type { Competence } from "../../../../ts/admin/interfaces/Competence";
   import { apiUri } from "../../../../ts/admin/stores";
   import { Action } from "../../../../ts/admin/tools/Action";
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
+  import { get } from "../../../../ts/admin/tools/arrayTools";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Button from "../Button.svelte";
   import DoneDialog from "../DoneDialog.svelte";
   import SidePanel from "../SidePanel.svelte";
 
-  export let competences: IDList<Competence>;
+  export let competences: Array<[string, Competence]>;
   export let payload: { competenceId: string };
 
   const navigate = useNavigate();
 
-  const competence = competences.get(payload.competenceId)!;
+  const competence = get(competences, payload.competenceId)!;
   let { number, name, description } = competence;
   let donePromise: Promise<void> | null = null;
 
