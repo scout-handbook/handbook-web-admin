@@ -17,17 +17,12 @@
   $: pageStart = perPage * (page - 1);
   $: pageEnd = pageStart + perPage;
 
-  const imageListPromise: Promise<Array<string>> = new Promise((resolve) => {
-    request(
-      $apiUri + "/v1.0/image",
-      "GET",
-      {},
-      (response: Array<string>): void => {
-        resolve(response);
-      },
-      reAuthHandler
-    );
-  });
+  const imageListPromise: Promise<Array<string>> = request(
+    $apiUri + "/v1.0/image",
+    "GET",
+    {},
+    reAuthHandler
+  );
 
   refreshLogin();
 </script>

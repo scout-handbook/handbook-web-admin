@@ -32,57 +32,51 @@
     selectedVersion === null
       ? ""
       : versionList.find((x) => x.version === selectedVersion)!.name;
-  $: contentPromise = new Promise<string>((resolve) => {
-    if (selectedVersion === null) {
-      resolve("");
-      return;
-    }
-    request(
-      $apiUri +
-        "/v1.0/deleted-lesson/" +
-        selectedLesson +
-        "/history/" +
-        selectedVersion.toString(),
-      "GET",
-      {},
-      (response: string) => {
-        void compileMarkdown(response).then(resolve);
-      },
-      authFailHandler
-    );
-  });
+  $: contentPromise =
+    selectedVersion === null
+      ? new Promise((resolve) => {
+          resolve("");
+        })
+      : request<string>(
+          $apiUri +
+            "/v1.0/deleted-lesson/" +
+            selectedLesson +
+            "/history/" +
+            selectedVersion.toString(),
+          "GET",
+          {},
+          authFailHandler
+        ).then(compileMarkdown);
 
   refreshLogin();
 
-  request(
+  void request<Record<string, DeletedLesson>>(
     $apiUri + "/v1.0/deleted-lesson",
     "GET",
     {},
-    (response: Record<string, DeletedLesson>) => {
-      lessonList = Object.entries(response);
-      if (lessonList.length === 0) {
-        error = "Nejsou žádné smazané lekce.";
-      }
-      step = "lesson-selection";
-    },
     reAuthHandler
-  );
+  ).then((response) => {
+    lessonList = Object.entries(response);
+    if (lessonList.length === 0) {
+      error = "Nejsou žádné smazané lekce.";
+    }
+    step = "lesson-selection";
+  });
 
   function loadVersionList(): void {
     if (!selectedLesson) {
       return;
     }
     step = "version-selection-loading";
-    request(
+    void request<Array<LessonVersion>>(
       $apiUri + "/v1.0/deleted-lesson/" + selectedLesson + "/history",
       "GET",
       {},
-      (response: Array<LessonVersion>) => {
-        versionList = response;
-        step = "version-selection";
-      },
       reAuthHandler
-    );
+    ).then((response) => {
+      versionList = response;
+      step = "version-selection";
+    });
   }
 
   function selectVersionCallback(): void {

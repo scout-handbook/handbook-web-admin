@@ -16,17 +16,12 @@
   let imageListPromise: Promise<Array<string>>;
 
   function reload(): void {
-    imageListPromise = new Promise((resolve) => {
-      request(
-        $apiUri + "/v1.0/image",
-        "GET",
-        {},
-        function (response: Array<string>): void {
-          resolve(response.slice(perPage * (page - 1), perPage * page));
-        },
-        reAuthHandler
-      );
-    });
+    imageListPromise = request<Array<string>>(
+      $apiUri + "/v1.0/image",
+      "GET",
+      {},
+      reAuthHandler
+    ).then((response) => response.slice(perPage * (page - 1), perPage * page));
   }
 
   reload();
