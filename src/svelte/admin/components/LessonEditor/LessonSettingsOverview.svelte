@@ -1,4 +1,4 @@
-<script lang="ts">
+<script lang="ts" strictEvents>
   import { useLocation, useNavigate } from "svelte-navigator";
 
   import {
@@ -6,6 +6,7 @@
     fields,
     groups as allGroups,
   } from "../../../../ts/admin/stores";
+  import { get } from "../../../../ts/admin/tools/arrayTools";
   import Button from "../Button.svelte";
 
   export let id: string | null;
@@ -16,17 +17,12 @@
   const location = useLocation();
   const navigate = useNavigate();
 
-  $: lessonCompetences = $allCompetences!
-    .filter(function (id) {
-      return competences.includes(id);
-    })
-    .asArray();
-  $: fieldName = field !== null ? $fields?.get(field)?.name : undefined;
-  $: lessonGroups = $allGroups!
-    .filter(function (id) {
-      return groups.includes(id);
-    })
-    .asArray();
+  $: lessonCompetences = $allCompetences!.filter(([id, _]) =>
+    competences.includes(id)
+  );
+  $: fieldName =
+    field !== null && $fields !== null ? get($fields, field)?.name : undefined;
+  $: lessonGroups = $allGroups!.filter(([id, _]) => groups.includes(id));
   $: currentUri = $location.pathname + $location.search;
 </script>
 
@@ -83,7 +79,7 @@
 >
   Upravit
 </Button>
-{#each lessonCompetences as { id: _, value: competence }}
+{#each lessonCompetences as [_, competence]}
   <br />
   <span class="competence-number">{competence.number}:</span>
   {competence.name}
@@ -103,7 +99,7 @@
 </Button>
 <br />
 <div id="settingsGroupList">
-  {#each lessonGroups as { id, value: group }}
+  {#each lessonGroups as [id, group]}
     {#if id === "00000000-0000-0000-0000-000000000000"}
       <span class="public-group">{group.name}</span>
       <br />

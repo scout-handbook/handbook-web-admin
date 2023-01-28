@@ -1,4 +1,4 @@
-<script lang="ts">
+<script lang="ts" strictEvents>
   import { useNavigate } from "svelte-navigator";
 
   import { competences as allCompetences } from "../../../../ts/admin/stores";
@@ -10,7 +10,7 @@
   const navigate = useNavigate();
 
   const initialCompetences = competences;
-  $: competencesArray = $allCompetences?.asArray() ?? [];
+  $: competencesArray = $allCompetences ?? [];
 
   refreshLogin();
 </script>
@@ -34,7 +34,7 @@
 >
 <h3 class="side-panel-title">Změnit kompetence</h3>
 <form id="side-panel-form">
-  {#each competencesArray as { id, value: competence }}
+  {#each competencesArray as [id, competence]}
     <div class="form-row">
       <label class="form-switch">
         <input type="checkbox" value={id} bind:group={competences} />

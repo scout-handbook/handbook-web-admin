@@ -38,21 +38,20 @@ export class ActionQueue {
     this.actions[0].exceptionHandler["AuthenticationException"] = (): void => {
       this.authException();
     };
-    request(
+    void request(
       this.actions[0].url,
       this.actions[0].method,
       this.actions[0].payload,
-      (response) => {
-        this.actions[0].callback(response, this);
-        this.actions.shift();
-        if (propagate) {
-          this.pop(resolve, true);
-        } else {
-          resolve();
-        }
-      },
       this.actions[0].exceptionHandler
-    );
+    ).then((response) => {
+      this.actions[0].callback(response, this);
+      this.actions.shift();
+      if (propagate) {
+        this.pop(resolve, true);
+      } else {
+        resolve();
+      }
+    });
   }
 
   private authException(): void {

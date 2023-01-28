@@ -1,16 +1,13 @@
-<script lang="ts">
+<script lang="ts" strictEvents>
   import { useSWR } from "sswr";
   import { useLocation, useNavigate } from "svelte-navigator";
 
-  import type { IDList } from "../../../ts/admin/IDList";
   import type { Group } from "../../../ts/admin/interfaces/Group";
   import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
   import type { Payload } from "../../../ts/admin/interfaces/Payload";
-  import type { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
   import type { Role } from "../../../ts/admin/interfaces/Role";
   import type { User } from "../../../ts/admin/interfaces/User";
   import type { UserListResponse } from "../../../ts/admin/interfaces/UserListResponse";
-  import type { UserSearchQuery } from "../../../ts/admin/interfaces/UserSearchQuery";
   import { apiUri, siteName } from "../../../ts/admin/stores";
   import { constructURL } from "../../../ts/admin/tools/constructURL";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
@@ -21,7 +18,7 @@
   import LoadingIndicator from "../components/LoadingIndicator.svelte";
   import Pagination from "../components/Pagination.svelte";
 
-  export let groups: IDList<Group>;
+  export let groups: Array<[string, Group]>;
 
   const location = useLocation<{
     action: string;
@@ -45,46 +42,27 @@
 
   let userListPromise: Promise<UserListResponse>;
 
-  $: userListPromise = new Promise((resolve) => {
-    const payload: UserSearchQuery = {
-      name: searchName,
-      page: page,
-      "per-page": perPage,
-    };
-    if (role !== "all") {
-      payload.role = role;
-    }
-    if (group !== "00000000-0000-0000-0000-000000000000") {
-      payload.group = group;
-    }
-    request(
-      $apiUri + "/v1.0/user",
-      "GET",
-      payload as unknown as Payload,
-      function (response: RequestResponse): void {
-        resolve(response as UserListResponse);
-      },
-      reAuthHandler
-    );
-  });
+  $: payload = {
+    name: searchName,
+    page: page,
+    "per-page": perPage,
+    role: role !== "all" ? role : undefined,
+    group: group !== "00000000-0000-0000-0000-000000000000" ? group : undefined,
+  };
+  $: userListPromise = request(
+    $apiUri + "/v1.0/user",
+    "GET",
+    payload as unknown as Payload,
+    reAuthHandler
+  );
 
   refreshLogin(true);
 
   function groupsList(user: User): string {
-    let first = true;
-    let output = "";
-    groups
-      .filter(function (id) {
-        return user.groups.includes(id);
-      })
-      .iterate(function (_, group) {
-        if (!first) {
-          output += ", ";
-        }
-        output += group.name;
-        first = false;
-      });
-    return output;
+    return groups
+      .filter(([id, _]) => user.groups.includes(id))
+      .map(([_, group]) => group.name)
+      .join(", ");
   }
 </script>
 
@@ -135,11 +113,7 @@
         >
           Všechny skupiny
         </option>
-        {#each groups
-          .filter(function (id) {
-            return id !== "00000000-0000-0000-0000-000000000000";
-          })
-          .asArray() as { id, value: group }}
+        {#each groups.filter(([id, _]) => id !== "00000000-0000-0000-0000-000000000000") as [id, group]}
           <option {id} value={id}>{group.name}</option>
         {/each}
       </select>

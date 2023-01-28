@@ -1,4 +1,4 @@
-<script lang="ts">
+<script lang="ts" strictEvents>
   import { useNavigate } from "svelte-navigator";
 
   import type { APIResponse } from "../../../ts/admin/interfaces/APIResponse";
@@ -8,6 +8,7 @@
   import { Action } from "../../../ts/admin/tools/Action";
   import { ActionCallback } from "../../../ts/admin/tools/ActionCallback";
   import { ActionQueue } from "../../../ts/admin/tools/ActionQueue";
+  import { get } from "../../../ts/admin/tools/arrayTools";
   import {
     populateCompetences,
     populateField,
@@ -23,13 +24,13 @@
   const navigate = useNavigate();
 
   let donePromise: Promise<void> | null = null;
-  let name = LESSONS.get(lessonID)?.name ?? "";
+  let name = get(LESSONS, lessonID)?.name ?? "";
   let body = "";
-  let competences: Array<string> = LESSONS.get(lessonID)?.competences ?? [];
+  let competences: Array<string> = get(LESSONS, lessonID)?.competences ?? [];
   let field: string | null =
-    FIELDS.asArray().find((field) => {
-      return field.value.lessons.includes(lessonID);
-    })?.id ?? null;
+    FIELDS.find(([_, field]) => {
+      return field.lessons.includes(lessonID);
+    })?.[0] ?? null;
   let groups: Array<string> = [];
 
   const initialName = name;
@@ -48,56 +49,47 @@
   const discardExceptionHandler = { NotFoundException: null };
 
   let lessonDataPromise = Promise.all([
-    new Promise<void>((resolve) => {
-      request(
-        $apiUri + "/v1.0/mutex/" + encodeURIComponent(lessonID),
-        "POST",
-        {},
-        () => {
-          window.onbeforeunload = function (): void {
-            sendBeacon(lessonID);
-          };
-          resolve();
+    request(
+      $apiUri + "/v1.0/mutex/" + encodeURIComponent(lessonID),
+      "POST",
+      {},
+      {
+        ...reAuthHandler,
+        LockedException: (response: APIResponse<RequestResponse>): void => {
+          globalDialogMessage.set(
+            "Nelze upravovat lekci, protože ji právě upravuje " +
+              response.holder! +
+              "."
+          );
         },
-        {
-          ...reAuthHandler,
-          LockedException: (response: APIResponse): void => {
-            globalDialogMessage.set(
-              "Nelze upravovat lekci, protože ji právě upravuje " +
-                response.holder! +
-                "."
-            );
-          },
-        }
-      );
+      }
+    ).then(() => {
+      window.onbeforeunload = function (): void {
+        sendBeacon(lessonID);
+      };
+    }),
+    request<Array<string>>(
+      $apiUri + "/v1.0/lesson/" + encodeURIComponent(lessonID) + "/group",
+      "GET",
+      {},
+      reAuthHandler
+    ).then((response) => {
+      groups = response;
+      initialGroups = groups;
     }),
     new Promise<void>((resolve) => {
-      request(
-        $apiUri + "/v1.0/lesson/" + encodeURIComponent(lessonID) + "/group",
-        "GET",
-        {},
-        (response: RequestResponse) => {
-          groups = response as Array<string>;
-          initialGroups = groups;
-          resolve();
-        },
-        reAuthHandler
-      );
-    }),
-    new Promise<void>((resolve) => {
-      request(
+      void request<string>(
         $apiUri + "/v1.0/lesson/" + encodeURIComponent(lessonID),
         "GET",
         {},
-        (response: RequestResponse): void => {
-          metadataEvent.addCallback(function (): void {
-            body = response as string;
-            initialBody = body;
-            resolve();
-          });
-        },
         reAuthHandler
-      );
+      ).then((response) => {
+        metadataEvent.addCallback(function (): void {
+          body = response;
+          initialBody = body;
+          resolve();
+        });
+      });
     }),
   ]);
 

@@ -1,4 +1,4 @@
-<script lang="ts">
+<script lang="ts" strictEvents>
   import { createEventDispatcher } from "svelte";
   import { useLocation } from "svelte-navigator";
 
@@ -19,7 +19,7 @@
   export let groups: Array<string>;
   export let refreshAction: (() => void) | null = null;
 
-  const dispatch = createEventDispatcher();
+  const dispatch = createEventDispatcher<{ discard: never; save: never }>();
   const location = useLocation();
   $: view = $location.state.view as string;
 
@@ -27,12 +27,12 @@
   let discardConfirmation = false;
   let insertAtCursor: (content: string) => void;
 
-  function insertImage(event: CustomEvent<{ image: string }>): void {
+  function insertImage(event: CustomEvent<string>): void {
     insertAtCursor(
       "![Text po najetí kurzorem](" +
         $apiUri +
         "/v1.0/image/" +
-        event.detail.image +
+        event.detail +
         ")"
     );
   }
