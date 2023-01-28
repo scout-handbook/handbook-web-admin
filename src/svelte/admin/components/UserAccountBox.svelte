@@ -1,4 +1,4 @@
-<script lang="ts">
+<script lang="ts" strictEvents>
   import { useSWR } from "sswr";
 
   import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";

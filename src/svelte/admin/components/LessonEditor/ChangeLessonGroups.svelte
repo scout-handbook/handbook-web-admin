@@ -1,7 +1,8 @@
-<script lang="ts">
+<script lang="ts" strictEvents>
   import { useNavigate } from "svelte-navigator";
 
   import { groups as allGroups } from "../../../../ts/admin/stores";
+  import { get } from "../../../../ts/admin/tools/arrayTools";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Button from "../Button.svelte";
 
@@ -10,9 +11,11 @@
   const navigate = useNavigate();
 
   const initialGroups = groups;
-  $: groupsArray = $allGroups?.asArray() ?? [];
+  $: groupsArray = $allGroups ?? [];
   $: publicName =
-    $allGroups?.get("00000000-0000-0000-0000-000000000000")?.name ?? "";
+    $allGroups !== null
+      ? get($allGroups, "00000000-0000-0000-0000-000000000000")?.name ?? ""
+      : "";
 
   refreshLogin();
 </script>
@@ -36,7 +39,7 @@
 >
 <h3 class="side-panel-title">Změnit skupiny</h3>
 <form id="side-panel-form">
-  {#each groupsArray as { id, value: group }}
+  {#each groupsArray as [id, group]}
     <div class="form-row">
       <label class="form-switch">
         <input type="checkbox" value={id} bind:group={groups} />
