@@ -84,24 +84,25 @@ export function rawRequest<T extends RequestResponse>(
   }
 }
 
-export function request<T extends RequestResponse>(
+export async function request<T extends RequestResponse>(
   url: string,
   method: string,
   payload: FormData | Payload,
-  callback: (response: T) => void,
   exceptionHandler: ExceptionHandler = {}
-): void {
-  rawRequest(url, method, payload, function (response: APIResponse<T>): void {
-    if (Math.floor(response.status / 100) === 2) {
-      callback(response.response!);
-    } else if (
-      Object.prototype.hasOwnProperty.call(exceptionHandler, response.type!)
-    ) {
-      exceptionHandler[response.type!]!(response);
-    } else {
-      globalDialogMessage.set(
-        "Nastala neznámá chyba. Chybová hláška: " + response.message!
-      );
-    }
+): Promise<T> {
+  return new Promise((resolve) => {
+    rawRequest(url, method, payload, function (response: APIResponse<T>): void {
+      if (Math.floor(response.status / 100) === 2) {
+        resolve(response.response!);
+      } else if (
+        Object.prototype.hasOwnProperty.call(exceptionHandler, response.type!)
+      ) {
+        exceptionHandler[response.type!]!(response);
+      } else {
+        globalDialogMessage.set(
+          "Nastala neznámá chyba. Chybová hláška: " + response.message!
+        );
+      }
+    });
   });
 }

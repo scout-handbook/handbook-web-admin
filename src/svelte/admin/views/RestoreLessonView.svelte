@@ -29,17 +29,13 @@
   let field: string | null = null;
   let groups: Array<string> = [];
 
-  let bodyPromise = new Promise<void>((resolve) => {
-    request(
-      $apiUri + "/v1.0/deleted-lesson/" + lessonID + "/history/" + version,
-      "GET",
-      {},
-      function (response: string): void {
-        body = response;
-        resolve();
-      },
-      authFailHandler
-    );
+  let bodyPromise = request<string>(
+    $apiUri + "/v1.0/deleted-lesson/" + lessonID + "/history/" + version,
+    "GET",
+    {},
+    authFailHandler
+  ).then((response) => {
+    body = response;
   });
 
   function save(): void {

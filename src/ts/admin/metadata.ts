@@ -112,36 +112,33 @@ export function refreshMetadata(): void {
     fields.set(FIELDS);
     metadataEvent.trigger();
   });
-  request(
+  void request<Record<string, Lesson>>(
     CONFIG["api-uri"] + "/v1.0/lesson?override-group=true",
     "GET",
     {},
-    function (response: Record<string, Lesson>): void {
-      LESSONS = Object.entries(response);
-      metadataSortEvent.trigger();
-    },
     undefined
-  );
-  request(
+  ).then((response) => {
+    LESSONS = Object.entries(response);
+    metadataSortEvent.trigger();
+  });
+  void request<Record<string, Field>>(
     CONFIG["api-uri"] + "/v1.0/field?override-group=true",
     "GET",
     {},
-    function (response: Record<string, Field>): void {
-      FIELDS = Object.entries(response);
-      metadataSortEvent.trigger();
-    },
     undefined
-  );
-  request(
+  ).then((response) => {
+    FIELDS = Object.entries(response);
+    metadataSortEvent.trigger();
+  });
+  void request<Record<string, Competence>>(
     CONFIG["api-uri"] + "/v1.0/competence",
     "GET",
     {},
-    function (response: Record<string, Competence>): void {
-      COMPETENCES = Object.entries(response);
-      metadataSortEvent.trigger();
-    },
     undefined
-  );
+  ).then((response) => {
+    COMPETENCES = Object.entries(response);
+    metadataSortEvent.trigger();
+  });
   const groupExceptionHandler = {
     AuthenticationException: function (): void {
       window.location.href =
@@ -153,17 +150,16 @@ export function refreshMetadata(): void {
       window.location.replace(CONFIG["frontend-uri"]);
     },
   };
-  request(
+  void request<Record<string, Group>>(
     CONFIG["api-uri"] + "/v1.0/group",
     "GET",
     {},
-    function (response: Record<string, Group>): void {
-      GROUPS = processGroups(response);
-      groups.set(GROUPS);
-      metadataEvent.trigger();
-    },
     groupExceptionHandler
-  );
+  ).then((response) => {
+    GROUPS = processGroups(response);
+    groups.set(GROUPS);
+    metadataEvent.trigger();
+  });
   rawRequest(
     CONFIG["api-uri"] + "/v1.0/account",
     "GET",

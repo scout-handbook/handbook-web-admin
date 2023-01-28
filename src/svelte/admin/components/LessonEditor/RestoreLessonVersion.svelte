@@ -6,7 +6,6 @@
   import { get } from "../../../../ts/admin/tools/arrayTools";
   import { compileMarkdown } from "../../../../ts/admin/tools/compileMarkdown";
   import { parseVersion } from "../../../../ts/admin/tools/parseVersion";
-  import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import { authFailHandler, request } from "../../../../ts/admin/tools/request";
   import Button from "../Button.svelte";
   import DoubleSidePanel from "../DoubleSidePanel.svelte";
@@ -27,39 +26,29 @@
       ? lessonName!
       : versionList.find((x) => x.version === selectedVersion)!.name;
 
-  const historyPromise = new Promise<Array<LessonVersion>>((resolve) => {
-    request(
-      $apiUri + "/v1.0/lesson/" + lessonId! + "/history",
-      "GET",
-      {},
-      (response: Array<LessonVersion>): void => {
-        versionList = response;
-        resolve(versionList);
-      },
-      authFailHandler
-    );
+  const historyPromise = request<Array<LessonVersion>>(
+    $apiUri + "/v1.0/lesson/" + lessonId! + "/history",
+    "GET",
+    {},
+    authFailHandler
+  ).then((response) => {
+    versionList = response;
+    return versionList;
   });
 
-  $: contentPromise = new Promise<string>((resolve) => {
-    refreshLogin();
-    if (selectedVersion === null) {
-      void compileMarkdown(body).then(resolve);
-    } else {
-      request(
-        $apiUri +
-          "/v1.0/lesson/" +
-          lessonId! +
-          "/history/" +
-          selectedVersion.toString(),
-        "GET",
-        {},
-        (response: string): void => {
-          void compileMarkdown(response).then(resolve);
-        },
-        authFailHandler
-      );
-    }
-  });
+  $: contentPromise =
+    selectedVersion === null
+      ? compileMarkdown(body)
+      : request<string>(
+          $apiUri +
+            "/v1.0/lesson/" +
+            lessonId! +
+            "/history/" +
+            selectedVersion.toString(),
+          "GET",
+          {},
+          authFailHandler
+        ).then(compileMarkdown);
 
   function saveCallback(markdown: string): void {
     (document.getElementById("name") as HTMLInputElement).value =
