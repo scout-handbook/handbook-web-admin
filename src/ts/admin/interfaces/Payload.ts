@@ -1,1 +1,4 @@
-export type Payload = Record<string, Array<string> | number | string>;
+export type Payload = Record<
+  string,
+  Array<string> | number | string | undefined
+>;

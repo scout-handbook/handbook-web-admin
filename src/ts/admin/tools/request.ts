@@ -22,7 +22,10 @@ function requestQueryBuilder(payload: Payload): string {
   let query = "";
   let first = true;
   for (const key in payload) {
-    if (!Object.prototype.hasOwnProperty.call(payload, key)) {
+    if (
+      !Object.prototype.hasOwnProperty.call(payload, key) ||
+      payload[key] === undefined
+    ) {
       continue;
     }
     if (Array.isArray(payload[key])) {
