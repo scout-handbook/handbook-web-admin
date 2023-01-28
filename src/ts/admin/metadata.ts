@@ -1,5 +1,4 @@
 import { AfterLoadEvent } from "./AfterLoadEvent";
-import type { APIResponse } from "./interfaces/APIResponse";
 import type { Competence } from "./interfaces/Competence";
 import type { Field } from "./interfaces/Field";
 import type { Group } from "./interfaces/Group";
@@ -160,35 +159,34 @@ export function refreshMetadata(): void {
     groups.set(GROUPS);
     metadataEvent.trigger();
   });
-  rawRequest(
+  void rawRequest<Loginstate>(
     CONFIG["api-uri"] + "/v1.0/account",
     "GET",
-    undefined,
-    function (response: APIResponse<Loginstate>): void {
-      if (response.status === 200) {
-        if (
-          ["editor", "administrator", "superuser"].includes(
-            response.response!.role
-          )
-        ) {
-          LOGINSTATE = response.response!;
-          loginstate.set(LOGINSTATE);
-          metadataEvent.trigger();
-        } else {
-          window.location.replace(CONFIG["frontend-uri"]);
-        }
-      } else if (response.status === 401) {
-        window.location.href =
-          CONFIG["api-uri"] +
-          "/v1.0/login?return-uri=" +
-          encodeURIComponent(window.location.href);
+    undefined
+  ).then((response) => {
+    if (response.status === 200) {
+      if (
+        ["editor", "administrator", "superuser"].includes(
+          response.response!.role
+        )
+      ) {
+        LOGINSTATE = response.response!;
+        loginstate.set(LOGINSTATE);
+        metadataEvent.trigger();
       } else {
-        globalDialogMessage.set(
-          "Nastala neznámá chyba. Chybová hláška: " + response.message!
-        );
+        window.location.replace(CONFIG["frontend-uri"]);
       }
+    } else if (response.status === 401) {
+      window.location.href =
+        CONFIG["api-uri"] +
+        "/v1.0/login?return-uri=" +
+        encodeURIComponent(window.location.href);
+    } else {
+      globalDialogMessage.set(
+        "Nastala neznámá chyba. Chybová hláška: " + response.message!
+      );
     }
-  );
+  });
 }
 
 export function metadataSetup(): void {
