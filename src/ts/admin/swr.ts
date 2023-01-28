@@ -6,8 +6,6 @@ import { reAuthHandler, request } from "./tools/request";
 export function SWRSetup(): void {
   createDefaultSWR({
     fetcher: async (url: string): Promise<RequestResponse> =>
-      new Promise((resolve) => {
-        request(url, "GET", {}, resolve, reAuthHandler);
-      }),
+      request(url, "GET", {}, reAuthHandler),
   });
 }
