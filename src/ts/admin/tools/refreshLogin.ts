@@ -20,17 +20,16 @@ export function refreshLogin(
           }
         },
       };
-      request(
+      void request(
         CONFIG["api-uri"] + "/v1.0/refresh",
         "GET",
         {},
-        function (): void {
-          if (afterAction) {
-            afterAction();
-          }
-        },
         exceptionHandler
-      );
+      ).then(() => {
+        if (afterAction) {
+          afterAction();
+        }
+      });
     }
   }
 }

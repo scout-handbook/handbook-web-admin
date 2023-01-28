@@ -1,7 +1,6 @@
 <script lang="ts" strictEvents>
   import { useLocation, useNavigate } from "svelte-navigator";
 
-  import type { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
   import { apiUri, siteName } from "../../../ts/admin/stores";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import { reAuthHandler, request } from "../../../ts/admin/tools/request";
@@ -26,17 +25,12 @@
   $: pageStart = perPage * (page - 1);
   $: pageEnd = pageStart + perPage;
 
-  const imageListPromise: Promise<Array<string>> = new Promise((resolve) => {
-    request(
-      $apiUri + "/v1.0/image",
-      "GET",
-      {},
-      function (response: RequestResponse): void {
-        resolve(response as Array<string>);
-      },
-      reAuthHandler
-    );
-  });
+  const imageListPromise: Promise<Array<string>> = request(
+    $apiUri + "/v1.0/image",
+    "GET",
+    {},
+    reAuthHandler
+  );
 
   function showImagePreview(id: string): void {
     const overlay = document.getElementById("overlay")!;

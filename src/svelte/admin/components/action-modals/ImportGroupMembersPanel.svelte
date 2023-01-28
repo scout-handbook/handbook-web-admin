@@ -5,7 +5,6 @@
   import type { Group } from "../../../../ts/admin/interfaces/Group";
   import type { Participant } from "../../../../ts/admin/interfaces/Participant";
   import type { Payload } from "../../../../ts/admin/interfaces/Payload";
-  import type { RequestResponse } from "../../../../ts/admin/interfaces/RequestResponse";
   import type { User } from "../../../../ts/admin/interfaces/User";
   import type { UserListResponse } from "../../../../ts/admin/interfaces/UserListResponse";
   import { apiUri } from "../../../../ts/admin/stores";
@@ -36,19 +35,18 @@
 
   refreshLogin();
 
-  request(
+  void request<Array<Event>>(
     $apiUri + "/v1.0/event",
     "GET",
     {},
-    (response: RequestResponse) => {
-      eventList = response as Array<Event>;
-      if (eventList.length < 1) {
-        error = "Nejste instruktorem na žádné akci.";
-      }
-      step = "event-selection";
-    },
     reAuthHandler
-  );
+  ).then((response) => {
+    eventList = response;
+    if (eventList.length < 1) {
+      error = "Nejste instruktorem na žádné akci.";
+    }
+    step = "event-selection";
+  });
 
   function setdiff(a: Array<Participant>, b: Array<User>): Array<Participant> {
     const bArr = b.map(function (x): number {
@@ -68,32 +66,23 @@
       return;
     }
     step = "participant-selection-loading";
-    const participantPromise = new Promise<Array<Participant>>((resolve) => {
-      const exceptionHandler = reAuthHandler;
-      exceptionHandler.SkautISAuthorizationException = function (): void {
-        error = "Pro tuto akci nemáte ve SkautISu dostatečná práva.";
-      };
-      request(
-        $apiUri + "/v1.0/event/" + selectedEvent + "/participant",
-        "GET",
-        {},
-        (response: RequestResponse) => {
-          resolve(response as Array<Participant>);
+    const participantPromise = request<Array<Participant>>(
+      $apiUri + "/v1.0/event/" + selectedEvent + "/participant",
+      "GET",
+      {},
+      {
+        ...reAuthHandler,
+        SkautISAuthorizationException: () => {
+          error = "Pro tuto akci nemáte ve SkautISu dostatečná práva.";
         },
-        exceptionHandler
-      );
-    });
-    const userPromise = new Promise<Array<User>>((resolve) => {
-      request(
-        $apiUri + "/v1.0/user",
-        "GET",
-        { page: 1, "per-page": 1000, group: payload.groupId },
-        (response: RequestResponse) => {
-          resolve((response as UserListResponse).users);
-        },
-        reAuthHandler
-      );
-    });
+      }
+    );
+    const userPromise = request<UserListResponse>(
+      $apiUri + "/v1.0/user",
+      "GET",
+      { page: 1, "per-page": 1000, group: payload.groupId },
+      reAuthHandler
+    ).then((response) => response.users);
     void Promise.all([participantPromise, userPromise]).then(
       ([participants, users]) => {
         participantList = setdiff(participants, users);
@@ -113,32 +102,21 @@
     step = "importing";
     void Promise.all(
       selectedParticipants.map(async (participant) =>
-        new Promise<void>((resolve) => {
+        request(
+          $apiUri + "/v1.0/user",
+          "POST",
+          {
+            id: participant,
+            name: participantList.find((p) => p.id === participant)!.name,
+          } as unknown as Payload,
+          authFailHandler
+        ).then(async () =>
           request(
-            $apiUri + "/v1.0/user",
-            "POST",
-            {
-              id: participant,
-              name: participantList.find((p) => p.id === participant)!.name,
-            } as unknown as Payload,
-            () => {
-              resolve();
-            },
+            $apiUri + "/v1.0/user/" + participant.toString() + "/group",
+            "PUT",
+            { group: payload.groupId },
             authFailHandler
-          );
-        }).then(
-          async () =>
-            new Promise<void>((resolve) => {
-              request(
-                $apiUri + "/v1.0/user/" + participant.toString() + "/group",
-                "PUT",
-                { group: payload.groupId },
-                () => {
-                  resolve();
-                },
-                authFailHandler
-              );
-            })
+          )
         )
       )
     ).then(() => {

@@ -1,7 +1,6 @@
 <script lang="ts" strictEvents>
   import { useLocation, useNavigate } from "svelte-navigator";
 
-  import type { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
   import { apiUri } from "../../../ts/admin/stores";
   import { Action } from "../../../ts/admin/tools/Action";
   import { ActionCallback } from "../../../ts/admin/tools/ActionCallback";
@@ -30,17 +29,13 @@
   let field: string | null = null;
   let groups: Array<string> = [];
 
-  let bodyPromise = new Promise<void>((resolve) => {
-    request(
-      $apiUri + "/v1.0/deleted-lesson/" + lessonID + "/history/" + version,
-      "GET",
-      {},
-      function (response: RequestResponse): void {
-        body = response as string;
-        resolve();
-      },
-      authFailHandler
-    );
+  let bodyPromise = request<string>(
+    $apiUri + "/v1.0/deleted-lesson/" + lessonID + "/history/" + version,
+    "GET",
+    {},
+    authFailHandler
+  ).then((response) => {
+    body = response;
   });
 
   function save(): void {

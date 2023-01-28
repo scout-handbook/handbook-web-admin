@@ -111,36 +111,33 @@ export function refreshMetadata(): void {
     fields.set(FIELDS);
     metadataEvent.trigger();
   });
-  request(
+  void request<Record<string, Lesson>>(
     CONFIG["api-uri"] + "/v1.0/lesson?override-group=true",
     "GET",
     {},
-    function (response): void {
-      LESSONS = Object.entries(response as Record<string, Lesson>);
-      metadataSortEvent.trigger();
-    },
     undefined
-  );
-  request(
+  ).then((response) => {
+    LESSONS = Object.entries(response);
+    metadataSortEvent.trigger();
+  });
+  void request<Record<string, Field>>(
     CONFIG["api-uri"] + "/v1.0/field?override-group=true",
     "GET",
     {},
-    function (response): void {
-      FIELDS = Object.entries(response as Record<string, Field>);
-      metadataSortEvent.trigger();
-    },
     undefined
-  );
-  request(
+  ).then((response) => {
+    FIELDS = Object.entries(response);
+    metadataSortEvent.trigger();
+  });
+  void request<Record<string, Competence>>(
     CONFIG["api-uri"] + "/v1.0/competence",
     "GET",
     {},
-    function (response): void {
-      COMPETENCES = Object.entries(response as Record<string, Competence>);
-      metadataSortEvent.trigger();
-    },
     undefined
-  );
+  ).then((response) => {
+    COMPETENCES = Object.entries(response);
+    metadataSortEvent.trigger();
+  });
   const groupExceptionHandler = {
     AuthenticationException: function (): void {
       window.location.href =
@@ -152,46 +149,44 @@ export function refreshMetadata(): void {
       window.location.replace(CONFIG["frontend-uri"]);
     },
   };
-  request(
+  void request<Record<string, Group>>(
     CONFIG["api-uri"] + "/v1.0/group",
     "GET",
     {},
-    function (response): void {
-      GROUPS = processGroups(response as Record<string, Group>);
-      groups.set(GROUPS);
-      metadataEvent.trigger();
-    },
     groupExceptionHandler
-  );
-  rawRequest(
+  ).then((response) => {
+    GROUPS = processGroups(response);
+    groups.set(GROUPS);
+    metadataEvent.trigger();
+  });
+  void rawRequest<Loginstate>(
     CONFIG["api-uri"] + "/v1.0/account",
     "GET",
-    undefined,
-    function (response): void {
-      if (response.status === 200) {
-        if (
-          ["editor", "administrator", "superuser"].includes(
-            (response.response as Loginstate).role
-          )
-        ) {
-          LOGINSTATE = response.response as Loginstate;
-          loginstate.set(LOGINSTATE);
-          metadataEvent.trigger();
-        } else {
-          window.location.replace(CONFIG["frontend-uri"]);
-        }
-      } else if (response.status === 401) {
-        window.location.href =
-          CONFIG["api-uri"] +
-          "/v1.0/login?return-uri=" +
-          encodeURIComponent(window.location.href);
+    undefined
+  ).then((response) => {
+    if (response.status === 200) {
+      if (
+        ["editor", "administrator", "superuser"].includes(
+          response.response!.role
+        )
+      ) {
+        LOGINSTATE = response.response!;
+        loginstate.set(LOGINSTATE);
+        metadataEvent.trigger();
       } else {
-        globalDialogMessage.set(
-          "Nastala neznámá chyba. Chybová hláška: " + response.message!
-        );
+        window.location.replace(CONFIG["frontend-uri"]);
       }
+    } else if (response.status === 401) {
+      window.location.href =
+        CONFIG["api-uri"] +
+        "/v1.0/login?return-uri=" +
+        encodeURIComponent(window.location.href);
+    } else {
+      globalDialogMessage.set(
+        "Nastala neznámá chyba. Chybová hláška: " + response.message!
+      );
     }
-  );
+  });
 }
 
 export function metadataSetup(): void {
