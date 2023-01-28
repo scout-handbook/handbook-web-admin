@@ -49,56 +49,47 @@
   const discardExceptionHandler = { NotFoundException: null };
 
   let lessonDataPromise = Promise.all([
-    new Promise<void>((resolve) => {
-      request(
-        $apiUri + "/v1.0/mutex/" + encodeURIComponent(lessonID),
-        "POST",
-        {},
-        () => {
-          window.onbeforeunload = function (): void {
-            sendBeacon(lessonID);
-          };
-          resolve();
+    request(
+      $apiUri + "/v1.0/mutex/" + encodeURIComponent(lessonID),
+      "POST",
+      {},
+      {
+        ...reAuthHandler,
+        LockedException: (response: APIResponse<RequestResponse>): void => {
+          globalDialogMessage.set(
+            "Nelze upravovat lekci, protože ji právě upravuje " +
+              response.holder! +
+              "."
+          );
         },
-        {
-          ...reAuthHandler,
-          LockedException: (response: APIResponse): void => {
-            globalDialogMessage.set(
-              "Nelze upravovat lekci, protože ji právě upravuje " +
-                response.holder! +
-                "."
-            );
-          },
-        }
-      );
+      }
+    ).then(() => {
+      window.onbeforeunload = function (): void {
+        sendBeacon(lessonID);
+      };
+    }),
+    request<Array<string>>(
+      $apiUri + "/v1.0/lesson/" + encodeURIComponent(lessonID) + "/group",
+      "GET",
+      {},
+      reAuthHandler
+    ).then((response) => {
+      groups = response;
+      initialGroups = groups;
     }),
     new Promise<void>((resolve) => {
-      request(
-        $apiUri + "/v1.0/lesson/" + encodeURIComponent(lessonID) + "/group",
-        "GET",
-        {},
-        (response: RequestResponse) => {
-          groups = response as Array<string>;
-          initialGroups = groups;
-          resolve();
-        },
-        reAuthHandler
-      );
-    }),
-    new Promise<void>((resolve) => {
-      request(
+      void request<string>(
         $apiUri + "/v1.0/lesson/" + encodeURIComponent(lessonID),
         "GET",
         {},
-        (response: RequestResponse): void => {
-          metadataEvent.addCallback(function (): void {
-            body = response as string;
-            initialBody = body;
-            resolve();
-          });
-        },
         reAuthHandler
-      );
+      ).then((response) => {
+        metadataEvent.addCallback(function (): void {
+          body = response;
+          initialBody = body;
+          resolve();
+        });
+      });
     }),
   ]);
 

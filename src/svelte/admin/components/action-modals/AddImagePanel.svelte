@@ -28,15 +28,14 @@
     stage = "upload";
     const formData = new FormData();
     formData.append("image", files[0]);
-    request(
+    void request(
       $apiUri + "/v1.0/image",
       "POST",
       formData,
-      function (): void {
-        stage = "done";
-      },
       authFailHandler
-    );
+    ).then(() => {
+      stage = "done";
+    });
   }
 
   refreshLogin();

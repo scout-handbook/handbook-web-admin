@@ -1,7 +1,6 @@
 <script lang="ts" strictEvents>
   import { createEventDispatcher } from "svelte";
 
-  import type { RequestResponse } from "../../../../ts/admin/interfaces/RequestResponse";
   import { apiUri } from "../../../../ts/admin/stores";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import { reAuthHandler, request } from "../../../../ts/admin/tools/request";
@@ -18,17 +17,12 @@
   $: pageStart = perPage * (page - 1);
   $: pageEnd = pageStart + perPage;
 
-  const imageListPromise: Promise<Array<string>> = new Promise((resolve) => {
-    request(
-      $apiUri + "/v1.0/image",
-      "GET",
-      {},
-      (response: RequestResponse): void => {
-        resolve(response as Array<string>);
-      },
-      reAuthHandler
-    );
-  });
+  const imageListPromise: Promise<Array<string>> = request(
+    $apiUri + "/v1.0/image",
+    "GET",
+    {},
+    reAuthHandler
+  );
 
   refreshLogin();
 </script>

@@ -4,11 +4,9 @@
   import type { Group } from "../../../ts/admin/interfaces/Group";
   import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
   import type { Payload } from "../../../ts/admin/interfaces/Payload";
-  import type { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
   import type { Role } from "../../../ts/admin/interfaces/Role";
   import type { User } from "../../../ts/admin/interfaces/User";
   import type { UserListResponse } from "../../../ts/admin/interfaces/UserListResponse";
-  import type { UserSearchQuery } from "../../../ts/admin/interfaces/UserSearchQuery";
   import { apiUri, siteName } from "../../../ts/admin/stores";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import { reAuthHandler, request } from "../../../ts/admin/tools/request";
@@ -39,28 +37,19 @@
 
   let userListPromise: Promise<UserListResponse>;
 
-  $: userListPromise = new Promise((resolve) => {
-    const payload: UserSearchQuery = {
-      name: searchName,
-      page: page,
-      "per-page": perPage,
-    };
-    if (role !== "all") {
-      payload.role = role;
-    }
-    if (group !== "00000000-0000-0000-0000-000000000000") {
-      payload.group = group;
-    }
-    request(
-      $apiUri + "/v1.0/user",
-      "GET",
-      payload as unknown as Payload,
-      function (response: RequestResponse): void {
-        resolve(response as UserListResponse);
-      },
-      reAuthHandler
-    );
-  });
+  $: payload = {
+    name: searchName,
+    page: page,
+    "per-page": perPage,
+    role: role !== "all" ? role : undefined,
+    group: group !== "00000000-0000-0000-0000-000000000000" ? group : undefined,
+  };
+  $: userListPromise = request(
+    $apiUri + "/v1.0/user",
+    "GET",
+    payload as unknown as Payload,
+    reAuthHandler
+  );
 
   refreshLogin(true);
 

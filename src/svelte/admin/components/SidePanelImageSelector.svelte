@@ -1,7 +1,6 @@
 <script lang="ts" strictEvents>
   import { createEventDispatcher } from "svelte";
 
-  import type { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
   import { apiUri } from "../../../ts/admin/stores";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import { reAuthHandler, request } from "../../../ts/admin/tools/request";
@@ -17,22 +16,12 @@
   let imageListPromise: Promise<Array<string>>;
 
   function reload(): void {
-    imageListPromise = new Promise((resolve) => {
-      request(
-        $apiUri + "/v1.0/image",
-        "GET",
-        {},
-        function (response: RequestResponse): void {
-          resolve(
-            (response as Array<string>).slice(
-              perPage * (page - 1),
-              perPage * page
-            )
-          );
-        },
-        reAuthHandler
-      );
-    });
+    imageListPromise = request<Array<string>>(
+      $apiUri + "/v1.0/image",
+      "GET",
+      {},
+      reAuthHandler
+    ).then((response) => response.slice(perPage * (page - 1), perPage * page));
   }
 
   reload();

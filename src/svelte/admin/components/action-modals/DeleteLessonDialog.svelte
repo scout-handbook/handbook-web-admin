@@ -3,6 +3,7 @@
 
   import type { APIResponse } from "../../../../ts/admin/interfaces/APIResponse";
   import type { Lesson } from "../../../../ts/admin/interfaces/Lesson";
+  import type { RequestResponse } from "../../../../ts/admin/interfaces/RequestResponse";
   import { apiUri } from "../../../../ts/admin/stores";
   import { Action } from "../../../../ts/admin/tools/Action";
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
@@ -21,23 +22,17 @@
   const name = get(lessons, payload.lessonId)!.name;
   let lockedError: string | null = null;
   let expiredError = false;
-  const mutexPromise = new Promise<void>((resolve) => {
-    const exceptionHandler = reAuthHandler;
-    exceptionHandler["LockedException"] = function (
-      response: APIResponse
-    ): void {
-      lockedError = response.holder!;
-    };
-    request(
-      $apiUri + "/v1.0/mutex/" + encodeURIComponent(payload.lessonId),
-      "POST",
-      {},
-      function (): void {
-        resolve();
+  const mutexPromise = request(
+    $apiUri + "/v1.0/mutex/" + encodeURIComponent(payload.lessonId),
+    "POST",
+    {},
+    {
+      ...reAuthHandler,
+      LockedException: (response: APIResponse<RequestResponse>): void => {
+        lockedError = response.holder!;
       },
-      exceptionHandler
-    );
-  });
+    }
+  );
   let donePromise: Promise<void> | null = null;
 
   function confirmCallback(): void {
