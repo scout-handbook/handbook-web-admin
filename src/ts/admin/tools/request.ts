@@ -44,18 +44,11 @@ function requestQueryBuilder(payload: Payload): string {
   return query;
 }
 
-export function rawRequest<T extends RequestResponse>(
+export async function rawRequest<T extends RequestResponse>(
   url: string,
   method: string,
-  payload: FormData | Payload = {},
-  callback: (response: APIResponse<T>) => void
-): void {
-  const xhr = new XMLHttpRequest();
-  xhr.onreadystatechange = function (): void {
-    if (this.readyState === 4) {
-      callback(JSON.parse(this.responseText) as APIResponse<T>);
-    }
-  };
+  payload: FormData | Payload = {}
+): Promise<APIResponse<T>> {
   let query = "";
   if (
     method === "GET" ||
@@ -67,21 +60,29 @@ export function rawRequest<T extends RequestResponse>(
   if ((method === "GET" || method === "DELETE") && query) {
     url += "?" + query;
   }
-  xhr.open(method, url, true);
-  if (
-    method === "GET" ||
-    method === "DELETE" ||
-    payload.toString() !== "[object FormData]"
-  ) {
-    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  }
-  if (method === "GET" || method === "DELETE") {
-    xhr.send();
-  } else if (payload.toString() !== "[object FormData]") {
-    xhr.send(query);
-  } else {
-    xhr.send(payload as unknown as string);
-  }
+  return new Promise((resolve) => {
+    const xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function (): void {
+      if (this.readyState === 4) {
+        resolve(JSON.parse(this.responseText) as APIResponse<T>);
+      }
+    };
+    xhr.open(method, url, true);
+    if (
+      method === "GET" ||
+      method === "DELETE" ||
+      payload.toString() !== "[object FormData]"
+    ) {
+      xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    }
+    if (method === "GET" || method === "DELETE") {
+      xhr.send();
+    } else if (payload.toString() !== "[object FormData]") {
+      xhr.send(query);
+    } else {
+      xhr.send(payload as unknown as string);
+    }
+  });
 }
 
 export async function request<T extends RequestResponse>(
@@ -90,19 +91,23 @@ export async function request<T extends RequestResponse>(
   payload: FormData | Payload,
   exceptionHandler: ExceptionHandler = {}
 ): Promise<T> {
-  return new Promise((resolve) => {
-    rawRequest(url, method, payload, function (response: APIResponse<T>): void {
-      if (Math.floor(response.status / 100) === 2) {
-        resolve(response.response!);
-      } else if (
-        Object.prototype.hasOwnProperty.call(exceptionHandler, response.type!)
-      ) {
-        exceptionHandler[response.type!]!(response);
-      } else {
-        globalDialogMessage.set(
-          "Nastala neznámá chyba. Chybová hláška: " + response.message!
-        );
+  return new Promise((resolve, reject) => {
+    void rawRequest<T>(url, method, payload).then(
+      (response: APIResponse<T>): void => {
+        if (Math.floor(response.status / 100) === 2) {
+          resolve(response.response!);
+        } else if (
+          Object.prototype.hasOwnProperty.call(exceptionHandler, response.type!)
+        ) {
+          exceptionHandler[response.type!]!(response);
+          reject();
+        } else {
+          globalDialogMessage.set(
+            "Nastala neznámá chyba. Chybová hláška: " + response.message!
+          );
+          reject();
+        }
       }
-    });
+    );
   });
 }
