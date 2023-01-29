@@ -1,13 +1,15 @@
 <script lang="ts" strictEvents>
+  import { useSWR } from "sswr";
+  import { derived } from "svelte/store";
   import { useLocation, useNavigate } from "svelte-navigator";
 
-  import {
-    competences as allCompetences,
-    fields,
-    groups as allGroups,
-  } from "../../../../ts/admin/stores";
+  import type { Competence } from "../../../../ts/admin/interfaces/Competence";
+  import { processCompetences } from "../../../../ts/admin/metadata";
+  import { fields, groups as allGroups } from "../../../../ts/admin/stores";
   import { get } from "../../../../ts/admin/tools/arrayTools";
+  import { constructURL } from "../../../../ts/admin/tools/constructURL";
   import Button from "../Button.svelte";
+  import LoadingIndicator from "../LoadingIndicator.svelte";
 
   export let id: string | null;
   export let field: string | null;
@@ -17,8 +19,16 @@
   const location = useLocation();
   const navigate = useNavigate();
 
-  $: lessonCompetences = $allCompetences!.filter(([id, _]) =>
-    competences.includes(id)
+  const allCompetences = derived(
+    useSWR<Record<string, Competence>>(constructURL("v1.0/competence")).data,
+    processCompetences,
+    undefined
+  );
+  const lessonCompetences = derived(
+    allCompetences,
+    ($allCompetences) =>
+      $allCompetences?.filter(([id, _]) => competences.includes(id)),
+    undefined
   );
   $: fieldName =
     field !== null && $fields !== null ? get($fields, field)?.name : undefined;
@@ -79,11 +89,15 @@
 >
   Upravit
 </Button>
-{#each lessonCompetences as [_, competence]}
-  <br />
-  <span class="competence-number">{competence.number}:</span>
-  {competence.name}
-{/each}
+{#if $lessonCompetences === undefined}
+  <LoadingIndicator />
+{:else}
+  {#each $lessonCompetences as [_, competence]}
+    <br />
+    <span class="competence-number">{competence.number}:</span>
+    {competence.name}
+  {/each}
+{/if}
 <br />
 <h3 class="side-panel-title no-newline">Skupiny</h3>
 <Button
