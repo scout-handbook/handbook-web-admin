@@ -1,9 +1,11 @@
 <script lang="ts" strictEvents>
   import { useSWR } from "sswr";
+  import { derived } from "svelte/store";
   import { useLocation, useNavigate } from "svelte-navigator";
 
   import type { Competence } from "../../../ts/admin/interfaces/Competence";
   import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
+  import { processCompetences } from "../../../ts/admin/metadata";
   import { siteName } from "../../../ts/admin/stores";
   import { constructURL } from "../../../ts/admin/tools/constructURL";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
@@ -11,8 +13,13 @@
   import ChangeCompetencePanel from "../components/action-modals/ChangeCompetencePanel.svelte";
   import DeleteCompetenceDialog from "../components/action-modals/DeleteCompetenceDialog.svelte";
   import Button from "../components/Button.svelte";
+  import LoadingIndicator from "../components/LoadingIndicator.svelte";
 
-  export let competences: Array<[string, Competence]>;
+  const competences = derived(
+    useSWR<Record<string, Competence>>(constructURL("v1.0/competence")).data,
+    processCompetences,
+    undefined
+  );
 
   const location = useLocation<{
     action: string;
@@ -34,9 +41,18 @@
 {#if action === "add-competence"}
   <AddCompetencePanel />
 {:else if action === "change-competence"}
-  <ChangeCompetencePanel {competences} payload={actionPayload} />
+  <!-- TODO: Handle SWR better -->
+  {#if $competences !== undefined}
+    <ChangeCompetencePanel competences={$competences} payload={actionPayload} />
+  {/if}
 {:else if action === "delete-competence"}
-  <DeleteCompetenceDialog {competences} payload={actionPayload} />
+  <!-- TODO: Handle SWR better -->
+  {#if $competences !== undefined}
+    <DeleteCompetenceDialog
+      competences={$competences}
+      payload={actionPayload}
+    />
+  {/if}
 {/if}
 
 <h1>{$siteName + " - Kompetence"}</h1>
@@ -52,45 +68,51 @@
   </Button>
   <br />
 {/if}
-{#each competences as [id, competence]}
-  <h3 class="main-page">
-    {competence.number.toString() + ": " + competence.name}
-  </h3>
-  {#if adminOrSuperuser}
-    <div class="buttons">
-      <Button
-        cyan
-        icon="pencil"
-        on:click={() => {
-          navigate("/competences", {
-            state: {
-              action: "change-competence",
-              actionPayload: { competenceId: id },
-            },
-          });
-        }}
-      >
-        Upravit
-      </Button>
-      <Button
-        icon="trash-empty"
-        red
-        on:click={() => {
-          navigate("/competences", {
-            state: {
-              action: "delete-competence",
-              actionPayload: { competenceId: id },
-            },
-          });
-        }}
-      >
-        Smazat
-      </Button>
-    </div>
-  {/if}
-  <span class="main-page competence-description">{competence.description}</span>
-  <br />
-{/each}
+{#if $competences === undefined}
+  <LoadingIndicator />
+{:else}
+  {#each $competences as [id, competence]}
+    <h3 class="main-page">
+      {competence.number.toString() + ": " + competence.name}
+    </h3>
+    {#if adminOrSuperuser}
+      <div class="buttons">
+        <Button
+          cyan
+          icon="pencil"
+          on:click={() => {
+            navigate("/competences", {
+              state: {
+                action: "change-competence",
+                actionPayload: { competenceId: id },
+              },
+            });
+          }}
+        >
+          Upravit
+        </Button>
+        <Button
+          icon="trash-empty"
+          red
+          on:click={() => {
+            navigate("/competences", {
+              state: {
+                action: "delete-competence",
+                actionPayload: { competenceId: id },
+              },
+            });
+          }}
+        >
+          Smazat
+        </Button>
+      </div>
+    {/if}
+    <span class="main-page competence-description"
+      >{competence.description}</span
+    >
+    <br />
+  {/each}
+{/if}
 
 <style>
   .buttons {
