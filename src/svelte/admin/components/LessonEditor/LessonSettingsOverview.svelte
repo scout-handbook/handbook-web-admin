@@ -24,11 +24,8 @@
     processCompetences,
     undefined
   );
-  const lessonCompetences = derived(
-    allCompetences,
-    ($allCompetences) =>
-      $allCompetences?.filter(([id, _]) => competences.includes(id)),
-    undefined
+  $: lessonCompetences = $allCompetences?.filter(([id, _]) =>
+    competences.includes(id)
   );
   $: fieldName =
     field !== null && $fields !== null ? get($fields, field)?.name : undefined;
@@ -89,10 +86,10 @@
 >
   Upravit
 </Button>
-{#if $lessonCompetences === undefined}
+{#if lessonCompetences === undefined}
   <LoadingIndicator />
 {:else}
-  {#each $lessonCompetences as [_, competence]}
+  {#each lessonCompetences as [_, competence]}
     <br />
     <span class="competence-number">{competence.number}:</span>
     {competence.name}
