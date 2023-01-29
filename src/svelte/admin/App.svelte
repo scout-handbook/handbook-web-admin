@@ -89,11 +89,7 @@
       <TopBar />
       <div id="main-page-container">
         <div id="main-page">
-          {#if $competences === null}
-            <LoadingIndicator />
-          {:else}
-            <CompetenceView competences={$competences} />
-          {/if}
+          <CompetenceView />
         </div>
       </div>
     </Route>
