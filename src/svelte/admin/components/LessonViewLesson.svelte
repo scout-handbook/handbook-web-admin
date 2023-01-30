@@ -1,36 +1,36 @@
 <script lang="ts" strictEvents>
   import { useSWR } from "sswr";
+  import { derived } from "svelte/store";
   import { useNavigate } from "svelte-navigator";
 
   import type { Competence } from "../../../ts/admin/interfaces/Competence";
   import type { Lesson } from "../../../ts/admin/interfaces/Lesson";
   import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
+  import { processCompetences } from "../../../ts/admin/metadata";
   import { adminUri } from "../../../ts/admin/stores";
   import { constructURL } from "../../../ts/admin/tools/constructURL";
   import Button from "./Button.svelte";
 
-  export let competences: Array<[string, Competence]>;
   export let id: string;
   export let lesson: Lesson;
   export let secondLevel = false;
 
   const navigate = useNavigate();
 
+  const competences = derived(
+    useSWR<Record<string, Competence>>(constructURL("v1.0/competence")).data,
+    processCompetences,
+    undefined
+  );
   const { data: loginstate } = useSWR<Loginstate>(constructURL("v1.0/account"));
   $: adminOrSuperuser =
     $loginstate?.role === "administrator" || $loginstate?.role === "superuser";
 
-  function lessonCompetenceList(): string {
-    return (
-      "Kompetence: " +
-      competences
-        .filter(([competenceId, _]) =>
-          lesson.competences.includes(competenceId)
-        )
-        .map(([_, competence]) => competence.number)
-        .join(", ")
-    );
-  }
+  $: competenceList =
+    $competences
+      ?.filter(([competenceId, _]) => lesson.competences.includes(competenceId))
+      ?.map(([_, competence]) => competence.number)
+      ?.join(", ") ?? "";
 </script>
 
 <br />
@@ -67,5 +67,5 @@
 </Button>
 <br />
 <span class="main-page" class:second-level={secondLevel}>
-  {lessonCompetenceList()}
+  Kompetence: {competenceList}
 </span>

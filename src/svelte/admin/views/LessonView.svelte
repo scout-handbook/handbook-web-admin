@@ -2,7 +2,6 @@
   import { useSWR } from "sswr";
   import { useLocation, useNavigate } from "svelte-navigator";
 
-  import type { Competence } from "../../../ts/admin/interfaces/Competence";
   import type { Field } from "../../../ts/admin/interfaces/Field";
   import type { Lesson } from "../../../ts/admin/interfaces/Lesson";
   import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
@@ -17,7 +16,6 @@
   import Button from "../components/Button.svelte";
   import LessonViewLesson from "../components/LessonViewLesson.svelte";
 
-  export let competences: Array<[string, Competence]>;
   export let fields: Array<[string, Field]>;
   export let lessons: Array<[string, Lesson]>;
 
@@ -87,7 +85,7 @@
 {#each lessons as [lessonId, lesson]}
   <!-- TODO: Precompute -->
   {#if fields.filter( ([_, field]) => field.lessons.includes(lessonId) ).length === 0}
-    <LessonViewLesson id={lessonId} {competences} {lesson} />
+    <LessonViewLesson id={lessonId} {lesson} />
   {/if}
 {/each}
 {#each fields as [fieldId, field]}
@@ -128,12 +126,7 @@
   </Button>
   {#each lessons as [lessonId, lesson]}
     {#if field.lessons.includes(lessonId)}
-      <LessonViewLesson
-        id={lessonId}
-        {competences}
-        {lesson}
-        secondLevel={true}
-      />
+      <LessonViewLesson id={lessonId} {lesson} secondLevel={true} />
     {/if}
   {/each}
 {/each}
