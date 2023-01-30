@@ -2,7 +2,6 @@
   import { Route, Router } from "svelte-navigator";
 
   import {
-    competences,
     fields,
     globalDialogMessage,
     globalLoadingIndicator,
@@ -57,14 +56,10 @@
       <TopBar />
       <div id="main-page-container">
         <div id="main-page">
-          {#if $fields === null || $competences === null || $lessons === null}
+          {#if $fields === null || $lessons === null}
             <LoadingIndicator />
           {:else}
-            <LessonView
-              competences={$competences}
-              fields={$fields}
-              lessons={$lessons}
-            />
+            <LessonView fields={$fields} lessons={$lessons} />
           {/if}
         </div>
       </div>
@@ -73,14 +68,10 @@
       <TopBar />
       <div id="main-page-container">
         <div id="main-page">
-          {#if $fields === null || $competences === null || $lessons === null}
+          {#if $fields === null || $lessons === null}
             <LoadingIndicator />
           {:else}
-            <LessonView
-              competences={$competences}
-              fields={$fields}
-              lessons={$lessons}
-            />
+            <LessonView fields={$fields} lessons={$lessons} />
           {/if}
         </div>
       </div>
