@@ -1,10 +1,19 @@
 <script lang="ts" strictEvents>
+  import { useSWR } from "sswr";
+  import { derived } from "svelte/store";
   import { useNavigate } from "svelte-navigator";
 
+  import type { Competence } from "../../../../ts/admin/interfaces/Competence";
+  import type { Lesson } from "../../../../ts/admin/interfaces/Lesson";
   import type { LessonVersion } from "../../../../ts/admin/interfaces/LessonVersion";
-  import { apiUri, lessons } from "../../../../ts/admin/stores";
+  import {
+    processCompetences,
+    processLessons,
+  } from "../../../../ts/admin/metadata";
+  import { apiUri } from "../../../../ts/admin/stores";
   import { get } from "../../../../ts/admin/tools/arrayTools";
   import { compileMarkdown } from "../../../../ts/admin/tools/compileMarkdown";
+  import { constructURL } from "../../../../ts/admin/tools/constructURL";
   import { parseVersion } from "../../../../ts/admin/tools/parseVersion";
   import { authFailHandler, request } from "../../../../ts/admin/tools/request";
   import Button from "../Button.svelte";
@@ -17,10 +26,25 @@
 
   const navigate = useNavigate();
 
+  const competences = derived(
+    useSWR<Record<string, Competence>>(constructURL("v1.0/competence")).data,
+    processCompetences,
+    undefined
+  );
+  const lessons = derived(
+    [
+      useSWR<Record<string, Lesson>>(
+        constructURL("v1.0/lesson?override-group=true")
+      ).data,
+      competences,
+    ],
+    processLessons,
+    undefined
+  );
   let selectedVersion: number | null = null;
   let versionList: Array<LessonVersion> | null = null;
   $: currentVersion =
-    $lessons !== null ? get($lessons, lessonId!)?.version ?? 0 : 0;
+    $lessons !== undefined ? get($lessons, lessonId!)?.version : undefined;
   $: selectedVersionName =
     selectedVersion === null || versionList === null
       ? lessonName!
@@ -100,7 +124,9 @@
             </label>
             <span class="lesson-history-current">Současná verze</span>
             —
-            {parseVersion(currentVersion)}
+            {#if currentVersion !== undefined}
+              {parseVersion(currentVersion)}
+            {/if}
           </div>
           {#each versionList as version}
             <div class="form-row">
