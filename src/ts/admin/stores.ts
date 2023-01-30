@@ -1,6 +1,5 @@
 import { readable, writable } from "svelte/store";
 
-import type { Competence } from "./interfaces/Competence";
 import type { ConfigCustomProperties } from "./interfaces/Config";
 import type { Field } from "./interfaces/Field";
 import type { Group } from "./interfaces/Group";
@@ -15,7 +14,6 @@ export const frontendUri = readable<string>(CONFIG["frontend-uri"]);
 export const siteName = readable<string>(CONFIG["site-name"]);
 
 export const fields = writable<Array<[string, Field]> | null>(null);
-export const competences = writable<Array<[string, Competence]> | null>(null);
 export const groups = writable<Array<[string, Group]> | null>(null);
 export const lessons = writable<Array<[string, Lesson]> | null>(null);
 
