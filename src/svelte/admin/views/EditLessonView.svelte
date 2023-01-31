@@ -2,8 +2,10 @@
   import { useNavigate } from "svelte-navigator";
 
   import type { APIResponse } from "../../../ts/admin/interfaces/APIResponse";
+  import type { Field } from "../../../ts/admin/interfaces/Field";
+  import type { Lesson } from "../../../ts/admin/interfaces/Lesson";
   import type { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
-  import { FIELDS, LESSONS, metadataEvent } from "../../../ts/admin/metadata";
+  import { metadataEvent } from "../../../ts/admin/metadata";
   import { apiUri, globalDialogMessage } from "../../../ts/admin/stores";
   import { Action } from "../../../ts/admin/tools/Action";
   import { ActionCallback } from "../../../ts/admin/tools/ActionCallback";
@@ -20,15 +22,17 @@
   import LoadingIndicator from "../components/LoadingIndicator.svelte";
 
   export let lessonID: string;
+  export let fields: Array<[string, Field]>;
+  export let lessons: Array<[string, Lesson]>;
 
   const navigate = useNavigate();
 
   let donePromise: Promise<void> | null = null;
-  let name = get(LESSONS, lessonID)?.name ?? "";
+  let name = get(lessons, lessonID)?.name ?? "";
   let body = "";
-  let competences: Array<string> = get(LESSONS, lessonID)?.competences ?? [];
+  let competences: Array<string> = get(lessons, lessonID)?.competences ?? [];
   let field: string | null =
-    FIELDS.find(([_, field]) => {
+    fields.find(([_, field]) => {
       return field.lessons.includes(lessonID);
     })?.[0] ?? null;
   let groups: Array<string> = [];
