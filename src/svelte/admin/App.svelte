@@ -42,10 +42,14 @@
   <Router basepath="/admin">
     <Route component={AddLessonView} path="/lessons/add" />
     <Route path="/lessons/:id/edit" let:params>
-      {#if $lessons === null}
+      {#if $fields === null || $lessons === null}
         <LoadingIndicator />
       {:else}
-        <EditLessonView lessonID={params.id} />
+        <EditLessonView
+          fields={$fields}
+          lessonID={params.id}
+          lessons={$lessons}
+        />
       {/if}
     </Route>
     <Route path="/lessons/:id/versions/:version/restore" let:params>
