@@ -1,10 +1,16 @@
 <script lang="ts" strictEvents>
   import { useSWR } from "sswr";
+  import { derived } from "svelte/store";
   import { useLocation, useNavigate } from "svelte-navigator";
 
+  import type { Competence } from "../../../ts/admin/interfaces/Competence";
   import type { Field } from "../../../ts/admin/interfaces/Field";
   import type { Lesson } from "../../../ts/admin/interfaces/Lesson";
   import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
+  import {
+    processCompetences,
+    processLessons,
+  } from "../../../ts/admin/metadata";
   import { siteName } from "../../../ts/admin/stores";
   import { constructURL } from "../../../ts/admin/tools/constructURL";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
@@ -15,9 +21,9 @@
   import RestoreLessonPanel from "../components/action-modals/RestoreLessonPanel.svelte";
   import Button from "../components/Button.svelte";
   import LessonViewLesson from "../components/LessonViewLesson.svelte";
+  import LoadingIndicator from "../components/LoadingIndicator.svelte";
 
   export let fields: Array<[string, Field]>;
-  export let lessons: Array<[string, Lesson]>;
 
   const navigate = useNavigate();
   const location = useLocation<{
@@ -32,6 +38,21 @@
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   $: actionPayload = $location.state?.actionPayload;
 
+  const competences = derived(
+    useSWR<Record<string, Competence>>(constructURL("v1.0/competence")).data,
+    processCompetences,
+    undefined
+  );
+  const lessons = derived(
+    [
+      useSWR<Record<string, Lesson>>(
+        constructURL("v1.0/lesson?override-group=true")
+      ).data,
+      competences,
+    ],
+    processLessons,
+    undefined
+  );
   const { data: loginstate } = useSWR<Loginstate>(constructURL("v1.0/account"));
   $: adminOrSuperuser =
     $loginstate?.role === "administrator" || $loginstate?.role === "superuser";
@@ -46,7 +67,10 @@
 {:else if action === "delete-field"}
   <DeleteFieldDialog {fields} payload={actionPayload} />
 {:else if action === "delete-lesson"}
-  <DeleteLessonDialog {lessons} payload={actionPayload} />
+  <!-- TODO: Handle SWR better -->
+  {#if $lessons !== undefined}
+    <DeleteLessonDialog lessons={$lessons} payload={actionPayload} />
+  {/if}
 {:else if action === "restore-lesson"}
   <RestoreLessonPanel />
 {/if}
@@ -82,51 +106,55 @@
     Smazané lekce
   </Button>
 {/if}
-{#each lessons as [lessonId, lesson]}
-  <!-- TODO: Precompute -->
-  {#if fields.filter( ([_, field]) => field.lessons.includes(lessonId) ).length === 0}
-    <LessonViewLesson id={lessonId} {lesson} />
-  {/if}
-{/each}
-{#each fields as [fieldId, field]}
-  <br />
-  <h2 class="main-page">{field.name}</h2>
-  {#if adminOrSuperuser}
-    <Button
-      cyan
-      icon="pencil"
-      on:click={() => {
-        navigate("/lessons", {
-          state: { action: "change-field", actionPayload: { fieldId } },
-        });
-      }}
-    >
-      Upravit
-    </Button>
-    <Button
-      icon="trash-empty"
-      red
-      on:click={() => {
-        navigate("/lessons", {
-          state: { action: "delete-field", actionPayload: { fieldId } },
-        });
-      }}
-    >
-      Smazat
-    </Button>
-  {/if}
-  <Button
-    green
-    icon="plus"
-    on:click={() => {
-      navigate("/lessons/add?field=" + fieldId);
-    }}
-  >
-    Přidat lekci
-  </Button>
-  {#each lessons as [lessonId, lesson]}
-    {#if field.lessons.includes(lessonId)}
-      <LessonViewLesson id={lessonId} {lesson} secondLevel={true} />
+{#if $lessons === undefined}
+  <LoadingIndicator />
+{:else}
+  {#each $lessons as [lessonId, lesson]}
+    <!-- TODO: Precompute -->
+    {#if fields.filter( ([_, field]) => field.lessons.includes(lessonId) ).length === 0}
+      <LessonViewLesson id={lessonId} {lesson} />
     {/if}
   {/each}
-{/each}
+  {#each fields as [fieldId, field]}
+    <br />
+    <h2 class="main-page">{field.name}</h2>
+    {#if adminOrSuperuser}
+      <Button
+        cyan
+        icon="pencil"
+        on:click={() => {
+          navigate("/lessons", {
+            state: { action: "change-field", actionPayload: { fieldId } },
+          });
+        }}
+      >
+        Upravit
+      </Button>
+      <Button
+        icon="trash-empty"
+        red
+        on:click={() => {
+          navigate("/lessons", {
+            state: { action: "delete-field", actionPayload: { fieldId } },
+          });
+        }}
+      >
+        Smazat
+      </Button>
+    {/if}
+    <Button
+      green
+      icon="plus"
+      on:click={() => {
+        navigate("/lessons/add?field=" + fieldId);
+      }}
+    >
+      Přidat lekci
+    </Button>
+    {#each $lessons as [lessonId, lesson]}
+      {#if field.lessons.includes(lessonId)}
+        <LessonViewLesson id={lessonId} {lesson} secondLevel={true} />
+      {/if}
+    {/each}
+  {/each}
+{/if}

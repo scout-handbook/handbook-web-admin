@@ -56,10 +56,10 @@
       <TopBar />
       <div id="main-page-container">
         <div id="main-page">
-          {#if $fields === null || $lessons === null}
+          {#if $fields === null}
             <LoadingIndicator />
           {:else}
-            <LessonView fields={$fields} lessons={$lessons} />
+            <LessonView fields={$fields} />
           {/if}
         </div>
       </div>
@@ -68,10 +68,10 @@
       <TopBar />
       <div id="main-page-container">
         <div id="main-page">
-          {#if $fields === null || $lessons === null}
+          {#if $fields === null}
             <LoadingIndicator />
           {:else}
-            <LessonView fields={$fields} lessons={$lessons} />
+            <LessonView fields={$fields} />
           {/if}
         </div>
       </div>
