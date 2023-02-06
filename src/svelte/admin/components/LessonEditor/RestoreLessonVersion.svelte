@@ -6,11 +6,8 @@
   import type { Competence } from "../../../../ts/admin/interfaces/Competence";
   import type { Lesson } from "../../../../ts/admin/interfaces/Lesson";
   import type { LessonVersion } from "../../../../ts/admin/interfaces/LessonVersion";
-  import {
-    processCompetences,
-    processLessons,
-  } from "../../../../ts/admin/metadata";
   import { apiUri } from "../../../../ts/admin/stores";
+  import { processCompetences, processLessons } from "../../../../ts/admin/swr";
   import { get } from "../../../../ts/admin/tools/arrayTools";
   import { compileMarkdown } from "../../../../ts/admin/tools/compileMarkdown";
   import { constructURL } from "../../../../ts/admin/tools/constructURL";

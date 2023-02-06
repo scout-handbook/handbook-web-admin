@@ -4,7 +4,7 @@
   import { useNavigate } from "svelte-navigator";
 
   import type { Group } from "../../../../ts/admin/interfaces/Group";
-  import { processGroups } from "../../../../ts/admin/metadata";
+  import { processGroups } from "../../../../ts/admin/swr";
   import { get } from "../../../../ts/admin/tools/arrayTools";
   import { constructURL } from "../../../../ts/admin/tools/constructURL";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";

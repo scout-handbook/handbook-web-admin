@@ -7,12 +7,12 @@
   import type { Field } from "../../../ts/admin/interfaces/Field";
   import type { Lesson } from "../../../ts/admin/interfaces/Lesson";
   import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
+  import { siteName } from "../../../ts/admin/stores";
   import {
     processCompetences,
     processFields,
     processLessons,
-  } from "../../../ts/admin/metadata";
-  import { siteName } from "../../../ts/admin/stores";
+  } from "../../../ts/admin/swr";
   import { constructURL } from "../../../ts/admin/tools/constructURL";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import AddFieldPanel from "../components/action-modals/AddFieldPanel.svelte";

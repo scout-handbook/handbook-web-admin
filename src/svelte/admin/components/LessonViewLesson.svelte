@@ -6,8 +6,8 @@
   import type { Competence } from "../../../ts/admin/interfaces/Competence";
   import type { Lesson } from "../../../ts/admin/interfaces/Lesson";
   import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
-  import { processCompetences } from "../../../ts/admin/metadata";
   import { adminUri } from "../../../ts/admin/stores";
+  import { processCompetences } from "../../../ts/admin/swr";
   import { constructURL } from "../../../ts/admin/tools/constructURL";
   import Button from "./Button.svelte";
 

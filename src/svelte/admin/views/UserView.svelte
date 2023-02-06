@@ -9,8 +9,8 @@
   import type { Role } from "../../../ts/admin/interfaces/Role";
   import type { User } from "../../../ts/admin/interfaces/User";
   import type { UserListResponse } from "../../../ts/admin/interfaces/UserListResponse";
-  import { processGroups } from "../../../ts/admin/metadata";
   import { apiUri, siteName } from "../../../ts/admin/stores";
+  import { processGroups } from "../../../ts/admin/swr";
   import { constructURL } from "../../../ts/admin/tools/constructURL";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import { reAuthHandler, request } from "../../../ts/admin/tools/request";

@@ -5,8 +5,8 @@
 
   import type { Group } from "../../../ts/admin/interfaces/Group";
   import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
-  import { processGroups } from "../../../ts/admin/metadata";
   import { siteName } from "../../../ts/admin/stores";
+  import { processGroups } from "../../../ts/admin/swr";
   import { constructURL } from "../../../ts/admin/tools/constructURL";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import AddGroupPanel from "../components/action-modals/AddGroupPanel.svelte";
