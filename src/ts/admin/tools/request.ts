@@ -22,7 +22,7 @@ export const authFailHandler: ExceptionHandler = {
   },
 };
 
-export async function rawRequest<T extends RequestResponse>(
+async function rawRequest<T extends RequestResponse>(
   url: string,
   method: string,
   payload: FormData | Payload = {}
