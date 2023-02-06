@@ -5,7 +5,6 @@
   import type { Field } from "../../../ts/admin/interfaces/Field";
   import type { Lesson } from "../../../ts/admin/interfaces/Lesson";
   import type { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
-  import { metadataEvent } from "../../../ts/admin/metadata";
   import { apiUri, globalDialogMessage } from "../../../ts/admin/stores";
   import { Action } from "../../../ts/admin/tools/Action";
   import { ActionCallback } from "../../../ts/admin/tools/ActionCallback";
@@ -81,19 +80,14 @@
       groups = response;
       initialGroups = groups;
     }),
-    new Promise<void>((resolve) => {
-      void request<string>(
-        $apiUri + "/v1.0/lesson/" + encodeURIComponent(lessonID),
-        "GET",
-        {},
-        reAuthHandler
-      ).then((response) => {
-        metadataEvent.addCallback(function (): void {
-          body = response;
-          initialBody = body;
-          resolve();
-        });
-      });
+    request<string>(
+      $apiUri + "/v1.0/lesson/" + encodeURIComponent(lessonID),
+      "GET",
+      {},
+      reAuthHandler
+    ).then((response) => {
+      body = response;
+      initialBody = body;
     }),
   ]);
 
