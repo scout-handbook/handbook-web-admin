@@ -9,7 +9,6 @@ import { get, map, sort } from "./tools/arrayTools";
 import { rawRequest, request } from "./tools/request";
 
 export let metadataEvent: AfterLoadEvent;
-export let FIELDS: Array<[string, Field]>;
 export let COMPETENCES: Array<[string, Competence]>;
 export let GROUPS: Array<[string, Group]>;
 export let LESSONS: Array<[string, Lesson]>;
@@ -127,7 +126,7 @@ function processGroups(
 
 export function refreshMetadata(): void {
   metadataEvent = new AfterLoadEvent(3);
-  const metadataSortEvent = new AfterLoadEvent(3);
+  const metadataSortEvent = new AfterLoadEvent(2);
   metadataSortEvent.addCallback((): void => {
     sort(COMPETENCES, competenceComparator);
     map(LESSONS, (lesson) => {
@@ -142,19 +141,6 @@ export function refreshMetadata(): void {
     sort(LESSONS, (first, second) =>
       lessonComparator(first, second, COMPETENCES)
     );
-    map(FIELDS, (field) => {
-      field.lessons.sort((first: string, second: string): number =>
-        lessonComparator(
-          get(LESSONS, first)!,
-          get(LESSONS, second)!,
-          COMPETENCES
-        )
-      );
-      return field;
-    });
-    sort(FIELDS, (first, second) =>
-      fieldComparator(first, second, LESSONS, COMPETENCES)
-    );
     metadataEvent.trigger();
   });
   void request<Record<string, Lesson>>(
@@ -164,15 +150,6 @@ export function refreshMetadata(): void {
     undefined
   ).then((response) => {
     LESSONS = Object.entries(response);
-    metadataSortEvent.trigger();
-  });
-  void request<Record<string, Field>>(
-    CONFIG["api-uri"] + "/v1.0/field?override-group=true",
-    "GET",
-    {},
-    undefined
-  ).then((response) => {
-    FIELDS = Object.entries(response);
     metadataSortEvent.trigger();
   });
   void request<Record<string, Competence>>(
