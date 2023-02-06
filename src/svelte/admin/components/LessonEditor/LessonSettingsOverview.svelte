@@ -1,11 +1,11 @@
 <script lang="ts" strictEvents>
   import { useLocation, useNavigate } from "svelte-navigator";
 
-  import { groups as allGroups } from "../../../../ts/admin/stores";
   import { get } from "../../../../ts/admin/tools/arrayTools";
   import Button from "../Button.svelte";
   import CompetenceProvider from "../swr-wrappers/CompetenceProvider.svelte";
   import FieldProvider from "../swr-wrappers/FieldProvider.svelte";
+  import GroupProvider from "../swr-wrappers/GroupProvider.svelte";
 
   export let id: string | null;
   export let field: string | null;
@@ -15,7 +15,6 @@
   const location = useLocation();
   const navigate = useNavigate();
 
-  $: lessonGroups = $allGroups!.filter(([id, _]) => groups.includes(id));
   $: currentUri = $location.pathname + $location.search;
 </script>
 
@@ -98,13 +97,16 @@
 </Button>
 <br />
 <div id="settingsGroupList">
-  {#each lessonGroups as [id, group]}
-    {#if id === "00000000-0000-0000-0000-000000000000"}
-      <span class="public-group">{group.name}</span>
-      <br />
-    {:else}
-      {group.name}
-      <br />
-    {/if}
-  {/each}
+  <GroupProvider let:groups={allGroups}>
+    <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-call @typescript-eslint/no-unsafe-argument -->
+    {#each allGroups.filter(([id, _]) => groups.includes(id)) as [id, group]}
+      {#if id === "00000000-0000-0000-0000-000000000000"}
+        <span class="public-group">{group.name}</span>
+        <br />
+      {:else}
+        {group.name}
+        <br />
+      {/if}
+    {/each}
+  </GroupProvider>
 </div>
