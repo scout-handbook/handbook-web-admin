@@ -11,7 +11,6 @@ import { rawRequest, request } from "./tools/request";
 export let metadataEvent: AfterLoadEvent;
 export let COMPETENCES: Array<[string, Competence]>;
 export let GROUPS: Array<[string, Group]>;
-export let LESSONS: Array<[string, Lesson]>;
 export let LOGINSTATE: Loginstate = { avatar: "", name: "", role: "guest" };
 
 function competenceComparator(first: Competence, second: Competence): number {
@@ -91,7 +90,7 @@ export function processFields(
     return field;
   });
   return sort(fields, (first, second) =>
-    fieldComparator(first, second, LESSONS, COMPETENCES)
+    fieldComparator(first, second, lessons, competences)
   );
 }
 
@@ -126,31 +125,10 @@ function processGroups(
 
 export function refreshMetadata(): void {
   metadataEvent = new AfterLoadEvent(3);
-  const metadataSortEvent = new AfterLoadEvent(2);
+  const metadataSortEvent = new AfterLoadEvent(1);
   metadataSortEvent.addCallback((): void => {
     sort(COMPETENCES, competenceComparator);
-    map(LESSONS, (lesson) => {
-      lesson.competences.sort((first: string, second: string): number =>
-        competenceComparator(
-          get(COMPETENCES, first)!,
-          get(COMPETENCES, second)!
-        )
-      );
-      return lesson;
-    });
-    sort(LESSONS, (first, second) =>
-      lessonComparator(first, second, COMPETENCES)
-    );
     metadataEvent.trigger();
-  });
-  void request<Record<string, Lesson>>(
-    CONFIG["api-uri"] + "/v1.0/lesson?override-group=true",
-    "GET",
-    {},
-    undefined
-  ).then((response) => {
-    LESSONS = Object.entries(response);
-    metadataSortEvent.trigger();
   });
   void request<Record<string, Competence>>(
     CONFIG["api-uri"] + "/v1.0/competence",
