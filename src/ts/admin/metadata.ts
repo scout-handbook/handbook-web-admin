@@ -9,7 +9,6 @@ import { get, map, sort } from "./tools/arrayTools";
 import { rawRequest, request } from "./tools/request";
 
 export let metadataEvent: AfterLoadEvent;
-export let GROUPS: Array<[string, Group]>;
 export let LOGINSTATE: Loginstate = { avatar: "", name: "", role: "guest" };
 
 function competenceComparator(first: Competence, second: Competence): number {
@@ -141,8 +140,7 @@ export function refreshMetadata(): void {
     {},
     groupExceptionHandler
   ).then((response) => {
-    GROUPS = processGroups(response);
-    groups.set(GROUPS);
+    groups.set(processGroups(response));
     metadataEvent.trigger();
   });
   void rawRequest<Loginstate>(
