@@ -70,6 +70,32 @@ export function processCompetences(
   return sort(Object.entries(rawCompetences), competenceComparator);
 }
 
+export function processFields(
+  values: [
+    Record<string, Field> | undefined,
+    Array<[string, Lesson]> | undefined,
+    Array<[string, Competence]> | undefined
+  ]
+): Array<[string, Field]> | undefined {
+  const [rawFields, lessons, competences] = values;
+  if (
+    rawFields === undefined ||
+    lessons === undefined ||
+    competences === undefined
+  ) {
+    return undefined;
+  }
+  const fields = map(Object.entries(rawFields), (field) => {
+    field.lessons.sort((first: string, second: string): number =>
+      lessonComparator(get(lessons, first)!, get(lessons, second)!, competences)
+    );
+    return field;
+  });
+  return sort(fields, (first, second) =>
+    fieldComparator(first, second, LESSONS, COMPETENCES)
+  );
+}
+
 export function processLessons(
   values: [
     Record<string, Lesson> | undefined,
