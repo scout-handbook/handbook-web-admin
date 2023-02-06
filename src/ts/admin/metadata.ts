@@ -1,4 +1,3 @@
-import { AfterLoadEvent } from "./AfterLoadEvent";
 import type { Competence } from "./interfaces/Competence";
 import type { Field } from "./interfaces/Field";
 import type { Group } from "./interfaces/Group";
@@ -7,8 +6,6 @@ import type { Loginstate } from "./interfaces/Loginstate";
 import { globalDialogMessage, groups } from "./stores";
 import { get, map, sort } from "./tools/arrayTools";
 import { rawRequest, request } from "./tools/request";
-
-export let metadataEvent: AfterLoadEvent;
 
 function competenceComparator(first: Competence, second: Competence): number {
   return first.number - second.number;
@@ -121,7 +118,6 @@ function processGroups(
 }
 
 export function refreshMetadata(): void {
-  metadataEvent = new AfterLoadEvent(2);
   const groupExceptionHandler = {
     AuthenticationException: function (): void {
       window.location.href =
@@ -140,7 +136,6 @@ export function refreshMetadata(): void {
     groupExceptionHandler
   ).then((response) => {
     groups.set(processGroups(response));
-    metadataEvent.trigger();
   });
   void rawRequest<Loginstate>(
     CONFIG["api-uri"] + "/v1.0/account",
@@ -154,7 +149,6 @@ export function refreshMetadata(): void {
         )
       ) {
         // TODO: Do these checks on every request?
-        metadataEvent.trigger();
       } else {
         window.location.replace(CONFIG["frontend-uri"]);
       }
