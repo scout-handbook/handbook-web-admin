@@ -20,6 +20,12 @@ export function SWRSetup(): void {
           RoleException: function (): void {
             window.location.replace(CONFIG["frontend-uri"]);
           },
+          401: function (): void {
+            window.location.href =
+              CONFIG["api-uri"] +
+              "/v1.0/login?return-uri=" +
+              encodeURIComponent(window.location.href);
+          },
         }
       ),
   });

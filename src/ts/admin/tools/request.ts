@@ -79,6 +79,11 @@ export async function request<T extends RequestResponse>(
         ) {
           exceptionHandler[response.type!]!(response);
           reject();
+        } else if (
+          response.status === 401 &&
+          Object.prototype.hasOwnProperty.call(exceptionHandler, "401")
+        ) {
+          exceptionHandler["401"]!(response);
         } else {
           globalDialogMessage.set(
             "Nastala neznámá chyba. Chybová hláška: " + response.message!
