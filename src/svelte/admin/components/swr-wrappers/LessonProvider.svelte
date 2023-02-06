@@ -1,4 +1,5 @@
 <script lang="ts" strictEvents>
+  // TODO: Unused component
   import { useSWR } from "sswr";
   import { derived } from "svelte/store";
 
