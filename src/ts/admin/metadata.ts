@@ -3,9 +3,9 @@ import type { Field } from "./interfaces/Field";
 import type { Group } from "./interfaces/Group";
 import type { Lesson } from "./interfaces/Lesson";
 import type { Loginstate } from "./interfaces/Loginstate";
-import { globalDialogMessage, groups } from "./stores";
+import { globalDialogMessage } from "./stores";
 import { get, map, sort } from "./tools/arrayTools";
-import { rawRequest, reAuthHandler, request } from "./tools/request";
+import { rawRequest } from "./tools/request";
 
 function competenceComparator(first: Competence, second: Competence): number {
   return first.number - second.number;
@@ -121,20 +121,6 @@ export function processLessons(
 }
 
 export function refreshMetadata(): void {
-  const groupExceptionHandler = {
-    ...reAuthHandler,
-    RoleException: function (): void {
-      window.location.replace(CONFIG["frontend-uri"]);
-    },
-  };
-  void request<Record<string, Group>>(
-    CONFIG["api-uri"] + "/v1.0/group",
-    "GET",
-    {},
-    groupExceptionHandler
-  ).then((response) => {
-    groups.set(processGroups(response)!);
-  });
   void rawRequest<Loginstate>(
     CONFIG["api-uri"] + "/v1.0/account",
     "GET",
