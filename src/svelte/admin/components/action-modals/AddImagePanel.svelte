@@ -1,7 +1,6 @@
 <script lang="ts" strictEvents>
   import { useNavigate } from "svelte-navigator";
 
-  import { refreshMetadata } from "../../../../ts/admin/metadata";
   import { apiUri } from "../../../../ts/admin/stores";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import { authFailHandler, request } from "../../../../ts/admin/tools/request";
@@ -76,7 +75,6 @@
   <Dialog
     confirmButtonText="OK"
     on:confirm={() => {
-      refreshMetadata();
       navigate(-1);
     }}
   >
