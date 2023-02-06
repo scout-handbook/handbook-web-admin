@@ -9,7 +9,7 @@
     processCompetences,
     processFields,
     processLessons,
-  } from "../../../../ts/admin/metadata";
+  } from "../../../../ts/admin/swr";
   import { constructURL } from "../../../../ts/admin/tools/constructURL";
   import LoadingIndicator from "../LoadingIndicator.svelte";
 

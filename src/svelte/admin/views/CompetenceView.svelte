@@ -5,8 +5,8 @@
 
   import type { Competence } from "../../../ts/admin/interfaces/Competence";
   import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
-  import { processCompetences } from "../../../ts/admin/metadata";
   import { siteName } from "../../../ts/admin/stores";
+  import { processCompetences } from "../../../ts/admin/swr";
   import { constructURL } from "../../../ts/admin/tools/constructURL";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import AddCompetencePanel from "../components/action-modals/AddCompetencePanel.svelte";
