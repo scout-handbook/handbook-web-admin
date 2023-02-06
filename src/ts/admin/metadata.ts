@@ -9,7 +9,6 @@ import { get, map, sort } from "./tools/arrayTools";
 import { rawRequest, request } from "./tools/request";
 
 export let metadataEvent: AfterLoadEvent;
-export let LOGINSTATE: Loginstate = { avatar: "", name: "", role: "guest" };
 
 function competenceComparator(first: Competence, second: Competence): number {
   return first.number - second.number;
@@ -154,7 +153,7 @@ export function refreshMetadata(): void {
           response.response!.role
         )
       ) {
-        LOGINSTATE = response.response!;
+        // TODO: Do these checks on every request?
         metadataEvent.trigger();
       } else {
         window.location.replace(CONFIG["frontend-uri"]);
