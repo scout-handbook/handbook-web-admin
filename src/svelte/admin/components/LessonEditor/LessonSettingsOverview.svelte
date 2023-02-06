@@ -1,10 +1,11 @@
 <script lang="ts" strictEvents>
   import { useLocation, useNavigate } from "svelte-navigator";
 
-  import { fields, groups as allGroups } from "../../../../ts/admin/stores";
+  import { groups as allGroups } from "../../../../ts/admin/stores";
   import { get } from "../../../../ts/admin/tools/arrayTools";
   import Button from "../Button.svelte";
   import CompetenceProvider from "../swr-wrappers/CompetenceProvider.svelte";
+  import FieldProvider from "../swr-wrappers/FieldProvider.svelte";
 
   export let id: string | null;
   export let field: string | null;
@@ -14,8 +15,6 @@
   const location = useLocation();
   const navigate = useNavigate();
 
-  $: fieldName =
-    field !== null && $fields !== null ? get($fields, field)?.name : undefined;
   $: lessonGroups = $allGroups!.filter(([id, _]) => groups.includes(id));
   $: currentUri = $location.pathname + $location.search;
 </script>
@@ -55,11 +54,14 @@
   Upravit
 </Button>
 <br />
-{#if fieldName}
-  {fieldName}
-{:else}
-  <span class="anonymous-field">Nezařazeno</span>
-{/if}
+<FieldProvider let:fields>
+  {#if field !== null}
+    <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-argument -->
+    {get(fields, field)?.name ?? ""}
+  {:else}
+    <span class="anonymous-field">Nezařazeno</span>
+  {/if}
+</FieldProvider>
 <br />
 <h3 class="side-panel-title no-newline">Kompetence</h3>
 <Button
