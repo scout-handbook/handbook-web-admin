@@ -6,11 +6,11 @@
     globalDialogMessage,
     globalLoadingIndicator,
     groups,
-    lessons,
   } from "../../ts/admin/stores";
   import Dialog from "./components/Dialog.svelte";
   import LoadingIndicator from "./components/LoadingIndicator.svelte";
   import Overlay from "./components/Overlay.svelte";
+  import LessonProvider from "./components/swr-wrappers/LessonProvider.svelte";
   import TopBar from "./components/TopBar.svelte";
   import AddLessonView from "./views/AddLessonView.svelte";
   import CompetenceView from "./views/CompetenceView.svelte";
@@ -42,14 +42,12 @@
   <Router basepath="/admin">
     <Route component={AddLessonView} path="/lessons/add" />
     <Route path="/lessons/:id/edit" let:params>
-      {#if $fields === null || $lessons === null}
+      {#if $fields === null}
         <LoadingIndicator />
       {:else}
-        <EditLessonView
-          fields={$fields}
-          lessonID={params.id}
-          lessons={$lessons}
-        />
+        <LessonProvider let:lessons>
+          <EditLessonView fields={$fields} lessonID={params.id} {lessons} />
+        </LessonProvider>
       {/if}
     </Route>
     <Route path="/lessons/:id/versions/:version/restore" let:params>
