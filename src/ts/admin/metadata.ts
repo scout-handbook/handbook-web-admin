@@ -9,7 +9,6 @@ import { get, map, sort } from "./tools/arrayTools";
 import { rawRequest, request } from "./tools/request";
 
 export let metadataEvent: AfterLoadEvent;
-export let COMPETENCES: Array<[string, Competence]>;
 export let GROUPS: Array<[string, Group]>;
 export let LOGINSTATE: Loginstate = { avatar: "", name: "", role: "guest" };
 
@@ -124,21 +123,7 @@ function processGroups(
 }
 
 export function refreshMetadata(): void {
-  metadataEvent = new AfterLoadEvent(3);
-  const metadataSortEvent = new AfterLoadEvent(1);
-  metadataSortEvent.addCallback((): void => {
-    sort(COMPETENCES, competenceComparator);
-    metadataEvent.trigger();
-  });
-  void request<Record<string, Competence>>(
-    CONFIG["api-uri"] + "/v1.0/competence",
-    "GET",
-    {},
-    undefined
-  ).then((response) => {
-    COMPETENCES = Object.entries(response);
-    metadataSortEvent.trigger();
-  });
+  metadataEvent = new AfterLoadEvent(2);
   const groupExceptionHandler = {
     AuthenticationException: function (): void {
       window.location.href =
