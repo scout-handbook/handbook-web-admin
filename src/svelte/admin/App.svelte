@@ -2,7 +2,6 @@
   import { Route, Router } from "svelte-navigator";
 
   import {
-    fields,
     globalDialogMessage,
     globalLoadingIndicator,
     groups,
@@ -54,11 +53,7 @@
       <TopBar />
       <div id="main-page-container">
         <div id="main-page">
-          {#if $fields === null}
-            <LoadingIndicator />
-          {:else}
-            <LessonView fields={$fields} />
-          {/if}
+          <LessonView />
         </div>
       </div>
     </Route>
@@ -66,11 +61,7 @@
       <TopBar />
       <div id="main-page-container">
         <div id="main-page">
-          {#if $fields === null}
-            <LoadingIndicator />
-          {:else}
-            <LessonView fields={$fields} />
-          {/if}
+          <LessonView />
         </div>
       </div>
     </Route>

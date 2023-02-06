@@ -9,6 +9,7 @@
   import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
   import {
     processCompetences,
+    processFields,
     processLessons,
   } from "../../../ts/admin/metadata";
   import { siteName } from "../../../ts/admin/stores";
@@ -22,8 +23,6 @@
   import Button from "../components/Button.svelte";
   import LessonViewLesson from "../components/LessonViewLesson.svelte";
   import LoadingIndicator from "../components/LoadingIndicator.svelte";
-
-  export let fields: Array<[string, Field]>;
 
   const navigate = useNavigate();
   const location = useLocation<{
@@ -53,6 +52,25 @@
     processLessons,
     undefined
   );
+  const fields = derived(
+    [
+      useSWR<Record<string, Field>>(
+        constructURL("v1.0/field?override-group=true")
+      ).data,
+      lessons,
+      competences,
+    ],
+    processFields,
+    undefined
+  );
+  $: lessonsWithoutField =
+    $lessons !== undefined && $fields !== undefined
+      ? $lessons.filter(
+          ([lessonId, _]) =>
+            $fields!.filter(([_, field]) => field.lessons.includes(lessonId))
+              .length === 0
+        )
+      : undefined;
   const { data: loginstate } = useSWR<Loginstate>(constructURL("v1.0/account"));
   $: adminOrSuperuser =
     $loginstate?.role === "administrator" || $loginstate?.role === "superuser";
@@ -63,9 +81,15 @@
 {#if action === "add-field"}
   <AddFieldPanel />
 {:else if action === "change-field"}
-  <ChangeFieldPanel {fields} payload={actionPayload} />
+  <!-- TODO: Handle SWR better -->
+  {#if $fields !== undefined}
+    <ChangeFieldPanel fields={$fields} payload={actionPayload} />
+  {/if}
 {:else if action === "delete-field"}
-  <DeleteFieldDialog {fields} payload={actionPayload} />
+  <!-- TODO: Handle SWR better -->
+  {#if $fields !== undefined}
+    <DeleteFieldDialog fields={$fields} payload={actionPayload} />
+  {/if}
 {:else if action === "delete-lesson"}
   <!-- TODO: Handle SWR better -->
   {#if $lessons !== undefined}
@@ -106,16 +130,13 @@
     Smazané lekce
   </Button>
 {/if}
-{#if $lessons === undefined}
+{#if $lessons === undefined || $fields === undefined || lessonsWithoutField === undefined}
   <LoadingIndicator />
 {:else}
-  {#each $lessons as [lessonId, lesson]}
-    <!-- TODO: Precompute -->
-    {#if fields.filter( ([_, field]) => field.lessons.includes(lessonId) ).length === 0}
-      <LessonViewLesson id={lessonId} {lesson} />
-    {/if}
+  {#each lessonsWithoutField as [lessonId, lesson]}
+    <LessonViewLesson id={lessonId} {lesson} />
   {/each}
-  {#each fields as [fieldId, field]}
+  {#each $fields as [fieldId, field]}
     <br />
     <h2 class="main-page">{field.name}</h2>
     {#if adminOrSuperuser}
