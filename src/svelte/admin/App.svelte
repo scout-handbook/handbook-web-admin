@@ -4,7 +4,6 @@
   import {
     globalDialogMessage,
     globalLoadingIndicator,
-    groups,
   } from "../../ts/admin/stores";
   import Dialog from "./components/Dialog.svelte";
   import LoadingIndicator from "./components/LoadingIndicator.svelte";
@@ -93,11 +92,7 @@
       <TopBar />
       <div id="main-page-container">
         <div id="main-page">
-          {#if $groups === null}
-            <LoadingIndicator />
-          {:else}
-            <GroupView groups={$groups} />
-          {/if}
+          <GroupView />
         </div>
       </div>
     </Route>
