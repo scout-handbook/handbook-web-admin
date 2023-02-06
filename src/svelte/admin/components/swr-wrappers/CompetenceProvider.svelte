@@ -1,0 +1,25 @@
+<script lang="ts" strictEvents>
+  import { useSWR } from "sswr";
+  import { derived } from "svelte/store";
+
+  import type { Competence } from "../../../../ts/admin/interfaces/Competence";
+  import { processCompetences } from "../../../../ts/admin/metadata";
+  import { constructURL } from "../../../../ts/admin/tools/constructURL";
+  import LoadingIndicator from "../LoadingIndicator.svelte";
+
+  interface $$Slots {
+    default: { competences: Array<[string, Competence]> };
+  }
+
+  const competences = derived(
+    useSWR<Record<string, Competence>>(constructURL("v1.0/competence")).data,
+    processCompetences,
+    undefined
+  );
+</script>
+
+{#if $competences === undefined}
+  <LoadingIndicator />
+{:else}
+  <slot competences={$competences} />
+{/if}
