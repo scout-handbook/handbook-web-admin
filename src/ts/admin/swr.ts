@@ -6,6 +6,16 @@ import { reAuthHandler, request } from "./tools/request";
 export function SWRSetup(): void {
   createDefaultSWR({
     fetcher: async (url: string): Promise<RequestResponse> =>
-      request(url, "GET", {}, reAuthHandler),
+      request(
+        url,
+        "GET",
+        {},
+        {
+          ...reAuthHandler,
+          RoleException: function (): void {
+            window.location.replace(CONFIG["frontend-uri"]);
+          },
+        }
+      ),
   });
 }

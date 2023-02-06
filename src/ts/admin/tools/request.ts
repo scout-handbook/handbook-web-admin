@@ -7,7 +7,10 @@ import { constructQuery } from "./constructURL";
 
 export const reAuthHandler: ExceptionHandler = {
   AuthenticationException: function (): void {
-    window.location.replace(CONFIG["api-uri"] + "/v1.0/login");
+    window.location.href =
+      CONFIG["api-uri"] +
+      "/v1.0/login?return-uri=" +
+      encodeURIComponent(window.location.href);
   },
 };
 
