@@ -10,7 +10,7 @@
   import Dialog from "./components/Dialog.svelte";
   import LoadingIndicator from "./components/LoadingIndicator.svelte";
   import Overlay from "./components/Overlay.svelte";
-  import LessonProvider from "./components/swr-wrappers/LessonProvider.svelte";
+  import FieldProvider from "./components/swr-wrappers/FieldProvider.svelte";
   import TopBar from "./components/TopBar.svelte";
   import AddLessonView from "./views/AddLessonView.svelte";
   import CompetenceView from "./views/CompetenceView.svelte";
@@ -42,13 +42,9 @@
   <Router basepath="/admin">
     <Route component={AddLessonView} path="/lessons/add" />
     <Route path="/lessons/:id/edit" let:params>
-      {#if $fields === null}
-        <LoadingIndicator />
-      {:else}
-        <LessonProvider let:lessons>
-          <EditLessonView fields={$fields} lessonID={params.id} {lessons} />
-        </LessonProvider>
-      {/if}
+      <FieldProvider let:fields let:lessons>
+        <EditLessonView {fields} lessonID={params.id} {lessons} />
+      </FieldProvider>
     </Route>
     <Route path="/lessons/:id/versions/:version/restore" let:params>
       <RestoreLessonView lessonID={params.id} version={params.version} />
