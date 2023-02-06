@@ -1,5 +1,6 @@
 <script lang="ts" strictEvents>
   import { useSWR } from "sswr";
+  import { derived } from "svelte/store";
   import { useLocation, useNavigate } from "svelte-navigator";
 
   import type { Group } from "../../../ts/admin/interfaces/Group";
@@ -8,6 +9,7 @@
   import type { Role } from "../../../ts/admin/interfaces/Role";
   import type { User } from "../../../ts/admin/interfaces/User";
   import type { UserListResponse } from "../../../ts/admin/interfaces/UserListResponse";
+  import { processGroups } from "../../../ts/admin/metadata";
   import { apiUri, siteName } from "../../../ts/admin/stores";
   import { constructURL } from "../../../ts/admin/tools/constructURL";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
@@ -17,8 +19,6 @@
   import Button from "../components/Button.svelte";
   import LoadingIndicator from "../components/LoadingIndicator.svelte";
   import Pagination from "../components/Pagination.svelte";
-
-  export let groups: Array<[string, Group]>;
 
   const location = useLocation<{
     action: string;
@@ -30,6 +30,14 @@
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   $: actionPayload = $location.state?.actionPayload;
 
+  const groups = derived(
+    useSWR<Record<string, Group>>(constructURL("v1.0/group")).data,
+    processGroups,
+    undefined
+  );
+  $: nonPublicGroups = $groups?.filter(
+    ([id, _]) => id !== "00000000-0000-0000-0000-000000000000"
+  );
   const { data: loginstate } = useSWR<Loginstate>(constructURL("v1.0/account"));
   $: isSuperuser = $loginstate?.role === "superuser";
   $: adminOrSuperuser = $loginstate?.role === "administrator" || isSuperuser;
@@ -59,7 +67,10 @@
   refreshLogin(true);
 
   function groupsList(user: User): string {
-    return groups
+    if ($groups === undefined) {
+      return "";
+    }
+    return $groups
       .filter(([id, _]) => user.groups.includes(id))
       .map(([_, group]) => group.name)
       .join(", ");
@@ -67,7 +78,10 @@
 </script>
 
 {#if action === "change-user-groups"}
-  <ChangeUserGroupsPanel {groups} payload={actionPayload} />
+  <!-- TODO: Handle SWR better -->
+  {#if $groups !== undefined}
+    <ChangeUserGroupsPanel groups={$groups} payload={actionPayload} />
+  {/if}
 {:else if action === "change-user-role"}
   <ChangeUserRolePanel payload={actionPayload} />
 {/if}
@@ -105,18 +119,20 @@
           {/if}
         </select>
       {/if}
-      <select id="group-search-filter" class="form-select" bind:value={group}>
-        <option
-          id="00000000-0000-0000-0000-000000000000"
-          class="select-filter-special"
-          value="00000000-0000-0000-0000-000000000000"
-        >
-          Všechny skupiny
-        </option>
-        {#each groups.filter(([id, _]) => id !== "00000000-0000-0000-0000-000000000000") as [id, group]}
-          <option {id} value={id}>{group.name}</option>
-        {/each}
-      </select>
+      {#if nonPublicGroups !== undefined}
+        <select id="group-search-filter" class="form-select" bind:value={group}>
+          <option
+            id="00000000-0000-0000-0000-000000000000"
+            class="select-filter-special"
+            value="00000000-0000-0000-0000-000000000000"
+          >
+            Všechny skupiny
+          </option>
+          {#each nonPublicGroups as [id, group]}
+            <option {id} value={id}>{group.name}</option>
+          {/each}
+        </select>
+      {/if}
       <Button
         icon="search"
         on:click={() => {

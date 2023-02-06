@@ -85,11 +85,7 @@
       <TopBar />
       <div id="main-page-container">
         <div id="main-page">
-          {#if $groups === null}
-            <LoadingIndicator />
-          {:else}
-            <UserView groups={$groups} />
-          {/if}
+          <UserView />
         </div>
       </div>
     </Route>
