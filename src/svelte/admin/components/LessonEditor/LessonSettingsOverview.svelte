@@ -1,15 +1,10 @@
 <script lang="ts" strictEvents>
-  import { useSWR } from "sswr";
-  import { derived } from "svelte/store";
   import { useLocation, useNavigate } from "svelte-navigator";
 
-  import type { Competence } from "../../../../ts/admin/interfaces/Competence";
-  import { processCompetences } from "../../../../ts/admin/metadata";
   import { fields, groups as allGroups } from "../../../../ts/admin/stores";
   import { get } from "../../../../ts/admin/tools/arrayTools";
-  import { constructURL } from "../../../../ts/admin/tools/constructURL";
   import Button from "../Button.svelte";
-  import LoadingIndicator from "../LoadingIndicator.svelte";
+  import CompetenceProvider from "../swr-wrappers/CompetenceProvider.svelte";
 
   export let id: string | null;
   export let field: string | null;
@@ -19,14 +14,6 @@
   const location = useLocation();
   const navigate = useNavigate();
 
-  const allCompetences = derived(
-    useSWR<Record<string, Competence>>(constructURL("v1.0/competence")).data,
-    processCompetences,
-    undefined
-  );
-  $: lessonCompetences = $allCompetences?.filter(([id, _]) =>
-    competences.includes(id)
-  );
   $: fieldName =
     field !== null && $fields !== null ? get($fields, field)?.name : undefined;
   $: lessonGroups = $allGroups!.filter(([id, _]) => groups.includes(id));
@@ -86,15 +73,14 @@
 >
   Upravit
 </Button>
-{#if lessonCompetences === undefined}
-  <LoadingIndicator />
-{:else}
-  {#each lessonCompetences as [_, competence]}
+<CompetenceProvider let:competences={allCompetences}>
+  <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-call @typescript-eslint/no-unsafe-argument -->
+  {#each allCompetences.filter( ([id, _]) => competences.includes(id) ) as [_, competence]}
     <br />
     <span class="competence-number">{competence.number}:</span>
     {competence.name}
   {/each}
-{/if}
+</CompetenceProvider>
 <br />
 <h3 class="side-panel-title no-newline">Skupiny</h3>
 <Button
