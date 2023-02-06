@@ -2,10 +2,7 @@ import type { Competence } from "./interfaces/Competence";
 import type { Field } from "./interfaces/Field";
 import type { Group } from "./interfaces/Group";
 import type { Lesson } from "./interfaces/Lesson";
-import type { Loginstate } from "./interfaces/Loginstate";
-import { globalDialogMessage } from "./stores";
 import { get, map, sort } from "./tools/arrayTools";
-import { rawRequest } from "./tools/request";
 
 function competenceComparator(first: Competence, second: Competence): number {
   return first.number - second.number;
@@ -118,37 +115,4 @@ export function processLessons(
   return sort(lessons, (first, second) =>
     lessonComparator(first, second, competences)
   );
-}
-
-export function refreshMetadata(): void {
-  void rawRequest<Loginstate>(
-    CONFIG["api-uri"] + "/v1.0/account",
-    "GET",
-    undefined
-  ).then((response) => {
-    if (response.status === 200) {
-      if (
-        ["editor", "administrator", "superuser"].includes(
-          response.response!.role
-        )
-      ) {
-        // TODO: Do these checks on every request?
-      } else {
-        window.location.replace(CONFIG["frontend-uri"]);
-      }
-    } else if (response.status === 401) {
-      window.location.href =
-        CONFIG["api-uri"] +
-        "/v1.0/login?return-uri=" +
-        encodeURIComponent(window.location.href);
-    } else {
-      globalDialogMessage.set(
-        "Nastala neznámá chyba. Chybová hláška: " + response.message!
-      );
-    }
-  });
-}
-
-export function metadataSetup(): void {
-  refreshMetadata();
 }

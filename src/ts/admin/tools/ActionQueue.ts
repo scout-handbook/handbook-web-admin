@@ -1,5 +1,4 @@
 import type { SerializedAction } from "../interfaces/SerializedAction";
-import { refreshMetadata } from "../metadata";
 import { globalDialogMessage, globalLoadingIndicator } from "../stores";
 import { request } from "../tools/request";
 import type { Action } from "./Action";
@@ -88,7 +87,6 @@ export function ActionQueueSetup(): void {
     void aq.dispatch().then(() => {
       globalLoadingIndicator.set(false);
       globalDialogMessage.set("Akce byla úspěšná");
-      refreshMetadata();
     });
   }
 }
