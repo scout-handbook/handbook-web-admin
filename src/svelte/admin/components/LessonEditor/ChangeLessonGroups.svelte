@@ -9,6 +9,7 @@
   import { constructURL } from "../../../../ts/admin/tools/constructURL";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Button from "../Button.svelte";
+  import LoadingIndicator from "../LoadingIndicator.svelte";
 
   export let groups: Array<string>;
 
@@ -20,7 +21,6 @@
     undefined
   );
   const initialGroups = groups;
-  $: groupsArray = $allGroups ?? [];
   $: publicName =
     $allGroups !== undefined
       ? get($allGroups, "00000000-0000-0000-0000-000000000000")?.name ?? ""
@@ -48,19 +48,23 @@
 >
 <h3 class="side-panel-title">Změnit skupiny</h3>
 <form id="side-panel-form">
-  {#each groupsArray as [id, group]}
-    <div class="form-row">
-      <label class="form-switch">
-        <input type="checkbox" value={id} bind:group={groups} />
-        <span class="form-custom form-checkbox" />
-      </label>
-      {#if id === "00000000-0000-0000-0000-000000000000"}
-        <span class="public-group">{group.name}</span>
-      {:else}
-        {group.name}
-      {/if}
-    </div>
-  {/each}
+  {#if $allGroups === undefined}
+    <LoadingIndicator />
+  {:else}
+    {#each $allGroups as [id, group]}
+      <div class="form-row">
+        <label class="form-switch">
+          <input type="checkbox" value={id} bind:group={groups} />
+          <span class="form-custom form-checkbox" />
+        </label>
+        {#if id === "00000000-0000-0000-0000-000000000000"}
+          <span class="public-group">{group.name}</span>
+        {:else}
+          {group.name}
+        {/if}
+      </div>
+    {/each}
+  {/if}
 </form>
 <div class="group-help">
   <i class="icon-info-circled" />
