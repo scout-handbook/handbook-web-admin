@@ -5,7 +5,7 @@ import type { Lesson } from "./interfaces/Lesson";
 import type { Loginstate } from "./interfaces/Loginstate";
 import { globalDialogMessage, groups } from "./stores";
 import { get, map, sort } from "./tools/arrayTools";
-import { rawRequest, request } from "./tools/request";
+import { rawRequest, reAuthHandler, request } from "./tools/request";
 
 function competenceComparator(first: Competence, second: Competence): number {
   return first.number - second.number;
@@ -119,12 +119,7 @@ function processGroups(
 
 export function refreshMetadata(): void {
   const groupExceptionHandler = {
-    AuthenticationException: function (): void {
-      window.location.href =
-        CONFIG["api-uri"] +
-        "/v1.0/login?return-uri=" +
-        encodeURIComponent(window.location.href);
-    },
+    ...reAuthHandler,
     RoleException: function (): void {
       window.location.replace(CONFIG["frontend-uri"]);
     },
