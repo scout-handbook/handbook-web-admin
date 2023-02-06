@@ -88,6 +88,17 @@ export function processFields(
   );
 }
 
+export function processGroups(
+  rawGroups: Record<string, Group> | undefined
+): Array<[string, Group]> | undefined {
+  if (rawGroups === undefined) {
+    return undefined;
+  }
+  return sort(Object.entries(rawGroups), (first, second) =>
+    first.name.localeCompare(second.name)
+  );
+}
+
 export function processLessons(
   values: [
     Record<string, Lesson> | undefined,
@@ -109,14 +120,6 @@ export function processLessons(
   );
 }
 
-function processGroups(
-  rawGroups: Record<string, Group>
-): Array<[string, Group]> {
-  return sort(Object.entries(rawGroups), (first, second) =>
-    first.name.localeCompare(second.name)
-  );
-}
-
 export function refreshMetadata(): void {
   const groupExceptionHandler = {
     ...reAuthHandler,
@@ -130,7 +133,7 @@ export function refreshMetadata(): void {
     {},
     groupExceptionHandler
   ).then((response) => {
-    groups.set(processGroups(response));
+    groups.set(processGroups(response)!);
   });
   void rawRequest<Loginstate>(
     CONFIG["api-uri"] + "/v1.0/account",

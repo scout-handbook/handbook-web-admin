@@ -1,8 +1,12 @@
 <script lang="ts" strictEvents>
+  import { useSWR } from "sswr";
+  import { derived } from "svelte/store";
   import { useNavigate } from "svelte-navigator";
 
-  import { groups as allGroups } from "../../../../ts/admin/stores";
+  import type { Group } from "../../../../ts/admin/interfaces/Group";
+  import { processGroups } from "../../../../ts/admin/metadata";
   import { get } from "../../../../ts/admin/tools/arrayTools";
+  import { constructURL } from "../../../../ts/admin/tools/constructURL";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Button from "../Button.svelte";
 
@@ -10,10 +14,15 @@
 
   const navigate = useNavigate();
 
+  const allGroups = derived(
+    useSWR<Record<string, Group>>(constructURL("v1.0/group")).data,
+    processGroups,
+    undefined
+  );
   const initialGroups = groups;
   $: groupsArray = $allGroups ?? [];
   $: publicName =
-    $allGroups !== null
+    $allGroups !== undefined
       ? get($allGroups, "00000000-0000-0000-0000-000000000000")?.name ?? ""
       : "";
 
