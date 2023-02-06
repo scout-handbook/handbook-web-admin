@@ -64,11 +64,12 @@ function fieldComparator(
   if (second.lessons.length === 0) {
     return -1;
   }
-  return lessonComparator(
-    get(lessons, first.lessons[0])!,
-    get(lessons, second.lessons[0])!,
-    competences
-  );
+  const firstFirstLesson = get(lessons, first.lessons[0]);
+  const secondFirstLesson = get(lessons, first.lessons[0]);
+  if (firstFirstLesson === undefined || secondFirstLesson === undefined) {
+    return 0;
+  }
+  return lessonComparator(firstFirstLesson, secondFirstLesson, competences);
 }
 
 export function processCompetences(
@@ -96,9 +97,14 @@ export function processFields(
     return undefined;
   }
   const fields = map(Object.entries(rawFields), (field) => {
-    field.lessons.sort((first: string, second: string): number =>
-      lessonComparator(get(lessons, first)!, get(lessons, second)!, competences)
-    );
+    field.lessons.sort((first: string, second: string): number => {
+      const firstLesson = get(lessons, first);
+      const secondLesson = get(lessons, second);
+      if (firstLesson === undefined || secondLesson === undefined) {
+        return 0;
+      }
+      return lessonComparator(firstLesson, secondLesson, competences);
+    });
     return field;
   });
   return sort(fields, (first, second) =>
