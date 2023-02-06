@@ -4,7 +4,7 @@ import type { Field } from "./interfaces/Field";
 import type { Group } from "./interfaces/Group";
 import type { Lesson } from "./interfaces/Lesson";
 import type { Loginstate } from "./interfaces/Loginstate";
-import { fields, globalDialogMessage, groups } from "./stores";
+import { globalDialogMessage, groups } from "./stores";
 import { get, map, sort } from "./tools/arrayTools";
 import { rawRequest, request } from "./tools/request";
 
@@ -155,7 +155,6 @@ export function refreshMetadata(): void {
     sort(FIELDS, (first, second) =>
       fieldComparator(first, second, LESSONS, COMPETENCES)
     );
-    fields.set(FIELDS);
     metadataEvent.trigger();
   });
   void request<Record<string, Lesson>>(
