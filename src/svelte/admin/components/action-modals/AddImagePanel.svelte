@@ -27,6 +27,7 @@
     stage = "upload";
     const formData = new FormData();
     formData.append("image", files[0]);
+    // TODO: MUTATE?
     void request(
       $apiUri + "/v1.0/image",
       "POST",

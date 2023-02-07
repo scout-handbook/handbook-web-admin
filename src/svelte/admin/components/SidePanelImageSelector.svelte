@@ -15,6 +15,8 @@
 
   let imageListPromise: Promise<Array<string>>;
 
+  // TODO: Reactive variable?
+  // TODO: SWR?
   function reload(): void {
     imageListPromise = request<Array<string>>(
       $apiUri + "/v1.0/image",
