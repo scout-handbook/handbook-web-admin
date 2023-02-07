@@ -61,7 +61,6 @@
       .filter(([competenceId, _]) => lesson.competences.includes(competenceId))
       .map(([_, competence]) => competence.number)
       .join(", ")}
-    }
     <!-- eslint-enable -->
   </CompetenceProvider>
 </span>
