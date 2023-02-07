@@ -3,13 +3,15 @@
 /// <reference path="../d.ts/CONFIG.d.ts" />
 
 import App from "../svelte/admin/App.svelte";
-import { metadataSetup } from "./admin/metadata";
+import { checkLogin } from "./admin/checkLogin";
+import { SWRSetup } from "./admin/swr";
 import { ActionQueueSetup } from "./admin/tools/ActionQueue";
 import { compileMarkdownSetup } from "./admin/tools/compileMarkdown";
 
 function main(): void {
   compileMarkdownSetup();
-  metadataSetup();
+  checkLogin();
+  SWRSetup();
   ActionQueueSetup();
   new App({
     target: document.getElementsByTagName("body")[0],

@@ -2,7 +2,7 @@
   import { useNavigate } from "svelte-navigator";
 
   import type { LessonVersion } from "../../../../ts/admin/interfaces/LessonVersion";
-  import { apiUri, lessons } from "../../../../ts/admin/stores";
+  import { apiUri } from "../../../../ts/admin/stores";
   import { get } from "../../../../ts/admin/tools/arrayTools";
   import { compileMarkdown } from "../../../../ts/admin/tools/compileMarkdown";
   import { parseVersion } from "../../../../ts/admin/tools/parseVersion";
@@ -10,8 +10,9 @@
   import Button from "../Button.svelte";
   import DoubleSidePanel from "../DoubleSidePanel.svelte";
   import LoadingIndicator from "../LoadingIndicator.svelte";
+  import LessonProvider from "../swr-wrappers/LessonProvider.svelte";
 
-  export let lessonId: string | null;
+  export let lessonId: string;
   export let lessonName: string | null;
   export let body: string;
 
@@ -19,22 +20,21 @@
 
   let selectedVersion: number | null = null;
   let versionList: Array<LessonVersion> | null = null;
-  $: currentVersion =
-    $lessons !== null ? get($lessons, lessonId!)?.version ?? 0 : 0;
   $: selectedVersionName =
     selectedVersion === null || versionList === null
       ? lessonName!
       : versionList.find((x) => x.version === selectedVersion)!.name;
 
-  const historyPromise = request<Array<LessonVersion>>(
+  void request<Array<LessonVersion>>(
     $apiUri + "/v1.0/lesson/" + lessonId! + "/history",
     "GET",
     {},
-    authFailHandler
+    {}
   ).then((response) => {
     versionList = response;
-    return versionList;
   });
+
+  $: console.log(versionList);
 
   $: contentPromise =
     selectedVersion === null
@@ -84,9 +84,9 @@
     {/if}
     <h3 class="side-panel-title">Historie lekce</h3>
     <div id="lessonHistoryForm">
-      {#await historyPromise}
+      {#if versionList === null}
         <LoadingIndicator />
-      {:then versionList}
+      {:else}
         <form id="side-panel-form">
           <div class="form-row">
             <label class="form-switch">
@@ -100,7 +100,10 @@
             </label>
             <span class="lesson-history-current">Současná verze</span>
             —
-            {parseVersion(currentVersion)}
+            <LessonProvider silent let:lessons>
+              <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-argument -->
+              {parseVersion(get(lessons, lessonId)?.version ?? 0)}
+            </LessonProvider>
           </div>
           {#each versionList as version}
             <div class="form-row">
@@ -121,7 +124,7 @@
             </div>
           {/each}
         </form>
-      {/await}
+      {/if}
     </div>
   </div>
   <div id="lesson-history-preview">

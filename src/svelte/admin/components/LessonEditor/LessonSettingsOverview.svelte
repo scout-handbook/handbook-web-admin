@@ -1,28 +1,20 @@
 <script lang="ts" strictEvents>
   import { useLocation, useNavigate } from "svelte-navigator";
 
-  import {
-    competences as allCompetences,
-    fields,
-    groups as allGroups,
-  } from "../../../../ts/admin/stores";
   import { get } from "../../../../ts/admin/tools/arrayTools";
   import Button from "../Button.svelte";
+  import CompetenceProvider from "../swr-wrappers/CompetenceProvider.svelte";
+  import FieldProvider from "../swr-wrappers/FieldProvider.svelte";
+  import GroupProvider from "../swr-wrappers/GroupProvider.svelte";
 
   export let id: string | null;
   export let field: string | null;
   export let competences: Array<string>;
   export let groups: Array<string>;
 
-  const location = useLocation();
+  const location = useLocation<Record<string, never>>();
   const navigate = useNavigate();
 
-  $: lessonCompetences = $allCompetences!.filter(([id, _]) =>
-    competences.includes(id)
-  );
-  $: fieldName =
-    field !== null && $fields !== null ? get($fields, field)?.name : undefined;
-  $: lessonGroups = $allGroups!.filter(([id, _]) => groups.includes(id));
   $: currentUri = $location.pathname + $location.search;
 </script>
 
@@ -61,11 +53,14 @@
   Upravit
 </Button>
 <br />
-{#if fieldName}
-  {fieldName}
-{:else}
-  <span class="anonymous-field">Nezařazeno</span>
-{/if}
+<FieldProvider inline let:fields>
+  {#if field !== null}
+    <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-argument -->
+    {get(fields, field)?.name ?? ""}
+  {:else}
+    <span class="anonymous-field">Nezařazeno</span>
+  {/if}
+</FieldProvider>
 <br />
 <h3 class="side-panel-title no-newline">Kompetence</h3>
 <Button
@@ -79,11 +74,14 @@
 >
   Upravit
 </Button>
-{#each lessonCompetences as [_, competence]}
-  <br />
-  <span class="competence-number">{competence.number}:</span>
-  {competence.name}
-{/each}
+<CompetenceProvider inline let:competences={allCompetences}>
+  <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-call @typescript-eslint/no-unsafe-argument -->
+  {#each allCompetences.filter( ([id, _]) => competences.includes(id) ) as [_, competence]}
+    <br />
+    <span class="competence-number">{competence.number}:</span>
+    {competence.name}
+  {/each}
+</CompetenceProvider>
 <br />
 <h3 class="side-panel-title no-newline">Skupiny</h3>
 <Button
@@ -99,13 +97,16 @@
 </Button>
 <br />
 <div id="settingsGroupList">
-  {#each lessonGroups as [id, group]}
-    {#if id === "00000000-0000-0000-0000-000000000000"}
-      <span class="public-group">{group.name}</span>
-      <br />
-    {:else}
-      {group.name}
-      <br />
-    {/if}
-  {/each}
+  <GroupProvider inline let:groups={allGroups}>
+    <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-call @typescript-eslint/no-unsafe-argument -->
+    {#each allGroups.filter(([id, _]) => groups.includes(id)) as [id, group]}
+      {#if id === "00000000-0000-0000-0000-000000000000"}
+        <span class="public-group">{group.name}</span>
+        <br />
+      {:else}
+        {group.name}
+        <br />
+      {/if}
+    {/each}
+  </GroupProvider>
 </div>

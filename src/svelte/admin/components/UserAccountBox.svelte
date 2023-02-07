@@ -1,6 +1,11 @@
 <script lang="ts" strictEvents>
-  import { adminUri, frontendUri, loginstate } from "../../../ts/admin/stores";
+  import { useSWR } from "sswr";
 
+  import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
+  import { adminUri, frontendUri } from "../../../ts/admin/stores";
+  import { constructURL } from "../../../ts/admin/tools/constructURL";
+
+  const { data: loginstate } = useSWR<Loginstate>(constructURL("v1.0/account"));
   $: avatar = $loginstate
     ? "data:image/png;base64," + $loginstate.avatar
     : $adminUri + "/avatar.png";

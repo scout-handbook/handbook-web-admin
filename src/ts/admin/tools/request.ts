@@ -3,10 +3,14 @@ import type { ExceptionHandler } from "../interfaces/ExceptionHandler";
 import type { Payload } from "../interfaces/Payload";
 import type { RequestResponse } from "../interfaces/RequestResponse";
 import { globalDialogMessage } from "../stores";
+import { constructQuery } from "./constructURL";
 
 export const reAuthHandler: ExceptionHandler = {
   AuthenticationException: function (): void {
-    window.location.replace(CONFIG["api-uri"] + "/v1.0/login");
+    window.location.href =
+      CONFIG["api-uri"] +
+      "/v1.0/login?return-uri=" +
+      encodeURIComponent(window.location.href);
   },
 };
 
@@ -18,36 +22,7 @@ export const authFailHandler: ExceptionHandler = {
   },
 };
 
-function requestQueryBuilder(payload: Payload): string {
-  let query = "";
-  let first = true;
-  for (const key in payload) {
-    if (
-      !Object.prototype.hasOwnProperty.call(payload, key) ||
-      payload[key] === undefined
-    ) {
-      continue;
-    }
-    if (Array.isArray(payload[key])) {
-      for (const instance of payload[key] as Array<string>) {
-        if (!first) {
-          query += "&";
-        }
-        query += key + "[]=" + instance;
-        first = false;
-      }
-    } else {
-      if (!first) {
-        query += "&";
-      }
-      query += key + "=" + (payload[key] as string);
-    }
-    first = false;
-  }
-  return query;
-}
-
-export async function rawRequest<T extends RequestResponse>(
+async function rawRequest<T extends RequestResponse>(
   url: string,
   method: string,
   payload: FormData | Payload = {}
@@ -58,7 +33,7 @@ export async function rawRequest<T extends RequestResponse>(
     method === "DELETE" ||
     payload.toString() !== "[object FormData]"
   ) {
-    query = requestQueryBuilder(payload as Payload);
+    query = constructQuery(payload as Payload);
   }
   if ((method === "GET" || method === "DELETE") && query) {
     url += "?" + query;
@@ -103,6 +78,12 @@ export async function request<T extends RequestResponse>(
           Object.prototype.hasOwnProperty.call(exceptionHandler, response.type!)
         ) {
           exceptionHandler[response.type!]!(response);
+          reject();
+        } else if (
+          response.status === 401 &&
+          Object.prototype.hasOwnProperty.call(exceptionHandler, "401")
+        ) {
+          exceptionHandler["401"]!(response);
           reject();
         } else {
           globalDialogMessage.set(
