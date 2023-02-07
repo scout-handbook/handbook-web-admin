@@ -110,3 +110,10 @@
     {/each}
   </GroupProvider>
 </div>
+
+<style>
+  #settingsGroupList {
+    position: relative;
+    min-height: 180px;
+  }
+</style>

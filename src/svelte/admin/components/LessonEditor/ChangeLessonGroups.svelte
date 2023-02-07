@@ -64,3 +64,10 @@
   ", bude lekce přístupná všem uživatelům (i nepřihlášeným návštěvníkům webu) bez
   ohledu na skupiny.
 </div>
+
+<style>
+  #side-panel-form {
+    position: relative;
+    min-height: 180px;
+  }
+</style>
