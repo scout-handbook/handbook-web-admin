@@ -25,15 +25,16 @@
       ? lessonName!
       : versionList.find((x) => x.version === selectedVersion)!.name;
 
-  const historyPromise = request<Array<LessonVersion>>(
+  void request<Array<LessonVersion>>(
     $apiUri + "/v1.0/lesson/" + lessonId! + "/history",
     "GET",
     {},
     authFailHandler
   ).then((response) => {
     versionList = response;
-    return versionList;
   });
+
+  $: console.log(versionList);
 
   $: contentPromise =
     selectedVersion === null
@@ -83,9 +84,9 @@
     {/if}
     <h3 class="side-panel-title">Historie lekce</h3>
     <div id="lessonHistoryForm">
-      {#await historyPromise}
+      {#if versionList === null}
         <LoadingIndicator />
-      {:then versionList}
+      {:else}
         <form id="side-panel-form">
           <div class="form-row">
             <label class="form-switch">
@@ -123,7 +124,7 @@
             </div>
           {/each}
         </form>
-      {/await}
+      {/if}
     </div>
   </div>
   <div id="lesson-history-preview">
