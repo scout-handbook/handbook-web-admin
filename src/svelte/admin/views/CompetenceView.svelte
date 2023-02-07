@@ -32,11 +32,11 @@
 {#if action === "add-competence"}
   <AddCompetencePanel />
 {:else if action === "change-competence"}
-  <CompetenceProvider let:competences>
+  <CompetenceProvider silent let:competences>
     <ChangeCompetencePanel {competences} payload={actionPayload} />
   </CompetenceProvider>
 {:else if action === "delete-competence"}
-  <CompetenceProvider let:competences>
+  <CompetenceProvider silent let:competences>
     <DeleteCompetenceDialog {competences} payload={actionPayload} />
   </CompetenceProvider>
 {/if}

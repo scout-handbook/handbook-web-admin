@@ -33,15 +33,15 @@
 {#if action === "add-group"}
   <AddGroupPanel />
 {:else if action === "change-group"}
-  <GroupProvider let:groups>
+  <GroupProvider silent let:groups>
     <ChangeGroupPanel {groups} payload={actionPayload} />
   </GroupProvider>
 {:else if action === "delete-group"}
-  <GroupProvider let:groups>
+  <GroupProvider silent let:groups>
     <DeleteGroupDialog {groups} payload={actionPayload} />
   </GroupProvider>
 {:else if action === "import-group-members"}
-  <GroupProvider let:groups>
+  <GroupProvider silent let:groups>
     <ImportGroupMembersPanel {groups} payload={actionPayload} />
   </GroupProvider>
 {/if}

@@ -53,7 +53,7 @@
   Upravit
 </Button>
 <br />
-<FieldProvider let:fields>
+<FieldProvider inline let:fields>
   {#if field !== null}
     <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-argument -->
     {get(fields, field)?.name ?? ""}
@@ -74,7 +74,7 @@
 >
   Upravit
 </Button>
-<CompetenceProvider let:competences={allCompetences}>
+<CompetenceProvider inline let:competences={allCompetences}>
   <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-call @typescript-eslint/no-unsafe-argument -->
   {#each allCompetences.filter( ([id, _]) => competences.includes(id) ) as [_, competence]}
     <br />
@@ -97,7 +97,7 @@
 </Button>
 <br />
 <div id="settingsGroupList">
-  <GroupProvider let:groups={allGroups}>
+  <GroupProvider inline let:groups={allGroups}>
     <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-call @typescript-eslint/no-unsafe-argument -->
     {#each allGroups.filter(([id, _]) => groups.includes(id)) as [id, group]}
       {#if id === "00000000-0000-0000-0000-000000000000"}
@@ -110,10 +110,3 @@
     {/each}
   </GroupProvider>
 </div>
-
-<style>
-  #settingsGroupList {
-    position: relative;
-    min-height: 180px;
-  }
-</style>

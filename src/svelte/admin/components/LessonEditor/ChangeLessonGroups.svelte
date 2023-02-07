@@ -34,7 +34,7 @@
 >
 <h3 class="side-panel-title">Změnit skupiny</h3>
 <form id="side-panel-form">
-  <GroupProvider let:groups={allGroups}>
+  <GroupProvider inline let:groups={allGroups}>
     {#each allGroups as [id, group]}
       <div class="form-row">
         <label class="form-switch">
@@ -64,10 +64,3 @@
   ", bude lekce přístupná všem uživatelům (i nepřihlášeným návštěvníkům webu) bez
   ohledu na skupiny.
 </div>
-
-<style>
-  #side-panel-form {
-    position: relative;
-    min-height: 180px;
-  }
-</style>

@@ -21,6 +21,9 @@
     };
   }
 
+  export let silent = false;
+  export let inline = false;
+
   const competences = derived(
     useSWR<Record<string, Competence>>(constructURL("v1.0/competence")).data,
     processCompetences,
@@ -50,7 +53,9 @@
 </script>
 
 {#if $competences === undefined || $lessons === undefined || $fields === undefined}
-  <LoadingIndicator />
+  {#if !silent}
+    <LoadingIndicator {inline} />
+  {/if}
 {:else}
   <slot competences={$competences} fields={$fields} lessons={$lessons} />
 {/if}

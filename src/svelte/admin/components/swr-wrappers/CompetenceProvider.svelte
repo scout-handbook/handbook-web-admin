@@ -8,6 +8,7 @@
   import LoadingIndicator from "../LoadingIndicator.svelte";
 
   export let silent = false;
+  export let inline = false;
 
   interface $$Slots {
     default: { competences: Array<[string, Competence]> };
@@ -22,7 +23,7 @@
 
 {#if $competences === undefined}
   {#if !silent}
-    <LoadingIndicator />
+    <LoadingIndicator {inline} />
   {/if}
 {:else}
   <slot competences={$competences} />

@@ -12,6 +12,7 @@
   }
 
   export let silent = false;
+  export let inline = false;
 
   const groups = derived(
     useSWR<Record<string, Group>>(constructURL("v1.0/group")).data,
@@ -22,7 +23,7 @@
 
 {#if $groups === undefined}
   {#if !silent}
-    <LoadingIndicator />
+    <LoadingIndicator {inline} />
   {/if}
 {:else}
   <slot groups={$groups} />
