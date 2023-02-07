@@ -7,6 +7,8 @@
   import { constructURL } from "../../../../ts/admin/tools/constructURL";
   import LoadingIndicator from "../LoadingIndicator.svelte";
 
+  export let silent = false;
+
   interface $$Slots {
     default: { competences: Array<[string, Competence]> };
   }
@@ -19,7 +21,9 @@
 </script>
 
 {#if $competences === undefined}
-  <LoadingIndicator />
+  {#if !silent}
+    <LoadingIndicator />
+  {/if}
 {:else}
   <slot competences={$competences} />
 {/if}
