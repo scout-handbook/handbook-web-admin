@@ -18,7 +18,7 @@
   import DoneDialog from "../components/DoneDialog.svelte";
   import LessonEditor from "../components/LessonEditor.svelte";
 
-  const location = useLocation();
+  const location = useLocation<Record<string, never>>();
   const navigate = useNavigate();
 
   let donePromise: Promise<void> | null = null;
