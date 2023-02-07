@@ -1,25 +1,16 @@
 <script lang="ts" strictEvents>
   import { useSWR } from "sswr";
-  import { derived } from "svelte/store";
   import { useLocation, useNavigate } from "svelte-navigator";
 
-  import type { Competence } from "../../../ts/admin/interfaces/Competence";
   import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
   import { siteName } from "../../../ts/admin/stores";
-  import { processCompetences } from "../../../ts/admin/swr";
   import { constructURL } from "../../../ts/admin/tools/constructURL";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import AddCompetencePanel from "../components/action-modals/AddCompetencePanel.svelte";
   import ChangeCompetencePanel from "../components/action-modals/ChangeCompetencePanel.svelte";
   import DeleteCompetenceDialog from "../components/action-modals/DeleteCompetenceDialog.svelte";
   import Button from "../components/Button.svelte";
-  import LoadingIndicator from "../components/LoadingIndicator.svelte";
-
-  const competences = derived(
-    useSWR<Record<string, Competence>>(constructURL("v1.0/competence")).data,
-    processCompetences,
-    undefined
-  );
+  import CompetenceProvider from "../components/swr-wrappers/CompetenceProvider.svelte";
 
   const location = useLocation<{
     action: string;
@@ -41,18 +32,13 @@
 {#if action === "add-competence"}
   <AddCompetencePanel />
 {:else if action === "change-competence"}
-  <!-- TODO: Handle SWR better -->
-  {#if $competences !== undefined}
-    <ChangeCompetencePanel competences={$competences} payload={actionPayload} />
-  {/if}
+  <CompetenceProvider let:competences>
+    <ChangeCompetencePanel {competences} payload={actionPayload} />
+  </CompetenceProvider>
 {:else if action === "delete-competence"}
-  <!-- TODO: Handle SWR better -->
-  {#if $competences !== undefined}
-    <DeleteCompetenceDialog
-      competences={$competences}
-      payload={actionPayload}
-    />
-  {/if}
+  <CompetenceProvider let:competences>
+    <DeleteCompetenceDialog {competences} payload={actionPayload} />
+  </CompetenceProvider>
 {/if}
 
 <h1>{$siteName + " - Kompetence"}</h1>
@@ -68,11 +54,10 @@
   </Button>
   <br />
 {/if}
-{#if $competences === undefined}
-  <LoadingIndicator />
-{:else}
-  {#each $competences as [id, competence]}
+<CompetenceProvider let:competences>
+  {#each competences as [id, competence]}
     <h3 class="main-page">
+      <!-- eslint-disable-next-line @typescript-eslint/restrict-plus-operands @typescript-eslint/no-unsafe-call -->
       {competence.number.toString() + ": " + competence.name}
     </h3>
     {#if adminOrSuperuser}
@@ -112,7 +97,7 @@
     >
     <br />
   {/each}
-{/if}
+</CompetenceProvider>
 
 <style>
   .buttons {
