@@ -1,18 +1,16 @@
-<script lang="ts">
+<script lang="ts" strictEvents>
   import { useNavigate } from "svelte-navigator";
 
-  import { groups as allGroups } from "../../../../ts/admin/stores";
+  import { get } from "../../../../ts/admin/tools/arrayTools";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Button from "../Button.svelte";
+  import GroupProvider from "../swr-wrappers/GroupProvider.svelte";
 
   export let groups: Array<string>;
 
   const navigate = useNavigate();
 
   const initialGroups = groups;
-  $: groupsArray = $allGroups?.asArray() ?? [];
-  $: publicName =
-    $allGroups?.get("00000000-0000-0000-0000-000000000000")?.name ?? "";
 
   refreshLogin();
 </script>
@@ -36,19 +34,21 @@
 >
 <h3 class="side-panel-title">Změnit skupiny</h3>
 <form id="side-panel-form">
-  {#each groupsArray as { id, value: group }}
-    <div class="form-row">
-      <label class="form-switch">
-        <input type="checkbox" value={id} bind:group={groups} />
-        <span class="form-custom form-checkbox" />
-      </label>
-      {#if id === "00000000-0000-0000-0000-000000000000"}
-        <span class="public-group">{group.name}</span>
-      {:else}
-        {group.name}
-      {/if}
-    </div>
-  {/each}
+  <GroupProvider inline let:groups={allGroups}>
+    {#each allGroups as [id, group]}
+      <div class="form-row">
+        <label class="form-switch">
+          <input type="checkbox" value={id} bind:group={groups} />
+          <span class="form-custom form-checkbox" />
+        </label>
+        {#if id === "00000000-0000-0000-0000-000000000000"}
+          <span class="public-group">{group.name}</span>
+        {:else}
+          {group.name}
+        {/if}
+      </div>
+    {/each}
+  </GroupProvider>
 </form>
 <div class="group-help">
   <i class="icon-info-circled" />
@@ -56,7 +56,10 @@
   uživatelů). Pokud není vybrána žádná skupiny, nebude lekce pro běžné uživatele
   vůbec přístupná (pouze v administraci). Pokud je vybrána skupina "
   <span class="public-group">
-    {publicName}
+    <GroupProvider silent let:groups={allGroups}>
+      <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-argument -->
+      {get(allGroups, "00000000-0000-0000-0000-000000000000")?.name ?? ""}
+    </GroupProvider>
   </span>
   ", bude lekce přístupná všem uživatelům (i nepřihlášeným návštěvníkům webu) bez
   ohledu na skupiny.

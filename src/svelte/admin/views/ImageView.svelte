@@ -1,10 +1,10 @@
-<script lang="ts">
+<script lang="ts" strictEvents>
+  import { useSWR } from "sswr";
   import { useLocation, useNavigate } from "svelte-navigator";
 
-  import type { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
   import { apiUri, siteName } from "../../../ts/admin/stores";
+  import { constructURL } from "../../../ts/admin/tools/constructURL";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
-  import { reAuthHandler, request } from "../../../ts/admin/tools/request";
   import AddImagePanel from "../components/action-modals/AddImagePanel.svelte";
   import DeleteImageDialog from "../components/action-modals/DeleteImageDialog.svelte";
   import Button from "../components/Button.svelte";
@@ -26,17 +26,9 @@
   $: pageStart = perPage * (page - 1);
   $: pageEnd = pageStart + perPage;
 
-  const imageListPromise: Promise<Array<string>> = new Promise((resolve) => {
-    request(
-      $apiUri + "/v1.0/image",
-      "GET",
-      {},
-      function (response: RequestResponse): void {
-        resolve(response as Array<string>);
-      },
-      reAuthHandler
-    );
-  });
+  const imageList = useSWR<Array<string>>(constructURL("v1.0/image")).data;
+  $: totalImageCount = $imageList?.length;
+  $: currentPageList = $imageList?.slice(pageStart, pageEnd);
 
   function showImagePreview(id: string): void {
     const overlay = document.getElementById("overlay")!;
@@ -73,10 +65,10 @@
   Nahrát
 </Button>
 <div id="imageList">
-  {#await imageListPromise}
+  {#if currentPageList === undefined || totalImageCount === undefined}
     <LoadingIndicator />
-  {:then list}
-    {#each list.slice(pageStart, pageEnd) as image}
+  {:else}
+    {#each currentPageList as image}
       <div class="thumbnail-container">
         <div class="button-container">
           <img
@@ -104,6 +96,9 @@
         </div>
       </div>
     {/each}
-    <Pagination total={Math.ceil(list.length / perPage)} bind:current={page} />
-  {/await}
+    <Pagination
+      total={Math.ceil(totalImageCount / perPage)}
+      bind:current={page}
+    />
+  {/if}
 </div>

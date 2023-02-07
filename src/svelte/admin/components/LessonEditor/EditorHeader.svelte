@@ -1,4 +1,4 @@
-<script lang="ts">
+<script lang="ts" strictEvents>
   import { createEventDispatcher } from "svelte";
   import { useLocation, useNavigate } from "svelte-navigator";
 
@@ -6,8 +6,8 @@
 
   export let name: string;
 
-  const dispatch = createEventDispatcher();
-  const location = useLocation();
+  const dispatch = createEventDispatcher<{ discard: never; save: never }>();
+  const location = useLocation<Record<string, never>>();
   const navigate = useNavigate();
   $: currentUri = $location.pathname + $location.search;
 </script>

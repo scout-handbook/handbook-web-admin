@@ -1,7 +1,11 @@
-<script lang="ts">
+<script lang="ts" strictEvents>
   import { fade, fly } from "svelte/transition";
 
   import { customProperties } from "../../../ts/admin/stores";
+
+  interface $$Slots {
+    default: Record<string, never>;
+  }
 
   $: ({ "--border-color": borderColor, "--overlay-color": overlayColor } =
     $customProperties);

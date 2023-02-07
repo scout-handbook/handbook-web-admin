@@ -1,4 +1,4 @@
-<script lang="ts">
+<script lang="ts" strictEvents>
   import { useLocation } from "svelte-navigator";
 
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
@@ -16,13 +16,14 @@
   export let groups: Array<string>;
   export let body: string;
 
-  const location = useLocation();
-  $: action = $location.state.action as string;
+  const location = useLocation<{ action: string }>();
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  $: action = $location.state?.action;
 
   refreshLogin();
 </script>
 
-{#if action === "restore-version"}
+{#if action === "restore-version" && id !== null}
   <RestoreLessonVersion lessonId={id} lessonName={name} bind:body />
 {:else}
   <SidePanel>

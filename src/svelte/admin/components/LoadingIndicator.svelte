@@ -1,4 +1,4 @@
-<script lang="ts">
+<script lang="ts" strictEvents>
   import { customProperties } from "../../../ts/admin/stores";
 
   $: ({
@@ -8,14 +8,25 @@
   } = $customProperties);
 
   export let darkBackground = false;
+  export let inline = false;
 
   $: indicatorColor = darkBackground ? backgroundDarker : borderColor;
 </script>
 
-<div style:border-color={indicatorColor} style:border-top-color={accentColor} />
+<div class:container={inline}>
+  <div
+    style:border-color={indicatorColor}
+    style:border-top-color={accentColor}
+    class="spinner"
+  />
+</div>
 
 <style>
-  div {
+  .container {
+    height: 180px;
+    position: relative;
+  }
+  .spinner {
     animation: spin 2s linear infinite;
     border-radius: 50%;
     border-style: solid;

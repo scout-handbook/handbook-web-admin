@@ -1,36 +1,23 @@
-<script lang="ts">
+<script lang="ts" strictEvents>
+  import { useSWR } from "sswr";
   import { useNavigate } from "svelte-navigator";
 
-  import type { IDList } from "../../../ts/admin/IDList";
-  import type { Competence } from "../../../ts/admin/interfaces/Competence";
   import type { Lesson } from "../../../ts/admin/interfaces/Lesson";
+  import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
   import { adminUri } from "../../../ts/admin/stores";
+  import { constructURL } from "../../../ts/admin/tools/constructURL";
   import Button from "./Button.svelte";
+  import CompetenceProvider from "./swr-wrappers/CompetenceProvider.svelte";
 
-  export let competences: IDList<Competence>;
-  export let adminPermissions: boolean;
   export let id: string;
   export let lesson: Lesson;
   export let secondLevel = false;
 
   const navigate = useNavigate();
 
-  function lessonCompetenceList(): string {
-    let output = "";
-    let first = true;
-    competences
-      .filter(function (competenceId) {
-        return lesson.competences.includes(competenceId);
-      })
-      .iterate(function (_, competence) {
-        if (!first) {
-          output += ", ";
-        }
-        output += competence.number.toString();
-        first = false;
-      });
-    return "Kompetence: " + output;
-  }
+  const { data: loginstate } = useSWR<Loginstate>(constructURL("v1.0/account"));
+  $: adminOrSuperuser =
+    $loginstate?.role === "administrator" || $loginstate?.role === "superuser";
 </script>
 
 <br />
@@ -44,7 +31,7 @@
 >
   Upravit
 </Button>
-{#if adminPermissions}
+{#if adminOrSuperuser}
   <Button
     icon="trash-empty"
     red
@@ -67,5 +54,13 @@
 </Button>
 <br />
 <span class="main-page" class:second-level={secondLevel}>
-  {lessonCompetenceList()}
+  Kompetence:
+  <CompetenceProvider silent let:competences>
+    <!-- eslint-disable @typescript-eslint/no-unsafe-call @typescript-eslint/no-unsafe-argument @typescript-eslint/no-unsafe-return -->
+    {competences
+      .filter(([competenceId, _]) => lesson.competences.includes(competenceId))
+      .map(([_, competence]) => competence.number)
+      .join(", ")}
+    <!-- eslint-enable -->
+  </CompetenceProvider>
 </span>

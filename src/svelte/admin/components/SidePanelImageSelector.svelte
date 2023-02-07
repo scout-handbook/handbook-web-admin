@@ -1,48 +1,33 @@
-<script lang="ts">
+<script lang="ts" strictEvents>
+  import { useSWR } from "sswr";
   import { createEventDispatcher } from "svelte";
 
-  import type { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
   import { apiUri } from "../../../ts/admin/stores";
+  import { constructURL } from "../../../ts/admin/tools/constructURL";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
-  import { reAuthHandler, request } from "../../../ts/admin/tools/request";
   import Button from "./Button.svelte";
   import DoubleSidePanel from "./DoubleSidePanel.svelte";
   import LoadingIndicator from "./LoadingIndicator.svelte";
+  import Pagination from "./Pagination.svelte";
 
-  const dispatch = createEventDispatcher();
+  const dispatch = createEventDispatcher<{ cancel: never; select: string }>();
 
   let page = 1;
   const perPage = 15;
+  $: pageStart = perPage * (page - 1);
+  $: pageEnd = pageStart + perPage;
 
-  let imageListPromise: Promise<Array<string>>;
+  const imageList = useSWR<Array<string>>(constructURL("v1.0/image")).data;
+  $: totalImageCount = $imageList?.length;
+  $: currentPageList = $imageList?.slice(pageStart, pageEnd);
 
-  function reload(): void {
-    imageListPromise = new Promise((resolve) => {
-      request(
-        $apiUri + "/v1.0/image",
-        "GET",
-        {},
-        function (response: RequestResponse): void {
-          resolve(
-            (response as Array<string>).slice(
-              perPage * (page - 1),
-              perPage * page
-            )
-          );
-        },
-        reAuthHandler
-      );
-    });
-  }
-
-  reload();
   refreshLogin();
 </script>
 
 <DoubleSidePanel>
-  {#await imageListPromise}
+  {#if currentPageList === undefined || totalImageCount === undefined}
     <LoadingIndicator />
-  {:then imageList}
+  {:else}
     <Button
       icon="cancel"
       yellow
@@ -51,7 +36,7 @@
       }}>Zrušit</Button
     >
     <div class="field-image-container">
-      {#each imageList as image}
+      {#each currentPageList as image}
         <div class="thumbnail-container">
           <img
             class="thumbnail-image"
@@ -66,102 +51,10 @@
           />
         </div>
       {/each}
-      {#if imageList.length > perPage}
-        <div id="pagination">
-          {#if page > 3}
-            <div
-              class="pagination-button"
-              on:click={() => {
-                page = 1;
-                reload();
-              }}
-              on:keypress={() => {
-                page = 1;
-                reload();
-              }}
-            >
-              1
-            </div>
-            ...
-          {/if}
-          {#if page > 2}
-            <div
-              class="pagination-button"
-              on:click={() => {
-                page = page - 2;
-                reload();
-              }}
-              on:keypress={() => {
-                page = page - 2;
-                reload();
-              }}
-            >
-              {page - 2}
-            </div>
-          {/if}
-          {#if page > 1}
-            <div
-              class="pagination-button"
-              on:click={() => {
-                page = page - 1;
-                reload();
-              }}
-              on:keypress={() => {
-                page = page - 1;
-                reload();
-              }}
-            >
-              {page - 1}
-            </div>
-          {/if}
-          <div class="pagination-button active">{page}</div>
-          {#if page < Math.ceil(imageList.length / perPage)}
-            <div
-              class="pagination-button"
-              on:click={() => {
-                page = page + 1;
-                reload();
-              }}
-              on:keypress={() => {
-                page = page + 1;
-                reload();
-              }}
-            >
-              {page + 1}
-            </div>
-          {/if}
-          {#if page < Math.ceil(imageList.length / perPage) - 1}
-            <div
-              class="pagination-button"
-              on:click={() => {
-                page = page + 2;
-                reload();
-              }}
-              on:keypress={() => {
-                page = page + 2;
-                reload();
-              }}
-            >
-              {page + 2}
-            </div>
-          {/if}
-          {#if page < Math.ceil(imageList.length / perPage) - 2}
-            ... <div
-              class="pagination-button"
-              on:click={() => {
-                page = Math.ceil(imageList.length / perPage);
-                reload();
-              }}
-              on:keypress={() => {
-                page = Math.ceil(imageList.length / perPage);
-                reload();
-              }}
-            >
-              {Math.ceil(imageList.length / perPage)}
-            </div>
-          {/if}
-        </div>
-      {/if}
+      <Pagination
+        total={Math.ceil(totalImageCount / perPage)}
+        bind:current={page}
+      />
     </div>
-  {/await}
+  {/if}
 </DoubleSidePanel>

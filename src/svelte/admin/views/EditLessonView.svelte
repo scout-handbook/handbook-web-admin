@@ -1,13 +1,15 @@
-<script lang="ts">
+<script lang="ts" strictEvents>
   import { useNavigate } from "svelte-navigator";
 
   import type { APIResponse } from "../../../ts/admin/interfaces/APIResponse";
+  import type { Field } from "../../../ts/admin/interfaces/Field";
+  import type { Lesson } from "../../../ts/admin/interfaces/Lesson";
   import type { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
-  import { FIELDS, LESSONS, metadataEvent } from "../../../ts/admin/metadata";
   import { apiUri, globalDialogMessage } from "../../../ts/admin/stores";
   import { Action } from "../../../ts/admin/tools/Action";
   import { ActionCallback } from "../../../ts/admin/tools/ActionCallback";
   import { ActionQueue } from "../../../ts/admin/tools/ActionQueue";
+  import { get } from "../../../ts/admin/tools/arrayTools";
   import {
     populateCompetences,
     populateField,
@@ -19,17 +21,19 @@
   import LoadingIndicator from "../components/LoadingIndicator.svelte";
 
   export let lessonID: string;
+  export let fields: Array<[string, Field]>;
+  export let lessons: Array<[string, Lesson]>;
 
   const navigate = useNavigate();
 
   let donePromise: Promise<void> | null = null;
-  let name = LESSONS.get(lessonID)?.name ?? "";
+  let name = get(lessons, lessonID)?.name ?? "";
   let body = "";
-  let competences: Array<string> = LESSONS.get(lessonID)?.competences ?? [];
+  let competences: Array<string> = get(lessons, lessonID)?.competences ?? [];
   let field: string | null =
-    FIELDS.asArray().find((field) => {
-      return field.value.lessons.includes(lessonID);
-    })?.id ?? null;
+    fields.find(([_, field]) => {
+      return field.lessons.includes(lessonID);
+    })?.[0] ?? null;
   let groups: Array<string> = [];
 
   const initialName = name;
@@ -48,56 +52,42 @@
   const discardExceptionHandler = { NotFoundException: null };
 
   let lessonDataPromise = Promise.all([
-    new Promise<void>((resolve) => {
-      request(
-        $apiUri + "/v1.0/mutex/" + encodeURIComponent(lessonID),
-        "POST",
-        {},
-        () => {
-          window.onbeforeunload = function (): void {
-            sendBeacon(lessonID);
-          };
-          resolve();
+    request(
+      $apiUri + "/v1.0/mutex/" + encodeURIComponent(lessonID),
+      "POST",
+      {},
+      {
+        ...reAuthHandler,
+        LockedException: (response: APIResponse<RequestResponse>): void => {
+          globalDialogMessage.set(
+            "Nelze upravovat lekci, protože ji právě upravuje " +
+              response.holder! +
+              "."
+          );
         },
-        {
-          ...reAuthHandler,
-          LockedException: (response: APIResponse): void => {
-            globalDialogMessage.set(
-              "Nelze upravovat lekci, protože ji právě upravuje " +
-                response.holder! +
-                "."
-            );
-          },
-        }
-      );
+      }
+    ).then(() => {
+      window.onbeforeunload = function (): void {
+        sendBeacon(lessonID);
+      };
     }),
-    new Promise<void>((resolve) => {
-      request(
-        $apiUri + "/v1.0/lesson/" + encodeURIComponent(lessonID) + "/group",
-        "GET",
-        {},
-        (response: RequestResponse) => {
-          groups = response as Array<string>;
-          initialGroups = groups;
-          resolve();
-        },
-        reAuthHandler
-      );
+    request<Array<string>>(
+      $apiUri + "/v1.0/lesson/" + encodeURIComponent(lessonID) + "/group",
+      "GET",
+      {},
+      reAuthHandler
+    ).then((response) => {
+      groups = response;
+      initialGroups = groups;
     }),
-    new Promise<void>((resolve) => {
-      request(
-        $apiUri + "/v1.0/lesson/" + encodeURIComponent(lessonID),
-        "GET",
-        {},
-        (response: RequestResponse): void => {
-          metadataEvent.addCallback(function (): void {
-            body = response as string;
-            initialBody = body;
-            resolve();
-          });
-        },
-        reAuthHandler
-      );
+    request<string>(
+      $apiUri + "/v1.0/lesson/" + encodeURIComponent(lessonID),
+      "GET",
+      {},
+      reAuthHandler
+    ).then((response) => {
+      body = response;
+      initialBody = body;
     }),
   ]);
 

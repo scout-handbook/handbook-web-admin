@@ -1,16 +1,15 @@
-<script lang="ts">
+<script lang="ts" strictEvents>
   import { useNavigate } from "svelte-navigator";
 
-  import { competences as allCompetences } from "../../../../ts/admin/stores";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Button from "../Button.svelte";
+  import CompetenceProvider from "../swr-wrappers/CompetenceProvider.svelte";
 
   export let competences: Array<string>;
 
   const navigate = useNavigate();
 
   const initialCompetences = competences;
-  $: competencesArray = $allCompetences?.asArray() ?? [];
 
   refreshLogin();
 </script>
@@ -34,16 +33,18 @@
 >
 <h3 class="side-panel-title">Změnit kompetence</h3>
 <form id="side-panel-form">
-  {#each competencesArray as { id, value: competence }}
-    <div class="form-row">
-      <label class="form-switch">
-        <input type="checkbox" value={id} bind:group={competences} />
-        <span class="form-custom form-checkbox" />
-      </label>
-      <span class="competence-number">
-        {competence.number}:
-      </span>
-      {competence.name}
-    </div>
-  {/each}
+  <CompetenceProvider let:competences={allCompetences}>
+    {#each allCompetences as [id, competence]}
+      <div class="form-row">
+        <label class="form-switch">
+          <input type="checkbox" value={id} bind:group={competences} />
+          <span class="form-custom form-checkbox" />
+        </label>
+        <span class="competence-number">
+          {competence.number}:
+        </span>
+        {competence.name}
+      </div>
+    {/each}
+  </CompetenceProvider>
 </form>

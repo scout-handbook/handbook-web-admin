@@ -1,10 +1,8 @@
-<script lang="ts">
+<script lang="ts" strictEvents>
   import { useNavigate } from "svelte-navigator";
 
-  import { IDList } from "../../../../ts/admin/IDList";
   import type { DeletedLesson } from "../../../../ts/admin/interfaces/DeletedLesson";
   import type { LessonVersion } from "../../../../ts/admin/interfaces/LessonVersion";
-  import type { RequestResponse } from "../../../../ts/admin/interfaces/RequestResponse";
   import { apiUri } from "../../../../ts/admin/stores";
   import { compileMarkdown } from "../../../../ts/admin/tools/compileMarkdown";
   import { parseVersion } from "../../../../ts/admin/tools/parseVersion";
@@ -25,7 +23,7 @@
 
   let error = "";
   let step = "lesson-selection-loading";
-  let lessonList: IDList<DeletedLesson>;
+  let lessonList: Array<[string, DeletedLesson]>;
   let selectedLesson = "";
   let versionList: Array<LessonVersion> = [];
   let selectedVersion: number | null = null;
@@ -34,57 +32,51 @@
     selectedVersion === null
       ? ""
       : versionList.find((x) => x.version === selectedVersion)!.name;
-  $: contentPromise = new Promise<string>((resolve) => {
-    if (selectedVersion === null) {
-      resolve("");
-      return;
-    }
-    request(
-      $apiUri +
-        "/v1.0/deleted-lesson/" +
-        selectedLesson +
-        "/history/" +
-        selectedVersion.toString(),
-      "GET",
-      {},
-      (response: RequestResponse) => {
-        void compileMarkdown(response as string).then(resolve);
-      },
-      authFailHandler
-    );
-  });
+  $: contentPromise =
+    selectedVersion === null
+      ? new Promise((resolve) => {
+          resolve("");
+        })
+      : request<string>(
+          $apiUri +
+            "/v1.0/deleted-lesson/" +
+            selectedLesson +
+            "/history/" +
+            selectedVersion.toString(),
+          "GET",
+          {},
+          authFailHandler
+        ).then(compileMarkdown);
 
   refreshLogin();
 
-  request(
+  void request<Record<string, DeletedLesson>>(
     $apiUri + "/v1.0/deleted-lesson",
     "GET",
     {},
-    (response: RequestResponse) => {
-      lessonList = new IDList(response as Record<string, DeletedLesson>);
-      if (lessonList.empty()) {
-        error = "Nejsou žádné smazané lekce.";
-      }
-      step = "lesson-selection";
-    },
     reAuthHandler
-  );
+  ).then((response) => {
+    lessonList = Object.entries(response);
+    if (lessonList.length === 0) {
+      error = "Nejsou žádné smazané lekce.";
+    }
+    step = "lesson-selection";
+  });
 
   function loadVersionList(): void {
     if (!selectedLesson) {
       return;
     }
     step = "version-selection-loading";
-    request(
+    void request<Array<LessonVersion>>(
       $apiUri + "/v1.0/deleted-lesson/" + selectedLesson + "/history",
       "GET",
       {},
-      (response: RequestResponse) => {
-        versionList = response as Array<LessonVersion>;
-        step = "version-selection";
-      },
       reAuthHandler
-    );
+    ).then((response) => {
+      versionList = response;
+      step = "version-selection";
+    });
   }
 
   function selectVersionCallback(): void {
@@ -134,7 +126,7 @@
         <LoadingIndicator />
       {:else if step === "lesson-selection"}
         <form id="side-panel-form">
-          {#each lessonList.asArray() as { id, value: lesson }}
+          {#each lessonList as [id, lesson]}
             <div class="form-row">
               <label class="form-switch">
                 <input

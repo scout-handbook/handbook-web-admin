@@ -1,9 +1,11 @@
+import { revalidate } from "sswr";
+
 import type { SerializedAction } from "../interfaces/SerializedAction";
-import { refreshMetadata } from "../metadata";
 import { globalDialogMessage, globalLoadingIndicator } from "../stores";
 import { request } from "../tools/request";
 import type { Action } from "./Action";
 import { deserializeAction, serializeAction } from "./Action";
+import { constructURL } from "./constructURL";
 
 export class ActionQueue {
   public actions: Array<Action>;
@@ -38,21 +40,20 @@ export class ActionQueue {
     this.actions[0].exceptionHandler["AuthenticationException"] = (): void => {
       this.authException();
     };
-    request(
+    void request(
       this.actions[0].url,
       this.actions[0].method,
       this.actions[0].payload,
-      (response) => {
-        this.actions[0].callback(response, this);
-        this.actions.shift();
-        if (propagate) {
-          this.pop(resolve, true);
-        } else {
-          resolve();
-        }
-      },
       this.actions[0].exceptionHandler
-    );
+    ).then((response) => {
+      this.actions[0].callback(response, this);
+      this.actions.shift();
+      if (propagate) {
+        this.pop(resolve, true);
+      } else {
+        resolve();
+      }
+    });
   }
 
   private authException(): void {
@@ -87,9 +88,16 @@ export function ActionQueueSetup(): void {
     sessionStorage.clear();
     globalLoadingIndicator.set(true);
     void aq.dispatch().then(() => {
+      revalidate(constructURL("v1.0/competence"), { force: true });
+      revalidate(constructURL("v1.0/lesson?override-group=true"), {
+        force: true,
+      });
+      revalidate(constructURL("v1.0/field?override-group=true"), {
+        force: true,
+      });
+      revalidate(constructURL("v1.0/group"), { force: true });
       globalLoadingIndicator.set(false);
       globalDialogMessage.set("Akce byla úspěšná");
-      refreshMetadata();
     });
   }
 }
