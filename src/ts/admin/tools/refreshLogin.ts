@@ -1,5 +1,6 @@
 import { request } from "./request";
 
+// TODO: Check where this is called
 export function refreshLogin(
   forceRelogin = false,
   afterAction: (() => void) | null = null
@@ -20,17 +21,16 @@ export function refreshLogin(
           }
         },
       };
-      request(
+      void request(
         CONFIG["api-uri"] + "/v1.0/refresh",
         "GET",
         {},
-        function (): void {
-          if (afterAction) {
-            afterAction();
-          }
-        },
         exceptionHandler
-      );
+      ).then(() => {
+        if (afterAction) {
+          afterAction();
+        }
+      });
     }
   }
 }

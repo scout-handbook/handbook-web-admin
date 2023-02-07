@@ -1,7 +1,11 @@
-<script lang="ts">
+<script lang="ts" strictEvents>
   import { createEventDispatcher } from "svelte";
 
   import { customProperties } from "../../../ts/admin/stores";
+
+  interface $$Slots {
+    default: Record<string, never>;
+  }
 
   export let cyan = false;
   export let green = false;
@@ -9,7 +13,7 @@
   export let yellow = false;
   export let icon = "";
 
-  const dispatch = createEventDispatcher();
+  const dispatch = createEventDispatcher<{ click: never }>();
 
   $: ({
     "--button-accent-cyan": buttonAccentCyan,

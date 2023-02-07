@@ -1,18 +1,14 @@
-<script lang="ts">
+<script lang="ts" strictEvents>
   import { Route, Router } from "svelte-navigator";
 
   import {
-    competences,
-    fields,
     globalDialogMessage,
     globalLoadingIndicator,
-    groups,
-    lessons,
-    loginstate,
   } from "../../ts/admin/stores";
   import Dialog from "./components/Dialog.svelte";
   import LoadingIndicator from "./components/LoadingIndicator.svelte";
   import Overlay from "./components/Overlay.svelte";
+  import FieldProvider from "./components/swr-wrappers/FieldProvider.svelte";
   import TopBar from "./components/TopBar.svelte";
   import AddLessonView from "./views/AddLessonView.svelte";
   import CompetenceView from "./views/CompetenceView.svelte";
@@ -44,74 +40,39 @@
   <Router basepath="/admin">
     <Route component={AddLessonView} path="/lessons/add" />
     <Route path="/lessons/:id/edit" let:params>
-      {#if $lessons === null}
-        <LoadingIndicator />
-      {:else}
-        <EditLessonView lessonID={params.id} />
-      {/if}
+      <FieldProvider let:fields let:lessons>
+        <EditLessonView {fields} lessonID={params.id} {lessons} />
+      </FieldProvider>
     </Route>
     <Route path="/lessons/:id/versions/:version/restore" let:params>
       <RestoreLessonView lessonID={params.id} version={params.version} />
     </Route>
 
     <Route path="/">
-      <div id="side-panel" />
-      <div id="side-panel-overlay" />
       <TopBar />
       <div id="main-page-container">
         <div id="main-page">
-          {#if $fields === null || $competences === null || $lessons === null || $loginstate === null}
-            <LoadingIndicator />
-          {:else}
-            <LessonView
-              competences={$competences}
-              fields={$fields}
-              lessons={$lessons}
-              loginstate={$loginstate}
-            />
-          {/if}
+          <LessonView />
         </div>
       </div>
     </Route>
     <Route path="/lessons">
-      <div id="side-panel" />
-      <div id="side-panel-overlay" />
       <TopBar />
       <div id="main-page-container">
         <div id="main-page">
-          {#if $fields === null || $competences === null || $lessons === null || $loginstate === null}
-            <LoadingIndicator />
-          {:else}
-            <LessonView
-              competences={$competences}
-              fields={$fields}
-              lessons={$lessons}
-              loginstate={$loginstate}
-            />
-          {/if}
+          <LessonView />
         </div>
       </div>
     </Route>
     <Route path="/competences">
-      <div id="side-panel" />
-      <div id="side-panel-overlay" />
       <TopBar />
       <div id="main-page-container">
         <div id="main-page">
-          {#if $competences === null || $loginstate === null}
-            <LoadingIndicator />
-          {:else}
-            <CompetenceView
-              competences={$competences}
-              loginstate={$loginstate}
-            />
-          {/if}
+          <CompetenceView />
         </div>
       </div>
     </Route>
     <Route path="/images">
-      <div id="side-panel" />
-      <div id="side-panel-overlay" />
       <TopBar />
       <div id="main-page-container">
         <div id="main-page">
@@ -120,30 +81,18 @@
       </div>
     </Route>
     <Route path="/users">
-      <div id="side-panel" />
-      <div id="side-panel-overlay" />
       <TopBar />
       <div id="main-page-container">
         <div id="main-page">
-          {#if $groups === null || $loginstate === null}
-            <LoadingIndicator />
-          {:else}
-            <UserView groups={$groups} loginstate={$loginstate} />
-          {/if}
+          <UserView />
         </div>
       </div>
     </Route>
     <Route path="/groups">
-      <div id="side-panel" />
-      <div id="side-panel-overlay" />
       <TopBar />
       <div id="main-page-container">
         <div id="main-page">
-          {#if $groups === null || $loginstate === null}
-            <LoadingIndicator />
-          {:else}
-            <GroupView groups={$groups} loginstate={$loginstate} />
-          {/if}
+          <GroupView />
         </div>
       </div>
     </Route>

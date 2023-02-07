@@ -1,8 +1,8 @@
-<script lang="ts">
-  import { createEventDispatcher } from "svelte";
+<script lang="ts" strictEvents>
+  import { createEventDispatcher, onDestroy, onMount } from "svelte";
   import { useLocation } from "svelte-navigator";
 
-  import { apiUri } from "../../../ts/admin/stores";
+  import { apiUri, suspendReAuth } from "../../../ts/admin/stores";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import Dialog from "./Dialog.svelte";
   import EditorHeader from "./LessonEditor/EditorHeader.svelte";
@@ -19,23 +19,31 @@
   export let groups: Array<string>;
   export let refreshAction: (() => void) | null = null;
 
-  const dispatch = createEventDispatcher();
-  const location = useLocation();
-  $: view = $location.state.view as string;
+  const dispatch = createEventDispatcher<{ discard: never; save: never }>();
+  const location = useLocation<{ view: string }>();
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  $: view = $location.state?.view;
 
   let imageSelectorOpen = false;
   let discardConfirmation = false;
   let insertAtCursor: (content: string) => void;
 
-  function insertImage(event: CustomEvent<{ image: string }>): void {
+  function insertImage(event: CustomEvent<string>): void {
     insertAtCursor(
       "![Text po najetí kurzorem](" +
         $apiUri +
         "/v1.0/image/" +
-        event.detail.image +
+        event.detail +
         ")"
     );
   }
+
+  onDestroy(() => {
+    suspendReAuth.set(false);
+  });
+  onMount(() => {
+    suspendReAuth.set(true);
+  });
 </script>
 
 {#if discardConfirmation}

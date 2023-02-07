@@ -1,4 +1,4 @@
-<script lang="ts">
+<script lang="ts" strictEvents>
   import { customProperties } from "../../../ts/admin/stores";
 
   $: ({ "--overlay-color": overlayColor } = $customProperties);

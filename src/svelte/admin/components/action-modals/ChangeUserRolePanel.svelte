@@ -1,4 +1,5 @@
-<script lang="ts">
+<script lang="ts" strictEvents>
+  import { useSWR } from "sswr";
   import { useNavigate } from "svelte-navigator";
 
   import type { Loginstate } from "../../../../ts/admin/interfaces/Loginstate";
@@ -6,15 +7,18 @@
   import { apiUri } from "../../../../ts/admin/stores";
   import { Action } from "../../../../ts/admin/tools/Action";
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
+  import { constructURL } from "../../../../ts/admin/tools/constructURL";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Button from "../Button.svelte";
   import DoneDialog from "../DoneDialog.svelte";
   import SidePanel from "../SidePanel.svelte";
 
-  export let loginstate: Loginstate;
   export let payload: { user: User };
 
   const navigate = useNavigate();
+
+  const { data: loginstate } = useSWR<Loginstate>(constructURL("v1.0/account"));
+  $: isSuperuser = $loginstate?.role === "superuser";
 
   let selectedRole = payload.user.role;
   let donePromise: Promise<void> | null = null;
@@ -61,7 +65,7 @@
       <select id="role-select" class="form-select" bind:value={selectedRole}>
         <option id="user" value="user">Uživatel</option>
         <option id="editor" value="editor">Editor</option>
-        {#if loginstate.role === "superuser"}
+        {#if isSuperuser}
           <option id="administrator" value="administrator">Administrátor</option
           >
           <option id="superuser" value="superuser">Superuser</option>
@@ -80,7 +84,7 @@
       je mezi oblastmi. Editor má přístup ke správě uživatelů, avšak může prohlížet
       a měnit pouze hosty a uživatele.
     </div>
-    {#if loginstate.role === "superuser"}
+    {#if isSuperuser}
       <div class="role-help">
         <i class="icon-info-circled" />
         <span class="role-help-name">Administrátor</span> - Instruktor, mající všechna

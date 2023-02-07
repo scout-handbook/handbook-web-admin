@@ -1,9 +1,7 @@
-<script lang="ts">
+<script lang="ts" strictEvents>
   import { useSWR } from "sswr";
   import { useLocation, useNavigate } from "svelte-navigator";
 
-  import type { IDList } from "../../../ts/admin/IDList";
-  import type { Group } from "../../../ts/admin/interfaces/Group";
   import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
   import type { Role } from "../../../ts/admin/interfaces/Role";
   import type { User } from "../../../ts/admin/interfaces/User";
@@ -16,9 +14,7 @@
   import Button from "../components/Button.svelte";
   import LoadingIndicator from "../components/LoadingIndicator.svelte";
   import Pagination from "../components/Pagination.svelte";
-
-  export let groups: IDList<Group>;
-  export let loginstate: Loginstate;
+  import GroupProvider from "../components/swr-wrappers/GroupProvider.svelte";
 
   const location = useLocation<{
     action: string;
@@ -29,6 +25,10 @@
   $: action = $location.state?.action;
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   $: actionPayload = $location.state?.actionPayload;
+
+  const { data: loginstate } = useSWR<Loginstate>(constructURL("v1.0/account"));
+  $: isSuperuser = $loginstate?.role === "superuser";
+  $: adminOrSuperuser = $loginstate?.role === "administrator" || isSuperuser;
 
   let page = 1;
   const perPage = 25;
@@ -51,29 +51,14 @@
   $: users = $userList?.users;
 
   refreshLogin(true);
-
-  function groupsList(user: User): string {
-    let first = true;
-    let output = "";
-    groups
-      .filter(function (id) {
-        return user.groups.includes(id);
-      })
-      .iterate(function (_, group) {
-        if (!first) {
-          output += ", ";
-        }
-        output += group.name;
-        first = false;
-      });
-    return output;
-  }
 </script>
 
 {#if action === "change-user-groups"}
-  <ChangeUserGroupsPanel {groups} payload={actionPayload} />
+  <GroupProvider silent let:groups>
+    <ChangeUserGroupsPanel {groups} payload={actionPayload} />
+  </GroupProvider>
 {:else if action === "change-user-role"}
-  <ChangeUserRolePanel {loginstate} payload={actionPayload} />
+  <ChangeUserRolePanel payload={actionPayload} />
 {/if}
 
 <h1>{$siteName + " - Uživatelé"}</h1>
@@ -91,14 +76,14 @@
       type="text"
       bind:value={searchName}
     />
-    {#if loginstate.role === "administrator" || loginstate.role === "superuser"}
+    {#if adminOrSuperuser}
       <select id="role-search-filter" class="form-select" bind:value={role}>
         <option id="all" class="select-filter-special" value="all">
           Všechny role
         </option>
         <option id="user" value="user">Uživatel</option>
         <option id="editor" value="editor">Editor</option>
-        {#if loginstate.role === "superuser"}
+        {#if isSuperuser}
           <option id="administrator" value="administrator">
             Administrátor
           </option>
@@ -106,22 +91,21 @@
         {/if}
       </select>
     {/if}
-    <select id="group-search-filter" class="form-select" bind:value={group}>
-      <option
-        id="00000000-0000-0000-0000-000000000000"
-        class="select-filter-special"
-        value="00000000-0000-0000-0000-000000000000"
-      >
-        Všechny skupiny
-      </option>
-      {#each groups
-        .filter(function (id) {
-          return id !== "00000000-0000-0000-0000-000000000000";
-        })
-        .asArray() as { id, value: group }}
-        <option {id} value={id}>{group.name}</option>
-      {/each}
-    </select>
+    <GroupProvider silent let:groups>
+      <select id="group-search-filter" class="form-select" bind:value={group}>
+        <option
+          id="00000000-0000-0000-0000-000000000000"
+          class="select-filter-special"
+          value="00000000-0000-0000-0000-000000000000"
+        >
+          Všechny skupiny
+        </option>
+        <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-call -->
+        {#each groups.filter(([id, _]) => id !== "00000000-0000-0000-0000-000000000000") as [id, group]}
+          <option {id} value={id}>{group.name}</option>
+        {/each}
+      </select>
+    </GroupProvider>
     {#if searchName || role !== "all" || group !== "00000000-0000-0000-0000-000000000000"}
       <Button
         icon="cancel"
@@ -159,7 +143,7 @@
             {:else}
               Uživatel
             {/if}
-            {#if loginstate.role === "administrator" || loginstate.role === "superuser"}
+            {#if adminOrSuperuser}
               <br />
               <Button
                 cyan
@@ -179,7 +163,14 @@
             {/if}
           </td>
           <td>
-            {groupsList(user)}
+            <GroupProvider silent let:groups>
+              <!-- eslint-disable @typescript-eslint/no-unsafe-call @typescript-eslint/no-unsafe-argument @typescript-eslint/no-unsafe-return -->
+              {groups
+                .filter(([id, _]) => user.groups.includes(id))
+                .map(([_, group]) => group.name)
+                .join(", ")}
+              <!-- eslint-enable -->
+            </GroupProvider>
             {#if user.groups.length > 0}
               <br />
             {/if}

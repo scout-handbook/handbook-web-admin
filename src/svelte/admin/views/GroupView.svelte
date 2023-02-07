@@ -1,19 +1,17 @@
-<script lang="ts">
+<script lang="ts" strictEvents>
+  import { useSWR } from "sswr";
   import { useLocation, useNavigate } from "svelte-navigator";
 
-  import type { IDList } from "../../../ts/admin/IDList";
-  import type { Group } from "../../../ts/admin/interfaces/Group";
   import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
   import { siteName } from "../../../ts/admin/stores";
+  import { constructURL } from "../../../ts/admin/tools/constructURL";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import AddGroupPanel from "../components/action-modals/AddGroupPanel.svelte";
   import ChangeGroupPanel from "../components/action-modals/ChangeGroupPanel.svelte";
   import DeleteGroupDialog from "../components/action-modals/DeleteGroupDialog.svelte";
   import ImportGroupMembersPanel from "../components/action-modals/ImportGroupMembersPanel.svelte";
   import Button from "../components/Button.svelte";
-
-  export let groups: IDList<Group>;
-  export let loginstate: Loginstate;
+  import GroupProvider from "../components/swr-wrappers/GroupProvider.svelte";
 
   const location = useLocation<{
     action: string;
@@ -25,8 +23,9 @@
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   $: actionPayload = $location.state?.actionPayload;
 
-  $: adminPermissions =
-    loginstate.role === "administrator" || loginstate.role === "superuser";
+  const { data: loginstate } = useSWR<Loginstate>(constructURL("v1.0/account"));
+  $: adminOrSuperuser =
+    $loginstate?.role === "administrator" || $loginstate?.role === "superuser";
 
   refreshLogin(true);
 </script>
@@ -34,15 +33,21 @@
 {#if action === "add-group"}
   <AddGroupPanel />
 {:else if action === "change-group"}
-  <ChangeGroupPanel {groups} payload={actionPayload} />
+  <GroupProvider silent let:groups>
+    <ChangeGroupPanel {groups} payload={actionPayload} />
+  </GroupProvider>
 {:else if action === "delete-group"}
-  <DeleteGroupDialog {groups} payload={actionPayload} />
+  <GroupProvider silent let:groups>
+    <DeleteGroupDialog {groups} payload={actionPayload} />
+  </GroupProvider>
 {:else if action === "import-group-members"}
-  <ImportGroupMembersPanel {groups} payload={actionPayload} />
+  <GroupProvider silent let:groups>
+    <ImportGroupMembersPanel {groups} payload={actionPayload} />
+  </GroupProvider>
 {/if}
 
 <h1>{$siteName + " - Uživatelské skupiny"}</h1>
-{#if adminPermissions}
+{#if adminOrSuperuser}
   <Button
     green
     icon="plus"
@@ -53,57 +58,60 @@
     Přidat
   </Button>
 {/if}
-{#each groups.asArray() as { id, value: group }}
-  {#if id === "00000000-0000-0000-0000-000000000000"}
-    <br />
-    <h3 class="main-page public-group">{group.name}</h3>
-  {:else}
-    <br />
-    <h3 class="main-page">{group.name}</h3>
-  {/if}
-  {#if adminPermissions}
-    <Button
-      cyan
-      icon="pencil"
-      on:click={() => {
-        navigate("/groups", {
-          state: { action: "change-group", actionPayload: { groupId: id } },
-        });
-      }}
-    >
-      Upravit
-    </Button>
-    {#if id !== "00000000-0000-0000-0000-000000000000"}
-      <Button
-        icon="trash-empty"
-        red
-        on:click={() => {
-          navigate("/groups", {
-            state: { action: "delete-group", actionPayload: { groupId: id } },
-          });
-        }}
-      >
-        Smazat
-      </Button>
-      <Button
-        icon="user-plus"
-        on:click={() => {
-          navigate("/groups", {
-            state: {
-              action: "import-group-members",
-              actionPayload: { groupId: id },
-            },
-          });
-        }}
-      >
-        Importovat ze SkautISu
-      </Button>
+<GroupProvider let:groups>
+  {#each groups as [id, group]}
+    {#if id === "00000000-0000-0000-0000-000000000000"}
+      <br />
+      <h3 class="main-page public-group">{group.name}</h3>
+    {:else}
+      <br />
+      <h3 class="main-page">{group.name}</h3>
     {/if}
-  {/if}
-  {#if id !== "00000000-0000-0000-0000-000000000000"}
-    <br />
-    <span class="main-page">
-      {"Uživatelů: " + group.count.toString()}
-    </span>
-  {/if}
-{/each}
+    {#if adminOrSuperuser}
+      <Button
+        cyan
+        icon="pencil"
+        on:click={() => {
+          navigate("/groups", {
+            state: { action: "change-group", actionPayload: { groupId: id } },
+          });
+        }}
+      >
+        Upravit
+      </Button>
+      {#if id !== "00000000-0000-0000-0000-000000000000"}
+        <Button
+          icon="trash-empty"
+          red
+          on:click={() => {
+            navigate("/groups", {
+              state: { action: "delete-group", actionPayload: { groupId: id } },
+            });
+          }}
+        >
+          Smazat
+        </Button>
+        <Button
+          icon="user-plus"
+          on:click={() => {
+            navigate("/groups", {
+              state: {
+                action: "import-group-members",
+                actionPayload: { groupId: id },
+              },
+            });
+          }}
+        >
+          Importovat ze SkautISu
+        </Button>
+      {/if}
+    {/if}
+    {#if id !== "00000000-0000-0000-0000-000000000000"}
+      <br />
+      <span class="main-page">
+        <!-- eslint-disable-next-line @typescript-eslint/restrict-plus-operands @typescript-eslint/no-unsafe-call -->
+        {"Uživatelů: " + group.count.toString()}
+      </span>
+    {/if}
+  {/each}
+</GroupProvider>

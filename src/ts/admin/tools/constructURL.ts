@@ -21,7 +21,7 @@ export function constructQuery(searchParams: Payload): string {
   return pairs.join("&");
 }
 
-export function constructURL(path: string, searchParams: Payload): string {
+export function constructURL(path: string, searchParams: Payload = {}): string {
   const query = constructQuery(searchParams);
   let url = get(apiUri) + "/" + path;
   if (query !== "") {

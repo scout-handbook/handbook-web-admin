@@ -7,11 +7,14 @@ import { constructQuery } from "./constructURL";
 
 export const reAuthHandler: ExceptionHandler = {
   AuthenticationException: function (): void {
-    window.location.replace(CONFIG["api-uri"] + "/v1.0/login");
+    window.location.href =
+      CONFIG["api-uri"] +
+      "/v1.0/login?return-uri=" +
+      encodeURIComponent(window.location.href);
   },
 };
 
-export const authFailHandler = {
+export const authFailHandler: ExceptionHandler = {
   AuthenticationException: function (): void {
     globalDialogMessage.set(
       "Proběhlo automatické odhlášení. Přihlašte se prosím a zkuste to znovu."
@@ -19,18 +22,11 @@ export const authFailHandler = {
   },
 };
 
-export function rawRequest(
+async function rawRequest<T extends RequestResponse>(
   url: string,
   method: string,
-  payload: FormData | Payload = {},
-  callback: (response: APIResponse) => void
-): void {
-  const xhr = new XMLHttpRequest();
-  xhr.onreadystatechange = function (): void {
-    if (this.readyState === 4) {
-      callback(JSON.parse(this.responseText) as APIResponse);
-    }
-  };
+  payload: FormData | Payload = {}
+): Promise<APIResponse<T>> {
   let query = "";
   if (
     method === "GET" ||
@@ -42,41 +38,60 @@ export function rawRequest(
   if ((method === "GET" || method === "DELETE") && query) {
     url += "?" + query;
   }
-  xhr.open(method, url, true);
-  if (
-    method === "GET" ||
-    method === "DELETE" ||
-    payload.toString() !== "[object FormData]"
-  ) {
-    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  }
-  if (method === "GET" || method === "DELETE") {
-    xhr.send();
-  } else if (payload.toString() !== "[object FormData]") {
-    xhr.send(query);
-  } else {
-    xhr.send(payload as unknown as string);
-  }
+  return new Promise((resolve) => {
+    const xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function (): void {
+      if (this.readyState === 4) {
+        resolve(JSON.parse(this.responseText) as APIResponse<T>);
+      }
+    };
+    xhr.open(method, url, true);
+    if (
+      method === "GET" ||
+      method === "DELETE" ||
+      payload.toString() !== "[object FormData]"
+    ) {
+      xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    }
+    if (method === "GET" || method === "DELETE") {
+      xhr.send();
+    } else if (payload.toString() !== "[object FormData]") {
+      xhr.send(query);
+    } else {
+      xhr.send(payload as unknown as string);
+    }
+  });
 }
 
-export function request(
+export async function request<T extends RequestResponse>(
   url: string,
   method: string,
   payload: FormData | Payload,
-  callback: (response: RequestResponse) => void,
   exceptionHandler: ExceptionHandler = {}
-): void {
-  rawRequest(url, method, payload, function (response): void {
-    if (Math.floor(response.status / 100) === 2) {
-      callback(response.response!);
-    } else if (
-      Object.prototype.hasOwnProperty.call(exceptionHandler, response.type!)
-    ) {
-      exceptionHandler[response.type!]!(response);
-    } else {
-      globalDialogMessage.set(
-        "Nastala neznámá chyba. Chybová hláška: " + response.message!
-      );
-    }
+): Promise<T> {
+  return new Promise((resolve, reject) => {
+    void rawRequest<T>(url, method, payload).then(
+      (response: APIResponse<T>): void => {
+        if (Math.floor(response.status / 100) === 2) {
+          resolve(response.response!);
+        } else if (
+          Object.prototype.hasOwnProperty.call(exceptionHandler, response.type!)
+        ) {
+          exceptionHandler[response.type!]!(response);
+          reject();
+        } else if (
+          response.status === 401 &&
+          Object.prototype.hasOwnProperty.call(exceptionHandler, "401")
+        ) {
+          exceptionHandler["401"]!(response);
+          reject();
+        } else {
+          globalDialogMessage.set(
+            "Nastala neznámá chyba. Chybová hláška: " + response.message!
+          );
+          reject();
+        }
+      }
+    );
   });
 }
