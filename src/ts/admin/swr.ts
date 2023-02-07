@@ -1,12 +1,23 @@
 import { createDefaultSWR } from "sswr";
+import { get as storeGet } from "svelte/store";
 
 import type { Competence } from "./interfaces/Competence";
 import type { Field } from "./interfaces/Field";
 import type { Group } from "./interfaces/Group";
 import type { Lesson } from "./interfaces/Lesson";
 import type { RequestResponse } from "./interfaces/RequestResponse";
+import { suspendReAuth } from "./stores";
 import { get, map, sort } from "./tools/arrayTools";
-import { reAuthHandler, request } from "./tools/request";
+import { request } from "./tools/request";
+
+function reAuth(): void {
+  if (!storeGet(suspendReAuth)) {
+    window.location.href =
+      CONFIG["api-uri"] +
+      "/v1.0/login?return-uri=" +
+      encodeURIComponent(window.location.href);
+  }
+}
 
 export function SWRSetup(): void {
   createDefaultSWR({
@@ -16,16 +27,10 @@ export function SWRSetup(): void {
         "GET",
         {},
         {
-          ...reAuthHandler,
+          401: reAuth,
+          AuthenticationException: reAuth,
           RoleException: function (): void {
             window.location.replace(CONFIG["frontend-uri"]);
-          },
-          401: function (): void {
-            // TODO: Add an option to suspend this
-            window.location.href =
-              CONFIG["api-uri"] +
-              "/v1.0/login?return-uri=" +
-              encodeURIComponent(window.location.href);
           },
         }
       ),

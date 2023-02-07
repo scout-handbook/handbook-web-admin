@@ -1,8 +1,8 @@
 <script lang="ts" strictEvents>
-  import { createEventDispatcher } from "svelte";
+  import { createEventDispatcher, onDestroy, onMount } from "svelte";
   import { useLocation } from "svelte-navigator";
 
-  import { apiUri } from "../../../ts/admin/stores";
+  import { apiUri, suspendReAuth } from "../../../ts/admin/stores";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import Dialog from "./Dialog.svelte";
   import EditorHeader from "./LessonEditor/EditorHeader.svelte";
@@ -37,6 +37,13 @@
         ")"
     );
   }
+
+  onDestroy(() => {
+    suspendReAuth.set(false);
+  });
+  onMount(() => {
+    suspendReAuth.set(true);
+  });
 </script>
 
 {#if discardConfirmation}

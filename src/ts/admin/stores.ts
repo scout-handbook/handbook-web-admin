@@ -10,5 +10,6 @@ export const customProperties = readable<ConfigCustomProperties>(
 export const frontendUri = readable<string>(CONFIG["frontend-uri"]);
 export const siteName = readable<string>(CONFIG["site-name"]);
 
+export const suspendReAuth = writable<boolean>(false);
 export const globalLoadingIndicator = writable<boolean>(false);
 export const globalDialogMessage = writable<string | null>(null);
