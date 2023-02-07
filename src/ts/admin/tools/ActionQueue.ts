@@ -1,8 +1,11 @@
+import { revalidate } from "sswr";
+
 import type { SerializedAction } from "../interfaces/SerializedAction";
 import { globalDialogMessage, globalLoadingIndicator } from "../stores";
 import { request } from "../tools/request";
 import type { Action } from "./Action";
 import { deserializeAction, serializeAction } from "./Action";
+import { constructURL } from "./constructURL";
 
 export class ActionQueue {
   public actions: Array<Action>;
@@ -85,6 +88,14 @@ export function ActionQueueSetup(): void {
     sessionStorage.clear();
     globalLoadingIndicator.set(true);
     void aq.dispatch().then(() => {
+      revalidate(constructURL("v1.0/competence"), { force: true });
+      revalidate(constructURL("v1.0/lesson?override-group=true"), {
+        force: true,
+      });
+      revalidate(constructURL("v1.0/field?override-group=true"), {
+        force: true,
+      });
+      revalidate(constructURL("v1.0/group"), { force: true });
       globalLoadingIndicator.set(false);
       globalDialogMessage.set("Akce byla úspěšná");
     });
