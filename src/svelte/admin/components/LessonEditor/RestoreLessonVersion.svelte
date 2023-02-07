@@ -29,7 +29,7 @@
     $apiUri + "/v1.0/lesson/" + lessonId! + "/history",
     "GET",
     {},
-    authFailHandler
+    {}
   ).then((response) => {
     versionList = response;
   });
