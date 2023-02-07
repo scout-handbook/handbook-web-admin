@@ -1,9 +1,10 @@
 <script lang="ts" strictEvents>
+  import { useSWR } from "sswr";
   import { createEventDispatcher } from "svelte";
 
   import { apiUri } from "../../../../ts/admin/stores";
+  import { constructURL } from "../../../../ts/admin/tools/constructURL";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
-  import { reAuthHandler, request } from "../../../../ts/admin/tools/request";
   import Button from "../../components/Button.svelte";
   import LoadingIndicator from "../LoadingIndicator.svelte";
   import Pagination from "../Pagination.svelte";
@@ -17,12 +18,9 @@
   $: pageStart = perPage * (page - 1);
   $: pageEnd = pageStart + perPage;
 
-  const imageListPromise: Promise<Array<string>> = request(
-    $apiUri + "/v1.0/image",
-    "GET",
-    {},
-    reAuthHandler
-  );
+  const imageList = useSWR<Array<string>>(constructURL("v1.0/image")).data;
+  $: totalImageCount = $imageList?.length;
+  $: currentPageList = $imageList?.slice(pageStart, pageEnd);
 
   refreshLogin();
 </script>
@@ -47,10 +45,10 @@
     </Button>
     -->
     <div id="image-wrapper">
-      {#await imageListPromise}
+      {#if currentPageList === undefined || totalImageCount === undefined}
         <LoadingIndicator />
-      {:then list}
-        {#each list.slice(pageStart, pageEnd) as image}
+      {:else}
+        {#each currentPageList as image}
           <div class="thumbnail-container">
             <img
               class="thumbnail-image"
@@ -68,10 +66,10 @@
           </div>
         {/each}
         <Pagination
-          total={Math.ceil(list.length / perPage)}
+          total={Math.ceil(totalImageCount / perPage)}
           bind:current={page}
         />
-      {/await}
+      {/if}
     </div>
   </div>
 </div>

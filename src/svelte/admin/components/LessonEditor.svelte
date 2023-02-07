@@ -1,8 +1,8 @@
 <script lang="ts" strictEvents>
-  import { createEventDispatcher } from "svelte";
+  import { createEventDispatcher, onDestroy, onMount } from "svelte";
   import { useLocation } from "svelte-navigator";
 
-  import { apiUri } from "../../../ts/admin/stores";
+  import { apiUri, suspendReAuth } from "../../../ts/admin/stores";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import Dialog from "./Dialog.svelte";
   import EditorHeader from "./LessonEditor/EditorHeader.svelte";
@@ -20,8 +20,9 @@
   export let refreshAction: (() => void) | null = null;
 
   const dispatch = createEventDispatcher<{ discard: never; save: never }>();
-  const location = useLocation();
-  $: view = $location.state.view as string;
+  const location = useLocation<{ view: string }>();
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  $: view = $location.state?.view;
 
   let imageSelectorOpen = false;
   let discardConfirmation = false;
@@ -36,6 +37,13 @@
         ")"
     );
   }
+
+  onDestroy(() => {
+    suspendReAuth.set(false);
+  });
+  onMount(() => {
+    suspendReAuth.set(true);
+  });
 </script>
 
 {#if discardConfirmation}

@@ -1,7 +1,6 @@
 <script lang="ts" strictEvents>
   import { useNavigate } from "svelte-navigator";
 
-  import { refreshMetadata } from "../../../../ts/admin/metadata";
   import { apiUri } from "../../../../ts/admin/stores";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import { authFailHandler, request } from "../../../../ts/admin/tools/request";
@@ -28,6 +27,7 @@
     stage = "upload";
     const formData = new FormData();
     formData.append("image", files[0]);
+    // TODO: MUTATE?
     void request(
       $apiUri + "/v1.0/image",
       "POST",
@@ -76,7 +76,6 @@
   <Dialog
     confirmButtonText="OK"
     on:confirm={() => {
-      refreshMetadata();
       navigate(-1);
     }}
   >

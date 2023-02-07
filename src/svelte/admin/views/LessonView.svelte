@@ -1,11 +1,10 @@
 <script lang="ts" strictEvents>
+  import { useSWR } from "sswr";
   import { useLocation, useNavigate } from "svelte-navigator";
 
-  import type { Competence } from "../../../ts/admin/interfaces/Competence";
-  import type { Field } from "../../../ts/admin/interfaces/Field";
-  import type { Lesson } from "../../../ts/admin/interfaces/Lesson";
   import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
   import { siteName } from "../../../ts/admin/stores";
+  import { constructURL } from "../../../ts/admin/tools/constructURL";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import AddFieldPanel from "../components/action-modals/AddFieldPanel.svelte";
   import ChangeFieldPanel from "../components/action-modals/ChangeFieldPanel.svelte";
@@ -14,11 +13,8 @@
   import RestoreLessonPanel from "../components/action-modals/RestoreLessonPanel.svelte";
   import Button from "../components/Button.svelte";
   import LessonViewLesson from "../components/LessonViewLesson.svelte";
-
-  export let competences: Array<[string, Competence]>;
-  export let fields: Array<[string, Field]>;
-  export let lessons: Array<[string, Lesson]>;
-  export let loginstate: Loginstate;
+  import FieldProvider from "../components/swr-wrappers/FieldProvider.svelte";
+  import LessonProvider from "../components/swr-wrappers/LessonProvider.svelte";
 
   const navigate = useNavigate();
   const location = useLocation<{
@@ -33,8 +29,9 @@
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   $: actionPayload = $location.state?.actionPayload;
 
-  $: adminPermissions =
-    loginstate.role === "administrator" || loginstate.role === "superuser";
+  const { data: loginstate } = useSWR<Loginstate>(constructURL("v1.0/account"));
+  $: adminOrSuperuser =
+    $loginstate?.role === "administrator" || $loginstate?.role === "superuser";
 
   refreshLogin(true);
 </script>
@@ -42,17 +39,23 @@
 {#if action === "add-field"}
   <AddFieldPanel />
 {:else if action === "change-field"}
-  <ChangeFieldPanel {fields} payload={actionPayload} />
+  <FieldProvider silent let:fields>
+    <ChangeFieldPanel {fields} payload={actionPayload} />
+  </FieldProvider>
 {:else if action === "delete-field"}
-  <DeleteFieldDialog {fields} payload={actionPayload} />
+  <FieldProvider silent let:fields>
+    <DeleteFieldDialog {fields} payload={actionPayload} />
+  </FieldProvider>
 {:else if action === "delete-lesson"}
-  <DeleteLessonDialog {lessons} payload={actionPayload} />
+  <LessonProvider silent let:lessons>
+    <DeleteLessonDialog {lessons} payload={actionPayload} />
+  </LessonProvider>
 {:else if action === "restore-lesson"}
   <RestoreLessonPanel />
 {/if}
 
 <h1>{$siteName + " - Lekce"}</h1>
-{#if adminPermissions}
+{#if adminOrSuperuser}
   <Button
     green
     icon="plus"
@@ -72,7 +75,7 @@
 >
   Přidat lekci
 </Button>
-{#if adminPermissions}
+{#if adminOrSuperuser}
   <Button
     icon="history"
     on:click={() => {
@@ -82,57 +85,53 @@
     Smazané lekce
   </Button>
 {/if}
-{#each lessons as [lessonId, lesson]}
-  <!-- TODO: Precompute -->
-  {#if fields.filter( ([_, field]) => field.lessons.includes(lessonId) ).length === 0}
-    <LessonViewLesson id={lessonId} {adminPermissions} {competences} {lesson} />
-  {/if}
-{/each}
-{#each fields as [fieldId, field]}
-  <br />
-  <h2 class="main-page">{field.name}</h2>
-  {#if adminPermissions}
-    <Button
-      cyan
-      icon="pencil"
-      on:click={() => {
-        navigate("/lessons", {
-          state: { action: "change-field", actionPayload: { fieldId } },
-        });
-      }}
-    >
-      Upravit
-    </Button>
-    <Button
-      icon="trash-empty"
-      red
-      on:click={() => {
-        navigate("/lessons", {
-          state: { action: "delete-field", actionPayload: { fieldId } },
-        });
-      }}
-    >
-      Smazat
-    </Button>
-  {/if}
-  <Button
-    green
-    icon="plus"
-    on:click={() => {
-      navigate("/lessons/add?field=" + fieldId);
-    }}
-  >
-    Přidat lekci
-  </Button>
-  {#each lessons as [lessonId, lesson]}
-    {#if field.lessons.includes(lessonId)}
-      <LessonViewLesson
-        id={lessonId}
-        {adminPermissions}
-        {competences}
-        {lesson}
-        secondLevel={true}
-      />
-    {/if}
+<FieldProvider let:fields let:lessons>
+  <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-call @typescript-eslint/no-unsafe-return -->
+  {#each lessons.filter(([lessonId, _]) => fields.filter( ([_, field]) => field.lessons.includes(lessonId) ).length === 0) as [lessonId, lesson]}
+    <LessonViewLesson id={lessonId} {lesson} />
   {/each}
-{/each}
+  {#each fields as [fieldId, field]}
+    <br />
+    <h2 class="main-page">{field.name}</h2>
+    {#if adminOrSuperuser}
+      <Button
+        cyan
+        icon="pencil"
+        on:click={() => {
+          navigate("/lessons", {
+            state: { action: "change-field", actionPayload: { fieldId } },
+          });
+        }}
+      >
+        Upravit
+      </Button>
+      <Button
+        icon="trash-empty"
+        red
+        on:click={() => {
+          navigate("/lessons", {
+            state: { action: "delete-field", actionPayload: { fieldId } },
+          });
+        }}
+      >
+        Smazat
+      </Button>
+    {/if}
+    <Button
+      green
+      icon="plus"
+      on:click={() => {
+        // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+        navigate("/lessons/add?field=" + fieldId);
+      }}
+    >
+      Přidat lekci
+    </Button>
+    {#each lessons as [lessonId, lesson]}
+      <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-call -->
+      {#if field.lessons.includes(lessonId)}
+        <LessonViewLesson id={lessonId} {lesson} secondLevel={true} />
+      {/if}
+    {/each}
+  {/each}
+</FieldProvider>
