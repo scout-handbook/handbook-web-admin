@@ -1,5 +1,4 @@
 <script lang="ts" strictEvents>
-  // TODO: Unused component
   import { useSWR } from "sswr";
   import { derived } from "svelte/store";
 
@@ -8,6 +7,8 @@
   import { processCompetences, processLessons } from "../../../../ts/admin/swr";
   import { constructURL } from "../../../../ts/admin/tools/constructURL";
   import LoadingIndicator from "../LoadingIndicator.svelte";
+
+  export let silent = false;
 
   interface $$Slots {
     default: {
@@ -34,7 +35,9 @@
 </script>
 
 {#if $competences === undefined || $lessons === undefined}
-  <LoadingIndicator />
+  {#if !silent}
+    <LoadingIndicator />
+  {/if}
 {:else}
   <slot competences={$competences} lessons={$lessons} />
 {/if}
