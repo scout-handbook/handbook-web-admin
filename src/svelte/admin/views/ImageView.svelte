@@ -25,6 +25,7 @@
   $: pageStart = perPage * (page - 1);
   $: pageEnd = pageStart + perPage;
 
+  // TODO: SWR
   const imageListPromise: Promise<Array<string>> = request(
     $apiUri + "/v1.0/image",
     "GET",

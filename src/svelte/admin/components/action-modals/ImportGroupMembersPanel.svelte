@@ -77,6 +77,7 @@
         },
       }
     );
+    // TODO: SWR?
     const userPromise = request<UserListResponse>(
       $apiUri + "/v1.0/user",
       "GET",

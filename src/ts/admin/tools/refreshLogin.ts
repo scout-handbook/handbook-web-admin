@@ -1,5 +1,6 @@
 import { request } from "./request";
 
+// TODO: Check where this is called
 export function refreshLogin(
   forceRelogin = false,
   afterAction: (() => void) | null = null

@@ -21,6 +21,7 @@ export function SWRSetup(): void {
             window.location.replace(CONFIG["frontend-uri"]);
           },
           401: function (): void {
+            // TODO: Add an option to suspend this
             window.location.href =
               CONFIG["api-uri"] +
               "/v1.0/login?return-uri=" +
