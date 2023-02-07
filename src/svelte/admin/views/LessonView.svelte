@@ -1,18 +1,9 @@
 <script lang="ts" strictEvents>
   import { useSWR } from "sswr";
-  import { derived } from "svelte/store";
   import { useLocation, useNavigate } from "svelte-navigator";
 
-  import type { Competence } from "../../../ts/admin/interfaces/Competence";
-  import type { Field } from "../../../ts/admin/interfaces/Field";
-  import type { Lesson } from "../../../ts/admin/interfaces/Lesson";
   import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
   import { siteName } from "../../../ts/admin/stores";
-  import {
-    processCompetences,
-    processFields,
-    processLessons,
-  } from "../../../ts/admin/swr";
   import { constructURL } from "../../../ts/admin/tools/constructURL";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import AddFieldPanel from "../components/action-modals/AddFieldPanel.svelte";
@@ -22,7 +13,8 @@
   import RestoreLessonPanel from "../components/action-modals/RestoreLessonPanel.svelte";
   import Button from "../components/Button.svelte";
   import LessonViewLesson from "../components/LessonViewLesson.svelte";
-  import LoadingIndicator from "../components/LoadingIndicator.svelte";
+  import FieldProvider from "../components/swr-wrappers/FieldProvider.svelte";
+  import LessonProvider from "../components/swr-wrappers/LessonProvider.svelte";
 
   const navigate = useNavigate();
   const location = useLocation<{
@@ -37,40 +29,6 @@
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   $: actionPayload = $location.state?.actionPayload;
 
-  const competences = derived(
-    useSWR<Record<string, Competence>>(constructURL("v1.0/competence")).data,
-    processCompetences,
-    undefined
-  );
-  const lessons = derived(
-    [
-      useSWR<Record<string, Lesson>>(
-        constructURL("v1.0/lesson?override-group=true")
-      ).data,
-      competences,
-    ],
-    processLessons,
-    undefined
-  );
-  const fields = derived(
-    [
-      useSWR<Record<string, Field>>(
-        constructURL("v1.0/field?override-group=true")
-      ).data,
-      lessons,
-      competences,
-    ],
-    processFields,
-    undefined
-  );
-  $: lessonsWithoutField =
-    $lessons !== undefined && $fields !== undefined
-      ? $lessons.filter(
-          ([lessonId, _]) =>
-            $fields!.filter(([_, field]) => field.lessons.includes(lessonId))
-              .length === 0
-        )
-      : undefined;
   const { data: loginstate } = useSWR<Loginstate>(constructURL("v1.0/account"));
   $: adminOrSuperuser =
     $loginstate?.role === "administrator" || $loginstate?.role === "superuser";
@@ -81,20 +39,17 @@
 {#if action === "add-field"}
   <AddFieldPanel />
 {:else if action === "change-field"}
-  <!-- TODO: Handle SWR better -->
-  {#if $fields !== undefined}
-    <ChangeFieldPanel fields={$fields} payload={actionPayload} />
-  {/if}
+  <FieldProvider let:fields>
+    <ChangeFieldPanel {fields} payload={actionPayload} />
+  </FieldProvider>
 {:else if action === "delete-field"}
-  <!-- TODO: Handle SWR better -->
-  {#if $fields !== undefined}
-    <DeleteFieldDialog fields={$fields} payload={actionPayload} />
-  {/if}
+  <FieldProvider let:fields>
+    <DeleteFieldDialog {fields} payload={actionPayload} />
+  </FieldProvider>
 {:else if action === "delete-lesson"}
-  <!-- TODO: Handle SWR better -->
-  {#if $lessons !== undefined}
-    <DeleteLessonDialog lessons={$lessons} payload={actionPayload} />
-  {/if}
+  <LessonProvider let:lessons>
+    <DeleteLessonDialog {lessons} payload={actionPayload} />
+  </LessonProvider>
 {:else if action === "restore-lesson"}
   <RestoreLessonPanel />
 {/if}
@@ -130,13 +85,12 @@
     Smazané lekce
   </Button>
 {/if}
-{#if $lessons === undefined || $fields === undefined || lessonsWithoutField === undefined}
-  <LoadingIndicator />
-{:else}
-  {#each lessonsWithoutField as [lessonId, lesson]}
+<FieldProvider let:fields let:lessons>
+  <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-call @typescript-eslint/no-unsafe-return -->
+  {#each lessons.filter(([lessonId, _]) => fields.filter( ([_, field]) => field.lessons.includes(lessonId) ).length === 0) as [lessonId, lesson]}
     <LessonViewLesson id={lessonId} {lesson} />
   {/each}
-  {#each $fields as [fieldId, field]}
+  {#each fields as [fieldId, field]}
     <br />
     <h2 class="main-page">{field.name}</h2>
     {#if adminOrSuperuser}
@@ -167,15 +121,17 @@
       green
       icon="plus"
       on:click={() => {
+        // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
         navigate("/lessons/add?field=" + fieldId);
       }}
     >
       Přidat lekci
     </Button>
-    {#each $lessons as [lessonId, lesson]}
+    {#each lessons as [lessonId, lesson]}
+      <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-call -->
       {#if field.lessons.includes(lessonId)}
         <LessonViewLesson id={lessonId} {lesson} secondLevel={true} />
       {/if}
     {/each}
   {/each}
-{/if}
+</FieldProvider>
