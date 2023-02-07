@@ -11,6 +11,8 @@
     default: { groups: Array<[string, Group]> };
   }
 
+  export let silent = false;
+
   const groups = derived(
     useSWR<Record<string, Group>>(constructURL("v1.0/group")).data,
     processGroups,
@@ -19,7 +21,9 @@
 </script>
 
 {#if $groups === undefined}
-  <LoadingIndicator />
+  {#if !silent}
+    <LoadingIndicator />
+  {/if}
 {:else}
   <slot groups={$groups} />
 {/if}

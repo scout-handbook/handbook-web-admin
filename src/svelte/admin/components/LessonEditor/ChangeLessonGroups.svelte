@@ -1,30 +1,16 @@
 <script lang="ts" strictEvents>
-  import { useSWR } from "sswr";
-  import { derived } from "svelte/store";
   import { useNavigate } from "svelte-navigator";
 
-  import type { Group } from "../../../../ts/admin/interfaces/Group";
-  import { processGroups } from "../../../../ts/admin/swr";
   import { get } from "../../../../ts/admin/tools/arrayTools";
-  import { constructURL } from "../../../../ts/admin/tools/constructURL";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Button from "../Button.svelte";
-  import LoadingIndicator from "../LoadingIndicator.svelte";
+  import GroupProvider from "../swr-wrappers/GroupProvider.svelte";
 
   export let groups: Array<string>;
 
   const navigate = useNavigate();
 
-  const allGroups = derived(
-    useSWR<Record<string, Group>>(constructURL("v1.0/group")).data,
-    processGroups,
-    undefined
-  );
   const initialGroups = groups;
-  $: publicName =
-    $allGroups !== undefined
-      ? get($allGroups, "00000000-0000-0000-0000-000000000000")?.name ?? ""
-      : "";
 
   refreshLogin();
 </script>
@@ -48,10 +34,8 @@
 >
 <h3 class="side-panel-title">Změnit skupiny</h3>
 <form id="side-panel-form">
-  {#if $allGroups === undefined}
-    <LoadingIndicator />
-  {:else}
-    {#each $allGroups as [id, group]}
+  <GroupProvider let:groups={allGroups}>
+    {#each allGroups as [id, group]}
       <div class="form-row">
         <label class="form-switch">
           <input type="checkbox" value={id} bind:group={groups} />
@@ -64,7 +48,7 @@
         {/if}
       </div>
     {/each}
-  {/if}
+  </GroupProvider>
 </form>
 <div class="group-help">
   <i class="icon-info-circled" />
@@ -72,7 +56,10 @@
   uživatelů). Pokud není vybrána žádná skupiny, nebude lekce pro běžné uživatele
   vůbec přístupná (pouze v administraci). Pokud je vybrána skupina "
   <span class="public-group">
-    {publicName}
+    <GroupProvider silent let:groups={allGroups}>
+      <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-argument -->
+      {get(allGroups, "00000000-0000-0000-0000-000000000000")?.name ?? ""}
+    </GroupProvider>
   </span>
   ", bude lekce přístupná všem uživatelům (i nepřihlášeným návštěvníkům webu) bez
   ohledu na skupiny.
