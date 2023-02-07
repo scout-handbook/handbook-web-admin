@@ -58,7 +58,7 @@
 </script>
 
 {#if action === "change-user-groups"}
-  <GroupProvider let:groups>
+  <GroupProvider silent let:groups>
     <ChangeUserGroupsPanel {groups} payload={actionPayload} />
   </GroupProvider>
 {:else if action === "change-user-role"}

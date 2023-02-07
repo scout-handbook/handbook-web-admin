@@ -39,15 +39,15 @@
 {#if action === "add-field"}
   <AddFieldPanel />
 {:else if action === "change-field"}
-  <FieldProvider let:fields>
+  <FieldProvider silent let:fields>
     <ChangeFieldPanel {fields} payload={actionPayload} />
   </FieldProvider>
 {:else if action === "delete-field"}
-  <FieldProvider let:fields>
+  <FieldProvider silent let:fields>
     <DeleteFieldDialog {fields} payload={actionPayload} />
   </FieldProvider>
 {:else if action === "delete-lesson"}
-  <LessonProvider let:lessons>
+  <LessonProvider silent let:lessons>
     <DeleteLessonDialog {lessons} payload={actionPayload} />
   </LessonProvider>
 {:else if action === "restore-lesson"}
