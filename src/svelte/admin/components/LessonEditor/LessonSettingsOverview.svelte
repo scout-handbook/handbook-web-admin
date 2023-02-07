@@ -12,7 +12,7 @@
   export let competences: Array<string>;
   export let groups: Array<string>;
 
-  const location = useLocation();
+  const location = useLocation<Record<string, never>>();
   const navigate = useNavigate();
 
   $: currentUri = $location.pathname + $location.search;

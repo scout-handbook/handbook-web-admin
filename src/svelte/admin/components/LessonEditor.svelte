@@ -20,8 +20,9 @@
   export let refreshAction: (() => void) | null = null;
 
   const dispatch = createEventDispatcher<{ discard: never; save: never }>();
-  const location = useLocation();
-  $: view = $location.state.view as string;
+  const location = useLocation<{ view: string }>();
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  $: view = $location.state?.view;
 
   let imageSelectorOpen = false;
   let discardConfirmation = false;

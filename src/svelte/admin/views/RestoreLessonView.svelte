@@ -19,7 +19,7 @@
   export let lessonID: string;
   export let version: string;
 
-  const location = useLocation();
+  const location = useLocation<Record<string, never>>();
   const navigate = useNavigate();
 
   let donePromise: Promise<void> | null = null;
