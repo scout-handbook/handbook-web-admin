@@ -22,7 +22,7 @@
   refreshLogin();
 </script>
 
-{#if action === "restore-version"}
+{#if action === "restore-version" && id !== null}
   <RestoreLessonVersion lessonId={id} lessonName={name} bind:body />
 {:else}
   <SidePanel>

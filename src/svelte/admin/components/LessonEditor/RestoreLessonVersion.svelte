@@ -1,47 +1,25 @@
 <script lang="ts" strictEvents>
-  import { useSWR } from "sswr";
-  import { derived } from "svelte/store";
   import { useNavigate } from "svelte-navigator";
 
-  import type { Competence } from "../../../../ts/admin/interfaces/Competence";
-  import type { Lesson } from "../../../../ts/admin/interfaces/Lesson";
   import type { LessonVersion } from "../../../../ts/admin/interfaces/LessonVersion";
   import { apiUri } from "../../../../ts/admin/stores";
-  import { processCompetences, processLessons } from "../../../../ts/admin/swr";
   import { get } from "../../../../ts/admin/tools/arrayTools";
   import { compileMarkdown } from "../../../../ts/admin/tools/compileMarkdown";
-  import { constructURL } from "../../../../ts/admin/tools/constructURL";
   import { parseVersion } from "../../../../ts/admin/tools/parseVersion";
   import { authFailHandler, request } from "../../../../ts/admin/tools/request";
   import Button from "../Button.svelte";
   import DoubleSidePanel from "../DoubleSidePanel.svelte";
   import LoadingIndicator from "../LoadingIndicator.svelte";
+  import LessonProvider from "../swr-wrappers/LessonProvider.svelte";
 
-  export let lessonId: string | null;
+  export let lessonId: string;
   export let lessonName: string | null;
   export let body: string;
 
   const navigate = useNavigate();
 
-  const competences = derived(
-    useSWR<Record<string, Competence>>(constructURL("v1.0/competence")).data,
-    processCompetences,
-    undefined
-  );
-  const lessons = derived(
-    [
-      useSWR<Record<string, Lesson>>(
-        constructURL("v1.0/lesson?override-group=true")
-      ).data,
-      competences,
-    ],
-    processLessons,
-    undefined
-  );
   let selectedVersion: number | null = null;
   let versionList: Array<LessonVersion> | null = null;
-  $: currentVersion =
-    $lessons !== undefined ? get($lessons, lessonId!)?.version : undefined;
   $: selectedVersionName =
     selectedVersion === null || versionList === null
       ? lessonName!
@@ -121,9 +99,10 @@
             </label>
             <span class="lesson-history-current">Současná verze</span>
             —
-            {#if currentVersion !== undefined}
-              {parseVersion(currentVersion)}
-            {/if}
+            <LessonProvider silent let:lessons>
+              <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-argument -->
+              {parseVersion(get(lessons, lessonId)?.version ?? 0)}
+            </LessonProvider>
           </div>
           {#each versionList as version}
             <div class="form-row">
