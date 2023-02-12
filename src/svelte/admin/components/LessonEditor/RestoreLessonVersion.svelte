@@ -51,8 +51,7 @@
         ).then(compileMarkdown);
 
   function saveCallback(markdown: string): void {
-    (document.getElementById("name") as HTMLInputElement).value =
-      selectedVersionName;
+    lessonName = selectedVersionName;
     body = markdown;
     navigate(-1);
   }
