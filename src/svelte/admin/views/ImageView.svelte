@@ -9,6 +9,7 @@
   import DeleteImageDialog from "../components/action-modals/DeleteImageDialog.svelte";
   import Button from "../components/Button.svelte";
   import LoadingIndicator from "../components/LoadingIndicator.svelte";
+  import Overlay from "../components/Overlay.svelte";
   import Pagination from "../components/Pagination.svelte";
 
   const location = useLocation<{
@@ -21,6 +22,7 @@
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   $: actionPayload = $location.state?.actionPayload;
 
+  let openImage: string | null = null;
   let page = 1;
   const perPage = 15;
   $: pageStart = perPage * (page - 1);
@@ -29,21 +31,6 @@
   const imageList = useSWR<Array<string>>(constructURL("v1.0/image")).data;
   $: totalImageCount = $imageList?.length;
   $: currentPageList = $imageList?.slice(pageStart, pageEnd);
-
-  function showImagePreview(id: string): void {
-    const overlay = document.getElementById("overlay")!;
-    overlay.style.display = "inline";
-    overlay.style.cursor = "pointer";
-    const html =
-      '<img src="' + $apiUri + "/v1.0/image/" + id + '" class="preview-image">';
-    overlay.innerHTML = html;
-    overlay.onclick = function (): void {
-      overlay.style.display = "none";
-      overlay.style.cursor = "auto";
-      overlay.innerHTML = "";
-      overlay.onclick = null;
-    };
-  }
 
   refreshLogin(true);
 </script>
@@ -54,6 +41,24 @@
   <DeleteImageDialog payload={actionPayload} />
 {/if}
 
+{#if openImage !== null}
+  <Overlay
+    on:click={() => {
+      openImage = null;
+    }}
+  />
+  <img
+    class="preview-image"
+    alt={"Image " + openImage}
+    src={$apiUri + "/v1.0/image/" + openImage}
+    on:click={() => {
+      openImage = null;
+    }}
+    on:keypress={() => {
+      openImage = null;
+    }}
+  />
+{/if}
 <h1>{$siteName + " - Obrázky"}</h1>
 <Button
   green
@@ -76,10 +81,10 @@
             alt={"Image " + image}
             src={$apiUri + "/v1.0/image/" + image + "?quality=thumbnail"}
             on:click={() => {
-              showImagePreview(image);
+              openImage = image;
             }}
             on:keypress={() => {
-              showImagePreview(image);
+              openImage = image;
             }}
           />
           <Button
@@ -102,3 +107,10 @@
     />
   {/if}
 </div>
+
+<style>
+  .preview-image {
+    cursor: pointer;
+    z-index: 9;
+  }
+</style>
