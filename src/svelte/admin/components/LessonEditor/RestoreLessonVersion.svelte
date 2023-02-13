@@ -34,11 +34,11 @@
     versionList = response;
   });
 
-  $: console.log(versionList);
-
-  $: contentPromise =
+  $: markdownPromise =
     selectedVersion === null
-      ? compileMarkdown(body)
+      ? new Promise<string>((resolve) => {
+          resolve(body);
+        })
       : request<string>(
           $apiUri +
             "/v1.0/lesson/" +
@@ -48,11 +48,10 @@
           "GET",
           {},
           authFailHandler
-        ).then(compileMarkdown);
+        );
 
   function saveCallback(markdown: string): void {
-    (document.getElementById("name") as HTMLInputElement).value =
-      selectedVersionName;
+    lessonName = selectedVersionName;
     body = markdown;
     navigate(-1);
   }
@@ -70,12 +69,12 @@
       Zrušit
     </Button>
     {#if selectedVersion !== null}
-      {#await contentPromise then content}
+      {#await markdownPromise then markdown}
         <Button
           green
           icon="history"
           on:click={() => {
-            saveCallback(content);
+            saveCallback(markdown);
           }}
         >
           Obnovit
@@ -128,7 +127,7 @@
     </div>
   </div>
   <div id="lesson-history-preview">
-    {#await contentPromise}
+    {#await markdownPromise.then(compileMarkdown)}
       <LoadingIndicator />
     {:then content}
       <h1>{selectedVersionName}</h1>
