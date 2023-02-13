@@ -64,7 +64,7 @@
 {#if view === "lesson-settings"}
   <LessonSettingsPanel
     {id}
-    {name}
+    bind:name
     bind:body
     bind:competences
     bind:field

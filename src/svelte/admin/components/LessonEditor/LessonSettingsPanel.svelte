@@ -24,7 +24,7 @@
 </script>
 
 {#if action === "restore-version" && id !== null}
-  <RestoreLessonVersion lessonId={id} lessonName={name} bind:body />
+  <RestoreLessonVersion lessonId={id} bind:lessonName={name} bind:body />
 {:else}
   <SidePanel>
     {#if action === "change-lesson-competences"}
