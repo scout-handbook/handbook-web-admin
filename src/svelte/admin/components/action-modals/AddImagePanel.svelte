@@ -13,10 +13,10 @@
   const navigate = useNavigate();
 
   let stage: "done" | "error" | "select" | "upload" = "select";
-  let files: FileList;
+  let files: FileList | undefined;
 
   function addImageSave(): void {
-    if (files.length === 0) {
+    if (files === undefined || files.length === 0) {
       return;
     }
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions
@@ -60,7 +60,7 @@
         <label class="form-file">
           <input class="form-file" type="file" bind:files />
           <Button icon="upload">
-            {#if files.length === 0}
+            {#if files === undefined || files.length === 0}
               Vybrat soubor
             {:else}
               {files[0].name}
