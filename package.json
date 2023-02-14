@@ -67,7 +67,7 @@
     "stylelint": "^14.11.0",
     "stylelint-config-prettier": "^9.0.5",
     "stylelint-config-standard": "^29.0.0",
-    "stylelint-no-unsupported-browser-features": "^6.0.1",
+    "stylelint-no-unsupported-browser-features": "^6.1.0",
     "stylelint-prettier": "^2.0.0",
     "svelte": "^3.50.0",
     "svelte-check": "^3.0.3",
