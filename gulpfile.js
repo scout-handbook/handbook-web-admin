@@ -120,7 +120,6 @@ gulp.task("build:css", function () {
   return merge(
     bundle("error", ["src/css/error.css"]),
     bundle("admin", [
-      "src/css/button.css",
       "src/css/competenceSubview.css",
       "src/css/dialog.css",
       "src/css/editor.css",
