@@ -78,7 +78,7 @@
         {/if}
       {/each}
     </form>
-    <div class="group-help">
+    <div class="group-explanation">
       <i class="icon-info-circled" />
       Každého uživatele lze zařadit do několika skupin (nebo i žádné). Podle toho
       poté tento uživatel bude moct zobrazit pouze lekce, které byly těmto skupiným
@@ -88,3 +88,9 @@
     </div>
   </SidePanel>
 {/if}
+
+<style>
+  .group-explanation {
+    margin-bottom: 30px;
+  }
+</style>
