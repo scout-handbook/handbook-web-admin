@@ -121,7 +121,6 @@ gulp.task("build:css", function () {
     bundle("error", ["src/css/error.css"]),
     bundle("admin", [
       "src/css/competenceSubview.css",
-      "src/css/dialog.css",
       "src/css/editor.css",
       "src/css/fieldSubview.css",
       "src/css/fontello.css",

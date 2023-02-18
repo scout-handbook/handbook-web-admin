@@ -11,6 +11,7 @@
     $customProperties);
 </script>
 
+<!-- TODO: Use Overlay component? It would need to spport transitions -->
 <div
   style:background-color={overlayColor}
   class="overlay"
