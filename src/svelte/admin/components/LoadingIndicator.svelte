@@ -17,7 +17,7 @@
   <div
     style:border-color={indicatorColor}
     style:border-top-color={accentColor}
-    class="spinner"
+    class="indicator"
   />
 </div>
 
@@ -26,7 +26,7 @@
     height: 180px;
     position: relative;
   }
-  .spinner {
+  .indicator {
     animation: spin 2s linear infinite;
     border-radius: 50%;
     border-style: solid;
