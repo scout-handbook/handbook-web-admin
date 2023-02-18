@@ -50,7 +50,7 @@
     {/each}
   </GroupProvider>
 </form>
-<div class="group-help">
+<div class="group-explanation">
   <i class="icon-info-circled" />
   U každé lekce lze zvolit, kteří uživatelé ji budou moct zobrazit (resp. které skupiny
   uživatelů). Pokud není vybrána žádná skupiny, nebude lekce pro běžné uživatele
@@ -64,3 +64,9 @@
   ", bude lekce přístupná všem uživatelům (i nepřihlášeným návštěvníkům webu) bez
   ohledu na skupiny.
 </div>
+
+<style>
+  .group-explanation {
+    margin-bottom: 30px;
+  }
+</style>
