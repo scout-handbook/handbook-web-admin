@@ -132,7 +132,6 @@ gulp.task("build:css", function () {
       "src/css/main.css",
       "src/css/mainPage.css",
       "src/css/mainView.css",
-      "src/css/pagination.css",
       "src/css/sidePanel.css",
       "src/css/userSubview.css",
     ])
