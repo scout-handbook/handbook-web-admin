@@ -41,6 +41,7 @@ module.exports = {
     alias: {
       svelte: path.resolve("node_modules", "svelte"),
     },
+    conditionNames: ["require", "node", "svelte"],
     extensions: [".ts", ".js", ".svelte"],
     mainFields: ["svelte", "browser", "module", "main"],
   },
