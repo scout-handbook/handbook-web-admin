@@ -92,9 +92,7 @@
         </Button>
       </div>
     {/if}
-    <span class="main-page competence-description"
-      >{competence.description}</span
-    >
+    <span class="main-page">{competence.description}</span>
     <br />
   {/each}
 </CompetenceProvider>
