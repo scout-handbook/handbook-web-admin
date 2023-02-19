@@ -32,7 +32,7 @@
     navigate(-1);
   }}>Uložit</Button
 >
-<h3 class="side-panel-title">Změnit skupiny</h3>
+<h1>Změnit skupiny</h1>
 <form id="side-panel-form">
   <GroupProvider inline let:groups={allGroups}>
     {#each allGroups as [id, group]}
@@ -52,13 +52,13 @@
 </form>
 <i class="icon-info-circled" />
 U každé lekce lze zvolit, kteří uživatelé ji budou moct zobrazit (resp. které skupiny
-uživatelů). Pokud není vybrána žádná skupiny, nebude lekce pro běžné uživatele
-vůbec přístupná (pouze v administraci). Pokud je vybrána skupina "
+uživatelů). Pokud není vybrána žádná skupiny, nebude lekce pro běžné uživatele vůbec
+přístupná (pouze v administraci). Pokud je vybrána skupina "
 <span class="public-group">
   <GroupProvider silent let:groups={allGroups}>
     <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-argument -->
     {get(allGroups, "00000000-0000-0000-0000-000000000000")?.name ?? ""}
   </GroupProvider>
 </span>
-", bude lekce přístupná všem uživatelům (i nepřihlášeným návštěvníkům webu) bez
-  ohledu na skupiny.
+", bude lekce přístupná všem uživatelům (i nepřihlášeným návštěvníkům webu) bez ohledu
+na skupiny.

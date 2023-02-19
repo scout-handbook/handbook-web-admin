@@ -167,7 +167,7 @@
     >
       Pokračovat
     </Button>
-    <h3 class="side-panel-title">Importovat ze SkautISu: {group.name}</h3>
+    <h1>Importovat ze SkautISu: {group.name}</h1>
     <div id="importList">
       {#if step === "event-selection-loading" || step === "participant-selection-loading" || step === "importing"}
         <LoadingIndicator />

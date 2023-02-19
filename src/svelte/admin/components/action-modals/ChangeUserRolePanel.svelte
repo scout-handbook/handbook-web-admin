@@ -59,7 +59,7 @@
       Zrušit
     </Button>
     <Button green icon="floppy" on:click={saveCallback}>Uložit</Button>
-    <h3 class="side-panel-title">Změnit roli: {payload.user.name}</h3>
+    <h1>Změnit roli: {payload.user.name}</h1>
     <form id="side-panel-form">
       <span class="role-text">Role: </span>
       <select id="role-select" class="form-select" bind:value={selectedRole}>

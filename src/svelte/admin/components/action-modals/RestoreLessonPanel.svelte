@@ -120,7 +120,7 @@
     >
       Pokračovat
     </Button>
-    <h3 class="side-panel-title">Obnovit smazanou lekci</h3>
+    <h1>Obnovit smazanou lekci</h1>
     <div id="restoreLessonList">
       {#if step === "lesson-selection-loading"}
         <LoadingIndicator />
@@ -162,7 +162,7 @@
           >Obnovit</Button
         >
       {/if}
-      <h3 class="side-panel-title">Obnovit smazanou lekci</h3>
+      <h1>Obnovit smazanou lekci</h1>
       {#if step === "version-selection-loading"}
         <LoadingIndicator />
       {:else if step === "version-selection"}
