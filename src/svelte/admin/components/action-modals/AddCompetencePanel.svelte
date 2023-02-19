@@ -63,8 +63,7 @@
       />
       <br />
       <textarea
-        id="competence-description"
-        class="form-text"
+        class="form-text space-above"
         autocomplete="off"
         rows="5"
         bind:value={description}
@@ -72,3 +71,9 @@
     </form>
   </SidePanel>
 {/if}
+
+<style>
+  .space-above {
+    margin-top: 20px;
+  }
+</style>
