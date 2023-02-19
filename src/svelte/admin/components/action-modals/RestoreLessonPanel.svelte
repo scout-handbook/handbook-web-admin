@@ -125,7 +125,7 @@
       {#if step === "lesson-selection-loading"}
         <LoadingIndicator />
       {:else if step === "lesson-selection"}
-        <form id="side-panel-form">
+        <form>
           {#each lessonList as [id, lesson]}
             <div class="form-row">
               <label class="form-switch">
@@ -166,7 +166,7 @@
       {#if step === "version-selection-loading"}
         <LoadingIndicator />
       {:else if step === "version-selection"}
-        <form id="side-panel-form">
+        <form>
           {#each versionList as version}
             <div class="form-row">
               <label class="form-switch">

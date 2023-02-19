@@ -60,7 +60,7 @@
     </Button>
     <Button green icon="floppy" on:click={saveCallback}>Uložit</Button>
     <h1>Změnit roli: {payload.user.name}</h1>
-    <form id="side-panel-form">
+    <form>
       <span class="role-text">Role: </span>
       <select id="role-select" class="form-select" bind:value={selectedRole}>
         <option id="user" value="user">Uživatel</option>
@@ -72,6 +72,7 @@
         {/if}
       </select>
     </form>
+    <br />
     <div class="role-help">
       <i class="icon-info-circled" />
       <span class="role-help-name">Uživatel</span> - Kdokoliv, kdo se někdy přihlásil

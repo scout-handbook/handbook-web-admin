@@ -44,7 +44,7 @@
     </Button>
     <Button green icon="floppy" on:click={saveCallback}>Uložit</Button>
     <h1>Přidat kompetenci</h1>
-    <form id="side-panel-form">
+    <form>
       <span class="competence-heading">Kompetence</span>
       <input
         id="competence-number"
