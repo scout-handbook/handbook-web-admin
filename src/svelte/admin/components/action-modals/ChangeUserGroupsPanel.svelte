@@ -78,19 +78,11 @@
         {/if}
       {/each}
     </form>
-    <div class="group-explanation">
-      <i class="icon-info-circled" />
-      Každého uživatele lze zařadit do několika skupin (nebo i žádné). Podle toho
-      poté tento uživatel bude moct zobrazit pouze lekce, které byly těmto skupiným
-      zveřejněny. Lekce ve skupině "<span class="public-group"
-        >{publicName}</span
-      >" uvidí všichni uživatelé bez ohledu na jejich skupiny.
-    </div>
+    <i class="icon-info-circled" />
+    Každého uživatele lze zařadit do několika skupin (nebo i žádné). Podle toho
+    poté tento uživatel bude moct zobrazit pouze lekce, které byly těmto skupiným
+    zveřejněny. Lekce ve skupině "<span class="public-group"
+      >{publicName}</span
+    >" uvidí všichni uživatelé bez ohledu na jejich skupiny.
   </SidePanel>
 {/if}
-
-<style>
-  .group-explanation {
-    margin-bottom: 30px;
-  }
-</style>
