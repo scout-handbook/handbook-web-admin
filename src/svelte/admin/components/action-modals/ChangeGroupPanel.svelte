@@ -54,7 +54,7 @@
     </Button>
     <Button green icon="floppy" on:click={saveCallback}>Uložit</Button>
     <h1>Upravit skupinu</h1>
-    <form id="side-panel-form">
+    <form>
       <label for="fieldName">Název:</label>
       <input
         id="group-name"

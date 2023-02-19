@@ -32,7 +32,7 @@
   }}>Uložit</Button
 >
 <h1>Změnit oblast</h1>
-<form id="side-panel-form">
+<form>
   <FieldProvider let:fields>
     {#each fields as [id, field]}
       <div class="form-row">

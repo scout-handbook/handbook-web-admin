@@ -65,7 +65,7 @@
     </Button>
     <Button green icon="floppy" on:click={saveCallback}>Uložit</Button>
     <h1>Změnit skupiny: {payload.user.name}</h1>
-    <form id="side-panel-form">
+    <form>
       {#each groups as [id, group]}
         {#if id !== "00000000-0000-0000-0000-000000000000"}
           <div class="form-row">
@@ -78,6 +78,7 @@
         {/if}
       {/each}
     </form>
+    <br />
     <i class="icon-info-circled" />
     Každého uživatele lze zařadit do několika skupin (nebo i žádné). Podle toho poté
     tento uživatel bude moct zobrazit pouze lekce, které byly těmto skupiným zveřejněny.

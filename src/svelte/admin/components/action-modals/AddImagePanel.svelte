@@ -55,7 +55,7 @@
     </Button>
     <Button green icon="floppy" on:click={addImageSave}>Uložit</Button>
     <h1>Nahrát obrázek</h1>
-    <form id="side-panel-form">
+    <form>
       <div class="form-row">
         <label class="form-file">
           <input class="form-file" type="file" bind:files />

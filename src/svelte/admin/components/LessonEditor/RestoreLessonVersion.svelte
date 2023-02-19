@@ -86,7 +86,7 @@
       {#if versionList === null}
         <LoadingIndicator />
       {:else}
-        <form id="side-panel-form">
+        <form>
           <div class="form-row">
             <label class="form-switch">
               <input

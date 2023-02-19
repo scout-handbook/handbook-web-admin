@@ -173,7 +173,7 @@
         <LoadingIndicator />
       {:else if step === "event-selection"}
         <h4>Volba kurzu:</h4>
-        <form id="side-panel-form">
+        <form>
           {#each eventList as event}
             <div class="form-row">
               <label class="form-switch">
@@ -191,7 +191,7 @@
         </form>
       {:else if step === "participant-selection"}
         <h4>Výběr účastníků:</h4>
-        <form id="side-panel-form">
+        <form>
           {#each participantList as participant}
             <div class="form-row">
               <label class="form-switch">

@@ -32,7 +32,7 @@
   }}>Uložit</Button
 >
 <h1>Změnit kompetence</h1>
-<form id="side-panel-form">
+<form>
   <CompetenceProvider let:competences={allCompetences}>
     {#each allCompetences as [id, competence]}
       <div class="form-row">

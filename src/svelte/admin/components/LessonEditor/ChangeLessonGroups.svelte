@@ -33,7 +33,7 @@
   }}>Uložit</Button
 >
 <h1>Změnit skupiny</h1>
-<form id="side-panel-form">
+<form>
   <GroupProvider inline let:groups={allGroups}>
     {#each allGroups as [id, group]}
       <div class="form-row">
@@ -50,6 +50,7 @@
     {/each}
   </GroupProvider>
 </form>
+<br />
 <i class="icon-info-circled" />
 U každé lekce lze zvolit, kteří uživatelé ji budou moct zobrazit (resp. které skupiny
 uživatelů). Pokud není vybrána žádná skupiny, nebude lekce pro běžné uživatele vůbec
