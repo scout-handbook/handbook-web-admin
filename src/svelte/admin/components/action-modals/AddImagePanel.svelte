@@ -54,7 +54,7 @@
       Zrušit
     </Button>
     <Button green icon="floppy" on:click={addImageSave}>Uložit</Button>
-    <h3 class="side-panel-title">Nahrát obrázek</h3>
+    <h1>Nahrát obrázek</h1>
     <form id="side-panel-form">
       <div class="form-row">
         <label class="form-file">

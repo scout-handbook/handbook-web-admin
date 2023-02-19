@@ -43,7 +43,7 @@
       Zrušit
     </Button>
     <Button green icon="floppy" on:click={saveCallback}>Uložit</Button>
-    <h3 class="side-panel-title">Přidat kompetenci</h3>
+    <h1>Přidat kompetenci</h1>
     <form id="side-panel-form">
       <span class="competence-heading">Kompetence</span>
       <input

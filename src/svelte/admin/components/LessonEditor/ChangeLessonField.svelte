@@ -31,7 +31,7 @@
     navigate(-1);
   }}>Uložit</Button
 >
-<h3 class="side-panel-title">Změnit oblast</h3>
+<h1>Změnit oblast</h1>
 <form id="side-panel-form">
   <FieldProvider let:fields>
     {#each fields as [id, field]}

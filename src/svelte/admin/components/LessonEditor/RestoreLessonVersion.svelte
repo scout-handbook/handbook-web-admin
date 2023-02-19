@@ -81,7 +81,7 @@
         </Button>
       {/await}
     {/if}
-    <h3 class="side-panel-title">Historie lekce</h3>
+    <h1>Historie lekce</h1>
     <div id="lessonHistoryForm">
       {#if versionList === null}
         <LoadingIndicator />

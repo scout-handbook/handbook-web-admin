@@ -40,7 +40,7 @@
   </Button>
 {/if}
 <br />
-<h3 class="side-panel-title no-newline">Oblast</h3>
+<h1 class="no-newline">Oblast</h1>
 <Button
   cyan
   icon="pencil"
@@ -62,7 +62,7 @@
   {/if}
 </FieldProvider>
 <br />
-<h3 class="side-panel-title no-newline">Kompetence</h3>
+<h1 class="no-newline">Kompetence</h1>
 <Button
   cyan
   icon="pencil"
@@ -83,7 +83,7 @@
   {/each}
 </CompetenceProvider>
 <br />
-<h3 class="side-panel-title no-newline">Skupiny</h3>
+<h1 class="no-newline">Skupiny</h1>
 <Button
   cyan
   icon="pencil"

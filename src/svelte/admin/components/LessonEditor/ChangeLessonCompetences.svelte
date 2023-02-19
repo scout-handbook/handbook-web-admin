@@ -31,7 +31,7 @@
     navigate(-1);
   }}>Uložit</Button
 >
-<h3 class="side-panel-title">Změnit kompetence</h3>
+<h1>Změnit kompetence</h1>
 <form id="side-panel-form">
   <CompetenceProvider let:competences={allCompetences}>
     {#each allCompetences as [id, competence]}

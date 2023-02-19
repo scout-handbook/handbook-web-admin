@@ -53,7 +53,7 @@
       Zrušit
     </Button>
     <Button green icon="floppy" on:click={saveCallback}>Uložit</Button>
-    <h3 class="side-panel-title">Upravit skupinu</h3>
+    <h1>Upravit skupinu</h1>
     <form id="side-panel-form">
       <label for="fieldName">Název:</label>
       <input
