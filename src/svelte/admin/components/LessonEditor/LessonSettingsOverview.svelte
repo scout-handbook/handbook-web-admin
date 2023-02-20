@@ -110,3 +110,9 @@
     {/each}
   </GroupProvider>
 </div>
+
+<style>
+  .competence-number {
+    font-weight: bold;
+  }
+</style>

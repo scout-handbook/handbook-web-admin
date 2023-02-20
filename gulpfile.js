@@ -120,7 +120,6 @@ gulp.task("build:css", function () {
   return merge(
     bundle("error", ["src/css/error.css"]),
     bundle("admin", [
-      "src/css/competenceSubview.css",
       "src/css/editor.css",
       "src/css/fieldSubview.css",
       "src/css/fontello.css",
