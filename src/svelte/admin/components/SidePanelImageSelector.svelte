@@ -6,6 +6,7 @@
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import Button from "./Button.svelte";
   import DoubleSidePanel from "./DoubleSidePanel.svelte";
+  import ImageGridCell from "./ImageGridCell.svelte";
   import ImageThumbnail from "./ImageThumbnail.svelte";
   import LoadingIndicator from "./LoadingIndicator.svelte";
   import Pagination from "./Pagination.svelte";
@@ -37,14 +38,14 @@
     >
     <div class="field-image-container">
       {#each currentPageList as image}
-        <div class="thumbnail-container">
+        <ImageGridCell>
           <ImageThumbnail
             id={image}
             on:click={() => {
               dispatch("select", image);
             }}
           />
-        </div>
+        </ImageGridCell>
       {/each}
       <Pagination
         total={Math.ceil(totalImageCount / perPage)}

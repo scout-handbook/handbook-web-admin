@@ -5,6 +5,7 @@
   import { constructURL } from "../../../../ts/admin/tools/constructURL";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Button from "../../components/Button.svelte";
+  import ImageGridCell from "../ImageGridCell.svelte";
   import ImageThumbnail from "../ImageThumbnail.svelte";
   import LoadingIndicator from "../LoadingIndicator.svelte";
   import Pagination from "../Pagination.svelte";
@@ -49,7 +50,7 @@
         <LoadingIndicator />
       {:else}
         {#each currentPageList as image}
-          <div class="thumbnail-container">
+          <ImageGridCell>
             <ImageThumbnail
               id={image}
               on:click={() => {
@@ -57,7 +58,7 @@
                 imageSelectorOpen = false;
               }}
             />
-          </div>
+          </ImageGridCell>
         {/each}
         <Pagination
           total={Math.ceil(totalImageCount / perPage)}

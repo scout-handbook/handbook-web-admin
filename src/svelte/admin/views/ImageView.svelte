@@ -8,6 +8,7 @@
   import AddImagePanel from "../components/action-modals/AddImagePanel.svelte";
   import DeleteImageDialog from "../components/action-modals/DeleteImageDialog.svelte";
   import Button from "../components/Button.svelte";
+  import ImageGridCell from "../components/ImageGridCell.svelte";
   import ImageThumbnail from "../components/ImageThumbnail.svelte";
   import LoadingIndicator from "../components/LoadingIndicator.svelte";
   import Overlay from "../components/Overlay.svelte";
@@ -75,29 +76,27 @@
     <LoadingIndicator />
   {:else}
     {#each currentPageList as image}
-      <div class="thumbnail-container">
-        <div class="button-container">
-          <ImageThumbnail
-            id={image}
+      <ImageGridCell>
+        <ImageThumbnail
+          id={image}
+          on:click={() => {
+            openImage = image;
+          }}
+        />
+        <div class="delete-image">
+          <Button
+            icon="trash-empty"
+            red
             on:click={() => {
-              openImage = image;
+              navigate("/images", {
+                state: { actionPayload: { imageId: image } },
+              });
             }}
-          />
-          <div class="delete-image">
-            <Button
-              icon="trash-empty"
-              red
-              on:click={() => {
-                navigate("/images", {
-                  state: { actionPayload: { imageId: image } },
-                });
-              }}
-            >
-              Smazat
-            </Button>
-          </div>
+          >
+            Smazat
+          </Button>
         </div>
-      </div>
+      </ImageGridCell>
     {/each}
     <Pagination
       total={Math.ceil(totalImageCount / perPage)}
