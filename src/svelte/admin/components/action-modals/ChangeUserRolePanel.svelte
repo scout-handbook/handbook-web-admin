@@ -80,8 +80,8 @@
     </div>
     <div class="infobox">
       <i class="icon-info-circled" />
-      <span class="infobox-name">Editor</span> - Instruktor, který má základní
-      přístup ke správě. Může přidávat lekce, měnit jejich obsah, kompetence a přesouvat
+      <span class="infobox-name">Editor</span> - Instruktor, který má základní přístup
+      ke správě. Může přidávat lekce, měnit jejich obsah, kompetence a přesouvat
       je mezi oblastmi. Editor má přístup ke správě uživatelů, avšak může prohlížet
       a měnit pouze hosty a uživatele.
     </div>

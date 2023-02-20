@@ -1,27 +1,3 @@
-#user-search-form {
-  margin-bottom: 50px;
-  margin-top: 20px;
-}
-
-#user-search-box {
-  margin-right: 10px;
-  width: 179px;
-}
-
-#role-search-filter,
-#group-search-filter {
-  margin-right: 10px;
-}
-
-.select-filter-special {
-  font-style: italic;
-}
-
-#user-search-button,
-#user-search-cancel {
-  margin-bottom: -11px;
-}
-
 .user-table {
   border: none;
 }
