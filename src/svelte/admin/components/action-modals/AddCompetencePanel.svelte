@@ -7,6 +7,7 @@
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Button from "../Button.svelte";
   import DoneDialog from "../DoneDialog.svelte";
+  import NameInput from "../NameInput.svelte";
   import SidePanel from "../SidePanel.svelte";
 
   const navigate = useNavigate();
@@ -54,13 +55,7 @@
         bind:value={number}
       />
       <br />
-      <input
-        id="competence-name"
-        class="form-text"
-        autocomplete="off"
-        type="text"
-        bind:value={name}
-      />
+      <NameInput bind:value={name} />
       <br />
       <textarea
         class="form-text space-above"

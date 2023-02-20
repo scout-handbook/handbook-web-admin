@@ -9,6 +9,7 @@
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Button from "../Button.svelte";
   import DoneDialog from "../DoneDialog.svelte";
+  import NameInput from "../NameInput.svelte";
   import SidePanel from "../SidePanel.svelte";
 
   export let groups: Array<[string, Group]>;
@@ -56,13 +57,7 @@
     <h1>Upravit skupinu</h1>
     <form>
       <label for="fieldName">Název:</label>
-      <input
-        id="group-name"
-        class="form-text"
-        autocomplete="off"
-        type="text"
-        bind:value={name}
-      />
+      <NameInput bind:value={name} />
       <br />
     </form>
   </SidePanel>
