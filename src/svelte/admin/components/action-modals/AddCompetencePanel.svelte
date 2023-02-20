@@ -8,11 +8,12 @@
   import Button from "../Button.svelte";
   import DoneDialog from "../DoneDialog.svelte";
   import NameInput from "../forms/NameInput.svelte";
+  import NumberNameInput from "../forms/NumberNameInput.svelte";
   import SidePanel from "../SidePanel.svelte";
 
   const navigate = useNavigate();
 
-  let number = "00";
+  let number = 0;
   let name = "Nová kompetence";
   let description = "Popis nové kompetence";
   let donePromise: Promise<void> | null = null;
@@ -47,13 +48,7 @@
     <h1>Přidat kompetenci</h1>
     <form>
       <span class="competence-heading">Kompetence</span>
-      <input
-        id="competence-number"
-        class="form-text form-name"
-        autocomplete="off"
-        type="text"
-        bind:value={number}
-      />
+      <NumberNameInput bind:value={number} />
       <br />
       <NameInput bind:value={name} />
       <br />
