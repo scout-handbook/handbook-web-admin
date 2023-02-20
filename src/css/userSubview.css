@@ -45,19 +45,3 @@
 .user-table tr:nth-child(2n + 1) {
   background-color: #fff;
 }
-
-#role-select {
-  margin-bottom: 60px;
-}
-
-.role-text {
-  font-weight: bold;
-}
-
-.role-help {
-  margin-top: 20px;
-}
-
-.role-help-name {
-  font-weight: bold;
-}
