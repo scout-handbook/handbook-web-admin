@@ -48,3 +48,9 @@
     {/each}
   </CompetenceProvider>
 </form>
+
+<style>
+  .competence-number {
+    font-weight: bold;
+  }
+</style>
