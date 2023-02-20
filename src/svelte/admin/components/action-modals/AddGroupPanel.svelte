@@ -7,6 +7,7 @@
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Button from "../Button.svelte";
   import DoneDialog from "../DoneDialog.svelte";
+  import NameInput from "../NameInput.svelte";
   import SidePanel from "../SidePanel.svelte";
 
   const navigate = useNavigate();
@@ -42,13 +43,7 @@
     <h1>Přidat skupinu</h1>
     <form>
       <label for="fieldName">Název:</label>
-      <input
-        id="group-name"
-        class="form-text"
-        autocomplete="off"
-        type="text"
-        bind:value={name}
-      />
+      <NameInput bind:value={name} />
       <br />
     </form>
   </SidePanel>
