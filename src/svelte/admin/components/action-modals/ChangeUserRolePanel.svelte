@@ -61,8 +61,8 @@
     <Button green icon="floppy" on:click={saveCallback}>Uložit</Button>
     <h1>Změnit roli: {payload.user.name}</h1>
     <form>
-      <span class="role-text">Role: </span>
-      <select id="role-select" class="form-select" bind:value={selectedRole}>
+      <span class="selector-legend">Role: </span>
+      <select class="form-select" bind:value={selectedRole}>
         <option id="user" value="user">Uživatel</option>
         <option id="editor" value="editor">Editor</option>
         {#if isSuperuser}
@@ -73,29 +73,40 @@
       </select>
     </form>
     <br />
-    <div class="role-help">
+    <div class="infobox">
       <i class="icon-info-circled" />
-      <span class="role-help-name">Uživatel</span> - Kdokoliv, kdo se někdy přihlásil
+      <span class="infobox-name">Uživatel</span> - Kdokoliv, kdo se někdy přihlásil
       pomocí skautISu. Nemá žádná oprávnění navíc oproti nepřihlášeným návštěvníkům.
     </div>
-    <div class="role-help">
+    <div class="infobox">
       <i class="icon-info-circled" />
-      <span class="role-help-name">Editor</span> - Instruktor, který má základní
+      <span class="infobox-name">Editor</span> - Instruktor, který má základní
       přístup ke správě. Může přidávat lekce, měnit jejich obsah, kompetence a přesouvat
       je mezi oblastmi. Editor má přístup ke správě uživatelů, avšak může prohlížet
       a měnit pouze hosty a uživatele.
     </div>
     {#if isSuperuser}
-      <div class="role-help">
+      <div class="infobox">
         <i class="icon-info-circled" />
-        <span class="role-help-name">Administrátor</span> - Instruktor, mající všechna
+        <span class="infobox-name">Administrátor</span> - Instruktor, mající všechna
         práva editora. Navíc může i mazat lekce a přidávat, upravovat a mazat oblasti
         a kompetence. Administrátor může navíc přidělovat a odebírat práva editorů.
       </div>
-      <div class="role-help">
+      <div class="infobox">
         <i class="icon-info-circled" />
-        <span class="role-help-name">Superuser</span> - Uživatel-polobůh.
+        <span class="infobox-name">Superuser</span> - Uživatel-polobůh.
       </div>
     {/if}
   </SidePanel>
 {/if}
+
+<style>
+  .infobox {
+    margin-top: 20px;
+  }
+
+  .selector-legend,
+  .infobox-name {
+    font-weight: bold;
+  }
+</style>
