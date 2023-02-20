@@ -8,6 +8,7 @@
   import AddImagePanel from "../components/action-modals/AddImagePanel.svelte";
   import DeleteImageDialog from "../components/action-modals/DeleteImageDialog.svelte";
   import Button from "../components/Button.svelte";
+  import ImageThumbnail from "../components/ImageThumbnail.svelte";
   import LoadingIndicator from "../components/LoadingIndicator.svelte";
   import Overlay from "../components/Overlay.svelte";
   import Pagination from "../components/Pagination.svelte";
@@ -76,14 +77,9 @@
     {#each currentPageList as image}
       <div class="thumbnail-container">
         <div class="button-container">
-          <img
-            class="thumbnail-image"
-            alt={"Image " + image}
-            src={$apiUri + "/v1.0/image/" + image + "?quality=thumbnail"}
+          <ImageThumbnail
+            id={image}
             on:click={() => {
-              openImage = image;
-            }}
-            on:keypress={() => {
               openImage = image;
             }}
           />

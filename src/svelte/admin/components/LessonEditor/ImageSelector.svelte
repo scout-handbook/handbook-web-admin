@@ -2,10 +2,10 @@
   import { useSWR } from "sswr";
   import { createEventDispatcher } from "svelte";
 
-  import { apiUri } from "../../../../ts/admin/stores";
   import { constructURL } from "../../../../ts/admin/tools/constructURL";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Button from "../../components/Button.svelte";
+  import ImageThumbnail from "../ImageThumbnail.svelte";
   import LoadingIndicator from "../LoadingIndicator.svelte";
   import Pagination from "../Pagination.svelte";
 
@@ -50,15 +50,9 @@
       {:else}
         {#each currentPageList as image}
           <div class="thumbnail-container">
-            <img
-              class="thumbnail-image"
-              alt={"Image " + image}
-              src={$apiUri + "/v1.0/image/" + image + "?quality=thumbnail"}
+            <ImageThumbnail
+              id={image}
               on:click={() => {
-                dispatch("insert", image);
-                imageSelectorOpen = false;
-              }}
-              on:keypress={() => {
                 dispatch("insert", image);
                 imageSelectorOpen = false;
               }}
