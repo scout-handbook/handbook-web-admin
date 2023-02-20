@@ -1,37 +1,29 @@
 <script lang="ts" strictEvents>
-  import { useSWR } from "sswr";
-  import { useLocation, useNavigate } from "svelte-navigator";
+  import { useLocation } from "svelte-navigator";
 
-  import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
   import type { Payload } from "../../../ts/admin/interfaces/Payload";
   import type { Role } from "../../../ts/admin/interfaces/Role";
   import type { User } from "../../../ts/admin/interfaces/User";
   import type { UserListResponse } from "../../../ts/admin/interfaces/UserListResponse";
   import { apiUri, siteName } from "../../../ts/admin/stores";
-  import { constructURL } from "../../../ts/admin/tools/constructURL";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import { reAuthHandler, request } from "../../../ts/admin/tools/request";
   import ChangeUserGroupsPanel from "../components/action-modals/ChangeUserGroupsPanel.svelte";
   import ChangeUserRolePanel from "../components/action-modals/ChangeUserRolePanel.svelte";
-  import Button from "../components/Button.svelte";
   import LoadingIndicator from "../components/LoadingIndicator.svelte";
   import Pagination from "../components/Pagination.svelte";
   import GroupProvider from "../components/swr-wrappers/GroupProvider.svelte";
   import UserViewSearchForm from "../components/UserViewSearchForm.svelte";
+  import UserViewTable from "../components/UserViewTable.svelte";
 
   const location = useLocation<{
     action: string;
     actionPayload: { user: User };
   }>();
-  const navigate = useNavigate();
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   $: action = $location.state?.action;
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   $: actionPayload = $location.state?.actionPayload;
-
-  const { data: loginstate } = useSWR<Loginstate>(constructURL("v1.0/account"));
-  $: isSuperuser = $loginstate?.role === "superuser";
-  $: adminOrSuperuser = $loginstate?.role === "administrator" || isSuperuser;
 
   let page = 1;
   const perPage = 25;
@@ -79,74 +71,7 @@
         page = 1;
       }}
     />
-    <table class="user-table">
-      <tr>
-        <th>Jméno</th>
-        <th>Role</th>
-        <th>Skupiny</th>
-      </tr>
-      {#each userList.users as user}
-        <tr>
-          <td>{user.name}</td>
-          <td>
-            {#if user.role === "superuser"}
-              Superuser
-            {:else if user.role === "administrator"}
-              Administrátor
-            {:else if user.role === "editor"}
-              Editor
-            {:else}
-              Uživatel
-            {/if}
-            {#if adminOrSuperuser}
-              <br />
-              <Button
-                cyan
-                icon="pencil"
-                on:click={() => {
-                  navigate("/users", {
-                    state: {
-                      action: "change-user-role",
-                      actionPayload: { user },
-                    },
-                  });
-                }}
-              >
-                Upravit
-              </Button>
-              <br />
-            {/if}
-          </td>
-          <td>
-            <GroupProvider silent let:groups>
-              <!-- eslint-disable @typescript-eslint/no-unsafe-call @typescript-eslint/no-unsafe-argument @typescript-eslint/no-unsafe-return -->
-              {groups
-                .filter(([id, _]) => user.groups.includes(id))
-                .map(([_, group]) => group.name)
-                .join(", ")}
-              <!-- eslint-enable -->
-            </GroupProvider>
-            {#if user.groups.length > 0}
-              <br />
-            {/if}
-            <Button
-              cyan
-              icon="pencil"
-              on:click={() => {
-                navigate("/users", {
-                  state: {
-                    action: "change-user-groups",
-                    actionPayload: { user },
-                  },
-                });
-              }}
-            >
-              Upravit
-            </Button>
-          </td>
-        </tr>
-      {/each}
-    </table>
+    <UserViewTable {userList} />
     <Pagination
       total={Math.ceil(userList.count / perPage)}
       bind:current={page}
