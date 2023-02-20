@@ -87,17 +87,19 @@
               openImage = image;
             }}
           />
-          <Button
-            icon="trash-empty"
-            red
-            on:click={() => {
-              navigate("/images", {
-                state: { actionPayload: { imageId: image } },
-              });
-            }}
-          >
-            Smazat
-          </Button>
+          <div class="delete-image">
+            <Button
+              icon="trash-empty"
+              red
+              on:click={() => {
+                navigate("/images", {
+                  state: { actionPayload: { imageId: image } },
+                });
+              }}
+            >
+              Smazat
+            </Button>
+          </div>
         </div>
       </div>
     {/each}
@@ -109,6 +111,14 @@
 </div>
 
 <style>
+  .delete-image {
+    bottom: 5%;
+    margin-bottom: 9px;
+    margin-right: -9px;
+    position: absolute;
+    right: 5%;
+  }
+
   .image-preview {
     cursor: pointer;
     bottom: 0;

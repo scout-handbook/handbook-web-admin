@@ -22,11 +22,3 @@
 .thumbnail-image:hover {
   transform: scale(1);
 }
-
-.delete-image {
-  bottom: 5%;
-  margin-bottom: 6px;
-  margin-right: 8px;
-  position: absolute;
-  right: 5%;
-}
