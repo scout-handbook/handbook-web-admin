@@ -2,10 +2,10 @@
   export let value: string;
 </script>
 
-<input class="form-text name-field" autocomplete="off" type="text" bind:value />
+<input class="form-text" autocomplete="off" type="text" bind:value />
 
 <style>
-  .name-field {
+  input {
     font-size: 1.5em;
     font-weight: bold;
   }
