@@ -9,7 +9,7 @@
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Button from "../Button.svelte";
   import DoneDialog from "../DoneDialog.svelte";
-  import NameInput from "../NameInput.svelte";
+  import NameInput from "../forms/NameInput.svelte";
   import SidePanel from "../SidePanel.svelte";
 
   export let groups: Array<[string, Group]>;
