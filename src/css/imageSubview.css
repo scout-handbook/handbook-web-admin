@@ -30,13 +30,3 @@
   position: absolute;
   right: 5%;
 }
-
-.preview-image {
-  bottom: 0;
-  left: 0;
-  margin: auto;
-  max-height: 100%;
-  position: absolute;
-  right: 0;
-  top: 0;
-}

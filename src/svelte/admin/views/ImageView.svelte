@@ -48,7 +48,7 @@
     }}
   />
   <img
-    class="preview-image"
+    class="image-preview"
     alt={"Image " + openImage}
     src={$apiUri + "/v1.0/image/" + openImage}
     on:click={() => {
@@ -109,8 +109,15 @@
 </div>
 
 <style>
-  .preview-image {
+  .image-preview {
     cursor: pointer;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    max-height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
     z-index: 9;
   }
 </style>
