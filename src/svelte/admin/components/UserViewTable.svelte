@@ -85,3 +85,25 @@
     </tr>
   {/each}
 </table>
+
+<style>
+  table {
+    border: none;
+  }
+
+  th {
+    border: none;
+    border-bottom: 1px solid var(--border-color);
+    text-align: left;
+  }
+
+  td {
+    border: none;
+    padding: 15px 20px;
+  }
+
+  td + td,
+  th + th {
+    padding-left: 50px;
+  }
+</style>

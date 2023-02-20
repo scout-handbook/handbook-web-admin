@@ -130,7 +130,6 @@ gulp.task("build:css", function () {
       "src/css/main.css",
       "src/css/mainPage.css",
       "src/css/mainView.css",
-      "src/css/userSubview.css",
     ])
   );
 });
