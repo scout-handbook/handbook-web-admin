@@ -43,9 +43,15 @@
         {#if id}
           {field.name}
         {:else}
-          <span class="anonymous-field">Nezařazeno</span>
+          <span class="anonymous">Nezařazeno</span>
         {/if}
       </div>
     {/each}
   </FieldProvider>
 </form>
+
+<style>
+  .anonymous {
+    font-style: italic;
+  }
+</style>

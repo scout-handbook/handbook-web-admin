@@ -36,7 +36,7 @@
         dispatch("cancel");
       }}>Zrušit</Button
     >
-    <div class="field-image-container">
+    <div class="container">
       {#each currentPageList as image}
         <ImageGridCell>
           <ImageThumbnail
@@ -54,3 +54,10 @@
     </div>
   {/if}
 </DoubleSidePanel>
+
+<style>
+  .container {
+    margin: 0 auto 30px;
+    max-width: 770px;
+  }
+</style>

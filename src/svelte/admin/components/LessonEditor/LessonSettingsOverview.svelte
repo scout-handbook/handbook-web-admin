@@ -58,7 +58,7 @@
     <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-argument -->
     {get(fields, field)?.name ?? ""}
   {:else}
-    <span class="anonymous-field">Nezařazeno</span>
+    <span class="anonymous">Nezařazeno</span>
   {/if}
 </FieldProvider>
 <br />
@@ -116,6 +116,7 @@
     font-weight: bold;
   }
 
+  .anonymous,
   .public {
     font-style: italic;
   }
