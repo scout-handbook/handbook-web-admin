@@ -85,6 +85,7 @@
         rows="5"
         bind:value={description}
       />
+      <!-- TODO: Fix image previews looking wrong -->
       <label for="fieldImage">Náhledový obrázek:</label>
       <input id="fieldImage" type="hidden" bind:value={image} />
       <img
