@@ -41,6 +41,7 @@
 {:else if action === "change-field"}
   <FieldProvider silent let:fields>
     <ChangeFieldPanel {fields} payload={actionPayload} />
+    <!-- TODO: This is too slow for some reason -->
   </FieldProvider>
 {:else if action === "delete-field"}
   <FieldProvider silent let:fields>
