@@ -62,7 +62,7 @@
   {#each groups as [id, group]}
     {#if id === "00000000-0000-0000-0000-000000000000"}
       <br />
-      <h3 class="main-page public-group">{group.name}</h3>
+      <h3 class="main-page public">{group.name}</h3>
     {:else}
       <br />
       <h3 class="main-page">{group.name}</h3>
@@ -115,3 +115,9 @@
     {/if}
   {/each}
 </GroupProvider>
+
+<style>
+  .public {
+    font-style: italic;
+  }
+</style>

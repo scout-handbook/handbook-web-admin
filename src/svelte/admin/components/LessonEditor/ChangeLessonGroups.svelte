@@ -42,7 +42,7 @@
           <span class="form-custom form-checkbox" />
         </label>
         {#if id === "00000000-0000-0000-0000-000000000000"}
-          <span class="public-group">{group.name}</span>
+          <span class="public">{group.name}</span>
         {:else}
           {group.name}
         {/if}
@@ -55,7 +55,7 @@
 U každé lekce lze zvolit, kteří uživatelé ji budou moct zobrazit (resp. které skupiny
 uživatelů). Pokud není vybrána žádná skupiny, nebude lekce pro běžné uživatele vůbec
 přístupná (pouze v administraci). Pokud je vybrána skupina "
-<span class="public-group">
+<span class="public">
   <GroupProvider silent let:groups={allGroups}>
     <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-argument -->
     {get(allGroups, "00000000-0000-0000-0000-000000000000")?.name ?? ""}
@@ -63,3 +63,9 @@ přístupná (pouze v administraci). Pokud je vybrána skupina "
 </span>
 ", bude lekce přístupná všem uživatelům (i nepřihlášeným návštěvníkům webu) bez ohledu
 na skupiny.
+
+<style>
+  .public {
+    font-style: italic;
+  }
+</style>
