@@ -147,7 +147,7 @@
 {:else if step === "version-selection-loading" || step === "version-selection"}
   <Overlay />
   <DoubleSidePanel>
-    <div id="restore-lesson-version-list">
+    <div class="version-list">
       <Button
         icon="cancel"
         yellow
@@ -178,7 +178,7 @@
                 />
                 <span class="form-custom form-radio" />
               </label>
-              <span class="restore-lesson-version">
+              <span class="version-name">
                 {version.name}
               </span>
               —
@@ -188,7 +188,7 @@
         </form>
       {/if}
     </div>
-    <div id="restore-lesson-preview">
+    <div class="preview">
       {#await contentPromise}
         <LoadingIndicator />
       {:then content}
@@ -199,3 +199,30 @@
     </div>
   </DoubleSidePanel>
 {/if}
+
+<style>
+  .preview {
+    border-left: 1px solid var(--border-color);
+    bottom: 0;
+    left: 430px;
+    overflow-y: auto;
+    padding: 0 20px 20px;
+    position: absolute;
+    top: 0;
+    width: 528px;
+  }
+
+  .version-list {
+    bottom: 0;
+    overflow-y: auto;
+    padding-bottom: 30px;
+    padding-top: 30px;
+    position: absolute;
+    top: 0;
+    width: 400px;
+  }
+
+  .version-name {
+    font-weight: bold;
+  }
+</style>
