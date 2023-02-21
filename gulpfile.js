@@ -124,7 +124,6 @@ gulp.task("build:css", function () {
       "src/css/fieldSubview.css",
       "src/css/fontello.css",
       "src/css/form.css",
-      "src/css/groupSubview.css",
       "src/css/lesson.css",
       "src/css/lessonSubview.css",
       "src/css/main.css",
