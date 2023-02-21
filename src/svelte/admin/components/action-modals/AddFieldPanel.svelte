@@ -80,13 +80,11 @@
         bind:value={name}
       />
       <textarea
-        id="field-description"
-        class="form-text"
+        class="form-text description"
         autocomplete="off"
         rows="5"
         bind:value={description}
       />
-      >
       <label for="fieldImage">Náhledový obrázek:</label>
       <input id="fieldImage" type="hidden" bind:value={image} />
       <img
@@ -116,3 +114,9 @@
     </form>
   </SidePanel>
 {/if}
+
+<style>
+  .description {
+    margin-top: 20px;
+  }
+</style>
