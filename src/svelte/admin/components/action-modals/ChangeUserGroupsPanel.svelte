@@ -72,8 +72,8 @@
             <label class="form-switch">
               <input type="checkbox" value={id} bind:group={selectedGroups} />
               <span class="form-custom form-checkbox" />
+              {group.name}
             </label>
-            {group.name}
           </div>
         {/if}
       {/each}

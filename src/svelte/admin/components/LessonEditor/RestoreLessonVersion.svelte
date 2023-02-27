@@ -96,13 +96,13 @@
                 bind:group={selectedVersion}
               />
               <span class="form-custom form-radio" />
+              <span class="lesson-history-current">Současná verze</span>
+              —
+              <LessonProvider silent let:lessons>
+                <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-argument -->
+                {parseVersion(get(lessons, lessonId)?.version ?? 0)}
+              </LessonProvider>
             </label>
-            <span class="lesson-history-current">Současná verze</span>
-            —
-            <LessonProvider silent let:lessons>
-              <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-argument -->
-              {parseVersion(get(lessons, lessonId)?.version ?? 0)}
-            </LessonProvider>
           </div>
           {#each versionList as version}
             <div class="form-row">
@@ -114,12 +114,12 @@
                   bind:group={selectedVersion}
                 />
                 <span class="form-custom form-radio" />
+                <span class="lesson-history-version">
+                  {version.name}
+                </span>
+                —
+                {parseVersion(version.version)}
               </label>
-              <span class="lesson-history-version">
-                {version.name}
-              </span>
-              —
-              {parseVersion(version.version)}
             </div>
           {/each}
         </form>

@@ -39,11 +39,11 @@
         <label class="form-switch">
           <input type="checkbox" value={id} bind:group={competences} />
           <span class="form-custom form-checkbox" />
+          <span class="competence-number">
+            {competence.number}:
+          </span>
+          {competence.name}
         </label>
-        <span class="competence-number">
-          {competence.number}:
-        </span>
-        {competence.name}
       </div>
     {/each}
   </CompetenceProvider>

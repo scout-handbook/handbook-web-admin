@@ -39,12 +39,12 @@
         <label class="form-switch">
           <input name="field" type="radio" value={id} bind:group={field} />
           <span class="form-custom form-radio" />
+          {#if id}
+            {field.name}
+          {:else}
+            <span class="anonymous">Nezařazeno</span>
+          {/if}
         </label>
-        {#if id}
-          {field.name}
-        {:else}
-          <span class="anonymous">Nezařazeno</span>
-        {/if}
       </div>
     {/each}
   </FieldProvider>
