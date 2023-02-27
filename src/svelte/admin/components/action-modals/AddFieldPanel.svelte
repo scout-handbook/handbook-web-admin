@@ -7,6 +7,7 @@
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Button from "../Button.svelte";
   import DoneDialog from "../DoneDialog.svelte";
+  import ImageInput from "../forms/ImageInput.svelte";
   import NameInput from "../forms/NameInput.svelte";
   import SidePanel from "../SidePanel.svelte";
   import SidePanelImageSelector from "../SidePanelImageSelector.svelte";
@@ -79,33 +80,20 @@
         rows="5"
         bind:value={description}
       />
-      <!-- TODO: Fix image previews looking wrong -->
-      <label for="fieldImage">Náhledový obrázek:</label>
-      <input id="fieldImage" type="hidden" bind:value={image} />
-      <img
-        alt="Náhledový obrázek"
-        src={$apiUri + "/v1.0/image/" + image + "?quality=thumbnail"}
-      />
-      <br />
-      <Button
-        icon="pencil"
-        on:click={() => {
+      <ImageInput
+        name="Náhledový obrázek"
+        bind:value={image}
+        on:select={() => {
           imageSelectorOpen = true;
-        }}>Změnit</Button
-      >
-      <label for="fieldIcon">Ikona:</label>
-      <input id="fieldIcon" type="hidden" bind:value={icon} />
-      <img
-        alt="Ikona"
-        src={$apiUri + "/v1.0/image/" + icon + "?quality=thumbnail"}
+        }}
       />
-      <br />
-      <Button
-        icon="pencil"
-        on:click={() => {
+      <ImageInput
+        name="Ikona"
+        bind:value={icon}
+        on:select={() => {
           iconSelectorOpen = true;
-        }}>Změnit</Button
-      >
+        }}
+      />
     </form>
   </SidePanel>
 {/if}
