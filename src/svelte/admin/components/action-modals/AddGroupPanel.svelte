@@ -42,7 +42,6 @@
     <Button green icon="floppy" on:click={saveCallback}>Uložit</Button>
     <h1>Přidat skupinu</h1>
     <form>
-      <label for="fieldName">Název:</label>
       <NameInput bind:value={name} />
       <br />
     </form>

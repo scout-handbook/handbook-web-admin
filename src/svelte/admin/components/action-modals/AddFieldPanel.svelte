@@ -7,6 +7,7 @@
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Button from "../Button.svelte";
   import DoneDialog from "../DoneDialog.svelte";
+  import NameInput from "../forms/NameInput.svelte";
   import SidePanel from "../SidePanel.svelte";
   import SidePanelImageSelector from "../SidePanelImageSelector.svelte";
 
@@ -71,14 +72,7 @@
     <Button green icon="floppy" on:click={saveCallback}>Uložit</Button>
     <h1>Přidat oblast</h1>
     <form>
-      <label for="fieldName">Název:</label>
-      <input
-        id="fieldName"
-        class="form-text form-name"
-        autocomplete="off"
-        type="text"
-        bind:value={name}
-      />
+      <NameInput bind:value={name} />
       <textarea
         class="form-text description"
         autocomplete="off"
