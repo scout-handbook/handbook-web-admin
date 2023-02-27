@@ -40,12 +40,12 @@
         <label class="form-switch">
           <input type="checkbox" value={id} bind:group={groups} />
           <span class="form-custom form-checkbox" />
+          {#if id === "00000000-0000-0000-0000-000000000000"}
+            <span class="public">{group.name}</span>
+          {:else}
+            {group.name}
+          {/if}
         </label>
-        {#if id === "00000000-0000-0000-0000-000000000000"}
-          <span class="public">{group.name}</span>
-        {:else}
-          {group.name}
-        {/if}
       </div>
     {/each}
   </GroupProvider>

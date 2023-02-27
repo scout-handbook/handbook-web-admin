@@ -184,8 +184,8 @@
                   bind:group={selectedEvent}
                 />
                 <span class="form-custom form-radio" />
+                {event.name}
               </label>
-              {event.name}
             </div>
           {/each}
         </form>
@@ -201,8 +201,8 @@
                   bind:group={selectedParticipants}
                 />
                 <span class="form-custom form-checkbox" />
+                {participant.name}
               </label>
-              {participant.name}
             </div>
           {/each}
         </form>

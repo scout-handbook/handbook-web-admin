@@ -136,8 +136,8 @@
                   bind:group={selectedLesson}
                 />
                 <span class="form-custom form-radio" />
+                {lesson.name}
               </label>
-              {lesson.name}
             </div>
           {/each}
         </form>
@@ -177,12 +177,12 @@
                   bind:group={selectedVersion}
                 />
                 <span class="form-custom form-radio" />
+                <span class="version-name">
+                  {version.name}
+                </span>
+                —
+                {parseVersion(version.version)}
               </label>
-              <span class="version-name">
-                {version.name}
-              </span>
-              —
-              {parseVersion(version.version)}
             </div>
           {/each}
         </form>
