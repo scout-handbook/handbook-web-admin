@@ -16,12 +16,6 @@
   width: 90%;
 }
 
-.form-name {
-  font-size: 1.5em;
-  font-weight: bold;
-  padding: 10px 16px;
-}
-
 .form-select {
   background-color: var(--background-darker);
   border: 1px solid var(--border-color);
