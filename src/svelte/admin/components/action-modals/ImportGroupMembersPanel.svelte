@@ -200,7 +200,10 @@
               participant.name,
             ])}
             bind:selected={selectedParticipants}
-          />
+            let:value={name}
+          >
+            {name}
+          </CheckboxGroup>
         </form>
       {/if}
     </div>
