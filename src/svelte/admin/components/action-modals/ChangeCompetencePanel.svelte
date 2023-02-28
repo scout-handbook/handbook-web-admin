@@ -79,6 +79,11 @@
 {/if}
 
 <style>
+  .competence-heading {
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+
   .space-above {
     margin-top: 20px;
   }
