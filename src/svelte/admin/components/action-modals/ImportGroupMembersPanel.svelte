@@ -17,6 +17,7 @@
   } from "../../../../ts/admin/tools/request";
   import Button from "../Button.svelte";
   import Dialog from "../Dialog.svelte";
+  import CheckboxGroup from "../forms/CheckboxGroup.svelte";
   import LoadingIndicator from "../LoadingIndicator.svelte";
   import SidePanel from "../SidePanel.svelte";
 
@@ -31,7 +32,7 @@
   let eventList: Array<Event> = [];
   let selectedEvent: string;
   let participantList: Array<Participant> = [];
-  let selectedParticipants: Array<number> = [];
+  let selectedParticipants: Array<string> = [];
 
   refreshLogin();
 
@@ -107,7 +108,8 @@
           "POST",
           {
             id: participant,
-            name: participantList.find((p) => p.id === participant)!.name,
+            name: participantList.find((p) => p.id.toString() === participant)!
+              .name,
           } as unknown as Payload,
           authFailHandler
         ).then(async () =>
@@ -192,19 +194,13 @@
       {:else if step === "participant-selection"}
         <h4>Výběr účastníků:</h4>
         <form>
-          {#each participantList as participant}
-            <div class="form-row">
-              <label class="form-switch">
-                <input
-                  type="checkbox"
-                  value={participant.id}
-                  bind:group={selectedParticipants}
-                />
-                <span class="form-custom form-checkbox" />
-                {participant.name}
-              </label>
-            </div>
-          {/each}
+          <CheckboxGroup
+            options={participantList.map((participant) => [
+              participant.id.toString(),
+              participant.name,
+            ])}
+            bind:selected={selectedParticipants}
+          />
         </form>
       {/if}
     </div>

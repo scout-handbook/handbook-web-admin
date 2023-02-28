@@ -1,9 +1,10 @@
 <script lang="ts" strictEvents>
   import { useNavigate } from "svelte-navigator";
 
-  import { get } from "../../../../ts/admin/tools/arrayTools";
+  import { get, map } from "../../../../ts/admin/tools/arrayTools";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Button from "../Button.svelte";
+  import CheckboxGroup from "../forms/CheckboxGroup.svelte";
   import GroupProvider from "../swr-wrappers/GroupProvider.svelte";
 
   export let groups: Array<string>;
@@ -35,19 +36,12 @@
 <h1>Změnit skupiny</h1>
 <form>
   <GroupProvider inline let:groups={allGroups}>
-    {#each allGroups as [id, group]}
-      <div class="form-row">
-        <label class="form-switch">
-          <input type="checkbox" value={id} bind:group={groups} />
-          <span class="form-custom form-checkbox" />
-          {#if id === "00000000-0000-0000-0000-000000000000"}
-            <span class="public">{group.name}</span>
-          {:else}
-            {group.name}
-          {/if}
-        </label>
-      </div>
-    {/each}
+    <!-- eslint-disable @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-return -->
+    <CheckboxGroup
+      options={map(allGroups, (group) => group.name)}
+      bind:selected={groups}
+    />
+    <!-- eslint-enable -->
   </GroupProvider>
 </form>
 <br />
