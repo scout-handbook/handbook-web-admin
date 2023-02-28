@@ -12,7 +12,7 @@
 
 <label>
   <div>{name}:</div>
-  <input type="hidden" bind:value />
+  <input type="hidden" {value} />
 </label>
 <img alt={name} src={$apiUri + "/v1.0/image/" + value + "?quality=thumbnail"} />
 <br />
