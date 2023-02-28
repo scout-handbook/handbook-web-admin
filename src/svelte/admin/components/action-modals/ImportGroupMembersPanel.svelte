@@ -18,6 +18,7 @@
   import Button from "../Button.svelte";
   import Dialog from "../Dialog.svelte";
   import CheckboxGroup from "../forms/CheckboxGroup.svelte";
+  import RadioGroup from "../forms/RadioGroup.svelte";
   import LoadingIndicator from "../LoadingIndicator.svelte";
   import SidePanel from "../SidePanel.svelte";
 
@@ -30,7 +31,7 @@
   let step = "event-selection-loading";
   const group = get(groups, payload.groupId)!;
   let eventList: Array<Event> = [];
-  let selectedEvent: string;
+  let selectedEvent: number;
   let participantList: Array<Participant> = [];
   let selectedParticipants: Array<number> = [];
 
@@ -68,7 +69,7 @@
     }
     step = "participant-selection-loading";
     const participantPromise = request<Array<Participant>>(
-      $apiUri + "/v1.0/event/" + selectedEvent + "/participant",
+      $apiUri + "/v1.0/event/" + selectedEvent.toString() + "/participant",
       "GET",
       {},
       {
@@ -175,20 +176,13 @@
       {:else if step === "event-selection"}
         <h4>Volba kurzu:</h4>
         <form>
-          {#each eventList as event}
-            <div class="form-row">
-              <label class="form-switch">
-                <input
-                  name="field"
-                  type="radio"
-                  value={event.id}
-                  bind:group={selectedEvent}
-                />
-                <span class="form-custom form-radio" />
-                {event.name}
-              </label>
-            </div>
-          {/each}
+          <RadioGroup
+            options={eventList.map((event) => [event.id, event.name])}
+            bind:selected={selectedEvent}
+            let:value={name}
+          >
+            {name}
+          </RadioGroup>
         </form>
       {:else if step === "participant-selection"}
         <h4>Výběr účastníků:</h4>
