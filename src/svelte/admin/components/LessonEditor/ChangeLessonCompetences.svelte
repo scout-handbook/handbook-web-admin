@@ -3,6 +3,7 @@
 
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Button from "../Button.svelte";
+  import CheckboxGroup from "../forms/CheckboxGroup.svelte";
   import CompetenceProvider from "../swr-wrappers/CompetenceProvider.svelte";
 
   export let competences: Array<string>;
@@ -34,18 +35,16 @@
 <h1>Změnit kompetence</h1>
 <form>
   <CompetenceProvider let:competences={allCompetences}>
-    {#each allCompetences as [id, competence]}
-      <div class="form-row">
-        <label class="form-switch">
-          <input type="checkbox" value={id} bind:group={competences} />
-          <span class="form-custom form-checkbox" />
-          <span class="competence-number">
-            {competence.number}:
-          </span>
-          {competence.name}
-        </label>
-      </div>
-    {/each}
+    <CheckboxGroup
+      options={allCompetences}
+      bind:selected={competences}
+      let:value={competence}
+    >
+      <span class="competence-number">
+        {competence.number}:
+      </span>
+      {competence.name}
+    </CheckboxGroup>
   </CompetenceProvider>
 </form>
 
