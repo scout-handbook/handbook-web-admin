@@ -21,7 +21,7 @@
   <div class="form-row">
     <label class="form-switch">
       <input {name} type="radio" value={null} bind:group={selected} />
-      <span class="form-custom form-radio" />
+      <span class="form-custom" />
       <slot name="nullOption" />
     </label>
   </div>
@@ -30,8 +30,32 @@
   <div class="form-row">
     <label class="form-switch">
       <input {name} type="radio" value={id} bind:group={selected} />
-      <span class="form-custom form-radio" />
+      <span class="form-custom" />
       <slot {id} name="option" {value} />
     </label>
   </div>
 {/each}
+
+<style>
+  span {
+    border-radius: 8px;
+  }
+
+  span::before {
+    background-color: var(--border-color);
+    border-radius: 4px;
+    height: 7px;
+    margin-left: 4px;
+    margin-top: 4px;
+    transition: background-color ease 0.15s;
+    width: 7px;
+  }
+
+  span:hover::before {
+    background-color: var(--accent-color);
+  }
+
+  input:checked + span::before {
+    background-color: var(--accent-color);
+  }
+</style>
