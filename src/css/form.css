@@ -58,25 +58,3 @@ input:checked + .form-custom {
   background-color: var(--background-darkest);
   border-color: var(--accent-color);
 }
-
-.form-radio {
-  border-radius: 8px;
-}
-
-.form-radio::before {
-  background-color: var(--border-color);
-  border-radius: 4px;
-  height: 7px;
-  margin-left: 4px;
-  margin-top: 4px;
-  transition: background-color ease 0.15s;
-  width: 7px;
-}
-
-.form-radio:hover::before {
-  background-color: var(--accent-color);
-}
-
-input:checked + .form-radio::before {
-  background-color: var(--accent-color);
-}
