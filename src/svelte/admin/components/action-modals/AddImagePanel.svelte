@@ -57,9 +57,7 @@
     <Button green icon="floppy" on:click={addImageSave}>Uložit</Button>
     <h1>Nahrát obrázek</h1>
     <form>
-      <div class="form-row">
-        <FileInput bind:files />
-      </div>
+      <FileInput bind:files />
     </form>
   </SidePanel>
 {:else if stage === "upload"}
