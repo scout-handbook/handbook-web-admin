@@ -4,12 +4,12 @@
   // eslint-disable-next-line no-undef
   type ValueType = $$Generic;
 
+  interface $$Slots {
+    option: { id: KeyType; value: ValueType };
+  }
+
   export let options: Array<[KeyType, ValueType]>;
   export let selected: KeyType | null;
-
-  interface $$Slots {
-    default: { id: KeyType; value: ValueType };
-  }
 
   const name = Math.random().toString();
 </script>
@@ -19,7 +19,7 @@
     <label class="form-switch">
       <input {name} type="radio" value={id} bind:group={selected} />
       <span class="form-custom form-radio" />
-      <slot {id} {value} />
+      <slot {id} name="option" {value} />
     </label>
   </div>
 {/each}

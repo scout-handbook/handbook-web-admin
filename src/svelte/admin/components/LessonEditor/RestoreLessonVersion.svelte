@@ -111,15 +111,15 @@
               version.name,
             ])}
             bind:selected={selectedVersion}
-            let:id={version}
-            let:value={name}
           >
-            <span class="lesson-history-version">
-              {name}
+            <span slot="option" let:id={version} let:value={name}>
+              <span class="lesson-history-version">
+                {name}
+              </span>
+              —
+              <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-argument -->
+              {parseVersion(version)}
             </span>
-            —
-            <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-argument -->
-            {parseVersion(version)}
           </RadioGroup>
         </form>
       {/if}

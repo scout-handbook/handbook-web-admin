@@ -179,9 +179,10 @@
           <RadioGroup
             options={eventList.map((event) => [event.id, event.name])}
             bind:selected={selectedEvent}
-            let:value={name}
           >
-            {name}
+            <span slot="option" let:value={name}>
+              {name}
+            </span>
           </RadioGroup>
         </form>
       {:else if step === "participant-selection"}

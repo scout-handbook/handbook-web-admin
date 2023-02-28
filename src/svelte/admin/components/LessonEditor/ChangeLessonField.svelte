@@ -35,17 +35,14 @@
 <h1>Změnit oblast</h1>
 <form>
   <FieldProvider let:fields>
-    <RadioGroup
-      options={fields}
-      bind:selected={field}
-      let:id
-      let:value={currentField}
-    >
-      {#if id}
-        {currentField.name}
-      {:else}
-        <span class="anonymous">Nezařazeno</span>
-      {/if}
+    <RadioGroup options={fields} bind:selected={field}>
+      <span slot="option" let:id let:value={currentField}>
+        {#if id}
+          {currentField.name}
+        {:else}
+          <span class="anonymous">Nezařazeno</span>
+        {/if}
+      </span>
     </RadioGroup>
   </FieldProvider>
 </form>
