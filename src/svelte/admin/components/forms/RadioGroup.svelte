@@ -18,7 +18,7 @@
 </script>
 
 {#if nullOptionPresent}
-  <div class="form-row">
+  <div>
     <label>
       <input {name} type="radio" value={null} bind:group={selected} />
       <span />
@@ -27,7 +27,7 @@
   </div>
 {/if}
 {#each options as [id, value]}
-  <div class="form-row">
+  <div>
     <label>
       <input {name} type="radio" value={id} bind:group={selected} />
       <span />
@@ -37,6 +37,10 @@
 {/each}
 
 <style>
+  div {
+    margin-top: 30px;
+  }
+
   input {
     display: none;
   }

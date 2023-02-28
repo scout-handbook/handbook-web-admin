@@ -13,7 +13,7 @@
 </script>
 
 {#each options as [id, value]}
-  <div class="form-row">
+  <div>
     <label>
       <input type="checkbox" value={id} bind:group={selected} />
       <span />
@@ -23,6 +23,10 @@
 {/each}
 
 <style>
+  div {
+    margin-top: 30px;
+  }
+
   input {
     display: none;
   }
