@@ -5,6 +5,7 @@
   type ValueType = $$Generic;
 
   interface $$Slots {
+    nullOption: Record<string, never>;
     option: { id: KeyType; value: ValueType };
   }
 
@@ -12,8 +13,19 @@
   export let selected: KeyType | null;
 
   const name = Math.random().toString();
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+  $: nullOptionPresent = $$slots.nullOption;
 </script>
 
+{#if nullOptionPresent}
+  <div class="form-row">
+    <label class="form-switch">
+      <input {name} type="radio" value={null} bind:group={selected} />
+      <span class="form-custom form-radio" />
+      <slot name="nullOption" />
+    </label>
+  </div>
+{/if}
 {#each options as [id, value]}
   <div class="form-row">
     <label class="form-switch">
