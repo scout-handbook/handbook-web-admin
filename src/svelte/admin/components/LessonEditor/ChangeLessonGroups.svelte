@@ -1,7 +1,7 @@
 <script lang="ts" strictEvents>
   import { useNavigate } from "svelte-navigator";
 
-  import { get, map } from "../../../../ts/admin/tools/arrayTools";
+  import { get } from "../../../../ts/admin/tools/arrayTools";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Button from "../Button.svelte";
   import CheckboxGroup from "../forms/CheckboxGroup.svelte";
@@ -38,9 +38,15 @@
   <GroupProvider inline let:groups={allGroups}>
     <!-- eslint-disable @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-return -->
     <CheckboxGroup
-      options={map(allGroups, (group) => group.name)}
+      options={allGroups}
       bind:selected={groups}
-    />
+      let:id
+      let:value={group}
+    >
+      <span class:public={id === "00000000-0000-0000-0000-000000000000"}
+        >{group.name}</span
+      >
+    </CheckboxGroup>
     <!-- eslint-enable -->
   </GroupProvider>
 </form>

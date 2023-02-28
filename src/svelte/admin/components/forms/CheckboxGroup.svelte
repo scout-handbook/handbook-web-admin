@@ -1,24 +1,21 @@
 <script lang="ts" strictEvents>
-  export let options: Array<[string, string]>;
+  // eslint-disable-next-line no-undef
+  type T = $$Generic;
+
+  export let options: Array<[string, T]>;
   export let selected: Array<string>;
+
+  interface $$Slots {
+    default: { id: string; value: T };
+  }
 </script>
 
-{#each options as [id, name]}
+{#each options as [id, value]}
   <div class="form-row">
     <label class="form-switch">
       <input type="checkbox" value={id} bind:group={selected} />
       <span class="form-custom form-checkbox" />
-      {#if id === "00000000-0000-0000-0000-000000000000"}
-        <span class="special">{name}</span>
-      {:else}
-        {name}
-      {/if}
+      <slot {id} {value} />
     </label>
   </div>
 {/each}
-
-<style>
-  .special {
-    font-style: italic;
-  }
-</style>
