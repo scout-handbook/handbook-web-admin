@@ -21,7 +21,7 @@
   <div class="form-row">
     <label>
       <input {name} type="radio" value={null} bind:group={selected} />
-      <span class="form-custom" />
+      <span />
       <slot name="nullOption" />
     </label>
   </div>
@@ -30,7 +30,7 @@
   <div class="form-row">
     <label>
       <input {name} type="radio" value={id} bind:group={selected} />
-      <span class="form-custom" />
+      <span />
       <slot {id} name="option" {value} />
     </label>
   </div>
@@ -42,21 +42,42 @@
   }
 
   span {
+    background-color: var(--background-darker);
+    border: 1px solid var(--border-color);
     border-radius: 8px;
+    cursor: pointer;
+    display: inline-block;
+    height: 15px;
+    margin-bottom: -2px;
+    margin-right: 10px;
+    transition: border-color ease 0.15s, background-color ease 0.15s;
+    width: 15px;
+  }
+
+  span:hover {
+    background-color: var(--background-darkest);
+    border-color: var(--accent-color);
   }
 
   span::before {
     background-color: var(--border-color);
     border-radius: 4px;
+    content: "";
     height: 7px;
     margin-left: 4px;
     margin-top: 4px;
+    position: absolute;
     transition: background-color ease 0.15s;
     width: 7px;
   }
 
   span:hover::before {
     background-color: var(--accent-color);
+  }
+
+  input:checked + span {
+    background-color: var(--background-darkest);
+    border-color: var(--accent-color);
   }
 
   input:checked + span::before {
