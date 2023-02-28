@@ -32,7 +32,7 @@
   let eventList: Array<Event> = [];
   let selectedEvent: string;
   let participantList: Array<Participant> = [];
-  let selectedParticipants: Array<string> = [];
+  let selectedParticipants: Array<number> = [];
 
   refreshLogin();
 
@@ -108,8 +108,7 @@
           "POST",
           {
             id: participant,
-            name: participantList.find((p) => p.id.toString() === participant)!
-              .name,
+            name: participantList.find((p) => p.id === participant)!.name,
           } as unknown as Payload,
           authFailHandler
         ).then(async () =>
@@ -196,7 +195,7 @@
         <form>
           <CheckboxGroup
             options={participantList.map((participant) => [
-              participant.id.toString(),
+              participant.id,
               participant.name,
             ])}
             bind:selected={selectedParticipants}

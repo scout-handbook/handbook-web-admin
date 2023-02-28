@@ -1,12 +1,14 @@
 <script lang="ts" strictEvents>
   // eslint-disable-next-line no-undef
-  type T = $$Generic;
+  type KeyType = $$Generic<number | string>;
+  // eslint-disable-next-line no-undef
+  type ValueType = $$Generic;
 
-  export let options: Array<[string, T]>;
-  export let selected: Array<string>;
+  export let options: Array<[KeyType, ValueType]>;
+  export let selected: Array<KeyType>;
 
   interface $$Slots {
-    default: { id: string; value: T };
+    default: { id: KeyType; value: ValueType };
   }
 </script>
 
