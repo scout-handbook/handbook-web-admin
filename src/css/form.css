@@ -17,10 +17,6 @@
   outline: none;
 }
 
-.form-switch input {
-  display: none;
-}
-
 .form-custom {
   background-color: var(--background-darker);
   border: 1px solid var(--border-color);
