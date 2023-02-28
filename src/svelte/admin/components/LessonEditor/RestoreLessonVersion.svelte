@@ -88,23 +88,6 @@
         <LoadingIndicator />
       {:else}
         <form>
-          <div class="form-row">
-            <label class="form-switch">
-              <input
-                name="version"
-                type="radio"
-                value={null}
-                bind:group={selectedVersion}
-              />
-              <span class="form-custom form-radio" />
-              <span class="lesson-history-current">Současná verze</span>
-              —
-              <LessonProvider silent let:lessons>
-                <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-argument -->
-                {parseVersion(get(lessons, lessonId)?.version ?? 0)}
-              </LessonProvider>
-            </label>
-          </div>
           <RadioGroup
             options={versionList.map((version) => [
               version.version,
@@ -112,6 +95,14 @@
             ])}
             bind:selected={selectedVersion}
           >
+            <span slot="nullOption">
+              <span class="lesson-history-current">Současná verze</span>
+              —
+              <LessonProvider silent let:lessons>
+                <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-argument -->
+                {parseVersion(get(lessons, lessonId)?.version ?? 0)}
+              </LessonProvider>
+            </span>
             <span slot="option" let:id={version} let:value={name}>
               <span class="lesson-history-version">
                 {name}
