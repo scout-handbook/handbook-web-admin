@@ -9,6 +9,7 @@
   import { authFailHandler, request } from "../../../../ts/admin/tools/request";
   import Button from "../Button.svelte";
   import DoubleSidePanel from "../DoubleSidePanel.svelte";
+  import RadioGroup from "../forms/RadioGroup.svelte";
   import LoadingIndicator from "../LoadingIndicator.svelte";
   import LessonProvider from "../swr-wrappers/LessonProvider.svelte";
 
@@ -104,24 +105,22 @@
               </LessonProvider>
             </label>
           </div>
-          {#each versionList as version}
-            <div class="form-row">
-              <label class="form-switch">
-                <input
-                  name="version"
-                  type="radio"
-                  value={version.version}
-                  bind:group={selectedVersion}
-                />
-                <span class="form-custom form-radio" />
-                <span class="lesson-history-version">
-                  {version.name}
-                </span>
-                —
-                {parseVersion(version.version)}
-              </label>
-            </div>
-          {/each}
+          <RadioGroup
+            options={versionList.map((version) => [
+              version.version,
+              version.name,
+            ])}
+            bind:selected={selectedVersion}
+            let:id={version}
+            let:value={name}
+          >
+            <span class="lesson-history-version">
+              {name}
+            </span>
+            —
+            <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-argument -->
+            {parseVersion(version)}
+          </RadioGroup>
         </form>
       {/if}
     </div>

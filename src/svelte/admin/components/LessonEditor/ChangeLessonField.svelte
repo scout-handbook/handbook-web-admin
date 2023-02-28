@@ -3,6 +3,7 @@
 
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Button from "../Button.svelte";
+  import RadioGroup from "../forms/RadioGroup.svelte";
   import FieldProvider from "../swr-wrappers/FieldProvider.svelte";
 
   export let field: string | null;
@@ -34,19 +35,18 @@
 <h1>Změnit oblast</h1>
 <form>
   <FieldProvider let:fields>
-    {#each fields as [id, field]}
-      <div class="form-row">
-        <label class="form-switch">
-          <input name="field" type="radio" value={id} bind:group={field} />
-          <span class="form-custom form-radio" />
-          {#if id}
-            {field.name}
-          {:else}
-            <span class="anonymous">Nezařazeno</span>
-          {/if}
-        </label>
-      </div>
-    {/each}
+    <RadioGroup
+      options={fields}
+      bind:selected={field}
+      let:id
+      let:value={currentField}
+    >
+      {#if id}
+        {currentField.name}
+      {:else}
+        <span class="anonymous">Nezařazeno</span>
+      {/if}
+    </RadioGroup>
   </FieldProvider>
 </form>
 
