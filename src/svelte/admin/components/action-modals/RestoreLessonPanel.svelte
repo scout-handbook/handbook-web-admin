@@ -15,6 +15,7 @@
   import Button from "../Button.svelte";
   import Dialog from "../Dialog.svelte";
   import DoubleSidePanel from "../DoubleSidePanel.svelte";
+  import RadioGroup from "../forms/RadioGroup.svelte";
   import LoadingIndicator from "../LoadingIndicator.svelte";
   import Overlay from "../Overlay.svelte";
   import SidePanel from "../SidePanel.svelte";
@@ -126,20 +127,11 @@
         <LoadingIndicator />
       {:else if step === "lesson-selection"}
         <form>
-          {#each lessonList as [id, lesson]}
-            <div class="form-row">
-              <label class="form-switch">
-                <input
-                  name="lesson"
-                  type="radio"
-                  value={id}
-                  bind:group={selectedLesson}
-                />
-                <span class="form-custom form-radio" />
-                {lesson.name}
-              </label>
-            </div>
-          {/each}
+          <RadioGroup options={lessonList} bind:selected={selectedLesson}>
+            <span slot="option" let:value={lesson}>
+              {lesson.name}
+            </span>
+          </RadioGroup>
         </form>
       {/if}
     </div>
@@ -167,24 +159,22 @@
         <LoadingIndicator />
       {:else if step === "version-selection"}
         <form>
-          {#each versionList as version}
-            <div class="form-row">
-              <label class="form-switch">
-                <input
-                  name="restoreLessonversion"
-                  type="radio"
-                  value={version.version}
-                  bind:group={selectedVersion}
-                />
-                <span class="form-custom form-radio" />
-                <span class="version-name">
-                  {version.name}
-                </span>
-                —
-                {parseVersion(version.version)}
-              </label>
-            </div>
-          {/each}
+          <RadioGroup
+            options={versionList.map((version) => [
+              version.version,
+              version.name,
+            ])}
+            bind:selected={selectedVersion}
+          >
+            <span slot="option" let:id={version} let:value={name}>
+              <span class="version-name">
+                {name}
+              </span>
+              —
+              <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-argument -->
+              {parseVersion(version)}
+            </span>
+          </RadioGroup>
         </form>
       {/if}
     </div>
