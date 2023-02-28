@@ -16,30 +16,3 @@
   border-color: var(--accent-color);
   outline: none;
 }
-
-.form-custom {
-  background-color: var(--background-darker);
-  border: 1px solid var(--border-color);
-  cursor: pointer;
-  display: inline-block;
-  height: 15px;
-  margin-bottom: -2px;
-  margin-right: 10px;
-  transition: border-color ease 0.15s, background-color ease 0.15s;
-  width: 15px;
-}
-
-.form-custom::before {
-  content: "";
-  position: absolute;
-}
-
-.form-custom:hover {
-  background-color: var(--background-darkest);
-  border-color: var(--accent-color);
-}
-
-input:checked + .form-custom {
-  background-color: var(--background-darkest);
-  border-color: var(--accent-color);
-}
