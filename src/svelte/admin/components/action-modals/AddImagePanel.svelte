@@ -6,6 +6,7 @@
   import { authFailHandler, request } from "../../../../ts/admin/tools/request";
   import Button from "../Button.svelte";
   import Dialog from "../Dialog.svelte";
+  import FileInput from "../forms/FileInput.svelte";
   import LoadingIndicator from "../LoadingIndicator.svelte";
   import Overlay from "../Overlay.svelte";
   import SidePanel from "../SidePanel.svelte";
@@ -57,16 +58,7 @@
     <h1>Nahrát obrázek</h1>
     <form>
       <div class="form-row">
-        <label class="form-file">
-          <input class="form-file" type="file" bind:files />
-          <Button icon="upload">
-            {#if files === undefined || files.length === 0}
-              Vybrat soubor
-            {:else}
-              {files[0].name}
-            {/if}
-          </Button>
-        </label>
+        <FileInput bind:files />
       </div>
     </form>
   </SidePanel>
