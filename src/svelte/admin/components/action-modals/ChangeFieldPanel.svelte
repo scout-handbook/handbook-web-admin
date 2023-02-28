@@ -96,14 +96,14 @@
       />
       <ImageInput
         name="Náhledový obrázek"
-        bind:value={image}
+        value={image}
         on:select={() => {
           imageSelectorOpen = true;
         }}
       />
       <ImageInput
         name="Ikona"
-        bind:value={icon}
+        value={icon}
         on:select={() => {
           iconSelectorOpen = true;
         }}
