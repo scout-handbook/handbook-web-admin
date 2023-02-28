@@ -11,6 +11,7 @@
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Button from "../Button.svelte";
   import DoneDialog from "../DoneDialog.svelte";
+  import RadioGroup from "../forms/RadioGroup.svelte";
   import SidePanel from "../SidePanel.svelte";
 
   export let payload: { user: User };
@@ -22,6 +23,18 @@
 
   let selectedRole = payload.user.role;
   let donePromise: Promise<void> | null = null;
+  $: roleList = ([] as Array<[string, string]>).concat(
+    [
+      ["user", "Uživatel"],
+      ["editor", "Editor"],
+    ],
+    isSuperuser
+      ? [
+          ["administrator", "Administrátor"],
+          ["superuser", "Superuser"],
+        ]
+      : []
+  );
 
   refreshLogin();
 
@@ -61,16 +74,11 @@
     <Button green icon="floppy" on:click={saveCallback}>Uložit</Button>
     <h1>Změnit roli: {payload.user.name}</h1>
     <form>
-      <span class="selector-legend">Role: </span>
-      <select class="form-select" bind:value={selectedRole}>
-        <option id="user" value="user">Uživatel</option>
-        <option id="editor" value="editor">Editor</option>
-        {#if isSuperuser}
-          <option id="administrator" value="administrator">Administrátor</option
-          >
-          <option id="superuser" value="superuser">Superuser</option>
-        {/if}
-      </select>
+      <RadioGroup options={roleList} bind:selected={selectedRole}>
+        <span slot="option" let:value>
+          {value}
+        </span>
+      </RadioGroup>
     </form>
     <br />
     <div class="infobox">
@@ -105,7 +113,6 @@
     margin-top: 20px;
   }
 
-  .selector-legend,
   .infobox-name {
     font-weight: bold;
   }
