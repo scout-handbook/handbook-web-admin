@@ -19,7 +19,7 @@
 
 {#if nullOptionPresent}
   <div class="form-row">
-    <label class="form-switch">
+    <label>
       <input {name} type="radio" value={null} bind:group={selected} />
       <span class="form-custom" />
       <slot name="nullOption" />
@@ -28,7 +28,7 @@
 {/if}
 {#each options as [id, value]}
   <div class="form-row">
-    <label class="form-switch">
+    <label>
       <input {name} type="radio" value={id} bind:group={selected} />
       <span class="form-custom" />
       <slot {id} name="option" {value} />
@@ -37,6 +37,10 @@
 {/each}
 
 <style>
+  input {
+    display: none;
+  }
+
   span {
     border-radius: 8px;
   }

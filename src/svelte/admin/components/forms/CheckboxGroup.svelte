@@ -14,7 +14,7 @@
 
 {#each options as [id, value]}
   <div class="form-row">
-    <label class="form-switch">
+    <label>
       <input type="checkbox" value={id} bind:group={selected} />
       <span class="form-custom" />
       <slot {id} {value} />
@@ -23,6 +23,10 @@
 {/each}
 
 <style>
+  input {
+    display: none;
+  }
+
   span {
     border-radius: 3px;
   }
