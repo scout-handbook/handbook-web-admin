@@ -109,12 +109,3 @@ input:checked + .form-radio::before {
 input:checked + .form-checkbox::before {
   border-color: var(--accent-color);
 }
-
-.form-file input {
-  height: 0.1px;
-  opacity: 0;
-  overflow: hidden;
-  position: absolute;
-  width: 0.1px;
-  z-index: -1;
-}
