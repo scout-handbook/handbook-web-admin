@@ -80,27 +80,3 @@ input:checked + .form-custom {
 input:checked + .form-radio::before {
   background-color: var(--accent-color);
 }
-
-.form-checkbox {
-  border-radius: 3px;
-}
-
-.form-checkbox::before {
-  border: 3px solid var(--border-color);
-  border-right: none;
-  border-top: none;
-  height: 4px;
-  margin-left: 2px;
-  margin-top: 3px;
-  transform: rotate(-45deg);
-  transition: border-color ease 0.15s;
-  width: 8px;
-}
-
-.form-checkbox:hover::before {
-  border-color: var(--accent-color);
-}
-
-input:checked + .form-checkbox::before {
-  border-color: var(--accent-color);
-}
