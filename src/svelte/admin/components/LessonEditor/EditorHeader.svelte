@@ -22,13 +22,7 @@
       }}>Zrušit</Button
     >
     <form class="name">
-      <input
-        id="name"
-        class="form-text form-name"
-        autocomplete="off"
-        type="text"
-        bind:value={name}
-      />
+      <input autocomplete="off" type="text" bind:value={name} />
     </form>
   </div>
   <div class="buttons-right">
@@ -76,7 +70,20 @@
     width: calc(100% - 180px);
   }
 
-  .name input {
+  input {
+    border: 1px solid var(--border-color);
+    border-radius: 3px;
+    font-family: "Open Sans", sans-serif;
+    font-size: 1.5em;
+    font-weight: bold;
+    padding: 10px 16px;
+    transition: border-color ease 0.15s, background-color ease 0.15s;
     width: 100%;
+  }
+
+  input:focus {
+    background-color: var(--background-darkest);
+    border-color: var(--accent-color);
+    outline: none;
   }
 </style>
