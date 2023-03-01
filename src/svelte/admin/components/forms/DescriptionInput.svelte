@@ -2,11 +2,7 @@
   export let value: string;
 </script>
 
-<textarea
-  autocomplete="off"
-  rows="5"
-  bind:value
-/>
+<textarea autocomplete="off" rows="5" bind:value />
 
 <style>
   textarea {
