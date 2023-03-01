@@ -9,6 +9,7 @@
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Button from "../Button.svelte";
   import DoneDialog from "../DoneDialog.svelte";
+  import DescriptionInput from "../forms/DescriptionInput.svelte";
   import ImageInput from "../forms/ImageInput.svelte";
   import NameInput from "../forms/NameInput.svelte";
   import SidePanel from "../SidePanel.svelte";
@@ -88,12 +89,7 @@
     <h1>Upravit oblast</h1>
     <form>
       <NameInput bind:value={name} />
-      <textarea
-        class="form-text description"
-        autocomplete="off"
-        rows="5"
-        bind:value={description}
-      />
+      <DescriptionInput bind:value={description} />
       <ImageInput
         name="Náhledový obrázek"
         value={image}
@@ -111,9 +107,3 @@
     </form>
   </SidePanel>
 {/if}
-
-<style>
-  .description {
-    margin-top: 20px;
-  }
-</style>

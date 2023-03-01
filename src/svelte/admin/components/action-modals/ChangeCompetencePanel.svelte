@@ -9,6 +9,7 @@
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Button from "../Button.svelte";
   import DoneDialog from "../DoneDialog.svelte";
+  import DescriptionInput from "../forms/DescriptionInput.svelte";
   import NameInput from "../forms/NameInput.svelte";
   import NumberNameInput from "../forms/NumberNameInput.svelte";
   import SidePanel from "../SidePanel.svelte";
@@ -68,12 +69,7 @@
       <br />
       <NameInput bind:value={name} />
       <br />
-      <textarea
-        class="form-text space-above"
-        autocomplete="off"
-        rows="5"
-        bind:value={description}
-      />
+      <DescriptionInput bind:value={description} />
     </form>
   </SidePanel>
 {/if}
@@ -82,9 +78,5 @@
   .competence-heading {
     font-size: 1.5em;
     font-weight: bold;
-  }
-
-  .space-above {
-    margin-top: 20px;
   }
 </style>
