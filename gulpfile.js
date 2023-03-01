@@ -122,7 +122,6 @@ gulp.task("build:css", function () {
     bundle("admin", [
       "src/css/editor.css",
       "src/css/fontello.css",
-      "src/css/form.css",
       "src/css/lesson.css",
       "src/css/main.css",
       "src/css/mainPage.css",
