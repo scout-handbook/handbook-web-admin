@@ -21,7 +21,7 @@
         dispatch("discard");
       }}>Zrušit</Button
     >
-    <form class="name">
+    <form>
       <input autocomplete="off" type="text" bind:value={name} />
     </form>
   </div>
@@ -65,9 +65,17 @@
     right: 0;
   }
 
-  .name {
+  form {
     display: inline-block;
     width: calc(100% - 180px);
+  }
+
+  header {
+    background-color: #fff;
+    border-bottom: 1px solid var(--border-color);
+    height: 75px;
+    position: relative;
+    z-index: 8;
   }
 
   input {

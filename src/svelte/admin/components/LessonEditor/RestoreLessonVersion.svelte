@@ -11,6 +11,7 @@
   import DoubleSidePanel from "../DoubleSidePanel.svelte";
   import RadioGroup from "../forms/RadioGroup.svelte";
   import LoadingIndicator from "../LoadingIndicator.svelte";
+  import Overlay from "../Overlay.svelte";
   import LessonProvider from "../swr-wrappers/LessonProvider.svelte";
 
   export let lessonId: string;
@@ -58,8 +59,9 @@
   }
 </script>
 
+<Overlay />
 <DoubleSidePanel>
-  <div id="lesson-history-list">
+  <div class="version-list">
     <Button
       icon="cancel"
       yellow
@@ -96,7 +98,7 @@
             bind:selected={selectedVersion}
           >
             <span slot="nullOption">
-              <span class="lesson-history-current">Současná verze</span>
+              <span class="current-version version-name">Současná verze</span>
               —
               <LessonProvider silent let:lessons>
                 <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-argument -->
@@ -104,7 +106,7 @@
               </LessonProvider>
             </span>
             <span slot="option" let:id={version} let:value={name}>
-              <span class="lesson-history-version">
+              <span class="version-name">
                 {name}
               </span>
               —
@@ -116,7 +118,7 @@
       {/if}
     </div>
   </div>
-  <div id="lesson-history-preview">
+  <div class="preview">
     {#await markdownPromise.then(compileMarkdown)}
       <LoadingIndicator />
     {:then content}
@@ -126,3 +128,34 @@
     {/await}
   </div>
 </DoubleSidePanel>
+
+<style>
+  .current-version {
+    font-style: italic;
+  }
+
+  .preview {
+    border-left: solid 1px var(--border-color);
+    bottom: 0;
+    left: 430px;
+    overflow-y: auto;
+    padding: 0 20px 20px;
+    position: absolute;
+    top: 0;
+    width: 528px;
+  }
+
+  .version-list {
+    bottom: 0;
+    overflow-y: auto;
+    padding-bottom: 30px;
+    padding-top: 30px;
+    position: absolute;
+    top: 0;
+    width: 400px;
+  }
+
+  .version-name {
+    font-weight: bold;
+  }
+</style>
