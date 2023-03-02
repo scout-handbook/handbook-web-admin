@@ -10,45 +10,77 @@
   const groupMatcher = useMatch("/groups");
 </script>
 
-<div id="top-bar">
+<div class="wrapper">
   <UserAccountBox />
-  <Link
-    id="lesson-manager"
-    class={"top-bar-tab" +
-      ($lessonMatcher !== null ? " active-top-bar-tab" : "")}
-    to="/lessons"
-  >
-    Lekce
-  </Link>
-  <Link
-    id="competence-manager"
-    class={"top-bar-tab" +
-      ($competenceMatcher !== null ? " active-top-bar-tab" : "")}
-    to="/competences"
-  >
-    Kompetence
-  </Link>
-  <Link
-    id="image-manager"
-    class={"top-bar-tab" +
-      ($imageMatcher !== null ? " active-top-bar-tab" : "")}
-    to="/images"
-  >
-    Obrázky
-  </Link>
-  <Link
-    id="user-manager"
-    class={"top-bar-tab" + ($userMatcher !== null ? " active-top-bar-tab" : "")}
-    to="/users"
-  >
-    Uživatelé
-  </Link>
-  <Link
-    id="group-manager"
-    class={"top-bar-tab" +
-      ($groupMatcher !== null ? " active-top-bar-tab" : "")}
-    to="/groups"
-  >
-    Uživatelské skupiny
-  </Link>
+  <div class="lessons tab" class:active-tab={$lessonMatcher !== null}>
+    <Link to="/lessons">Lekce</Link>
+  </div>
+  <div class="competences tab" class:active-tab={$competenceMatcher !== null}>
+    <Link to="/competences">Kompetence</Link>
+  </div>
+  <div class="images tab" class:active-tab={$imageMatcher !== null}>
+    <Link to="/images">Obrázky</Link>
+  </div>
+  <div class="users tab" class:active-tab={$userMatcher !== null}>
+    <Link to="/users">Uživatelé</Link>
+  </div>
+  <div class="groups tab" class:active-tab={$groupMatcher !== null}>
+    <Link to="/groups">Uživatelské skupiny</Link>
+  </div>
 </div>
+
+<style>
+  .tab {
+    border-left: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+    color: var(--background);
+    cursor: pointer;
+    display: inline-block;
+    font-size: 1.1em;
+    font-weight: bold;
+    height: 52px;
+    margin-left: -1px;
+    padding-top: 28px;
+    position: absolute;
+    text-align: center;
+    transition: color ease 0.15s, border-color ease 0.15s,
+      background-color ease 0.15s;
+    width: 140px;
+  }
+
+  .active-tab,
+  .tab:hover {
+    background-color: var(--background-darkest);
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+    z-index: 1;
+  }
+
+  .lessons {
+    left: 301px;
+  }
+
+  .competences {
+    left: 442px;
+  }
+
+  .images {
+    left: 583px;
+  }
+
+  .users {
+    left: 724px;
+  }
+
+  .groups {
+    left: 865px;
+    padding-bottom: 11px;
+    padding-top: 17px;
+  }
+
+  .wrapper {
+    background-color: var(--background-darker);
+    border-bottom: 1px solid var(--border-color);
+    height: 80px;
+  }
+</style>
