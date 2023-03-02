@@ -41,26 +41,3 @@ main tbody tr:nth-child(2n + 1) {
 main .notes {
   display: block;
 }
-
-#embedded-spinner {
-  animation: spin 2s linear infinite;
-  border: 16px solid var(--border-color);
-  border-radius: 50%;
-  border-top: 16px solid var(--accent-color);
-  height: 120px;
-  left: 50%;
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 120px;
-}
-
-@keyframes spin {
-  0% {
-    transform: translate(-50%, -50%) rotate(0deg);
-  }
-
-  100% {
-    transform: translate(-50%, -50%) rotate(360deg);
-  }
-}
