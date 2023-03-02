@@ -64,3 +64,9 @@
     <!-- eslint-enable -->
   </CompetenceProvider>
 </span>
+
+<style>
+  .second-level {
+    margin-left: 40px;
+  }
+</style>
