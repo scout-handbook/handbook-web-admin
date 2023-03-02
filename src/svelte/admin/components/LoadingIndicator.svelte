@@ -1,24 +1,11 @@
 <script lang="ts" strictEvents>
-  import { customProperties } from "../../../ts/admin/stores";
-
-  $: ({
-    "--accent-color": accentColor,
-    "--background-darker": backgroundDarker,
-    "--border-color": borderColor,
-  } = $customProperties);
-
   export let darkBackground = false;
   export let inline = false;
-
-  $: indicatorColor = darkBackground ? backgroundDarker : borderColor;
 </script>
 
+<!-- TODO: Doesn't spin -->
 <div class:container={inline}>
-  <div
-    style:border-color={indicatorColor}
-    style:border-top-color={accentColor}
-    class="indicator"
-  />
+  <div class="indicator" class:dark-background={darkBackground} />
 </div>
 
 <style>
@@ -26,10 +13,13 @@
     height: 180px;
     position: relative;
   }
+
   .indicator {
     animation: spin 2s linear infinite;
+    border-color: var(--border-color);
     border-radius: 50%;
     border-style: solid;
+    border-top-color: var(--accent-color);
     border-width: 16px;
     height: 120px;
     left: 50%;
@@ -38,5 +28,10 @@
     transform: translate(-50%, -50%);
     width: 120px;
     z-index: 9;
+  }
+
+  .dark-background {
+    border-color: var(--background-darker);
+    border-top-color: var(--accent-color);
   }
 </style>
