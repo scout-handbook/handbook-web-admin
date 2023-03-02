@@ -3,7 +3,6 @@
   export let inline = false;
 </script>
 
-<!-- TODO: Doesn't spin -->
 <div class:container={inline}>
   <div class="indicator" class:dark-background={darkBackground} />
 </div>
@@ -33,5 +32,15 @@
   .dark-background {
     border-color: var(--background-darker);
     border-top-color: var(--accent-color);
+  }
+
+  @keyframes spin {
+    0% {
+      transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    100% {
+      transform: translate(-50%, -50%) rotate(360deg);
+    }
   }
 </style>
