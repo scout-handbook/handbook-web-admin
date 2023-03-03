@@ -21,7 +21,7 @@
 </script>
 
 <br />
-<h3 class="main-page" class:second-level={secondLevel}>{lesson.name}</h3>
+<h3 class:second-level={secondLevel}>{lesson.name}</h3>
 <Button
   cyan
   icon="pencil"
@@ -53,7 +53,7 @@
   PDF
 </Button>
 <br />
-<span class="main-page" class:second-level={secondLevel}>
+<span class:second-level={secondLevel}>
   Kompetence:
   <CompetenceProvider silent let:competences>
     <!-- eslint-disable @typescript-eslint/no-unsafe-call @typescript-eslint/no-unsafe-argument @typescript-eslint/no-unsafe-return -->
@@ -66,6 +66,13 @@
 </span>
 
 <style>
+  h3 {
+    display: inline-block;
+    margin-bottom: 10px;
+    margin-right: 15px;
+    margin-top: 1.9em;
+  }
+
   .second-level {
     margin-left: 40px;
   }

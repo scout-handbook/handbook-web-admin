@@ -56,7 +56,7 @@
 {/if}
 <CompetenceProvider let:competences>
   {#each competences as [id, competence]}
-    <h3 class="main-page">
+    <h3>
       <!-- eslint-disable-next-line @typescript-eslint/restrict-plus-operands @typescript-eslint/no-unsafe-call -->
       {competence.number.toString() + ": " + competence.name}
     </h3>
@@ -92,7 +92,7 @@
         </Button>
       </div>
     {/if}
-    <span class="main-page">{competence.description}</span>
+    <span>{competence.description}</span>
     <br />
   {/each}
 </CompetenceProvider>
@@ -100,5 +100,12 @@
 <style>
   .buttons {
     margin-bottom: 10px;
+  }
+
+  h3 {
+    display: inline-block;
+    margin-bottom: 10px;
+    margin-right: 15px;
+    margin-top: 1.9em;
   }
 </style>

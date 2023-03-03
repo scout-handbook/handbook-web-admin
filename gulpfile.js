@@ -123,7 +123,6 @@ gulp.task("build:css", function () {
       "src/css/fontello.css",
       "src/css/lesson.css",
       "src/css/main.css",
-      "src/css/mainPage.css",
     ])
   );
 });
