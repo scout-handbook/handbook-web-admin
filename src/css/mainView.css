@@ -1,6 +1,5 @@
 h2.main-page,
-h3.main-page,
-.no-newline {
+h3.main-page {
   display: inline-block;
   margin-right: 15px;
 }
