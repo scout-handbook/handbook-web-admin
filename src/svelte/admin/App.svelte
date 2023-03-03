@@ -102,3 +102,20 @@
   href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700,700i"
   rel="stylesheet"
 />
+
+<style>
+  #main-page {
+    margin: 0 auto;
+    max-width: 770px;
+    padding: 20px;
+  }
+
+  #main-page-container {
+    bottom: 0;
+    left: 0;
+    overflow-y: auto;
+    position: absolute;
+    right: 0;
+    top: 81px;
+  }
+</style>
