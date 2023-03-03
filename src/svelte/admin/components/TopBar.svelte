@@ -1,8 +1,9 @@
 <script lang="ts" strictEvents>
-  import { Link, useMatch } from "svelte-navigator";
+  import { useMatch, useNavigate } from "svelte-navigator";
 
   import UserAccountBox from "./UserAccountBox.svelte";
 
+  const navigate = useNavigate();
   const lessonMatcher = useMatch("/lessons");
   const competenceMatcher = useMatch("/competences");
   const imageMatcher = useMatch("/images");
@@ -12,20 +13,65 @@
 
 <div class="wrapper">
   <UserAccountBox />
-  <div class="lessons tab" class:active-tab={$lessonMatcher !== null}>
-    <Link to="/lessons">Lekce</Link>
+  <div
+    class="lessons tab"
+    class:active-tab={$lessonMatcher !== null}
+    on:click={() => {
+      navigate("/lessons");
+    }}
+    on:keypress={() => {
+      navigate("/lessons");
+    }}
+  >
+    Lekce
   </div>
-  <div class="competences tab" class:active-tab={$competenceMatcher !== null}>
-    <Link to="/competences">Kompetence</Link>
+  <div
+    class="competences tab"
+    class:active-tab={$competenceMatcher !== null}
+    on:click={() => {
+      navigate("/competences");
+    }}
+    on:keypress={() => {
+      navigate("/competences");
+    }}
+  >
+    Kompetence
   </div>
-  <div class="images tab" class:active-tab={$imageMatcher !== null}>
-    <Link to="/images">Obrázky</Link>
+  <div
+    class="images tab"
+    class:active-tab={$imageMatcher !== null}
+    on:click={() => {
+      navigate("/images");
+    }}
+    on:keypress={() => {
+      navigate("/images");
+    }}
+  >
+    Obrázky
   </div>
-  <div class="users tab" class:active-tab={$userMatcher !== null}>
-    <Link to="/users">Uživatelé</Link>
+  <div
+    class="users tab"
+    class:active-tab={$userMatcher !== null}
+    on:click={() => {
+      navigate("/users");
+    }}
+    on:keypress={() => {
+      navigate("/users");
+    }}
+  >
+    Uživatelé
   </div>
-  <div class="groups tab" class:active-tab={$groupMatcher !== null}>
-    <Link to="/groups">Uživatelské skupiny</Link>
+  <div
+    class="groups tab"
+    class:active-tab={$groupMatcher !== null}
+    on:keypress={() => {
+      navigate("/groups");
+    }}
+    on:click={() => {
+      navigate("/groups");
+    }}
+  >
+    Uživatelské skupiny
   </div>
 </div>
 
