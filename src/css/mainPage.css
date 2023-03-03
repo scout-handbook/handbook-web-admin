@@ -11,3 +11,9 @@ h3.main-page {
   margin-bottom: 10px;
   margin-top: 1.9em;
 }
+
+h2.main-page,
+h3.main-page {
+  display: inline-block;
+  margin-right: 15px;
+}
