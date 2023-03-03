@@ -89,11 +89,13 @@
 <style>
   table {
     border: none;
+    border-collapse: collapse;
   }
 
   th {
     border: none;
     border-bottom: 1px solid var(--border-color);
+    padding: 8px 20px;
     text-align: left;
   }
 
