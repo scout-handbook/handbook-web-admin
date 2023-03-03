@@ -7,10 +7,3 @@ body {
   line-height: 160%;
   margin: 0;
 }
-
-main {
-  height: 100%;
-  overflow: hidden;
-  position: absolute;
-  width: 100%;
-}

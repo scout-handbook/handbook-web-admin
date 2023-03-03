@@ -1,43 +1,43 @@
-main a {
+a {
   color: var(--accent-color);
   text-decoration: none;
 }
 
-main a:hover {
+a:hover {
   text-decoration: underline;
 }
 
-main h1 {
+h1 {
   line-height: 140%;
 }
 
-main img {
+img {
   max-width: 100%;
 }
 
-main .table-container {
+.table-container {
   overflow-x: auto;
 }
 
-main table {
+table {
   border: 1px solid var(--table-border);
   border-collapse: collapse;
 }
 
-main td,
-main th {
+td,
+th {
   border: 1px solid var(--table-border);
   padding: 8px 20px;
 }
 
-main th {
+th {
   border-bottom-width: 2px;
 }
 
-main tbody tr:nth-child(2n + 1) {
+tbody tr:nth-child(2n + 1) {
   background-color: var(--table-odd-row-background);
 }
 
-main .notes {
+.notes {
   display: block;
 }
