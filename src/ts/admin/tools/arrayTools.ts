@@ -1,11 +1,18 @@
+export function filter<T>(
+  arr: Array<[string, T]>,
+  fn: (id: string) => boolean
+): Array<[string, T]> {
+  return arr.filter(([id, _]) => fn(id));
+}
+
 export function get<T>(arr: Array<[string, T]>, id: string): T | undefined {
   return arr.find(([elementId, _]) => elementId === id)?.[1];
 }
 
-export function map<T>(
+export function map<T, U>(
   arr: Array<[string, T]>,
-  fn: (item: T) => T
-): Array<[string, T]> {
+  fn: (item: T) => U
+): Array<[string, U]> {
   return arr.map(([id, value]) => [id, fn(value)]);
 }
 

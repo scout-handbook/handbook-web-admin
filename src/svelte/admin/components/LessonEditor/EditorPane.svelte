@@ -92,6 +92,28 @@
   });
 </script>
 
-<div id="editor">
+<div>
   <textarea bind:this={editorArea} />
 </div>
+
+<style>
+  :global(.editor-toolbar) {
+    border: none;
+  }
+
+  :global(.CodeMirror) {
+    bottom: 0;
+    left: 0;
+    padding-top: 0;
+    position: absolute;
+    right: 0;
+    top: 50px;
+  }
+
+  div {
+    bottom: 0;
+    position: absolute;
+    top: 76px;
+    width: 50%;
+  }
+</style>

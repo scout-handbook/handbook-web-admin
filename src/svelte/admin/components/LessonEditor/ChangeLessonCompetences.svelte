@@ -3,6 +3,7 @@
 
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Button from "../Button.svelte";
+  import CheckboxGroup from "../forms/CheckboxGroup.svelte";
   import CompetenceProvider from "../swr-wrappers/CompetenceProvider.svelte";
 
   export let competences: Array<string>;
@@ -31,20 +32,24 @@
     navigate(-1);
   }}>Uložit</Button
 >
-<h3 class="side-panel-title">Změnit kompetence</h3>
-<form id="side-panel-form">
+<h1>Změnit kompetence</h1>
+<form>
   <CompetenceProvider let:competences={allCompetences}>
-    {#each allCompetences as [id, competence]}
-      <div class="form-row">
-        <label class="form-switch">
-          <input type="checkbox" value={id} bind:group={competences} />
-          <span class="form-custom form-checkbox" />
-        </label>
-        <span class="competence-number">
-          {competence.number}:
-        </span>
-        {competence.name}
-      </div>
-    {/each}
+    <CheckboxGroup
+      options={allCompetences}
+      bind:selected={competences}
+      let:value={competence}
+    >
+      <span class="competence-number">
+        {competence.number}:
+      </span>
+      {competence.name}
+    </CheckboxGroup>
   </CompetenceProvider>
 </form>
+
+<style>
+  .competence-number {
+    font-weight: bold;
+  }
+</style>
