@@ -93,7 +93,7 @@
   {/each}
   {#each fields as [fieldId, field]}
     <br />
-    <h2 class="main-page">{field.name}</h2>
+    <h2>{field.name}</h2>
     {#if adminOrSuperuser}
       <Button
         cyan
@@ -136,3 +136,12 @@
     {/each}
   {/each}
 </FieldProvider>
+
+<style>
+  h2 {
+    display: inline-block;
+    margin-bottom: 10px;
+    margin-right: 15px;
+    margin-top: 2.3em;
+  }
+</style>
