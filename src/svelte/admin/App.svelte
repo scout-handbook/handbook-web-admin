@@ -115,4 +115,18 @@
     right: 0;
     top: 81px;
   }
+
+  :global(body) {
+    color: var(--background);
+    font-family: "Open Sans", sans-serif;
+    font-feature-settings: "liga" 1; /* stylelint-disable-line plugin/no-unsupported-browser-features */
+    font-kerning: normal; /* stylelint-disable-line plugin/no-unsupported-browser-features */
+    font-size: 16px;
+    line-height: 160%;
+    margin: 0;
+  }
+
+  :global(h1) {
+    line-height: 140%;
+  }
 </style>

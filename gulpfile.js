@@ -119,11 +119,7 @@ gulp.task("build:css", function () {
   }
   return merge(
     bundle("error", ["src/css/error.css"]),
-    bundle("admin", [
-      "src/css/fontello.css",
-      "src/css/lesson.css",
-      "src/css/main.css",
-    ])
+    bundle("admin", ["src/css/fontello.css"])
   );
 });
 

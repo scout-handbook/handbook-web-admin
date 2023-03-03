@@ -34,6 +34,15 @@
 </div>
 
 <style>
+  a {
+    color: var(--accent-color);
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
   .frontend-link {
     float: right;
     margin-right: 20px;
