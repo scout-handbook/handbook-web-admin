@@ -1,8 +1,6 @@
 <script lang="ts" strictEvents>
   import { createEventDispatcher } from "svelte";
 
-  import { customProperties } from "../../../ts/admin/stores";
-
   interface $$Slots {
     default: Record<string, never>;
   }
@@ -15,24 +13,6 @@
 
   const dispatch = createEventDispatcher<{ click: never }>();
 
-  $: ({
-    "--button-accent-cyan": buttonAccentCyan,
-    "--button-accent-green": buttonAccentGreen,
-    "--button-accent-red": buttonAccentRed,
-    "--button-accent-yellow": buttonAccentYellow,
-    "--button-border": buttonBorder,
-  } = $customProperties);
-
-  $: accentColor = cyan
-    ? buttonAccentCyan
-    : green
-    ? buttonAccentGreen
-    : red
-    ? buttonAccentRed
-    : yellow
-    ? buttonAccentYellow
-    : buttonBorder;
-
   function callback(): void {
     dispatch("click");
   }
@@ -40,11 +20,13 @@
 
 <!-- eslint-disable svelte/require-optimized-style-attribute -->
 <div
-  style={"--accent-color: " + accentColor}
+  class:cyan
+  class:green
+  class:red
+  class:yellow
   on:click={callback}
   on:keypress={callback}
 >
-  <!-- eslint-enable svelte/require-optimized-style-attribute -->
   {#if icon !== ""}
     <i class={"icon-" + icon} />
   {/if}
@@ -54,7 +36,7 @@
 <style>
   div {
     background-clip: padding-box;
-    background-color: var(--accent-color);
+    background-color: var(--button-border);
     border: 1px solid #fff;
     border: 1px solid rgba(255, 255, 255, 0%);
     border-radius: 5px;
@@ -74,8 +56,40 @@
   }
 
   div:hover {
-    border-color: var(--accent-color);
+    border-color: var(--button-border);
     box-shadow: rgba(0, 0, 0, 20%) 1px 1px 4px 1px;
     text-decoration: none;
+  }
+
+  .cyan {
+    background-color: var(--button-accent-cyan);
+  }
+
+  .cyan:hover {
+    border-color: var(--button-accent-cyan);
+  }
+
+  .green {
+    background-color: var(--button-accent-green);
+  }
+
+  .green:hover {
+    border-color: var(--button-accent-green);
+  }
+
+  .red {
+    background-color: var(--button-accent-red);
+  }
+
+  .red:hover {
+    border-color: var(--button-accent-red);
+  }
+
+  .yellow {
+    background-color: var(--button-accent-yellow);
+  }
+
+  .yellow:hover {
+    border-color: var(--button-accent-yellow);
   }
 </style>

@@ -62,10 +62,10 @@
   {#each groups as [id, group]}
     {#if id === "00000000-0000-0000-0000-000000000000"}
       <br />
-      <h3 class="main-page public-group">{group.name}</h3>
+      <h3 class="public">{group.name}</h3>
     {:else}
       <br />
-      <h3 class="main-page">{group.name}</h3>
+      <h3>{group.name}</h3>
     {/if}
     {#if adminOrSuperuser}
       <Button
@@ -108,10 +108,23 @@
     {/if}
     {#if id !== "00000000-0000-0000-0000-000000000000"}
       <br />
-      <span class="main-page">
+      <span>
         <!-- eslint-disable-next-line @typescript-eslint/restrict-plus-operands @typescript-eslint/no-unsafe-call -->
         {"Uživatelů: " + group.count.toString()}
       </span>
     {/if}
   {/each}
 </GroupProvider>
+
+<style>
+  .public {
+    font-style: italic;
+  }
+
+  h3 {
+    display: inline-block;
+    margin-bottom: 10px;
+    margin-right: 15px;
+    margin-top: 1.9em;
+  }
+</style>

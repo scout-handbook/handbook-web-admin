@@ -8,6 +8,8 @@
   import AddImagePanel from "../components/action-modals/AddImagePanel.svelte";
   import DeleteImageDialog from "../components/action-modals/DeleteImageDialog.svelte";
   import Button from "../components/Button.svelte";
+  import ImageGridCell from "../components/ImageGridCell.svelte";
+  import ImageThumbnail from "../components/ImageThumbnail.svelte";
   import LoadingIndicator from "../components/LoadingIndicator.svelte";
   import Overlay from "../components/Overlay.svelte";
   import Pagination from "../components/Pagination.svelte";
@@ -48,7 +50,7 @@
     }}
   />
   <img
-    class="preview-image"
+    class="image-preview"
     alt={"Image " + openImage}
     src={$apiUri + "/v1.0/image/" + openImage}
     on:click={() => {
@@ -74,19 +76,14 @@
     <LoadingIndicator />
   {:else}
     {#each currentPageList as image}
-      <div class="thumbnail-container">
-        <div class="button-container">
-          <img
-            class="thumbnail-image"
-            alt={"Image " + image}
-            src={$apiUri + "/v1.0/image/" + image + "?quality=thumbnail"}
-            on:click={() => {
-              openImage = image;
-            }}
-            on:keypress={() => {
-              openImage = image;
-            }}
-          />
+      <ImageGridCell>
+        <ImageThumbnail
+          id={image}
+          on:click={() => {
+            openImage = image;
+          }}
+        />
+        <div class="delete-image">
           <Button
             icon="trash-empty"
             red
@@ -99,7 +96,7 @@
             Smazat
           </Button>
         </div>
-      </div>
+      </ImageGridCell>
     {/each}
     <Pagination
       total={Math.ceil(totalImageCount / perPage)}
@@ -109,8 +106,23 @@
 </div>
 
 <style>
-  .preview-image {
+  .delete-image {
+    bottom: 5%;
+    margin-bottom: 9px;
+    margin-right: -9px;
+    position: absolute;
+    right: 5%;
+  }
+
+  .image-preview {
     cursor: pointer;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    max-height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
     z-index: 9;
   }
 </style>

@@ -9,6 +9,9 @@
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Button from "../Button.svelte";
   import DoneDialog from "../DoneDialog.svelte";
+  import DescriptionInput from "../forms/DescriptionInput.svelte";
+  import NameInput from "../forms/NameInput.svelte";
+  import NumberNameInput from "../forms/NumberNameInput.svelte";
   import SidePanel from "../SidePanel.svelte";
 
   export let competences: Array<[string, Competence]>;
@@ -59,32 +62,21 @@
       Zrušit
     </Button>
     <Button green icon="floppy" on:click={saveCallback}>Uložit</Button>
-    <h3 class="side-panel-title">Upravit kompetenci</h3>
-    <form id="side-panel-form">
+    <h1>Upravit kompetenci</h1>
+    <form>
       <span class="competence-heading">Kompetence</span>
-      <input
-        id="competence-number"
-        class="form-text form-name"
-        autocomplete="off"
-        type="number"
-        bind:value={number}
-      />
+      <NumberNameInput bind:value={number} />
       <br />
-      <input
-        id="competence-name"
-        class="form-text"
-        autocomplete="off"
-        type="text"
-        bind:value={name}
-      />
+      <NameInput bind:value={name} />
       <br />
-      <textarea
-        id="competence-description"
-        class="form-text"
-        autocomplete="off"
-        rows="5"
-        bind:value={description}
-      />
+      <DescriptionInput bind:value={description} />
     </form>
   </SidePanel>
 {/if}
+
+<style>
+  .competence-heading {
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+</style>

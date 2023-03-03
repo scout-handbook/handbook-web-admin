@@ -11,6 +11,7 @@
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Button from "../Button.svelte";
   import DoneDialog from "../DoneDialog.svelte";
+  import RadioGroup from "../forms/RadioGroup.svelte";
   import SidePanel from "../SidePanel.svelte";
 
   export let payload: { user: User };
@@ -22,6 +23,18 @@
 
   let selectedRole = payload.user.role;
   let donePromise: Promise<void> | null = null;
+  $: roleList = ([] as Array<[string, string]>).concat(
+    [
+      ["user", "Uživatel"],
+      ["editor", "Editor"],
+    ],
+    isSuperuser
+      ? [
+          ["administrator", "Administrátor"],
+          ["superuser", "Superuser"],
+        ]
+      : []
+  );
 
   refreshLogin();
 
@@ -59,42 +72,48 @@
       Zrušit
     </Button>
     <Button green icon="floppy" on:click={saveCallback}>Uložit</Button>
-    <h3 class="side-panel-title">Změnit roli: {payload.user.name}</h3>
-    <form id="side-panel-form">
-      <span class="role-text">Role: </span>
-      <select id="role-select" class="form-select" bind:value={selectedRole}>
-        <option id="user" value="user">Uživatel</option>
-        <option id="editor" value="editor">Editor</option>
-        {#if isSuperuser}
-          <option id="administrator" value="administrator">Administrátor</option
-          >
-          <option id="superuser" value="superuser">Superuser</option>
-        {/if}
-      </select>
+    <h1>Změnit roli: {payload.user.name}</h1>
+    <form>
+      <RadioGroup options={roleList} bind:selected={selectedRole}>
+        <span slot="option" let:value>
+          {value}
+        </span>
+      </RadioGroup>
     </form>
-    <div class="role-help">
+    <br />
+    <div class="infobox">
       <i class="icon-info-circled" />
-      <span class="role-help-name">Uživatel</span> - Kdokoliv, kdo se někdy přihlásil
+      <span class="infobox-name">Uživatel</span> - Kdokoliv, kdo se někdy přihlásil
       pomocí skautISu. Nemá žádná oprávnění navíc oproti nepřihlášeným návštěvníkům.
     </div>
-    <div class="role-help">
+    <div class="infobox">
       <i class="icon-info-circled" />
-      <span class="role-help-name">Editor</span> - Instruktor, který má základní
-      přístup ke správě. Může přidávat lekce, měnit jejich obsah, kompetence a přesouvat
+      <span class="infobox-name">Editor</span> - Instruktor, který má základní přístup
+      ke správě. Může přidávat lekce, měnit jejich obsah, kompetence a přesouvat
       je mezi oblastmi. Editor má přístup ke správě uživatelů, avšak může prohlížet
       a měnit pouze hosty a uživatele.
     </div>
     {#if isSuperuser}
-      <div class="role-help">
+      <div class="infobox">
         <i class="icon-info-circled" />
-        <span class="role-help-name">Administrátor</span> - Instruktor, mající všechna
+        <span class="infobox-name">Administrátor</span> - Instruktor, mající všechna
         práva editora. Navíc může i mazat lekce a přidávat, upravovat a mazat oblasti
         a kompetence. Administrátor může navíc přidělovat a odebírat práva editorů.
       </div>
-      <div class="role-help">
+      <div class="infobox">
         <i class="icon-info-circled" />
-        <span class="role-help-name">Superuser</span> - Uživatel-polobůh.
+        <span class="infobox-name">Superuser</span> - Uživatel-polobůh.
       </div>
     {/if}
   </SidePanel>
 {/if}
+
+<style>
+  .infobox {
+    margin-top: 20px;
+  }
+
+  .infobox-name {
+    font-weight: bold;
+  }
+</style>

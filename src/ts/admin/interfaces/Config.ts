@@ -1,6 +1,7 @@
 export interface ConfigCustomProperties {
   "--accent-color": string;
   "--avatar-border": string;
+  "--background": string;
   "--background-darker": string;
   "--background-darkest": string;
   "--border-color": string;

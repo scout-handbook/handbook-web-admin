@@ -6,10 +6,11 @@
   import { apiUri } from "../../../../ts/admin/stores";
   import { Action } from "../../../../ts/admin/tools/Action";
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
-  import { get } from "../../../../ts/admin/tools/arrayTools";
+  import { filter, get } from "../../../../ts/admin/tools/arrayTools";
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Button from "../Button.svelte";
   import DoneDialog from "../DoneDialog.svelte";
+  import CheckboxGroup from "../forms/CheckboxGroup.svelte";
   import SidePanel from "../SidePanel.svelte";
 
   export let groups: Array<[string, Group]>;
@@ -64,27 +65,30 @@
       Zrušit
     </Button>
     <Button green icon="floppy" on:click={saveCallback}>Uložit</Button>
-    <h3 class="side-panel-title">Změnit skupiny: {payload.user.name}</h3>
-    <form id="side-panel-form">
-      {#each groups as [id, group]}
-        {#if id !== "00000000-0000-0000-0000-000000000000"}
-          <div class="form-row">
-            <label class="form-switch">
-              <input type="checkbox" value={id} bind:group={selectedGroups} />
-              <span class="form-custom form-checkbox" />
-            </label>
-            {group.name}
-          </div>
-        {/if}
-      {/each}
+    <h1>Změnit skupiny: {payload.user.name}</h1>
+    <form>
+      <CheckboxGroup
+        options={filter(
+          groups,
+          (id) => id !== "00000000-0000-0000-0000-000000000000"
+        )}
+        bind:selected={selectedGroups}
+        let:value={group}
+      >
+        {group.name}
+      </CheckboxGroup>
     </form>
-    <div class="group-help">
-      <i class="icon-info-circled" />
-      Každého uživatele lze zařadit do několika skupin (nebo i žádné). Podle toho
-      poté tento uživatel bude moct zobrazit pouze lekce, které byly těmto skupiným
-      zveřejněny. Lekce ve skupině "<span class="public-group"
-        >{publicName}</span
-      >" uvidí všichni uživatelé bez ohledu na jejich skupiny.
-    </div>
+    <br />
+    <i class="icon-info-circled" />
+    Každého uživatele lze zařadit do několika skupin (nebo i žádné). Podle toho poté
+    tento uživatel bude moct zobrazit pouze lekce, které byly těmto skupiným zveřejněny.
+    Lekce ve skupině "<span class="public">{publicName}</span>" uvidí všichni
+    uživatelé bez ohledu na jejich skupiny.
   </SidePanel>
 {/if}
+
+<style>
+  .public {
+    font-style: italic;
+  }
+</style>

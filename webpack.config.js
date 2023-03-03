@@ -21,6 +21,7 @@ module.exports = {
               dev: mode === "development",
             },
             preprocess: sveltePreprocess({
+              postcss: true,
               tsconfigFile: "./tsconfig.json",
             }),
           },

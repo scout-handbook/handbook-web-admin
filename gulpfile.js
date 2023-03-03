@@ -119,25 +119,7 @@ gulp.task("build:css", function () {
   }
   return merge(
     bundle("error", ["src/css/error.css"]),
-    bundle("admin", [
-      "src/css/button.css",
-      "src/css/competenceSubview.css",
-      "src/css/dialog.css",
-      "src/css/editor.css",
-      "src/css/fieldSubview.css",
-      "src/css/fontello.css",
-      "src/css/form.css",
-      "src/css/groupSubview.css",
-      "src/css/imageSubview.css",
-      "src/css/lesson.css",
-      "src/css/lessonSubview.css",
-      "src/css/main.css",
-      "src/css/mainPage.css",
-      "src/css/mainView.css",
-      "src/css/pagination.css",
-      "src/css/sidePanel.css",
-      "src/css/userSubview.css",
-    ])
+    bundle("admin", ["src/css/fontello.css"])
   );
 });
 

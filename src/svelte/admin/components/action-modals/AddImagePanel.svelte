@@ -6,6 +6,7 @@
   import { authFailHandler, request } from "../../../../ts/admin/tools/request";
   import Button from "../Button.svelte";
   import Dialog from "../Dialog.svelte";
+  import FileInput from "../forms/FileInput.svelte";
   import LoadingIndicator from "../LoadingIndicator.svelte";
   import Overlay from "../Overlay.svelte";
   import SidePanel from "../SidePanel.svelte";
@@ -54,20 +55,9 @@
       Zrušit
     </Button>
     <Button green icon="floppy" on:click={addImageSave}>Uložit</Button>
-    <h3 class="side-panel-title">Nahrát obrázek</h3>
-    <form id="side-panel-form">
-      <div class="form-row">
-        <label class="form-file">
-          <input class="form-file" type="file" bind:files />
-          <Button icon="upload">
-            {#if files === undefined || files.length === 0}
-              Vybrat soubor
-            {:else}
-              {files[0].name}
-            {/if}
-          </Button>
-        </label>
-      </div>
+    <h1>Nahrát obrázek</h1>
+    <form>
+      <FileInput bind:files />
     </form>
   </SidePanel>
 {:else if stage === "upload"}
