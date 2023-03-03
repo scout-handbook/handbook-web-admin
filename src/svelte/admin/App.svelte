@@ -122,8 +122,11 @@
     font-feature-settings: "liga" 1; /* stylelint-disable-line plugin/no-unsupported-browser-features */
     font-kerning: normal; /* stylelint-disable-line plugin/no-unsupported-browser-features */
     font-size: 16px;
+    height: 100%;
     line-height: 160%;
     margin: 0;
+    position: absolute;
+    width: 100%;
   }
 
   :global(h1) {
