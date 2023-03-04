@@ -42,7 +42,6 @@
   refreshLogin();
 </script>
 
-<!-- TODO: stage === "error" -->
 {#if stage === "select"}
   <SidePanel>
     <Button
