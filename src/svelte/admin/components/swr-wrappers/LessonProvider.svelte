@@ -18,21 +18,14 @@
     };
   }
 
-  const competences = derived(
-    useSWR<Record<string, Competence>>(constructURL("v1.0/competence")).data,
-    processCompetences,
-    undefined,
+  const { data: rawCompetences } = useSWR<Record<string, Competence>>(
+    constructURL("v1.0/competence")
   );
-  const lessons = derived(
-    [
-      useSWR<Record<string, Lesson>>(
-        constructURL("v1.0/lesson?override-group=true"),
-      ).data,
-      competences,
-    ],
-    processLessons,
-    undefined,
+  const { data: rawLessons } = useSWR<Record<string, Lesson>>(
+    constructURL("v1.0/lesson?override-group=true")
   );
+  const competences = derived(rawCompetences, processCompetences, undefined);
+  const lessons = derived([rawLessons, competences], processLessons, undefined);
 </script>
 
 {#if $competences === undefined || $lessons === undefined}

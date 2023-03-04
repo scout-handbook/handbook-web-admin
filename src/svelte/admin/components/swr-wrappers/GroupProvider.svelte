@@ -14,11 +14,10 @@
   export let silent = false;
   export let inline = false;
 
-  const groups = derived(
-    useSWR<Record<string, Group>>(constructURL("v1.0/group")).data,
-    processGroups,
-    undefined,
+  const { data: rawGroups } = useSWR<Record<string, Group>>(
+    constructURL("v1.0/group")
   );
+  const groups = derived(rawGroups, processGroups, undefined);
 </script>
 
 {#if $groups === undefined}

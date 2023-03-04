@@ -14,11 +14,10 @@
     default: { competences: Array<[string, Competence]> };
   }
 
-  const competences = derived(
-    useSWR<Record<string, Competence>>(constructURL("v1.0/competence")).data,
-    processCompetences,
-    undefined,
+  const { data: rawCompetences } = useSWR<Record<string, Competence>>(
+    constructURL("v1.0/competence")
   );
+  const competences = derived(rawCompetences, processCompetences, undefined);
 </script>
 
 {#if $competences === undefined}
