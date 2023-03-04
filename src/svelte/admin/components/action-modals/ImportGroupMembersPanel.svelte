@@ -113,6 +113,7 @@
           } as unknown as Payload,
           authFailHandler
         ).then(async () =>
+          // TODO: Mutate/invalidate group member count
           request(
             $apiUri + "/v1.0/user/" + participant.toString() + "/group",
             "PUT",
