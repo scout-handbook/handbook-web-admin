@@ -8,7 +8,7 @@
   import { Action } from "../../../../ts/admin/tools/Action";
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
   import { get } from "../../../../ts/admin/tools/arrayTools";
-  import { reAuthHandler, request } from "../../../../ts/admin/tools/request";
+  import { reAuth, request } from "../../../../ts/admin/tools/request";
   import Dialog from "../Dialog.svelte";
   import DoneDialog from "../DoneDialog.svelte";
   import LoadingIndicator from "../LoadingIndicator.svelte";
@@ -27,7 +27,7 @@
     "POST",
     {},
     {
-      ...reAuthHandler,
+      AuthenticationException: reAuth,
       LockedException: (response: APIResponse<RequestResponse>): void => {
         lockedError = response.holder!;
       },

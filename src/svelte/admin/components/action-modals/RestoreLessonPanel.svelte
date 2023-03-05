@@ -9,7 +9,7 @@
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import {
     authFailHandler,
-    reAuthHandler,
+    reAuth,
     request,
   } from "../../../../ts/admin/tools/request";
   import Button from "../Button.svelte";
@@ -55,7 +55,9 @@
     $apiUri + "/v1.0/deleted-lesson",
     "GET",
     {},
-    reAuthHandler
+    {
+      AuthenticationException: reAuth,
+    }
   ).then((response) => {
     lessonList = Object.entries(response);
     if (lessonList.length === 0) {
@@ -73,7 +75,9 @@
       $apiUri + "/v1.0/deleted-lesson/" + selectedLesson + "/history",
       "GET",
       {},
-      reAuthHandler
+      {
+        AuthenticationException: reAuth,
+      }
     ).then((response) => {
       versionList = response;
       step = "version-selection";

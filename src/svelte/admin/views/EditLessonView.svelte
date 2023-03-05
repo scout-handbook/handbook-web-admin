@@ -15,7 +15,7 @@
     populateField,
     populateGroups,
   } from "../../../ts/admin/tools/populateLessonActionQueue";
-  import { reAuthHandler, request } from "../../../ts/admin/tools/request";
+  import { reAuth, request } from "../../../ts/admin/tools/request";
   import DoneDialog from "../components/DoneDialog.svelte";
   import LessonEditor from "../components/LessonEditor.svelte";
   import LoadingIndicator from "../components/LoadingIndicator.svelte";
@@ -57,7 +57,7 @@
       "POST",
       {},
       {
-        ...reAuthHandler,
+        AuthenticationException: reAuth,
         LockedException: (response: APIResponse<RequestResponse>): void => {
           globalDialogMessage.set(
             "Nelze upravovat lekci, protože ji právě upravuje " +
@@ -75,7 +75,9 @@
       $apiUri + "/v1.0/lesson/" + encodeURIComponent(lessonID) + "/group",
       "GET",
       {},
-      reAuthHandler
+      {
+        AuthenticationException: reAuth,
+      }
     ).then((response) => {
       groups = response;
       initialGroups = groups;
@@ -84,7 +86,9 @@
       $apiUri + "/v1.0/lesson/" + encodeURIComponent(lessonID),
       "GET",
       {},
-      reAuthHandler
+      {
+        AuthenticationException: reAuth,
+      }
     ).then((response) => {
       body = response;
       initialBody = body;

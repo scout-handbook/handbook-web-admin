@@ -12,7 +12,7 @@
   import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import {
     authFailHandler,
-    reAuthHandler,
+    reAuth,
     request,
   } from "../../../../ts/admin/tools/request";
   import Button from "../Button.svelte";
@@ -41,7 +41,9 @@
     $apiUri + "/v1.0/event",
     "GET",
     {},
-    reAuthHandler
+    {
+      AuthenticationException: reAuth,
+    }
   ).then((response) => {
     eventList = response;
     if (eventList.length < 1) {
@@ -73,7 +75,7 @@
       "GET",
       {},
       {
-        ...reAuthHandler,
+        AuthenticationException: reAuth,
         SkautISAuthorizationException: () => {
           error = "Pro tuto akci nemáte ve SkautISu dostatečná práva.";
         },
@@ -83,7 +85,9 @@
       $apiUri + "/v1.0/user",
       "GET",
       { page: 1, "per-page": 1000, group: payload.groupId },
-      reAuthHandler
+      {
+        AuthenticationException: reAuth,
+      }
     ).then((response) => response.users);
     void Promise.all([participantPromise, userPromise]).then(
       ([participants, users]) => {
