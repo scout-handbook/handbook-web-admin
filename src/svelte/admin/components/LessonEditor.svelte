@@ -3,7 +3,6 @@
   import { useLocation } from "svelte-navigator";
 
   import { apiUri, suspendReAuth } from "../../../ts/admin/stores";
-  import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import Dialog from "./Dialog.svelte";
   import EditorHeader from "./LessonEditor/EditorHeader.svelte";
   import EditorPane from "./LessonEditor/EditorPane.svelte";
@@ -75,7 +74,6 @@
   bind:name
   on:discard={() => {
     discardConfirmation = true;
-    refreshLogin();
   }}
   on:save={() => {
     dispatch("save");

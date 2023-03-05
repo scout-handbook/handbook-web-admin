@@ -3,7 +3,6 @@
   import { createEventDispatcher } from "svelte";
 
   import { constructURL } from "../../../../ts/admin/tools/constructURL";
-  import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Button from "../../components/Button.svelte";
   import ImageGridCell from "../ImageGridCell.svelte";
   import ImageThumbnail from "../ImageThumbnail.svelte";
@@ -22,8 +21,6 @@
   const imageList = useSWR<Array<string>>(constructURL("v1.0/image")).data;
   $: totalImageCount = $imageList?.length;
   $: currentPageList = $imageList?.slice(pageStart, pageEnd);
-
-  refreshLogin();
 </script>
 
 <div style:top={imageSelectorOpen ? "-76px" : "-100%"} class="selector">

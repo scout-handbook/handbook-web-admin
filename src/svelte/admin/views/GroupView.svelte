@@ -5,7 +5,6 @@
   import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
   import { siteName } from "../../../ts/admin/stores";
   import { constructURL } from "../../../ts/admin/tools/constructURL";
-  import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import AddGroupPanel from "../components/action-modals/AddGroupPanel.svelte";
   import ChangeGroupPanel from "../components/action-modals/ChangeGroupPanel.svelte";
   import DeleteGroupDialog from "../components/action-modals/DeleteGroupDialog.svelte";
@@ -26,8 +25,6 @@
   const { data: loginstate } = useSWR<Loginstate>(constructURL("v1.0/account"));
   $: adminOrSuperuser =
     $loginstate?.role === "administrator" || $loginstate?.role === "superuser";
-
-  refreshLogin();
 </script>
 
 {#if action === "add-group"}
