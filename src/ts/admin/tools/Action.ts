@@ -12,7 +12,6 @@ export class Action {
   public callbacks: Array<ActionCallback>;
   public exceptionHandler: ExceptionHandler;
 
-  // TODO: Add SWR state mutation to callers
   public constructor(
     url: string,
     method: string,

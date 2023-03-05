@@ -146,6 +146,7 @@
     const saveActionQueue = new ActionQueue([]);
     if (initialName !== name || initialBody !== body) {
       saveActionQueue.actions.push(
+        // TODO: SSWR revalidation/mutation
         new Action(
           $apiUri + "/v1.0/lesson/" + encodeURIComponent(lessonID),
           "PUT",

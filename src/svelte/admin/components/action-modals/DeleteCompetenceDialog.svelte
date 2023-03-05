@@ -19,6 +19,7 @@
 
   function confirmCallback(): void {
     donePromise = new ActionQueue([
+      // TODO: SSWR revalidation/mutation
       new Action(
         $apiUri +
           "/v1.0/competence/" +
