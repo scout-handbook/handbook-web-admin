@@ -17,7 +17,6 @@
   export let competences: Array<string>;
   export let field: string | null;
   export let groups: Array<string>;
-  export let refreshAction: (() => void) | null = null;
 
   const dispatch = createEventDispatcher<{ discard: never; save: never }>();
   const location = useLocation<{ view: string }>();
@@ -84,4 +83,4 @@
 />
 <ImageSelector bind:imageSelectorOpen on:insert={insertImage} />
 <EditorPane bind:imageSelectorOpen bind:insertAtCursor bind:value={body} />
-<PreviewPane {name} {body} {refreshAction} />
+<PreviewPane {name} {body} />

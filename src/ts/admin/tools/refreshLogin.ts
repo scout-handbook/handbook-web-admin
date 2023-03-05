@@ -1,7 +1,10 @@
+import { get } from "svelte/store";
+
+import { afterReAuthAction } from "../stores";
 import { reAuth, request } from "./request";
 
 // TODO: Check where this is called
-export function refreshLogin(afterAction: (() => void) | null = null): void {
+export function refreshLogin(): void {
   const allCookies = "; " + document.cookie;
   const parts = allCookies.split("; skautis_timeout=");
   if (parts.length === 2) {
@@ -15,7 +18,8 @@ export function refreshLogin(afterAction: (() => void) | null = null): void {
           AuthenticationException: reAuth,
         }
       ).then(() => {
-        if (afterAction) {
+        const afterAction = get(afterReAuthAction);
+        if (afterAction !== null) {
           afterAction();
         }
       });

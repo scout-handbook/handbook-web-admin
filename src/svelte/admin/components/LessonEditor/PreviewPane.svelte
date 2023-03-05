@@ -4,7 +4,6 @@
 
   export let name: string;
   export let body: string;
-  export let refreshAction: (() => void) | null = null;
 
   let html = "";
 
@@ -19,7 +18,7 @@
   }
 
   function onChange(): void {
-    refreshLogin(refreshAction);
+    refreshLogin();
     refreshPreview();
   }
 </script>
