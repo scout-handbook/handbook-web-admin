@@ -26,17 +26,14 @@
         $apiUri + "/v1.0/group/" + encodeURIComponent(payload.groupId),
         "DELETE"
       ),
-    ])
-      .dispatch()
-      .then(() => {
-        mutate<SWRMutateFix<Record<string, Group>>>(
-          constructURL("v1.0/group"),
-          (groups) => {
-            delete groups[payload.groupId];
-            return groups;
-          }
-        );
-      });
+    ]).dispatch();
+    mutate<SWRMutateFix<Record<string, Group>>>(
+      constructURL("v1.0/group"),
+      (groups) => {
+        delete groups[payload.groupId];
+        return groups;
+      }
+    );
   }
 </script>
 

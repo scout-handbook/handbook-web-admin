@@ -126,15 +126,15 @@
         )
       )
     ).then(() => {
-      mutate<SWRMutateFix<Record<string, Group>>>(
-        constructURL("v1.0/group"),
-        (groups) => {
-          groups[payload.groupId].count += selectedParticipants.length;
-          return groups;
-        }
-      );
       step = "done";
     });
+    mutate<SWRMutateFix<Record<string, Group>>>(
+      constructURL("v1.0/group"),
+      (groups) => {
+        groups[payload.groupId].count += selectedParticipants.length;
+        return groups;
+      }
+    );
   }
 </script>
 
