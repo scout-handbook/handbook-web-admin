@@ -5,7 +5,6 @@
   import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
   import { siteName } from "../../../ts/admin/stores";
   import { constructURL } from "../../../ts/admin/tools/constructURL";
-  import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import AddCompetencePanel from "../components/action-modals/AddCompetencePanel.svelte";
   import ChangeCompetencePanel from "../components/action-modals/ChangeCompetencePanel.svelte";
   import DeleteCompetenceDialog from "../components/action-modals/DeleteCompetenceDialog.svelte";
@@ -25,8 +24,6 @@
   const { data: loginstate } = useSWR<Loginstate>(constructURL("v1.0/account"));
   $: adminOrSuperuser =
     $loginstate?.role === "administrator" || $loginstate?.role === "superuser";
-
-  refreshLogin(true);
 </script>
 
 {#if action === "add-competence"}

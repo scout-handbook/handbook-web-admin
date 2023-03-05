@@ -1,11 +1,16 @@
 <script lang="ts" strictEvents>
+  import { onDestroy, onMount } from "svelte";
   import { useNavigate } from "svelte-navigator";
 
   import type { APIResponse } from "../../../ts/admin/interfaces/APIResponse";
   import type { Field } from "../../../ts/admin/interfaces/Field";
   import type { Lesson } from "../../../ts/admin/interfaces/Lesson";
   import type { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
-  import { apiUri, globalDialogMessage } from "../../../ts/admin/stores";
+  import {
+    afterReAuthAction,
+    apiUri,
+    globalDialogMessage,
+  } from "../../../ts/admin/stores";
   import { Action } from "../../../ts/admin/tools/Action";
   import { ActionCallback } from "../../../ts/admin/tools/ActionCallback";
   import { ActionQueue } from "../../../ts/admin/tools/ActionQueue";
@@ -15,7 +20,7 @@
     populateField,
     populateGroups,
   } from "../../../ts/admin/tools/populateLessonActionQueue";
-  import { reAuthHandler, request } from "../../../ts/admin/tools/request";
+  import { reAuth, request } from "../../../ts/admin/tools/request";
   import DoneDialog from "../components/DoneDialog.svelte";
   import LessonEditor from "../components/LessonEditor.svelte";
   import LoadingIndicator from "../components/LoadingIndicator.svelte";
@@ -57,7 +62,7 @@
       "POST",
       {},
       {
-        ...reAuthHandler,
+        AuthenticationException: reAuth,
         LockedException: (response: APIResponse<RequestResponse>): void => {
           globalDialogMessage.set(
             "Nelze upravovat lekci, protože ji právě upravuje " +
@@ -75,7 +80,9 @@
       $apiUri + "/v1.0/lesson/" + encodeURIComponent(lessonID) + "/group",
       "GET",
       {},
-      reAuthHandler
+      {
+        AuthenticationException: reAuth,
+      }
     ).then((response) => {
       groups = response;
       initialGroups = groups;
@@ -84,12 +91,23 @@
       $apiUri + "/v1.0/lesson/" + encodeURIComponent(lessonID),
       "GET",
       {},
-      reAuthHandler
+      {
+        AuthenticationException: reAuth,
+      }
     ).then((response) => {
       body = response;
       initialBody = body;
     }),
   ]);
+
+  onDestroy(() => {
+    afterReAuthAction.set(null);
+  });
+  onMount(() => {
+    afterReAuthAction.set(() => {
+      lessonEditMutexExtend(lessonID);
+    });
+  });
 
   function lessonEditMutexExtend(id: string): void {
     void new ActionQueue([
@@ -167,9 +185,6 @@
   {:then}
     <LessonEditor
       id={lessonID}
-      refreshAction={() => {
-        lessonEditMutexExtend(lessonID);
-      }}
       bind:body
       bind:name
       bind:competences
