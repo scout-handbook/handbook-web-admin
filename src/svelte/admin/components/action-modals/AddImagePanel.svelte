@@ -1,7 +1,9 @@
 <script lang="ts" strictEvents>
+  import { revalidate } from "sswr";
   import { useNavigate } from "svelte-navigator";
 
   import { apiUri } from "../../../../ts/admin/stores";
+  import { constructURL } from "../../../../ts/admin/tools/constructURL";
   import { authFailHandler, request } from "../../../../ts/admin/tools/request";
   import Button from "../Button.svelte";
   import Dialog from "../Dialog.svelte";
@@ -27,13 +29,13 @@
     stage = "upload";
     const formData = new FormData();
     formData.append("image", files[0]);
-    // TODO: MUTATE?
     void request(
       $apiUri + "/v1.0/image",
       "POST",
       formData,
       authFailHandler
     ).then(() => {
+      revalidate(constructURL("v1.0/image"));
       stage = "done";
     });
   }
