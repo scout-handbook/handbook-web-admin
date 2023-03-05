@@ -19,7 +19,7 @@
   }
 
   function onChange(): void {
-    refreshLogin(false, refreshAction);
+    refreshLogin(refreshAction);
     refreshPreview();
   }
 </script>

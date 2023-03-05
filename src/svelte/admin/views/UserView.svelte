@@ -49,7 +49,7 @@
     }
   );
 
-  refreshLogin(true);
+  refreshLogin();
 </script>
 
 {#if action === "change-user-groups"}
