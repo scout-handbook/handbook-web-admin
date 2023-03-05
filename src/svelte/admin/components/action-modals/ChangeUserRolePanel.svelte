@@ -8,7 +8,6 @@
   import { Action } from "../../../../ts/admin/tools/Action";
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
   import { constructURL } from "../../../../ts/admin/tools/constructURL";
-  import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Button from "../Button.svelte";
   import DoneDialog from "../DoneDialog.svelte";
   import RadioGroup from "../forms/RadioGroup.svelte";
@@ -35,8 +34,6 @@
         ]
       : []
   );
-
-  refreshLogin();
 
   function saveCallback(): void {
     if (selectedRole === payload.user.role) {

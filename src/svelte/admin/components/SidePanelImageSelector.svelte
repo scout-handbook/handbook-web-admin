@@ -3,7 +3,6 @@
   import { createEventDispatcher } from "svelte";
 
   import { constructURL } from "../../../ts/admin/tools/constructURL";
-  import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import Button from "./Button.svelte";
   import DoubleSidePanel from "./DoubleSidePanel.svelte";
   import ImageGridCell from "./ImageGridCell.svelte";
@@ -21,8 +20,6 @@
   const imageList = useSWR<Array<string>>(constructURL("v1.0/image")).data;
   $: totalImageCount = $imageList?.length;
   $: currentPageList = $imageList?.slice(pageStart, pageEnd);
-
-  refreshLogin();
 </script>
 
 <DoubleSidePanel>

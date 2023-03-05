@@ -2,14 +2,11 @@
   import { default as EasyMDE } from "easymde";
   import { onMount } from "svelte";
 
-  import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
-
   export let imageSelectorOpen: boolean;
   export let value: string;
   export const insertAtCursor = (content: string): void => {
     const doc = editor!.codemirror.getDoc();
     doc.replaceRange(content, doc.getCursor());
-    refreshLogin();
   };
 
   let editor: EasyMDE | undefined;
