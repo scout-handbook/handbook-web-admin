@@ -6,7 +6,6 @@
   import { Action } from "../../../../ts/admin/tools/Action";
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
   import { get } from "../../../../ts/admin/tools/arrayTools";
-  import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Button from "../Button.svelte";
   import DoneDialog from "../DoneDialog.svelte";
   import NameInput from "../forms/NameInput.svelte";
@@ -20,8 +19,6 @@
   const group = get(groups, payload.groupId)!;
   let { name } = group;
   let donePromise: Promise<void> | null = null;
-
-  refreshLogin();
 
   function saveCallback(): void {
     if (group.name === name) {

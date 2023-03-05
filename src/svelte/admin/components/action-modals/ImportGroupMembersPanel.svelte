@@ -9,7 +9,6 @@
   import type { UserListResponse } from "../../../../ts/admin/interfaces/UserListResponse";
   import { apiUri } from "../../../../ts/admin/stores";
   import { get } from "../../../../ts/admin/tools/arrayTools";
-  import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import {
     authFailHandler,
     reAuth,
@@ -34,8 +33,6 @@
   let selectedEvent: number;
   let participantList: Array<Participant> = [];
   let selectedParticipants: Array<number> = [];
-
-  refreshLogin();
 
   void request<Array<Event>>(
     $apiUri + "/v1.0/event",

@@ -2,7 +2,6 @@
   import { useNavigate } from "svelte-navigator";
 
   import { get } from "../../../../ts/admin/tools/arrayTools";
-  import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Button from "../Button.svelte";
   import CheckboxGroup from "../forms/CheckboxGroup.svelte";
   import GroupProvider from "../swr-wrappers/GroupProvider.svelte";
@@ -12,8 +11,6 @@
   const navigate = useNavigate();
 
   const initialGroups = groups;
-
-  refreshLogin();
 </script>
 
 <Button

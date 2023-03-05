@@ -1,7 +1,6 @@
 <script lang="ts" strictEvents>
   import { useNavigate } from "svelte-navigator";
 
-  import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Button from "../Button.svelte";
   import CheckboxGroup from "../forms/CheckboxGroup.svelte";
   import CompetenceProvider from "../swr-wrappers/CompetenceProvider.svelte";
@@ -11,8 +10,6 @@
   const navigate = useNavigate();
 
   const initialCompetences = competences;
-
-  refreshLogin();
 </script>
 
 <Button
