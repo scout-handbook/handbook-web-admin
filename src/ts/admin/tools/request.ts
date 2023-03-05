@@ -17,10 +17,6 @@ export function reAuth(): void {
   }
 }
 
-export const reAuthHandler: ExceptionHandler = {
-  AuthenticationException: reAuth,
-};
-
 export const authFailHandler: ExceptionHandler = {
   AuthenticationException: function (): void {
     globalDialogMessage.set(

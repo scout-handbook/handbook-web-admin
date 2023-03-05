@@ -7,7 +7,7 @@
   import type { UserListResponse } from "../../../ts/admin/interfaces/UserListResponse";
   import { apiUri, siteName } from "../../../ts/admin/stores";
   import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
-  import { reAuthHandler, request } from "../../../ts/admin/tools/request";
+  import { reAuth, request } from "../../../ts/admin/tools/request";
   import ChangeUserGroupsPanel from "../components/action-modals/ChangeUserGroupsPanel.svelte";
   import ChangeUserRolePanel from "../components/action-modals/ChangeUserRolePanel.svelte";
   import LoadingIndicator from "../components/LoadingIndicator.svelte";
@@ -44,7 +44,9 @@
     $apiUri + "/v1.0/user",
     "GET",
     payload as unknown as Payload,
-    reAuthHandler
+    {
+      AuthenticationException: reAuth,
+    }
   );
 
   refreshLogin(true);
