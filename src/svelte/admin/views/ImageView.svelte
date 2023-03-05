@@ -34,7 +34,7 @@
   $: totalImageCount = $imageList?.length;
   $: currentPageList = $imageList?.slice(pageStart, pageEnd);
 
-  refreshLogin(true);
+  refreshLogin();
 </script>
 
 {#if action === "add-image"}

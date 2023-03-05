@@ -27,7 +27,7 @@
   $: adminOrSuperuser =
     $loginstate?.role === "administrator" || $loginstate?.role === "superuser";
 
-  refreshLogin(true);
+  refreshLogin();
 </script>
 
 {#if action === "add-group"}
