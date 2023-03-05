@@ -1,14 +1,17 @@
 <script lang="ts" strictEvents>
+  import { mutate } from "sswr";
   import { useNavigate } from "svelte-navigator";
 
   import type { Event } from "../../../../ts/admin/interfaces/Event";
   import type { Group } from "../../../../ts/admin/interfaces/Group";
   import type { Participant } from "../../../../ts/admin/interfaces/Participant";
   import type { Payload } from "../../../../ts/admin/interfaces/Payload";
+  import type { SWRMutateFix } from "../../../../ts/admin/interfaces/SWRMutateFix";
   import type { User } from "../../../../ts/admin/interfaces/User";
   import type { UserListResponse } from "../../../../ts/admin/interfaces/UserListResponse";
   import { apiUri } from "../../../../ts/admin/stores";
   import { get } from "../../../../ts/admin/tools/arrayTools";
+  import { constructURL } from "../../../../ts/admin/tools/constructURL";
   import {
     authFailHandler,
     reAuth,
@@ -114,7 +117,6 @@
           } as unknown as Payload,
           authFailHandler
         ).then(async () =>
-          // TODO: Mutate/invalidate group member count
           request(
             $apiUri + "/v1.0/user/" + participant.toString() + "/group",
             "PUT",
@@ -124,6 +126,13 @@
         )
       )
     ).then(() => {
+      mutate<SWRMutateFix<Record<string, Group>>>(
+        constructURL("v1.0/group"),
+        (groups) => {
+          groups[payload.groupId].count += selectedParticipants.length;
+          return groups;
+        }
+      );
       step = "done";
     });
   }
