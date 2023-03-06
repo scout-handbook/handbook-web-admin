@@ -29,6 +29,7 @@
         "DELETE"
       ),
     ]).dispatch();
+    // TODO: Also mutate lessons which may contain the deleted competence? Or just revalidate them?
     mutate<SWRMutateFix<Record<string, Competence>>>(
       constructURL("v1.0/competence"),
       (competences) => {
