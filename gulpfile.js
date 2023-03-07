@@ -6,15 +6,12 @@ const nestedObjectAssign = require("nested-object-assign");
 
 const gulp = require("gulp");
 
-const autoprefixer = require("autoprefixer");
 const cleanCSS = require("gulp-clean-css");
 const concat = require("gulp-concat");
 const htmlmin = require("gulp-htmlmin");
 const inject = require("gulp-inject-string");
 const merge = require("merge-stream");
 const postcss = require("gulp-postcss");
-const postcssCustomProperties = require("postcss-custom-properties");
-const postcssJitProps = require("postcss-jit-props");
 const rename = require("gulp-rename");
 const sourcemaps = require("gulp-sourcemaps");
 const through = require("through2");
@@ -102,15 +99,7 @@ gulp.task("build:css", function () {
         .src(sources)
         .pipe(sourcemaps.init())
         .pipe(concat(name + ".min.css"))
-        .pipe(postcss([postcssJitProps(getConfig()["custom-properties"])]))
-        .pipe(
-          postcss([
-            postcssCustomProperties({
-              preserve: false,
-            }),
-            autoprefixer(),
-          ])
-        )
+        .pipe(postcss())
         //.pipe(gulp.dest('dist/'));
         .pipe(cleanCSS())
         .pipe(sourcemaps.write("./"))
