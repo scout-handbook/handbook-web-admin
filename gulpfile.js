@@ -149,24 +149,17 @@ gulp.task("build:deps", function () {
 });
 
 gulp.task("build:icon", function () {
-  return merge(
-    gulp.src([
+  return gulp
+    .src([
       "src/icon/apple-touch-icon.png",
+      "src/icon/browserconfig.xml",
       "src/icon/favicon-16x16.png",
       "src/icon/favicon-32x32.png",
       "src/icon/favicon.ico",
       "src/icon/mstile-150x150.png",
       "src/icon/safari-pinned-tab.svg",
-    ]),
-    gulp
-      .src(["src/icon/browserconfig.xml"])
-      .pipe(
-        inject.replace(
-          "<!--ACCENT-COLOR-->",
-          getConfig()["custom-properties"]["--accent-color"]
-        )
-      )
-  ).pipe(gulp.dest("dist/"));
+    ])
+    .pipe(gulp.dest("dist/"));
 });
 
 gulp.task(
