@@ -2,7 +2,6 @@
 
 const yargs = require("yargs");
 const fs = require("fs");
-const nestedObjectAssign = require("nested-object-assign");
 
 const gulp = require("gulp");
 
@@ -18,15 +17,11 @@ const through = require("through2");
 const webpack = require("webpack-stream");
 
 function getConfig() {
-  let config = JSON.parse(fs.readFileSync("src/json/config.json", "utf8"));
-  const overrideLocation = yargs.string("config").argv.config;
-  if (overrideLocation) {
-    config = nestedObjectAssign(
-      config,
-      JSON.parse(fs.readFileSync(overrideLocation, "utf8"))
-    );
+  const location = yargs.string("config").argv.config;
+  if (location === undefined) {
+    throw new Error("No config specified");
   }
-  return config;
+  return JSON.parse(fs.readFileSync(location, "utf8"));
 }
 
 gulp.task("build:html", function () {
