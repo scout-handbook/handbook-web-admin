@@ -4,7 +4,6 @@
   import { apiUri } from "../../../../ts/admin/stores";
   import { Action } from "../../../../ts/admin/tools/Action";
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
-  import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Dialog from "../Dialog.svelte";
   import DoneDialog from "../DoneDialog.svelte";
 
@@ -13,8 +12,6 @@
   const navigate = useNavigate();
 
   let donePromise: Promise<void> | null = null;
-
-  refreshLogin();
 
   function confirmCallback(): void {
     donePromise = new ActionQueue([

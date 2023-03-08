@@ -1,7 +1,6 @@
 <script lang="ts" strictEvents>
   import { useLocation } from "svelte-navigator";
 
-  import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import SidePanel from "../SidePanel.svelte";
   import ChangeLessonCompetences from "./ChangeLessonCompetences.svelte";
   import ChangeLessonField from "./ChangeLessonField.svelte";
@@ -19,12 +18,10 @@
   const location = useLocation<{ action: string }>();
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   $: action = $location.state?.action;
-
-  refreshLogin();
 </script>
 
 {#if action === "restore-version" && id !== null}
-  <RestoreLessonVersion lessonId={id} lessonName={name} bind:body />
+  <RestoreLessonVersion lessonId={id} bind:lessonName={name} bind:body />
 {:else}
   <SidePanel>
     {#if action === "change-lesson-competences"}

@@ -7,11 +7,13 @@ import { checkLogin } from "./admin/checkLogin";
 import { SWRSetup } from "./admin/swr";
 import { ActionQueueSetup } from "./admin/tools/ActionQueue";
 import { compileMarkdownSetup } from "./admin/tools/compileMarkdown";
+import { loginRefreshSetup } from "./admin/tools/loginRefresh";
 
 function main(): void {
-  compileMarkdownSetup();
   checkLogin();
   SWRSetup();
+  compileMarkdownSetup();
+  loginRefreshSetup();
   ActionQueueSetup();
   new App({
     target: document.getElementsByTagName("body")[0],

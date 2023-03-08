@@ -3,7 +3,6 @@
   import { useLocation } from "svelte-navigator";
 
   import { apiUri, suspendReAuth } from "../../../ts/admin/stores";
-  import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import Dialog from "./Dialog.svelte";
   import EditorHeader from "./LessonEditor/EditorHeader.svelte";
   import EditorPane from "./LessonEditor/EditorPane.svelte";
@@ -17,7 +16,6 @@
   export let competences: Array<string>;
   export let field: string | null;
   export let groups: Array<string>;
-  export let refreshAction: (() => void) | null = null;
 
   const dispatch = createEventDispatcher<{ discard: never; save: never }>();
   const location = useLocation<{ view: string }>();
@@ -64,7 +62,7 @@
 {#if view === "lesson-settings"}
   <LessonSettingsPanel
     {id}
-    {name}
+    bind:name
     bind:body
     bind:competences
     bind:field
@@ -76,7 +74,6 @@
   bind:name
   on:discard={() => {
     discardConfirmation = true;
-    refreshLogin();
   }}
   on:save={() => {
     dispatch("save");
@@ -84,4 +81,4 @@
 />
 <ImageSelector bind:imageSelectorOpen on:insert={insertImage} />
 <EditorPane bind:imageSelectorOpen bind:insertAtCursor bind:value={body} />
-<PreviewPane {name} {body} {refreshAction} />
+<PreviewPane {name} {body} />

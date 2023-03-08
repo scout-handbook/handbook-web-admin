@@ -1,13 +1,23 @@
 <script lang="ts" strictEvents>
-  import { customProperties } from "../../../ts/admin/stores";
+  import { createEventDispatcher } from "svelte";
+  import { fade } from "svelte/transition";
 
-  $: ({ "--overlay-color": overlayColor } = $customProperties);
+  const dispatch = createEventDispatcher<{ click: never }>();
 </script>
 
-<div style:background-color={overlayColor} />
+<div
+  on:click={() => {
+    dispatch("click");
+  }}
+  on:keypress={() => {
+    dispatch("click");
+  }}
+  transition:fade={{ duration: 100 }}
+/>
 
 <style>
   div {
+    background-color: var(--overlay-color);
     height: 100%;
     left: 0;
     position: fixed;

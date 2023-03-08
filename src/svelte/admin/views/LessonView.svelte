@@ -5,7 +5,6 @@
   import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
   import { siteName } from "../../../ts/admin/stores";
   import { constructURL } from "../../../ts/admin/tools/constructURL";
-  import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import AddFieldPanel from "../components/action-modals/AddFieldPanel.svelte";
   import ChangeFieldPanel from "../components/action-modals/ChangeFieldPanel.svelte";
   import DeleteFieldDialog from "../components/action-modals/DeleteFieldDialog.svelte";
@@ -32,8 +31,6 @@
   const { data: loginstate } = useSWR<Loginstate>(constructURL("v1.0/account"));
   $: adminOrSuperuser =
     $loginstate?.role === "administrator" || $loginstate?.role === "superuser";
-
-  refreshLogin(true);
 </script>
 
 {#if action === "add-field"}
@@ -41,6 +38,7 @@
 {:else if action === "change-field"}
   <FieldProvider silent let:fields>
     <ChangeFieldPanel {fields} payload={actionPayload} />
+    <!-- TODO: This is too slow for some reason -->
   </FieldProvider>
 {:else if action === "delete-field"}
   <FieldProvider silent let:fields>
@@ -92,7 +90,7 @@
   {/each}
   {#each fields as [fieldId, field]}
     <br />
-    <h2 class="main-page">{field.name}</h2>
+    <h2>{field.name}</h2>
     {#if adminOrSuperuser}
       <Button
         cyan
@@ -135,3 +133,12 @@
     {/each}
   {/each}
 </FieldProvider>
+
+<style>
+  h2 {
+    display: inline-block;
+    margin-bottom: 10px;
+    margin-right: 15px;
+    margin-top: 2.3em;
+  }
+</style>

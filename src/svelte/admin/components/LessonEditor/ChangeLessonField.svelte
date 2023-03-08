@@ -1,8 +1,8 @@
 <script lang="ts" strictEvents>
   import { useNavigate } from "svelte-navigator";
 
-  import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Button from "../Button.svelte";
+  import RadioGroup from "../forms/RadioGroup.svelte";
   import FieldProvider from "../swr-wrappers/FieldProvider.svelte";
 
   export let field: string | null;
@@ -10,8 +10,6 @@
   const navigate = useNavigate();
 
   const initialField = field;
-
-  refreshLogin();
 </script>
 
 <Button
@@ -31,21 +29,23 @@
     navigate(-1);
   }}>Uložit</Button
 >
-<h3 class="side-panel-title">Změnit oblast</h3>
-<form id="side-panel-form">
+<h1>Změnit oblast</h1>
+<form>
   <FieldProvider let:fields>
-    {#each fields as [id, field]}
-      <div class="form-row">
-        <label class="form-switch">
-          <input name="field" type="radio" value={id} bind:group={field} />
-          <span class="form-custom form-radio" />
-        </label>
+    <RadioGroup options={fields} bind:selected={field}>
+      <span slot="option" let:id let:value={currentField}>
         {#if id}
-          {field.name}
+          {currentField.name}
         {:else}
-          <span class="anonymous-field">Nezařazeno</span>
+          <span class="anonymous">Nezařazeno</span>
         {/if}
-      </div>
-    {/each}
+      </span>
+    </RadioGroup>
   </FieldProvider>
 </form>
+
+<style>
+  .anonymous {
+    font-style: italic;
+  }
+</style>

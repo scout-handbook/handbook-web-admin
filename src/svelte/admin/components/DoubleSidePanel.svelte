@@ -1,26 +1,19 @@
 <script lang="ts" strictEvents>
   import { fly } from "svelte/transition";
 
-  import { customProperties } from "../../../ts/admin/stores";
-
   interface $$Slots {
     default: Record<string, never>;
   }
-
-  $: ({ "--border-color": borderColor } = $customProperties);
 </script>
 
-<div
-  style:border-left={borderColor}
-  class="panel"
-  transition:fly={{ x: 939, duration: 300 }}
->
+<div class="panel" transition:fly={{ x: 939, duration: 300 }}>
   <slot />
 </div>
 
 <style>
   .panel {
     background: white;
+    border-left: var(--border-color);
     bottom: 0;
     overflow-y: auto;
     padding: 30px;
@@ -28,6 +21,6 @@
     right: 0;
     top: 0;
     width: 939px;
-    z-index: 10;
+    z-index: 11;
   }
 </style>

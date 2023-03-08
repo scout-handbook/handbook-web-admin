@@ -1,18 +1,21 @@
+import { get } from "svelte/store";
+
 import type { APIResponse } from "../interfaces/APIResponse";
 import type { ExceptionHandler } from "../interfaces/ExceptionHandler";
 import type { Payload } from "../interfaces/Payload";
 import type { RequestResponse } from "../interfaces/RequestResponse";
 import { globalDialogMessage } from "../stores";
+import { suspendReAuth } from "../stores";
 import { constructQuery } from "./constructURL";
 
-export const reAuthHandler: ExceptionHandler = {
-  AuthenticationException: function (): void {
+export function reAuth(): void {
+  if (!get(suspendReAuth)) {
     window.location.href =
       CONFIG["api-uri"] +
       "/v1.0/login?return-uri=" +
       encodeURIComponent(window.location.href);
-  },
-};
+  }
+}
 
 export const authFailHandler: ExceptionHandler = {
   AuthenticationException: function (): void {
