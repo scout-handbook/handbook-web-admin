@@ -1,11 +1,15 @@
 <script lang="ts" strictEvents>
+  import { mutate } from "sswr";
   import { useNavigate } from "svelte-navigator";
 
   import type { Competence } from "../../../../ts/admin/interfaces/Competence";
   import { apiUri } from "../../../../ts/admin/stores";
+  import type { SWRMutateFix } from "../../../../ts/admin/SWRMutateFix";
+  import { SWRMutateFnWrapper } from "../../../../ts/admin/SWRMutateFix";
   import { Action } from "../../../../ts/admin/tools/Action";
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
   import { get } from "../../../../ts/admin/tools/arrayTools";
+  import { constructURL } from "../../../../ts/admin/tools/constructURL";
   import Button from "../Button.svelte";
   import DoneDialog from "../DoneDialog.svelte";
   import DescriptionInput from "../forms/DescriptionInput.svelte";
@@ -33,7 +37,6 @@
       });
     } else {
       donePromise = new ActionQueue([
-        // TODO: SSWR revalidation/mutation
         new Action(
           $apiUri +
             "/v1.0/competence/" +
@@ -42,6 +45,15 @@
           { number, name, description }
         ),
       ]).dispatch();
+      mutate<SWRMutateFix<Record<string, Competence>>>(
+        constructURL("v1.0/competence"),
+        SWRMutateFnWrapper((competences) => {
+          competences[payload.competenceId].number = number;
+          competences[payload.competenceId].name = name;
+          competences[payload.competenceId].description = description;
+          return competences;
+        })
+      );
     }
   }
 </script>
