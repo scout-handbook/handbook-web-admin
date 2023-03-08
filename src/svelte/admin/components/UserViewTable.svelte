@@ -3,12 +3,12 @@
   import { useNavigate } from "svelte-navigator";
 
   import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
-  import type { UserListResponse } from "../../../ts/admin/interfaces/UserListResponse";
+  import type { User } from "../../../ts/admin/interfaces/User";
   import { constructURL } from "../../../ts/admin/tools/constructURL";
   import Button from "../components/Button.svelte";
   import GroupProvider from "../components/swr-wrappers/GroupProvider.svelte";
 
-  export let userList: UserListResponse;
+  export let users: Array<User>;
 
   const navigate = useNavigate();
 
@@ -23,7 +23,7 @@
     <th>Role</th>
     <th>Skupiny</th>
   </tr>
-  {#each userList.users as user}
+  {#each users as user}
     <tr>
       <td>{user.name}</td>
       <td>

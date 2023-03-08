@@ -1,5 +1,6 @@
 <script lang="ts" strictEvents>
   import { createEventDispatcher } from "svelte";
+  import { fade } from "svelte/transition";
 
   const dispatch = createEventDispatcher<{ click: never }>();
 </script>
@@ -11,6 +12,7 @@
   on:keypress={() => {
     dispatch("click");
   }}
+  transition:fade={{ duration: 100 }}
 />
 
 <style>

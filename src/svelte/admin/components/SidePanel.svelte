@@ -1,28 +1,19 @@
 <script lang="ts" strictEvents>
-  import { fade, fly } from "svelte/transition";
+  import { fly } from "svelte/transition";
+
+  import Overlay from "./Overlay.svelte";
 
   interface $$Slots {
     default: Record<string, never>;
   }
 </script>
 
-<!-- TODO: Use Overlay component? It would need to spport transitions -->
-<div class="overlay" transition:fade={{ duration: 300 }} />
+<Overlay />
 <div class="panel" transition:fly={{ x: 539, duration: 300 }}>
   <slot />
 </div>
 
 <style>
-  .overlay {
-    background-color: var(--overlay-color);
-    height: 100%;
-    left: 0;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 9;
-  }
-
   .panel {
     background: white;
     border-left: var(--border-color);

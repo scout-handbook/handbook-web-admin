@@ -2,7 +2,6 @@
   import { useNavigate } from "svelte-navigator";
 
   import { apiUri } from "../../../../ts/admin/stores";
-  import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import { authFailHandler, request } from "../../../../ts/admin/tools/request";
   import Button from "../Button.svelte";
   import Dialog from "../Dialog.svelte";
@@ -38,11 +37,8 @@
       stage = "done";
     });
   }
-
-  refreshLogin();
 </script>
 
-<!-- TODO: stage === "error" -->
 {#if stage === "select"}
   <SidePanel>
     <Button

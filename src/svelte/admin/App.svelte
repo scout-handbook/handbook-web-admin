@@ -2,6 +2,7 @@
   import { Route, Router } from "svelte-navigator";
 
   import {
+    adminUri,
     globalDialogMessage,
     globalLoadingIndicator,
   } from "../../ts/admin/stores";
@@ -18,6 +19,9 @@
   import LessonView from "./views/LessonView.svelte";
   import RestoreLessonView from "./views/RestoreLessonView.svelte";
   import UserView from "./views/UserView.svelte";
+
+  // Remove https:// and domain
+  const basepath = $adminUri.split("/").slice(3).join("/");
 </script>
 
 {#if $globalLoadingIndicator}
@@ -34,8 +38,7 @@
     {$globalDialogMessage}
   </Dialog>
 {/if}
-<!-- TODO: Extract from config -->
-<Router basepath="/admin">
+<Router {basepath}>
   <Route component={AddLessonView} path="/lessons/add" />
   <Route path="/lessons/:id/edit" let:params>
     <FieldProvider let:fields let:lessons>

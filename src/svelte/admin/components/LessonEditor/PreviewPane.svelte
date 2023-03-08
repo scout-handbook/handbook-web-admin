@@ -1,10 +1,8 @@
 <script lang="ts" strictEvents>
   import { compileMarkdown } from "../../../../ts/admin/tools/compileMarkdown";
-  import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
 
   export let name: string;
   export let body: string;
-  export let refreshAction: (() => void) | null = null;
 
   let html = "";
 
@@ -19,7 +17,6 @@
   }
 
   function onChange(): void {
-    refreshLogin(false, refreshAction);
     refreshPreview();
   }
 </script>

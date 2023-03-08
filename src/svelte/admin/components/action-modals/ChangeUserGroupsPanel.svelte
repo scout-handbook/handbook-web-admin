@@ -7,7 +7,6 @@
   import { Action } from "../../../../ts/admin/tools/Action";
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
   import { filter, get } from "../../../../ts/admin/tools/arrayTools";
-  import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Button from "../Button.svelte";
   import DoneDialog from "../DoneDialog.svelte";
   import CheckboxGroup from "../forms/CheckboxGroup.svelte";
@@ -23,8 +22,6 @@
 
   $: publicName =
     get(groups, "00000000-0000-0000-0000-000000000000")?.name ?? "";
-
-  refreshLogin();
 
   function saveCallback(): void {
     if (
