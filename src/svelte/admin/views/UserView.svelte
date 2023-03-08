@@ -1,12 +1,12 @@
 <script lang="ts" strictEvents>
+  import { useSWR } from "sswr";
   import { useLocation } from "svelte-navigator";
 
-  import type { Payload } from "../../../ts/admin/interfaces/Payload";
   import type { Role } from "../../../ts/admin/interfaces/Role";
   import type { User } from "../../../ts/admin/interfaces/User";
   import type { UserListResponse } from "../../../ts/admin/interfaces/UserListResponse";
-  import { apiUri, siteName } from "../../../ts/admin/stores";
-  import { reAuth, request } from "../../../ts/admin/tools/request";
+  import { siteName } from "../../../ts/admin/stores";
+  import { constructURL } from "../../../ts/admin/tools/constructURL";
   import ChangeUserGroupsPanel from "../components/action-modals/ChangeUserGroupsPanel.svelte";
   import ChangeUserRolePanel from "../components/action-modals/ChangeUserRolePanel.svelte";
   import LoadingIndicator from "../components/LoadingIndicator.svelte";
@@ -30,8 +30,6 @@
   let searchName = "";
   let group = "00000000-0000-0000-0000-000000000000";
 
-  let userListPromise: Promise<UserListResponse>;
-
   $: payload = {
     name: searchName,
     page: page,
@@ -39,14 +37,12 @@
     role: role !== "all" ? role : undefined,
     group: group !== "00000000-0000-0000-0000-000000000000" ? group : undefined,
   };
-  $: userListPromise = request(
-    $apiUri + "/v1.0/user",
-    "GET",
-    payload as unknown as Payload,
-    {
-      AuthenticationException: reAuth,
-    }
-  );
+  $: ({ data: userList } = useSWR<UserListResponse>(() =>
+    constructURL("v1.0/user", payload)
+  ));
+  $: userListCount = $userList?.count;
+  let users: Array<User> | undefined;
+  $: users = $userList?.users;
 </script>
 
 {#if action === "change-user-groups"}
@@ -59,21 +55,21 @@
 
 <h1>{$siteName + " - Uživatelé"}</h1>
 <div id="userList">
-  {#await userListPromise}
+  <UserViewSearchForm
+    bind:searchName
+    bind:role
+    bind:group
+    on:change={() => {
+      page = 1;
+    }}
+  />
+  {#if users === undefined || userListCount === undefined}
     <LoadingIndicator />
-  {:then userList}
-    <UserViewSearchForm
-      bind:searchName
-      bind:role
-      bind:group
-      on:change={() => {
-        page = 1;
-      }}
-    />
-    <UserViewTable {userList} />
+  {:else}
+    <UserViewTable {users} />
     <Pagination
-      total={Math.ceil(userList.count / perPage)}
+      total={Math.ceil(userListCount / perPage)}
       bind:current={page}
     />
-  {/await}
+  {/if}
 </div>

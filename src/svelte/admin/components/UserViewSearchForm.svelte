@@ -66,14 +66,6 @@
       bind:selected={group}
     />
   </GroupProvider>
-  <Button
-    icon="search"
-    on:click={() => {
-      dispatch("change");
-    }}
-  >
-    Vyhledat
-  </Button>
   {#if searchName || role !== "all" || group !== "00000000-0000-0000-0000-000000000000"}
     <Button
       icon="cancel"
