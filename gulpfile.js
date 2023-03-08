@@ -2,34 +2,26 @@
 
 const yargs = require("yargs");
 const fs = require("fs");
-const nestedObjectAssign = require("nested-object-assign");
 
 const gulp = require("gulp");
 
-const autoprefixer = require("autoprefixer");
 const cleanCSS = require("gulp-clean-css");
 const concat = require("gulp-concat");
 const htmlmin = require("gulp-htmlmin");
 const inject = require("gulp-inject-string");
 const merge = require("merge-stream");
 const postcss = require("gulp-postcss");
-const postcssCustomProperties = require("postcss-custom-properties");
-const postcssJitProps = require("postcss-jit-props");
 const rename = require("gulp-rename");
 const sourcemaps = require("gulp-sourcemaps");
 const through = require("through2");
 const webpack = require("webpack-stream");
 
 function getConfig() {
-  let config = JSON.parse(fs.readFileSync("src/json/config.json", "utf8"));
-  const overrideLocation = yargs.string("config").argv.config;
-  if (overrideLocation) {
-    config = nestedObjectAssign(
-      config,
-      JSON.parse(fs.readFileSync(overrideLocation, "utf8"))
-    );
+  const location = yargs.string("config").argv.config;
+  if (location === undefined) {
+    throw new Error("No config specified");
   }
-  return config;
+  return JSON.parse(fs.readFileSync(location, "utf8"));
 }
 
 gulp.task("build:html", function () {
@@ -102,15 +94,7 @@ gulp.task("build:css", function () {
         .src(sources)
         .pipe(sourcemaps.init())
         .pipe(concat(name + ".min.css"))
-        .pipe(postcss([postcssJitProps(getConfig()["custom-properties"])]))
-        .pipe(
-          postcss([
-            postcssCustomProperties({
-              preserve: false,
-            }),
-            autoprefixer(),
-          ])
-        )
+        .pipe(postcss())
         //.pipe(gulp.dest('dist/'));
         .pipe(cleanCSS())
         .pipe(sourcemaps.write("./"))
@@ -160,24 +144,17 @@ gulp.task("build:deps", function () {
 });
 
 gulp.task("build:icon", function () {
-  return merge(
-    gulp.src([
+  return gulp
+    .src([
       "src/icon/apple-touch-icon.png",
+      "src/icon/browserconfig.xml",
       "src/icon/favicon-16x16.png",
       "src/icon/favicon-32x32.png",
       "src/icon/favicon.ico",
       "src/icon/mstile-150x150.png",
       "src/icon/safari-pinned-tab.svg",
-    ]),
-    gulp
-      .src(["src/icon/browserconfig.xml"])
-      .pipe(
-        inject.replace(
-          "<!--ACCENT-COLOR-->",
-          getConfig()["custom-properties"]["--accent-color"]
-        )
-      )
-  ).pipe(gulp.dest("dist/"));
+    ])
+    .pipe(gulp.dest("dist/"));
 });
 
 gulp.task(
