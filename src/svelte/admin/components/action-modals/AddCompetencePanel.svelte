@@ -1,9 +1,11 @@
 <script lang="ts" strictEvents>
+  import { revalidate } from "sswr";
   import { useNavigate } from "svelte-navigator";
 
   import { apiUri } from "../../../../ts/admin/stores";
   import { Action } from "../../../../ts/admin/tools/Action";
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
+  import { constructURL } from "../../../../ts/admin/tools/constructURL";
   import Button from "../Button.svelte";
   import DoneDialog from "../DoneDialog.svelte";
   import DescriptionInput from "../forms/DescriptionInput.svelte";
@@ -20,13 +22,16 @@
 
   function saveCallback(): void {
     donePromise = new ActionQueue([
-      // TODO: SSWR revalidation/mutation
       new Action($apiUri + "/v1.0/competence", "POST", {
         number: encodeURIComponent(number),
         name: encodeURIComponent(name),
         description: encodeURIComponent(description),
       }),
-    ]).dispatch();
+    ])
+      .dispatch()
+      .then(() => {
+        revalidate(constructURL("v1.0/competence"));
+      });
   }
 </script>
 
