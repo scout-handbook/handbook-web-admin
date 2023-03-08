@@ -62,7 +62,7 @@
     "postcss-custom-properties": "^13.1.4",
     "prettier": "^2.8.4",
     "prettier-plugin-svelte": "^2.7.0",
-    "sswr": "^1.7.0",
+    "sswr": "^1.10.0",
     "stylelint": "^15.2.0",
     "stylelint-config-standard": "^30.0.1",
     "stylelint-no-unsupported-browser-features": "^6.1.0",
