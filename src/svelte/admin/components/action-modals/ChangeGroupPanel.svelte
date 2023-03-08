@@ -6,9 +6,9 @@
   import { Action } from "../../../../ts/admin/tools/Action";
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
   import { get } from "../../../../ts/admin/tools/arrayTools";
-  import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import Button from "../Button.svelte";
   import DoneDialog from "../DoneDialog.svelte";
+  import NameInput from "../forms/NameInput.svelte";
   import SidePanel from "../SidePanel.svelte";
 
   export let groups: Array<[string, Group]>;
@@ -19,8 +19,6 @@
   const group = get(groups, payload.groupId)!;
   let { name } = group;
   let donePromise: Promise<void> | null = null;
-
-  refreshLogin();
 
   function saveCallback(): void {
     if (group.name === name) {
@@ -53,16 +51,9 @@
       Zrušit
     </Button>
     <Button green icon="floppy" on:click={saveCallback}>Uložit</Button>
-    <h3 class="side-panel-title">Upravit skupinu</h3>
-    <form id="side-panel-form">
-      <label for="fieldName">Název:</label>
-      <input
-        id="group-name"
-        class="form-text"
-        autocomplete="off"
-        type="text"
-        bind:value={name}
-      />
+    <h1>Upravit skupinu</h1>
+    <form>
+      <NameInput bind:value={name} />
       <br />
     </form>
   </SidePanel>

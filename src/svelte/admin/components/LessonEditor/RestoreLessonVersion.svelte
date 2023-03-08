@@ -9,7 +9,9 @@
   import { authFailHandler, request } from "../../../../ts/admin/tools/request";
   import Button from "../Button.svelte";
   import DoubleSidePanel from "../DoubleSidePanel.svelte";
+  import RadioGroup from "../forms/RadioGroup.svelte";
   import LoadingIndicator from "../LoadingIndicator.svelte";
+  import Overlay from "../Overlay.svelte";
   import LessonProvider from "../swr-wrappers/LessonProvider.svelte";
 
   export let lessonId: string;
@@ -34,11 +36,11 @@
     versionList = response;
   });
 
-  $: console.log(versionList);
-
-  $: contentPromise =
+  $: markdownPromise =
     selectedVersion === null
-      ? compileMarkdown(body)
+      ? new Promise<string>((resolve) => {
+          resolve(body);
+        })
       : request<string>(
           $apiUri +
             "/v1.0/lesson/" +
@@ -48,18 +50,18 @@
           "GET",
           {},
           authFailHandler
-        ).then(compileMarkdown);
+        );
 
   function saveCallback(markdown: string): void {
-    (document.getElementById("name") as HTMLInputElement).value =
-      selectedVersionName;
+    lessonName = selectedVersionName;
     body = markdown;
     navigate(-1);
   }
 </script>
 
+<Overlay />
 <DoubleSidePanel>
-  <div id="lesson-history-list">
+  <div class="version-list">
     <Button
       icon="cancel"
       yellow
@@ -70,65 +72,54 @@
       Zrušit
     </Button>
     {#if selectedVersion !== null}
-      {#await contentPromise then content}
+      {#await markdownPromise then markdown}
         <Button
           green
           icon="history"
           on:click={() => {
-            saveCallback(content);
+            saveCallback(markdown);
           }}
         >
           Obnovit
         </Button>
       {/await}
     {/if}
-    <h3 class="side-panel-title">Historie lekce</h3>
+    <h1>Historie lekce</h1>
     <div id="lessonHistoryForm">
       {#if versionList === null}
         <LoadingIndicator />
       {:else}
-        <form id="side-panel-form">
-          <div class="form-row">
-            <label class="form-switch">
-              <input
-                name="version"
-                type="radio"
-                value={null}
-                bind:group={selectedVersion}
-              />
-              <span class="form-custom form-radio" />
-            </label>
-            <span class="lesson-history-current">Současná verze</span>
-            —
-            <LessonProvider silent let:lessons>
-              <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-argument -->
-              {parseVersion(get(lessons, lessonId)?.version ?? 0)}
-            </LessonProvider>
-          </div>
-          {#each versionList as version}
-            <div class="form-row">
-              <label class="form-switch">
-                <input
-                  name="version"
-                  type="radio"
-                  value={version.version}
-                  bind:group={selectedVersion}
-                />
-                <span class="form-custom form-radio" />
-              </label>
-              <span class="lesson-history-version">
-                {version.name}
+        <form>
+          <RadioGroup
+            options={versionList.map((version) => [
+              version.version,
+              version.name,
+            ])}
+            bind:selected={selectedVersion}
+          >
+            <span slot="nullOption">
+              <span class="current-version version-name">Současná verze</span>
+              —
+              <LessonProvider silent let:lessons>
+                <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-argument -->
+                {parseVersion(get(lessons, lessonId)?.version ?? 0)}
+              </LessonProvider>
+            </span>
+            <span slot="option" let:id={version} let:value={name}>
+              <span class="version-name">
+                {name}
               </span>
               —
-              {parseVersion(version.version)}
-            </div>
-          {/each}
+              <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-argument -->
+              {parseVersion(version)}
+            </span>
+          </RadioGroup>
         </form>
       {/if}
     </div>
   </div>
-  <div id="lesson-history-preview">
-    {#await contentPromise}
+  <div class="preview">
+    {#await markdownPromise.then(compileMarkdown)}
       <LoadingIndicator />
     {:then content}
       <h1>{selectedVersionName}</h1>
@@ -137,3 +128,34 @@
     {/await}
   </div>
 </DoubleSidePanel>
+
+<style>
+  .current-version {
+    font-style: italic;
+  }
+
+  .preview {
+    border-left: solid 1px var(--border-color);
+    bottom: 0;
+    left: 430px;
+    overflow-y: auto;
+    padding: 0 20px 20px;
+    position: absolute;
+    top: 0;
+    width: 528px;
+  }
+
+  .version-list {
+    bottom: 0;
+    overflow-y: auto;
+    padding-bottom: 30px;
+    padding-top: 30px;
+    position: absolute;
+    top: 0;
+    width: 400px;
+  }
+
+  .version-name {
+    font-weight: bold;
+  }
+</style>

@@ -46,7 +46,13 @@
     "@typescript-eslint/no-unnecessary-boolean-literal-compare": "error",
     "@typescript-eslint/no-unnecessary-condition": "error",
     "@typescript-eslint/no-unnecessary-qualifier": "error",
-    "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^\\$\\$Slots$" }],
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^\\$\\$Slots$"
+      }
+    ],
     "@typescript-eslint/non-nullable-type-assertion-style": "error",
     "@typescript-eslint/prefer-for-of": "error",
     "@typescript-eslint/prefer-function-type": "error",
@@ -68,7 +74,17 @@
     "@typescript-eslint/no-non-null-assertion": "off",
     "svelte/no-store-async": "error",
     "svelte/no-target-blank": "error",
+    "svelte/block-lang": [
+      "error",
+      {
+        "enforceScriptPresent": true,
+        "script": "ts",
+        "style": null
+      }
+    ],
     "svelte/button-has-type": "error",
+    "svelte/experimental-require-slot-types": "error",
+    "svelte/experimental-require-strict-events": "error",
     "svelte/no-dom-manipulating": "error",
     "svelte/no-dupe-on-directives": "error",
     "svelte/no-dupe-use-directives": "error",
@@ -109,7 +125,7 @@
       "parserOptions": {
         "project": null
       },
-      "files": ["gulpfile.js", "webpack.config.js", ".eslintrc.js"],
+      "files": ["gulpfile.js", "postcss.config.js", "webpack.config.js", ".eslintrc.js"],
       "rules": {
         "deprecation/deprecation": "off",
         "@typescript-eslint/await-thenable": "off",

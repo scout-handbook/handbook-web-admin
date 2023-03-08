@@ -2,14 +2,11 @@
   import { default as EasyMDE } from "easymde";
   import { onMount } from "svelte";
 
-  import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
-
   export let imageSelectorOpen: boolean;
   export let value: string;
   export const insertAtCursor = (content: string): void => {
     const doc = editor!.codemirror.getDoc();
     doc.replaceRange(content, doc.getCursor());
-    refreshLogin();
   };
 
   let editor: EasyMDE | undefined;
@@ -92,6 +89,28 @@
   });
 </script>
 
-<div id="editor">
+<div>
   <textarea bind:this={editorArea} />
 </div>
+
+<style>
+  :global(.editor-toolbar) {
+    border: none;
+  }
+
+  :global(.CodeMirror) {
+    bottom: 0;
+    left: 0;
+    padding-top: 0;
+    position: absolute;
+    right: 0;
+    top: 50px;
+  }
+
+  div {
+    bottom: 0;
+    position: absolute;
+    top: 76px;
+    width: 50%;
+  }
+</style>

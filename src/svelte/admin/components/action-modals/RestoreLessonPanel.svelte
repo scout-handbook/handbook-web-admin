@@ -6,15 +6,15 @@
   import { apiUri } from "../../../../ts/admin/stores";
   import { compileMarkdown } from "../../../../ts/admin/tools/compileMarkdown";
   import { parseVersion } from "../../../../ts/admin/tools/parseVersion";
-  import { refreshLogin } from "../../../../ts/admin/tools/refreshLogin";
   import {
     authFailHandler,
-    reAuthHandler,
+    reAuth,
     request,
   } from "../../../../ts/admin/tools/request";
   import Button from "../Button.svelte";
   import Dialog from "../Dialog.svelte";
   import DoubleSidePanel from "../DoubleSidePanel.svelte";
+  import RadioGroup from "../forms/RadioGroup.svelte";
   import LoadingIndicator from "../LoadingIndicator.svelte";
   import Overlay from "../Overlay.svelte";
   import SidePanel from "../SidePanel.svelte";
@@ -48,13 +48,13 @@
           authFailHandler
         ).then(compileMarkdown);
 
-  refreshLogin();
-
   void request<Record<string, DeletedLesson>>(
     $apiUri + "/v1.0/deleted-lesson",
     "GET",
     {},
-    reAuthHandler
+    {
+      AuthenticationException: reAuth,
+    }
   ).then((response) => {
     lessonList = Object.entries(response);
     if (lessonList.length === 0) {
@@ -72,7 +72,9 @@
       $apiUri + "/v1.0/deleted-lesson/" + selectedLesson + "/history",
       "GET",
       {},
-      reAuthHandler
+      {
+        AuthenticationException: reAuth,
+      }
     ).then((response) => {
       versionList = response;
       step = "version-selection";
@@ -120,26 +122,17 @@
     >
       Pokračovat
     </Button>
-    <h3 class="side-panel-title">Obnovit smazanou lekci</h3>
+    <h1>Obnovit smazanou lekci</h1>
     <div id="restoreLessonList">
       {#if step === "lesson-selection-loading"}
         <LoadingIndicator />
       {:else if step === "lesson-selection"}
-        <form id="side-panel-form">
-          {#each lessonList as [id, lesson]}
-            <div class="form-row">
-              <label class="form-switch">
-                <input
-                  name="lesson"
-                  type="radio"
-                  value={id}
-                  bind:group={selectedLesson}
-                />
-                <span class="form-custom form-radio" />
-              </label>
+        <form>
+          <RadioGroup options={lessonList} bind:selected={selectedLesson}>
+            <span slot="option" let:value={lesson}>
               {lesson.name}
-            </div>
-          {/each}
+            </span>
+          </RadioGroup>
         </form>
       {/if}
     </div>
@@ -147,7 +140,7 @@
 {:else if step === "version-selection-loading" || step === "version-selection"}
   <Overlay />
   <DoubleSidePanel>
-    <div id="restore-lesson-version-list">
+    <div class="version-list">
       <Button
         icon="cancel"
         yellow
@@ -162,33 +155,31 @@
           >Obnovit</Button
         >
       {/if}
-      <h3 class="side-panel-title">Obnovit smazanou lekci</h3>
+      <h1>Obnovit smazanou lekci</h1>
       {#if step === "version-selection-loading"}
         <LoadingIndicator />
       {:else if step === "version-selection"}
-        <form id="side-panel-form">
-          {#each versionList as version}
-            <div class="form-row">
-              <label class="form-switch">
-                <input
-                  name="restoreLessonversion"
-                  type="radio"
-                  value={version.version}
-                  bind:group={selectedVersion}
-                />
-                <span class="form-custom form-radio" />
-              </label>
-              <span class="restore-lesson-version">
-                {version.name}
+        <form>
+          <RadioGroup
+            options={versionList.map((version) => [
+              version.version,
+              version.name,
+            ])}
+            bind:selected={selectedVersion}
+          >
+            <span slot="option" let:id={version} let:value={name}>
+              <span class="version-name">
+                {name}
               </span>
               —
-              {parseVersion(version.version)}
-            </div>
-          {/each}
+              <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-argument -->
+              {parseVersion(version)}
+            </span>
+          </RadioGroup>
         </form>
       {/if}
     </div>
-    <div id="restore-lesson-preview">
+    <div class="preview">
       {#await contentPromise}
         <LoadingIndicator />
       {:then content}
@@ -199,3 +190,30 @@
     </div>
   </DoubleSidePanel>
 {/if}
+
+<style>
+  .preview {
+    border-left: 1px solid var(--border-color);
+    bottom: 0;
+    left: 430px;
+    overflow-y: auto;
+    padding: 0 20px 20px;
+    position: absolute;
+    top: 0;
+    width: 528px;
+  }
+
+  .version-list {
+    bottom: 0;
+    overflow-y: auto;
+    padding-bottom: 30px;
+    padding-top: 30px;
+    position: absolute;
+    top: 0;
+    width: 400px;
+  }
+
+  .version-name {
+    font-weight: bold;
+  }
+</style>

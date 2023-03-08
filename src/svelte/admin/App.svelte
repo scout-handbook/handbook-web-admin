@@ -2,6 +2,7 @@
   import { Route, Router } from "svelte-navigator";
 
   import {
+    adminUri,
     globalDialogMessage,
     globalLoadingIndicator,
   } from "../../ts/admin/stores";
@@ -18,6 +19,9 @@
   import LessonView from "./views/LessonView.svelte";
   import RestoreLessonView from "./views/RestoreLessonView.svelte";
   import UserView from "./views/UserView.svelte";
+
+  // Remove https:// and domain
+  const basepath = $adminUri.split("/").slice(3).join("/");
 </script>
 
 {#if $globalLoadingIndicator}
@@ -34,71 +38,101 @@
     {$globalDialogMessage}
   </Dialog>
 {/if}
-<!-- TODO: Remove main -->
-<main>
-  <!-- TODO: Extract from config -->
-  <Router basepath="/admin">
-    <Route component={AddLessonView} path="/lessons/add" />
-    <Route path="/lessons/:id/edit" let:params>
-      <FieldProvider let:fields let:lessons>
-        <EditLessonView {fields} lessonID={params.id} {lessons} />
-      </FieldProvider>
-    </Route>
-    <Route path="/lessons/:id/versions/:version/restore" let:params>
-      <RestoreLessonView lessonID={params.id} version={params.version} />
-    </Route>
+<Router {basepath}>
+  <Route component={AddLessonView} path="/lessons/add" />
+  <Route path="/lessons/:id/edit" let:params>
+    <FieldProvider let:fields let:lessons>
+      <EditLessonView {fields} lessonID={params.id} {lessons} />
+    </FieldProvider>
+  </Route>
+  <Route path="/lessons/:id/versions/:version/restore" let:params>
+    <RestoreLessonView lessonID={params.id} version={params.version} />
+  </Route>
 
-    <Route path="/">
-      <TopBar />
-      <div id="main-page-container">
-        <div id="main-page">
-          <LessonView />
-        </div>
+  <Route path="/">
+    <TopBar />
+    <div id="main-page-container">
+      <div id="main-page">
+        <LessonView />
       </div>
-    </Route>
-    <Route path="/lessons">
-      <TopBar />
-      <div id="main-page-container">
-        <div id="main-page">
-          <LessonView />
-        </div>
+    </div>
+  </Route>
+  <Route path="/lessons">
+    <TopBar />
+    <div id="main-page-container">
+      <div id="main-page">
+        <LessonView />
       </div>
-    </Route>
-    <Route path="/competences">
-      <TopBar />
-      <div id="main-page-container">
-        <div id="main-page">
-          <CompetenceView />
-        </div>
+    </div>
+  </Route>
+  <Route path="/competences">
+    <TopBar />
+    <div id="main-page-container">
+      <div id="main-page">
+        <CompetenceView />
       </div>
-    </Route>
-    <Route path="/images">
-      <TopBar />
-      <div id="main-page-container">
-        <div id="main-page">
-          <ImageView />
-        </div>
+    </div>
+  </Route>
+  <Route path="/images">
+    <TopBar />
+    <div id="main-page-container">
+      <div id="main-page">
+        <ImageView />
       </div>
-    </Route>
-    <Route path="/users">
-      <TopBar />
-      <div id="main-page-container">
-        <div id="main-page">
-          <UserView />
-        </div>
+    </div>
+  </Route>
+  <Route path="/users">
+    <TopBar />
+    <div id="main-page-container">
+      <div id="main-page">
+        <UserView />
       </div>
-    </Route>
-    <Route path="/groups">
-      <TopBar />
-      <div id="main-page-container">
-        <div id="main-page">
-          <GroupView />
-        </div>
+    </div>
+  </Route>
+  <Route path="/groups">
+    <TopBar />
+    <div id="main-page-container">
+      <div id="main-page">
+        <GroupView />
       </div>
-    </Route>
-  </Router>
-</main>
+    </div>
+  </Route>
+</Router>
 <link
   href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700,700i"
   rel="stylesheet"
 />
+
+<style>
+  #main-page {
+    margin: 0 auto;
+    max-width: 770px;
+    padding: 20px;
+  }
+
+  #main-page-container {
+    bottom: 0;
+    left: 0;
+    overflow-y: auto;
+    position: absolute;
+    right: 0;
+    top: 81px;
+  }
+
+  :global(body) {
+    color: var(--background);
+    font-family: "Open Sans", sans-serif;
+    font-feature-settings: "liga" 1; /* stylelint-disable-line plugin/no-unsupported-browser-features */
+    font-kerning: normal; /* stylelint-disable-line plugin/no-unsupported-browser-features */
+    font-size: 16px;
+    height: 100%;
+    line-height: 160%;
+    margin: 0;
+    position: absolute;
+    width: 100%;
+  }
+
+  :global(h1) {
+    line-height: 140%;
+  }
+</style>

@@ -5,7 +5,6 @@
   import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
   import { siteName } from "../../../ts/admin/stores";
   import { constructURL } from "../../../ts/admin/tools/constructURL";
-  import { refreshLogin } from "../../../ts/admin/tools/refreshLogin";
   import AddCompetencePanel from "../components/action-modals/AddCompetencePanel.svelte";
   import ChangeCompetencePanel from "../components/action-modals/ChangeCompetencePanel.svelte";
   import DeleteCompetenceDialog from "../components/action-modals/DeleteCompetenceDialog.svelte";
@@ -25,8 +24,6 @@
   const { data: loginstate } = useSWR<Loginstate>(constructURL("v1.0/account"));
   $: adminOrSuperuser =
     $loginstate?.role === "administrator" || $loginstate?.role === "superuser";
-
-  refreshLogin(true);
 </script>
 
 {#if action === "add-competence"}
@@ -56,7 +53,7 @@
 {/if}
 <CompetenceProvider let:competences>
   {#each competences as [id, competence]}
-    <h3 class="main-page">
+    <h3>
       <!-- eslint-disable-next-line @typescript-eslint/restrict-plus-operands @typescript-eslint/no-unsafe-call -->
       {competence.number.toString() + ": " + competence.name}
     </h3>
@@ -92,9 +89,7 @@
         </Button>
       </div>
     {/if}
-    <span class="main-page competence-description"
-      >{competence.description}</span
-    >
+    <span>{competence.description}</span>
     <br />
   {/each}
 </CompetenceProvider>
@@ -102,5 +97,12 @@
 <style>
   .buttons {
     margin-bottom: 10px;
+  }
+
+  h3 {
+    display: inline-block;
+    margin-bottom: 10px;
+    margin-right: 15px;
+    margin-top: 1.9em;
   }
 </style>

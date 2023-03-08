@@ -40,7 +40,7 @@
   </Button>
 {/if}
 <br />
-<h3 class="side-panel-title no-newline">Oblast</h3>
+<h1>Oblast</h1>
 <Button
   cyan
   icon="pencil"
@@ -58,11 +58,11 @@
     <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-argument -->
     {get(fields, field)?.name ?? ""}
   {:else}
-    <span class="anonymous-field">Nezařazeno</span>
+    <span class="anonymous">Nezařazeno</span>
   {/if}
 </FieldProvider>
 <br />
-<h3 class="side-panel-title no-newline">Kompetence</h3>
+<h1>Kompetence</h1>
 <Button
   cyan
   icon="pencil"
@@ -83,7 +83,7 @@
   {/each}
 </CompetenceProvider>
 <br />
-<h3 class="side-panel-title no-newline">Skupiny</h3>
+<h1>Skupiny</h1>
 <Button
   cyan
   icon="pencil"
@@ -101,7 +101,7 @@
     <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-call @typescript-eslint/no-unsafe-argument -->
     {#each allGroups.filter(([id, _]) => groups.includes(id)) as [id, group]}
       {#if id === "00000000-0000-0000-0000-000000000000"}
-        <span class="public-group">{group.name}</span>
+        <span class="public">{group.name}</span>
         <br />
       {:else}
         {group.name}
@@ -110,3 +110,19 @@
     {/each}
   </GroupProvider>
 </div>
+
+<style>
+  .competence-number {
+    font-weight: bold;
+  }
+
+  .anonymous,
+  .public {
+    font-style: italic;
+  }
+
+  h1 {
+    display: inline-block;
+    margin-right: 15px;
+  }
+</style>
