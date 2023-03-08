@@ -3,8 +3,9 @@
   import { useNavigate } from "svelte-navigator";
 
   import type { Field } from "../../../../ts/admin/interfaces/Field";
-  import type { SWRMutateFix } from "../../../../ts/admin/interfaces/SWRMutateFix";
   import { apiUri } from "../../../../ts/admin/stores";
+  import type { SWRMutateFix } from "../../../../ts/admin/SWRMutateFix";
+  import { SWRMutateFnWrapper } from "../../../../ts/admin/SWRMutateFix";
   import { Action } from "../../../../ts/admin/tools/Action";
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
   import { get } from "../../../../ts/admin/tools/arrayTools";
@@ -29,10 +30,10 @@
     ]).dispatch();
     mutate<SWRMutateFix<Record<string, Field>>>(
       constructURL("v1.0/field?override-group=true"),
-      (fields) => {
+      SWRMutateFnWrapper((fields) => {
         delete fields[payload.fieldId];
         return fields;
-      }
+      })
     );
   }
 </script>

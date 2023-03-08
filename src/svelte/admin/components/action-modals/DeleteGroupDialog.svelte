@@ -3,8 +3,9 @@
   import { useNavigate } from "svelte-navigator";
 
   import type { Group } from "../../../../ts/admin/interfaces/Group";
-  import type { SWRMutateFix } from "../../../../ts/admin/interfaces/SWRMutateFix";
   import { apiUri } from "../../../../ts/admin/stores";
+  import type { SWRMutateFix } from "../../../../ts/admin/SWRMutateFix";
+  import { SWRMutateFnWrapper } from "../../../../ts/admin/SWRMutateFix";
   import { Action } from "../../../../ts/admin/tools/Action";
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
   import { get } from "../../../../ts/admin/tools/arrayTools";
@@ -29,10 +30,10 @@
     ]).dispatch();
     mutate<SWRMutateFix<Record<string, Group>>>(
       constructURL("v1.0/group"),
-      (groups) => {
+      SWRMutateFnWrapper((groups) => {
         delete groups[payload.groupId];
         return groups;
-      }
+      })
     );
   }
 </script>
