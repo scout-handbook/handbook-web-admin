@@ -1,13 +1,17 @@
 <script lang="ts" strictEvents>
+  import { mutate } from "sswr";
   import { useNavigate } from "svelte-navigator";
 
   import type { APIResponse } from "../../../../ts/admin/interfaces/APIResponse";
   import type { Lesson } from "../../../../ts/admin/interfaces/Lesson";
   import type { RequestResponse } from "../../../../ts/admin/interfaces/RequestResponse";
   import { apiUri } from "../../../../ts/admin/stores";
+  import type { SWRMutateFix } from "../../../../ts/admin/SWRMutateFix";
+  import { SWRMutateFnWrapper } from "../../../../ts/admin/SWRMutateFix";
   import { Action } from "../../../../ts/admin/tools/Action";
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
   import { get } from "../../../../ts/admin/tools/arrayTools";
+  import { constructURL } from "../../../../ts/admin/tools/constructURL";
   import { reAuth, request } from "../../../../ts/admin/tools/request";
   import Dialog from "../Dialog.svelte";
   import DoneDialog from "../DoneDialog.svelte";
@@ -37,7 +41,6 @@
 
   function confirmCallback(): void {
     donePromise = new ActionQueue([
-      // TODO: SSWR revalidation/mutation
       new Action(
         $apiUri + "/v1.0/lesson/" + encodeURIComponent(payload.lessonId),
         "DELETE",
@@ -50,6 +53,13 @@
         }
       ),
     ]).dispatch();
+    mutate<SWRMutateFix<Record<string, Lesson>>>(
+      constructURL("v1.0/lesson?override-group=true"),
+      SWRMutateFnWrapper((lessons) => {
+        delete lessons[payload.lessonId];
+        return lessons;
+      })
+    );
   }
 
   function dismissCallback(): void {
