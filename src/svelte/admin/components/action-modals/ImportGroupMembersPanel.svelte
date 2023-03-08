@@ -6,10 +6,11 @@
   import type { Group } from "../../../../ts/admin/interfaces/Group";
   import type { Participant } from "../../../../ts/admin/interfaces/Participant";
   import type { Payload } from "../../../../ts/admin/interfaces/Payload";
-  import type { SWRMutateFix } from "../../../../ts/admin/interfaces/SWRMutateFix";
   import type { User } from "../../../../ts/admin/interfaces/User";
   import type { UserListResponse } from "../../../../ts/admin/interfaces/UserListResponse";
   import { apiUri } from "../../../../ts/admin/stores";
+  import type { SWRMutateFix } from "../../../../ts/admin/SWRMutateFix";
+  import { SWRMutateFnWrapper } from "../../../../ts/admin/SWRMutateFix";
   import { get } from "../../../../ts/admin/tools/arrayTools";
   import { constructURL } from "../../../../ts/admin/tools/constructURL";
   import {
@@ -130,10 +131,10 @@
     });
     mutate<SWRMutateFix<Record<string, Group>>>(
       constructURL("v1.0/group"),
-      (groups) => {
+      SWRMutateFnWrapper((groups) => {
         groups[payload.groupId].count += selectedParticipants.length;
         return groups;
-      }
+      })
     );
   }
 </script>

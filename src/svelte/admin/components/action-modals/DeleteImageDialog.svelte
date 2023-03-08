@@ -2,8 +2,9 @@
   import { mutate } from "sswr";
   import { useNavigate } from "svelte-navigator";
 
-  import type { SWRMutateFix } from "../../../../ts/admin/interfaces/SWRMutateFix";
   import { apiUri } from "../../../../ts/admin/stores";
+  import type { SWRMutateFix } from "../../../../ts/admin/SWRMutateFix";
+  import { SWRMutateFnWrapper } from "../../../../ts/admin/SWRMutateFix";
   import { Action } from "../../../../ts/admin/tools/Action";
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
   import { constructURL } from "../../../../ts/admin/tools/constructURL";
@@ -25,10 +26,10 @@
     ]).dispatch();
     mutate<SWRMutateFix<Array<string>>>(
       constructURL("v1.0/image"),
-      (images) => {
+      SWRMutateFnWrapper((images) => {
         images.splice(images.indexOf(payload.imageId), 1);
         return images;
-      }
+      })
     );
   }
 </script>
