@@ -14,6 +14,7 @@
 
   export let groups: Array<[string, Group]>;
   export let payload: { user: User };
+  export let revalidate: (() => void) | undefined = undefined;
 
   const navigate = useNavigate();
 
@@ -35,7 +36,6 @@
       });
     } else {
       donePromise = new ActionQueue([
-        // TODO: SSWR revalidation/mutation
         new Action(
           $apiUri +
             "/v1.0/user/" +
@@ -45,6 +45,7 @@
           { group: selectedGroups.map(encodeURIComponent) }
         ),
       ]).dispatch();
+      revalidate?.();
     }
   }
 </script>
