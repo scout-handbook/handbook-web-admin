@@ -50,7 +50,7 @@
     <ChangeUserGroupsPanel {groups} payload={actionPayload} {revalidate} />
   </GroupProvider>
 {:else if action === "change-user-role"}
-  <ChangeUserRolePanel payload={actionPayload} />
+  <ChangeUserRolePanel payload={actionPayload} {revalidate} />
 {/if}
 
 <h1>{$siteName + " - Uživatelé"}</h1>
