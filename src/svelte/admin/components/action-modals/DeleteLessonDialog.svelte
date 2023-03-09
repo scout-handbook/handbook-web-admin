@@ -1,13 +1,18 @@
 <script lang="ts" strictEvents>
+  import { mutate } from "sswr";
   import { useNavigate } from "svelte-navigator";
 
   import type { APIResponse } from "../../../../ts/admin/interfaces/APIResponse";
+  import type { Field } from "../../../../ts/admin/interfaces/Field";
   import type { Lesson } from "../../../../ts/admin/interfaces/Lesson";
   import type { RequestResponse } from "../../../../ts/admin/interfaces/RequestResponse";
   import { apiUri } from "../../../../ts/admin/stores";
+  import type { SWRMutateFix } from "../../../../ts/admin/SWRMutateFix";
+  import { SWRMutateFnWrapper } from "../../../../ts/admin/SWRMutateFix";
   import { Action } from "../../../../ts/admin/tools/Action";
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
   import { get } from "../../../../ts/admin/tools/arrayTools";
+  import { constructURL } from "../../../../ts/admin/tools/constructURL";
   import { reAuth, request } from "../../../../ts/admin/tools/request";
   import Dialog from "../Dialog.svelte";
   import DoneDialog from "../DoneDialog.svelte";
@@ -49,6 +54,28 @@
         }
       ),
     ]).dispatch();
+    mutate<SWRMutateFix<Record<string, Lesson>>>(
+      constructURL("v1.0/lesson?override-group=true"),
+      SWRMutateFnWrapper((lessons) => {
+        delete lessons[payload.lessonId];
+        return lessons;
+      })
+    );
+    mutate<SWRMutateFix<Record<string, Field>>>(
+      constructURL("v1.0/field?override-group=true"),
+      SWRMutateFnWrapper((fields) => {
+        for (const fieldId in fields) {
+          if (fields[fieldId].lessons.includes(payload.lessonId)) {
+            fields[fieldId].lessons.splice(
+              fields[fieldId].lessons.indexOf(payload.lessonId),
+              1
+            );
+            break;
+          }
+        }
+        return fields;
+      })
+    );
   }
 
   function dismissCallback(): void {

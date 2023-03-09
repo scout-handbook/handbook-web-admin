@@ -1,11 +1,16 @@
 <script lang="ts" strictEvents>
+  import { mutate } from "sswr";
   import { useNavigate } from "svelte-navigator";
 
   import type { Competence } from "../../../../ts/admin/interfaces/Competence";
+  import type { Lesson } from "../../../../ts/admin/interfaces/Lesson";
   import { apiUri } from "../../../../ts/admin/stores";
+  import type { SWRMutateFix } from "../../../../ts/admin/SWRMutateFix";
+  import { SWRMutateFnWrapper } from "../../../../ts/admin/SWRMutateFix";
   import { Action } from "../../../../ts/admin/tools/Action";
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
   import { get } from "../../../../ts/admin/tools/arrayTools";
+  import { constructURL } from "../../../../ts/admin/tools/constructURL";
   import Dialog from "../Dialog.svelte";
   import DoneDialog from "../DoneDialog.svelte";
 
@@ -26,6 +31,27 @@
         "DELETE"
       ),
     ]).dispatch();
+    mutate<SWRMutateFix<Record<string, Competence>>>(
+      constructURL("v1.0/competence"),
+      SWRMutateFnWrapper((competences) => {
+        delete competences[payload.competenceId];
+        return competences;
+      })
+    );
+    mutate<SWRMutateFix<Record<string, Lesson>>>(
+      constructURL("v1.0/lesson?override-group=true"),
+      SWRMutateFnWrapper((lessons) => {
+        for (const lessonId in lessons) {
+          if (lessons[lessonId].competences.includes(payload.competenceId)) {
+            lessons[lessonId].competences.splice(
+              lessons[lessonId].competences.indexOf(payload.competenceId),
+              1
+            );
+          }
+        }
+        return lessons;
+      })
+    );
   }
 </script>
 
