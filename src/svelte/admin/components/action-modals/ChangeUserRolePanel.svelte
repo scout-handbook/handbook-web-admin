@@ -14,6 +14,7 @@
   import SidePanel from "../SidePanel.svelte";
 
   export let payload: { user: User };
+  export let revalidate: (() => void) | undefined = undefined;
 
   const navigate = useNavigate();
 
@@ -42,7 +43,6 @@
       });
     } else {
       donePromise = new ActionQueue([
-        // TODO: SSWR revalidation/mutation
         new Action(
           $apiUri +
             "/v1.0/user/" +
@@ -52,6 +52,7 @@
           { role: selectedRole }
         ),
       ]).dispatch();
+      revalidate?.();
     }
   }
 </script>
