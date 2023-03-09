@@ -44,8 +44,11 @@
           "PUT",
           { group: selectedGroups.map(encodeURIComponent) }
         ),
-      ]).dispatch();
-      revalidate?.();
+      ])
+        .dispatch()
+        .then(() => {
+          revalidate?.();
+        });
     }
   }
 </script>
