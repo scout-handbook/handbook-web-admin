@@ -1,4 +1,5 @@
 <script lang="ts" strictEvents>
+  import { revalidate } from "sswr";
   import { useLocation, useNavigate } from "svelte-navigator";
 
   import {
@@ -9,6 +10,7 @@
   import { Action } from "../../../ts/admin/tools/Action";
   import { ActionCallback } from "../../../ts/admin/tools/ActionCallback";
   import { ActionQueue } from "../../../ts/admin/tools/ActionQueue";
+  import { constructURL } from "../../../ts/admin/tools/constructURL";
   import { getQueryField } from "../../../ts/admin/tools/getQueryField";
   import {
     populateCompetences,
@@ -30,7 +32,6 @@
 
   function save(): void {
     const saveActionQueue = new ActionQueue([
-      // TODO: SSWR revalidation/mutation
       new Action(
         $apiUri + "/v1.0/lesson",
         "POST",
@@ -45,6 +46,7 @@
     populateField(saveActionQueue, null, field);
     populateGroups(saveActionQueue, null, groups);
     donePromise = saveActionQueue.dispatch();
+    revalidate(constructURL("v1.0/lesson?override-group=true"));
   }
 </script>
 
