@@ -1,4 +1,5 @@
 <script lang="ts" strictEvents>
+  import { mutate } from "sswr";
   import { onDestroy, onMount } from "svelte";
   import { useNavigate } from "svelte-navigator";
 
@@ -11,10 +12,13 @@
     apiUri,
     globalDialogMessage,
   } from "../../../ts/admin/stores";
+  import type { SWRMutateFix } from "../../../ts/admin/SWRMutateFix";
+  import { SWRMutateFnWrapper } from "../../../ts/admin/SWRMutateFix";
   import { Action } from "../../../ts/admin/tools/Action";
   import { ActionCallback } from "../../../ts/admin/tools/ActionCallback";
   import { ActionQueue } from "../../../ts/admin/tools/ActionQueue";
   import { get } from "../../../ts/admin/tools/arrayTools";
+  import { constructURL } from "../../../ts/admin/tools/constructURL";
   import {
     populateCompetences,
     populateField,
@@ -146,7 +150,6 @@
     const saveActionQueue = new ActionQueue([]);
     if (initialName !== name || initialBody !== body) {
       saveActionQueue.actions.push(
-        // TODO: SSWR revalidation/mutation
         new Action(
           $apiUri + "/v1.0/lesson/" + encodeURIComponent(lessonID),
           "PUT",
@@ -170,6 +173,21 @@
     populateField(saveActionQueue, lessonID, field, initialField);
     populateGroups(saveActionQueue, lessonID, groups, initialGroups);
     donePromise = saveActionQueue.dispatch();
+    mutate<SWRMutateFix<Record<string, Lesson>>>(
+      constructURL("v1.0/lesson?override-group=true"),
+      SWRMutateFnWrapper((lessons) => {
+        lessons[lessonID].name = name;
+        lessons[lessonID].competences = competences;
+        if (initialField !== null) {
+          const oldField = get(fields, initialField)!;
+          oldField.lessons.splice(oldField.lessons.indexOf(lessonID), 1);
+        }
+        if (field !== null) {
+          get(fields, field)!.lessons.push(lessonID);
+        }
+        return lessons;
+      })
+    );
   }
 
   function discard(): void {
