@@ -19,7 +19,6 @@ export function populateField(
   }
   const encodedID = lessonID !== null ? encodeURIComponent(lessonID) : "{id}";
   actionQueue.actions.push(
-    // TODO: SSWR revalidation/mutation
     new Action(
       get(apiUri) + "/v1.0/lesson/" + encodedID + "/field",
       "PUT",
@@ -43,7 +42,6 @@ export function populateCompetences(
   }
   const encodedID = lessonID !== null ? encodeURIComponent(lessonID) : "{id}";
   actionQueue.actions.push(
-    // TODO: SSWR revalidation/mutation
     new Action(
       get(apiUri) + "/v1.0/lesson/" + encodedID + "/competence",
       "PUT",
@@ -65,7 +63,6 @@ export function populateGroups(
   }
   const encodedID = lessonID !== null ? encodeURIComponent(lessonID) : "{id}";
   actionQueue.actions.push(
-    // TODO: SSWR revalidation/mutation
     new Action(get(apiUri) + "/v1.0/lesson/" + encodedID + "/group", "PUT", {
       group: groups.map(encodeURIComponent),
     })
