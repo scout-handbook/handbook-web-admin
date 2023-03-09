@@ -55,8 +55,9 @@
     populateCompetences(saveActionQueue, null, competences);
     populateField(saveActionQueue, null, field);
     populateGroups(saveActionQueue, null, groups);
-    donePromise = saveActionQueue.dispatch();
-    revalidate(constructURL("v1.0/lesson?override-group=true"));
+    donePromise = saveActionQueue.dispatch().then(() => {
+      revalidate(constructURL("v1.0/lesson?override-group=true"));
+    });
   }
 </script>
 

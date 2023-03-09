@@ -51,8 +51,11 @@
           "PUT",
           { role: selectedRole }
         ),
-      ]).dispatch();
-      revalidate?.();
+      ])
+        .dispatch()
+        .then(() => {
+          revalidate?.();
+        });
     }
   }
 </script>
