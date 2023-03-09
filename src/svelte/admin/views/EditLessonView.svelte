@@ -178,14 +178,22 @@
       SWRMutateFnWrapper((lessons) => {
         lessons[lessonID].name = name;
         lessons[lessonID].competences = competences;
+        return lessons;
+      })
+    );
+    mutate<SWRMutateFix<Record<string, Field>>>(
+      constructURL("v1.0/field?override-group=true"),
+      SWRMutateFnWrapper((fields) => {
         if (initialField !== null) {
-          const oldField = get(fields, initialField)!;
-          oldField.lessons.splice(oldField.lessons.indexOf(lessonID), 1);
+          fields[initialField].lessons.splice(
+            fields[initialField].lessons.indexOf(lessonID),
+            1
+          );
         }
         if (field !== null) {
-          get(fields, field)!.lessons.push(lessonID);
+          fields[field].lessons.push(lessonID);
         }
-        return lessons;
+        return fields;
       })
     );
   }
