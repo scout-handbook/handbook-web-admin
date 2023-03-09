@@ -3,6 +3,7 @@
   import { useNavigate } from "svelte-navigator";
 
   import type { Competence } from "../../../../ts/admin/interfaces/Competence";
+  import type { Lesson } from "../../../../ts/admin/interfaces/Lesson";
   import { apiUri } from "../../../../ts/admin/stores";
   import type { SWRMutateFix } from "../../../../ts/admin/SWRMutateFix";
   import { SWRMutateFnWrapper } from "../../../../ts/admin/SWRMutateFix";
@@ -30,12 +31,25 @@
         "DELETE"
       ),
     ]).dispatch();
-    // TODO: Also mutate lessons which may contain the deleted competence? Or just revalidate them?
     mutate<SWRMutateFix<Record<string, Competence>>>(
       constructURL("v1.0/competence"),
       SWRMutateFnWrapper((competences) => {
         delete competences[payload.competenceId];
         return competences;
+      })
+    );
+    mutate<SWRMutateFix<Record<string, Lesson>>>(
+      constructURL("v1.0/lesson?override-group=true"),
+      SWRMutateFnWrapper((lessons) => {
+        for (const lessonId in lessons) {
+          if (lessons[lessonId].competences.includes(payload.competenceId)) {
+            lessons[lessonId].competences.splice(
+              lessons[lessonId].competences.indexOf(payload.competenceId),
+              1
+            );
+          }
+        }
+        return lessons;
       })
     );
   }
