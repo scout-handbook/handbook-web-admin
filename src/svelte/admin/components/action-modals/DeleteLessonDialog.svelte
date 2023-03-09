@@ -3,6 +3,7 @@
   import { useNavigate } from "svelte-navigator";
 
   import type { APIResponse } from "../../../../ts/admin/interfaces/APIResponse";
+  import type { Field } from "../../../../ts/admin/interfaces/Field";
   import type { Lesson } from "../../../../ts/admin/interfaces/Lesson";
   import type { RequestResponse } from "../../../../ts/admin/interfaces/RequestResponse";
   import { apiUri } from "../../../../ts/admin/stores";
@@ -58,6 +59,21 @@
       SWRMutateFnWrapper((lessons) => {
         delete lessons[payload.lessonId];
         return lessons;
+      })
+    );
+    mutate<SWRMutateFix<Record<string, Field>>>(
+      constructURL("v1.0/field?override-group=true"),
+      SWRMutateFnWrapper((fields) => {
+        for (const fieldId in fields) {
+          if (fields[fieldId].lessons.includes(payload.lessonId)) {
+            fields[fieldId].lessons.splice(
+              fields[fieldId].lessons.indexOf(payload.lessonId),
+              1
+            );
+            break;
+          }
+        }
+        return fields;
       })
     );
   }
