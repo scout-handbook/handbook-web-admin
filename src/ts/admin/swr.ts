@@ -10,6 +10,7 @@ import { reAuth, request } from "./tools/request";
 
 export function SWRSetup(): void {
   createDefaultSWR({
+    dedupingInterval: 60000,
     fetcher: async (url: string): Promise<RequestResponse> =>
       request(
         url,
