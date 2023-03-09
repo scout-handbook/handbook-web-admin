@@ -123,19 +123,17 @@
       Pokračovat
     </Button>
     <h1>Obnovit smazanou lekci</h1>
-    <div id="restoreLessonList">
-      {#if step === "lesson-selection-loading"}
-        <LoadingIndicator />
-      {:else if step === "lesson-selection"}
-        <form>
-          <RadioGroup options={lessonList} bind:selected={selectedLesson}>
-            <span slot="option" let:value={lesson}>
-              {lesson.name}
-            </span>
-          </RadioGroup>
-        </form>
-      {/if}
-    </div>
+    {#if step === "lesson-selection-loading"}
+      <LoadingIndicator />
+    {:else if step === "lesson-selection"}
+      <form>
+        <RadioGroup options={lessonList} bind:selected={selectedLesson}>
+          <span slot="option" let:value={lesson}>
+            {lesson.name}
+          </span>
+        </RadioGroup>
+      </form>
+    {/if}
   </SidePanel>
 {:else if step === "version-selection-loading" || step === "version-selection"}
   <Overlay />

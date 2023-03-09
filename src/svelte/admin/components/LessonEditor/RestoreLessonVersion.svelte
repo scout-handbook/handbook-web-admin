@@ -85,38 +85,36 @@
       {/await}
     {/if}
     <h1>Historie lekce</h1>
-    <div id="lessonHistoryForm">
-      {#if versionList === null}
-        <LoadingIndicator />
-      {:else}
-        <form>
-          <RadioGroup
-            options={versionList.map((version) => [
-              version.version,
-              version.name,
-            ])}
-            bind:selected={selectedVersion}
-          >
-            <span slot="nullOption">
-              <span class="current-version version-name">Současná verze</span>
-              —
-              <LessonProvider silent let:lessons>
-                <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-argument -->
-                {parseVersion(get(lessons, lessonId)?.version ?? 0)}
-              </LessonProvider>
-            </span>
-            <span slot="option" let:id={version} let:value={name}>
-              <span class="version-name">
-                {name}
-              </span>
-              —
+    {#if versionList === null}
+      <LoadingIndicator />
+    {:else}
+      <form>
+        <RadioGroup
+          options={versionList.map((version) => [
+            version.version,
+            version.name,
+          ])}
+          bind:selected={selectedVersion}
+        >
+          <span slot="nullOption">
+            <span class="current-version version-name">Současná verze</span>
+            —
+            <LessonProvider silent let:lessons>
               <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-argument -->
-              {parseVersion(version)}
+              {parseVersion(get(lessons, lessonId)?.version ?? 0)}
+            </LessonProvider>
+          </span>
+          <span slot="option" let:id={version} let:value={name}>
+            <span class="version-name">
+              {name}
             </span>
-          </RadioGroup>
-        </form>
-      {/if}
-    </div>
+            —
+            <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-argument -->
+            {parseVersion(version)}
+          </span>
+        </RadioGroup>
+      </form>
+    {/if}
   </div>
   <div class="preview">
     {#await markdownPromise.then(compileMarkdown)}

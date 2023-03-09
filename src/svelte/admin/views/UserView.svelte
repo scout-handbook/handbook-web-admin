@@ -54,22 +54,17 @@
 {/if}
 
 <h1>{$siteName + " - Uživatelé"}</h1>
-<div id="userList">
-  <UserViewSearchForm
-    bind:searchName
-    bind:role
-    bind:group
-    on:change={() => {
-      page = 1;
-    }}
-  />
-  {#if users === undefined || userListCount === undefined}
-    <LoadingIndicator />
-  {:else}
-    <UserViewTable {users} />
-    <Pagination
-      total={Math.ceil(userListCount / perPage)}
-      bind:current={page}
-    />
-  {/if}
-</div>
+<UserViewSearchForm
+  bind:searchName
+  bind:role
+  bind:group
+  on:change={() => {
+    page = 1;
+  }}
+/>
+{#if users === undefined || userListCount === undefined}
+  <LoadingIndicator />
+{:else}
+  <UserViewTable {users} />
+  <Pagination total={Math.ceil(userListCount / perPage)} bind:current={page} />
+{/if}
