@@ -68,39 +68,38 @@
 >
   Nahrát
 </Button>
-<div id="imageList">
-  {#if currentPageList === undefined || totalImageCount === undefined}
-    <LoadingIndicator />
-  {:else}
-    {#each currentPageList as image}
-      <ImageGridCell>
-        <ImageThumbnail
-          id={image}
+<br />
+{#if currentPageList === undefined || totalImageCount === undefined}
+  <LoadingIndicator />
+{:else}
+  {#each currentPageList as image}
+    <ImageGridCell>
+      <ImageThumbnail
+        id={image}
+        on:click={() => {
+          openImage = image;
+        }}
+      />
+      <div class="delete-image">
+        <Button
+          icon="trash-empty"
+          red
           on:click={() => {
-            openImage = image;
+            navigate("/images", {
+              state: { actionPayload: { imageId: image } },
+            });
           }}
-        />
-        <div class="delete-image">
-          <Button
-            icon="trash-empty"
-            red
-            on:click={() => {
-              navigate("/images", {
-                state: { actionPayload: { imageId: image } },
-              });
-            }}
-          >
-            Smazat
-          </Button>
-        </div>
-      </ImageGridCell>
-    {/each}
-    <Pagination
-      total={Math.ceil(totalImageCount / perPage)}
-      bind:current={page}
-    />
-  {/if}
-</div>
+        >
+          Smazat
+        </Button>
+      </div>
+    </ImageGridCell>
+  {/each}
+  <Pagination
+    total={Math.ceil(totalImageCount / perPage)}
+    bind:current={page}
+  />
+{/if}
 
 <style>
   .delete-image {

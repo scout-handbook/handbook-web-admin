@@ -182,36 +182,34 @@
       Pokračovat
     </Button>
     <h1>Importovat ze SkautISu: {group.name}</h1>
-    <div id="importList">
-      {#if step === "event-selection-loading" || step === "participant-selection-loading" || step === "importing"}
-        <LoadingIndicator />
-      {:else if step === "event-selection"}
-        <h4>Volba kurzu:</h4>
-        <form>
-          <RadioGroup
-            options={eventList.map((event) => [event.id, event.name])}
-            bind:selected={selectedEvent}
-          >
-            <span slot="option" let:value={name}>
-              {name}
-            </span>
-          </RadioGroup>
-        </form>
-      {:else if step === "participant-selection"}
-        <h4>Výběr účastníků:</h4>
-        <form>
-          <CheckboxGroup
-            options={participantList.map((participant) => [
-              participant.id,
-              participant.name,
-            ])}
-            bind:selected={selectedParticipants}
-            let:value={name}
-          >
+    {#if step === "event-selection-loading" || step === "participant-selection-loading" || step === "importing"}
+      <LoadingIndicator />
+    {:else if step === "event-selection"}
+      <h4>Volba kurzu:</h4>
+      <form>
+        <RadioGroup
+          options={eventList.map((event) => [event.id, event.name])}
+          bind:selected={selectedEvent}
+        >
+          <span slot="option" let:value={name}>
             {name}
-          </CheckboxGroup>
-        </form>
-      {/if}
-    </div>
+          </span>
+        </RadioGroup>
+      </form>
+    {:else if step === "participant-selection"}
+      <h4>Výběr účastníků:</h4>
+      <form>
+        <CheckboxGroup
+          options={participantList.map((participant) => [
+            participant.id,
+            participant.name,
+          ])}
+          bind:selected={selectedParticipants}
+          let:value={name}
+        >
+          {name}
+        </CheckboxGroup>
+      </form>
+    {/if}
   </SidePanel>
 {/if}
