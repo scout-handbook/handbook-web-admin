@@ -1,10 +1,12 @@
 <script lang="ts" strictEvents>
+  import { revalidate } from "sswr";
   import { useLocation, useNavigate } from "svelte-navigator";
 
   import { apiUri } from "../../../ts/admin/stores";
   import { Action } from "../../../ts/admin/tools/Action";
   import { ActionCallback } from "../../../ts/admin/tools/ActionCallback";
   import { ActionQueue } from "../../../ts/admin/tools/ActionQueue";
+  import { constructURL } from "../../../ts/admin/tools/constructURL";
   import { getQueryField } from "../../../ts/admin/tools/getQueryField";
   import {
     populateCompetences,
@@ -53,7 +55,9 @@
     populateCompetences(saveActionQueue, null, competences);
     populateField(saveActionQueue, null, field);
     populateGroups(saveActionQueue, null, groups);
-    donePromise = saveActionQueue.dispatch();
+    donePromise = saveActionQueue.dispatch().then(() => {
+      revalidate(constructURL("v1.0/lesson?override-group=true"));
+    });
   }
 </script>
 

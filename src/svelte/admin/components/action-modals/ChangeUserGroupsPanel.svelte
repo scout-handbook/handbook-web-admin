@@ -14,6 +14,7 @@
 
   export let groups: Array<[string, Group]>;
   export let payload: { user: User };
+  export let revalidate: (() => void) | undefined = undefined;
 
   const navigate = useNavigate();
 
@@ -43,7 +44,11 @@
           "PUT",
           { group: selectedGroups.map(encodeURIComponent) }
         ),
-      ]).dispatch();
+      ])
+        .dispatch()
+        .then(() => {
+          revalidate?.();
+        });
     }
   }
 </script>

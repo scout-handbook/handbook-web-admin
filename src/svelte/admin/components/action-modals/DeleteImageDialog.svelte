@@ -1,9 +1,13 @@
 <script lang="ts" strictEvents>
+  import { mutate } from "sswr";
   import { useNavigate } from "svelte-navigator";
 
   import { apiUri } from "../../../../ts/admin/stores";
+  import type { SWRMutateFix } from "../../../../ts/admin/SWRMutateFix";
+  import { SWRMutateFnWrapper } from "../../../../ts/admin/SWRMutateFix";
   import { Action } from "../../../../ts/admin/tools/Action";
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
+  import { constructURL } from "../../../../ts/admin/tools/constructURL";
   import Dialog from "../Dialog.svelte";
   import DoneDialog from "../DoneDialog.svelte";
 
@@ -20,6 +24,13 @@
         "DELETE"
       ),
     ]).dispatch();
+    mutate<SWRMutateFix<Array<string>>>(
+      constructURL("v1.0/image"),
+      SWRMutateFnWrapper((images) => {
+        images.splice(images.indexOf(payload.imageId), 1);
+        return images;
+      })
+    );
   }
 </script>
 

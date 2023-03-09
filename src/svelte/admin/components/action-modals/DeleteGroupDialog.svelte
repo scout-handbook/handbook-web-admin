@@ -1,11 +1,15 @@
 <script lang="ts" strictEvents>
+  import { mutate } from "sswr";
   import { useNavigate } from "svelte-navigator";
 
   import type { Group } from "../../../../ts/admin/interfaces/Group";
   import { apiUri } from "../../../../ts/admin/stores";
+  import type { SWRMutateFix } from "../../../../ts/admin/SWRMutateFix";
+  import { SWRMutateFnWrapper } from "../../../../ts/admin/SWRMutateFix";
   import { Action } from "../../../../ts/admin/tools/Action";
   import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
   import { get } from "../../../../ts/admin/tools/arrayTools";
+  import { constructURL } from "../../../../ts/admin/tools/constructURL";
   import Dialog from "../Dialog.svelte";
   import DoneDialog from "../DoneDialog.svelte";
 
@@ -24,6 +28,13 @@
         "DELETE"
       ),
     ]).dispatch();
+    mutate<SWRMutateFix<Record<string, Group>>>(
+      constructURL("v1.0/group"),
+      SWRMutateFnWrapper((groups) => {
+        delete groups[payload.groupId];
+        return groups;
+      })
+    );
   }
 </script>
 
