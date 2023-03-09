@@ -37,7 +37,7 @@
     role: role !== "all" ? role : undefined,
     group: group !== "00000000-0000-0000-0000-000000000000" ? group : undefined,
   };
-  $: ({ data: userList } = useSWR<UserListResponse>(() =>
+  $: ({ data: userList, revalidate } = useSWR<UserListResponse>(() =>
     constructURL("v1.0/user", payload)
   ));
   $: userListCount = $userList?.count;
@@ -47,10 +47,10 @@
 
 {#if action === "change-user-groups"}
   <GroupProvider silent let:groups>
-    <ChangeUserGroupsPanel {groups} payload={actionPayload} />
+    <ChangeUserGroupsPanel {groups} payload={actionPayload} {revalidate} />
   </GroupProvider>
 {:else if action === "change-user-role"}
-  <ChangeUserRolePanel payload={actionPayload} />
+  <ChangeUserRolePanel payload={actionPayload} {revalidate} />
 {/if}
 
 <h1>{$siteName + " - Uživatelé"}</h1>

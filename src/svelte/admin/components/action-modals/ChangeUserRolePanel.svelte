@@ -14,6 +14,7 @@
   import SidePanel from "../SidePanel.svelte";
 
   export let payload: { user: User };
+  export let revalidate: (() => void) | undefined = undefined;
 
   const navigate = useNavigate();
 
@@ -50,7 +51,11 @@
           "PUT",
           { role: selectedRole }
         ),
-      ]).dispatch();
+      ])
+        .dispatch()
+        .then(() => {
+          revalidate?.();
+        });
     }
   }
 </script>
