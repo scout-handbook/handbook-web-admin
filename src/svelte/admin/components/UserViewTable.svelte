@@ -17,7 +17,7 @@
   $: adminOrSuperuser = $loginstate?.role === "administrator" || isSuperuser;
 </script>
 
-<table class="user-table">
+<table>
   <tr>
     <th>Jméno</th>
     <th>Role</th>
