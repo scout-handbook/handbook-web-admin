@@ -9,12 +9,12 @@
 </script>
 
 <Overlay />
-<div class="panel" transition:fly={{ x: 539, duration: 300 }}>
+<div transition:fly={{ x: 539, duration: 300 }}>
   <slot />
 </div>
 
 <style>
-  .panel {
+  div {
     background: white;
     border-left: var(--border-color);
     bottom: 0;
