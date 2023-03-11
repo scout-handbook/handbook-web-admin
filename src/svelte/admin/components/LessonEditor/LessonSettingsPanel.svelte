@@ -2,9 +2,9 @@
   import { useLocation } from "svelte-navigator";
 
   import SidePanel from "../SidePanel.svelte";
-  import ChangeLessonCompetences from "./ChangeLessonCompetences.svelte";
-  import ChangeLessonField from "./ChangeLessonField.svelte";
-  import ChangeLessonGroups from "./ChangeLessonGroups.svelte";
+  import EditLessonCompetences from "./EditLessonCompetences.svelte";
+  import EditLessonField from "./EditLessonField.svelte";
+  import EditLessonGroups from "./EditLessonGroups.svelte";
   import LessonSettingsOverview from "./LessonSettingsOverview.svelte";
   import RestoreLessonVersion from "./RestoreLessonVersion.svelte";
 
@@ -25,11 +25,11 @@
 {:else}
   <SidePanel>
     {#if action === "change-lesson-competences"}
-      <ChangeLessonCompetences bind:competences />
+      <EditLessonCompetences bind:competences />
     {:else if action === "change-lesson-field"}
-      <ChangeLessonField bind:field />
+      <EditLessonField bind:field />
     {:else if action === "change-lesson-groups"}
-      <ChangeLessonGroups bind:groups />
+      <EditLessonGroups bind:groups />
     {:else}
       <LessonSettingsOverview {id} {competences} {field} {groups} />
     {/if}
