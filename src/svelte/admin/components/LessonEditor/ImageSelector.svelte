@@ -44,7 +44,7 @@
       Nahrát
     </Button>
     -->
-    <div class="wrapper">
+    <div class="container">
       {#if currentPageList === undefined || totalImageCount === undefined}
         <LoadingIndicator />
       {:else}
@@ -93,7 +93,7 @@
     z-index: 7;
   }
 
-  .wrapper {
+  .container {
     margin: 0 auto;
     max-width: 770px;
   }
