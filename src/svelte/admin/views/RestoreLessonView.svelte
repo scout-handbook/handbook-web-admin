@@ -62,7 +62,7 @@
 </script>
 
 {#if donePromise !== null}
-  <DoneDialog {donePromise} />
+  <DoneDialog {donePromise}>Lekce byla úspěšně obnovena.</DoneDialog>
 {:else}
   {#await bodyPromise}
     <LoadingIndicator />

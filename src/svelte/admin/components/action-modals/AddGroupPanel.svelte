@@ -30,7 +30,7 @@
 </script>
 
 {#if donePromise !== null}
-  <DoneDialog {donePromise} />
+  <DoneDialog {donePromise}>Skupina byla úspěšně přidána.</DoneDialog>
 {:else}
   <SidePanel>
     <Button

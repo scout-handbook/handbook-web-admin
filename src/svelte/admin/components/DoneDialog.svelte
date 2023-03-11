@@ -5,6 +5,10 @@
   import LoadingIndicator from "./LoadingIndicator.svelte";
   import Overlay from "./Overlay.svelte";
 
+  interface $$Slots {
+    default: Record<string, never>;
+  }
+
   export let donePromise: Promise<void>;
 
   const navigate = useNavigate();
@@ -20,7 +24,6 @@
       navigate(-1);
     }}
   >
-    <!-- TODO: Enable custom messages? -->
-    Akce byla úspěšná.
+    <slot />
   </Dialog>
 {/await}

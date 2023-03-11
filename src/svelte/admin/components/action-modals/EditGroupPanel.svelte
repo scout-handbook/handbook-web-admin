@@ -49,7 +49,7 @@
 </script>
 
 {#if donePromise !== null}
-  <DoneDialog {donePromise} />
+  <DoneDialog {donePromise}>Skupina byla úspěšně upravena.</DoneDialog>
 {:else}
   <SidePanel>
     <Button

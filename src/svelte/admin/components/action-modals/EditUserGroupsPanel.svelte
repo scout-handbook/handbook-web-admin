@@ -54,7 +54,9 @@
 </script>
 
 {#if donePromise !== null}
-  <DoneDialog {donePromise} />
+  <DoneDialog {donePromise}>
+    Uživatelské skupiny byly úspěšně upraveny.
+  </DoneDialog>
 {:else}
   <SidePanel>
     <Button

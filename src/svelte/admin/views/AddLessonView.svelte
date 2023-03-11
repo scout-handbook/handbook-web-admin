@@ -52,7 +52,7 @@
 </script>
 
 {#if donePromise !== null}
-  <DoneDialog {donePromise} />
+  <DoneDialog {donePromise}>Lekce byla úspěšně přidána.</DoneDialog>
 {:else}
   <LessonEditor
     id={null}
