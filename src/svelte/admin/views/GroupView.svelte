@@ -6,8 +6,8 @@
   import { siteName } from "../../../ts/admin/stores";
   import { constructURL } from "../../../ts/admin/tools/constructURL";
   import AddGroupPanel from "../components/action-modals/AddGroupPanel.svelte";
-  import ChangeGroupPanel from "../components/action-modals/ChangeGroupPanel.svelte";
   import DeleteGroupDialog from "../components/action-modals/DeleteGroupDialog.svelte";
+  import EditGroupPanel from "../components/action-modals/EditGroupPanel.svelte";
   import ImportGroupMembersPanel from "../components/action-modals/ImportGroupMembersPanel.svelte";
   import Button from "../components/Button.svelte";
   import GroupProvider from "../components/swr-wrappers/GroupProvider.svelte";
@@ -31,7 +31,7 @@
   <AddGroupPanel />
 {:else if action === "change-group"}
   <GroupProvider silent let:groups>
-    <ChangeGroupPanel {groups} payload={actionPayload} />
+    <EditGroupPanel {groups} payload={actionPayload} />
   </GroupProvider>
 {:else if action === "delete-group"}
   <GroupProvider silent let:groups>

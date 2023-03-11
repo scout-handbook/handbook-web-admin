@@ -6,9 +6,9 @@
   import { siteName } from "../../../ts/admin/stores";
   import { constructURL } from "../../../ts/admin/tools/constructURL";
   import AddFieldPanel from "../components/action-modals/AddFieldPanel.svelte";
-  import ChangeFieldPanel from "../components/action-modals/ChangeFieldPanel.svelte";
   import DeleteFieldDialog from "../components/action-modals/DeleteFieldDialog.svelte";
   import DeleteLessonDialog from "../components/action-modals/DeleteLessonDialog.svelte";
+  import EditFieldPanel from "../components/action-modals/EditFieldPanel.svelte";
   import RestoreLessonPanel from "../components/action-modals/RestoreLessonPanel.svelte";
   import Button from "../components/Button.svelte";
   import LessonViewLesson from "../components/LessonViewLesson.svelte";
@@ -37,7 +37,7 @@
   <AddFieldPanel />
 {:else if action === "change-field"}
   <FieldProvider silent let:fields>
-    <ChangeFieldPanel {fields} payload={actionPayload} />
+    <EditFieldPanel {fields} payload={actionPayload} />
     <!-- TODO: This is too slow for some reason -->
   </FieldProvider>
 {:else if action === "delete-field"}
