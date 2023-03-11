@@ -17,7 +17,7 @@
   let stage: "done" | "error" | "select" | "upload" = "select";
   let files: FileList | undefined;
 
-  function addImageSave(): void {
+  function saveCallback(): void {
     if (files === undefined || files.length === 0) {
       return;
     }
@@ -52,7 +52,7 @@
     >
       Zrušit
     </Button>
-    <Button green icon="floppy" on:click={addImageSave}>Uložit</Button>
+    <Button green icon="floppy" on:click={saveCallback}>Uložit</Button>
     <h1>Nahrát obrázek</h1>
     <form>
       <FileInput bind:files />
