@@ -4,13 +4,13 @@
   import type { DeletedLesson } from "../../../../ts/admin/interfaces/DeletedLesson";
   import type { LessonVersion } from "../../../../ts/admin/interfaces/LessonVersion";
   import { apiUri } from "../../../../ts/admin/stores";
-  import { compileMarkdown } from "../../../../ts/admin/tools/compileMarkdown";
-  import { parseVersion } from "../../../../ts/admin/tools/parseVersion";
+  import { compileMarkdown } from "../../../../ts/admin/utils/compileMarkdown";
+  import { parseVersion } from "../../../../ts/admin/utils/parseVersion";
   import {
     authFailHandler,
     reAuth,
     request,
-  } from "../../../../ts/admin/tools/request";
+  } from "../../../../ts/admin/utils/request";
   import Button from "../Button.svelte";
   import Dialog from "../Dialog.svelte";
   import DoubleSidePanel from "../DoubleSidePanel.svelte";

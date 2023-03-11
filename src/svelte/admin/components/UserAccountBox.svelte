@@ -3,7 +3,7 @@
 
   import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
   import { adminUri, frontendUri } from "../../../ts/admin/stores";
-  import { constructURL } from "../../../ts/admin/tools/constructURL";
+  import { constructURL } from "../../../ts/admin/utils/constructURL";
 
   const { data: loginstate } = useSWR<Loginstate>(constructURL("v1.0/account"));
   $: avatar = $loginstate

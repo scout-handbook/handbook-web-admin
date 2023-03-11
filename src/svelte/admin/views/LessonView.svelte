@@ -4,7 +4,7 @@
 
   import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
   import { siteName } from "../../../ts/admin/stores";
-  import { constructURL } from "../../../ts/admin/tools/constructURL";
+  import { constructURL } from "../../../ts/admin/utils/constructURL";
   import AddFieldPanel from "../components/action-modals/AddFieldPanel.svelte";
   import DeleteFieldDialog from "../components/action-modals/DeleteFieldDialog.svelte";
   import DeleteLessonDialog from "../components/action-modals/DeleteLessonDialog.svelte";

@@ -11,13 +11,13 @@
   import { apiUri } from "../../../../ts/admin/stores";
   import type { SWRMutateFix } from "../../../../ts/admin/SWRMutateFix";
   import { SWRMutateFnWrapper } from "../../../../ts/admin/SWRMutateFix";
-  import { get } from "../../../../ts/admin/tools/arrayTools";
-  import { constructURL } from "../../../../ts/admin/tools/constructURL";
+  import { get } from "../../../../ts/admin/utils/arrayUtils";
+  import { constructURL } from "../../../../ts/admin/utils/constructURL";
   import {
     authFailHandler,
     reAuth,
     request,
-  } from "../../../../ts/admin/tools/request";
+  } from "../../../../ts/admin/utils/request";
   import Button from "../Button.svelte";
   import Dialog from "../Dialog.svelte";
   import CheckboxGroup from "../forms/CheckboxGroup.svelte";

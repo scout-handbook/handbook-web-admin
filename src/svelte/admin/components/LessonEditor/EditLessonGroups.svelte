@@ -1,7 +1,7 @@
 <script lang="ts" strictEvents>
   import { useNavigate } from "svelte-navigator";
 
-  import { get } from "../../../../ts/admin/tools/arrayTools";
+  import { get } from "../../../../ts/admin/utils/arrayUtils";
   import Button from "../Button.svelte";
   import CheckboxGroup from "../forms/CheckboxGroup.svelte";
   import GroupProvider from "../swr-wrappers/GroupProvider.svelte";

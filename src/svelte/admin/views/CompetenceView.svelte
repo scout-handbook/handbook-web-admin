@@ -4,7 +4,7 @@
 
   import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
   import { siteName } from "../../../ts/admin/stores";
-  import { constructURL } from "../../../ts/admin/tools/constructURL";
+  import { constructURL } from "../../../ts/admin/utils/constructURL";
   import AddCompetencePanel from "../components/action-modals/AddCompetencePanel.svelte";
   import DeleteCompetenceDialog from "../components/action-modals/DeleteCompetenceDialog.svelte";
   import EditCompetencePanel from "../components/action-modals/EditCompetencePanel.svelte";

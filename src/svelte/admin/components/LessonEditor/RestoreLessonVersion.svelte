@@ -3,10 +3,10 @@
 
   import type { LessonVersion } from "../../../../ts/admin/interfaces/LessonVersion";
   import { apiUri } from "../../../../ts/admin/stores";
-  import { get } from "../../../../ts/admin/tools/arrayTools";
-  import { compileMarkdown } from "../../../../ts/admin/tools/compileMarkdown";
-  import { parseVersion } from "../../../../ts/admin/tools/parseVersion";
-  import { authFailHandler, request } from "../../../../ts/admin/tools/request";
+  import { get } from "../../../../ts/admin/utils/arrayUtils";
+  import { compileMarkdown } from "../../../../ts/admin/utils/compileMarkdown";
+  import { parseVersion } from "../../../../ts/admin/utils/parseVersion";
+  import { authFailHandler, request } from "../../../../ts/admin/utils/request";
   import Button from "../Button.svelte";
   import DoubleSidePanel from "../DoubleSidePanel.svelte";
   import RadioGroup from "../forms/RadioGroup.svelte";

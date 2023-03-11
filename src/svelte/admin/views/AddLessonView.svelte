@@ -2,21 +2,21 @@
   import { revalidate } from "sswr";
   import { useLocation, useNavigate } from "svelte-navigator";
 
-  import {
-    defaultBody,
-    defaultName,
-  } from "../../../ts/admin/lessonEditor/defaultContent";
-  import { apiUri } from "../../../ts/admin/stores";
-  import { Action } from "../../../ts/admin/tools/Action";
-  import { ActionCallback } from "../../../ts/admin/tools/ActionCallback";
-  import { ActionQueue } from "../../../ts/admin/tools/ActionQueue";
-  import { constructURL } from "../../../ts/admin/tools/constructURL";
-  import { getQueryField } from "../../../ts/admin/tools/getQueryField";
+  import { Action } from "../../../ts/admin/actions/Action";
+  import { ActionCallback } from "../../../ts/admin/actions/ActionCallback";
+  import { ActionQueue } from "../../../ts/admin/actions/ActionQueue";
   import {
     populateCompetences,
     populateField,
     populateGroups,
-  } from "../../../ts/admin/tools/populateLessonActionQueue";
+  } from "../../../ts/admin/actions/populateLessonActionQueue";
+  import { apiUri } from "../../../ts/admin/stores";
+  import { constructURL } from "../../../ts/admin/utils/constructURL";
+  import {
+    defaultBody,
+    defaultName,
+  } from "../../../ts/admin/utils/defaultLessonContent";
+  import { getQueryField } from "../../../ts/admin/utils/getQueryField";
   import DoneDialog from "../components/DoneDialog.svelte";
   import LessonEditor from "../components/LessonEditor.svelte";
 

@@ -4,7 +4,7 @@
 
   import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
   import { siteName } from "../../../ts/admin/stores";
-  import { constructURL } from "../../../ts/admin/tools/constructURL";
+  import { constructURL } from "../../../ts/admin/utils/constructURL";
   import AddGroupPanel from "../components/action-modals/AddGroupPanel.svelte";
   import DeleteGroupDialog from "../components/action-modals/DeleteGroupDialog.svelte";
   import EditGroupPanel from "../components/action-modals/EditGroupPanel.svelte";

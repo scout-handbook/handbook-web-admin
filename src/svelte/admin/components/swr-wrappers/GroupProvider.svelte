@@ -4,7 +4,7 @@
 
   import type { Group } from "../../../../ts/admin/interfaces/Group";
   import { processGroups } from "../../../../ts/admin/swr";
-  import { constructURL } from "../../../../ts/admin/tools/constructURL";
+  import { constructURL } from "../../../../ts/admin/utils/constructURL";
   import LoadingIndicator from "../LoadingIndicator.svelte";
 
   interface $$Slots {

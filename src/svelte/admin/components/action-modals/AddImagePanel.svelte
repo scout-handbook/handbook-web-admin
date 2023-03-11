@@ -3,8 +3,8 @@
   import { useNavigate } from "svelte-navigator";
 
   import { apiUri } from "../../../../ts/admin/stores";
-  import { constructURL } from "../../../../ts/admin/tools/constructURL";
-  import { authFailHandler, request } from "../../../../ts/admin/tools/request";
+  import { constructURL } from "../../../../ts/admin/utils/constructURL";
+  import { authFailHandler, request } from "../../../../ts/admin/utils/request";
   import Button from "../Button.svelte";
   import Dialog from "../Dialog.svelte";
   import FileInput from "../forms/FileInput.svelte";
