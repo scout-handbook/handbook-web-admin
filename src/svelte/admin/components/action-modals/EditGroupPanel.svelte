@@ -65,7 +65,6 @@
     <h1>Upravit skupinu</h1>
     <form>
       <NameInput bind:value={name} />
-      <br />
     </form>
   </SidePanel>
 {/if}
