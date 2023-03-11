@@ -30,7 +30,6 @@
 
   const navigate = useNavigate();
 
-  // TODO: Merge steps with loaded values.
   let error = "";
   let step = "event-selection-loading";
   const group = get(groups, payload.groupId)!;
