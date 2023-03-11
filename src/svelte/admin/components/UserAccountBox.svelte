@@ -12,7 +12,7 @@
   $: name = $loginstate?.name;
 </script>
 
-<div class="wrapper">
+<div class="container">
   <img alt="Account avatar" src={avatar} />
   <div class="name">
     {#if name}
@@ -66,7 +66,7 @@
     padding-top: 12px;
   }
 
-  .wrapper {
+  .container {
     border-right: 1px solid var(--border-color);
     display: inline-block;
     height: 80px;
