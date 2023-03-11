@@ -4,6 +4,7 @@
   import UserAccountBox from "./UserAccountBox.svelte";
 
   const navigate = useNavigate();
+  const rootMatcher = useMatch("/");
   const lessonMatcher = useMatch("/lessons");
   const competenceMatcher = useMatch("/competences");
   const imageMatcher = useMatch("/images");
@@ -16,7 +17,7 @@
   <!-- TODO: Remove manual positioning -->
   <div
     class="lessons tab"
-    class:active-tab={$lessonMatcher !== null}
+    class:active-tab={$rootMatcher !== null || $lessonMatcher !== null}
     on:click={() => {
       navigate("/lessons");
     }}
