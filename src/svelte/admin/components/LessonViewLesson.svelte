@@ -20,6 +20,7 @@
     $loginstate?.role === "administrator" || $loginstate?.role === "superuser";
 </script>
 
+<!-- TODO: Remove? -->
 <br />
 <h3 class:second-level={secondLevel}>{lesson.name}</h3>
 <Button

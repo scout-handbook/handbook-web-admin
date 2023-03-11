@@ -18,6 +18,7 @@
 </script>
 
 {#if nullOptionPresent}
+  <!-- TODO: Remove div? -->
   <div>
     <label>
       <input {name} type="radio" value={null} bind:group={selected} />
@@ -27,6 +28,7 @@
   </div>
 {/if}
 {#each options as [id, value]}
+  <!-- TODO: Remove div? -->
   <div>
     <label>
       <input {name} type="radio" value={id} bind:group={selected} />

@@ -13,6 +13,7 @@
 </script>
 
 {#each options as [id, value]}
+  <!-- TODO: Remove div? -->
   <div>
     <label>
       <input type="checkbox" value={id} bind:group={selected} />

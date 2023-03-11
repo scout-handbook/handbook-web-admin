@@ -90,6 +90,7 @@
       </div>
     {/if}
     <span>{competence.description}</span>
+    <!-- TODO: Remove br? -->
     <br />
   {/each}
 </CompetenceProvider>

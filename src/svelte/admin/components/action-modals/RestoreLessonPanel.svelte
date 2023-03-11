@@ -21,6 +21,7 @@
 
   const navigate = useNavigate();
 
+  // TODO: Merge steps with loaded values.
   let error = "";
   let step = "lesson-selection-loading";
   let lessonList: Array<[string, DeletedLesson]>;

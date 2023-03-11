@@ -20,6 +20,7 @@
       navigate(-1);
     }}
   >
+    <!-- TODO: Enable custom messages? -->
     Akce byla úspěšná.
   </Dialog>
 {/await}
