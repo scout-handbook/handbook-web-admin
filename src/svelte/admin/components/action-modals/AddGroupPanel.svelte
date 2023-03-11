@@ -46,7 +46,6 @@
     <h1>Přidat skupinu</h1>
     <form>
       <NameInput bind:value={name} />
-      <br />
     </form>
   </SidePanel>
 {/if}
