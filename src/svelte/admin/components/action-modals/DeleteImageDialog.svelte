@@ -35,7 +35,7 @@
 </script>
 
 {#if donePromise !== null}
-  <DoneDialog {donePromise} />
+  <DoneDialog {donePromise}>Obrázek byl úspěšně smazán.</DoneDialog>
 {:else}
   <Dialog
     confirmButtonText="Ano"

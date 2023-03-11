@@ -206,7 +206,7 @@
 </script>
 
 {#if donePromise !== null}
-  <DoneDialog {donePromise} />
+  <DoneDialog {donePromise}>Lekce byla úspěšně upravena.</DoneDialog>
 {:else}
   {#await lessonDataPromise}
     <LoadingIndicator />

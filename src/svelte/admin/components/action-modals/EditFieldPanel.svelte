@@ -84,7 +84,7 @@
   />
 {/if}
 {#if donePromise !== null}
-  <DoneDialog {donePromise} />
+  <DoneDialog {donePromise}>Oblast byla úspěšně upravena.</DoneDialog>
 {:else}
   <SidePanel>
     <Button

@@ -112,7 +112,7 @@
     Zkuste to prosím znovu.
   </Dialog>
 {:else if donePromise !== null}
-  <DoneDialog {donePromise} />
+  <DoneDialog {donePromise}>Lekce byla úspěšně smazána.</DoneDialog>
 {:else}
   {#await mutexPromise}
     <Overlay />

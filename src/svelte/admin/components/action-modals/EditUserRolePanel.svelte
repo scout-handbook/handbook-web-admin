@@ -61,7 +61,7 @@
 </script>
 
 {#if donePromise !== null}
-  <DoneDialog {donePromise} />
+  <DoneDialog {donePromise}>Uživatelská role byla úspěšně upravena.</DoneDialog>
 {:else}
   <SidePanel>
     <Button

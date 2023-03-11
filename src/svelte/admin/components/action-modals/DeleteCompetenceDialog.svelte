@@ -56,7 +56,7 @@
 </script>
 
 {#if donePromise !== null}
-  <DoneDialog {donePromise} />
+  <DoneDialog {donePromise}>Kompetence byla úspěšně smazána.</DoneDialog>
 {:else}
   <Dialog
     confirmButtonText="Ano"
