@@ -45,6 +45,7 @@ async function rawRequest<T extends RequestResponse>(
     const xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function (): void {
       if (this.readyState === 4) {
+        // TODO: This can fail on API error - however, it should still be handled gracefully
         resolve(JSON.parse(this.responseText) as APIResponse<T>);
       }
     };

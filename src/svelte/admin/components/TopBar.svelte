@@ -13,6 +13,7 @@
 
 <div class="wrapper">
   <UserAccountBox />
+  <!-- TODO: Remove manual positioning -->
   <div
     class="lessons tab"
     class:active-tab={$lessonMatcher !== null}

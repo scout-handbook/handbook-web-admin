@@ -6,6 +6,7 @@
 {#if total > 1}
   <div class="container">
     {#if current > 3}
+      <!-- TODO: Simplify by splitting out the button component -->
       <div
         class="button"
         on:click={() => {

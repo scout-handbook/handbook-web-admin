@@ -80,6 +80,7 @@
         sendBeacon(lessonID);
       };
     }),
+    // TODO: Move this sometime later? This doesn't need to be ready beforedisplaying the editor. Or get it from parent like RestoreLessonView does?
     request<Array<string>>(
       $apiUri + "/v1.0/lesson/" + encodeURIComponent(lessonID) + "/group",
       "GET",
