@@ -2,10 +2,10 @@ import { revalidate } from "sswr";
 
 import type { SerializedAction } from "../interfaces/SerializedAction";
 import { globalDialogMessage, globalLoadingIndicator } from "../stores";
-import { request } from "../tools/request";
+import { constructURL } from "../utils/constructURL";
+import { request } from "../utils/request";
 import type { Action } from "./Action";
 import { deserializeAction, serializeAction } from "./Action";
-import { constructURL } from "./constructURL";
 
 export class ActionQueue {
   public actions: Array<Action>;

@@ -2,7 +2,7 @@
   import { useSWR } from "sswr";
   import { createEventDispatcher } from "svelte";
 
-  import { constructURL } from "../../../ts/admin/tools/constructURL";
+  import { constructURL } from "../../../ts/admin/utils/constructURL";
   import Button from "./Button.svelte";
   import DoubleSidePanel from "./DoubleSidePanel.svelte";
   import ImageGridCell from "./ImageGridCell.svelte";

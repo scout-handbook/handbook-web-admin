@@ -1,5 +1,5 @@
-import type { Loginstate } from "./interfaces/Loginstate";
-import { request } from "./tools/request";
+import type { Loginstate } from "../interfaces/Loginstate";
+import { request } from "../utils/request";
 
 export function checkLogin(): void {
   void request<Loginstate>(

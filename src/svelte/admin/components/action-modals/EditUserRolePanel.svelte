@@ -2,12 +2,12 @@
   import { useSWR } from "sswr";
   import { useNavigate } from "svelte-navigator";
 
+  import { Action } from "../../../../ts/admin/actions/Action";
+  import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
   import type { Loginstate } from "../../../../ts/admin/interfaces/Loginstate";
   import type { User } from "../../../../ts/admin/interfaces/User";
   import { apiUri } from "../../../../ts/admin/stores";
-  import { Action } from "../../../../ts/admin/tools/Action";
-  import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
-  import { constructURL } from "../../../../ts/admin/tools/constructURL";
+  import { constructURL } from "../../../../ts/admin/utils/constructURL";
   import Button from "../Button.svelte";
   import DoneDialog from "../DoneDialog.svelte";
   import RadioGroup from "../forms/RadioGroup.svelte";

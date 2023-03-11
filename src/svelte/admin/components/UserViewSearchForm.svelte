@@ -4,8 +4,8 @@
 
   import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
   import type { Role } from "../../../ts/admin/interfaces/Role";
-  import { filter, map } from "../../../ts/admin/tools/arrayTools";
-  import { constructURL } from "../../../ts/admin/tools/constructURL";
+  import { filter, map } from "../../../ts/admin/utils/arrayUtils";
+  import { constructURL } from "../../../ts/admin/utils/constructURL";
   import Button from "../components/Button.svelte";
   import GroupProvider from "../components/swr-wrappers/GroupProvider.svelte";
   import Select from "./forms/Select.svelte";

@@ -1,5 +1,5 @@
 <script lang="ts" strictEvents>
-  import { compileMarkdown } from "../../../../ts/admin/tools/compileMarkdown";
+  import { compileMarkdown } from "../../../../ts/admin/utils/compileMarkdown";
 
   export let name: string;
   export let body: string;

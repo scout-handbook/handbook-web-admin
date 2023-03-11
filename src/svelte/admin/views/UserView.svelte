@@ -6,7 +6,7 @@
   import type { User } from "../../../ts/admin/interfaces/User";
   import type { UserListResponse } from "../../../ts/admin/interfaces/UserListResponse";
   import { siteName } from "../../../ts/admin/stores";
-  import { constructURL } from "../../../ts/admin/tools/constructURL";
+  import { constructURL } from "../../../ts/admin/utils/constructURL";
   import EditUserGroupsPanel from "../components/action-modals/EditUserGroupsPanel.svelte";
   import EditUserRolePanel from "../components/action-modals/EditUserRolePanel.svelte";
   import LoadingIndicator from "../components/LoadingIndicator.svelte";

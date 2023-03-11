@@ -1,7 +1,7 @@
 <script lang="ts" strictEvents>
   import { useLocation, useNavigate } from "svelte-navigator";
 
-  import { get } from "../../../../ts/admin/tools/arrayTools";
+  import { get } from "../../../../ts/admin/utils/arrayUtils";
   import Button from "../Button.svelte";
   import CompetenceProvider from "../swr-wrappers/CompetenceProvider.svelte";
   import FieldProvider from "../swr-wrappers/FieldProvider.svelte";
