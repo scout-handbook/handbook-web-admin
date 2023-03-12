@@ -12,7 +12,7 @@ function refreshLogin(): void {
       AuthenticationException: reAuth,
     }
   ).then(() => {
-    setTimeout(refreshLogin, 20 * 60);
+    setTimeout(refreshLogin, 20 * 60 * 1000);
     const afterAction = get(afterReAuthAction);
     if (afterAction !== null) {
       afterAction();
