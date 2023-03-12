@@ -38,7 +38,7 @@
     {$globalDialogMessage}
   </Dialog>
 {/if}
-<Router {basepath}>
+<Router {basepath} primary={false}>
   <Route component={AddLessonView} path="/lessons/add" />
   <Route path="/lessons/:id/edit" let:params>
     <FieldProvider let:fields let:lessons>
