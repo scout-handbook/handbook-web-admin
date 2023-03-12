@@ -6,9 +6,9 @@
   import type { User } from "../../../ts/admin/interfaces/User";
   import type { UserListResponse } from "../../../ts/admin/interfaces/UserListResponse";
   import { siteName } from "../../../ts/admin/stores";
-  import { constructURL } from "../../../ts/admin/tools/constructURL";
-  import ChangeUserGroupsPanel from "../components/action-modals/ChangeUserGroupsPanel.svelte";
-  import ChangeUserRolePanel from "../components/action-modals/ChangeUserRolePanel.svelte";
+  import { constructURL } from "../../../ts/admin/utils/constructURL";
+  import EditUserGroupsPanel from "../components/action-modals/EditUserGroupsPanel.svelte";
+  import EditUserRolePanel from "../components/action-modals/EditUserRolePanel.svelte";
   import LoadingIndicator from "../components/LoadingIndicator.svelte";
   import Pagination from "../components/Pagination.svelte";
   import GroupProvider from "../components/swr-wrappers/GroupProvider.svelte";
@@ -47,29 +47,24 @@
 
 {#if action === "change-user-groups"}
   <GroupProvider silent let:groups>
-    <ChangeUserGroupsPanel {groups} payload={actionPayload} {revalidate} />
+    <EditUserGroupsPanel {groups} payload={actionPayload} {revalidate} />
   </GroupProvider>
 {:else if action === "change-user-role"}
-  <ChangeUserRolePanel payload={actionPayload} {revalidate} />
+  <EditUserRolePanel payload={actionPayload} {revalidate} />
 {/if}
 
 <h1>{$siteName + " - Uživatelé"}</h1>
-<div id="userList">
-  <UserViewSearchForm
-    bind:searchName
-    bind:role
-    bind:group
-    on:change={() => {
-      page = 1;
-    }}
-  />
-  {#if users === undefined || userListCount === undefined}
-    <LoadingIndicator />
-  {:else}
-    <UserViewTable {users} />
-    <Pagination
-      total={Math.ceil(userListCount / perPage)}
-      bind:current={page}
-    />
-  {/if}
-</div>
+<UserViewSearchForm
+  bind:searchName
+  bind:role
+  bind:group
+  on:change={() => {
+    page = 1;
+  }}
+/>
+{#if users === undefined || userListCount === undefined}
+  <LoadingIndicator />
+{:else}
+  <UserViewTable {users} />
+  <Pagination total={Math.ceil(userListCount / perPage)} bind:current={page} />
+{/if}

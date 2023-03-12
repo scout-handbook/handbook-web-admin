@@ -4,7 +4,7 @@
   }
 </script>
 
-<div class="thumbnail-container">
+<div>
   <slot />
 </div>
 

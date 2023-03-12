@@ -6,12 +6,12 @@
   }
 </script>
 
-<div class="panel" transition:fly={{ x: 939, duration: 300 }}>
+<div transition:fly={{ x: 939, duration: 300 }}>
   <slot />
 </div>
 
 <style>
-  .panel {
+  div {
     background: white;
     border-left: var(--border-color);
     bottom: 0;

@@ -11,13 +11,13 @@
   import { apiUri } from "../../../../ts/admin/stores";
   import type { SWRMutateFix } from "../../../../ts/admin/SWRMutateFix";
   import { SWRMutateFnWrapper } from "../../../../ts/admin/SWRMutateFix";
-  import { get } from "../../../../ts/admin/tools/arrayTools";
-  import { constructURL } from "../../../../ts/admin/tools/constructURL";
+  import { get } from "../../../../ts/admin/utils/arrayUtils";
+  import { constructURL } from "../../../../ts/admin/utils/constructURL";
   import {
     authFailHandler,
     reAuth,
     request,
-  } from "../../../../ts/admin/tools/request";
+  } from "../../../../ts/admin/utils/request";
   import Button from "../Button.svelte";
   import Dialog from "../Dialog.svelte";
   import CheckboxGroup from "../forms/CheckboxGroup.svelte";
@@ -182,36 +182,34 @@
       Pokračovat
     </Button>
     <h1>Importovat ze SkautISu: {group.name}</h1>
-    <div id="importList">
-      {#if step === "event-selection-loading" || step === "participant-selection-loading" || step === "importing"}
-        <LoadingIndicator />
-      {:else if step === "event-selection"}
-        <h4>Volba kurzu:</h4>
-        <form>
-          <RadioGroup
-            options={eventList.map((event) => [event.id, event.name])}
-            bind:selected={selectedEvent}
-          >
-            <span slot="option" let:value={name}>
-              {name}
-            </span>
-          </RadioGroup>
-        </form>
-      {:else if step === "participant-selection"}
-        <h4>Výběr účastníků:</h4>
-        <form>
-          <CheckboxGroup
-            options={participantList.map((participant) => [
-              participant.id,
-              participant.name,
-            ])}
-            bind:selected={selectedParticipants}
-            let:value={name}
-          >
+    {#if step === "event-selection-loading" || step === "participant-selection-loading" || step === "importing"}
+      <LoadingIndicator />
+    {:else if step === "event-selection"}
+      <h4>Volba kurzu:</h4>
+      <form>
+        <RadioGroup
+          options={eventList.map((event) => [event.id, event.name])}
+          bind:selected={selectedEvent}
+        >
+          <span slot="option" let:value={name}>
             {name}
-          </CheckboxGroup>
-        </form>
-      {/if}
-    </div>
+          </span>
+        </RadioGroup>
+      </form>
+    {:else if step === "participant-selection"}
+      <h4>Výběr účastníků:</h4>
+      <form>
+        <CheckboxGroup
+          options={participantList.map((participant) => [
+            participant.id,
+            participant.name,
+          ])}
+          bind:selected={selectedParticipants}
+          let:value={name}
+        >
+          {name}
+        </CheckboxGroup>
+      </form>
+    {/if}
   </SidePanel>
 {/if}

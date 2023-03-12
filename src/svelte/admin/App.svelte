@@ -51,48 +51,48 @@
 
   <Route path="/">
     <TopBar />
-    <div id="main-page-container">
-      <div id="main-page">
+    <div class="main-page-container">
+      <div class="main-page">
         <LessonView />
       </div>
     </div>
   </Route>
   <Route path="/lessons">
     <TopBar />
-    <div id="main-page-container">
-      <div id="main-page">
+    <div class="main-page-container">
+      <div class="main-page">
         <LessonView />
       </div>
     </div>
   </Route>
   <Route path="/competences">
     <TopBar />
-    <div id="main-page-container">
-      <div id="main-page">
+    <div class="main-page-container">
+      <div class="main-page">
         <CompetenceView />
       </div>
     </div>
   </Route>
   <Route path="/images">
     <TopBar />
-    <div id="main-page-container">
-      <div id="main-page">
+    <div class="main-page-container">
+      <div class="main-page">
         <ImageView />
       </div>
     </div>
   </Route>
   <Route path="/users">
     <TopBar />
-    <div id="main-page-container">
-      <div id="main-page">
+    <div class="main-page-container">
+      <div class="main-page">
         <UserView />
       </div>
     </div>
   </Route>
   <Route path="/groups">
     <TopBar />
-    <div id="main-page-container">
-      <div id="main-page">
+    <div class="main-page-container">
+      <div class="main-page">
         <GroupView />
       </div>
     </div>
@@ -104,13 +104,13 @@
 />
 
 <style>
-  #main-page {
+  .main-page {
     margin: 0 auto;
     max-width: 770px;
     padding: 20px;
   }
 
-  #main-page-container {
+  .main-page-container {
     bottom: 0;
     left: 0;
     overflow-y: auto;

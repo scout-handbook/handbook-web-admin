@@ -4,7 +4,7 @@
 
   import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
   import type { User } from "../../../ts/admin/interfaces/User";
-  import { constructURL } from "../../../ts/admin/tools/constructURL";
+  import { constructURL } from "../../../ts/admin/utils/constructURL";
   import Button from "../components/Button.svelte";
   import GroupProvider from "../components/swr-wrappers/GroupProvider.svelte";
 
@@ -17,7 +17,7 @@
   $: adminOrSuperuser = $loginstate?.role === "administrator" || isSuperuser;
 </script>
 
-<table class="user-table">
+<table>
   <tr>
     <th>Jméno</th>
     <th>Role</th>

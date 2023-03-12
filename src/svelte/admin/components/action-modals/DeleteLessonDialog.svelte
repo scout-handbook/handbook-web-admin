@@ -2,6 +2,8 @@
   import { mutate } from "sswr";
   import { useNavigate } from "svelte-navigator";
 
+  import { Action } from "../../../../ts/admin/actions/Action";
+  import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
   import type { APIResponse } from "../../../../ts/admin/interfaces/APIResponse";
   import type { Field } from "../../../../ts/admin/interfaces/Field";
   import type { Lesson } from "../../../../ts/admin/interfaces/Lesson";
@@ -9,11 +11,9 @@
   import { apiUri } from "../../../../ts/admin/stores";
   import type { SWRMutateFix } from "../../../../ts/admin/SWRMutateFix";
   import { SWRMutateFnWrapper } from "../../../../ts/admin/SWRMutateFix";
-  import { Action } from "../../../../ts/admin/tools/Action";
-  import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
-  import { get } from "../../../../ts/admin/tools/arrayTools";
-  import { constructURL } from "../../../../ts/admin/tools/constructURL";
-  import { reAuth, request } from "../../../../ts/admin/tools/request";
+  import { get } from "../../../../ts/admin/utils/arrayUtils";
+  import { constructURL } from "../../../../ts/admin/utils/constructURL";
+  import { reAuth, request } from "../../../../ts/admin/utils/request";
   import Dialog from "../Dialog.svelte";
   import DoneDialog from "../DoneDialog.svelte";
   import LoadingIndicator from "../LoadingIndicator.svelte";
@@ -112,7 +112,7 @@
     Zkuste to prosím znovu.
   </Dialog>
 {:else if donePromise !== null}
-  <DoneDialog {donePromise} />
+  <DoneDialog {donePromise}>Lekce byla úspěšně smazána.</DoneDialog>
 {:else}
   {#await mutexPromise}
     <Overlay />

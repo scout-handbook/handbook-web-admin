@@ -13,17 +13,16 @@
 </script>
 
 {#each options as [id, value]}
-  <div>
-    <label>
-      <input type="checkbox" value={id} bind:group={selected} />
-      <span />
-      <slot {id} {value} />
-    </label>
-  </div>
+  <label>
+    <input type="checkbox" value={id} bind:group={selected} />
+    <span />
+    <slot {id} {value} />
+  </label>
 {/each}
 
 <style>
-  div {
+  label {
+    display: block;
     margin-top: 30px;
   }
 
