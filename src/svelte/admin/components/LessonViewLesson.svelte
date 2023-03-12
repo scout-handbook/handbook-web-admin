@@ -20,40 +20,39 @@
     $loginstate?.role === "administrator" || $loginstate?.role === "superuser";
 </script>
 
-<br />
-<h3 class:second-level={secondLevel}>{lesson.name}</h3>
-<Button
-  cyan
-  icon="pencil"
-  on:click={() => {
-    navigate("/lessons/" + id + "/edit");
-  }}
->
-  Upravit
-</Button>
-{#if adminOrSuperuser}
+<div class:second-level={secondLevel}>
+  <h3>{lesson.name}</h3>
   <Button
-    icon="trash-empty"
-    red
+    cyan
+    icon="pencil"
     on:click={() => {
-      navigate("/lessons", {
-        state: { action: "delete-lesson", actionPayload: { lessonId: id } },
-      });
+      navigate("/lessons/" + id + "/edit");
     }}
   >
-    Smazat
+    Upravit
   </Button>
-{/if}
-<Button
-  icon="file-pdf"
-  on:click={() => {
-    window.open($adminUri + "/lesson/" + id, "_blank", "noopener,noreferrer");
-  }}
->
-  PDF
-</Button>
-<br />
-<span class:second-level={secondLevel}>
+  {#if adminOrSuperuser}
+    <Button
+      icon="trash-empty"
+      red
+      on:click={() => {
+        navigate("/lessons", {
+          state: { action: "delete-lesson", actionPayload: { lessonId: id } },
+        });
+      }}
+    >
+      Smazat
+    </Button>
+  {/if}
+  <Button
+    icon="file-pdf"
+    on:click={() => {
+      window.open($adminUri + "/lesson/" + id, "_blank", "noopener,noreferrer");
+    }}
+  >
+    PDF
+  </Button>
+  <br />
   Kompetence:
   <CompetenceProvider silent let:competences>
     <!-- eslint-disable @typescript-eslint/no-unsafe-call @typescript-eslint/no-unsafe-argument @typescript-eslint/no-unsafe-return -->
@@ -63,7 +62,7 @@
       .join(", ")}
     <!-- eslint-enable -->
   </CompetenceProvider>
-</span>
+</div>
 
 <style>
   h3 {
