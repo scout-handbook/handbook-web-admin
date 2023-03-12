@@ -89,7 +89,7 @@
         </Button>
       </div>
     {/if}
-    <span>{competence.description}</span>
+    <div>{competence.description}</div>
   {/each}
 </CompetenceProvider>
 
