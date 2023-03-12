@@ -89,48 +89,49 @@
     <LessonViewLesson id={lessonId} {lesson} />
   {/each}
   {#each fields as [fieldId, field]}
-    <br />
-    <h2>{field.name}</h2>
-    {#if adminOrSuperuser}
-      <Button
-        cyan
-        icon="pencil"
-        on:click={() => {
-          navigate("/lessons", {
-            state: { action: "change-field", actionPayload: { fieldId } },
-          });
-        }}
-      >
-        Upravit
-      </Button>
-      <Button
-        icon="trash-empty"
-        red
-        on:click={() => {
-          navigate("/lessons", {
-            state: { action: "delete-field", actionPayload: { fieldId } },
-          });
-        }}
-      >
-        Smazat
-      </Button>
-    {/if}
-    <Button
-      green
-      icon="plus"
-      on:click={() => {
-        // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-        navigate("/lessons/add?field=" + fieldId);
-      }}
-    >
-      Přidat lekci
-    </Button>
-    {#each lessons as [lessonId, lesson]}
-      <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-call -->
-      {#if field.lessons.includes(lessonId)}
-        <LessonViewLesson id={lessonId} {lesson} secondLevel={true} />
+    <div>
+      <h2>{field.name}</h2>
+      {#if adminOrSuperuser}
+        <Button
+          cyan
+          icon="pencil"
+          on:click={() => {
+            navigate("/lessons", {
+              state: { action: "change-field", actionPayload: { fieldId } },
+            });
+          }}
+        >
+          Upravit
+        </Button>
+        <Button
+          icon="trash-empty"
+          red
+          on:click={() => {
+            navigate("/lessons", {
+              state: { action: "delete-field", actionPayload: { fieldId } },
+            });
+          }}
+        >
+          Smazat
+        </Button>
       {/if}
-    {/each}
+      <Button
+        green
+        icon="plus"
+        on:click={() => {
+          // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+          navigate("/lessons/add?field=" + fieldId);
+        }}
+      >
+        Přidat lekci
+      </Button>
+      {#each lessons as [lessonId, lesson]}
+        <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-call -->
+        {#if field.lessons.includes(lessonId)}
+          <LessonViewLesson id={lessonId} {lesson} secondLevel={true} />
+        {/if}
+      {/each}
+    </div>
   {/each}
 </FieldProvider>
 
