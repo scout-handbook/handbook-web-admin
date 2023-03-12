@@ -14,9 +14,8 @@
 
 <div class="wrapper">
   <UserAccountBox />
-  <!-- TODO: Remove manual positioning -->
   <div
-    class="lessons tab"
+    class="tab"
     class:active-tab={$rootMatcher !== null || $lessonMatcher !== null}
     on:click={() => {
       navigate("/lessons");
@@ -28,7 +27,7 @@
     Lekce
   </div>
   <div
-    class="competences tab"
+    class="tab"
     class:active-tab={$competenceMatcher !== null}
     on:click={() => {
       navigate("/competences");
@@ -40,7 +39,7 @@
     Kompetence
   </div>
   <div
-    class="images tab"
+    class="tab"
     class:active-tab={$imageMatcher !== null}
     on:click={() => {
       navigate("/images");
@@ -52,7 +51,7 @@
     Obrázky
   </div>
   <div
-    class="users tab"
+    class="tab"
     class:active-tab={$userMatcher !== null}
     on:click={() => {
       navigate("/users");
@@ -87,12 +86,12 @@
     font-size: 1.1em;
     font-weight: bold;
     height: 52px;
-    margin-left: -1px;
+    margin-left: -5px;
     padding-top: 28px;
-    position: absolute;
     text-align: center;
     transition: color ease 0.15s, border-color ease 0.15s,
       background-color ease 0.15s;
+    vertical-align: top;
     width: 140px;
   }
 
@@ -101,27 +100,9 @@
     background-color: var(--background-darkest);
     border-color: var(--accent-color);
     color: var(--accent-color);
-    z-index: 1;
-  }
-
-  .lessons {
-    left: 301px;
-  }
-
-  .competences {
-    left: 442px;
-  }
-
-  .images {
-    left: 583px;
-  }
-
-  .users {
-    left: 724px;
   }
 
   .groups {
-    left: 865px;
     padding-bottom: 11px;
     padding-top: 17px;
   }
