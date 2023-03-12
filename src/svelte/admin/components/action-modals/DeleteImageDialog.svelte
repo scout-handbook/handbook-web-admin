@@ -2,12 +2,12 @@
   import { mutate } from "sswr";
   import { useNavigate } from "svelte-navigator";
 
+  import { Action } from "../../../../ts/admin/actions/Action";
+  import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
   import { apiUri } from "../../../../ts/admin/stores";
   import type { SWRMutateFix } from "../../../../ts/admin/SWRMutateFix";
   import { SWRMutateFnWrapper } from "../../../../ts/admin/SWRMutateFix";
-  import { Action } from "../../../../ts/admin/tools/Action";
-  import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
-  import { constructURL } from "../../../../ts/admin/tools/constructURL";
+  import { constructURL } from "../../../../ts/admin/utils/constructURL";
   import Dialog from "../Dialog.svelte";
   import DoneDialog from "../DoneDialog.svelte";
 
@@ -35,7 +35,7 @@
 </script>
 
 {#if donePromise !== null}
-  <DoneDialog {donePromise} />
+  <DoneDialog {donePromise}>Obrázek byl úspěšně smazán.</DoneDialog>
 {:else}
   <Dialog
     confirmButtonText="Ano"

@@ -5,7 +5,7 @@
   import type { Competence } from "../../../../ts/admin/interfaces/Competence";
   import type { Lesson } from "../../../../ts/admin/interfaces/Lesson";
   import { processCompetences, processLessons } from "../../../../ts/admin/swr";
-  import { constructURL } from "../../../../ts/admin/tools/constructURL";
+  import { constructURL } from "../../../../ts/admin/utils/constructURL";
   import LoadingIndicator from "../LoadingIndicator.svelte";
 
   export let silent = false;

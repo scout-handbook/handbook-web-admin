@@ -2,7 +2,7 @@
   import { useSWR } from "sswr";
   import { createEventDispatcher } from "svelte";
 
-  import { constructURL } from "../../../../ts/admin/tools/constructURL";
+  import { constructURL } from "../../../../ts/admin/utils/constructURL";
   import Button from "../../components/Button.svelte";
   import ImageGridCell from "../ImageGridCell.svelte";
   import ImageThumbnail from "../ImageThumbnail.svelte";
@@ -44,7 +44,7 @@
       Nahrát
     </Button>
     -->
-    <div class="wrapper">
+    <div class="container">
       {#if currentPageList === undefined || totalImageCount === undefined}
         <LoadingIndicator />
       {:else}
@@ -93,7 +93,7 @@
     z-index: 7;
   }
 
-  .wrapper {
+  .container {
     margin: 0 auto;
     max-width: 770px;
   }

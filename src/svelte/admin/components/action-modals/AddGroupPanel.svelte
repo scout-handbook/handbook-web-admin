@@ -2,10 +2,10 @@
   import { revalidate } from "sswr";
   import { useNavigate } from "svelte-navigator";
 
+  import { Action } from "../../../../ts/admin/actions/Action";
+  import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
   import { apiUri } from "../../../../ts/admin/stores";
-  import { Action } from "../../../../ts/admin/tools/Action";
-  import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
-  import { constructURL } from "../../../../ts/admin/tools/constructURL";
+  import { constructURL } from "../../../../ts/admin/utils/constructURL";
   import Button from "../Button.svelte";
   import DoneDialog from "../DoneDialog.svelte";
   import NameInput from "../forms/NameInput.svelte";
@@ -30,7 +30,7 @@
 </script>
 
 {#if donePromise !== null}
-  <DoneDialog {donePromise} />
+  <DoneDialog {donePromise}>Skupina byla úspěšně přidána.</DoneDialog>
 {:else}
   <SidePanel>
     <Button
@@ -46,7 +46,6 @@
     <h1>Přidat skupinu</h1>
     <form>
       <NameInput bind:value={name} />
-      <br />
     </form>
   </SidePanel>
 {/if}

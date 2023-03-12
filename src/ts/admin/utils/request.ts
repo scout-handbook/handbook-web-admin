@@ -41,11 +41,15 @@ async function rawRequest<T extends RequestResponse>(
   if ((method === "GET" || method === "DELETE") && query) {
     url += "?" + query;
   }
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function (): void {
       if (this.readyState === 4) {
-        resolve(JSON.parse(this.responseText) as APIResponse<T>);
+        try {
+          resolve(JSON.parse(this.responseText) as APIResponse<T>);
+        } catch {
+          reject();
+        }
       }
     };
     xhr.open(method, url, true);

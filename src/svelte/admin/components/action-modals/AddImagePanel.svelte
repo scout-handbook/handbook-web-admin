@@ -3,8 +3,8 @@
   import { useNavigate } from "svelte-navigator";
 
   import { apiUri } from "../../../../ts/admin/stores";
-  import { constructURL } from "../../../../ts/admin/tools/constructURL";
-  import { authFailHandler, request } from "../../../../ts/admin/tools/request";
+  import { constructURL } from "../../../../ts/admin/utils/constructURL";
+  import { authFailHandler, request } from "../../../../ts/admin/utils/request";
   import Button from "../Button.svelte";
   import Dialog from "../Dialog.svelte";
   import FileInput from "../forms/FileInput.svelte";
@@ -17,7 +17,7 @@
   let stage: "done" | "error" | "select" | "upload" = "select";
   let files: FileList | undefined;
 
-  function addImageSave(): void {
+  function saveCallback(): void {
     if (files === undefined || files.length === 0) {
       return;
     }
@@ -52,7 +52,7 @@
     >
       Zrušit
     </Button>
-    <Button green icon="floppy" on:click={addImageSave}>Uložit</Button>
+    <Button green icon="floppy" on:click={saveCallback}>Uložit</Button>
     <h1>Nahrát obrázek</h1>
     <form>
       <FileInput bind:files />

@@ -1,12 +1,12 @@
 <script lang="ts" strictEvents>
   import { useNavigate } from "svelte-navigator";
 
+  import { Action } from "../../../../ts/admin/actions/Action";
+  import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
   import type { Group } from "../../../../ts/admin/interfaces/Group";
   import type { User } from "../../../../ts/admin/interfaces/User";
   import { apiUri } from "../../../../ts/admin/stores";
-  import { Action } from "../../../../ts/admin/tools/Action";
-  import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
-  import { filter, get } from "../../../../ts/admin/tools/arrayTools";
+  import { filter, get } from "../../../../ts/admin/utils/arrayUtils";
   import Button from "../Button.svelte";
   import DoneDialog from "../DoneDialog.svelte";
   import CheckboxGroup from "../forms/CheckboxGroup.svelte";
@@ -54,7 +54,9 @@
 </script>
 
 {#if donePromise !== null}
-  <DoneDialog {donePromise} />
+  <DoneDialog {donePromise}>
+    Uživatelské skupiny byly úspěšně upraveny.
+  </DoneDialog>
 {:else}
   <SidePanel>
     <Button

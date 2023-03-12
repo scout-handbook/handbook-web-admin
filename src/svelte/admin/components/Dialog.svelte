@@ -24,9 +24,7 @@
 
 <Overlay />
 <div class="dialog">
-  <div class="dialogText">
-    <slot />
-  </div>
+  <slot />
   <div class="buttons">
     {#if dismissButtonText !== ""}
       <Button

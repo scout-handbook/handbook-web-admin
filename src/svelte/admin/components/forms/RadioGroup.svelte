@@ -18,26 +18,23 @@
 </script>
 
 {#if nullOptionPresent}
-  <div>
-    <label>
-      <input {name} type="radio" value={null} bind:group={selected} />
-      <span />
-      <slot name="nullOption" />
-    </label>
-  </div>
+  <label>
+    <input {name} type="radio" value={null} bind:group={selected} />
+    <span />
+    <slot name="nullOption" />
+  </label>
 {/if}
 {#each options as [id, value]}
-  <div>
-    <label>
-      <input {name} type="radio" value={id} bind:group={selected} />
-      <span />
-      <slot {id} name="option" {value} />
-    </label>
-  </div>
+  <label>
+    <input {name} type="radio" value={id} bind:group={selected} />
+    <span />
+    <slot {id} name="option" {value} />
+  </label>
 {/each}
 
 <style>
-  div {
+  label {
+    display: block;
     margin-top: 30px;
   }
 

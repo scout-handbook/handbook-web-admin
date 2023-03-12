@@ -3,6 +3,14 @@
   import { onDestroy, onMount } from "svelte";
   import { useNavigate } from "svelte-navigator";
 
+  import { Action } from "../../../ts/admin/actions/Action";
+  import { ActionCallback } from "../../../ts/admin/actions/ActionCallback";
+  import { ActionQueue } from "../../../ts/admin/actions/ActionQueue";
+  import {
+    populateCompetences,
+    populateField,
+    populateGroups,
+  } from "../../../ts/admin/actions/populateLessonActionQueue";
   import type { APIResponse } from "../../../ts/admin/interfaces/APIResponse";
   import type { Field } from "../../../ts/admin/interfaces/Field";
   import type { Lesson } from "../../../ts/admin/interfaces/Lesson";
@@ -14,17 +22,9 @@
   } from "../../../ts/admin/stores";
   import type { SWRMutateFix } from "../../../ts/admin/SWRMutateFix";
   import { SWRMutateFnWrapper } from "../../../ts/admin/SWRMutateFix";
-  import { Action } from "../../../ts/admin/tools/Action";
-  import { ActionCallback } from "../../../ts/admin/tools/ActionCallback";
-  import { ActionQueue } from "../../../ts/admin/tools/ActionQueue";
-  import { get } from "../../../ts/admin/tools/arrayTools";
-  import { constructURL } from "../../../ts/admin/tools/constructURL";
-  import {
-    populateCompetences,
-    populateField,
-    populateGroups,
-  } from "../../../ts/admin/tools/populateLessonActionQueue";
-  import { reAuth, request } from "../../../ts/admin/tools/request";
+  import { get } from "../../../ts/admin/utils/arrayUtils";
+  import { constructURL } from "../../../ts/admin/utils/constructURL";
+  import { reAuth, request } from "../../../ts/admin/utils/request";
   import DoneDialog from "../components/DoneDialog.svelte";
   import LessonEditor from "../components/LessonEditor.svelte";
   import LoadingIndicator from "../components/LoadingIndicator.svelte";
@@ -205,7 +205,7 @@
 </script>
 
 {#if donePromise !== null}
-  <DoneDialog {donePromise} />
+  <DoneDialog {donePromise}>Lekce byla úspěšně upravena.</DoneDialog>
 {:else}
   {#await lessonDataPromise}
     <LoadingIndicator />

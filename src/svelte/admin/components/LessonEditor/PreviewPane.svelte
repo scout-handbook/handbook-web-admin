@@ -1,5 +1,5 @@
 <script lang="ts" strictEvents>
-  import { compileMarkdown } from "../../../../ts/admin/tools/compileMarkdown";
+  import { compileMarkdown } from "../../../../ts/admin/utils/compileMarkdown";
 
   export let name: string;
   export let body: string;
@@ -21,8 +21,8 @@
   }
 </script>
 
-<div class="outer-wrapper">
-  <div class="wrapper">
+<div class="outer-container">
+  <div class="container">
     <h1>{name}</h1>
     <!-- eslint-disable-next-line svelte/no-at-html-tags -->
     {@html html}
@@ -30,11 +30,11 @@
 </div>
 
 <style>
-  .wrapper {
+  .container {
     margin: 0 20px 20px;
   }
 
-  .outer-wrapper {
+  .outer-container {
     border-left: 1px solid var(--border-color);
     bottom: 0;
     overflow-y: auto;
@@ -45,43 +45,43 @@
   }
 
   /* Styles applied to the rendered lesson */
-  .wrapper :global(a) {
+  .container :global(a) {
     color: var(--accent-color);
     text-decoration: none;
   }
 
-  .wrapper :global(a:hover) {
+  .container :global(a:hover) {
     text-decoration: underline;
   }
 
-  .wrapper :global(img) {
+  .container :global(img) {
     max-width: 100%;
   }
 
-  .wrapper :global(table) {
+  .container :global(table) {
     border: 1px solid var(--table-border);
     border-collapse: collapse;
   }
 
-  .wrapper :global(.table-container) {
+  .container :global(.table-container) {
     overflow-x: auto;
   }
 
-  .wrapper :global(td),
-  .wrapper :global(th) {
+  .container :global(td),
+  .container :global(th) {
     border: 1px solid var(--table-border);
     padding: 8px 20px;
   }
 
-  .wrapper :global(th) {
+  .container :global(th) {
     border-bottom-width: 2px;
   }
 
-  .wrapper :global(tbody tr:nth-child(2n + 1)) {
+  .container :global(tbody tr:nth-child(2n + 1)) {
     background-color: var(--table-odd-row-background);
   }
 
-  .wrapper :global(.notes) {
+  .container :global(.notes) {
     display: block;
   }
 </style>

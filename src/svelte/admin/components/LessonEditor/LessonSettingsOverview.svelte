@@ -1,7 +1,7 @@
 <script lang="ts" strictEvents>
   import { useLocation, useNavigate } from "svelte-navigator";
 
-  import { get } from "../../../../ts/admin/tools/arrayTools";
+  import { get } from "../../../../ts/admin/utils/arrayUtils";
   import Button from "../Button.svelte";
   import CompetenceProvider from "../swr-wrappers/CompetenceProvider.svelte";
   import FieldProvider from "../swr-wrappers/FieldProvider.svelte";
@@ -96,20 +96,18 @@
   Upravit
 </Button>
 <br />
-<div id="settingsGroupList">
-  <GroupProvider inline let:groups={allGroups}>
-    <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-call @typescript-eslint/no-unsafe-argument -->
-    {#each allGroups.filter(([id, _]) => groups.includes(id)) as [id, group]}
-      {#if id === "00000000-0000-0000-0000-000000000000"}
-        <span class="public">{group.name}</span>
-        <br />
-      {:else}
-        {group.name}
-        <br />
-      {/if}
-    {/each}
-  </GroupProvider>
-</div>
+<GroupProvider inline let:groups={allGroups}>
+  <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-call @typescript-eslint/no-unsafe-argument -->
+  {#each allGroups.filter(([id, _]) => groups.includes(id)) as [id, group]}
+    {#if id === "00000000-0000-0000-0000-000000000000"}
+      <span class="public">{group.name}</span>
+      <br />
+    {:else}
+      {group.name}
+      <br />
+    {/if}
+  {/each}
+</GroupProvider>
 
 <style>
   .competence-number {

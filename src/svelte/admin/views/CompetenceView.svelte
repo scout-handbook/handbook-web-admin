@@ -4,10 +4,10 @@
 
   import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
   import { siteName } from "../../../ts/admin/stores";
-  import { constructURL } from "../../../ts/admin/tools/constructURL";
+  import { constructURL } from "../../../ts/admin/utils/constructURL";
   import AddCompetencePanel from "../components/action-modals/AddCompetencePanel.svelte";
-  import ChangeCompetencePanel from "../components/action-modals/ChangeCompetencePanel.svelte";
   import DeleteCompetenceDialog from "../components/action-modals/DeleteCompetenceDialog.svelte";
+  import EditCompetencePanel from "../components/action-modals/EditCompetencePanel.svelte";
   import Button from "../components/Button.svelte";
   import CompetenceProvider from "../components/swr-wrappers/CompetenceProvider.svelte";
 
@@ -30,7 +30,7 @@
   <AddCompetencePanel />
 {:else if action === "change-competence"}
   <CompetenceProvider silent let:competences>
-    <ChangeCompetencePanel {competences} payload={actionPayload} />
+    <EditCompetencePanel {competences} payload={actionPayload} />
   </CompetenceProvider>
 {:else if action === "delete-competence"}
   <CompetenceProvider silent let:competences>
@@ -90,7 +90,6 @@
       </div>
     {/if}
     <span>{competence.description}</span>
-    <br />
   {/each}
 </CompetenceProvider>
 

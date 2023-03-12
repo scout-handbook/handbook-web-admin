@@ -2,14 +2,14 @@
   import { mutate } from "sswr";
   import { useNavigate } from "svelte-navigator";
 
+  import { Action } from "../../../../ts/admin/actions/Action";
+  import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
   import type { Group } from "../../../../ts/admin/interfaces/Group";
   import { apiUri } from "../../../../ts/admin/stores";
   import type { SWRMutateFix } from "../../../../ts/admin/SWRMutateFix";
   import { SWRMutateFnWrapper } from "../../../../ts/admin/SWRMutateFix";
-  import { Action } from "../../../../ts/admin/tools/Action";
-  import { ActionQueue } from "../../../../ts/admin/tools/ActionQueue";
-  import { get } from "../../../../ts/admin/tools/arrayTools";
-  import { constructURL } from "../../../../ts/admin/tools/constructURL";
+  import { get } from "../../../../ts/admin/utils/arrayUtils";
+  import { constructURL } from "../../../../ts/admin/utils/constructURL";
   import Button from "../Button.svelte";
   import DoneDialog from "../DoneDialog.svelte";
   import NameInput from "../forms/NameInput.svelte";
@@ -49,7 +49,7 @@
 </script>
 
 {#if donePromise !== null}
-  <DoneDialog {donePromise} />
+  <DoneDialog {donePromise}>Skupina byla úspěšně upravena.</DoneDialog>
 {:else}
   <SidePanel>
     <Button
@@ -65,7 +65,6 @@
     <h1>Upravit skupinu</h1>
     <form>
       <NameInput bind:value={name} />
-      <br />
     </form>
   </SidePanel>
 {/if}
