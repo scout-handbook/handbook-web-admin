@@ -1,8 +1,9 @@
 <script lang="ts" strictEvents>
-  import { revalidate } from "sswr";
+  import { useSWR } from "sswr";
   import { useNavigate } from "svelte-navigator";
 
   import { apiUri } from "../../../../ts/admin/stores";
+  import type { SWRMutateFix } from "../../../../ts/admin/SWRMutateFix";
   import { constructURL } from "../../../../ts/admin/utils/constructURL";
   import { authFailHandler, request } from "../../../../ts/admin/utils/request";
   import Button from "../Button.svelte";
@@ -16,6 +17,9 @@
 
   let stage: "done" | "error" | "select" | "upload" = "select";
   let files: FileList | undefined;
+  const { revalidate } = useSWR<SWRMutateFix<Array<string>>>(
+    constructURL("v1.0/image")
+  );
 
   function saveCallback(): void {
     if (files === undefined || files.length === 0) {
@@ -35,7 +39,7 @@
       formData,
       authFailHandler
     ).then(() => {
-      revalidate(constructURL("v1.0/image"));
+      revalidate();
       stage = "done";
     });
   }
