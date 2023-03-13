@@ -73,8 +73,14 @@
 
 {#if donePromise !== null}
   <!-- TODO: Looks strange with the overlay -->
-  <!-- TODO: Something strange happens here with history - after saving, the panel is shown again -->
-  <DoneDialog {donePromise}>Lekce byla úspěšně obnovena.</DoneDialog>
+  <DoneDialog
+    {donePromise}
+    on:confirm={() => {
+      navigate("/lessons");
+    }}
+  >
+    Lekce byla úspěšně obnovena.
+  </DoneDialog>
 {:else}
   {#await bodyPromise}
     <LoadingIndicator />
