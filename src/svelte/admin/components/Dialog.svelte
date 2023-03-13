@@ -55,7 +55,7 @@
     height: 150px;
     left: 50%;
     padding: 40px;
-    position: absolute;
+    position: fixed;
     top: 50%;
     transform: translate(-50%, -50%);
     width: 450px;
