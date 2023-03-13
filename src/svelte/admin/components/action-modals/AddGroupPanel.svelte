@@ -29,7 +29,7 @@
     ])
       .dispatch()
       .then(() => {
-        revalidate();
+        revalidate({ force: true });
       });
   }
 </script>

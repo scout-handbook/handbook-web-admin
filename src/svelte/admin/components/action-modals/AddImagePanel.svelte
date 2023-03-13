@@ -39,7 +39,7 @@
       formData,
       authFailHandler
     ).then(() => {
-      revalidate();
+      revalidate({ force: true });
       stage = "done";
     });
   }
