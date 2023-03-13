@@ -51,7 +51,7 @@
     populateField(saveActionQueue, null, field);
     populateGroups(saveActionQueue, null, groups);
     donePromise = saveActionQueue.dispatch().then(() => {
-      revalidate();
+      revalidate({ force: true });
     });
   }
 </script>
