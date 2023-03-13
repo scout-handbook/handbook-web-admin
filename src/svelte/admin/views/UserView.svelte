@@ -37,8 +37,10 @@
     role: role !== "all" ? role : undefined,
     group: group !== "00000000-0000-0000-0000-000000000000" ? group : undefined,
   };
-  $: ({ data: userList, revalidate } = useSWR<UserListResponse>(() =>
-    constructURL("v1.0/user", payload)
+  $: ({ data: userList, revalidate } = useSWR<UserListResponse>(
+    () => constructURL("v1.0/user", payload),
+    // TODO: Remove this when ConsoleTVs/sswr#43 is fixed
+    { dedupingInterval: 0 }
   ));
   $: userListCount = $userList?.count;
   let users: Array<User> | undefined;

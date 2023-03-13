@@ -1,4 +1,6 @@
 <script lang="ts" strictEvents>
+  import { createEventDispatcher } from "svelte";
+
   // eslint-disable-next-line no-undef
   type KeyType = $$Generic<number | string>;
   // eslint-disable-next-line no-undef
@@ -6,9 +8,16 @@
 
   export let options: Array<[KeyType, ValueType]>;
   export let selected: KeyType | null;
+
+  const dispatch = createEventDispatcher<{ change: never }>();
 </script>
 
-<select bind:value={selected}>
+<select
+  bind:value={selected}
+  on:change={() => {
+    dispatch("change");
+  }}
+>
   {#each options as [id, value]}
     <option value={id}>{value}</option>
   {/each}

@@ -1,10 +1,12 @@
 <script lang="ts" strictEvents>
-  import { revalidate } from "sswr";
+  import { useSWR } from "sswr";
   import { useNavigate } from "svelte-navigator";
 
   import { Action } from "../../../../ts/admin/actions/Action";
   import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
+  import type { Field } from "../../../../ts/admin/interfaces/Field";
   import { apiUri } from "../../../../ts/admin/stores";
+  import type { SWRMutateFix } from "../../../../ts/admin/SWRMutateFix";
   import { constructURL } from "../../../../ts/admin/utils/constructURL";
   import Button from "../Button.svelte";
   import DoneDialog from "../DoneDialog.svelte";
@@ -24,6 +26,9 @@
   let imageSelectorOpen = false;
   let iconSelectorOpen = false;
   let donePromise: Promise<void> | null = null;
+  const { revalidate } = useSWR<SWRMutateFix<Record<string, Field>>>(
+    constructURL("v1.0/field?override-group=true")
+  );
 
   function saveCallback(): void {
     donePromise = new ActionQueue([
@@ -36,7 +41,7 @@
     ])
       .dispatch()
       .then(() => {
-        revalidate(constructURL("v1.0/field?override-group=true"));
+        revalidate({ force: true });
       });
   }
 </script>

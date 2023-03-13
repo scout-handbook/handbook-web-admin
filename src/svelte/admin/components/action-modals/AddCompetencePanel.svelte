@@ -1,10 +1,12 @@
 <script lang="ts" strictEvents>
-  import { revalidate } from "sswr";
+  import { useSWR } from "sswr";
   import { useNavigate } from "svelte-navigator";
 
   import { Action } from "../../../../ts/admin/actions/Action";
   import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
+  import type { Competence } from "../../../../ts/admin/interfaces/Competence";
   import { apiUri } from "../../../../ts/admin/stores";
+  import type { SWRMutateFix } from "../../../../ts/admin/SWRMutateFix";
   import { constructURL } from "../../../../ts/admin/utils/constructURL";
   import Button from "../Button.svelte";
   import DoneDialog from "../DoneDialog.svelte";
@@ -19,6 +21,9 @@
   let name = "Nová kompetence";
   let description = "Popis nové kompetence";
   let donePromise: Promise<void> | null = null;
+  const { revalidate } = useSWR<SWRMutateFix<Record<string, Competence>>>(
+    constructURL("v1.0/competence")
+  );
 
   function saveCallback(): void {
     donePromise = new ActionQueue([
@@ -30,7 +35,7 @@
     ])
       .dispatch()
       .then(() => {
-        revalidate(constructURL("v1.0/competence"));
+        revalidate({ force: true });
       });
   }
 </script>

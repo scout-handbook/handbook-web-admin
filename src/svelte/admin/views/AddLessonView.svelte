@@ -1,5 +1,5 @@
 <script lang="ts" strictEvents>
-  import { revalidate } from "sswr";
+  import { useSWR } from "sswr";
   import { useLocation, useNavigate } from "svelte-navigator";
 
   import { Action } from "../../../ts/admin/actions/Action";
@@ -10,7 +10,10 @@
     populateField,
     populateGroups,
   } from "../../../ts/admin/actions/populateLessonActionQueue";
+  import type { Field } from "../../../ts/admin/interfaces/Field";
+  import type { Lesson } from "../../../ts/admin/interfaces/Lesson";
   import { apiUri } from "../../../ts/admin/stores";
+  import type { SWRMutateFix } from "../../../ts/admin/SWRMutateFix";
   import { constructURL } from "../../../ts/admin/utils/constructURL";
   import {
     defaultBody,
@@ -29,6 +32,12 @@
   let competences: Array<string> = [];
   let field: string | null = getQueryField($location.search, "field");
   let groups: Array<string> = [];
+  const { revalidate: lessonRevalidate } = useSWR<
+    SWRMutateFix<Record<string, Lesson>>
+  >(constructURL("v1.0/lesson?override-group=true"));
+  const { revalidate: fieldRevalidate } = useSWR<
+    SWRMutateFix<Record<string, Field>>
+  >(constructURL("v1.0/field?override-group=true"));
 
   function save(): void {
     const saveActionQueue = new ActionQueue([
@@ -46,7 +55,8 @@
     populateField(saveActionQueue, null, field);
     populateGroups(saveActionQueue, null, groups);
     donePromise = saveActionQueue.dispatch().then(() => {
-      revalidate(constructURL("v1.0/lesson?override-group=true"));
+      lessonRevalidate({ force: true });
+      fieldRevalidate({ force: true });
     });
   }
 </script>

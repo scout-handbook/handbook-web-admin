@@ -1,5 +1,5 @@
 <script lang="ts" strictEvents>
-  import { mutate } from "sswr";
+  import { useSWR } from "sswr";
   import { useNavigate } from "svelte-navigator";
 
   import { Action } from "../../../../ts/admin/actions/Action";
@@ -20,6 +20,9 @@
 
   const field = get(fields, payload.fieldId)!;
   let donePromise: Promise<void> | null = null;
+  const { mutate } = useSWR<SWRMutateFix<Record<string, Field>>>(
+    constructURL("v1.0/field?override-group=true")
+  );
 
   function confirmCallback(): void {
     donePromise = new ActionQueue([
@@ -27,14 +30,16 @@
         $apiUri + "/v1.0/field/" + encodeURIComponent(payload.fieldId),
         "DELETE"
       ),
-    ]).dispatch();
-    mutate<SWRMutateFix<Record<string, Field>>>(
-      constructURL("v1.0/field?override-group=true"),
-      SWRMutateFnWrapper((fields) => {
-        delete fields[payload.fieldId];
-        return fields;
-      })
-    );
+    ])
+      .dispatch()
+      .then(() => {
+        mutate(
+          SWRMutateFnWrapper((fields) => {
+            delete fields[payload.fieldId];
+            return fields;
+          })
+        );
+      });
   }
 </script>
 
