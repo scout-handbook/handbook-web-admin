@@ -10,6 +10,7 @@
     populateField,
     populateGroups,
   } from "../../../ts/admin/actions/populateLessonActionQueue";
+  import type { Field } from "../../../ts/admin/interfaces/Field";
   import type { Lesson } from "../../../ts/admin/interfaces/Lesson";
   import { apiUri } from "../../../ts/admin/stores";
   import type { SWRMutateFix } from "../../../ts/admin/SWRMutateFix";
@@ -31,9 +32,12 @@
   let competences: Array<string> = [];
   let field: string | null = getQueryField($location.search, "field");
   let groups: Array<string> = [];
-  const { revalidate } = useSWR<SWRMutateFix<Record<string, Lesson>>>(
-    constructURL("v1.0/lesson?override-group=true")
-  );
+  const { revalidate: lessonRevalidate } = useSWR<
+    SWRMutateFix<Record<string, Lesson>>
+  >(constructURL("v1.0/lesson?override-group=true"));
+  const { revalidate: fieldRevalidate } = useSWR<
+    SWRMutateFix<Record<string, Field>>
+  >(constructURL("v1.0/field?override-group=true"));
 
   function save(): void {
     const saveActionQueue = new ActionQueue([
@@ -51,12 +55,14 @@
     populateField(saveActionQueue, null, field);
     populateGroups(saveActionQueue, null, groups);
     donePromise = saveActionQueue.dispatch().then(() => {
-      revalidate({ force: true });
+      lessonRevalidate({ force: true });
+      fieldRevalidate({ force: true });
     });
   }
 </script>
 
 {#if donePromise !== null}
+  <!-- TODO: Looks strange with the overlay -->
   <DoneDialog {donePromise}>Lekce byla úspěšně přidána.</DoneDialog>
 {:else}
   <LessonEditor
