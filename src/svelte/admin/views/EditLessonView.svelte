@@ -1,5 +1,5 @@
 <script lang="ts" strictEvents>
-  import { mutate } from "sswr";
+  import { useSWR } from "sswr";
   import { onDestroy, onMount } from "svelte";
   import { useNavigate } from "svelte-navigator";
 
@@ -50,6 +50,12 @@
   const initialCompetences = competences;
   const initialField = field;
   let initialGroups: Array<string> = [];
+  const { mutate: lessonMutate } = useSWR<SWRMutateFix<Record<string, Lesson>>>(
+    constructURL("v1.0/lesson?override-group=true")
+  );
+  const { mutate: fieldMutate } = useSWR<SWRMutateFix<Record<string, Field>>>(
+    constructURL("v1.0/field?override-group=true")
+  );
 
   const saveExceptionHandler = {
     NotLockedException: function (): void {
@@ -172,30 +178,29 @@
     );
     populateField(saveActionQueue, lessonID, field, initialField);
     populateGroups(saveActionQueue, lessonID, groups, initialGroups);
-    donePromise = saveActionQueue.dispatch();
-    mutate<SWRMutateFix<Record<string, Lesson>>>(
-      constructURL("v1.0/lesson?override-group=true"),
-      SWRMutateFnWrapper((lessons) => {
-        lessons[lessonID].name = name;
-        lessons[lessonID].competences = competences;
-        return lessons;
-      })
-    );
-    mutate<SWRMutateFix<Record<string, Field>>>(
-      constructURL("v1.0/field?override-group=true"),
-      SWRMutateFnWrapper((fields) => {
-        if (initialField !== null) {
-          fields[initialField].lessons.splice(
-            fields[initialField].lessons.indexOf(lessonID),
-            1
-          );
-        }
-        if (field !== null) {
-          fields[field].lessons.push(lessonID);
-        }
-        return fields;
-      })
-    );
+    donePromise = saveActionQueue.dispatch().then(() => {
+      lessonMutate(
+        SWRMutateFnWrapper((lessons) => {
+          lessons[lessonID].name = name;
+          lessons[lessonID].competences = competences;
+          return lessons;
+        })
+      );
+      fieldMutate(
+        SWRMutateFnWrapper((fields) => {
+          if (initialField !== null) {
+            fields[initialField].lessons.splice(
+              fields[initialField].lessons.indexOf(lessonID),
+              1
+            );
+          }
+          if (field !== null) {
+            fields[field].lessons.push(lessonID);
+          }
+          return fields;
+        })
+      );
+    });
   }
 
   function discard(): void {

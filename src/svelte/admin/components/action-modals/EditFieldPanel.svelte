@@ -1,5 +1,5 @@
 <script lang="ts" strictEvents>
-  import { mutate } from "sswr";
+  import { useSWR } from "sswr";
   import { useNavigate } from "svelte-navigator";
 
   import { Action } from "../../../../ts/admin/actions/Action";
@@ -28,6 +28,9 @@
   let imageSelectorOpen = false;
   let iconSelectorOpen = false;
   let donePromise: Promise<void> | null = null;
+  const { mutate } = useSWR<SWRMutateFix<Record<string, Field>>>(
+    constructURL("v1.0/field?override-group=true")
+  );
 
   function saveCallback(): void {
     if (
@@ -46,17 +49,19 @@
           "PUT",
           { name, description, image, icon }
         ),
-      ]).dispatch();
-      mutate<SWRMutateFix<Record<string, Field>>>(
-        constructURL("v1.0/field?override-group=true"),
-        SWRMutateFnWrapper((fields) => {
-          fields[payload.fieldId].name = name;
-          fields[payload.fieldId].description = description;
-          fields[payload.fieldId].image = image;
-          fields[payload.fieldId].icon = icon;
-          return fields;
-        })
-      );
+      ])
+        .dispatch()
+        .then(() => {
+          mutate(
+            SWRMutateFnWrapper((fields) => {
+              fields[payload.fieldId].name = name;
+              fields[payload.fieldId].description = description;
+              fields[payload.fieldId].image = image;
+              fields[payload.fieldId].icon = icon;
+              return fields;
+            })
+          );
+        });
     }
   }
 </script>

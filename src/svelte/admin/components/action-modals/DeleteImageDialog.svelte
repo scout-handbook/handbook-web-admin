@@ -1,5 +1,5 @@
 <script lang="ts" strictEvents>
-  import { mutate } from "sswr";
+  import { useSWR } from "sswr";
   import { useNavigate } from "svelte-navigator";
 
   import { Action } from "../../../../ts/admin/actions/Action";
@@ -16,6 +16,9 @@
   const navigate = useNavigate();
 
   let donePromise: Promise<void> | null = null;
+  const { mutate } = useSWR<SWRMutateFix<Array<string>>>(
+    constructURL("v1.0/image")
+  );
 
   function confirmCallback(): void {
     donePromise = new ActionQueue([
@@ -23,14 +26,16 @@
         $apiUri + "/v1.0/image/" + encodeURIComponent(payload.imageId),
         "DELETE"
       ),
-    ]).dispatch();
-    mutate<SWRMutateFix<Array<string>>>(
-      constructURL("v1.0/image"),
-      SWRMutateFnWrapper((images) => {
-        images.splice(images.indexOf(payload.imageId), 1);
-        return images;
-      })
-    );
+    ])
+      .dispatch()
+      .then(() => {
+        mutate(
+          SWRMutateFnWrapper((images) => {
+            images.splice(images.indexOf(payload.imageId), 1);
+            return images;
+          })
+        );
+      });
   }
 </script>
 
