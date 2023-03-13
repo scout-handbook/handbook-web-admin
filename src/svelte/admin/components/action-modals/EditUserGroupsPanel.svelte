@@ -14,7 +14,8 @@
 
   export let groups: Array<[string, Group]>;
   export let payload: { user: User };
-  export let revalidate: (() => void) | undefined = undefined;
+  export let revalidate: ((ops?: { force?: boolean }) => void) | undefined =
+    undefined;
 
   const navigate = useNavigate();
 
@@ -47,7 +48,7 @@
       ])
         .dispatch()
         .then(() => {
-          revalidate?.();
+          revalidate?.({ force: true });
         });
     }
   }
