@@ -60,7 +60,6 @@
   bind:role
   bind:group
   on:change={() => {
-    // TODO: Doesn't always work
     page = 1;
   }}
 />

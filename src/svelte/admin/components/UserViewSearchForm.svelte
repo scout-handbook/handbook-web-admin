@@ -49,9 +49,18 @@
     placeholder="Jméno uživatele"
     type="text"
     bind:value={searchName}
+    on:input={() => {
+      dispatch("change");
+    }}
   />
   {#if adminOrSuperuser}
-    <Select options={roleList} bind:selected={role} />
+    <Select
+      options={roleList}
+      bind:selected={role}
+      on:change={() => {
+        dispatch("change");
+      }}
+    />
   {/if}
   <GroupProvider silent let:groups>
     <Select
@@ -64,6 +73,9 @@
         )
       )}
       bind:selected={group}
+      on:change={() => {
+        dispatch("change");
+      }}
     />
   </GroupProvider>
   {#if searchName || role !== "all" || group !== "00000000-0000-0000-0000-000000000000"}
