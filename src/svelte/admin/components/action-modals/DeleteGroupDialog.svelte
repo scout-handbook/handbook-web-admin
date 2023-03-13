@@ -1,5 +1,5 @@
 <script lang="ts" strictEvents>
-  import { mutate } from "sswr";
+  import { useSWR } from "sswr";
   import { useNavigate } from "svelte-navigator";
 
   import { Action } from "../../../../ts/admin/actions/Action";
@@ -20,6 +20,9 @@
 
   const group = get(groups, payload.groupId)!;
   let donePromise: Promise<void> | null = null;
+  const { mutate } = useSWR<SWRMutateFix<Record<string, Group>>>(
+    constructURL("v1.0/group")
+  );
 
   function confirmCallback(): void {
     donePromise = new ActionQueue([
@@ -27,14 +30,16 @@
         $apiUri + "/v1.0/group/" + encodeURIComponent(payload.groupId),
         "DELETE"
       ),
-    ]).dispatch();
-    mutate<SWRMutateFix<Record<string, Group>>>(
-      constructURL("v1.0/group"),
-      SWRMutateFnWrapper((groups) => {
-        delete groups[payload.groupId];
-        return groups;
-      })
-    );
+    ])
+      .dispatch()
+      .then(() => {
+        mutate(
+          SWRMutateFnWrapper((groups) => {
+            delete groups[payload.groupId];
+            return groups;
+          })
+        );
+      });
   }
 </script>
 
