@@ -62,7 +62,6 @@
 </script>
 
 {#if donePromise !== null}
-  <!-- TODO: Looks strange with the overlay -->
   <DoneDialog {donePromise}>Lekce byla úspěšně přidána.</DoneDialog>
 {:else}
   <LessonEditor
