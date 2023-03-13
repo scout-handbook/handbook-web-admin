@@ -1,5 +1,5 @@
 <script lang="ts" strictEvents>
-  import { mutate } from "sswr";
+  import { useSWR } from "sswr";
   import { useNavigate } from "svelte-navigator";
 
   import type { Event } from "../../../../ts/admin/interfaces/Event";
@@ -37,6 +37,9 @@
   let selectedEvent: number;
   let participantList: Array<Participant> = [];
   let selectedParticipants: Array<number> = [];
+  const { mutate } = useSWR<SWRMutateFix<Record<string, Group>>>(
+    constructURL("v1.0/group")
+  );
 
   void request<Array<Event>>(
     $apiUri + "/v1.0/event",
@@ -127,15 +130,14 @@
         )
       )
     ).then(() => {
+      mutate(
+        SWRMutateFnWrapper((groups) => {
+          groups[payload.groupId].count += selectedParticipants.length;
+          return groups;
+        })
+      );
       step = "done";
     });
-    mutate<SWRMutateFix<Record<string, Group>>>(
-      constructURL("v1.0/group"),
-      SWRMutateFnWrapper((groups) => {
-        groups[payload.groupId].count += selectedParticipants.length;
-        return groups;
-      })
-    );
   }
 </script>
 
