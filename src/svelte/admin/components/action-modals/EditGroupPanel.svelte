@@ -1,5 +1,5 @@
 <script lang="ts" strictEvents>
-  import { mutate } from "sswr";
+  import { useSWR } from "sswr";
   import { useNavigate } from "svelte-navigator";
 
   import { Action } from "../../../../ts/admin/actions/Action";
@@ -23,6 +23,9 @@
   const group = get(groups, payload.groupId)!;
   let { name } = group;
   let donePromise: Promise<void> | null = null;
+  const { mutate } = useSWR<SWRMutateFix<Record<string, Group>>>(
+    constructURL("v1.0/group")
+  );
 
   function saveCallback(): void {
     if (group.name === name) {
@@ -36,14 +39,16 @@
           "PUT",
           { name }
         ),
-      ]).dispatch();
-      mutate<SWRMutateFix<Record<string, Group>>>(
-        constructURL("v1.0/group"),
-        SWRMutateFnWrapper((groups) => {
-          groups[payload.groupId].name = name;
-          return groups;
-        })
-      );
+      ])
+        .dispatch()
+        .then(() => {
+          mutate(
+            SWRMutateFnWrapper((groups) => {
+              groups[payload.groupId].name = name;
+              return groups;
+            })
+          );
+        });
     }
   }
 </script>

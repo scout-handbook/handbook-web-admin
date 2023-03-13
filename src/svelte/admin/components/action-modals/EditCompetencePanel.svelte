@@ -1,5 +1,5 @@
 <script lang="ts" strictEvents>
-  import { mutate } from "sswr";
+  import { useSWR } from "sswr";
   import { useNavigate } from "svelte-navigator";
 
   import { Action } from "../../../../ts/admin/actions/Action";
@@ -25,6 +25,9 @@
   const competence = get(competences, payload.competenceId)!;
   let { number, name, description } = competence;
   let donePromise: Promise<void> | null = null;
+  const { mutate } = useSWR<SWRMutateFix<Record<string, Competence>>>(
+    constructURL("v1.0/competence")
+  );
 
   function saveCallback(): void {
     if (
@@ -44,16 +47,18 @@
           "PUT",
           { number, name, description }
         ),
-      ]).dispatch();
-      mutate<SWRMutateFix<Record<string, Competence>>>(
-        constructURL("v1.0/competence"),
-        SWRMutateFnWrapper((competences) => {
-          competences[payload.competenceId].number = number;
-          competences[payload.competenceId].name = name;
-          competences[payload.competenceId].description = description;
-          return competences;
-        })
-      );
+      ])
+        .dispatch()
+        .then(() => {
+          mutate(
+            SWRMutateFnWrapper((competences) => {
+              competences[payload.competenceId].number = number;
+              competences[payload.competenceId].name = name;
+              competences[payload.competenceId].description = description;
+              return competences;
+            })
+          );
+        });
     }
   }
 </script>

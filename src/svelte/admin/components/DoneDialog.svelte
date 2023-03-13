@@ -1,4 +1,5 @@
 <script lang="ts" strictEvents>
+  import { createEventDispatcher } from "svelte";
   import { useNavigate } from "svelte-navigator";
 
   import Dialog from "./Dialog.svelte";
@@ -12,6 +13,7 @@
   export let donePromise: Promise<void>;
 
   const navigate = useNavigate();
+  const dispatch = createEventDispatcher<{ confirm: never; dismiss: never }>();
 </script>
 
 {#await donePromise}
@@ -22,6 +24,7 @@
     confirmButtonText="OK"
     on:confirm={() => {
       navigate(-1);
+      dispatch("confirm");
     }}
   >
     <slot />

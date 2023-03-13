@@ -86,7 +86,10 @@
           red
           on:click={() => {
             navigate("/images", {
-              state: { actionPayload: { imageId: image } },
+              state: {
+                action: "delete-image",
+                actionPayload: { imageId: image },
+              },
             });
           }}
         >

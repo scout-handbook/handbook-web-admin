@@ -1,5 +1,5 @@
 <script lang="ts" strictEvents>
-  import { mutate } from "sswr";
+  import { useSWR } from "sswr";
   import { useNavigate } from "svelte-navigator";
 
   import { Action } from "../../../../ts/admin/actions/Action";
@@ -21,6 +21,12 @@
 
   const competence = get(competences, payload.competenceId)!;
   let donePromise: Promise<void> | null = null;
+  const { mutate: competenceMutate } = useSWR<
+    SWRMutateFix<Record<string, Competence>>
+  >(constructURL("v1.0/competence"));
+  const { mutate: lessonMutate } = useSWR<SWRMutateFix<Record<string, Lesson>>>(
+    constructURL("v1.0/lesson?override-group=true")
+  );
 
   function confirmCallback(): void {
     donePromise = new ActionQueue([
@@ -30,28 +36,31 @@
           encodeURIComponent(payload.competenceId),
         "DELETE"
       ),
-    ]).dispatch();
-    mutate<SWRMutateFix<Record<string, Competence>>>(
-      constructURL("v1.0/competence"),
-      SWRMutateFnWrapper((competences) => {
-        delete competences[payload.competenceId];
-        return competences;
-      })
-    );
-    mutate<SWRMutateFix<Record<string, Lesson>>>(
-      constructURL("v1.0/lesson?override-group=true"),
-      SWRMutateFnWrapper((lessons) => {
-        for (const lessonId in lessons) {
-          if (lessons[lessonId].competences.includes(payload.competenceId)) {
-            lessons[lessonId].competences.splice(
-              lessons[lessonId].competences.indexOf(payload.competenceId),
-              1
-            );
-          }
-        }
-        return lessons;
-      })
-    );
+    ])
+      .dispatch()
+      .then(() => {
+        competenceMutate(
+          SWRMutateFnWrapper((competences) => {
+            delete competences[payload.competenceId];
+            return competences;
+          })
+        );
+        lessonMutate(
+          SWRMutateFnWrapper((lessons) => {
+            for (const lessonId in lessons) {
+              if (
+                lessons[lessonId].competences.includes(payload.competenceId)
+              ) {
+                lessons[lessonId].competences.splice(
+                  lessons[lessonId].competences.indexOf(payload.competenceId),
+                  1
+                );
+              }
+            }
+            return lessons;
+          })
+        );
+      });
   }
 </script>
 
