@@ -37,6 +37,7 @@
     role: role !== "all" ? role : undefined,
     group: group !== "00000000-0000-0000-0000-000000000000" ? group : undefined,
   };
+  // TODO: Doesn't work when deleting.
   $: ({ data: userList, revalidate } = useSWR<UserListResponse>(() =>
     constructURL("v1.0/user", payload)
   ));
@@ -59,6 +60,7 @@
   bind:role
   bind:group
   on:change={() => {
+    // TODO: Doesn't always work
     page = 1;
   }}
 />
