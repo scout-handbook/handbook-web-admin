@@ -93,6 +93,7 @@
       bind:groups
       on:discard={() => {
         navigate(-1);
+        navigate(-1);
       }}
       on:save={save}
     />
