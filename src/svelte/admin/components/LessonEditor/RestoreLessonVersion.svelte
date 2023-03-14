@@ -96,7 +96,7 @@
           ])}
           bind:selected={selectedVersion}
         >
-          <span slot="nullOption">
+          <span slot="null-option">
             <span class="current-version version-name">Současná verze</span>
             —
             <LessonProvider silent let:lessons>
