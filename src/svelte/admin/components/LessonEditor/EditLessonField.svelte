@@ -33,12 +33,9 @@
 <form>
   <FieldProvider let:fields>
     <RadioGroup options={fields} bind:selected={field}>
-      <span slot="option" let:id let:value={currentField}>
-        {#if id}
-          {currentField.name}
-        {:else}
-          <span class="anonymous">Nezařazeno</span>
-        {/if}
+      <span slot="nullOption" class="anonymous">Nezařazeno</span>
+      <span slot="option" let:value={currentField}>
+        {currentField.name}
       </span>
     </RadioGroup>
   </FieldProvider>
