@@ -33,7 +33,7 @@
 <form>
   <FieldProvider let:fields>
     <RadioGroup options={fields} bind:selected={field}>
-      <span slot="nullOption" class="anonymous">Nezařazeno</span>
+      <span slot="null-option" class="anonymous">Nezařazeno</span>
       <span slot="option" let:value={currentField}>
         {currentField.name}
       </span>

@@ -5,7 +5,7 @@
   type ValueType = $$Generic;
 
   interface $$Slots {
-    nullOption: Record<string, never>;
+    "null-option": Record<string, never>;
     option: { id: KeyType; value: ValueType };
   }
 
@@ -14,14 +14,14 @@
 
   const name = Math.random().toString();
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-  $: nullOptionPresent = $$slots.nullOption;
+  $: nullOptionPresent = $$slots["null-option"];
 </script>
 
 {#if nullOptionPresent}
   <label>
     <input {name} type="radio" value={null} bind:group={selected} />
     <span />
-    <slot name="nullOption" />
+    <slot name="null-option" />
   </label>
 {/if}
 {#each options as [id, value]}
