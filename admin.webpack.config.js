@@ -23,9 +23,10 @@ module.exports = (env) => {
     devtool: "source-map",
     plugins: [
       new HtmlWebpackPlugin({
+        base: config["admin-uri"] + "/",
+        configuration: config,
         title: config["site-name"] + " - administrace",
         template: "./src/html/index.html",
-        configuration: config,
       }),
     ],
     module: {
