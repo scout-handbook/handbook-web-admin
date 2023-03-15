@@ -4,11 +4,7 @@ var exec = require("child_process").exec;
 const gulp = require("gulp");
 const yargs = require("yargs");
 
-const inject = require("gulp-inject-string");
 const postcss = require("gulp-postcss");
-const rename = require("gulp-rename");
-const sourcemaps = require("gulp-sourcemaps");
-const through = require("through2");
 const webpack = require("webpack-stream");
 
 gulp.task("build:main", function (cb) {
