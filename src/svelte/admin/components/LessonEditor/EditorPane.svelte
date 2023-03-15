@@ -1,6 +1,7 @@
 <script lang="ts" strictEvents>
-  import { default as EasyMDE } from "easymde";
   import "../../../../../node_modules/easymde/dist/easymde.min.css";
+
+  import { default as EasyMDE } from "easymde";
   import { onMount } from "svelte";
 
   export let imageSelectorOpen: boolean;
