@@ -23,17 +23,15 @@
   $: currentPageList = $imageList?.slice(pageStart, pageEnd);
 </script>
 
-<div style:top={imageSelectorOpen ? "-76px" : "-100%"} class="selector">
-  <div class="scroller">
-    <div class="close-button-wrapper">
-      <Button
-        icon="up-open"
-        yellow
-        on:click={() => {
-          imageSelectorOpen = false;
-        }}>Zavřít</Button
-      >
-    </div>
+<div style:top={imageSelectorOpen ? "0" : "-100%"} class="selector">
+  <div class="button-wrapper">
+    <Button
+      icon="up-open"
+      yellow
+      on:click={() => {
+        imageSelectorOpen = false;
+      }}>Zavřít</Button
+    >
     <!-- TODO: Re-enable uploads in editor without discarding its contents
     <Button
       icon="plus"
@@ -44,6 +42,8 @@
       Nahrát
     </Button>
     -->
+  </div>
+  <div class="scroller">
     <div class="container">
       {#if currentPageList === undefined || totalImageCount === undefined}
         <LoadingIndicator />
@@ -69,9 +69,11 @@
 </div>
 
 <style>
-  .close-button-wrapper {
-    margin-left: 19px;
-    margin-top: 19px;
+  .button-wrapper {
+    margin-left: 15px;
+    margin-top: 95px;
+    position: absolute;
+    z-index: 8;
   }
 
   .scroller {
@@ -79,17 +81,19 @@
     left: 0;
     overflow-y: auto;
     padding-bottom: 30px;
+    padding-top: 76px;
     position: absolute;
     right: 0;
-    top: 76px;
+    top: 0;
   }
 
   .selector {
     background-color: #fff;
     height: 100%;
-    position: relative;
+    position: fixed;
     top: -100%;
     transition: top 0.4s ease;
+    width: 100%;
     z-index: 7;
   }
 
