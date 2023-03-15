@@ -5,7 +5,6 @@ const gulp = require("gulp");
 const yargs = require("yargs");
 
 const postcss = require("gulp-postcss");
-const webpack = require("webpack-stream");
 
 gulp.task("build:main", function (cb) {
   const config = yargs.argv.config;
