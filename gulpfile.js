@@ -10,8 +10,7 @@ const webpack = require("webpack-stream");
 gulp.task("build:main", function (cb) {
   const config = yargs.argv.config;
   exec(
-    "npx webpack --color -c admin.webpack.config.js --env client-config=" +
-      config,
+    "npx webpack --color --env client-config=" + config,
     function (err, stdout, stderr) {
       console.log(stdout);
       console.log(stderr);
