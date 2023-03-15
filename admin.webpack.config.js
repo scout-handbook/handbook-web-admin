@@ -74,7 +74,6 @@ module.exports = (env) => {
     },
     externalsType: "var",
     externals: {
-      easymde: "EasyMDE",
       showdown: "showdown",
       xss: "filterXSS",
     },
