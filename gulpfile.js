@@ -19,12 +19,20 @@ gulp.task("build:main", function (cb) {
   );
 });
 
-gulp.task("build:css:error", function () {
+gulp.task("build:error:css", function () {
   return gulp
     .src(["src/css/error.css"])
     .pipe(postcss())
     .pipe(gulp.dest("dist/"));
 });
+
+gulp.task("build:error:html", function () {
+  return gulp
+    .src(["src/html/403.html", "src/html/404.html", "src/html/500.html"])
+    .pipe(gulp.dest("dist/"));
+});
+
+gulp.task("build:error", gulp.parallel("build:error:css", "build:error:html"));
 
 gulp.task("build:php", function () {
   return gulp.src(["src/php/lesson.php"]).pipe(gulp.dest("dist/"));
@@ -56,7 +64,7 @@ gulp.task(
   "build",
   gulp.parallel(
     "build:main",
-    "build:css:error",
+    "build:error",
     "build:php",
     "build:txt",
     "build:png",
