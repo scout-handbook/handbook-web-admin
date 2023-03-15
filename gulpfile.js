@@ -65,10 +65,7 @@ gulp.task("build:css", function () {
         .pipe(gulp.dest("dist/"))
     );
   }
-  return merge(
-    bundle("error", ["src/css/error.css"]),
-    bundle("admin", ["src/css/fontello.css"])
-  );
+  return merge(bundle("error", ["src/css/error.css"]));
 });
 
 gulp.task("build:php", function () {
@@ -77,18 +74,6 @@ gulp.task("build:php", function () {
 
 gulp.task("build:txt", function () {
   return gulp.src(["src/txt/htaccess.txt"]).pipe(gulp.dest("dist/"));
-});
-
-gulp.task("build:font", function () {
-  return gulp
-    .src([
-      "src/font/fontello.eot",
-      "src/font/fontello.svg",
-      "src/font/fontello.ttf",
-      "src/font/fontello.woff",
-      "src/font/fontello.woff2",
-    ])
-    .pipe(gulp.dest("dist/font/"));
 });
 
 gulp.task("build:png", function () {
@@ -129,7 +114,6 @@ gulp.task(
     "build:js",
     "build:php",
     "build:txt",
-    "build:font",
     "build:png",
     "build:deps",
     "build:icon"
