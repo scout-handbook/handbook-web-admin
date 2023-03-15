@@ -2,6 +2,7 @@
 
 const fs = require("fs");
 const path = require("path");
+const webpack = require("webpack");
 
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const sveltePreprocess = require("svelte-preprocess");
@@ -27,6 +28,9 @@ module.exports = (env) => {
         configuration: config,
         title: config["site-name"] + " - administrace",
         template: "./src/html/index.html",
+      }),
+      new webpack.DefinePlugin({
+        CONFIG: JSON.stringify(config),
       }),
     ],
     module: {
