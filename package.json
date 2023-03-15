@@ -36,6 +36,7 @@
   },
   "devDependencies": {
     "@csstools/postcss-global-data": "^1.0.3",
+    "@fontsource/open-sans": "^4.5.14",
     "@types/codemirror": "5.60.7",
     "@types/showdown": "^2.0.0",
     "@typescript-eslint/eslint-plugin": "^5.54.1",
