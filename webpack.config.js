@@ -92,6 +92,9 @@ module.exports = (env) => {
           },
         }),
       ],
+      splitChunks: {
+        chunks: "all",
+      },
     },
   };
 };
