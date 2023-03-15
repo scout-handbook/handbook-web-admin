@@ -1,11 +1,11 @@
 /* eslint-env node */
 
+var exec = require("child_process").exec;
 const gulp = require("gulp");
 const yargs = require("yargs");
 
 const cleanCSS = require("gulp-clean-css");
 const concat = require("gulp-concat");
-var exec = require('child_process').exec;
 const inject = require("gulp-inject-string");
 const merge = require("merge-stream");
 const postcss = require("gulp-postcss");
