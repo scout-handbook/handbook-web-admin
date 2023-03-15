@@ -1,5 +1,9 @@
 <script lang="ts" strictEvents>
   import "../../css/fontello.css";
+  import "@fontsource/open-sans/400.css"
+  import "@fontsource/open-sans/400-italic.css"
+  import "@fontsource/open-sans/700.css"
+  import "@fontsource/open-sans/700-italic.css"
 
   import { Route, Router } from "svelte-navigator";
 
@@ -100,10 +104,6 @@
     </div>
   </Route>
 </Router>
-<link
-  href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700,700i"
-  rel="stylesheet"
-/>
 
 <style>
   .main-page {
