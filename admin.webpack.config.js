@@ -72,11 +72,6 @@ module.exports = (env) => {
     output: {
       filename: "[name].js",
     },
-    externalsType: "var",
-    externals: {
-      showdown: "showdown",
-      xss: "filterXSS",
-    },
     optimization: {
       minimize: mode === "production",
       minimizer: [
