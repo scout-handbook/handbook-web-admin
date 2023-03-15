@@ -1,4 +1,6 @@
 <script lang="ts" strictEvents>
+  import "../../css/fontello.css";
+
   import { Route, Router } from "svelte-navigator";
 
   import {
