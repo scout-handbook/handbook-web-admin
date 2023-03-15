@@ -49,23 +49,11 @@ gulp.task("build:js:worker", function () {
     .pipe(gulp.dest("dist/"));
 });
 
-gulp.task("build:js", gulp.parallel("build:js:worker"));
-
-gulp.task("build:css", function () {
-  function bundle(name, sources) {
-    return (
-      gulp
-        .src(sources)
-        .pipe(sourcemaps.init())
-        .pipe(concat(name + ".min.css"))
-        .pipe(postcss())
-        //.pipe(gulp.dest('dist/'));
-        .pipe(cleanCSS())
-        .pipe(sourcemaps.write("./"))
-        .pipe(gulp.dest("dist/"))
-    );
-  }
-  return merge(bundle("error", ["src/css/error.css"]));
+gulp.task("build:css:error", function () {
+  return gulp
+    .src(["src/css/error.css"])
+    .pipe(postcss())
+    .pipe(gulp.dest("dist/"));
 });
 
 gulp.task("build:php", function () {
@@ -110,8 +98,8 @@ gulp.task(
   "build",
   gulp.parallel(
     "build:main",
-    "build:css",
-    "build:js",
+    "build:css:error",
+    "build:js:worker",
     "build:php",
     "build:txt",
     "build:png",
