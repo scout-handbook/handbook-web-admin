@@ -4,10 +4,7 @@ var exec = require("child_process").exec;
 const gulp = require("gulp");
 const yargs = require("yargs");
 
-const cleanCSS = require("gulp-clean-css");
-const concat = require("gulp-concat");
 const inject = require("gulp-inject-string");
-const merge = require("merge-stream");
 const postcss = require("gulp-postcss");
 const rename = require("gulp-rename");
 const sourcemaps = require("gulp-sourcemaps");
