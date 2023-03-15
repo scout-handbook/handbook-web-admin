@@ -2,7 +2,7 @@
   import { useSWR } from "sswr";
 
   import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
-  import { adminUri, frontendUri } from "../../../ts/admin/stores";
+  import { adminUri, apiUri, frontendUri } from "../../../ts/admin/stores";
   import { constructURL } from "../../../ts/admin/utils/constructURL";
 
   const { data: loginstate } = useSWR<Loginstate>(constructURL("v1.0/account"));
@@ -23,7 +23,7 @@
   </div>
   <div class="links">
     <a
-      href={$adminUri +
+      href={$apiUri +
         "/v1.0/logout?redirect-uri=" +
         encodeURIComponent($frontendUri)}
     >
