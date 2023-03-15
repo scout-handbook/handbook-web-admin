@@ -6,6 +6,7 @@ const webpack = require("webpack");
 
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const { SubresourceIntegrityPlugin } = require("webpack-subresource-integrity");
 const sveltePreprocess = require("svelte-preprocess");
 const TerserPlugin = require("terser-webpack-plugin");
 
@@ -34,6 +35,7 @@ module.exports = (env) => {
       new webpack.DefinePlugin({
         CONFIG: JSON.stringify(config),
       }),
+      new SubresourceIntegrityPlugin(),
     ],
     module: {
       rules: [
