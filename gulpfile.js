@@ -24,28 +24,6 @@ gulp.task("build:main", function (cb) {
   );
 });
 
-gulp.task("build:js:worker", function () {
-  return gulp
-    .src("src/ts/admin-worker.ts")
-    .pipe(webpack(require("./webpack.config.js")))
-    .pipe(sourcemaps.init({ loadMaps: true }))
-    .pipe(
-      through.obj(function (file, _, cb) {
-        const isSourceMap = /\.map$/.test(file.path);
-        if (!isSourceMap) this.push(file);
-        cb();
-      })
-    )
-    .pipe(
-      inject.prepend(
-        'importScripts("showdown.min.js");\nimportScripts("xss.min.js");\n'
-      )
-    )
-    .pipe(rename({ basename: "admin-worker", suffix: ".min" }))
-    .pipe(sourcemaps.write("."))
-    .pipe(gulp.dest("dist/"));
-});
-
 gulp.task("build:css:error", function () {
   return gulp
     .src(["src/css/error.css"])
@@ -96,7 +74,6 @@ gulp.task(
   gulp.parallel(
     "build:main",
     "build:css:error",
-    "build:js:worker",
     "build:php",
     "build:txt",
     "build:png",
