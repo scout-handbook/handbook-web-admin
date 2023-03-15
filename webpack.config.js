@@ -16,12 +16,12 @@ function getConfig(env) {
 }
 
 module.exports = (env) => {
-  // TODO: Take mode from env
-  const mode = "development";
+  const mode =
+    process.env.NODE_ENV ?? (env.development ? "development" : "production");
   const config = getConfig(env);
   return {
     mode,
-    devtool: "source-map",
+    devtool: mode === "development" ? "source-map" : false,
     plugins: [
       new HtmlWebpackPlugin({
         base: config["admin-uri"] + "/",
