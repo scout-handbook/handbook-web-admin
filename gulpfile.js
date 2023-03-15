@@ -1,13 +1,11 @@
 /* eslint-env node */
 
-const yargs = require("yargs");
-const fs = require("fs");
-
 const gulp = require("gulp");
+const yargs = require("yargs");
 
 const cleanCSS = require("gulp-clean-css");
 const concat = require("gulp-concat");
-const htmlmin = require("gulp-htmlmin");
+var exec = require('child_process').exec;
 const inject = require("gulp-inject-string");
 const merge = require("merge-stream");
 const postcss = require("gulp-postcss");
@@ -16,51 +14,17 @@ const sourcemaps = require("gulp-sourcemaps");
 const through = require("through2");
 const webpack = require("webpack-stream");
 
-function getConfig() {
-  const location = yargs.string("config").argv.config;
-  if (location === undefined) {
-    throw new Error("No config specified");
-  }
-  return JSON.parse(fs.readFileSync(location, "utf8"));
-}
-
-gulp.task("build:html", function () {
-  return (
-    merge(
-      gulp.src(["src/html/403.html", "src/html/404.html", "src/html/500.html"]),
-      gulp
-        .src(["src/html/index.html"])
-        .pipe(inject.replace("<!--ADMIN-URI-->", getConfig()["admin-uri"]))
-    )
-      .pipe(sourcemaps.init())
-      .pipe(inject.replace("<!--SITE-NAME-->", getConfig()["site-name"]))
-      //.pipe(gulp.dest('dist/'));
-      .pipe(htmlmin({ collapseWhitespace: true }))
-      .pipe(sourcemaps.write("./"))
-      .pipe(gulp.dest("dist/"))
+gulp.task("build:main", function (cb) {
+  const config = yargs.argv.config;
+  exec(
+    "npx webpack --color -c admin.webpack.config.js --env client-config=" +
+      config,
+    function (err, stdout, stderr) {
+      console.log(stdout);
+      console.log(stderr);
+      cb(err);
+    }
   );
-});
-
-gulp.task("build:js:main", function () {
-  return gulp
-    .src("src/ts/admin.ts")
-    .pipe(webpack(require("./webpack.config.js")))
-    .pipe(sourcemaps.init({ loadMaps: true }))
-    .pipe(
-      through.obj(function (file, _, cb) {
-        const isSourceMap = /\.map$/.test(file.path);
-        if (!isSourceMap) this.push(file);
-        cb();
-      })
-    )
-    .pipe(
-      inject.prepend(
-        "var CONFIG = JSON.parse('" + JSON.stringify(getConfig()) + "');\n"
-      )
-    )
-    .pipe(rename({ basename: "admin", suffix: ".min" }))
-    .pipe(sourcemaps.write("."))
-    .pipe(gulp.dest("dist/"));
 });
 
 gulp.task("build:js:worker", function () {
@@ -85,7 +49,7 @@ gulp.task("build:js:worker", function () {
     .pipe(gulp.dest("dist/"));
 });
 
-gulp.task("build:js", gulp.parallel("build:js:main", "build:js:worker"));
+gulp.task("build:js", gulp.parallel("build:js:worker"));
 
 gulp.task("build:css", function () {
   function bundle(name, sources) {
@@ -160,7 +124,7 @@ gulp.task("build:icon", function () {
 gulp.task(
   "build",
   gulp.parallel(
-    "build:html",
+    "build:main",
     "build:css",
     "build:js",
     "build:php",
