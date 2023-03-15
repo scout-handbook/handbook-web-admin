@@ -43,18 +43,6 @@ gulp.task("build:png", function () {
   return gulp.src(["src/png/avatar.png"]).pipe(gulp.dest("dist/"));
 });
 
-gulp.task("build:deps", function () {
-  return gulp
-    .src([
-      "node_modules/easymde/dist/easymde.min.css",
-      "node_modules/easymde/dist/easymde.min.js",
-      "node_modules/showdown/dist/showdown.min.js",
-      "node_modules/showdown/dist/showdown.min.js.map",
-      "node_modules/xss/dist/xss.min.js",
-    ])
-    .pipe(gulp.dest("dist/"));
-});
-
 gulp.task("build:icon", function () {
   return gulp
     .src([
@@ -77,7 +65,6 @@ gulp.task(
     "build:php",
     "build:txt",
     "build:png",
-    "build:deps",
     "build:icon"
   )
 );
