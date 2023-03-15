@@ -5,6 +5,7 @@ const path = require("path");
 const webpack = require("webpack");
 
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const sveltePreprocess = require("svelte-preprocess");
 const TerserPlugin = require("terser-webpack-plugin");
 
@@ -29,6 +30,7 @@ module.exports = (env) => {
         title: config["site-name"] + " - administrace",
         template: "./src/html/index.html",
       }),
+      new MiniCssExtractPlugin(),
       new webpack.DefinePlugin({
         CONFIG: JSON.stringify(config),
       }),
@@ -37,7 +39,7 @@ module.exports = (env) => {
       rules: [
         {
           test: /\.css$/,
-          use: ["style-loader", "css-loader"],
+          use: [MiniCssExtractPlugin.loader, "css-loader"],
         },
         {
           test: /\.svelte$/,
@@ -47,6 +49,7 @@ module.exports = (env) => {
               compilerOptions: {
                 dev: mode === "development",
               },
+              emitCss: true,
               preprocess: sveltePreprocess({
                 postcss: true,
                 tsconfigFile: "./tsconfig.json",
