@@ -1,22 +1,29 @@
 <script lang="ts" strictEvents>
-  import "../../../../../node_modules/easymde/dist/easymde.min.css";
+  //import "../../../../../node_modules/easymde/dist/easymde.min.css";
 
-  import { default as EasyMDE } from "easymde";
+  //import { default as EasyMDE } from "easymde";
   import { onMount } from "svelte";
+  import { ProseMirrorView } from "../../../../ts/admin/utils/ProseMirrorView";
+  import "prosemirror-view/style/prosemirror.css";
+  import "prosemirror-example-setup/style/style.css";
+  import "prosemirror-menu/style/menu.css";
 
   export let imageSelectorOpen: boolean;
   export let value: string;
   export const insertAtCursor = (content: string): void => {
-    const doc = editor!.codemirror.getDoc();
-    doc.replaceRange(content, doc.getCursor());
+    //const doc = editor!.codemirror.getDoc();
+    //doc.replaceRange(content, doc.getCursor());
   };
 
-  let editor: EasyMDE | undefined;
+  let view: ProseMirrorView;
+  //let editor: EasyMDE | undefined;
   let editorArea: HTMLElement;
 
-  $: editor !== undefined && value !== editor.value() && editor.value(value);
+  //$: editor !== undefined && value !== editor.value() && editor.value(value);
 
   onMount(() => {
+    view = new ProseMirrorView(editorArea, value);
+    /*
     editor = new EasyMDE({
       autoDownloadFontAwesome: false,
       autofocus: true,
@@ -88,12 +95,11 @@
     editor.codemirror.on("change", () => {
       value = editor!.value();
     });
+    */
   });
 </script>
 
-<div>
-  <textarea bind:this={editorArea} />
-</div>
+<div bind:this={editorArea} />
 
 <style>
   :global(.editor-toolbar) {
