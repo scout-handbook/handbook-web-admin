@@ -39,7 +39,7 @@
     "@fontsource/open-sans": "^4.5.14",
     "@types/codemirror": "5.60.7",
     "@types/showdown": "^2.0.1",
-    "@typescript-eslint/eslint-plugin": "^5.59.1",
+    "@typescript-eslint/eslint-plugin": "^5.59.2",
     "@typescript-eslint/parser": "^5.59.2",
     "autoprefixer": "^10.4.14",
     "css-loader": "^6.7.3",
