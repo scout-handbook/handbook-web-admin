@@ -52,7 +52,7 @@
   <br />
 {/if}
 <CompetenceProvider let:competences>
-  {#each competences as [id, competence]}
+  {#each competences as [id, competence] (id)}
     <h3>
       <!-- eslint-disable-next-line @typescript-eslint/restrict-plus-operands @typescript-eslint/no-unsafe-call -->
       {competence.number.toString() + ": " + competence.name}

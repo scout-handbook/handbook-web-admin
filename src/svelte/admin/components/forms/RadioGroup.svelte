@@ -24,7 +24,7 @@
     <slot name="null-option" />
   </label>
 {/if}
-{#each options as [id, value]}
+{#each options as [id, value] (id)}
   <label>
     <input {name} type="radio" value={id} bind:group={selected} />
     <span />
