@@ -23,7 +23,7 @@
     <th>Role</th>
     <th>Skupiny</th>
   </tr>
-  {#each users as user}
+  {#each users as user (user.id)}
     <tr>
       <td>{user.name}</td>
       <td>
