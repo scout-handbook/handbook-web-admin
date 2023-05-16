@@ -12,7 +12,7 @@
   }
 </script>
 
-{#each options as [id, value]}
+{#each options as [id, value] (id)}
   <label>
     <input type="checkbox" value={id} bind:group={selected} />
     <span />

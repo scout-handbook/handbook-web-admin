@@ -56,7 +56,7 @@
   </Button>
 {/if}
 <GroupProvider let:groups>
-  {#each groups as [id, group]}
+  {#each groups as [id, group] (id)}
     {#if id === "00000000-0000-0000-0000-000000000000"}
       <br />
       <h3 class="public">{group.name}</h3>

@@ -18,7 +18,7 @@
     dispatch("change");
   }}
 >
-  {#each options as [id, value]}
+  {#each options as [id, value] (id)}
     <option value={id}>{value}</option>
   {/each}
 </select>
