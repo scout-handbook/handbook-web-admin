@@ -102,6 +102,7 @@
     "svelte/no-reactive-reassign": "error",
     "svelte/prefer-class-directive": "error",
     "svelte/prefer-style-directive": "error",
+    "svelte/require-each-key": "error",
     "svelte/sort-attributes": "error",
     "svelte/spaced-html-comment": "error",
     "svelte/valid-each-key": "error"
