@@ -72,7 +72,7 @@
 {#if currentPageList === undefined || totalImageCount === undefined}
   <LoadingIndicator />
 {:else}
-  {#each currentPageList as image}
+  {#each currentPageList as image (image)}
     <ImageGridCell>
       <ImageThumbnail
         id={image}

@@ -99,10 +99,13 @@
     "svelte/require-stores-init": "error",
     "svelte/derived-has-same-inputs-outputs": "error",
     "svelte/no-extra-reactive-curlies": "error",
+    "svelte/no-reactive-reassign": "error",
     "svelte/prefer-class-directive": "error",
     "svelte/prefer-style-directive": "error",
+    "svelte/require-each-key": "error",
     "svelte/sort-attributes": "error",
-    "svelte/spaced-html-comment": "error"
+    "svelte/spaced-html-comment": "error",
+    "svelte/valid-each-key": "error"
   },
   "settings": {
     "svelte": {
@@ -125,7 +128,7 @@
       "parserOptions": {
         "project": null
       },
-      "files": ["gulpfile.js", "postcss.config.js", "webpack.config.js", ".eslintrc.js"],
+      "files": ["gulpfile.js", "postcss.config.js", "webpack.config.js"],
       "rules": {
         "deprecation/deprecation": "off",
         "@typescript-eslint/await-thenable": "off",

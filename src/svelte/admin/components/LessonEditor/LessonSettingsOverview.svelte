@@ -76,7 +76,7 @@
 </Button>
 <CompetenceProvider inline let:competences={allCompetences}>
   <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-call @typescript-eslint/no-unsafe-argument -->
-  {#each allCompetences.filter( ([id, _]) => competences.includes(id) ) as [_, competence]}
+  {#each allCompetences.filter( ([id, _]) => competences.includes(id) ) as [id, competence] (id)}
     <br />
     <span class="competence-number">{competence.number}:</span>
     {competence.name}
@@ -98,7 +98,7 @@
 <br />
 <GroupProvider inline let:groups={allGroups}>
   <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-call @typescript-eslint/no-unsafe-argument -->
-  {#each allGroups.filter(([id, _]) => groups.includes(id)) as [id, group]}
+  {#each allGroups.filter(([id, _]) => groups.includes(id)) as [id, group] (id)}
     {#if id === "00000000-0000-0000-0000-000000000000"}
       <span class="public">{group.name}</span>
       <br />
