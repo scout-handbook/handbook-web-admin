@@ -80,6 +80,7 @@ module.exports = (env) => {
     },
     entry: "./src/ts/admin.ts",
     output: {
+      crossOriginLoading: "anonymous",
       filename: "[name].js",
     },
     optimization: {
