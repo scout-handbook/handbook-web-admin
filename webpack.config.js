@@ -11,7 +11,7 @@ const sveltePreprocess = require("svelte-preprocess");
 const TerserPlugin = require("terser-webpack-plugin");
 
 function getConfig(env) {
-  if (env["client-config"] === undefined) {
+  if (env["client-config"] === "undefined") {
     throw new Error("No config specified");
   }
   return JSON.parse(fs.readFileSync(env["client-config"], "utf8"));
@@ -80,6 +80,7 @@ module.exports = (env) => {
     },
     entry: "./src/ts/admin.ts",
     output: {
+      crossOriginLoading: "anonymous",
       filename: "[name].js",
     },
     optimization: {
