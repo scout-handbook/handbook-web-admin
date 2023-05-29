@@ -58,7 +58,7 @@
     "postcss": "^8.4.24",
     "postcss-custom-properties": "^13.1.5",
     "prettier": "^2.8.8",
-    "prettier-plugin-svelte": "^2.10.0",
+    "prettier-plugin-svelte": "^2.10.1",
     "sswr": "^1.10.0",
     "stylelint": "^15.6.2",
     "stylelint-config-standard": "^33.0.0",
