@@ -74,6 +74,12 @@
     "@typescript-eslint/no-non-null-assertion": "off",
     "svelte/no-store-async": "error",
     "svelte/no-target-blank": "error",
+    "svelte/no-unused-class-name": [
+      "error",
+      {
+        "allowedClassNames": ["icon-info-circled"]
+      }
+    ],
     "svelte/block-lang": [
       "error",
       {
