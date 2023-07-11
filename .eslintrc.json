@@ -31,7 +31,6 @@
     "@typescript-eslint/explicit-module-boundary-types": "error",
     "@typescript-eslint/member-ordering": "error",
     "@typescript-eslint/method-signature-style": ["error", "method"],
-    "@typescript-eslint/naming-convention": "off", // TODO
     "@typescript-eslint/no-base-to-string": ["error", { "ignoredTypeNames": ["FormData", "Payload"] }],
     "@typescript-eslint/no-dynamic-delete": "off", // TODO
     "@typescript-eslint/no-import-type-side-effects": "error",
