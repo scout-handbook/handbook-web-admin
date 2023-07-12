@@ -36,7 +36,7 @@ export class ActionQueue {
     if (this.actions.length <= 1) {
       propagate = false;
     }
-    this.actions[0].exceptionHandler["AuthenticationException"] = (): void => {
+    this.actions[0].exceptionHandler.AuthenticationException = (): void => {
       this.authException();
     };
     void request(

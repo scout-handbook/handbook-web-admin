@@ -7,6 +7,7 @@
   type ValueType = $$Generic;
 
   export let options: Array<[KeyType, ValueType]>;
+  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
   export let selected: KeyType | null;
 
   const dispatch = createEventDispatcher<{ change: never }>();

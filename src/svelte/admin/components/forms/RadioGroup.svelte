@@ -10,6 +10,7 @@
   }
 
   export let options: Array<[KeyType, ValueType]>;
+  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
   export let selected: KeyType | null;
 
   const name = Math.random().toString();
