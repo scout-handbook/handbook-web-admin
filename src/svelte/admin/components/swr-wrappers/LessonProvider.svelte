@@ -21,17 +21,17 @@
   const competences = derived(
     useSWR<Record<string, Competence>>(constructURL("v1.0/competence")).data,
     processCompetences,
-    undefined
+    undefined,
   );
   const lessons = derived(
     [
       useSWR<Record<string, Lesson>>(
-        constructURL("v1.0/lesson?override-group=true")
+        constructURL("v1.0/lesson?override-group=true"),
       ).data,
       competences,
     ],
     processLessons,
-    undefined
+    undefined,
   );
 </script>
 

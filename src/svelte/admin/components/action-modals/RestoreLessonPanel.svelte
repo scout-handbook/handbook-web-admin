@@ -45,7 +45,7 @@
             selectedVersion.toString(),
           "GET",
           {},
-          authFailHandler
+          authFailHandler,
         ).then(compileMarkdown);
 
   void request<Record<string, DeletedLesson>>(
@@ -54,7 +54,7 @@
     {},
     {
       AuthenticationException: reAuth,
-    }
+    },
   ).then((response) => {
     lessonList = Object.entries(response);
     if (lessonList.length === 0) {
@@ -74,7 +74,7 @@
       {},
       {
         AuthenticationException: reAuth,
-      }
+      },
     ).then((response) => {
       versionList = response;
       step = "version-selection";
@@ -88,7 +88,7 @@
         "/versions/" +
         selectedVersion!.toString() +
         "/restore?name=" +
-        name
+        name,
     );
   }
 </script>

@@ -33,7 +33,9 @@
     font-family: "Open Sans", sans-serif;
     font-size: 1em;
     padding: 2px 10px;
-    transition: border-color ease 0.15s, background-color ease 0.15s;
+    transition:
+      border-color ease 0.15s,
+      background-color ease 0.15s;
   }
 
   select:focus {

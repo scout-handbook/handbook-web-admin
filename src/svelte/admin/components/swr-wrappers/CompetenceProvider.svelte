@@ -17,7 +17,7 @@
   const competences = derived(
     useSWR<Record<string, Competence>>(constructURL("v1.0/competence")).data,
     processCompetences,
-    undefined
+    undefined,
   );
 </script>
 

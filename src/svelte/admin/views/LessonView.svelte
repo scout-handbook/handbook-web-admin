@@ -85,7 +85,7 @@
 {/if}
 <FieldProvider let:fields let:lessons>
   <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-call @typescript-eslint/no-unsafe-return -->
-  {#each lessons.filter(([lessonId, _]) => fields.filter( ([_, field]) => field.lessons.includes(lessonId) ).length === 0) as [lessonId, lesson] (lessonId)}
+  {#each lessons.filter(([lessonId, _]) => fields.filter( ([_, field]) => field.lessons.includes(lessonId), ).length === 0) as [lessonId, lesson] (lessonId)}
     <LessonViewLesson id={lessonId} {lesson} />
   {/each}
   {#each fields as [fieldId, field] (fieldId)}

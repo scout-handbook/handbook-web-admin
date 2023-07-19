@@ -21,14 +21,14 @@
   const group = get(groups, payload.groupId)!;
   let donePromise: Promise<void> | null = null;
   const { mutate } = useSWR<SWRMutateFix<Record<string, Group>>>(
-    constructURL("v1.0/group")
+    constructURL("v1.0/group"),
   );
 
   function confirmCallback(): void {
     donePromise = new ActionQueue([
       new Action(
         $apiUri + "/v1.0/group/" + encodeURIComponent(payload.groupId),
-        "DELETE"
+        "DELETE",
       ),
     ])
       .dispatch()
@@ -37,7 +37,7 @@
           SWRMutateFnWrapper((groups) => {
             delete groups[payload.groupId];
             return groups;
-          })
+          }),
         );
       });
   }

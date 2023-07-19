@@ -25,7 +25,7 @@
     SWRMutateFix<Record<string, Competence>>
   >(constructURL("v1.0/competence"));
   const { mutate: lessonMutate } = useSWR<SWRMutateFix<Record<string, Lesson>>>(
-    constructURL("v1.0/lesson?override-group=true")
+    constructURL("v1.0/lesson?override-group=true"),
   );
 
   function confirmCallback(): void {
@@ -34,7 +34,7 @@
         $apiUri +
           "/v1.0/competence/" +
           encodeURIComponent(payload.competenceId),
-        "DELETE"
+        "DELETE",
       ),
     ])
       .dispatch()
@@ -43,7 +43,7 @@
           SWRMutateFnWrapper((competences) => {
             delete competences[payload.competenceId];
             return competences;
-          })
+          }),
         );
         lessonMutate(
           SWRMutateFnWrapper((lessons) => {
@@ -53,12 +53,12 @@
               ) {
                 lessons[lessonId].competences.splice(
                   lessons[lessonId].competences.indexOf(payload.competenceId),
-                  1
+                  1,
                 );
               }
             }
             return lessons;
-          })
+          }),
         );
       });
   }

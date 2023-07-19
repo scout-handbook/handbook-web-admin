@@ -48,7 +48,7 @@
           name: encodeURIComponent(name),
           body: encodeURIComponent(body),
         },
-        [ActionCallback.FillID]
+        [ActionCallback.FillID],
       ),
     ]);
     populateCompetences(saveActionQueue, null, competences);

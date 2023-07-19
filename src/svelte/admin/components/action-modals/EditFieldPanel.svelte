@@ -29,7 +29,7 @@
   let iconSelectorOpen = false;
   let donePromise: Promise<void> | null = null;
   const { mutate } = useSWR<SWRMutateFix<Record<string, Field>>>(
-    constructURL("v1.0/field?override-group=true")
+    constructURL("v1.0/field?override-group=true"),
   );
 
   function saveCallback(): void {
@@ -47,7 +47,7 @@
         new Action(
           $apiUri + "/v1.0/field/" + encodeURIComponent(payload.fieldId),
           "PUT",
-          { name, description, image, icon }
+          { name, description, image, icon },
         ),
       ])
         .dispatch()
@@ -59,7 +59,7 @@
               fields[payload.fieldId].image = image;
               fields[payload.fieldId].icon = icon;
               return fields;
-            })
+            }),
           );
         });
     }
