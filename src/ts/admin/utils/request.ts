@@ -20,7 +20,7 @@ export function reAuth(): void {
 export const authFailHandler: ExceptionHandler = {
   AuthenticationException: function (): void {
     globalDialogMessage.set(
-      "Proběhlo automatické odhlášení. Přihlašte se prosím a zkuste to znovu."
+      "Proběhlo automatické odhlášení. Přihlašte se prosím a zkuste to znovu.",
     );
   },
 };
@@ -28,7 +28,7 @@ export const authFailHandler: ExceptionHandler = {
 async function rawRequest<T extends RequestResponse>(
   url: string,
   method: string,
-  payload: FormData | Payload = {}
+  payload: FormData | Payload = {},
 ): Promise<APIResponse<T>> {
   let query = "";
   if (
@@ -74,7 +74,7 @@ export async function request<T extends RequestResponse>(
   url: string,
   method: string,
   payload: FormData | Payload,
-  exceptionHandler: ExceptionHandler = {}
+  exceptionHandler: ExceptionHandler = {},
 ): Promise<T> {
   return new Promise((resolve, reject) => {
     void rawRequest<T>(url, method, payload).then(
@@ -94,11 +94,11 @@ export async function request<T extends RequestResponse>(
           reject();
         } else {
           globalDialogMessage.set(
-            "Nastala neznámá chyba. Chybová hláška: " + response.message!
+            "Nastala neznámá chyba. Chybová hláška: " + response.message!,
           );
           reject();
         }
-      }
+      },
     );
   });
 }

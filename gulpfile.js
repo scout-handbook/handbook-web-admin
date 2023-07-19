@@ -14,7 +14,7 @@ gulp.task("build:main", function (cb) {
       console.log(stdout);
       console.log(stderr);
       cb(err);
-    }
+    },
   );
 });
 
@@ -67,6 +67,6 @@ gulp.task(
     "build:php",
     "build:txt",
     "build:png",
-    "build:icon"
-  )
+    "build:icon",
+  ),
 );

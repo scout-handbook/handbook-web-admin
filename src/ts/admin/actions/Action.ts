@@ -17,7 +17,7 @@ export class Action {
     method: string,
     payload: Payload = {},
     callbacks: Array<ActionCallback> = [],
-    exceptionHandler: ExceptionHandler = {}
+    exceptionHandler: ExceptionHandler = {},
   ) {
     this.url = url;
     this.method = method;
@@ -59,6 +59,6 @@ export function deserializeAction(action: SerializedAction): Action {
     action.method,
     action.payload,
     action.callbacks,
-    undefined
+    undefined,
   );
 }

@@ -12,7 +12,7 @@ export function populateField(
   actionQueue: ActionQueue,
   lessonID: string | null,
   field: string | null,
-  initialField: string | null = null
+  initialField: string | null = null,
 ): void {
   if (initialField === field) {
     return;
@@ -26,8 +26,8 @@ export function populateField(
         ? {
             field: encodeURIComponent(field),
           }
-        : {}
-    )
+        : {},
+    ),
   );
 }
 
@@ -35,7 +35,7 @@ export function populateCompetences(
   actionQueue: ActionQueue,
   lessonID: string | null,
   competences: Array<string>,
-  initialCompetences: Array<string> = []
+  initialCompetences: Array<string> = [],
 ): void {
   if (arrayEquals(initialCompetences, competences)) {
     return;
@@ -47,8 +47,8 @@ export function populateCompetences(
       "PUT",
       {
         competence: competences.map(encodeURIComponent),
-      }
-    )
+      },
+    ),
   );
 }
 
@@ -56,7 +56,7 @@ export function populateGroups(
   actionQueue: ActionQueue,
   lessonID: string | null,
   groups: Array<string>,
-  initialGroups: Array<string> = []
+  initialGroups: Array<string> = [],
 ): void {
   if (arrayEquals(initialGroups, groups)) {
     return;
@@ -65,6 +65,6 @@ export function populateGroups(
   actionQueue.actions.push(
     new Action(get(apiUri) + "/v1.0/lesson/" + encodedID + "/group", "PUT", {
       group: groups.map(encodeURIComponent),
-    })
+    }),
   );
 }

@@ -22,7 +22,7 @@ export function SWRSetup(): void {
           RoleException: function (): void {
             window.location.replace(CONFIG["frontend-uri"]);
           },
-        }
+        },
       ),
   });
 }
@@ -34,7 +34,7 @@ function competenceComparator(first: Competence, second: Competence): number {
 function lessonComparator(
   first: Lesson,
   second: Lesson,
-  competences: Array<[string, Competence]>
+  competences: Array<[string, Competence]>,
 ): number {
   if (first.competences.length === 0) {
     if (second.competences.length === 0) {
@@ -47,7 +47,7 @@ function lessonComparator(
   }
   return competenceComparator(
     get(competences, first.competences[0])!,
-    get(competences, second.competences[0])!
+    get(competences, second.competences[0])!,
   );
 }
 
@@ -55,7 +55,7 @@ function fieldComparator(
   first: Field,
   second: Field,
   lessons: Array<[string, Lesson]>,
-  competences: Array<[string, Competence]>
+  competences: Array<[string, Competence]>,
 ): number {
   if (first.lessons.length === 0) {
     if (second.lessons.length === 0) {
@@ -75,7 +75,7 @@ function fieldComparator(
 }
 
 export function processCompetences(
-  rawCompetences: Record<string, Competence> | undefined
+  rawCompetences: Record<string, Competence> | undefined,
 ): Array<[string, Competence]> | undefined {
   if (rawCompetences === undefined) {
     return undefined;
@@ -87,8 +87,8 @@ export function processFields(
   values: [
     Record<string, Field> | undefined,
     Array<[string, Lesson]> | undefined,
-    Array<[string, Competence]> | undefined
-  ]
+    Array<[string, Competence]> | undefined,
+  ],
 ): Array<[string, Field]> | undefined {
   const [rawFields, lessons, competences] = values;
   if (
@@ -110,26 +110,26 @@ export function processFields(
     return field;
   });
   return sort(fields, (first, second) =>
-    fieldComparator(first, second, lessons, competences)
+    fieldComparator(first, second, lessons, competences),
   );
 }
 
 export function processGroups(
-  rawGroups: Record<string, Group> | undefined
+  rawGroups: Record<string, Group> | undefined,
 ): Array<[string, Group]> | undefined {
   if (rawGroups === undefined) {
     return undefined;
   }
   return sort(Object.entries(rawGroups), (first, second) =>
-    first.name.localeCompare(second.name)
+    first.name.localeCompare(second.name),
   );
 }
 
 export function processLessons(
   values: [
     Record<string, Lesson> | undefined,
-    Array<[string, Competence]> | undefined
-  ]
+    Array<[string, Competence]> | undefined,
+  ],
 ): Array<[string, Lesson]> | undefined {
   const [rawLessons, competences] = values;
   if (rawLessons === undefined || competences === undefined) {
@@ -137,11 +137,11 @@ export function processLessons(
   }
   const lessons = map(Object.entries(rawLessons), (lesson) => {
     lesson.competences.sort((first: string, second: string): number =>
-      competenceComparator(get(competences, first)!, get(competences, second)!)
+      competenceComparator(get(competences, first)!, get(competences, second)!),
     );
     return lesson;
   });
   return sort(lessons, (first, second) =>
-    lessonComparator(first, second, competences)
+    lessonComparator(first, second, competences),
   );
 }
