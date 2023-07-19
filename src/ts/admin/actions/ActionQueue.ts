@@ -43,7 +43,7 @@ export class ActionQueue {
       this.actions[0].url,
       this.actions[0].method,
       this.actions[0].payload,
-      this.actions[0].exceptionHandler
+      this.actions[0].exceptionHandler,
     ).then((response) => {
       this.actions[0].callback(response, this);
       this.actions.shift();
@@ -60,14 +60,16 @@ export class ActionQueue {
     if (!this.isRetryAfterLogin && window.sessionStorage) {
       sessionStorage.setItem(
         "ActionQueue",
-        JSON.stringify(this.actions.map(serializeAction))
+        JSON.stringify(this.actions.map(serializeAction)),
       );
       window.location.replace(
-        CONFIG["api-uri"] + "/v1.0/login?return-uri=" + window.location.pathname
+        CONFIG["api-uri"] +
+          "/v1.0/login?return-uri=" +
+          window.location.pathname,
       );
     } else {
       globalDialogMessage.set(
-        "Byl jste odhlášen a akce se nepodařila. Přihlašte se prosím a zkuste to znovu."
+        "Byl jste odhlášen a akce se nepodařila. Přihlašte se prosím a zkuste to znovu.",
       );
     }
   }
@@ -79,10 +81,10 @@ export function ActionQueueSetup(): void {
     const aq = new ActionQueue(
       (
         JSON.parse(
-          sessionStorage.getItem("ActionQueue")!
+          sessionStorage.getItem("ActionQueue")!,
         ) as Array<SerializedAction>
       ).map(deserializeAction),
-      true
+      true,
     );
     sessionStorage.clear();
     globalLoadingIndicator.set(true);

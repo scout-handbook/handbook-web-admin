@@ -11,7 +11,9 @@
     font-family: "Open Sans", sans-serif;
     margin-top: 20px;
     padding: 5px 10px;
-    transition: border-color ease 0.15s, background-color ease 0.15s;
+    transition:
+      border-color ease 0.15s,
+      background-color ease 0.15s;
     width: 90%;
   }
 

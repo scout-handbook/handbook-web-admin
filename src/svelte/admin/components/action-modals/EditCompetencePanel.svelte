@@ -26,7 +26,7 @@
   let { number, name, description } = competence;
   let donePromise: Promise<void> | null = null;
   const { mutate } = useSWR<SWRMutateFix<Record<string, Competence>>>(
-    constructURL("v1.0/competence")
+    constructURL("v1.0/competence"),
   );
 
   function saveCallback(): void {
@@ -45,7 +45,7 @@
             "/v1.0/competence/" +
             encodeURIComponent(payload.competenceId),
           "PUT",
-          { number, name, description }
+          { number, name, description },
         ),
       ])
         .dispatch()
@@ -56,7 +56,7 @@
               competences[payload.competenceId].name = name;
               competences[payload.competenceId].description = description;
               return competences;
-            })
+            }),
           );
         });
     }

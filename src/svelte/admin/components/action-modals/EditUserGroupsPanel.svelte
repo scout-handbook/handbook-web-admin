@@ -29,7 +29,7 @@
     if (
       selectedGroups.length === payload.user.groups.length &&
       selectedGroups.every(
-        (value, index) => value === payload.user.groups[index]
+        (value, index) => value === payload.user.groups[index],
       )
     ) {
       donePromise = new Promise((resolve) => {
@@ -43,7 +43,7 @@
             encodeURIComponent(payload.user.id) +
             "/group",
           "PUT",
-          { group: selectedGroups.map(encodeURIComponent) }
+          { group: selectedGroups.map(encodeURIComponent) },
         ),
       ])
         .dispatch()
@@ -75,7 +75,7 @@
       <CheckboxGroup
         options={filter(
           groups,
-          (id) => id !== "00000000-0000-0000-0000-000000000000"
+          (id) => id !== "00000000-0000-0000-0000-000000000000",
         )}
         bind:selected={selectedGroups}
         let:value={group}

@@ -52,7 +52,9 @@
     height: 15px;
     margin-bottom: -2px;
     margin-right: 10px;
-    transition: border-color ease 0.15s, background-color ease 0.15s;
+    transition:
+      border-color ease 0.15s,
+      background-color ease 0.15s;
     width: 15px;
   }
 

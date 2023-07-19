@@ -36,14 +36,14 @@
       LockedException: (response: APIResponse<RequestResponse>): void => {
         lockedError = response.holder!;
       },
-    }
+    },
   );
   let donePromise: Promise<void> | null = null;
   const { mutate: lessonMutate } = useSWR<SWRMutateFix<Record<string, Lesson>>>(
-    constructURL("v1.0/lesson?override-group=true")
+    constructURL("v1.0/lesson?override-group=true"),
   );
   const { mutate: fieldMutate } = useSWR<SWRMutateFix<Record<string, Field>>>(
-    constructURL("v1.0/field?override-group=true")
+    constructURL("v1.0/field?override-group=true"),
   );
 
   function confirmCallback(): void {
@@ -57,7 +57,7 @@
           NotLockedException: (): void => {
             expiredError = true;
           },
-        }
+        },
       ),
     ])
       .dispatch()
@@ -66,7 +66,7 @@
           SWRMutateFnWrapper((lessons) => {
             delete lessons[payload.lessonId];
             return lessons;
-          })
+          }),
         );
         fieldMutate(
           SWRMutateFnWrapper((fields) => {
@@ -74,13 +74,13 @@
               if (fields[fieldId].lessons.includes(payload.lessonId)) {
                 fields[fieldId].lessons.splice(
                   fields[fieldId].lessons.indexOf(payload.lessonId),
-                  1
+                  1,
                 );
                 break;
               }
             }
             return fields;
-          })
+          }),
         );
       });
   }
@@ -92,7 +92,7 @@
         "DELETE",
         undefined,
         [],
-        { NotFoundException: null }
+        { NotFoundException: null },
       ),
     ]).dispatch();
     navigate(-1);

@@ -17,7 +17,7 @@
   const groups = derived(
     useSWR<Record<string, Group>>(constructURL("v1.0/group")).data,
     processGroups,
-    undefined
+    undefined,
   );
 </script>
 
