@@ -38,7 +38,7 @@
   let participantList: Array<Participant> = [];
   let selectedParticipants: Array<number> = [];
   const { mutate } = useSWR<SWRMutateFix<Record<string, Group>>>(
-    constructURL("v1.0/group")
+    constructURL("v1.0/group"),
   );
 
   void request<Array<Event>>(
@@ -47,7 +47,7 @@
     {},
     {
       AuthenticationException: reAuth,
-    }
+    },
   ).then((response) => {
     eventList = response;
     if (eventList.length < 1) {
@@ -83,7 +83,7 @@
         SkautISAuthorizationException: () => {
           error = "Pro tuto akci nemáte ve SkautISu dostatečná práva.";
         },
-      }
+      },
     );
     const userPromise = request<UserListResponse>(
       $apiUri + "/v1.0/user",
@@ -91,7 +91,7 @@
       { page: 1, "per-page": 1000, group: payload.groupId },
       {
         AuthenticationException: reAuth,
-      }
+      },
     ).then((response) => response.users);
     void Promise.all([participantPromise, userPromise]).then(
       ([participants, users]) => {
@@ -100,7 +100,7 @@
           error = "Akce nemá žádné účastníky (kteří ještě nebyli importováni).";
         }
         step = "participant-selection";
-      }
+      },
     );
   }
 
@@ -119,22 +119,22 @@
             id: participant,
             name: participantList.find((p) => p.id === participant)!.name,
           } as unknown as Payload,
-          authFailHandler
+          authFailHandler,
         ).then(async () =>
           request(
             $apiUri + "/v1.0/user/" + participant.toString() + "/group",
             "PUT",
             { group: payload.groupId },
-            authFailHandler
-          )
-        )
-      )
+            authFailHandler,
+          ),
+        ),
+      ),
     ).then(() => {
       mutate(
         SWRMutateFnWrapper((groups) => {
           groups[payload.groupId].count += selectedParticipants.length;
           return groups;
-        })
+        }),
       );
       step = "done";
     });

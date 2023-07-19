@@ -32,7 +32,7 @@
         $apiUri +
         "/v1.0/image/" +
         event.detail +
-        ")"
+        ")",
     );
   }
 

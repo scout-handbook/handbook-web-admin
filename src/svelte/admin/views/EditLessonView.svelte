@@ -51,16 +51,16 @@
   const initialField = field;
   let initialGroups: Array<string> = [];
   const { mutate: lessonMutate } = useSWR<SWRMutateFix<Record<string, Lesson>>>(
-    constructURL("v1.0/lesson?override-group=true")
+    constructURL("v1.0/lesson?override-group=true"),
   );
   const { mutate: fieldMutate } = useSWR<SWRMutateFix<Record<string, Field>>>(
-    constructURL("v1.0/field?override-group=true")
+    constructURL("v1.0/field?override-group=true"),
   );
 
   const saveExceptionHandler = {
     NotLockedException: function (): void {
       globalDialogMessage.set(
-        "Kvůli příliš malé aktivitě byla lekce odemknuta a již ji upravil někdo jiný. Zkuste to prosím znovu."
+        "Kvůli příliš malé aktivitě byla lekce odemknuta a již ji upravil někdo jiný. Zkuste to prosím znovu.",
       );
     },
   };
@@ -77,10 +77,10 @@
           globalDialogMessage.set(
             "Nelze upravovat lekci, protože ji právě upravuje " +
               response.holder! +
-              "."
+              ".",
           );
         },
-      }
+      },
     ).then(() => {
       window.onbeforeunload = function (): void {
         sendBeacon(lessonID);
@@ -92,7 +92,7 @@
       {},
       {
         AuthenticationException: reAuth,
-      }
+      },
     ).then((response) => {
       groups = response;
       initialGroups = groups;
@@ -103,7 +103,7 @@
       {},
       {
         AuthenticationException: reAuth,
-      }
+      },
     ).then((response) => {
       body = response;
       initialBody = body;
@@ -126,7 +126,7 @@
         "PUT",
         undefined,
         undefined,
-        { NotFoundException: null }
+        { NotFoundException: null },
       ),
     ]).dispatch();
   }
@@ -135,7 +135,7 @@
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions
     if (navigator.sendBeacon) {
       navigator.sendBeacon(
-        $apiUri + "/v1.0/mutex-beacon/" + encodeURIComponent(id)
+        $apiUri + "/v1.0/mutex-beacon/" + encodeURIComponent(id),
       );
     }
   }
@@ -147,7 +147,7 @@
         "DELETE",
         undefined,
         [ActionCallback.RemoveBeacon],
-        discardExceptionHandler
+        discardExceptionHandler,
       ),
     ]).dispatch();
   }
@@ -164,8 +164,8 @@
             body: encodeURIComponent(body),
           },
           [ActionCallback.RemoveBeacon],
-          saveExceptionHandler
-        )
+          saveExceptionHandler,
+        ),
       );
     } else {
       destroyMutex();
@@ -174,7 +174,7 @@
       saveActionQueue,
       lessonID,
       competences,
-      initialCompetences
+      initialCompetences,
     );
     populateField(saveActionQueue, lessonID, field, initialField);
     populateGroups(saveActionQueue, lessonID, groups, initialGroups);
@@ -184,21 +184,21 @@
           lessons[lessonID].name = name;
           lessons[lessonID].competences = competences;
           return lessons;
-        })
+        }),
       );
       fieldMutate(
         SWRMutateFnWrapper((fields) => {
           if (initialField !== null) {
             fields[initialField].lessons.splice(
               fields[initialField].lessons.indexOf(lessonID),
-              1
+              1,
             );
           }
           if (field !== null) {
             fields[field].lessons.push(lessonID);
           }
           return fields;
-        })
+        }),
       );
     });
   }

@@ -85,7 +85,9 @@
     font-size: 1.5em;
     font-weight: bold;
     padding: 10px 16px;
-    transition: border-color ease 0.15s, background-color ease 0.15s;
+    transition:
+      border-color ease 0.15s,
+      background-color ease 0.15s;
     width: 100%;
   }
 

@@ -13,7 +13,9 @@
     font-weight: bold;
     margin-left: 5px;
     padding: 10px 16px;
-    transition: border-color ease 0.15s, background-color ease 0.15s;
+    transition:
+      border-color ease 0.15s,
+      background-color ease 0.15s;
     width: 50px;
   }
 

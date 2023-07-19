@@ -27,7 +27,7 @@
   let iconSelectorOpen = false;
   let donePromise: Promise<void> | null = null;
   const { revalidate } = useSWR<SWRMutateFix<Record<string, Field>>>(
-    constructURL("v1.0/field?override-group=true")
+    constructURL("v1.0/field?override-group=true"),
   );
 
   function saveCallback(): void {

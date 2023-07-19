@@ -30,7 +30,7 @@
           ["administrator", "Administrátor"],
           ["superuser", "Superuser"],
         ]
-      : []
+      : [],
   );
 
   const groupList = [
@@ -69,8 +69,8 @@
           // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
           filter(groups, (id) => id !== "00000000-0000-0000-0000-000000000000"),
           // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-          (group) => group.name
-        )
+          (group) => group.name,
+        ),
       )}
       bind:selected={group}
       on:change={() => {
@@ -101,7 +101,9 @@
     font-family: "Open Sans", sans-serif;
     margin-right: 10px;
     padding: 5px 10px;
-    transition: border-color ease 0.15s, background-color ease 0.15s;
+    transition:
+      border-color ease 0.15s,
+      background-color ease 0.15s;
     width: 151px;
   }
 

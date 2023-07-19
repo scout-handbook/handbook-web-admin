@@ -18,7 +18,7 @@
   let stage: "done" | "error" | "select" | "upload" = "select";
   let files: FileList | undefined;
   const { revalidate } = useSWR<SWRMutateFix<Array<string>>>(
-    constructURL("v1.0/image")
+    constructURL("v1.0/image"),
   );
 
   function saveCallback(): void {
@@ -37,7 +37,7 @@
       $apiUri + "/v1.0/image",
       "POST",
       formData,
-      authFailHandler
+      authFailHandler,
     ).then(() => {
       revalidate({ force: true });
       stage = "done";

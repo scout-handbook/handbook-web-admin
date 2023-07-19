@@ -31,7 +31,7 @@
     $apiUri + "/v1.0/lesson/" + lessonId! + "/history",
     "GET",
     {},
-    {}
+    {},
   ).then((response) => {
     versionList = response;
   });
@@ -49,7 +49,7 @@
             selectedVersion.toString(),
           "GET",
           {},
-          authFailHandler
+          authFailHandler,
         );
 
   function saveCallback(markdown: string): void {

@@ -44,7 +44,7 @@
     $apiUri + "/v1.0/deleted-lesson/" + lessonID + "/history/" + version,
     "GET",
     {},
-    authFailHandler
+    authFailHandler,
   ).then((response) => {
     body = response;
   });
@@ -58,7 +58,7 @@
           name: encodeURIComponent(name),
           body: encodeURIComponent(body),
         },
-        [ActionCallback.FillID]
+        [ActionCallback.FillID],
       ),
     ]);
     populateCompetences(saveActionQueue, null, competences);
