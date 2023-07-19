@@ -4,7 +4,7 @@ export function xssOptions(): XSS.IFilterXSSOptions {
       tag: string,
       name: string,
       value: string,
-      isWhiteAttr: boolean
+      isWhiteAttr: boolean,
     ): string {
       if (!isWhiteAttr) {
         if (tag === "a" && name === "rel" && value === "noopener noreferrer") {

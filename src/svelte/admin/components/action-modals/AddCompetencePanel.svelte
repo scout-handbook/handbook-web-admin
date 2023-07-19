@@ -22,7 +22,7 @@
   let description = "Popis nové kompetence";
   let donePromise: Promise<void> | null = null;
   const { revalidate } = useSWR<SWRMutateFix<Record<string, Competence>>>(
-    constructURL("v1.0/competence")
+    constructURL("v1.0/competence"),
   );
 
   function saveCallback(): void {

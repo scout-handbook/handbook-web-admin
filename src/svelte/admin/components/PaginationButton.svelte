@@ -32,7 +32,9 @@
     display: inline-block;
     margin: 0 8px;
     padding: 3px 5px;
-    transition: color ease 0.15s, border-color ease 0.15s,
+    transition:
+      color ease 0.15s,
+      border-color ease 0.15s,
       background-color ease 0.15s;
   }
 

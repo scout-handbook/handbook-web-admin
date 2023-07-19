@@ -21,14 +21,14 @@
   const field = get(fields, payload.fieldId)!;
   let donePromise: Promise<void> | null = null;
   const { mutate } = useSWR<SWRMutateFix<Record<string, Field>>>(
-    constructURL("v1.0/field?override-group=true")
+    constructURL("v1.0/field?override-group=true"),
   );
 
   function confirmCallback(): void {
     donePromise = new ActionQueue([
       new Action(
         $apiUri + "/v1.0/field/" + encodeURIComponent(payload.fieldId),
-        "DELETE"
+        "DELETE",
       ),
     ])
       .dispatch()
@@ -37,7 +37,7 @@
           SWRMutateFnWrapper((fields) => {
             delete fields[payload.fieldId];
             return fields;
-          })
+          }),
         );
       });
   }

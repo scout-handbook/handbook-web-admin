@@ -34,7 +34,7 @@
           ["administrator", "Administrátor"],
           ["superuser", "Superuser"],
         ]
-      : []
+      : [],
   );
 
   function saveCallback(): void {
@@ -50,7 +50,7 @@
             encodeURIComponent(payload.user.id) +
             "/role",
           "PUT",
-          { role: selectedRole }
+          { role: selectedRole },
         ),
       ])
         .dispatch()

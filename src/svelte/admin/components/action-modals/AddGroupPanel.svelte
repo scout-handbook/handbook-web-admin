@@ -18,7 +18,7 @@
   let name = "Nová skupina";
   let donePromise: Promise<void> | null = null;
   const { revalidate } = useSWR<SWRMutateFix<Record<string, Group>>>(
-    constructURL("v1.0/group")
+    constructURL("v1.0/group"),
   );
 
   function saveCallback(): void {

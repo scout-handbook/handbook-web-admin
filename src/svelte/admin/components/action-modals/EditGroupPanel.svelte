@@ -24,7 +24,7 @@
   let { name } = group;
   let donePromise: Promise<void> | null = null;
   const { mutate } = useSWR<SWRMutateFix<Record<string, Group>>>(
-    constructURL("v1.0/group")
+    constructURL("v1.0/group"),
   );
 
   function saveCallback(): void {
@@ -37,7 +37,7 @@
         new Action(
           $apiUri + "/v1.0/group/" + encodeURIComponent(payload.groupId),
           "PUT",
-          { name }
+          { name },
         ),
       ])
         .dispatch()
@@ -46,7 +46,7 @@
             SWRMutateFnWrapper((groups) => {
               groups[payload.groupId].name = name;
               return groups;
-            })
+            }),
           );
         });
     }

@@ -17,14 +17,14 @@
 
   let donePromise: Promise<void> | null = null;
   const { mutate } = useSWR<SWRMutateFix<Array<string>>>(
-    constructURL("v1.0/image")
+    constructURL("v1.0/image"),
   );
 
   function confirmCallback(): void {
     donePromise = new ActionQueue([
       new Action(
         $apiUri + "/v1.0/image/" + encodeURIComponent(payload.imageId),
-        "DELETE"
+        "DELETE",
       ),
     ])
       .dispatch()
@@ -33,7 +33,7 @@
           SWRMutateFnWrapper((images) => {
             images.splice(images.indexOf(payload.imageId), 1);
             return images;
-          })
+          }),
         );
       });
   }

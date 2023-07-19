@@ -89,7 +89,9 @@
     margin-left: -5px;
     padding-top: 28px;
     text-align: center;
-    transition: color ease 0.15s, border-color ease 0.15s,
+    transition:
+      color ease 0.15s,
+      border-color ease 0.15s,
       background-color ease 0.15s;
     vertical-align: top;
     width: 140px;

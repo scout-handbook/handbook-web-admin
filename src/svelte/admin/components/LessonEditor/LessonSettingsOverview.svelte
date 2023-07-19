@@ -76,7 +76,7 @@
 </Button>
 <CompetenceProvider inline let:competences={allCompetences}>
   <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-call @typescript-eslint/no-unsafe-argument -->
-  {#each allCompetences.filter( ([id, _]) => competences.includes(id) ) as [id, competence] (id)}
+  {#each allCompetences.filter( ([id, _]) => competences.includes(id), ) as [id, competence] (id)}
     <br />
     <span class="competence-number">{competence.number}:</span>
     {competence.name}
