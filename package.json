@@ -37,7 +37,7 @@
     "lint": "run-p -c --aggregate-output lint:*"
   },
   "devDependencies": {
-    "@csstools/postcss-global-data": "^2.0.1",
+    "@csstools/postcss-global-data": "^2.1.0",
     "@fontsource/open-sans": "^5.0.9",
     "@types/codemirror": "5.60.9",
     "@types/showdown": "^2.0.1",
