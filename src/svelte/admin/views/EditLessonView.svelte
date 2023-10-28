@@ -40,9 +40,7 @@
   let body = "";
   let competences: Array<string> = get(lessons, lessonID)?.competences ?? [];
   let field: string | null =
-    fields.find(([_, field]) => {
-      return field.lessons.includes(lessonID);
-    })?.[0] ?? null;
+    fields.find(([_, field]) => field.lessons.includes(lessonID))?.[0] ?? null;
   let groups: Array<string> = [];
 
   const initialName = name;
@@ -58,7 +56,7 @@
   );
 
   const saveExceptionHandler = {
-    NotLockedException: function (): void {
+    NotLockedException: (): void => {
       globalDialogMessage.set(
         "Kvůli příliš malé aktivitě byla lekce odemknuta a již ji upravil někdo jiný. Zkuste to prosím znovu.",
       );
@@ -82,7 +80,7 @@
         },
       },
     ).then(() => {
-      window.onbeforeunload = function (): void {
+      window.onbeforeunload = (): void => {
         sendBeacon(lessonID);
       };
     }),

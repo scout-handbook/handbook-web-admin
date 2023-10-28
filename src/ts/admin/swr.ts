@@ -19,7 +19,7 @@ export function SWRSetup(): void {
         {
           401: reAuth,
           AuthenticationException: reAuth,
-          RoleException: function (): void {
+          RoleException: (): void => {
             window.location.replace(CONFIG["frontend-uri"]);
           },
         },

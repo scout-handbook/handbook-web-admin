@@ -18,7 +18,7 @@ export function reAuth(): void {
 }
 
 export const authFailHandler: ExceptionHandler = {
-  AuthenticationException: function (): void {
+  AuthenticationException: (): void => {
     globalDialogMessage.set(
       "Proběhlo automatické odhlášení. Přihlašte se prosím a zkuste to znovu.",
     );
