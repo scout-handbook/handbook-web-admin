@@ -2,7 +2,7 @@
 export type SWRMutateFix<D> = D | null;
 
 export function SWRMutateFnWrapper<D>(fn: (state: D) => D) {
-  return function (state: D | null): D | null {
+  return (state: D | null): D | null => {
     if (state === null) {
       return null;
     }

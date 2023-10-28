@@ -16,7 +16,7 @@ export function compileMarkdownSetup(): void {
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions
   if (Worker) {
     worker = new Worker(new URL("../../admin-worker.ts", import.meta.url));
-    worker.onmessage = function (payload): void {
+    worker.onmessage = (payload): void => {
       const data = payload.data as WorkerPayload;
       promiseResolvers[data.id](data.body);
       if (nextPayload) {

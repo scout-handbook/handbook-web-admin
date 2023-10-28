@@ -57,9 +57,7 @@
   });
 
   function setdiff(a: Array<Participant>, b: Array<User>): Array<Participant> {
-    const bArr = b.map(function (x): number {
-      return x.id;
-    });
+    const bArr = b.map((x): number => x.id);
     const result = [];
     for (const aItem of a) {
       if (!bArr.includes(aItem.id)) {
