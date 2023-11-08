@@ -1,12 +1,13 @@
 <script lang="ts" strictEvents>
-  import { fly } from "svelte/transition";
+  import { fly } from "../../../ts/admin/transition";
 
   interface $$Slots {
     default: Record<string, never>;
   }
 </script>
 
-<div transition:fly={{ x: 939, duration: 300 }}>
+<!-- eslint-disable-next-line svelte/no-inline-styles -->
+<div transition:fly={{ from: "right", duration: 300 }}>
   <slot />
 </div>
 
