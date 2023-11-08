@@ -1,10 +1,12 @@
 <script lang="ts" strictEvents>
   import { createEventDispatcher } from "svelte";
-  import { fade } from "svelte/transition";
+
+  import { fade } from "../../../ts/admin/transition";
 
   const dispatch = createEventDispatcher<{ click: never }>();
 </script>
 
+<!-- eslint-disable svelte/no-inline-styles -->
 <div
   on:click={() => {
     dispatch("click");
@@ -14,6 +16,8 @@
   }}
   transition:fade={{ duration: 100 }}
 />
+
+<!-- eslint-enable -->
 
 <style>
   div {

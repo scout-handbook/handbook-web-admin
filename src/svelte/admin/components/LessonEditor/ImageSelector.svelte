@@ -23,7 +23,7 @@
   $: currentPageList = $imageList?.slice(pageStart, pageEnd);
 </script>
 
-<div style:top={imageSelectorOpen ? "0" : "-100%"} class="selector">
+<div class="selector" class:selector-open={imageSelectorOpen}>
   <div class="button-wrapper">
     <Button
       icon="up-open"
@@ -95,6 +95,10 @@
     transition: top 0.4s ease;
     width: 100%;
     z-index: 7;
+  }
+
+  .selector-open {
+    top: 0;
   }
 
   .container {
