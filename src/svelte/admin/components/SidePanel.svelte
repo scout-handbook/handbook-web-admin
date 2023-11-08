@@ -1,6 +1,5 @@
 <script lang="ts" strictEvents>
-  import { fly } from "svelte/transition";
-
+  import { fly } from "../../../ts/admin/transition";
   import Overlay from "./Overlay.svelte";
 
   interface $$Slots {
@@ -9,7 +8,8 @@
 </script>
 
 <Overlay />
-<div transition:fly={{ x: 539, duration: 300 }}>
+<!-- eslint-disable-next-line svelte/no-inline-styles -->
+<div transition:fly={{ from: "right", duration: 300 }}>
   <slot />
 </div>
 
