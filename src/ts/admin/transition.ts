@@ -1,4 +1,21 @@
-import type { EasingFunction, TransitionConfig } from "svelte/transition";
+import type {
+  EasingFunction,
+  FadeParams,
+  TransitionConfig,
+} from "svelte/transition";
+
+export function fade(
+  node: HTMLElement,
+  params: FadeParams = {},
+): TransitionConfig {
+  const o = +getComputedStyle(node).opacity;
+  return {
+    ...params,
+    tick: (t: number): void => {
+      node.style.setProperty("opacity", `${t * o}`);
+    },
+  };
+}
 
 const dirs = {
   bottom: "translateY(",
@@ -16,9 +33,9 @@ interface FlyParams {
 
 export const fly = (
   node: HTMLElement,
-  { from = "top", ...opts }: FlyParams,
+  { from = "top", ...params }: FlyParams,
 ): TransitionConfig => ({
-  ...opts,
+  ...params,
   tick: (t: number, u: number): void => {
     node.style.setProperty("transform", `${dirs[from]}${u * 100.0}%)`);
     node.style.setProperty("opacity", `${t}`);
