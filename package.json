@@ -40,7 +40,7 @@
     "@csstools/postcss-global-data": "^2.1.0",
     "@fontsource/open-sans": "^5.0.17",
     "@types/codemirror": "5.60.13",
-    "@types/showdown": "^2.0.3",
+    "@types/showdown": "^2.0.4",
     "@typescript-eslint/eslint-plugin": "^6.10.0",
     "@typescript-eslint/parser": "^6.10.0",
     "autoprefixer": "^10.4.16",
