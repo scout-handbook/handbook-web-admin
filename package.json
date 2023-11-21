@@ -74,7 +74,7 @@
     "svelte-navigator": "^3.2.2",
     "svelte-preprocess": "^5.1.0",
     "ts-loader": "^9.5.1",
-    "typescript": "^5.2.2",
+    "typescript": "^5.3.2",
     "webpack-cli": "^5.1.4",
     "webpack-subresource-integrity": "^5.2.0-rc.1",
     "yargs": "^17.7.2"
