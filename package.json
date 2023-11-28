@@ -41,7 +41,7 @@
     "@fontsource/open-sans": "^5.0.17",
     "@types/codemirror": "5.60.15",
     "@types/showdown": "^2.0.6",
-    "@typescript-eslint/eslint-plugin": "^6.12.0",
+    "@typescript-eslint/eslint-plugin": "^6.13.1",
     "@typescript-eslint/parser": "^6.13.1",
     "autoprefixer": "^10.4.16",
     "css-loader": "^6.8.1",
