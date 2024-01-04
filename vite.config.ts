@@ -1,4 +1,5 @@
 import { svelte } from "@sveltejs/vite-plugin-svelte";
+import legacy from "@vitejs/plugin-legacy";
 import { readFileSync } from "fs";
 import { defineConfig, loadEnv, splitVendorChunkPlugin } from "vite";
 
@@ -12,6 +13,7 @@ function getConfig(mode: string): unknown {
 
 export default defineConfig(({ mode }) => ({
   plugins: [
+    legacy(),
     splitVendorChunkPlugin(),
     svelte({
       configFile: "../svelte.config.js",
