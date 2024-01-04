@@ -9,8 +9,7 @@ const postcss = require("gulp-postcss");
 gulp.task("build:main", (cb) => {
   const config = yargs.argv.config;
   exec(
-    //"npx vite build --env client-config=" + config,
-    "npx vite build",
+    "VITE_CONFIG=\"" + config + "\" npx vite build",
     (err, stdout, stderr) => {
       console.log(stdout);
       console.log(stderr);
