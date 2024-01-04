@@ -15,6 +15,7 @@
   },
   "license": "MIT",
   "author": "Marek Dědič",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/scout-handbook/handbook-web-admin.git"
