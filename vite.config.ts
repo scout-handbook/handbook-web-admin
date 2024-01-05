@@ -2,6 +2,7 @@ import { svelte } from "@sveltejs/vite-plugin-svelte";
 import legacy, { cspHashes } from "@vitejs/plugin-legacy";
 import { readFileSync } from "fs";
 import { defineConfig, loadEnv, splitVendorChunkPlugin } from "vite";
+import { createHtmlPlugin } from "vite-plugin-html";
 
 if (
   JSON.stringify(cspHashes) !==
@@ -18,16 +19,24 @@ if (
   );
 }
 
-function getConfig(mode: string): unknown {
+function getConfig(mode: string): Record<string, string> {
   const location = loadEnv(mode, process.cwd()).VITE_CONFIG;
   if (location === "undefined") {
     throw new Error("No config specified");
   }
-  return readFileSync(location, "utf8");
+  return JSON.parse(readFileSync(location, "utf8")) as Record<string, string>;
 }
 
 export default defineConfig(({ mode }) => ({
   plugins: [
+    createHtmlPlugin({
+      minify: true,
+      inject: {
+        data: {
+          title: getConfig(mode)["site-name"] + " - administrace",
+        },
+      },
+    }),
     legacy(),
     splitVendorChunkPlugin(),
     svelte({
@@ -40,6 +49,6 @@ export default defineConfig(({ mode }) => ({
     outDir: "../dist",
   },
   define: {
-    CONFIG: getConfig(mode),
+    CONFIG: JSON.stringify(getConfig(mode)),
   },
 }));
