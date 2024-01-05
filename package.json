@@ -28,7 +28,7 @@
   "scripts": {
     "clean": "rimraf dist/*",
     "prebuild": "npm run clean",
-    "build": "gulp -f gulpfile.cjs build",
+    "build": "gulp build",
     "lint:css:stylelint": "stylelint --color 'src/**/*.css' '!src/css/fontello.css'",
     "lint:css": "run-p -c --aggregate-output lint:css:*",
     "lint:svelte:svelte-check": "svelte-check",
