@@ -1,21 +1,21 @@
 /* eslint-env node */
 
-const yargs = require("yargs");
-
-const autoprefixer = require("autoprefixer");
-const postcssCustomProperties = require("postcss-custom-properties");
-const postcssGlobalData = require("@csstools/postcss-global-data");
+import autoprefixer from "autoprefixer";
+import postcssCustomProperties from "postcss-custom-properties";
+import postcssGlobalData from "@csstools/postcss-global-data";
+import yargs from "yargs";
+import { hideBin } from "yargs/helpers";
 
 function getThemeFiles() {
   const themeFiles = ["src/css/default-theme.css"];
-  const argTheme = yargs.string("theme").argv.theme;
+  const argTheme = yargs(hideBin(process.argv)).string("theme").argv.theme;
   if (argTheme !== undefined) {
     themeFiles.push(argTheme);
   }
   return themeFiles;
 }
 
-module.exports = {
+export default {
   plugins: [
     postcssGlobalData({ files: getThemeFiles() }),
     postcssCustomProperties({ preserve: false }),
