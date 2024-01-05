@@ -31,8 +31,7 @@ export default defineConfig(({ mode }) => ({
   plugins: [
     createHtmlPlugin({
       minify: true,
-      entry: "../ts/admin.ts",
-      template: "html/index.html",
+      entry: "ts/admin.ts",
       inject: {
         data: {
           title: getConfig(mode)["site-name"] + " - administrace",
