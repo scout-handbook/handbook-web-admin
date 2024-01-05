@@ -2,8 +2,8 @@
 
 import { exec } from "child_process";
 import gulp from "gulp";
-import yargs from "yargs";
 import postcss from "gulp-postcss";
+import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 
 gulp.task("build:main", (cb) => {
