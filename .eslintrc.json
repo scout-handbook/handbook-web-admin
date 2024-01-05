@@ -135,7 +135,7 @@
       "parserOptions": {
         "project": null
       },
-      "files": ["gulpfile.js", "postcss.config.js", "webpack.config.js"],
+      "files": ["gulpfile.js", "postcss.config.cjs"],
       "rules": {
         "deprecation/deprecation": "off",
         "@typescript-eslint/await-thenable": "off",
