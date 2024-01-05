@@ -1,3 +1,4 @@
+import sri from "@small-tech/vite-plugin-sri";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
 import legacy, { cspHashes } from "@vitejs/plugin-legacy";
 import { readFileSync } from "fs";
@@ -40,6 +41,7 @@ export default defineConfig(({ mode }) => {
       }),
       legacy(),
       splitVendorChunkPlugin(),
+      sri(),
       svelte({
         configFile: "../svelte.config.js",
       }),
