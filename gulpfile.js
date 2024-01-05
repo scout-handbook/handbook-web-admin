@@ -1,21 +1,18 @@
 /* eslint-env node */
 
-var exec = require("child_process").exec;
-const gulp = require("gulp");
-const yargs = require("yargs");
-
-const postcss = require("gulp-postcss");
+import { exec } from "child_process";
+import gulp from "gulp";
+import yargs from "yargs";
+import postcss from "gulp-postcss";
+import { hideBin } from "yargs/helpers";
 
 gulp.task("build:main", (cb) => {
-  const config = yargs.argv.config;
-  exec(
-    "VITE_CONFIG=\"" + config + "\" npx vite build",
-    (err, stdout, stderr) => {
-      console.log(stdout);
-      console.log(stderr);
-      cb(err);
-    },
-  );
+  const config = yargs(hideBin(process.argv)).string("config").argv.config;
+  exec('VITE_CONFIG="' + config + '" npx vite build', (err, stdout, stderr) => {
+    console.log(stdout);
+    console.log(stderr);
+    cb(err);
+  });
 });
 
 gulp.task("build:error:css", () =>
