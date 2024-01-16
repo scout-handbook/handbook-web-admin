@@ -48,7 +48,7 @@ async function rawRequest<T extends RequestResponse>(
         try {
           resolve(JSON.parse(this.responseText) as APIResponse<T>);
         } catch {
-          reject();
+          reject(new Error());
         }
       }
     };
@@ -85,18 +85,18 @@ export async function request<T extends RequestResponse>(
           Object.prototype.hasOwnProperty.call(exceptionHandler, response.type!)
         ) {
           exceptionHandler[response.type!]!(response);
-          reject();
+          reject(new Error());
         } else if (
           response.status === 401 &&
           Object.prototype.hasOwnProperty.call(exceptionHandler, "401")
         ) {
           exceptionHandler["401"]!(response);
-          reject();
+          reject(new Error());
         } else {
           globalDialogMessage.set(
             "Nastala neznámá chyba. Chybová hláška: " + response.message!,
           );
-          reject();
+          reject(new Error());
         }
       },
     );
