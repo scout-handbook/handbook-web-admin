@@ -1,9 +1,4 @@
 <script lang="ts" strictEvents>
-  import "../../css/fontello.css";
-  import "@fontsource/open-sans/400.css";
-  import "@fontsource/open-sans/400-italic.css";
-  import "@fontsource/open-sans/700.css";
-  import "@fontsource/open-sans/700-italic.css";
   import { QueryClientProvider } from "@tanstack/svelte-query";
   import { Route, Router } from "svelte-navigator";
 
