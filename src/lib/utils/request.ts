@@ -1,15 +1,14 @@
-import { get } from "svelte/store";
-
 import type {
   APIResponse,
   APISuccessResponse,
-} from "../interfaces/APIResponse";
-import type { ExceptionHandler } from "../interfaces/ExceptionHandler";
-import type { Payload } from "../interfaces/Payload";
-import type { RequestResponse } from "../interfaces/RequestResponse";
+} from "$lib/interfaces/APIResponse";
+import type { ExceptionHandler } from "$lib/interfaces/ExceptionHandler";
+import type { Payload } from "$lib/interfaces/Payload";
+import type { RequestResponse } from "$lib/interfaces/RequestResponse";
 
-import { globalDialogMessage, suspendReAuth } from "../stores";
-import { buildQuery } from "./buildQuery";
+import { globalDialogMessage, suspendReAuth } from "$lib/stores";
+import { buildQuery } from "$lib/utils/buildQuery";
+import { get } from "svelte/store";
 
 function isSuccessResponse<T extends RequestResponse>(
   response: APIResponse<T>,

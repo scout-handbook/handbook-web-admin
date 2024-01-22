@@ -1,12 +1,12 @@
+import type { Payload } from "$lib/interfaces/Payload";
+import type { RequestResponse } from "$lib/interfaces/RequestResponse";
+
+import { browser } from "$app/environment";
+import { apiUri } from "$lib/stores";
+import { buildQuery } from "$lib/utils/buildQuery";
+import { reAuth, request } from "$lib/utils/request";
 import { QueryClient } from "@tanstack/svelte-query";
 import { get } from "svelte/store";
-
-import type { Payload } from "../interfaces/Payload";
-import type { RequestResponse } from "../interfaces/RequestResponse";
-
-import { apiUri } from "../stores";
-import { buildQuery } from "./buildQuery";
-import { reAuth, request } from "./request";
 
 async function queryFn({
   queryKey,
@@ -39,6 +39,7 @@ async function queryFn({
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
+      enabled: browser,
       queryFn,
       staleTime: 60 * 1000, // 1 minute
     },

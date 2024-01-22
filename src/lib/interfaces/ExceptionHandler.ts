@@ -6,7 +6,7 @@ import type {
   NotLockedExceptionResponse,
   RoleExceptionResponse,
   SkautISAuthorizationExceptionResponse,
-} from "./APIResponse";
+} from "$lib/interfaces/APIResponse";
 
 export interface ExceptionHandler {
   401?: ((response: Error401Response) => void) | null;

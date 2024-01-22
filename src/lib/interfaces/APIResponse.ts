@@ -1,4 +1,4 @@
-import type { RequestResponse } from "./RequestResponse";
+import type { RequestResponse } from "$lib/interfaces/RequestResponse";
 
 export interface APISuccessResponse<T extends RequestResponse> {
   response: T;
