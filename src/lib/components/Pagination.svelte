@@ -1,5 +1,5 @@
 <script lang="ts" strictEvents>
-  import PaginationButton from "./PaginationButton.svelte";
+  import PaginationButton from "$lib/components/PaginationButton.svelte";
 
   export let current: number;
   export let total: number;

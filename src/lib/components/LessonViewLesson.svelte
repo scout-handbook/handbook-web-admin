@@ -1,19 +1,17 @@
 <script lang="ts" strictEvents>
+  import type { Lesson } from "$lib/interfaces/Lesson";
+  import type { Loginstate } from "$lib/interfaces/Loginstate";
+
+  import { goto, pushState } from "$app/navigation";
+  import { base } from "$app/paths";
+  import Button from "$lib/components/Button.svelte";
+  import CompetenceProvider from "$lib/components/swr-wrappers/CompetenceProvider.svelte";
+  import { adminUri } from "$lib/stores";
   import { createQuery } from "@tanstack/svelte-query";
-  import { useNavigate } from "svelte-navigator";
-
-  import type { Lesson } from "../../../ts/admin/interfaces/Lesson";
-  import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
-
-  import { adminUri } from "../../../ts/admin/stores";
-  import Button from "./Button.svelte";
-  import CompetenceProvider from "./swr-wrappers/CompetenceProvider.svelte";
 
   export let id: string;
   export let lesson: Lesson;
   export let secondLevel = false;
-
-  const navigate = useNavigate();
 
   const accountQuery = createQuery<Loginstate>({
     queryKey: ["v1.0", "account"],
@@ -29,7 +27,7 @@
     cyan
     icon="pencil"
     on:click={() => {
-      navigate(`/lessons/${id}/edit`);
+      void goto(`${base}/lessons/${id}/edit`);
     }}
   >
     Upravit
@@ -39,8 +37,9 @@
       icon="trash-empty"
       red
       on:click={() => {
-        navigate("/lessons", {
-          state: { action: "delete-lesson", actionPayload: { lessonId: id } },
+        pushState("", {
+          action: "delete-lesson",
+          actionPayload: { lessonId: id },
         });
       }}
     >
