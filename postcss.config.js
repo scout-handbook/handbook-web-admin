@@ -7,7 +7,7 @@ import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 
 function getThemeFiles() {
-  const themeFiles = ["src/css/default-theme.css"];
+  const themeFiles = ["src/lib/default-theme.css"];
   const argTheme = yargs(hideBin(process.argv)).string("theme").argv.theme;
   if (argTheme !== undefined) {
     themeFiles.push(argTheme);

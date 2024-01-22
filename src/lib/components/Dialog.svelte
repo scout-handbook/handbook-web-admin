@@ -1,8 +1,8 @@
 <script lang="ts" strictEvents>
   import { createEventDispatcher } from "svelte";
 
-  import Button from "./Button.svelte";
-  import Overlay from "./Overlay.svelte";
+  import Button from "$lib/components/Button.svelte";
+  import Overlay from "$lib/components/Overlay.svelte";
 
   interface $$Slots {
     default: Record<string, never>;
