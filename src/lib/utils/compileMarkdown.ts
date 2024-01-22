@@ -1,10 +1,9 @@
+import type { WorkerPayload } from "$lib/common/WorkerPayload";
+
+import { xssOptions } from "$lib/common/xssOptions";
+import "$lib/common/HandbookMarkdown";
 import { Converter } from "showdown";
 import { filterXSS } from "xss";
-
-import type { WorkerPayload } from "../../common/WorkerPayload";
-
-import "../../common/HandbookMarkdown";
-import { xssOptions } from "../../common/xssOptions";
 
 let converter: showdown.Converter | null = null;
 let worker: Worker | null = null;

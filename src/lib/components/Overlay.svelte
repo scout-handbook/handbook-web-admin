@@ -1,7 +1,6 @@
 <script lang="ts" strictEvents>
+  import { fade } from "$lib/transition";
   import { createEventDispatcher } from "svelte";
-
-  import { fade } from "../../../ts/admin/transition";
 
   const dispatch = createEventDispatcher<{ click: null }>();
 </script>

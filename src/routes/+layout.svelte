@@ -5,11 +5,27 @@
   import "@fontsource/open-sans/700.css";
   import "@fontsource/open-sans/700-italic.css";
   import { base } from "$app/paths";
-  import { siteName } from "$lib/stores";
+  import { setupActionQueue } from "$lib/actions/ActionQueue";
+  import Dialog from "$lib/components/Dialog.svelte";
+  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
+  import Overlay from "$lib/components/Overlay.svelte";
+  import {
+    globalDialogMessage,
+    globalLoadingIndicator,
+    siteName,
+  } from "$lib/stores";
+  import { checkLogin } from "$lib/utils/checkLogin";
+  import { compileMarkdownSetup } from "$lib/utils/compileMarkdown";
+  import { loginRefreshSetup } from "$lib/utils/loginRefresh";
 
   interface $$Slots {
     default: Record<string, never>;
   }
+
+  checkLogin();
+  compileMarkdownSetup();
+  loginRefreshSetup();
+  setupActionQueue();
 </script>
 
 <svelte:head>
@@ -35,6 +51,21 @@
   <link href="{base}/favicon.ico" rel="shortcut icon" />
   <meta name="msapplication-config" content="{base}/browserconfig.xml" />
 </svelte:head>
+
+{#if $globalLoadingIndicator}
+  <Overlay />
+  <LoadingIndicator darkBackground />
+{/if}
+{#if $globalDialogMessage !== null}
+  <Dialog
+    confirmButtonText="OK"
+    on:confirm={() => {
+      globalDialogMessage.set(null);
+    }}
+  >
+    {$globalDialogMessage}
+  </Dialog>
+{/if}
 
 <slot />
 

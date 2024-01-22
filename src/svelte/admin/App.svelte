@@ -2,15 +2,8 @@
   import { QueryClientProvider } from "@tanstack/svelte-query";
   import { Route, Router } from "svelte-navigator";
 
-  import {
-    adminUri,
-    globalDialogMessage,
-    globalLoadingIndicator,
-  } from "../../ts/admin/stores";
+  import { adminUri } from "../../ts/admin/stores";
   import { queryClient } from "../../ts/admin/utils/queryClient";
-  import Dialog from "./components/Dialog.svelte";
-  import LoadingIndicator from "./components/LoadingIndicator.svelte";
-  import Overlay from "./components/Overlay.svelte";
   import FieldProvider from "./components/swr-wrappers/FieldProvider.svelte";
   import TopBar from "./components/TopBar.svelte";
   import AddLessonView from "./views/AddLessonView.svelte";
@@ -27,20 +20,6 @@
 </script>
 
 <QueryClientProvider client={queryClient}>
-  {#if $globalLoadingIndicator}
-    <Overlay />
-    <LoadingIndicator darkBackground />
-  {/if}
-  {#if $globalDialogMessage !== null}
-    <Dialog
-      confirmButtonText="OK"
-      on:confirm={() => {
-        globalDialogMessage.set(null);
-      }}
-    >
-      {$globalDialogMessage}
-    </Dialog>
-  {/if}
   <Router {basepath} primary={false}>
     <Route component={AddLessonView} path="/lessons/add" />
     <Route path="/lessons/:id/edit" let:params>
