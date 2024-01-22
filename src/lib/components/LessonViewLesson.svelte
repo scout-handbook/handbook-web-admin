@@ -2,12 +2,12 @@
   import { useSWR } from "sswr";
   import { useNavigate } from "svelte-navigator";
 
-  import type { Lesson } from "../../../ts/admin/interfaces/Lesson";
-  import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
-  import { adminUri } from "../../../ts/admin/stores";
-  import { constructURL } from "../../../ts/admin/utils/constructURL";
-  import Button from "./Button.svelte";
-  import CompetenceProvider from "./swr-wrappers/CompetenceProvider.svelte";
+  import type { Lesson } from "$lib/interfaces/Lesson";
+  import type { Loginstate } from "$lib/interfaces/Loginstate";
+  import { adminUri } from "$lib/stores";
+  import { constructURL } from "$lib/utils/constructURL";
+  import Button from "$lib/components/Button.svelte";
+  import CompetenceProvider from "$lib/components/swr-wrappers/CompetenceProvider.svelte";
 
   export let id: string;
   export let lesson: Lesson;

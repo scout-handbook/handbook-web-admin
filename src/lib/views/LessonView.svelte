@@ -2,18 +2,18 @@
   import { useSWR } from "sswr";
   import { useLocation, useNavigate } from "svelte-navigator";
 
-  import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
-  import { siteName } from "../../../ts/admin/stores";
-  import { constructURL } from "../../../ts/admin/utils/constructURL";
-  import AddFieldPanel from "../components/action-modals/AddFieldPanel.svelte";
-  import DeleteFieldDialog from "../components/action-modals/DeleteFieldDialog.svelte";
-  import DeleteLessonDialog from "../components/action-modals/DeleteLessonDialog.svelte";
-  import EditFieldPanel from "../components/action-modals/EditFieldPanel.svelte";
-  import RestoreLessonPanel from "../components/action-modals/RestoreLessonPanel.svelte";
-  import Button from "../components/Button.svelte";
-  import LessonViewLesson from "../components/LessonViewLesson.svelte";
-  import FieldProvider from "../components/swr-wrappers/FieldProvider.svelte";
-  import LessonProvider from "../components/swr-wrappers/LessonProvider.svelte";
+  import type { Loginstate } from "$lib/interfaces/Loginstate";
+  import { siteName } from "$lib/stores";
+  import { constructURL } from "$lib/utils/constructURL";
+  import AddFieldPanel from "$lib/components/action-modals/AddFieldPanel.svelte";
+  import DeleteFieldDialog from "$lib/components/action-modals/DeleteFieldDialog.svelte";
+  import DeleteLessonDialog from "$lib/components/action-modals/DeleteLessonDialog.svelte";
+  import EditFieldPanel from "$lib/components/action-modals/EditFieldPanel.svelte";
+  import RestoreLessonPanel from "$lib/components/action-modals/RestoreLessonPanel.svelte";
+  import Button from "$lib/components/Button.svelte";
+  import LessonViewLesson from "$lib/components/LessonViewLesson.svelte";
+  import FieldProvider from "$lib/components/swr-wrappers/FieldProvider.svelte";
+  import LessonProvider from "$lib/components/swr-wrappers/LessonProvider.svelte";
 
   const navigate = useNavigate();
   const location = useLocation<{

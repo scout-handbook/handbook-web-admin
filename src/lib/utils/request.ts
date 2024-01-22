@@ -1,12 +1,12 @@
 import { get } from "svelte/store";
 
-import type { APIResponse } from "../interfaces/APIResponse";
-import type { ExceptionHandler } from "../interfaces/ExceptionHandler";
-import type { Payload } from "../interfaces/Payload";
-import type { RequestResponse } from "../interfaces/RequestResponse";
-import { globalDialogMessage } from "../stores";
-import { suspendReAuth } from "../stores";
-import { constructQuery } from "./constructURL";
+import type { APIResponse } from "$lib/interfaces/APIResponse";
+import type { ExceptionHandler } from "$lib/interfaces/ExceptionHandler";
+import type { Payload } from "$lib/interfaces/Payload";
+import type { RequestResponse } from "$lib/interfaces/RequestResponse";
+import { globalDialogMessage } from "$lib/stores";
+import { suspendReAuth } from "$lib/stores";
+import { constructQuery } from "$lib/utils/constructURL";
 
 export function reAuth(): void {
   if (!get(suspendReAuth)) {

@@ -1,10 +1,10 @@
-import "../../common/HandbookMarkdown";
+import "$lib/common/HandbookMarkdown";
 
 import { Converter } from "showdown";
 import { filterXSS } from "xss";
 
-import type { WorkerPayload } from "../../common/WorkerPayload";
-import { xssOptions } from "../../common/xssOptions";
+import type { WorkerPayload } from "$lib/common/WorkerPayload";
+import { xssOptions } from "$lib/common/xssOptions";
 
 let converter: showdown.Converter | null = null;
 let worker: Worker | null = null;
@@ -15,7 +15,7 @@ const promiseResolvers: Record<string, (value: string) => void> = {};
 export function compileMarkdownSetup(): void {
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions -- Worker isn't present in older browsers
   if (Worker) {
-    worker = new Worker(new URL("../../admin-worker.ts", import.meta.url));
+    worker = new Worker(new URL("$lib/admin-worker.ts", import.meta.url));
     worker.onmessage = (payload): void => {
       const data = payload.data as WorkerPayload;
       promiseResolvers[data.id](data.body);

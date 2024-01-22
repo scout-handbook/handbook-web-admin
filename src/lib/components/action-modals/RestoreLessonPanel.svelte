@@ -1,23 +1,23 @@
 <script lang="ts" strictEvents>
   import { useNavigate } from "svelte-navigator";
 
-  import type { DeletedLesson } from "../../../../ts/admin/interfaces/DeletedLesson";
-  import type { LessonVersion } from "../../../../ts/admin/interfaces/LessonVersion";
-  import { apiUri } from "../../../../ts/admin/stores";
-  import { compileMarkdown } from "../../../../ts/admin/utils/compileMarkdown";
-  import { parseVersion } from "../../../../ts/admin/utils/parseVersion";
+  import type { DeletedLesson } from "$lib/interfaces/DeletedLesson";
+  import type { LessonVersion } from "$lib/interfaces/LessonVersion";
+  import { apiUri } from "$lib/stores";
+  import { compileMarkdown } from "$lib/utils/compileMarkdown";
+  import { parseVersion } from "$lib/utils/parseVersion";
   import {
     authFailHandler,
     reAuth,
     request,
-  } from "../../../../ts/admin/utils/request";
-  import Button from "../Button.svelte";
-  import Dialog from "../Dialog.svelte";
-  import DoubleSidePanel from "../DoubleSidePanel.svelte";
-  import RadioGroup from "../forms/RadioGroup.svelte";
-  import LoadingIndicator from "../LoadingIndicator.svelte";
-  import Overlay from "../Overlay.svelte";
-  import SidePanel from "../SidePanel.svelte";
+  } from "$lib/utils/request";
+  import Button from "$lib/components/Button.svelte";
+  import Dialog from "$lib/components/Dialog.svelte";
+  import DoubleSidePanel from "$lib/components/DoubleSidePanel.svelte";
+  import RadioGroup from "$lib/components/forms/RadioGroup.svelte";
+  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
+  import Overlay from "$lib/components/Overlay.svelte";
+  import SidePanel from "$lib/components/SidePanel.svelte";
 
   const navigate = useNavigate();
 

@@ -2,9 +2,9 @@
   import { createEventDispatcher } from "svelte";
   import { useNavigate } from "svelte-navigator";
 
-  import Dialog from "./Dialog.svelte";
-  import LoadingIndicator from "./LoadingIndicator.svelte";
-  import Overlay from "./Overlay.svelte";
+  import Dialog from "$lib/components/Dialog.svelte";
+  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
+  import Overlay from "$lib/components/Overlay.svelte";
 
   interface $$Slots {
     default: Record<string, never>;

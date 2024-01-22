@@ -1,9 +1,9 @@
 <script lang="ts" strictEvents>
   import { useSWR } from "sswr";
 
-  import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
-  import { adminUri, apiUri, frontendUri } from "../../../ts/admin/stores";
-  import { constructURL } from "../../../ts/admin/utils/constructURL";
+  import type { Loginstate } from "$lib/interfaces/Loginstate";
+  import { adminUri, apiUri, frontendUri } from "$lib/stores";
+  import { constructURL } from "$lib/utils/constructURL";
 
   const { data: loginstate } = useSWR<Loginstate>(constructURL("v1.0/account"));
   $: avatar = $loginstate
