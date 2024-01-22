@@ -1,5 +1,11 @@
 import { readable, writable } from "svelte/store";
 
+import type { Config } from "$lib/interfaces/Config";
+
+declare global {
+  const CONFIG: Config;
+}
+
 export const adminUri = readable<string>(CONFIG["admin-uri"]);
 export const apiUri = readable<string>(CONFIG["api-uri"]);
 export const frontendUri = readable<string>(CONFIG["frontend-uri"]);
