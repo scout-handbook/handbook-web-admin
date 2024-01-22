@@ -41,7 +41,8 @@
   "devDependencies": {
     "@csstools/postcss-global-data": "^2.1.1",
     "@fontsource/open-sans": "^5.0.26",
-    "@sveltejs/vite-plugin-svelte": "^2.5.2",
+    "@sveltejs/adapter-static": "^2.0.3",
+    "@sveltejs/kit": "^1.30.3",
     "@types/codemirror": "5.60.15",
     "@types/showdown": "^2.0.6",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
@@ -76,7 +77,6 @@
     "ts-loader": "^9.5.1",
     "typescript": "^5.3.3 <5.5",
     "vite": "^4.5.3",
-    "vite-plugin-html": "^3.2.2",
     "yargs": "^17.7.2"
   },
   "browserslist": [
