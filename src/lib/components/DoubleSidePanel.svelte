@@ -1,13 +1,11 @@
 <script lang="ts" strictEvents>
-  import { fly } from "../../../ts/admin/transition";
-  import Overlay from "./Overlay.svelte";
+  import { fly } from "$lib/transition";
 
   interface $$Slots {
     default: Record<string, never>;
   }
 </script>
 
-<Overlay />
 <!-- eslint-disable-next-line svelte/no-inline-styles -->
 <div transition:fly={{ from: "right", duration: 300 }}>
   <slot />
@@ -23,7 +21,7 @@
     position: fixed;
     right: 0;
     top: 0;
-    width: 539px;
-    z-index: 10;
+    width: 939px;
+    z-index: 11;
   }
 </style>

@@ -2,21 +2,21 @@
   import { useSWR } from "sswr";
   import { useNavigate } from "svelte-navigator";
 
-  import { Action } from "../../../../ts/admin/actions/Action";
-  import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
-  import type { Field } from "../../../../ts/admin/interfaces/Field";
-  import { apiUri } from "../../../../ts/admin/stores";
-  import type { SWRMutateFix } from "../../../../ts/admin/SWRMutateFix";
-  import { SWRMutateFnWrapper } from "../../../../ts/admin/SWRMutateFix";
-  import { get } from "../../../../ts/admin/utils/arrayUtils";
-  import { constructURL } from "../../../../ts/admin/utils/constructURL";
-  import Button from "../Button.svelte";
-  import DoneDialog from "../DoneDialog.svelte";
-  import DescriptionInput from "../forms/DescriptionInput.svelte";
-  import ImageInput from "../forms/ImageInput.svelte";
-  import NameInput from "../forms/NameInput.svelte";
-  import SidePanel from "../SidePanel.svelte";
-  import SidePanelImageSelector from "../SidePanelImageSelector.svelte";
+  import { Action } from "$lib/actions/Action";
+  import { ActionQueue } from "$lib/actions/ActionQueue";
+  import type { Field } from "$lib/interfaces/Field";
+  import { apiUri } from "$lib/stores";
+  import type { SWRMutateFix } from "$lib/SWRMutateFix";
+  import { SWRMutateFnWrapper } from "$lib/SWRMutateFix";
+  import { get } from "$lib/utils/arrayUtils";
+  import { constructURL } from "$lib/utils/constructURL";
+  import Button from "$lib/components/Button.svelte";
+  import DoneDialog from "$lib/components/DoneDialog.svelte";
+  import DescriptionInput from "$lib/components/forms/DescriptionInput.svelte";
+  import ImageInput from "$lib/components/forms/ImageInput.svelte";
+  import NameInput from "$lib/components/forms/NameInput.svelte";
+  import SidePanel from "$lib/components/SidePanel.svelte";
+  import SidePanelImageSelector from "$lib/components/SidePanelImageSelector.svelte";
 
   export let fields: Array<[string, Field]>;
   export let payload: { fieldId: string };

@@ -1,7 +1,7 @@
 import { get } from "svelte/store";
 
-import type { Payload } from "../interfaces/Payload";
-import { apiUri } from "../stores";
+import type { Payload } from "$lib/interfaces/Payload";
+import { apiUri } from "$lib/stores";
 
 export function constructQuery(searchParams: Payload): string {
   const pairs: Array<string> = [];

@@ -1,12 +1,12 @@
 import { createDefaultSWR } from "sswr";
 
-import type { Competence } from "./interfaces/Competence";
-import type { Field } from "./interfaces/Field";
-import type { Group } from "./interfaces/Group";
-import type { Lesson } from "./interfaces/Lesson";
-import type { RequestResponse } from "./interfaces/RequestResponse";
-import { get, map, sort } from "./utils/arrayUtils";
-import { reAuth, request } from "./utils/request";
+import type { Competence } from "$lib/interfaces/Competence";
+import type { Field } from "$lib/interfaces/Field";
+import type { Group } from "$lib/interfaces/Group";
+import type { Lesson } from "$lib/interfaces/Lesson";
+import type { RequestResponse } from "$lib/interfaces/RequestResponse";
+import { get, map, sort } from "$lib/utils/arrayUtils";
+import { reAuth, request } from "$lib/utils/request";
 
 export function setupSWR(): void {
   createDefaultSWR({

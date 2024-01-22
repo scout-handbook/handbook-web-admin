@@ -2,22 +2,22 @@
   import { useSWR } from "sswr";
   import { useNavigate } from "svelte-navigator";
 
-  import { Action } from "../../../../ts/admin/actions/Action";
-  import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
-  import type { APIResponse } from "../../../../ts/admin/interfaces/APIResponse";
-  import type { Field } from "../../../../ts/admin/interfaces/Field";
-  import type { Lesson } from "../../../../ts/admin/interfaces/Lesson";
-  import type { RequestResponse } from "../../../../ts/admin/interfaces/RequestResponse";
-  import { apiUri } from "../../../../ts/admin/stores";
-  import type { SWRMutateFix } from "../../../../ts/admin/SWRMutateFix";
-  import { SWRMutateFnWrapper } from "../../../../ts/admin/SWRMutateFix";
-  import { get } from "../../../../ts/admin/utils/arrayUtils";
-  import { constructURL } from "../../../../ts/admin/utils/constructURL";
-  import { reAuth, request } from "../../../../ts/admin/utils/request";
-  import Dialog from "../Dialog.svelte";
-  import DoneDialog from "../DoneDialog.svelte";
-  import LoadingIndicator from "../LoadingIndicator.svelte";
-  import Overlay from "../Overlay.svelte";
+  import { Action } from "$lib/actions/Action";
+  import { ActionQueue } from "$lib/actions/ActionQueue";
+  import type { APIResponse } from "$lib/interfaces/APIResponse";
+  import type { Field } from "$lib/interfaces/Field";
+  import type { Lesson } from "$lib/interfaces/Lesson";
+  import type { RequestResponse } from "$lib/interfaces/RequestResponse";
+  import { apiUri } from "$lib/stores";
+  import type { SWRMutateFix } from "$lib/SWRMutateFix";
+  import { SWRMutateFnWrapper } from "$lib/SWRMutateFix";
+  import { get } from "$lib/utils/arrayUtils";
+  import { constructURL } from "$lib/utils/constructURL";
+  import { reAuth, request } from "$lib/utils/request";
+  import Dialog from "$lib/components/Dialog.svelte";
+  import DoneDialog from "$lib/components/DoneDialog.svelte";
+  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
+  import Overlay from "$lib/components/Overlay.svelte";
 
   export let lessons: Array<[string, Lesson]>;
   export let payload: { lessonId: string };

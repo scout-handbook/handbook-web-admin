@@ -2,11 +2,11 @@
   import { useSWR } from "sswr";
   import { derived } from "svelte/store";
 
-  import type { Competence } from "../../../../ts/admin/interfaces/Competence";
-  import type { Lesson } from "../../../../ts/admin/interfaces/Lesson";
-  import { processCompetences, processLessons } from "../../../../ts/admin/swr";
-  import { constructURL } from "../../../../ts/admin/utils/constructURL";
-  import LoadingIndicator from "../LoadingIndicator.svelte";
+  import type { Competence } from "$lib/interfaces/Competence";
+  import type { Lesson } from "$lib/interfaces/Lesson";
+  import { processCompetences, processLessons } from "$lib/swr";
+  import { constructURL } from "$lib/utils/constructURL";
+  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
 
   export let silent = false;
   export let inline = false;

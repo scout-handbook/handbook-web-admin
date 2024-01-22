@@ -1,7 +1,7 @@
 <script lang="ts" strictEvents>
   import { createEventDispatcher } from "svelte";
 
-  import { apiUri } from "../../../ts/admin/stores";
+  import { apiUri } from "$lib/stores";
 
   export let id: string;
 

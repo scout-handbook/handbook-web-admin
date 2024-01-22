@@ -1,7 +1,7 @@
 <script lang="ts" strictEvents>
   import { useMatch, useNavigate } from "svelte-navigator";
 
-  import UserAccountBox from "./UserAccountBox.svelte";
+  import UserAccountBox from "$lib/components/UserAccountBox.svelte";
 
   const navigate = useNavigate();
   const rootMatcher = useMatch("/");

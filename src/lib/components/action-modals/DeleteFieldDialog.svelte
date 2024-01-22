@@ -2,16 +2,16 @@
   import { useSWR } from "sswr";
   import { useNavigate } from "svelte-navigator";
 
-  import { Action } from "../../../../ts/admin/actions/Action";
-  import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
-  import type { Field } from "../../../../ts/admin/interfaces/Field";
-  import { apiUri } from "../../../../ts/admin/stores";
-  import type { SWRMutateFix } from "../../../../ts/admin/SWRMutateFix";
-  import { SWRMutateFnWrapper } from "../../../../ts/admin/SWRMutateFix";
-  import { get } from "../../../../ts/admin/utils/arrayUtils";
-  import { constructURL } from "../../../../ts/admin/utils/constructURL";
-  import Dialog from "../Dialog.svelte";
-  import DoneDialog from "../DoneDialog.svelte";
+  import { Action } from "$lib/actions/Action";
+  import { ActionQueue } from "$lib/actions/ActionQueue";
+  import type { Field } from "$lib/interfaces/Field";
+  import { apiUri } from "$lib/stores";
+  import type { SWRMutateFix } from "$lib/SWRMutateFix";
+  import { SWRMutateFnWrapper } from "$lib/SWRMutateFix";
+  import { get } from "$lib/utils/arrayUtils";
+  import { constructURL } from "$lib/utils/constructURL";
+  import Dialog from "$lib/components/Dialog.svelte";
+  import DoneDialog from "$lib/components/DoneDialog.svelte";
 
   export let fields: Array<[string, Field]>;
   export let payload: { fieldId: string };
