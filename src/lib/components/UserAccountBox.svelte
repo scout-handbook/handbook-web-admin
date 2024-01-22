@@ -1,9 +1,8 @@
 <script lang="ts" strictEvents>
+  import type { Loginstate } from "$lib/interfaces/Loginstate";
+
+  import { adminUri, apiUri, frontendUri } from "$lib/stores";
   import { createQuery } from "@tanstack/svelte-query";
-
-  import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
-
-  import { adminUri, apiUri, frontendUri } from "../../../ts/admin/stores";
 
   const accountQuery = createQuery<Loginstate>({
     queryKey: ["v1.0", "account"],

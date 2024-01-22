@@ -1,10 +1,10 @@
-import type { ExceptionHandler } from "../interfaces/ExceptionHandler";
-import type { Payload } from "../interfaces/Payload";
-import type { RequestResponse } from "../interfaces/RequestResponse";
-import type { SerializedAction } from "../interfaces/SerializedAction";
-import type { ActionQueue } from "./ActionQueue";
+import type { ActionQueue } from "$lib/actions/ActionQueue";
+import type { ExceptionHandler } from "$lib/interfaces/ExceptionHandler";
+import type { Payload } from "$lib/interfaces/Payload";
+import type { RequestResponse } from "$lib/interfaces/RequestResponse";
+import type { SerializedAction } from "$lib/interfaces/SerializedAction";
 
-import { ActionCallback } from "./ActionCallback";
+import { ActionCallback } from "$lib/actions/ActionCallback";
 
 export class Action {
   public callbacks: Array<ActionCallback>;

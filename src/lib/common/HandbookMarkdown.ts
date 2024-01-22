@@ -1,4 +1,4 @@
-import { extension, type ShowdownExtension } from "showdown";
+import showdown from "showdown";
 
 function getArgumentString(
   lines: Array<string>,
@@ -81,7 +81,7 @@ function pagebreakCommand(): string {
 
 // Showdown extensions definitions
 // eslint-disable-next-line @typescript-eslint/naming-convention -- A plugin can be PascalCase
-const HandbookMarkdown = (): Array<ShowdownExtension> => {
+const HandbookMarkdown = (): Array<showdown.ShowdownExtension> => {
   const responsiveTablesBegin = {
     regex: "<table>",
     replace: '<div class="table-container"><table>',
@@ -123,4 +123,4 @@ const HandbookMarkdown = (): Array<ShowdownExtension> => {
 };
 
 //Register extensions
-extension("HandbookMarkdown", HandbookMarkdown);
+showdown.extension("HandbookMarkdown", HandbookMarkdown);

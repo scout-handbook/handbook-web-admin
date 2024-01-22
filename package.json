@@ -29,7 +29,7 @@
     "clean": "rimraf dist/*",
     "prebuild": "npm run clean",
     "build": "vite build",
-    "lint:css:stylelint": "stylelint --color 'src/**/*.css' '!src/css/fontello.css'",
+    "lint:css:stylelint": "stylelint --color 'src/**/*.css' 'static/**/*.css' '!src/lib/font/fontello.css'",
     "lint:css": "run-p -c --aggregate-output lint:css:*",
     "lint:svelte:svelte-check": "svelte-check",
     "lint:svelte": "run-p -c --aggregate-output lint:svelte:*",
