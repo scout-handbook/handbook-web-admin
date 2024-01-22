@@ -1,10 +1,9 @@
 import type { Options } from "rollup-plugin-htaccess";
 
 /* eslint-disable @typescript-eslint/naming-convention -- Most of these are things like header names */
-const options: (
-  config: Record<string, string>,
-  cspHashes: Array<string>,
-) => Partial<Options> = (config, cspHashes) => ({
+const options: (config: Record<string, string>) => Partial<Options> = (
+  config,
+) => ({
   spec: {
     AddOutputFilterByType: [
       {
@@ -40,9 +39,6 @@ const options: (
           },
           "object-src": {},
           "script-src": {
-            hashes: {
-              sha256: cspHashes,
-            },
             self: true,
           },
           "style-src": {
