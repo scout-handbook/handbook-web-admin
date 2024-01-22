@@ -9,7 +9,6 @@
   import EditLessonView from "./views/EditLessonView.svelte";
   import GroupView from "./views/GroupView.svelte";
   import ImageView from "./views/ImageView.svelte";
-  import LessonView from "./views/LessonView.svelte";
   import RestoreLessonView from "./views/RestoreLessonView.svelte";
   import UserView from "./views/UserView.svelte";
 
@@ -28,22 +27,6 @@
     <RestoreLessonView lessonID={params["id"]} version={params["version"]} />
   </Route>
 
-  <Route path="/">
-    <TopBar />
-    <div class="main-page-container">
-      <div class="main-page">
-        <LessonView />
-      </div>
-    </div>
-  </Route>
-  <Route path="/lessons">
-    <TopBar />
-    <div class="main-page-container">
-      <div class="main-page">
-        <LessonView />
-      </div>
-    </div>
-  </Route>
   <Route path="/competences">
     <TopBar />
     <div class="main-page-container">

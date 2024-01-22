@@ -1,24 +1,20 @@
 <script lang="ts" strictEvents>
-  import { useNavigate } from "svelte-navigator";
-
-  import { Action } from "../../../../ts/admin/actions/Action";
-  import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
-  import { apiUri } from "../../../../ts/admin/stores";
-  import { queryClient } from "../../../../ts/admin/utils/queryClient";
-  import Button from "../Button.svelte";
-  import DoneDialog from "../DoneDialog.svelte";
-  import DescriptionInput from "../forms/DescriptionInput.svelte";
-  import ImageInput from "../forms/ImageInput.svelte";
-  import NameInput from "../forms/NameInput.svelte";
-  import SidePanel from "../SidePanel.svelte";
-  import SidePanelImageSelector from "../SidePanelImageSelector.svelte";
+  import { Action } from "$lib/actions/Action";
+  import { ActionQueue } from "$lib/actions/ActionQueue";
+  import Button from "$lib/components/Button.svelte";
+  import DoneDialog from "$lib/components/DoneDialog.svelte";
+  import DescriptionInput from "$lib/components/forms/DescriptionInput.svelte";
+  import ImageInput from "$lib/components/forms/ImageInput.svelte";
+  import NameInput from "$lib/components/forms/NameInput.svelte";
+  import SidePanel from "$lib/components/SidePanel.svelte";
+  import SidePanelImageSelector from "$lib/components/SidePanelImageSelector.svelte";
+  import { apiUri } from "$lib/stores";
+  import { queryClient } from "$lib/utils/queryClient";
 
   export let name = "Nová oblast";
   export let description = "Popis nové oblasti";
   export let image = "00000000-0000-0000-0000-000000000000";
   export let icon = "00000000-0000-0000-0000-000000000000";
-
-  const navigate = useNavigate();
 
   let imageSelectorOpen = false;
   let iconSelectorOpen = false;
@@ -72,7 +68,7 @@
       icon="cancel"
       yellow
       on:click={() => {
-        navigate(-1);
+        history.back();
       }}>Zrušit</Button
     >
     <Button green icon="floppy" on:click={saveCallback}>Uložit</Button>
