@@ -1,9 +1,9 @@
-import type { Competence } from "./interfaces/Competence";
-import type { Field } from "./interfaces/Field";
-import type { Group } from "./interfaces/Group";
-import type { Lesson } from "./interfaces/Lesson";
+import type { Competence } from "$lib/interfaces/Competence";
+import type { Field } from "$lib/interfaces/Field";
+import type { Group } from "$lib/interfaces/Group";
+import type { Lesson } from "$lib/interfaces/Lesson";
 
-import { get, map, sort } from "./utils/arrayUtils";
+import { get, map, sort } from "$lib/utils/arrayUtils";
 
 function competenceComparator(first: Competence, second: Competence): number {
   const numberComparison =

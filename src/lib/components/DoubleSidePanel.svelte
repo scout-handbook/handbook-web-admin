@@ -1,5 +1,5 @@
 <script lang="ts" strictEvents>
-  import { fly } from "../../../ts/admin/transition";
+  import { fly } from "$lib/transition";
 
   interface $$Slots {
     default: Record<string, never>;

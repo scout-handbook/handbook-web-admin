@@ -1,17 +1,16 @@
 <script lang="ts" strictEvents>
-  import { createQuery } from "@tanstack/svelte-query";
-  import { derived } from "svelte/store";
+  import type { Competence } from "$lib/interfaces/Competence";
+  import type { Field } from "$lib/interfaces/Field";
+  import type { Lesson } from "$lib/interfaces/Lesson";
 
-  import type { Competence } from "../../../../ts/admin/interfaces/Competence";
-  import type { Field } from "../../../../ts/admin/interfaces/Field";
-  import type { Lesson } from "../../../../ts/admin/interfaces/Lesson";
-
+  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import {
     processCompetences,
     processFields,
     processLessons,
-  } from "../../../../ts/admin/resourceProcessing";
-  import LoadingIndicator from "../LoadingIndicator.svelte";
+  } from "$lib/resourceProcessing";
+  import { createQuery } from "@tanstack/svelte-query";
+  import { derived } from "svelte/store";
 
   interface $$Slots {
     default: {

@@ -1,11 +1,10 @@
 <script lang="ts" strictEvents>
+  import type { Competence } from "$lib/interfaces/Competence";
+
+  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
+  import { processCompetences } from "$lib/resourceProcessing";
   import { createQuery } from "@tanstack/svelte-query";
   import { derived } from "svelte/store";
-
-  import type { Competence } from "../../../../ts/admin/interfaces/Competence";
-
-  import { processCompetences } from "../../../../ts/admin/resourceProcessing";
-  import LoadingIndicator from "../LoadingIndicator.svelte";
 
   export let silent = false;
   export let inline = false;
