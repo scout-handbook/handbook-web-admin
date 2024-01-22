@@ -1,10 +1,9 @@
-import { Converter } from "showdown";
+import type { WorkerPayload } from "$lib/common/WorkerPayload";
+
+import { xssOptions } from "$lib/common/xssOptions";
+import showdown from "showdown";
+import "$lib/common/HandbookMarkdown";
 import { filterXSS } from "xss";
-
-import type { WorkerPayload } from "../../common/WorkerPayload";
-
-import "../../common/HandbookMarkdown";
-import { xssOptions } from "../../common/xssOptions";
 
 let converter: showdown.Converter | null = null;
 let worker: Worker | null = null;
@@ -30,7 +29,7 @@ export function compileMarkdownSetup(): void {
       }
     };
   } else {
-    converter = new Converter({ extensions: ["HandbookMarkdown"] });
+    converter = new showdown.Converter({ extensions: ["HandbookMarkdown"] });
     converter.setOption("noHeaderId", "true");
     converter.setOption("tables", "true");
     converter.setOption("smoothLivePreview", "true");

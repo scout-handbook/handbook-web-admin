@@ -1,16 +1,20 @@
-import { get } from "svelte/store";
-import { navigate } from "svelte-navigator";
+import type { SerializedAction } from "$lib/interfaces/SerializedAction";
 
-import type { SerializedAction } from "../interfaces/SerializedAction";
-
+import { goto } from "$app/navigation";
+import { base } from "$app/paths";
+import {
+  type Action,
+  deserializeAction,
+  serializeAction,
+} from "$lib/actions/Action";
 import {
   adminUri,
   globalDialogMessage,
   globalLoadingIndicator,
-} from "../stores";
-import { queryClient } from "../utils/queryClient";
-import { request } from "../utils/request";
-import { type Action, deserializeAction, serializeAction } from "./Action";
+} from "$lib/stores";
+import { queryClient } from "$lib/utils/queryClient";
+import { request } from "$lib/utils/request";
+import { get } from "svelte/store";
 
 export class ActionQueue {
   private readonly isRetryAfterLogin: boolean;
@@ -86,7 +90,7 @@ export function setupActionQueue(): void {
   globalLoadingIndicator.set(true);
   void aq.dispatch().then(() => {
     void queryClient.invalidateQueries();
-    navigate(`/${get(adminUri).split("/").slice(3).join("/")}`);
+    void goto(`${base}/${get(adminUri).split("/").slice(3).join("/")}`);
     globalLoadingIndicator.set(false);
     globalDialogMessage.set("Akce byla úspěšná");
   });

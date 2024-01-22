@@ -1,7 +1,6 @@
 <script lang="ts" strictEvents>
+  import { fade } from "$lib/transition";
   import { createEventDispatcher } from "svelte";
-
-  import { fade } from "../../../ts/admin/transition";
 
   const dispatch = createEventDispatcher<{ click: null }>();
 </script>
@@ -12,7 +11,7 @@
   on:click={() => {
     dispatch("click");
   }}
-  transition:fade={{ duration: 100 }}
+  transition:fade|global={{ duration: 100 }}
 />
 
 <!-- eslint-enable -->

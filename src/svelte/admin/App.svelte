@@ -1,19 +1,7 @@
 <script lang="ts" strictEvents>
-  import "../../css/fontello.css";
-  import "@fontsource/open-sans/400.css";
-  import "@fontsource/open-sans/400-italic.css";
-  import "@fontsource/open-sans/700.css";
-  import "@fontsource/open-sans/700-italic.css";
   import { Route, Router } from "svelte-navigator";
 
-  import {
-    adminUri,
-    globalDialogMessage,
-    globalLoadingIndicator,
-  } from "../../ts/admin/stores";
-  import Dialog from "./components/Dialog.svelte";
-  import LoadingIndicator from "./components/LoadingIndicator.svelte";
-  import Overlay from "./components/Overlay.svelte";
+  import { adminUri } from "../../ts/admin/stores";
   import FieldProvider from "./components/swr-wrappers/FieldProvider.svelte";
   import TopBar from "./components/TopBar.svelte";
   import AddLessonView from "./views/AddLessonView.svelte";
@@ -29,20 +17,6 @@
   const basepath = $adminUri.split("/").slice(3).join("/");
 </script>
 
-{#if $globalLoadingIndicator}
-  <Overlay />
-  <LoadingIndicator darkBackground />
-{/if}
-{#if $globalDialogMessage !== null}
-  <Dialog
-    confirmButtonText="OK"
-    on:confirm={() => {
-      globalDialogMessage.set(null);
-    }}
-  >
-    {$globalDialogMessage}
-  </Dialog>
-{/if}
 <Router {basepath} primary={false}>
   <Route component={AddLessonView} path="/lessons/add" />
   <Route path="/lessons/:id/edit" let:params>
