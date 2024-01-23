@@ -1,8 +1,8 @@
 <script lang="ts" strictEvents>
   import { createEventDispatcher } from "svelte";
 
-  import { apiUri } from "$lib/stores";
   import Button from "$lib/components/Button.svelte";
+  import { apiUri } from "$lib/stores";
 
   export let name: string;
   export let value: string;

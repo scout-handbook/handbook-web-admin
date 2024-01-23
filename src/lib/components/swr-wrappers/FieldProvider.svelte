@@ -2,16 +2,12 @@
   import { useSWR } from "sswr";
   import { derived } from "svelte/store";
 
+  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import type { Competence } from "$lib/interfaces/Competence";
   import type { Field } from "$lib/interfaces/Field";
   import type { Lesson } from "$lib/interfaces/Lesson";
-  import {
-    processCompetences,
-    processFields,
-    processLessons,
-  } from "$lib/swr";
+  import { processCompetences, processFields, processLessons } from "$lib/swr";
   import { constructURL } from "$lib/utils/constructURL";
-  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
 
   interface $$Slots {
     default: {

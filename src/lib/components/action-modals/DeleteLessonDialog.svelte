@@ -4,6 +4,10 @@
 
   import { Action } from "$lib/actions/Action";
   import { ActionQueue } from "$lib/actions/ActionQueue";
+  import Dialog from "$lib/components/Dialog.svelte";
+  import DoneDialog from "$lib/components/DoneDialog.svelte";
+  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
+  import Overlay from "$lib/components/Overlay.svelte";
   import type { APIResponse } from "$lib/interfaces/APIResponse";
   import type { Field } from "$lib/interfaces/Field";
   import type { Lesson } from "$lib/interfaces/Lesson";
@@ -14,10 +18,6 @@
   import { get } from "$lib/utils/arrayUtils";
   import { constructURL } from "$lib/utils/constructURL";
   import { reAuth, request } from "$lib/utils/request";
-  import Dialog from "$lib/components/Dialog.svelte";
-  import DoneDialog from "$lib/components/DoneDialog.svelte";
-  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
-  import Overlay from "$lib/components/Overlay.svelte";
 
   export let lessons: Array<[string, Lesson]>;
   export let payload: { lessonId: string };

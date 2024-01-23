@@ -1,9 +1,9 @@
+import { ActionCallback } from "$lib/actions/ActionCallback";
+import type { ActionQueue } from "$lib/actions/ActionQueue";
 import type { ExceptionHandler } from "$lib/interfaces/ExceptionHandler";
 import type { Payload } from "$lib/interfaces/Payload";
 import type { RequestResponse } from "$lib/interfaces/RequestResponse";
 import type { SerializedAction } from "$lib/interfaces/SerializedAction";
-import { ActionCallback } from "$lib/actions/ActionCallback";
-import type { ActionQueue } from "$lib/actions/ActionQueue";
 
 export class Action {
   public url: string;
