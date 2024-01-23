@@ -1,74 +1,51 @@
 <script lang="ts" strictEvents>
-  import { useMatch, useNavigate } from "svelte-navigator";
-
+  import { page } from "$app/stores";
   import UserAccountBox from "$lib/components/UserAccountBox.svelte";
 
-  const navigate = useNavigate();
-  const rootMatcher = useMatch("/");
-  const lessonMatcher = useMatch("/lessons");
-  const competenceMatcher = useMatch("/competences");
-  const imageMatcher = useMatch("/images");
-  const userMatcher = useMatch("/users");
-  const groupMatcher = useMatch("/groups");
+  const {
+    route: { id: routeId },
+  } = $page;
 </script>
 
 <div class="wrapper">
   <UserAccountBox />
-  <button
-    class:active-tab={$rootMatcher !== null || $lessonMatcher !== null}
-    type="button"
-    on:click={() => {
-      navigate("/lessons");
-    }}
+  <a
+    class:active-tab={routeId === "/" || routeId === "/lessons"}
+    href="/lessons"
   >
     Lekce
-  </button>
-  <button
-    class:active-tab={$competenceMatcher !== null}
-    type="button"
-    on:click={() => {
-      navigate("/competences");
-    }}
+  </a>
+  <a
+    class:active-tab={routeId === "/competences"}
+    href="/competences"
   >
     Body
-  </button>
-  <button
-    class:active-tab={$imageMatcher !== null}
-    type="button"
-    on:click={() => {
-      navigate("/images");
-    }}
+  </a>
+  <a
+    class:active-tab={routeId === "/images"}
+    href="/images"
   >
     Obrázky
-  </button>
-  <button
-    class:active-tab={$userMatcher !== null}
-    type="button"
-    on:click={() => {
-      navigate("/users");
-    }}
+  </a>
+  <a
+    class:active-tab={routeId === "/users"}
+    href="/users"
   >
     Uživatelé
-  </button>
-  <button
+  </a>
+  <a
     class="groups"
-    class:active-tab={$groupMatcher !== null}
-    type="button"
-    on:click={() => {
-      navigate("/groups");
-    }}
+    class:active-tab={routeId === "/groups"}
+    href="/groups"
   >
     Uživatelské skupiny
-  </button>
+  </a>
 </div>
 
 <style>
-  button {
-    background: none;
-    border: none;
+  a {
     border-left: 1px solid var(--border-color);
     border-right: 1px solid var(--border-color);
-    box-sizing: content-box;
     color: var(--background);
     cursor: pointer;
     display: inline-block;
@@ -88,7 +65,7 @@
   }
 
   .active-tab,
-  button:hover {
+  a:hover {
     background-color: var(--background-darkest);
     border-color: var(--accent-color);
     color: var(--accent-color);

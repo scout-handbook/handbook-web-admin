@@ -1,6 +1,5 @@
 <script lang="ts" strictEvents>
   import { useSWR } from "sswr";
-  import { useNavigate } from "svelte-navigator";
 
   import { Action } from "$lib/actions/Action";
   import { ActionQueue } from "$lib/actions/ActionQueue";
@@ -20,8 +19,6 @@
 
   export let fields: Array<[string, Field]>;
   export let payload: { fieldId: string };
-
-  const navigate = useNavigate();
 
   const field = get(fields, payload.fieldId)!;
   let { name, description, image, icon } = field;
@@ -96,7 +93,7 @@
       icon="cancel"
       yellow
       on:click={() => {
-        navigate(-1);
+        history.back();
       }}
     >
       Zrušit
