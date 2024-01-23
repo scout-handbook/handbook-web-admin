@@ -3,7 +3,7 @@
 
   import { fade } from "$lib/transition";
 
-  const dispatch = createEventDispatcher<{ click: never }>();
+  const dispatch = createEventDispatcher<{ click: null }>();
 </script>
 
 <!-- eslint-disable svelte/no-inline-styles -->
