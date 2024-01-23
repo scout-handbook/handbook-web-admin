@@ -1,6 +1,5 @@
 <script lang="ts" strictEvents>
   import { useSWR } from "sswr";
-  import { useNavigate } from "svelte-navigator";
 
   import { Action } from "$lib/actions/Action";
   import { ActionQueue } from "$lib/actions/ActionQueue";
@@ -20,8 +19,6 @@
   export let description = "Popis nové oblasti";
   export let image = "00000000-0000-0000-0000-000000000000";
   export let icon = "00000000-0000-0000-0000-000000000000";
-
-  const navigate = useNavigate();
 
   let imageSelectorOpen = false;
   let iconSelectorOpen = false;
@@ -76,7 +73,7 @@
       icon="cancel"
       yellow
       on:click={() => {
-        navigate(-1);
+        history.back();
       }}>Zrušit</Button
     >
     <Button green icon="floppy" on:click={saveCallback}>Uložit</Button>

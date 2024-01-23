@@ -1,6 +1,5 @@
 <script lang="ts" strictEvents>
-  import { useNavigate } from "svelte-navigator";
-
+  import { goto } from "$app/navigation";
   import Button from "$lib/components/Button.svelte";
   import Dialog from "$lib/components/Dialog.svelte";
   import DoubleSidePanel from "$lib/components/DoubleSidePanel.svelte";
@@ -14,8 +13,6 @@
   import { compileMarkdown } from "$lib/utils/compileMarkdown";
   import { parseVersion } from "$lib/utils/parseVersion";
   import { authFailHandler, reAuth, request } from "$lib/utils/request";
-
-  const navigate = useNavigate();
 
   let error = "";
   let step = "lesson-selection-loading";
@@ -78,7 +75,7 @@
   }
 
   function selectVersionCallback(): void {
-    navigate(
+    void goto(
       "/lessons/" +
         selectedLesson +
         "/versions/" +
@@ -93,7 +90,7 @@
   <Dialog
     confirmButtonText="OK"
     on:confirm={() => {
-      navigate(-1);
+      history.back();
     }}
   >
     {error}
@@ -104,7 +101,7 @@
       icon="cancel"
       yellow
       on:click={() => {
-        navigate(-1);
+        history.back();
       }}>Zrušit</Button
     >
     <Button
@@ -139,7 +136,7 @@
         icon="cancel"
         yellow
         on:click={() => {
-          navigate(-1);
+          history.back();
         }}
       >
         Zrušit

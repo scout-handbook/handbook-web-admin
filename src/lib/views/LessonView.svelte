@@ -1,7 +1,8 @@
 <script lang="ts" strictEvents>
   import { useSWR } from "sswr";
-  import { useLocation, useNavigate } from "svelte-navigator";
 
+  import { goto } from "$app/navigation";
+  import { page } from "$app/stores";
   import AddFieldPanel from "$lib/components/action-modals/AddFieldPanel.svelte";
   import DeleteFieldDialog from "$lib/components/action-modals/DeleteFieldDialog.svelte";
   import DeleteLessonDialog from "$lib/components/action-modals/DeleteLessonDialog.svelte";
@@ -15,40 +16,31 @@
   import { siteName } from "$lib/stores";
   import { constructURL } from "$lib/utils/constructURL";
 
-  const navigate = useNavigate();
-  const location = useLocation<{
-    action: string;
-    actionPayload: {
-      fieldId: string;
-      lessonId: string;
-    };
-  }>();
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- The typings for svelte-navigator incorrectly don't include undefined for $location.state
-  $: action = $location.state?.action;
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- The typings for svelte-navigator incorrectly don't include undefined for $location.state
-  $: actionPayload = $location.state?.actionPayload;
+  import type { PageStateFix } from "../../app";
+
+  $: state = $page.state as PageStateFix;
 
   const { data: loginstate } = useSWR<Loginstate>(constructURL("v1.0/account"));
   $: adminOrSuperuser =
     $loginstate?.role === "administrator" || $loginstate?.role === "superuser";
 </script>
 
-{#if action === "add-field"}
+{#if state.action === "add-field"}
   <AddFieldPanel />
-{:else if action === "change-field"}
+{:else if state.action === "change-field"}
   <FieldProvider silent let:fields>
-    <EditFieldPanel {fields} payload={actionPayload} />
+    <EditFieldPanel {fields} payload={state.actionPayload} />
     <!-- TODO: This is too slow for some reason -->
   </FieldProvider>
-{:else if action === "delete-field"}
+{:else if state.action === "delete-field"}
   <FieldProvider silent let:fields>
-    <DeleteFieldDialog {fields} payload={actionPayload} />
+    <DeleteFieldDialog {fields} payload={state.actionPayload} />
   </FieldProvider>
-{:else if action === "delete-lesson"}
+{:else if state.action === "delete-lesson"}
   <LessonProvider silent let:lessons>
-    <DeleteLessonDialog {lessons} payload={actionPayload} />
+    <DeleteLessonDialog {lessons} payload={state.actionPayload} />
   </LessonProvider>
-{:else if action === "restore-lesson"}
+{:else if state.action === "restore-lesson"}
   <RestoreLessonPanel />
 {/if}
 
@@ -58,7 +50,7 @@
     green
     icon="plus"
     on:click={() => {
-      navigate("/lessons", { state: { action: "add-field" } });
+      void goto("/lessons", { state: { action: "add-field" } });
     }}
   >
     Přidat oblast
@@ -68,7 +60,7 @@
   green
   icon="plus"
   on:click={() => {
-    navigate("/lessons/add");
+    void goto("/lessons/add");
   }}
 >
   Přidat lekci
@@ -77,7 +69,7 @@
   <Button
     icon="history"
     on:click={() => {
-      navigate("/lessons", { state: { action: "restore-lesson" } });
+      void goto("/lessons", { state: { action: "restore-lesson" } });
     }}
   >
     Smazané lekce
@@ -96,7 +88,7 @@
           cyan
           icon="pencil"
           on:click={() => {
-            navigate("/lessons", {
+            void goto("/lessons", {
               state: { action: "change-field", actionPayload: { fieldId } },
             });
           }}
@@ -107,7 +99,7 @@
           icon="trash-empty"
           red
           on:click={() => {
-            navigate("/lessons", {
+            void goto("/lessons", {
               state: { action: "delete-field", actionPayload: { fieldId } },
             });
           }}
@@ -119,7 +111,7 @@
         green
         icon="plus"
         on:click={() => {
-          navigate("/lessons/add?field=" + fieldId);
+          void goto("/lessons/add?field=" + fieldId);
         }}
       >
         Přidat lekci

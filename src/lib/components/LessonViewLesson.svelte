@@ -1,7 +1,7 @@
 <script lang="ts" strictEvents>
   import { useSWR } from "sswr";
-  import { useNavigate } from "svelte-navigator";
 
+  import { goto } from "$app/navigation";
   import Button from "$lib/components/Button.svelte";
   import CompetenceProvider from "$lib/components/swr-wrappers/CompetenceProvider.svelte";
   import type { Lesson } from "$lib/interfaces/Lesson";
@@ -12,8 +12,6 @@
   export let id: string;
   export let lesson: Lesson;
   export let secondLevel = false;
-
-  const navigate = useNavigate();
 
   const { data: loginstate } = useSWR<Loginstate>(constructURL("v1.0/account"));
   $: adminOrSuperuser =
@@ -26,7 +24,7 @@
     cyan
     icon="pencil"
     on:click={() => {
-      navigate("/lessons/" + id + "/edit");
+      void goto("/lessons/" + id + "/edit");
     }}
   >
     Upravit
@@ -36,7 +34,7 @@
       icon="trash-empty"
       red
       on:click={() => {
-        navigate("/lessons", {
+        void goto("/lessons", {
           state: { action: "delete-lesson", actionPayload: { lessonId: id } },
         });
       }}

@@ -1,6 +1,5 @@
 <script lang="ts" strictEvents>
   import { useSWR } from "sswr";
-  import { useNavigate } from "svelte-navigator";
 
   import { Action } from "$lib/actions/Action";
   import { ActionQueue } from "$lib/actions/ActionQueue";
@@ -21,8 +20,6 @@
 
   export let lessons: Array<[string, Lesson]>;
   export let payload: { lessonId: string };
-
-  const navigate = useNavigate();
 
   const name = get(lessons, payload.lessonId)!.name;
   let lockedError: string | null = null;
@@ -95,7 +92,7 @@
         { NotFoundException: null },
       ),
     ]).dispatch();
-    navigate(-1);
+    history.back();
   }
 </script>
 
@@ -103,7 +100,7 @@
   <Dialog
     confirmButtonText="OK"
     on:confirm={() => {
-      navigate(-1);
+      history.back();
     }}
   >
     Nelze smazat lekci, protože ji právě upravuje {lockedError}.
@@ -112,7 +109,7 @@
   <Dialog
     confirmButtonText="OK"
     on:confirm={() => {
-      navigate(-1);
+      history.back();
     }}
   >
     Kvůli příliš malé aktivitě byla lekce odemknuta a již ji upravil někdo jiný.

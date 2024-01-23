@@ -1,6 +1,5 @@
 <script lang="ts" strictEvents>
   import { useSWR } from "sswr";
-  import { useNavigate } from "svelte-navigator";
 
   import { Action } from "$lib/actions/Action";
   import { ActionQueue } from "$lib/actions/ActionQueue";
@@ -15,8 +14,6 @@
 
   export let fields: Array<[string, Field]>;
   export let payload: { fieldId: string };
-
-  const navigate = useNavigate();
 
   const field = get(fields, payload.fieldId)!;
   let donePromise: Promise<void> | null = null;
@@ -51,7 +48,7 @@
     dismissButtonText="Ne"
     on:confirm={confirmCallback}
     on:dismiss={() => {
-      navigate(-1);
+      history.back();
     }}
   >
     Opravdu si přejete smazat oblast "{field.name}"?
