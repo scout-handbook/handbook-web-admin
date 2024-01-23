@@ -52,8 +52,8 @@
       ])
         .dispatch()
         .then(() => {
-          mutate(
-            SWRMutateFnWrapper((cachedFields) => {
+          void mutate(
+            SWRMutateFnWrapper<Record<string, Field>>((cachedFields) => {
               cachedFields[payload.fieldId].name = name;
               cachedFields[payload.fieldId].description = description;
               cachedFields[payload.fieldId].image = image;

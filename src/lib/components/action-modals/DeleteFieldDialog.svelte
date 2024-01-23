@@ -33,8 +33,8 @@
     ])
       .dispatch()
       .then(() => {
-        mutate(
-          SWRMutateFnWrapper((cachedFields) => {
+        void mutate(
+          SWRMutateFnWrapper<Record<string, Field>>((cachedFields) => {
             delete cachedFields[payload.fieldId];
             return cachedFields;
           }),

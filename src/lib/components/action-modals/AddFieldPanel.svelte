@@ -41,7 +41,7 @@
     ])
       .dispatch()
       .then(() => {
-        revalidate({ force: true });
+        void revalidate({ force: true });
       });
   }
 </script>
