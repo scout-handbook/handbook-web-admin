@@ -1,10 +1,10 @@
 import { clear } from "sswr";
 
+import type { Action } from "$lib/actions/Action";
+import { deserializeAction, serializeAction } from "$lib/actions/Action";
 import type { SerializedAction } from "$lib/interfaces/SerializedAction";
 import { globalDialogMessage, globalLoadingIndicator } from "$lib/stores";
 import { request } from "$lib/utils/request";
-import type { Action } from "$lib/actions/Action";
-import { deserializeAction, serializeAction } from "$lib/actions/Action";
 
 export class ActionQueue {
   public actions: Array<Action>;

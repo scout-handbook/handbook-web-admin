@@ -1,16 +1,6 @@
 <script lang="ts" strictEvents>
   import { useNavigate } from "svelte-navigator";
 
-  import type { DeletedLesson } from "$lib/interfaces/DeletedLesson";
-  import type { LessonVersion } from "$lib/interfaces/LessonVersion";
-  import { apiUri } from "$lib/stores";
-  import { compileMarkdown } from "$lib/utils/compileMarkdown";
-  import { parseVersion } from "$lib/utils/parseVersion";
-  import {
-    authFailHandler,
-    reAuth,
-    request,
-  } from "$lib/utils/request";
   import Button from "$lib/components/Button.svelte";
   import Dialog from "$lib/components/Dialog.svelte";
   import DoubleSidePanel from "$lib/components/DoubleSidePanel.svelte";
@@ -18,6 +8,12 @@
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import Overlay from "$lib/components/Overlay.svelte";
   import SidePanel from "$lib/components/SidePanel.svelte";
+  import type { DeletedLesson } from "$lib/interfaces/DeletedLesson";
+  import type { LessonVersion } from "$lib/interfaces/LessonVersion";
+  import { apiUri } from "$lib/stores";
+  import { compileMarkdown } from "$lib/utils/compileMarkdown";
+  import { parseVersion } from "$lib/utils/parseVersion";
+  import { authFailHandler, reAuth, request } from "$lib/utils/request";
 
   const navigate = useNavigate();
 

@@ -2,11 +2,11 @@
   import { useSWR } from "sswr";
   import { derived } from "svelte/store";
 
+  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import type { Competence } from "$lib/interfaces/Competence";
   import type { Lesson } from "$lib/interfaces/Lesson";
   import { processCompetences, processLessons } from "$lib/swr";
   import { constructURL } from "$lib/utils/constructURL";
-  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
 
   export let silent = false;
   export let inline = false;

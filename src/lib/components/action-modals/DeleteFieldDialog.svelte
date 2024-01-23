@@ -4,14 +4,14 @@
 
   import { Action } from "$lib/actions/Action";
   import { ActionQueue } from "$lib/actions/ActionQueue";
+  import Dialog from "$lib/components/Dialog.svelte";
+  import DoneDialog from "$lib/components/DoneDialog.svelte";
   import type { Field } from "$lib/interfaces/Field";
   import { apiUri } from "$lib/stores";
   import type { SWRMutateFix } from "$lib/SWRMutateFix";
   import { SWRMutateFnWrapper } from "$lib/SWRMutateFix";
   import { get } from "$lib/utils/arrayUtils";
   import { constructURL } from "$lib/utils/constructURL";
-  import Dialog from "$lib/components/Dialog.svelte";
-  import DoneDialog from "$lib/components/DoneDialog.svelte";
 
   export let fields: Array<[string, Field]>;
   export let payload: { fieldId: string };

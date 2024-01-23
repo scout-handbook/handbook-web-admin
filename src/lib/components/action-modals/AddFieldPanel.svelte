@@ -4,10 +4,6 @@
 
   import { Action } from "$lib/actions/Action";
   import { ActionQueue } from "$lib/actions/ActionQueue";
-  import type { Field } from "$lib/interfaces/Field";
-  import { apiUri } from "$lib/stores";
-  import type { SWRMutateFix } from "$lib/SWRMutateFix";
-  import { constructURL } from "$lib/utils/constructURL";
   import Button from "$lib/components/Button.svelte";
   import DoneDialog from "$lib/components/DoneDialog.svelte";
   import DescriptionInput from "$lib/components/forms/DescriptionInput.svelte";
@@ -15,6 +11,10 @@
   import NameInput from "$lib/components/forms/NameInput.svelte";
   import SidePanel from "$lib/components/SidePanel.svelte";
   import SidePanelImageSelector from "$lib/components/SidePanelImageSelector.svelte";
+  import type { Field } from "$lib/interfaces/Field";
+  import { apiUri } from "$lib/stores";
+  import type { SWRMutateFix } from "$lib/SWRMutateFix";
+  import { constructURL } from "$lib/utils/constructURL";
 
   export let name = "Nová oblast";
   export let description = "Popis nové oblasti";

@@ -2,9 +2,6 @@
   import { useSWR } from "sswr";
   import { useLocation, useNavigate } from "svelte-navigator";
 
-  import type { Loginstate } from "$lib/interfaces/Loginstate";
-  import { siteName } from "$lib/stores";
-  import { constructURL } from "$lib/utils/constructURL";
   import AddFieldPanel from "$lib/components/action-modals/AddFieldPanel.svelte";
   import DeleteFieldDialog from "$lib/components/action-modals/DeleteFieldDialog.svelte";
   import DeleteLessonDialog from "$lib/components/action-modals/DeleteLessonDialog.svelte";
@@ -14,6 +11,9 @@
   import LessonViewLesson from "$lib/components/LessonViewLesson.svelte";
   import FieldProvider from "$lib/components/swr-wrappers/FieldProvider.svelte";
   import LessonProvider from "$lib/components/swr-wrappers/LessonProvider.svelte";
+  import type { Loginstate } from "$lib/interfaces/Loginstate";
+  import { siteName } from "$lib/stores";
+  import { constructURL } from "$lib/utils/constructURL";
 
   const navigate = useNavigate();
   const location = useLocation<{
