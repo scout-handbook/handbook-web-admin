@@ -1,48 +1,44 @@
 <script lang="ts" strictEvents>
-  import { page } from "$app/stores";
+  //import { page } from "$app/stores";
+  //import { base } from "$app/paths";
   import UserAccountBox from "$lib/components/UserAccountBox.svelte";
 
+  /*
   const {
     route: { id: routeId },
   } = $page;
+  */
 </script>
 
 <div class="wrapper">
   <UserAccountBox />
+  <!-- TODO
   <a
     class:active-tab={routeId === "/" || routeId === "/lessons"}
-    href="/lessons"
+    href="{base}/lessons"
   >
     Lekce
   </a>
   <a
     class:active-tab={routeId === "/competences"}
-    href="/competences"
+    href="{base}/competences"
   >
     Body
   </a>
-  <a
-    class:active-tab={routeId === "/images"}
-    href="/images"
-  >
+  <a class:active-tab={routeId === "/images"} href="{base}/images">
     Obrázky
   </a>
-  <a
-    class:active-tab={routeId === "/users"}
-    href="/users"
-  >
+  <a class:active-tab={routeId === "/users"} href="{base}/users">
     Uživatelé
   </a>
-  <a
-    class="groups"
-    class:active-tab={routeId === "/groups"}
-    href="/groups"
-  >
+  <a class="groups" class:active-tab={routeId === "/groups"} href="{base}/groups">
     Uživatelské skupiny
   </a>
+  -->
 </div>
 
 <style>
+  /*
   a {
     border-left: 1px solid var(--border-color);
     border-right: 1px solid var(--border-color);
@@ -75,6 +71,7 @@
     padding-bottom: 12px;
     padding-top: 16px;
   }
+  */
 
   .wrapper {
     background-color: var(--background-darker);
