@@ -1,5 +1,5 @@
-import type { APIResponse } from "./APIResponse";
-import type { RequestResponse } from "./RequestResponse";
+import type { APIResponse } from "$lib/interfaces/APIResponse";
+import type { RequestResponse } from "$lib/interfaces/RequestResponse";
 
 export interface ExceptionHandler {
   readonly [key: string]:
