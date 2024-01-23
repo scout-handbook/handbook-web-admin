@@ -34,7 +34,7 @@
     transition: transform ease 0.15s;
   }
 
-  img:hover {
+  div:hover {
     transform: scale(1);
   }
 </style>
