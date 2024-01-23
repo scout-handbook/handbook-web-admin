@@ -62,14 +62,14 @@
     ])
       .dispatch()
       .then(() => {
-        lessonMutate(
-          SWRMutateFnWrapper((cachedLessons) => {
+        void lessonMutate(
+          SWRMutateFnWrapper<Record<string, Lesson>>((cachedLessons) => {
             delete cachedLessons[payload.lessonId];
             return cachedLessons;
           }),
         );
-        fieldMutate(
-          SWRMutateFnWrapper((fields) => {
+        void fieldMutate(
+          SWRMutateFnWrapper<Record<string, Field>>((fields) => {
             for (const fieldId in fields) {
               if (fields[fieldId].lessons.includes(payload.lessonId)) {
                 fields[fieldId].lessons.splice(
