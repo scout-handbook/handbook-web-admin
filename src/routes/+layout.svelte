@@ -27,3 +27,5 @@
     {$globalDialogMessage}
   </Dialog>
 {/if}
+
+<slot />
