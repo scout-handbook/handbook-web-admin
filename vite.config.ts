@@ -21,6 +21,9 @@ if (
 */
 
 function getConfig(mode: string): Record<string, string> {
+  if (process.env.npm_lifecycle_script !== "vite") {
+    return {};
+  }
   const location = loadEnv(mode, process.cwd()).VITE_CONFIG;
   if (location === "undefined") {
     throw new Error("No config specified");
