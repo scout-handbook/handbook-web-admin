@@ -10,7 +10,7 @@
   import Pagination from "$lib/components/Pagination.svelte";
   import { constructURL } from "$lib/utils/constructURL";
 
-  const dispatch = createEventDispatcher<{ cancel: never; select: string }>();
+  const dispatch = createEventDispatcher<{ cancel: null; select: string }>();
 
   let page = 1;
   const perPage = 15;

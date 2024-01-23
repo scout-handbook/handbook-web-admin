@@ -13,7 +13,7 @@
   export let donePromise: Promise<void>;
 
   const navigate = useNavigate();
-  const dispatch = createEventDispatcher<{ confirm: never; dismiss: never }>();
+  const dispatch = createEventDispatcher<{ confirm: null; dismiss: null }>();
 </script>
 
 {#await donePromise}
