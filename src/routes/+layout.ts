@@ -1,1 +1,2 @@
-export const prerender = true;
+// TODO: Re-enable
+export const prerender = false;
