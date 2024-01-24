@@ -1,11 +1,12 @@
 import "$lib/common/HandbookMarkdown";
 
-import { Converter } from "showdown";
+import showdown from "showdown";
 import { filterXSS } from "xss";
 
 import type { WorkerPayload } from "$lib/common/WorkerPayload";
 import { xssOptions } from "$lib/common/xssOptions";
 
+const { Converter } = showdown;
 let converter: showdown.Converter | null = null;
 let worker: Worker | null = null;
 let workerRunning = false;

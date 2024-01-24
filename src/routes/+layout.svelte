@@ -5,6 +5,7 @@
   import "@fontsource/open-sans/700.css";
   import "@fontsource/open-sans/700-italic.css";
 
+  import { setupActionQueue } from "$lib/actions/ActionQueue";
   import Dialog from "$lib/components/Dialog.svelte";
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import Overlay from "$lib/components/Overlay.svelte";
@@ -13,13 +14,20 @@
     globalLoadingIndicator,
     siteName,
   } from "$lib/stores";
-  import { SWRSetup } from "$lib/swr";
+  import { setupSWR } from "$lib/swr";
+  import { checkLogin } from "$lib/utils/checkLogin";
+  import { compileMarkdownSetup } from "$lib/utils/compileMarkdown";
+  import { loginRefreshSetup } from "$lib/utils/loginRefresh";
 
   interface $$Slots {
     default: Record<string, never>;
   }
 
-  SWRSetup();
+  checkLogin();
+  setupSWR();
+  compileMarkdownSetup();
+  loginRefreshSetup();
+  setupActionQueue();
 </script>
 
 <svelte:head>

@@ -1,7 +1,7 @@
 import { get } from "svelte/store";
 
-import { afterReAuthAction } from "../stores";
-import { reAuth, request } from "./request";
+import { afterReAuthAction } from "$lib/stores";
+import { reAuth, request } from "$lib/utils/request";
 
 function refreshLogin(): void {
   void request(
