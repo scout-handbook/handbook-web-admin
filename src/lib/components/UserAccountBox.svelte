@@ -1,7 +1,6 @@
 <script lang="ts" strictEvents>
   import { useSWR } from "sswr";
 
-  import { base } from "$app/paths";
   import type { Loginstate } from "$lib/interfaces/Loginstate";
   import { adminUri, apiUri, frontendUri } from "$lib/stores";
   import { constructURL } from "$lib/utils/constructURL";
@@ -30,7 +29,7 @@
     >
       Odhlásit
     </a>
-    <a class="frontend-link" href="{base}/">Zpět na web</a>
+    <a class="frontend-link" href="/">Zpět na web</a>
   </div>
 </div>
 
