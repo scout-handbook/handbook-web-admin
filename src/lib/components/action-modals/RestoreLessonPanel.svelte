@@ -1,5 +1,6 @@
 <script lang="ts" strictEvents>
   import { goto } from "$app/navigation";
+  import { base } from "$app/paths";
   import Button from "$lib/components/Button.svelte";
   import Dialog from "$lib/components/Dialog.svelte";
   import DoubleSidePanel from "$lib/components/DoubleSidePanel.svelte";
@@ -76,7 +77,8 @@
 
   function selectVersionCallback(): void {
     void goto(
-      "/lessons/" +
+      base +
+        "/lessons/" +
         selectedLesson +
         "/versions/" +
         selectedVersion!.toString() +

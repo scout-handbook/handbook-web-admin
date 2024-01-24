@@ -2,6 +2,7 @@
   import { useSWR } from "sswr";
 
   import { goto } from "$app/navigation";
+  import { base } from "$app/paths";
   import { page } from "$app/stores";
   import AddFieldPanel from "$lib/components/action-modals/AddFieldPanel.svelte";
   import DeleteFieldDialog from "$lib/components/action-modals/DeleteFieldDialog.svelte";
@@ -50,7 +51,7 @@
     green
     icon="plus"
     on:click={() => {
-      void goto("/lessons", { state: { action: "add-field" } });
+      void goto(base + "/lessons", { state: { action: "add-field" } });
     }}
   >
     Přidat oblast
@@ -60,7 +61,7 @@
   green
   icon="plus"
   on:click={() => {
-    void goto("/lessons/add");
+    void goto(base + "/lessons/add");
   }}
 >
   Přidat lekci
@@ -69,7 +70,7 @@
   <Button
     icon="history"
     on:click={() => {
-      void goto("/lessons", { state: { action: "restore-lesson" } });
+      void goto(base + "/lessons", { state: { action: "restore-lesson" } });
     }}
   >
     Smazané lekce
@@ -88,7 +89,7 @@
           cyan
           icon="pencil"
           on:click={() => {
-            void goto("/lessons", {
+            void goto(base + "/lessons", {
               state: { action: "change-field", actionPayload: { fieldId } },
             });
           }}
@@ -99,7 +100,7 @@
           icon="trash-empty"
           red
           on:click={() => {
-            void goto("/lessons", {
+            void goto(base + "/lessons", {
               state: { action: "delete-field", actionPayload: { fieldId } },
             });
           }}
@@ -111,7 +112,7 @@
         green
         icon="plus"
         on:click={() => {
-          void goto("/lessons/add?field=" + fieldId);
+          void goto(base + "/lessons/add?field=" + fieldId);
         }}
       >
         Přidat lekci

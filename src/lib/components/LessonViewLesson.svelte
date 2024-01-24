@@ -2,6 +2,7 @@
   import { useSWR } from "sswr";
 
   import { goto } from "$app/navigation";
+  import { base } from "$app/paths";
   import Button from "$lib/components/Button.svelte";
   import CompetenceProvider from "$lib/components/swr-wrappers/CompetenceProvider.svelte";
   import type { Lesson } from "$lib/interfaces/Lesson";
@@ -24,7 +25,7 @@
     cyan
     icon="pencil"
     on:click={() => {
-      void goto("/lessons/" + id + "/edit");
+      void goto(base + "/lessons/" + id + "/edit");
     }}
   >
     Upravit
@@ -34,7 +35,7 @@
       icon="trash-empty"
       red
       on:click={() => {
-        void goto("/lessons", {
+        void goto(base + "/lessons", {
           state: { action: "delete-lesson", actionPayload: { lessonId: id } },
         });
       }}
