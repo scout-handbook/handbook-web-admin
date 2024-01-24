@@ -7,6 +7,9 @@
     globalLoadingIndicator,
     siteName,
   } from "$lib/stores";
+  import { SWRSetup } from "$lib/swr";
+
+  SWRSetup();
 </script>
 
 <svelte:head>
