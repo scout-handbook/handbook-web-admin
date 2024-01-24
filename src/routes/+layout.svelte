@@ -9,6 +9,10 @@
   } from "$lib/stores";
   import { SWRSetup } from "$lib/swr";
 
+  interface $$Slots {
+    default: Record<string, never>;
+  }
+
   SWRSetup();
 </script>
 
