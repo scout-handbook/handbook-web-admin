@@ -1,18 +1,14 @@
 <script lang="ts" strictEvents>
-  import { useNavigate } from "svelte-navigator";
-
-  import { Action } from "../../../../ts/admin/actions/Action";
-  import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
-  import { apiUri } from "../../../../ts/admin/stores";
-  import { queryClient } from "../../../../ts/admin/utils/queryClient";
-  import Button from "../Button.svelte";
-  import DoneDialog from "../DoneDialog.svelte";
-  import DescriptionInput from "../forms/DescriptionInput.svelte";
-  import NameInput from "../forms/NameInput.svelte";
-  import NumberNameInput from "../forms/NumberNameInput.svelte";
-  import SidePanel from "../SidePanel.svelte";
-
-  const navigate = useNavigate();
+  import { Action } from "$lib/actions/Action";
+  import { ActionQueue } from "$lib/actions/ActionQueue";
+  import Button from "$lib/components/Button.svelte";
+  import DoneDialog from "$lib/components/DoneDialog.svelte";
+  import DescriptionInput from "$lib/components/forms/DescriptionInput.svelte";
+  import NameInput from "$lib/components/forms/NameInput.svelte";
+  import NumberNameInput from "$lib/components/forms/NumberNameInput.svelte";
+  import SidePanel from "$lib/components/SidePanel.svelte";
+  import { apiUri } from "$lib/stores";
+  import { queryClient } from "$lib/utils/queryClient";
 
   let number = "0";
   let name = "Nový bod";
@@ -44,7 +40,7 @@
       icon="cancel"
       yellow
       on:click={() => {
-        navigate(-1);
+        history.back();
       }}
     >
       Zrušit

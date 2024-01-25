@@ -1,18 +1,15 @@
 <script lang="ts" strictEvents>
-  //import { base } from "$app/paths";
-  //import { page } from "$app/stores";
+  import { base } from "$app/paths";
+  import { page } from "$app/stores";
   import UserAccountBox from "$lib/components/UserAccountBox.svelte";
 
-  /*
   const {
     route: { id: routeId },
   } = $page;
-  */
 </script>
 
 <div class="wrapper">
   <UserAccountBox />
-  <!-- TODO
   <a
     class:active-tab={routeId === "/" || routeId === "/lessons"}
     href="{base}/lessons"
@@ -22,6 +19,7 @@
   <a class:active-tab={routeId === "/competences"} href="{base}/competences">
     Body
   </a>
+  <!-- TODO
   <a class:active-tab={routeId === "/images"} href="{base}/images">Obrázky</a>
   <a class:active-tab={routeId === "/users"} href="{base}/users">Uživatelé</a>
   <a
@@ -35,7 +33,6 @@
 </div>
 
 <style>
-  /*
   a {
     border-left: 1px solid var(--border-color);
     border-right: 1px solid var(--border-color);
@@ -65,6 +62,7 @@
     color: var(--accent-color);
   }
 
+  /*
   .groups {
     padding-bottom: 12px;
     padding-top: 16px;

@@ -1,6 +1,12 @@
 export type PageStateFix =
   | {
-      action: "add-field" | "restore-lesson";
+      action: "add-competence" | "add-field" | "restore-lesson";
+    }
+  | {
+      action: "change-competence" | "delete-competence";
+      actionPayload: {
+        competenceId: string;
+      };
     }
   | {
       action: "change-field" | "delete-field";
