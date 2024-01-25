@@ -10,7 +10,8 @@ import { reAuth, request } from "$lib/utils/request";
 
 export function setupSWR(): void {
   createDefaultSWR({
-    dedupingInterval: 60000,
+    // TODO: This breaks SWR, report and re-enable
+    //dedupingInterval: 60000,
     fetcher: async (url: string): Promise<RequestResponse> =>
       request(
         url,
