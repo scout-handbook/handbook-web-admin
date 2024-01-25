@@ -1,40 +1,36 @@
 <script lang="ts" strictEvents>
   import { useSWR } from "sswr";
-  import { useLocation, useNavigate } from "svelte-navigator";
 
-  import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
-  import { siteName } from "../../../ts/admin/stores";
-  import { constructURL } from "../../../ts/admin/utils/constructURL";
-  import AddCompetencePanel from "../components/action-modals/AddCompetencePanel.svelte";
-  import DeleteCompetenceDialog from "../components/action-modals/DeleteCompetenceDialog.svelte";
-  import EditCompetencePanel from "../components/action-modals/EditCompetencePanel.svelte";
-  import Button from "../components/Button.svelte";
-  import CompetenceProvider from "../components/swr-wrappers/CompetenceProvider.svelte";
+  import { goto } from "$app/navigation";
+  import { base } from "$app/paths";
+  import { page } from "$app/stores";
+  import AddCompetencePanel from "$lib/components/action-modals/AddCompetencePanel.svelte";
+  import DeleteCompetenceDialog from "$lib/components/action-modals/DeleteCompetenceDialog.svelte";
+  import EditCompetencePanel from "$lib/components/action-modals/EditCompetencePanel.svelte";
+  import Button from "$lib/components/Button.svelte";
+  import CompetenceProvider from "$lib/components/swr-wrappers/CompetenceProvider.svelte";
+  import type { Loginstate } from "$lib/interfaces/Loginstate";
+  import { siteName } from "$lib/stores";
+  import { constructURL } from "$lib/utils/constructURL";
 
-  const location = useLocation<{
-    action: string;
-    actionPayload: { competenceId: string };
-  }>();
-  const navigate = useNavigate();
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- The typings for svelte-navigator incorrectly don't include undefined for $location.state
-  $: action = $location.state?.action;
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- The typings for svelte-navigator incorrectly don't include undefined for $location.state
-  $: actionPayload = $location.state?.actionPayload;
+  import type { PageStateFix } from "../../app";
+
+  $: state = $page.state as PageStateFix;
 
   const { data: loginstate } = useSWR<Loginstate>(constructURL("v1.0/account"));
   $: adminOrSuperuser =
     $loginstate?.role === "administrator" || $loginstate?.role === "superuser";
 </script>
 
-{#if action === "add-competence"}
+{#if state.action === "add-competence"}
   <AddCompetencePanel />
-{:else if action === "change-competence"}
+{:else if state.action === "change-competence"}
   <CompetenceProvider silent let:competences>
-    <EditCompetencePanel {competences} payload={actionPayload} />
+    <EditCompetencePanel {competences} payload={state.actionPayload} />
   </CompetenceProvider>
-{:else if action === "delete-competence"}
+{:else if state.action === "delete-competence"}
   <CompetenceProvider silent let:competences>
-    <DeleteCompetenceDialog {competences} payload={actionPayload} />
+    <DeleteCompetenceDialog {competences} payload={state.actionPayload} />
   </CompetenceProvider>
 {/if}
 
@@ -44,7 +40,7 @@
     green
     icon="plus"
     on:click={() => {
-      navigate("/competences", { state: { action: "add-competence" } });
+      void goto(base + "/competences", { state: { action: "add-competence" } });
     }}
   >
     Přidat
@@ -63,7 +59,7 @@
           cyan
           icon="pencil"
           on:click={() => {
-            navigate("/competences", {
+            void goto(base + "/competences", {
               state: {
                 action: "change-competence",
                 actionPayload: { competenceId: id },
@@ -77,7 +73,7 @@
           icon="trash-empty"
           red
           on:click={() => {
-            navigate("/competences", {
+            void goto(base + "/competences", {
               state: {
                 action: "delete-competence",
                 actionPayload: { competenceId: id },
