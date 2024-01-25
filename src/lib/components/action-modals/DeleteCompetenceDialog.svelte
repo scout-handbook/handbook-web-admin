@@ -1,21 +1,17 @@
 <script lang="ts" strictEvents>
+  import type { Competence } from "$lib/interfaces/Competence";
+  import type { Lesson } from "$lib/interfaces/Lesson";
+
+  import { Action } from "$lib/actions/Action";
+  import { ActionQueue } from "$lib/actions/ActionQueue";
+  import Dialog from "$lib/components/Dialog.svelte";
+  import DoneDialog from "$lib/components/DoneDialog.svelte";
+  import { apiUri } from "$lib/stores";
+  import { queryClient } from "$lib/utils/queryClient";
   import { createMutation } from "@tanstack/svelte-query";
-  import { useNavigate } from "svelte-navigator";
-
-  import type { Competence } from "../../../../ts/admin/interfaces/Competence";
-  import type { Lesson } from "../../../../ts/admin/interfaces/Lesson";
-
-  import { Action } from "../../../../ts/admin/actions/Action";
-  import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
-  import { apiUri } from "../../../../ts/admin/stores";
-  import { queryClient } from "../../../../ts/admin/utils/queryClient";
-  import Dialog from "../Dialog.svelte";
-  import DoneDialog from "../DoneDialog.svelte";
 
   export let competenceId: string;
   export let competence: Competence;
-
-  const navigate = useNavigate();
 
   let donePromise: Promise<void> | null = null;
 
@@ -82,7 +78,7 @@
     dismissButtonText="Ne"
     on:confirm={confirmCallback}
     on:dismiss={() => {
-      navigate(-1);
+      history.back();
     }}
   >
     Opravdu si přejete smazat bod {competence.number}: "{competence.name}"?

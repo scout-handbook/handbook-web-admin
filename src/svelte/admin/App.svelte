@@ -5,7 +5,6 @@
   import FieldProvider from "./components/swr-wrappers/FieldProvider.svelte";
   import TopBar from "./components/TopBar.svelte";
   import AddLessonView from "./views/AddLessonView.svelte";
-  import CompetenceView from "./views/CompetenceView.svelte";
   import EditLessonView from "./views/EditLessonView.svelte";
   import GroupView from "./views/GroupView.svelte";
   import ImageView from "./views/ImageView.svelte";
@@ -27,14 +26,6 @@
     <RestoreLessonView lessonID={params["id"]} version={params["version"]} />
   </Route>
 
-  <Route path="/competences">
-    <TopBar />
-    <div class="main-page-container">
-      <div class="main-page">
-        <CompetenceView />
-      </div>
-    </div>
-  </Route>
   <Route path="/images">
     <TopBar />
     <div class="main-page-container">
