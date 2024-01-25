@@ -1,26 +1,23 @@
 <script lang="ts" strictEvents>
   import { useSWR } from "sswr";
-  import { useNavigate } from "svelte-navigator";
 
-  import { Action } from "../../../../ts/admin/actions/Action";
-  import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
-  import type { Competence } from "../../../../ts/admin/interfaces/Competence";
-  import { apiUri } from "../../../../ts/admin/stores";
-  import type { SWRMutateFix } from "../../../../ts/admin/SWRMutateFix";
-  import { SWRMutateFnWrapper } from "../../../../ts/admin/SWRMutateFix";
-  import { get } from "../../../../ts/admin/utils/arrayUtils";
-  import { constructURL } from "../../../../ts/admin/utils/constructURL";
-  import Button from "../Button.svelte";
-  import DoneDialog from "../DoneDialog.svelte";
-  import DescriptionInput from "../forms/DescriptionInput.svelte";
-  import NameInput from "../forms/NameInput.svelte";
-  import NumberNameInput from "../forms/NumberNameInput.svelte";
-  import SidePanel from "../SidePanel.svelte";
+  import { Action } from "$lib/actions/Action";
+  import { ActionQueue } from "$lib/actions/ActionQueue";
+  import Button from "$lib/components/Button.svelte";
+  import DoneDialog from "$lib/components/DoneDialog.svelte";
+  import DescriptionInput from "$lib/components/forms/DescriptionInput.svelte";
+  import NameInput from "$lib/components/forms/NameInput.svelte";
+  import NumberNameInput from "$lib/components/forms/NumberNameInput.svelte";
+  import SidePanel from "$lib/components/SidePanel.svelte";
+  import type { Competence } from "$lib/interfaces/Competence";
+  import { apiUri } from "$lib/stores";
+  import type { SWRMutateFix } from "$lib/SWRMutateFix";
+  import { SWRMutateFnWrapper } from "$lib/SWRMutateFix";
+  import { get } from "$lib/utils/arrayUtils";
+  import { constructURL } from "$lib/utils/constructURL";
 
   export let competences: Array<[string, Competence]>;
   export let payload: { competenceId: string };
-
-  const navigate = useNavigate();
 
   const competence = get(competences, payload.competenceId)!;
   let { number, name, description } = competence;
@@ -50,8 +47,8 @@
       ])
         .dispatch()
         .then(() => {
-          mutate(
-            SWRMutateFnWrapper((cachedCompetences) => {
+          void mutate(
+            SWRMutateFnWrapper<Record<string, Competence>>((cachedCompetences) => {
               cachedCompetences[payload.competenceId].number = number;
               cachedCompetences[payload.competenceId].name = name;
               cachedCompetences[payload.competenceId].description = description;
@@ -71,7 +68,7 @@
       icon="cancel"
       yellow
       on:click={() => {
-        navigate(-1);
+        history.back();
       }}
     >
       Zrušit

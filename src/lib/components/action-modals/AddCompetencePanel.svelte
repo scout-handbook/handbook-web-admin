@@ -1,21 +1,18 @@
 <script lang="ts" strictEvents>
   import { useSWR } from "sswr";
-  import { useNavigate } from "svelte-navigator";
 
-  import { Action } from "../../../../ts/admin/actions/Action";
-  import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
-  import type { Competence } from "../../../../ts/admin/interfaces/Competence";
-  import { apiUri } from "../../../../ts/admin/stores";
-  import type { SWRMutateFix } from "../../../../ts/admin/SWRMutateFix";
-  import { constructURL } from "../../../../ts/admin/utils/constructURL";
-  import Button from "../Button.svelte";
-  import DoneDialog from "../DoneDialog.svelte";
-  import DescriptionInput from "../forms/DescriptionInput.svelte";
-  import NameInput from "../forms/NameInput.svelte";
-  import NumberNameInput from "../forms/NumberNameInput.svelte";
-  import SidePanel from "../SidePanel.svelte";
-
-  const navigate = useNavigate();
+  import { Action } from "$lib/actions/Action";
+  import { ActionQueue } from "$lib/actions/ActionQueue";
+  import Button from "$lib/components/Button.svelte";
+  import DoneDialog from "$lib/components/DoneDialog.svelte";
+  import DescriptionInput from "$lib/components/forms/DescriptionInput.svelte";
+  import NameInput from "$lib/components/forms/NameInput.svelte";
+  import NumberNameInput from "$lib/components/forms/NumberNameInput.svelte";
+  import SidePanel from "$lib/components/SidePanel.svelte";
+  import type { Competence } from "$lib/interfaces/Competence";
+  import { apiUri } from "$lib/stores";
+  import type { SWRMutateFix } from "$lib/SWRMutateFix";
+  import { constructURL } from "$lib/utils/constructURL";
 
   let number = "0";
   let name = "Nový bod";
@@ -35,7 +32,7 @@
     ])
       .dispatch()
       .then(() => {
-        revalidate({ force: true });
+        void revalidate({ force: true });
       });
   }
 </script>
@@ -48,7 +45,7 @@
       icon="cancel"
       yellow
       on:click={() => {
-        navigate(-1);
+        history.back();
       }}
     >
       Zrušit
