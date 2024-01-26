@@ -10,6 +10,14 @@ export type PageStateFix =
         | "restore-lesson";
     }
   | {
+      action:
+        | "change-lesson-competences"
+        | "change-lesson-field"
+        | "change-lesson-groups"
+        | "restore-version";
+      view?: "lesson-settings";
+    }
+  | {
       action: "change-competence" | "delete-competence";
       actionPayload: {
         competenceId: string;

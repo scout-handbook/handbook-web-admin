@@ -1,13 +1,9 @@
 <script lang="ts" strictEvents>
-  import { useNavigate } from "svelte-navigator";
-
-  import Button from "../Button.svelte";
-  import CheckboxGroup from "../forms/CheckboxGroup.svelte";
-  import CompetenceProvider from "../swr-wrappers/CompetenceProvider.svelte";
+  import Button from "$lib/components/Button.svelte";
+  import CheckboxGroup from "$lib/components/forms/CheckboxGroup.svelte";
+  import CompetenceProvider from "$lib/components/swr-wrappers/CompetenceProvider.svelte";
 
   export let competences: Array<string>;
-
-  const navigate = useNavigate();
 
   const initialCompetences = competences;
 </script>
@@ -17,7 +13,7 @@
   yellow
   on:click={() => {
     competences = initialCompetences;
-    navigate(-1);
+    history.back();
   }}
 >
   Zrušit
@@ -26,7 +22,7 @@
   green
   icon="floppy"
   on:click={() => {
-    navigate(-1);
+    history.back();
   }}>Uložit</Button
 >
 <h1>Změnit body</h1>
