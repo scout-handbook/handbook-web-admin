@@ -16,18 +16,11 @@
   >
     Lekce
   </a>
-  <a
-    class:active-tab={routeId === "/competences"}
-    href="{base}/competences"
-  >
+  <a class:active-tab={routeId === "/competences"} href="{base}/competences">
     Body
   </a>
-  <a class:active-tab={routeId === "/images"} href="{base}/images">
-    Obrázky
-  </a>
-  <a class:active-tab={routeId === "/users"} href="{base}/users">
-    Uživatelé
-  </a>
+  <a class:active-tab={routeId === "/images"} href="{base}/images">Obrázky</a>
+  <a class:active-tab={routeId === "/users"} href="{base}/users">Uživatelé</a>
   <a class="groups" class:active-tab={routeId === "/groups"} href="{base}/groups">
     Uživatelské skupiny
   </a>
@@ -47,6 +40,7 @@
     margin-left: -5px;
     padding: 15px 0 13px 0;
     text-align: center;
+    text-decoration: none;
     transition:
       color ease 0.15s,
       border-color ease 0.15s,
