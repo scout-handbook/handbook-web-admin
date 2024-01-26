@@ -1,22 +1,18 @@
 <script lang="ts" strictEvents>
+  import type { Loginstate } from "$lib/interfaces/Loginstate";
+  import type { User } from "$lib/interfaces/User";
+
+  import { Action } from "$lib/actions/Action";
+  import { ActionQueue } from "$lib/actions/ActionQueue";
+  import Button from "$lib/components/Button.svelte";
+  import DoneDialog from "$lib/components/DoneDialog.svelte";
+  import RadioGroup from "$lib/components/forms/RadioGroup.svelte";
+  import SidePanel from "$lib/components/SidePanel.svelte";
+  import { apiUri } from "$lib/stores";
+  import { queryClient } from "$lib/utils/queryClient";
   import { createQuery } from "@tanstack/svelte-query";
-  import { useNavigate } from "svelte-navigator";
-
-  import type { Loginstate } from "../../../../ts/admin/interfaces/Loginstate";
-  import type { User } from "../../../../ts/admin/interfaces/User";
-
-  import { Action } from "../../../../ts/admin/actions/Action";
-  import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
-  import { apiUri } from "../../../../ts/admin/stores";
-  import { queryClient } from "../../../../ts/admin/utils/queryClient";
-  import Button from "../Button.svelte";
-  import DoneDialog from "../DoneDialog.svelte";
-  import RadioGroup from "../forms/RadioGroup.svelte";
-  import SidePanel from "../SidePanel.svelte";
 
   export let payload: { user: User };
-
-  const navigate = useNavigate();
 
   const accountQuery = createQuery<Loginstate>({
     queryKey: ["v1.0", "account"],
@@ -69,7 +65,7 @@
       icon="cancel"
       yellow
       on:click={() => {
-        navigate(-1);
+        history.back();
       }}
     >
       Zrušit

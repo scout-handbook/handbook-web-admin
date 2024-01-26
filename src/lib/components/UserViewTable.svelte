@@ -1,16 +1,13 @@
 <script lang="ts" strictEvents>
+  import type { Loginstate } from "$lib/interfaces/Loginstate";
+  import type { User } from "$lib/interfaces/User";
+
+  import { pushState } from "$app/navigation";
+  import Button from "$lib/components/Button.svelte";
+  import GroupProvider from "$lib/components/swr-wrappers/GroupProvider.svelte";
   import { createQuery } from "@tanstack/svelte-query";
-  import { useNavigate } from "svelte-navigator";
-
-  import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
-  import type { User } from "../../../ts/admin/interfaces/User";
-
-  import Button from "../components/Button.svelte";
-  import GroupProvider from "../components/swr-wrappers/GroupProvider.svelte";
 
   export let users: Array<User>;
-
-  const navigate = useNavigate();
 
   const accountQuery = createQuery<Loginstate>({
     queryKey: ["v1.0", "account"],
@@ -45,11 +42,9 @@
             cyan
             icon="pencil"
             on:click={() => {
-              navigate("/users", {
-                state: {
-                  action: "change-user-role",
-                  actionPayload: { user },
-                },
+              pushState("", {
+                action: "change-user-role",
+                actionPayload: { user },
               });
             }}
           >
@@ -72,11 +67,9 @@
           cyan
           icon="pencil"
           on:click={() => {
-            navigate("/users", {
-              state: {
-                action: "change-user-groups",
-                actionPayload: { user },
-              },
+            pushState("", {
+              action: "change-user-groups",
+              actionPayload: { user },
             });
           }}
         >
