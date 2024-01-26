@@ -1,3 +1,5 @@
+import type { User } from "$lib/interfaces/User";
+
 export type PageStateFix =
   | {
       action: "add-competence" | "add-field" | "add-image" | "restore-lesson";
@@ -12,6 +14,12 @@ export type PageStateFix =
       action: "change-field" | "delete-field";
       actionPayload: {
         fieldId: string;
+      };
+    }
+  | {
+      action: "change-user-groups" | "change-user-role";
+      actionPayload: {
+        user: User;
       };
     }
   | {

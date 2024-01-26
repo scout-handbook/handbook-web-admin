@@ -1,23 +1,19 @@
 <script lang="ts" strictEvents>
-  import { useNavigate } from "svelte-navigator";
+  import type { Group } from "$lib/interfaces/Group";
+  import type { User } from "$lib/interfaces/User";
 
-  import type { Group } from "../../../../ts/admin/interfaces/Group";
-  import type { User } from "../../../../ts/admin/interfaces/User";
-
-  import { Action } from "../../../../ts/admin/actions/Action";
-  import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
-  import { apiUri } from "../../../../ts/admin/stores";
-  import { filter, get } from "../../../../ts/admin/utils/arrayUtils";
-  import { queryClient } from "../../../../ts/admin/utils/queryClient";
-  import Button from "../Button.svelte";
-  import DoneDialog from "../DoneDialog.svelte";
-  import CheckboxGroup from "../forms/CheckboxGroup.svelte";
-  import SidePanel from "../SidePanel.svelte";
+  import { Action } from "$lib/actions/Action";
+  import { ActionQueue } from "$lib/actions/ActionQueue";
+  import Button from "$lib/components/Button.svelte";
+  import DoneDialog from "$lib/components/DoneDialog.svelte";
+  import CheckboxGroup from "$lib/components/forms/CheckboxGroup.svelte";
+  import SidePanel from "$lib/components/SidePanel.svelte";
+  import { apiUri } from "$lib/stores";
+  import { filter, get } from "$lib/utils/arrayUtils";
+  import { queryClient } from "$lib/utils/queryClient";
 
   export let groups: Array<[string, Group]>;
   export let payload: { user: User };
-
-  const navigate = useNavigate();
 
   let selectedGroups = payload.user.groups;
   let donePromise: Promise<void> | null = null;
@@ -63,7 +59,7 @@
       icon="cancel"
       yellow
       on:click={() => {
-        navigate(-1);
+        history.back();
       }}
     >
       Zrušit

@@ -1,14 +1,13 @@
 <script lang="ts" strictEvents>
+  import type { Loginstate } from "$lib/interfaces/Loginstate";
+  import type { Role } from "$lib/interfaces/Role";
+
+  import Button from "$lib/components/Button.svelte";
+  import Select from "$lib/components/forms/Select.svelte";
+  import GroupProvider from "$lib/components/swr-wrappers/GroupProvider.svelte";
+  import { filter, map } from "$lib/utils/arrayUtils";
   import { createQuery } from "@tanstack/svelte-query";
   import { createEventDispatcher } from "svelte";
-
-  import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
-  import type { Role } from "../../../ts/admin/interfaces/Role";
-
-  import { filter, map } from "../../../ts/admin/utils/arrayUtils";
-  import Button from "../components/Button.svelte";
-  import GroupProvider from "../components/swr-wrappers/GroupProvider.svelte";
-  import Select from "./forms/Select.svelte";
 
   export let group: string;
   export let role: "all" | Role;
