@@ -44,6 +44,14 @@ export type PageStateFix =
         | "add-group"
         | "add-image"
         | "restore-lesson";
+    }
+  | {
+      action:
+        | "change-lesson-competences"
+        | "change-lesson-field"
+        | "change-lesson-groups"
+        | "restore-version";
+      view?: "lesson-settings";
     };
 
 declare global {
