@@ -1,27 +1,23 @@
 <script lang="ts" strictEvents>
   import { useSWR } from "sswr";
-  import { useLocation, useNavigate } from "svelte-navigator";
 
-  import { apiUri, siteName } from "../../../ts/admin/stores";
-  import { constructURL } from "../../../ts/admin/utils/constructURL";
-  import AddImagePanel from "../components/action-modals/AddImagePanel.svelte";
-  import DeleteImageDialog from "../components/action-modals/DeleteImageDialog.svelte";
-  import Button from "../components/Button.svelte";
-  import ImageGridCell from "../components/ImageGridCell.svelte";
-  import ImageThumbnail from "../components/ImageThumbnail.svelte";
-  import LoadingIndicator from "../components/LoadingIndicator.svelte";
-  import Overlay from "../components/Overlay.svelte";
-  import Pagination from "../components/Pagination.svelte";
+  import { goto } from "$app/navigation";
+  import { base } from "$app/paths";
+  import { page as kitPage } from "$app/stores";
+  import AddImagePanel from "$lib/components/action-modals/AddImagePanel.svelte";
+  import DeleteImageDialog from "$lib/components/action-modals/DeleteImageDialog.svelte";
+  import Button from "$lib/components/Button.svelte";
+  import ImageGridCell from "$lib/components/ImageGridCell.svelte";
+  import ImageThumbnail from "$lib/components/ImageThumbnail.svelte";
+  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
+  import Overlay from "$lib/components/Overlay.svelte";
+  import Pagination from "$lib/components/Pagination.svelte";
+  import { apiUri, siteName } from "$lib/stores";
+  import { constructURL } from "$lib/utils/constructURL";
 
-  const location = useLocation<{
-    action: string;
-    actionPayload: { imageId: string };
-  }>();
-  const navigate = useNavigate();
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- The typings for svelte-navigator incorrectly don't include undefined for $location.state
-  $: action = $location.state?.action;
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- The typings for svelte-navigator incorrectly don't include undefined for $location.state
-  $: actionPayload = $location.state?.actionPayload;
+  import type { PageStateFix } from "../../app";
+
+  $: state = $kitPage.state as PageStateFix;
 
   let openImage: string | null = null;
   let page = 1;
@@ -34,10 +30,10 @@
   $: currentPageList = $imageList?.slice(pageStart, pageEnd);
 </script>
 
-{#if action === "add-image"}
+{#if state.action === "add-image"}
   <AddImagePanel />
-{:else if action === "delete-image"}
-  <DeleteImageDialog payload={actionPayload} />
+{:else if state.action === "delete-image"}
+  <DeleteImageDialog payload={state.actionPayload} />
 {/if}
 
 {#if openImage !== null}
@@ -47,7 +43,6 @@
     }}
   />
   <button
-    class="image-preview"
     type="button"
     on:click={() => {
       openImage = null;
@@ -64,7 +59,7 @@
   green
   icon="plus"
   on:click={() => {
-    navigate("/images", { state: { action: "add-image" } });
+    void goto(base + "/images", { state: { action: "add-image" } });
   }}
 >
   Nahrát
@@ -86,7 +81,7 @@
           icon="trash-empty"
           red
           on:click={() => {
-            navigate("/images", {
+            void goto(base + "/images", {
               state: {
                 action: "delete-image",
                 actionPayload: { imageId: image },
@@ -114,7 +109,7 @@
     right: 5%;
   }
 
-  .image-preview {
+  button {
     border: none;
     cursor: pointer;
     bottom: 0;

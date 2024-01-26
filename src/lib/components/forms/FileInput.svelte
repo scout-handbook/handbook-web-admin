@@ -1,5 +1,5 @@
 <script lang="ts" strictEvents>
-  import Button from "../Button.svelte";
+  import Button from "$lib/components/Button.svelte";
 
   export let files: FileList | undefined;
 

@@ -1,19 +1,16 @@
 <script lang="ts" strictEvents>
   import { useSWR } from "sswr";
-  import { useNavigate } from "svelte-navigator";
 
-  import { apiUri } from "../../../../ts/admin/stores";
-  import type { SWRMutateFix } from "../../../../ts/admin/SWRMutateFix";
-  import { constructURL } from "../../../../ts/admin/utils/constructURL";
-  import { authFailHandler, request } from "../../../../ts/admin/utils/request";
-  import Button from "../Button.svelte";
-  import Dialog from "../Dialog.svelte";
-  import FileInput from "../forms/FileInput.svelte";
-  import LoadingIndicator from "../LoadingIndicator.svelte";
-  import Overlay from "../Overlay.svelte";
-  import SidePanel from "../SidePanel.svelte";
-
-  const navigate = useNavigate();
+  import Button from "$lib/components/Button.svelte";
+  import Dialog from "$lib/components/Dialog.svelte";
+  import FileInput from "$lib/components/forms/FileInput.svelte";
+  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
+  import Overlay from "$lib/components/Overlay.svelte";
+  import SidePanel from "$lib/components/SidePanel.svelte";
+  import { apiUri } from "$lib/stores";
+  import type { SWRMutateFix } from "$lib/SWRMutateFix";
+  import { constructURL } from "$lib/utils/constructURL";
+  import { authFailHandler, request } from "$lib/utils/request";
 
   let stage: "done" | "error" | "select" | "upload" = "select";
   let files: FileList | undefined;
@@ -39,7 +36,7 @@
       formData,
       authFailHandler,
     ).then(() => {
-      revalidate({ force: true });
+      void revalidate({ force: true });
       stage = "done";
     });
   }
@@ -51,7 +48,7 @@
       icon="cancel"
       yellow
       on:click={() => {
-        navigate(-1);
+        history.back();
       }}
     >
       Zrušit
@@ -69,7 +66,7 @@
   <Dialog
     confirmButtonText="OK"
     on:confirm={() => {
-      navigate(-1);
+      history.back();
     }}
   >
     Akce byla úspěšná.
@@ -78,7 +75,7 @@
   <Dialog
     confirmButtonText="OK"
     on:confirm={() => {
-      navigate(-1);
+      history.back();
     }}
   >
     Tento prohlížeč nepodporuje nahrávání souborů.

@@ -22,10 +22,10 @@
   >
     Body
   </a>
-  <!-- TODO
   <a class:active-tab={routeId === "/images"} href="{base}/images">
     Obrázky
   </a>
+  <!-- TODO
   <a class:active-tab={routeId === "/users"} href="{base}/users">
     Uživatelé
   </a>
