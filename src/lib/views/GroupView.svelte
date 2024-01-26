@@ -1,45 +1,41 @@
 <script lang="ts" strictEvents>
   import { useSWR } from "sswr";
-  import { useLocation, useNavigate } from "svelte-navigator";
 
-  import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
-  import { siteName } from "../../../ts/admin/stores";
-  import { constructURL } from "../../../ts/admin/utils/constructURL";
-  import AddGroupPanel from "../components/action-modals/AddGroupPanel.svelte";
-  import DeleteGroupDialog from "../components/action-modals/DeleteGroupDialog.svelte";
-  import EditGroupPanel from "../components/action-modals/EditGroupPanel.svelte";
-  import ImportGroupMembersPanel from "../components/action-modals/ImportGroupMembersPanel.svelte";
-  import Button from "../components/Button.svelte";
-  import GroupProvider from "../components/swr-wrappers/GroupProvider.svelte";
+  import { goto } from "$app/navigation";
+  import { base } from "$app/paths";
+  import { page } from "$app/stores";
+  import AddGroupPanel from "$lib/components/action-modals/AddGroupPanel.svelte";
+  import DeleteGroupDialog from "$lib/components/action-modals/DeleteGroupDialog.svelte";
+  import EditGroupPanel from "$lib/components/action-modals/EditGroupPanel.svelte";
+  import ImportGroupMembersPanel from "$lib/components/action-modals/ImportGroupMembersPanel.svelte";
+  import Button from "$lib/components/Button.svelte";
+  import GroupProvider from "$lib/components/swr-wrappers/GroupProvider.svelte";
+  import type { Loginstate } from "$lib/interfaces/Loginstate";
+  import { siteName } from "$lib/stores";
+  import { constructURL } from "$lib/utils/constructURL";
 
-  const location = useLocation<{
-    action: string;
-    actionPayload: { groupId: string };
-  }>();
-  const navigate = useNavigate();
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- The typings for svelte-navigator incorrectly don't include undefined for $location.state
-  $: action = $location.state?.action;
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- The typings for svelte-navigator incorrectly don't include undefined for $location.state
-  $: actionPayload = $location.state?.actionPayload;
+  import type { PageStateFix } from "../../app";
+
+  $: state = $page.state as PageStateFix;
 
   const { data: loginstate } = useSWR<Loginstate>(constructURL("v1.0/account"));
   $: adminOrSuperuser =
     $loginstate?.role === "administrator" || $loginstate?.role === "superuser";
 </script>
 
-{#if action === "add-group"}
+{#if state.action === "add-group"}
   <AddGroupPanel />
-{:else if action === "change-group"}
+{:else if state.action === "change-group"}
   <GroupProvider silent let:groups>
-    <EditGroupPanel {groups} payload={actionPayload} />
+    <EditGroupPanel {groups} payload={state.actionPayload} />
   </GroupProvider>
-{:else if action === "delete-group"}
+{:else if state.action === "delete-group"}
   <GroupProvider silent let:groups>
-    <DeleteGroupDialog {groups} payload={actionPayload} />
+    <DeleteGroupDialog {groups} payload={state.actionPayload} />
   </GroupProvider>
-{:else if action === "import-group-members"}
+{:else if state.action === "import-group-members"}
   <GroupProvider silent let:groups>
-    <ImportGroupMembersPanel {groups} payload={actionPayload} />
+    <ImportGroupMembersPanel {groups} payload={state.actionPayload} />
   </GroupProvider>
 {/if}
 
@@ -49,7 +45,7 @@
     green
     icon="plus"
     on:click={() => {
-      navigate("/groups", { state: { action: "add-group" } });
+      void goto(base + "/groups", { state: { action: "add-group" } });
     }}
   >
     Přidat
@@ -69,7 +65,7 @@
         cyan
         icon="pencil"
         on:click={() => {
-          navigate("/groups", {
+          void goto(base + "/groups", {
             state: { action: "change-group", actionPayload: { groupId: id } },
           });
         }}
@@ -81,7 +77,7 @@
           icon="trash-empty"
           red
           on:click={() => {
-            navigate("/groups", {
+            void goto(base + "/groups", {
               state: { action: "delete-group", actionPayload: { groupId: id } },
             });
           }}
@@ -91,7 +87,7 @@
         <Button
           icon="user-plus"
           on:click={() => {
-            navigate("/groups", {
+            void goto(base + "/groups", {
               state: {
                 action: "import-group-members",
                 actionPayload: { groupId: id },

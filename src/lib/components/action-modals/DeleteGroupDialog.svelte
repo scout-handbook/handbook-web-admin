@@ -1,22 +1,19 @@
 <script lang="ts" strictEvents>
   import { useSWR } from "sswr";
-  import { useNavigate } from "svelte-navigator";
 
-  import { Action } from "../../../../ts/admin/actions/Action";
-  import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
-  import type { Group } from "../../../../ts/admin/interfaces/Group";
-  import { apiUri } from "../../../../ts/admin/stores";
-  import type { SWRMutateFix } from "../../../../ts/admin/SWRMutateFix";
-  import { SWRMutateFnWrapper } from "../../../../ts/admin/SWRMutateFix";
-  import { get } from "../../../../ts/admin/utils/arrayUtils";
-  import { constructURL } from "../../../../ts/admin/utils/constructURL";
-  import Dialog from "../Dialog.svelte";
-  import DoneDialog from "../DoneDialog.svelte";
+  import { Action } from "$lib/actions/Action";
+  import { ActionQueue } from "$lib/actions/ActionQueue";
+  import Dialog from "$lib/components/Dialog.svelte";
+  import DoneDialog from "$lib/components/DoneDialog.svelte";
+  import type { Group } from "$lib/interfaces/Group";
+  import { apiUri } from "$lib/stores";
+  import type { SWRMutateFix } from "$lib/SWRMutateFix";
+  import { SWRMutateFnWrapper } from "$lib/SWRMutateFix";
+  import { get } from "$lib/utils/arrayUtils";
+  import { constructURL } from "$lib/utils/constructURL";
 
   export let groups: Array<[string, Group]>;
   export let payload: { groupId: string };
-
-  const navigate = useNavigate();
 
   const group = get(groups, payload.groupId)!;
   let donePromise: Promise<void> | null = null;
@@ -33,8 +30,8 @@
     ])
       .dispatch()
       .then(() => {
-        mutate(
-          SWRMutateFnWrapper((cachedGroups) => {
+        void mutate(
+          SWRMutateFnWrapper<Record<string, Group>>((cachedGroups) => {
             delete cachedGroups[payload.groupId];
             return cachedGroups;
           }),
@@ -51,7 +48,7 @@
     dismissButtonText="Ne"
     on:confirm={confirmCallback}
     on:dismiss={() => {
-      navigate(-1);
+      history.back();
     }}
   >
     Opravdu si přejete smazat skupinu "{group.name}"?
