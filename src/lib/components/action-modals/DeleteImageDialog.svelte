@@ -1,19 +1,16 @@
 <script lang="ts" strictEvents>
   import { useSWR } from "sswr";
-  import { useNavigate } from "svelte-navigator";
 
-  import { Action } from "../../../../ts/admin/actions/Action";
-  import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
-  import { apiUri } from "../../../../ts/admin/stores";
-  import type { SWRMutateFix } from "../../../../ts/admin/SWRMutateFix";
-  import { SWRMutateFnWrapper } from "../../../../ts/admin/SWRMutateFix";
-  import { constructURL } from "../../../../ts/admin/utils/constructURL";
-  import Dialog from "../Dialog.svelte";
-  import DoneDialog from "../DoneDialog.svelte";
+  import { Action } from "$lib/actions/Action";
+  import { ActionQueue } from "$lib/actions/ActionQueue";
+  import Dialog from "$lib/components/Dialog.svelte";
+  import DoneDialog from "$lib/components/DoneDialog.svelte";
+  import { apiUri } from "$lib/stores";
+  import type { SWRMutateFix } from "$lib/SWRMutateFix";
+  import { SWRMutateFnWrapper } from "$lib/SWRMutateFix";
+  import { constructURL } from "$lib/utils/constructURL";
 
   export let payload: { imageId: string };
-
-  const navigate = useNavigate();
 
   let donePromise: Promise<void> | null = null;
   const { mutate } = useSWR<SWRMutateFix<Array<string>>>(
@@ -29,8 +26,8 @@
     ])
       .dispatch()
       .then(() => {
-        mutate(
-          SWRMutateFnWrapper((images) => {
+        void mutate(
+          SWRMutateFnWrapper<Array<string>>((images) => {
             images.splice(images.indexOf(payload.imageId), 1);
             return images;
           }),
@@ -47,7 +44,7 @@
     dismissButtonText="Ne"
     on:confirm={confirmCallback}
     on:dismiss={() => {
-      navigate(-1);
+      history.back();
     }}
   >
     Opravdu si přejete smazat tento obrázek?
