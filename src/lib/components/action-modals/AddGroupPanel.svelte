@@ -1,19 +1,16 @@
 <script lang="ts" strictEvents>
   import { useSWR } from "sswr";
-  import { useNavigate } from "svelte-navigator";
 
-  import { Action } from "../../../../ts/admin/actions/Action";
-  import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
-  import type { Group } from "../../../../ts/admin/interfaces/Group";
-  import { apiUri } from "../../../../ts/admin/stores";
-  import type { SWRMutateFix } from "../../../../ts/admin/SWRMutateFix";
-  import { constructURL } from "../../../../ts/admin/utils/constructURL";
-  import Button from "../Button.svelte";
-  import DoneDialog from "../DoneDialog.svelte";
-  import NameInput from "../forms/NameInput.svelte";
-  import SidePanel from "../SidePanel.svelte";
-
-  const navigate = useNavigate();
+  import { Action } from "$lib/actions/Action";
+  import { ActionQueue } from "$lib/actions/ActionQueue";
+  import Button from "$lib/components/Button.svelte";
+  import DoneDialog from "$lib/components/DoneDialog.svelte";
+  import NameInput from "$lib/components/forms/NameInput.svelte";
+  import SidePanel from "$lib/components/SidePanel.svelte";
+  import type { Group } from "$lib/interfaces/Group";
+  import { apiUri } from "$lib/stores";
+  import type { SWRMutateFix } from "$lib/SWRMutateFix";
+  import { constructURL } from "$lib/utils/constructURL";
 
   let name = "Nová skupina";
   let donePromise: Promise<void> | null = null;
@@ -29,7 +26,7 @@
     ])
       .dispatch()
       .then(() => {
-        revalidate({ force: true });
+        void revalidate({ force: true });
       });
   }
 </script>
@@ -42,7 +39,7 @@
       icon="cancel"
       yellow
       on:click={() => {
-        navigate(-1);
+        history.back();
       }}
     >
       Zrušit

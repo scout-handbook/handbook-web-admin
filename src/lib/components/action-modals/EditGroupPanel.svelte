@@ -1,24 +1,21 @@
 <script lang="ts" strictEvents>
   import { useSWR } from "sswr";
-  import { useNavigate } from "svelte-navigator";
 
-  import { Action } from "../../../../ts/admin/actions/Action";
-  import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
-  import type { Group } from "../../../../ts/admin/interfaces/Group";
-  import { apiUri } from "../../../../ts/admin/stores";
-  import type { SWRMutateFix } from "../../../../ts/admin/SWRMutateFix";
-  import { SWRMutateFnWrapper } from "../../../../ts/admin/SWRMutateFix";
-  import { get } from "../../../../ts/admin/utils/arrayUtils";
-  import { constructURL } from "../../../../ts/admin/utils/constructURL";
-  import Button from "../Button.svelte";
-  import DoneDialog from "../DoneDialog.svelte";
-  import NameInput from "../forms/NameInput.svelte";
-  import SidePanel from "../SidePanel.svelte";
+  import { Action } from "$lib/actions/Action";
+  import { ActionQueue } from "$lib/actions/ActionQueue";
+  import Button from "$lib/components/Button.svelte";
+  import DoneDialog from "$lib/components/DoneDialog.svelte";
+  import NameInput from "$lib/components/forms/NameInput.svelte";
+  import SidePanel from "$lib/components/SidePanel.svelte";
+  import type { Group } from "$lib/interfaces/Group";
+  import { apiUri } from "$lib/stores";
+  import type { SWRMutateFix } from "$lib/SWRMutateFix";
+  import { SWRMutateFnWrapper } from "$lib/SWRMutateFix";
+  import { get } from "$lib/utils/arrayUtils";
+  import { constructURL } from "$lib/utils/constructURL";
 
   export let groups: Array<[string, Group]>;
   export let payload: { groupId: string };
-
-  const navigate = useNavigate();
 
   const group = get(groups, payload.groupId)!;
   let { name } = group;
@@ -42,8 +39,8 @@
       ])
         .dispatch()
         .then(() => {
-          mutate(
-            SWRMutateFnWrapper((cachedGroups) => {
+          void mutate(
+            SWRMutateFnWrapper<Record<string, Group>>((cachedGroups) => {
               cachedGroups[payload.groupId].name = name;
               return cachedGroups;
             }),
@@ -61,7 +58,7 @@
       icon="cancel"
       yellow
       on:click={() => {
-        navigate(-1);
+        history.back();
       }}
     >
       Zrušit
