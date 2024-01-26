@@ -2,10 +2,10 @@
   import { useSWR } from "sswr";
   import { derived } from "svelte/store";
 
-  import type { Group } from "../../../../ts/admin/interfaces/Group";
-  import { processGroups } from "../../../../ts/admin/swr";
-  import { constructURL } from "../../../../ts/admin/utils/constructURL";
-  import LoadingIndicator from "../LoadingIndicator.svelte";
+  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
+  import type { Group } from "$lib/interfaces/Group";
+  import { processGroups } from "$lib/swr";
+  import { constructURL } from "$lib/utils/constructURL";
 
   interface $$Slots {
     default: { groups: Array<[string, Group]> };

@@ -1,16 +1,15 @@
 <script lang="ts" strictEvents>
   import { useSWR } from "sswr";
-  import { useNavigate } from "svelte-navigator";
 
-  import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
-  import type { User } from "../../../ts/admin/interfaces/User";
-  import { constructURL } from "../../../ts/admin/utils/constructURL";
-  import Button from "../components/Button.svelte";
-  import GroupProvider from "../components/swr-wrappers/GroupProvider.svelte";
+  import { goto } from "$app/navigation";
+  import { base } from "$app/paths";
+  import Button from "$lib/components/Button.svelte";
+  import GroupProvider from "$lib/components/swr-wrappers/GroupProvider.svelte";
+  import type { Loginstate } from "$lib/interfaces/Loginstate";
+  import type { User } from "$lib/interfaces/User";
+  import { constructURL } from "$lib/utils/constructURL";
 
   export let users: Array<User>;
-
-  const navigate = useNavigate();
 
   const { data: loginstate } = useSWR<Loginstate>(constructURL("v1.0/account"));
   $: isSuperuser = $loginstate?.role === "superuser";
@@ -42,7 +41,7 @@
             cyan
             icon="pencil"
             on:click={() => {
-              navigate("/users", {
+              void goto(base + "/users", {
                 state: {
                   action: "change-user-role",
                   actionPayload: { user },
@@ -71,7 +70,7 @@
           cyan
           icon="pencil"
           on:click={() => {
-            navigate("/users", {
+            void goto(base + "/users", {
               state: {
                 action: "change-user-groups",
                 actionPayload: { user },
