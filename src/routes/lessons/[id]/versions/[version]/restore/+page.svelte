@@ -1,37 +1,35 @@
 <script lang="ts" strictEvents>
-  import { useLocation, useNavigate } from "svelte-navigator";
-
-  import { Action } from "../../../ts/admin/actions/Action";
-  import { ActionCallback } from "../../../ts/admin/actions/ActionCallback";
-  import { ActionQueue } from "../../../ts/admin/actions/ActionQueue";
+  import { goto } from "$app/navigation";
+  import { base } from "$app/paths";
+  import { page } from "$app/stores";
+  import { Action } from "$lib/actions/Action";
+  import { ActionCallback } from "$lib/actions/ActionCallback";
+  import { ActionQueue } from "$lib/actions/ActionQueue";
   import {
     populateCompetences,
     populateField,
     populateGroups,
-  } from "../../../ts/admin/actions/populateLessonActionQueue";
-  import { apiUri } from "../../../ts/admin/stores";
-  import { getQueryField } from "../../../ts/admin/utils/getQueryField";
-  import { queryClient } from "../../../ts/admin/utils/queryClient";
-  import { authFailHandler, request } from "../../../ts/admin/utils/request";
-  import DoneDialog from "../components/DoneDialog.svelte";
-  import LessonEditor from "../components/LessonEditor.svelte";
-  import LoadingIndicator from "../components/LoadingIndicator.svelte";
+  } from "$lib/actions/populateLessonActionQueue";
+  import DoneDialog from "$lib/components/DoneDialog.svelte";
+  import LessonEditor from "$lib/components/LessonEditor.svelte";
+  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
+  import { apiUri } from "$lib/stores";
+  import { queryClient } from "$lib/utils/queryClient";
+  import { authFailHandler, request } from "$lib/utils/request";
 
-  export let lessonID: string;
-  export let version: string;
+  import type { PageData } from "./$types";
 
-  const location = useLocation<Record<string, never>>();
-  const navigate = useNavigate();
+  export let data: PageData;
 
   let donePromise: Promise<void> | null = null;
-  let name = getQueryField($location.search, "name") ?? "Obnovená lekce";
+  let name = $page.url.searchParams.get("name") ?? "Obnovená lekce";
   let body = "";
   let competences: Array<string> = [];
   let field: string | null = null;
   let groups: Array<string> = [];
 
   let bodyPromise = request<string>(
-    `${$apiUri}/v1.0/deleted-lesson/${lessonID}/history/${version}`,
+    `${$apiUri}/v1.0/deleted-lesson/${data.id}/history/${data.version}`,
     "GET",
     {},
     authFailHandler,
@@ -69,7 +67,7 @@
   <DoneDialog
     {donePromise}
     on:confirm={() => {
-      navigate("/lessons");
+      void goto(`${base}/lessons`);
     }}
   >
     Lekce byla úspěšně obnovena.
@@ -86,8 +84,8 @@
       bind:field
       bind:groups
       on:discard={() => {
-        navigate(-1);
-        navigate(-1);
+        history.back();
+        history.back();
       }}
       on:save={save}
     />
