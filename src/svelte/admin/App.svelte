@@ -10,7 +10,6 @@
   import EditLessonView from "./views/EditLessonView.svelte";
   import GroupView from "./views/GroupView.svelte";
   import RestoreLessonView from "./views/RestoreLessonView.svelte";
-  import UserView from "./views/UserView.svelte";
 
   // Remove https:// and domain
   const basepath = $adminUri.split("/").slice(3).join("/");
@@ -28,14 +27,6 @@
       <RestoreLessonView lessonID={params["id"]} version={params["version"]} />
     </Route>
 
-    <Route path="/users">
-      <TopBar />
-      <div class="main-page-container">
-        <div class="main-page">
-          <UserView />
-        </div>
-      </div>
-    </Route>
     <Route path="/groups">
       <TopBar />
       <div class="main-page-container">
