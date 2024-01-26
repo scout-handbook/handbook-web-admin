@@ -2,9 +2,6 @@ import type { User } from "$lib/interfaces/User";
 
 export type PageStateFix =
   | {
-      action: "add-competence" | "add-field" | "add-image" | "restore-lesson";
-    }
-  | {
       action: "change-competence" | "delete-competence";
       actionPayload: {
         competenceId: string;
@@ -14,6 +11,12 @@ export type PageStateFix =
       action: "change-field" | "delete-field";
       actionPayload: {
         fieldId: string;
+      };
+    }
+  | {
+      action: "change-group" | "delete-group" | "import-group-members";
+      actionPayload: {
+        groupId: string;
       };
     }
   | {
@@ -33,6 +36,14 @@ export type PageStateFix =
       actionPayload: {
         lessonId: string;
       };
+    }
+  | {
+      action:
+        | "add-competence"
+        | "add-field"
+        | "add-group"
+        | "add-image"
+        | "restore-lesson";
     };
 
 declare global {

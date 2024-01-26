@@ -20,7 +20,6 @@
     Body
   </a>
   <a class:active-tab={routeId === "/images"} href="{base}/images">Obrázky</a>
-  <!-- TODO
   <a class:active-tab={routeId === "/users"} href="{base}/users">Uživatelé</a>
   <a
     class="groups"
@@ -29,7 +28,6 @@
   >
     Uživatelské skupiny
   </a>
-  -->
 </div>
 
 <style>
@@ -62,12 +60,10 @@
     color: var(--accent-color);
   }
 
-  /*
   .groups {
     padding-bottom: 12px;
     padding-top: 16px;
   }
-  */
 
   .wrapper {
     background-color: var(--background-darker);
