@@ -5,10 +5,8 @@
   import { adminUri } from "../../ts/admin/stores";
   import { queryClient } from "../../ts/admin/utils/queryClient";
   import FieldProvider from "./components/swr-wrappers/FieldProvider.svelte";
-  import TopBar from "./components/TopBar.svelte";
   import AddLessonView from "./views/AddLessonView.svelte";
   import EditLessonView from "./views/EditLessonView.svelte";
-  import GroupView from "./views/GroupView.svelte";
   import RestoreLessonView from "./views/RestoreLessonView.svelte";
 
   // Remove https:// and domain
@@ -25,15 +23,6 @@
     </Route>
     <Route path="/lessons/:id/versions/:version/restore" let:params>
       <RestoreLessonView lessonID={params["id"]} version={params["version"]} />
-    </Route>
-
-    <Route path="/groups">
-      <TopBar />
-      <div class="main-page-container">
-        <div class="main-page">
-          <GroupView />
-        </div>
-      </div>
     </Route>
   </Router>
 </QueryClientProvider>

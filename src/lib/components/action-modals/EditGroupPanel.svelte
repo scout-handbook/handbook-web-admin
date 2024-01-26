@@ -1,22 +1,18 @@
 <script lang="ts" strictEvents>
+  import type { Group } from "$lib/interfaces/Group";
+
+  import { Action } from "$lib/actions/Action";
+  import { ActionQueue } from "$lib/actions/ActionQueue";
+  import Button from "$lib/components/Button.svelte";
+  import DoneDialog from "$lib/components/DoneDialog.svelte";
+  import NameInput from "$lib/components/forms/NameInput.svelte";
+  import SidePanel from "$lib/components/SidePanel.svelte";
+  import { apiUri } from "$lib/stores";
+  import { queryClient } from "$lib/utils/queryClient";
   import { createMutation } from "@tanstack/svelte-query";
-  import { useNavigate } from "svelte-navigator";
-
-  import type { Group } from "../../../../ts/admin/interfaces/Group";
-
-  import { Action } from "../../../../ts/admin/actions/Action";
-  import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
-  import { apiUri } from "../../../../ts/admin/stores";
-  import { queryClient } from "../../../../ts/admin/utils/queryClient";
-  import Button from "../Button.svelte";
-  import DoneDialog from "../DoneDialog.svelte";
-  import NameInput from "../forms/NameInput.svelte";
-  import SidePanel from "../SidePanel.svelte";
 
   export let group: Group;
   export let groupId: string;
-
-  const navigate = useNavigate();
 
   let { name } = group;
   let donePromise: Promise<void> | null = null;
@@ -68,7 +64,7 @@
       icon="cancel"
       yellow
       on:click={() => {
-        navigate(-1);
+        history.back();
       }}
     >
       Zrušit
