@@ -1,39 +1,32 @@
 <script lang="ts" strictEvents>
   import { useSWR } from "sswr";
   import { onDestroy, onMount } from "svelte";
-  import { useNavigate } from "svelte-navigator";
 
-  import { Action } from "../../../ts/admin/actions/Action";
-  import { ActionCallback } from "../../../ts/admin/actions/ActionCallback";
-  import { ActionQueue } from "../../../ts/admin/actions/ActionQueue";
+  import { Action } from "$lib/actions/Action";
+  import { ActionCallback } from "$lib/actions/ActionCallback";
+  import { ActionQueue } from "$lib/actions/ActionQueue";
   import {
     populateCompetences,
     populateField,
     populateGroups,
-  } from "../../../ts/admin/actions/populateLessonActionQueue";
-  import type { APIResponse } from "../../../ts/admin/interfaces/APIResponse";
-  import type { Field } from "../../../ts/admin/interfaces/Field";
-  import type { Lesson } from "../../../ts/admin/interfaces/Lesson";
-  import type { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
-  import {
-    afterReAuthAction,
-    apiUri,
-    globalDialogMessage,
-  } from "../../../ts/admin/stores";
-  import type { SWRMutateFix } from "../../../ts/admin/SWRMutateFix";
-  import { SWRMutateFnWrapper } from "../../../ts/admin/SWRMutateFix";
-  import { get } from "../../../ts/admin/utils/arrayUtils";
-  import { constructURL } from "../../../ts/admin/utils/constructURL";
-  import { reAuth, request } from "../../../ts/admin/utils/request";
-  import DoneDialog from "../components/DoneDialog.svelte";
-  import LessonEditor from "../components/LessonEditor.svelte";
-  import LoadingIndicator from "../components/LoadingIndicator.svelte";
+  } from "$lib/actions/populateLessonActionQueue";
+  import DoneDialog from "$lib/components/DoneDialog.svelte";
+  import LessonEditor from "$lib/components/LessonEditor.svelte";
+  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
+  import type { APIResponse } from "$lib/interfaces/APIResponse";
+  import type { Field } from "$lib/interfaces/Field";
+  import type { Lesson } from "$lib/interfaces/Lesson";
+  import type { RequestResponse } from "$lib/interfaces/RequestResponse";
+  import { afterReAuthAction, apiUri, globalDialogMessage } from "$lib/stores";
+  import type { SWRMutateFix } from "$lib/SWRMutateFix";
+  import { SWRMutateFnWrapper } from "$lib/SWRMutateFix";
+  import { get } from "$lib/utils/arrayUtils";
+  import { constructURL } from "$lib/utils/constructURL";
+  import { reAuth, request } from "$lib/utils/request";
 
   export let lessonID: string;
   export let fields: Array<[string, Field]>;
   export let lessons: Array<[string, Lesson]>;
-
-  const navigate = useNavigate();
 
   let donePromise: Promise<void> | null = null;
   let name = get(lessons, lessonID)?.name ?? "";
@@ -178,15 +171,15 @@
     populateField(saveActionQueue, lessonID, field, initialField);
     populateGroups(saveActionQueue, lessonID, groups, initialGroups);
     donePromise = saveActionQueue.dispatch().then(() => {
-      lessonMutate(
-        SWRMutateFnWrapper((cachedLessons) => {
+      void lessonMutate(
+        SWRMutateFnWrapper<Record<string, Lesson>>((cachedLessons) => {
           cachedLessons[lessonID].name = name;
           cachedLessons[lessonID].competences = competences;
           return cachedLessons;
         }),
       );
-      fieldMutate(
-        SWRMutateFnWrapper((cachedFields) => {
+      void fieldMutate(
+        SWRMutateFnWrapper<Record<string, Field>>((cachedFields) => {
           if (initialField !== null) {
             cachedFields[initialField].lessons.splice(
               cachedFields[initialField].lessons.indexOf(lessonID),
@@ -204,7 +197,7 @@
 
   function discard(): void {
     destroyMutex();
-    navigate(-1);
+    history.back();
   }
 </script>
 
