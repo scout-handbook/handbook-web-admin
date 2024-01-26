@@ -1,32 +1,24 @@
 <script lang="ts" strictEvents>
-  import { useLocation, useNavigate } from "svelte-navigator";
-
-  import { Action } from "../../../ts/admin/actions/Action";
-  import { ActionCallback } from "../../../ts/admin/actions/ActionCallback";
-  import { ActionQueue } from "../../../ts/admin/actions/ActionQueue";
+  import { page } from "$app/stores";
+  import { Action } from "$lib/actions/Action";
+  import { ActionCallback } from "$lib/actions/ActionCallback";
+  import { ActionQueue } from "$lib/actions/ActionQueue";
   import {
     populateCompetences,
     populateField,
     populateGroups,
-  } from "../../../ts/admin/actions/populateLessonActionQueue";
-  import { apiUri } from "../../../ts/admin/stores";
-  import {
-    defaultBody,
-    defaultName,
-  } from "../../../ts/admin/utils/defaultLessonContent";
-  import { getQueryField } from "../../../ts/admin/utils/getQueryField";
-  import { queryClient } from "../../../ts/admin/utils/queryClient";
-  import DoneDialog from "../components/DoneDialog.svelte";
-  import LessonEditor from "../components/LessonEditor.svelte";
-
-  const location = useLocation<Record<string, never>>();
-  const navigate = useNavigate();
+  } from "$lib/actions/populateLessonActionQueue";
+  import DoneDialog from "$lib/components/DoneDialog.svelte";
+  import LessonEditor from "$lib/components/LessonEditor.svelte";
+  import { apiUri } from "$lib/stores";
+  import { defaultBody, defaultName } from "$lib/utils/defaultLessonContent";
+  import { queryClient } from "$lib/utils/queryClient";
 
   let donePromise: Promise<void> | null = null;
   let name = defaultName;
   let body = defaultBody;
   let competences: Array<string> = [];
-  let field: string | null = getQueryField($location.search, "field");
+  let field: string | null = $page.url.searchParams.get("field");
   let groups: Array<string> = [];
 
   function save(): void {
@@ -66,7 +58,7 @@
     bind:field
     bind:groups
     on:discard={() => {
-      navigate(-1);
+      history.back();
     }}
     on:save={save}
   />

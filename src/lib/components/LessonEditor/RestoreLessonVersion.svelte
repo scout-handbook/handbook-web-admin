@@ -1,25 +1,21 @@
 <script lang="ts" strictEvents>
-  import { useNavigate } from "svelte-navigator";
+  import type { LessonVersion } from "$lib/interfaces/LessonVersion";
 
-  import type { LessonVersion } from "../../../../ts/admin/interfaces/LessonVersion";
-
-  import { apiUri } from "../../../../ts/admin/stores";
-  import { get } from "../../../../ts/admin/utils/arrayUtils";
-  import { compileMarkdown } from "../../../../ts/admin/utils/compileMarkdown";
-  import { parseVersion } from "../../../../ts/admin/utils/parseVersion";
-  import { authFailHandler, request } from "../../../../ts/admin/utils/request";
-  import Button from "../Button.svelte";
-  import DoubleSidePanel from "../DoubleSidePanel.svelte";
-  import RadioGroup from "../forms/RadioGroup.svelte";
-  import LoadingIndicator from "../LoadingIndicator.svelte";
-  import Overlay from "../Overlay.svelte";
-  import LessonProvider from "../swr-wrappers/LessonProvider.svelte";
+  import Button from "$lib/components/Button.svelte";
+  import DoubleSidePanel from "$lib/components/DoubleSidePanel.svelte";
+  import RadioGroup from "$lib/components/forms/RadioGroup.svelte";
+  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
+  import Overlay from "$lib/components/Overlay.svelte";
+  import LessonProvider from "$lib/components/swr-wrappers/LessonProvider.svelte";
+  import { apiUri } from "$lib/stores";
+  import { get } from "$lib/utils/arrayUtils";
+  import { compileMarkdown } from "$lib/utils/compileMarkdown";
+  import { parseVersion } from "$lib/utils/parseVersion";
+  import { authFailHandler, request } from "$lib/utils/request";
 
   export let lessonId: string;
   export let lessonName: string;
   export let body: string;
-
-  const navigate = useNavigate();
 
   let selectedVersion: number | null = null;
   let versionList: Array<LessonVersion> | null = null;
@@ -52,7 +48,7 @@
   function saveCallback(markdown: string): void {
     lessonName = selectedVersionName;
     body = markdown;
-    navigate(-1);
+    history.back();
   }
 </script>
 
@@ -63,7 +59,7 @@
       icon="cancel"
       yellow
       on:click={() => {
-        navigate(-1);
+        history.back();
       }}
     >
       Zrušit

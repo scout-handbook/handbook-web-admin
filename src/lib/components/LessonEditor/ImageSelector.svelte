@@ -1,12 +1,11 @@
 <script lang="ts" strictEvents>
+  import Button from "$lib/components/Button.svelte";
+  import ImageGridCell from "$lib/components/ImageGridCell.svelte";
+  import ImageThumbnail from "$lib/components/ImageThumbnail.svelte";
+  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
+  import Pagination from "$lib/components/Pagination.svelte";
   import { createQuery } from "@tanstack/svelte-query";
   import { createEventDispatcher } from "svelte";
-
-  import Button from "../../components/Button.svelte";
-  import ImageGridCell from "../ImageGridCell.svelte";
-  import ImageThumbnail from "../ImageThumbnail.svelte";
-  import LoadingIndicator from "../LoadingIndicator.svelte";
-  import Pagination from "../Pagination.svelte";
 
   export let imageSelectorOpen: boolean;
 

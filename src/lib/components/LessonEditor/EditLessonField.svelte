@@ -1,13 +1,9 @@
 <script lang="ts" strictEvents>
-  import { useNavigate } from "svelte-navigator";
-
-  import Button from "../Button.svelte";
-  import RadioGroup from "../forms/RadioGroup.svelte";
-  import FieldProvider from "../swr-wrappers/FieldProvider.svelte";
+  import Button from "$lib/components/Button.svelte";
+  import RadioGroup from "$lib/components/forms/RadioGroup.svelte";
+  import FieldProvider from "$lib/components/swr-wrappers/FieldProvider.svelte";
 
   export let field: string | null;
-
-  const navigate = useNavigate();
 
   const initialField = field;
 </script>
@@ -17,7 +13,7 @@
   yellow
   on:click={() => {
     field = initialField;
-    navigate(-1);
+    history.back();
   }}
 >
   Zrušit
@@ -26,7 +22,7 @@
   green
   icon="floppy"
   on:click={() => {
-    navigate(-1);
+    history.back();
   }}>Uložit</Button
 >
 <h1>Změnit oblast</h1>

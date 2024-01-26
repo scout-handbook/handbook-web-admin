@@ -1,28 +1,22 @@
 <script lang="ts" strictEvents>
-  import { useLocation, useNavigate } from "svelte-navigator";
-
-  import { get } from "../../../../ts/admin/utils/arrayUtils";
-  import Button from "../Button.svelte";
-  import CompetenceProvider from "../swr-wrappers/CompetenceProvider.svelte";
-  import FieldProvider from "../swr-wrappers/FieldProvider.svelte";
-  import GroupProvider from "../swr-wrappers/GroupProvider.svelte";
+  import { pushState } from "$app/navigation";
+  import Button from "$lib/components/Button.svelte";
+  import CompetenceProvider from "$lib/components/swr-wrappers/CompetenceProvider.svelte";
+  import FieldProvider from "$lib/components/swr-wrappers/FieldProvider.svelte";
+  import GroupProvider from "$lib/components/swr-wrappers/GroupProvider.svelte";
+  import { get } from "$lib/utils/arrayUtils";
 
   export let id: string | null;
   export let field: string | null;
   export let competences: Array<string>;
   export let groups: Array<string>;
-
-  const location = useLocation<Record<string, never>>();
-  const navigate = useNavigate();
-
-  $: currentUri = $location.pathname + $location.search;
 </script>
 
 <Button
   icon="right-open"
   yellow
   on:click={() => {
-    navigate(-1);
+    history.back();
   }}
 >
   Zavřít
@@ -31,8 +25,9 @@
   <Button
     icon="history"
     on:click={() => {
-      navigate(currentUri, {
-        state: { action: "restore-version", view: "lesson-settings" },
+      pushState("", {
+        action: "restore-version",
+        view: "lesson-settings",
       });
     }}
   >
@@ -45,8 +40,9 @@
   cyan
   icon="pencil"
   on:click={() => {
-    navigate(currentUri, {
-      state: { action: "change-lesson-field", view: "lesson-settings" },
+    pushState("", {
+      action: "change-lesson-field",
+      view: "lesson-settings",
     });
   }}
 >
@@ -66,8 +62,9 @@
   cyan
   icon="pencil"
   on:click={() => {
-    navigate(currentUri, {
-      state: { action: "change-lesson-competences", view: "lesson-settings" },
+    pushState("", {
+      action: "change-lesson-competences",
+      view: "lesson-settings",
     });
   }}
 >
@@ -86,8 +83,9 @@
   cyan
   icon="pencil"
   on:click={() => {
-    navigate(currentUri, {
-      state: { action: "change-lesson-groups", view: "lesson-settings" },
+    pushState("", {
+      action: "change-lesson-groups",
+      view: "lesson-settings",
     });
   }}
 >
