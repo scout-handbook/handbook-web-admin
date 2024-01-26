@@ -1,15 +1,11 @@
 <script lang="ts" strictEvents>
+  import { pushState } from "$app/navigation";
+  import Button from "$lib/components/Button.svelte";
   import { createEventDispatcher } from "svelte";
-  import { useLocation, useNavigate } from "svelte-navigator";
-
-  import Button from "../../components/Button.svelte";
 
   export let name: string;
 
   const dispatch = createEventDispatcher<{ discard: null; save: null }>();
-  const location = useLocation<Record<string, never>>();
-  const navigate = useNavigate();
-  $: currentUri = $location.pathname + $location.search;
 </script>
 
 <header>
@@ -29,8 +25,8 @@
     <Button
       icon="cog"
       on:click={() => {
-        navigate(currentUri, {
-          state: { view: "lesson-settings" },
+        pushState("", {
+          view: "lesson-settings",
         });
       }}
     >

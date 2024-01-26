@@ -1,8 +1,7 @@
 <script lang="ts" strictEvents>
   import { default as EasyMDE } from "easymde";
   import { onMount } from "svelte";
-
-  import "../../../../../node_modules/easymde/dist/easymde.min.css";
+  import "easymde/dist/easymde.min.css";
 
   let editor: EasyMDE | undefined;
   let editorArea: HTMLElement;

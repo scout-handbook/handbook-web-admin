@@ -1,14 +1,10 @@
 <script lang="ts" strictEvents>
-  import { useNavigate } from "svelte-navigator";
-
-  import { get } from "../../../../ts/admin/utils/arrayUtils";
-  import Button from "../Button.svelte";
-  import CheckboxGroup from "../forms/CheckboxGroup.svelte";
-  import GroupProvider from "../swr-wrappers/GroupProvider.svelte";
+  import Button from "$lib/components/Button.svelte";
+  import CheckboxGroup from "$lib/components/forms/CheckboxGroup.svelte";
+  import GroupProvider from "$lib/components/swr-wrappers/GroupProvider.svelte";
+  import { get } from "$lib/utils/arrayUtils";
 
   export let groups: Array<string>;
-
-  const navigate = useNavigate();
 
   const initialGroups = groups;
 </script>
@@ -18,7 +14,7 @@
   yellow
   on:click={() => {
     groups = initialGroups;
-    navigate(-1);
+    history.back();
   }}
 >
   Zrušit
@@ -27,7 +23,7 @@
   green
   icon="floppy"
   on:click={() => {
-    navigate(-1);
+    history.back();
   }}>Uložit</Button
 >
 <h1>Změnit skupiny</h1>
