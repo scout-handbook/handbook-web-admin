@@ -1,15 +1,15 @@
 <script lang="ts" strictEvents>
   import { createEventDispatcher } from "svelte";
-  import { useLocation, useNavigate } from "svelte-navigator";
 
-  import Button from "../../components/Button.svelte";
+  import { goto } from "$app/navigation";
+  import { page } from "$app/stores";
+  import Button from "$lib/components/Button.svelte";
 
   export let name: string;
 
-  const dispatch = createEventDispatcher<{ discard: never; save: never }>();
-  const location = useLocation<Record<string, never>>();
-  const navigate = useNavigate();
-  $: currentUri = $location.pathname + $location.search;
+  const dispatch = createEventDispatcher<{ discard: null; save: null }>();
+
+  $: currentPathname = $page.url.pathname;
 </script>
 
 <header>
@@ -29,8 +29,8 @@
     <Button
       icon="cog"
       on:click={() => {
-        navigate(currentUri, {
-          state: { view: "lesson-settings" },
+        void goto(currentPathname, {
+          state: { view: "lesson-settings" }, // TODO: Action gets discarded?
         });
       }}
     >

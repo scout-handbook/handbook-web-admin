@@ -1,8 +1,8 @@
 import { get } from "svelte/store";
 
-import { apiUri } from "../stores";
-import { Action } from "./Action";
-import type { ActionQueue } from "./ActionQueue";
+import { Action } from "$lib/actions/Action";
+import type { ActionQueue } from "$lib/actions/ActionQueue";
+import { apiUri } from "$lib/stores";
 
 function arrayEquals<T>(a: Array<T>, b: Array<T>): boolean {
   return a.length === b.length && a.every((v, i) => v === b[i]);

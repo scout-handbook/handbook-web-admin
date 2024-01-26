@@ -1,14 +1,16 @@
 <script lang="ts" strictEvents>
   import { createEventDispatcher, onDestroy, onMount } from "svelte";
-  import { useLocation } from "svelte-navigator";
 
-  import { apiUri, suspendReAuth } from "../../../ts/admin/stores";
-  import Dialog from "./Dialog.svelte";
-  import EditorHeader from "./LessonEditor/EditorHeader.svelte";
-  import EditorPane from "./LessonEditor/EditorPane.svelte";
-  import ImageSelector from "./LessonEditor/ImageSelector.svelte";
-  import LessonSettingsPanel from "./LessonEditor/LessonSettingsPanel.svelte";
-  import PreviewPane from "./LessonEditor/PreviewPane.svelte";
+  import { page } from "$app/stores";
+  import Dialog from "$lib/components/Dialog.svelte";
+  import EditorHeader from "$lib/components/LessonEditor/EditorHeader.svelte";
+  import EditorPane from "$lib/components/LessonEditor/EditorPane.svelte";
+  import ImageSelector from "$lib/components/LessonEditor/ImageSelector.svelte";
+  import LessonSettingsPanel from "$lib/components/LessonEditor/LessonSettingsPanel.svelte";
+  import PreviewPane from "$lib/components/LessonEditor/PreviewPane.svelte";
+  import { apiUri, suspendReAuth } from "$lib/stores";
+
+  import type { PageStateFix } from "../../app";
 
   export let id: string | null;
   export let name: string;
@@ -17,10 +19,10 @@
   export let field: string | null;
   export let groups: Array<string>;
 
-  const dispatch = createEventDispatcher<{ discard: never; save: never }>();
-  const location = useLocation<{ view: string }>();
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- The typings for svelte-navigator incorrectly don't include undefined for $location.state
-  $: view = $location.state?.view;
+  const dispatch = createEventDispatcher<{ discard: null; save: null }>();
+
+  $: state = $page.state as PageStateFix;
+  $: view = "view" in state ? state.view : undefined;
 
   let imageSelectorOpen = false;
   let discardConfirmation = false;

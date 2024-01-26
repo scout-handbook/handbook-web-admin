@@ -2,12 +2,12 @@
   import { useSWR } from "sswr";
   import { createEventDispatcher } from "svelte";
 
-  import { constructURL } from "../../../../ts/admin/utils/constructURL";
-  import Button from "../../components/Button.svelte";
-  import ImageGridCell from "../ImageGridCell.svelte";
-  import ImageThumbnail from "../ImageThumbnail.svelte";
-  import LoadingIndicator from "../LoadingIndicator.svelte";
-  import Pagination from "../Pagination.svelte";
+  import Button from "$lib/components/Button.svelte";
+  import ImageGridCell from "$lib/components/ImageGridCell.svelte";
+  import ImageThumbnail from "$lib/components/ImageThumbnail.svelte";
+  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
+  import Pagination from "$lib/components/Pagination.svelte";
+  import { constructURL } from "$lib/utils/constructURL";
 
   export let imageSelectorOpen: boolean;
 
