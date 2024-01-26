@@ -1,6 +1,6 @@
 export type PageStateFix =
   | {
-      action: "add-competence" | "add-field" | "restore-lesson";
+      action: "add-competence" | "add-field" | "add-image" | "restore-lesson";
     }
   | {
       action: "change-competence" | "delete-competence";
@@ -12,6 +12,12 @@ export type PageStateFix =
       action: "change-field" | "delete-field";
       actionPayload: {
         fieldId: string;
+      };
+    }
+  | {
+      action: "delete-image";
+      actionPayload: {
+        imageId: string;
       };
     }
   | {

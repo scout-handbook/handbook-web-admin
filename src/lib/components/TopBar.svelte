@@ -19,8 +19,8 @@
   <a class:active-tab={routeId === "/competences"} href="{base}/competences">
     Body
   </a>
-  <!-- TODO
   <a class:active-tab={routeId === "/images"} href="{base}/images">Obrázky</a>
+  <!-- TODO
   <a class:active-tab={routeId === "/users"} href="{base}/users">Uživatelé</a>
   <a
     class="groups"
