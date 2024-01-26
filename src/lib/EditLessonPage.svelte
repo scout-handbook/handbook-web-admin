@@ -1,37 +1,29 @@
 <script lang="ts" strictEvents>
-  import { createMutation } from "@tanstack/svelte-query";
-  import { onDestroy, onMount } from "svelte";
-  import { useNavigate } from "svelte-navigator";
+  import type { LockedExceptionResponse } from "$lib/interfaces/APIResponse";
+  import type { Field } from "$lib/interfaces/Field";
+  import type { Lesson } from "$lib/interfaces/Lesson";
 
-  import type { LockedExceptionResponse } from "../../../ts/admin/interfaces/APIResponse";
-  import type { Field } from "../../../ts/admin/interfaces/Field";
-  import type { Lesson } from "../../../ts/admin/interfaces/Lesson";
-
-  import { Action } from "../../../ts/admin/actions/Action";
-  import { ActionCallback } from "../../../ts/admin/actions/ActionCallback";
-  import { ActionQueue } from "../../../ts/admin/actions/ActionQueue";
+  import { Action } from "$lib/actions/Action";
+  import { ActionCallback } from "$lib/actions/ActionCallback";
+  import { ActionQueue } from "$lib/actions/ActionQueue";
   import {
     populateCompetences,
     populateField,
     populateGroups,
-  } from "../../../ts/admin/actions/populateLessonActionQueue";
-  import {
-    afterReAuthAction,
-    apiUri,
-    globalDialogMessage,
-  } from "../../../ts/admin/stores";
-  import { get } from "../../../ts/admin/utils/arrayUtils";
-  import { queryClient } from "../../../ts/admin/utils/queryClient";
-  import { reAuth, request } from "../../../ts/admin/utils/request";
-  import DoneDialog from "../components/DoneDialog.svelte";
-  import LessonEditor from "../components/LessonEditor.svelte";
-  import LoadingIndicator from "../components/LoadingIndicator.svelte";
+  } from "$lib/actions/populateLessonActionQueue";
+  import DoneDialog from "$lib/components/DoneDialog.svelte";
+  import LessonEditor from "$lib/components/LessonEditor.svelte";
+  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
+  import { afterReAuthAction, apiUri, globalDialogMessage } from "$lib/stores";
+  import { get } from "$lib/utils/arrayUtils";
+  import { queryClient } from "$lib/utils/queryClient";
+  import { reAuth, request } from "$lib/utils/request";
+  import { createMutation } from "@tanstack/svelte-query";
+  import { onDestroy, onMount } from "svelte";
 
   export let lessonID: string;
   export let fields: Array<[string, Field]>;
   export let lessons: Array<[string, Lesson]>;
-
-  const navigate = useNavigate();
 
   let donePromise: Promise<void> | null = null;
   let name = get(lessons, lessonID)?.name ?? "";
@@ -117,7 +109,7 @@
       {
         AuthenticationException: reAuth,
         LockedException: (response: LockedExceptionResponse): void => {
-          navigate(-1);
+          history.back();
           globalDialogMessage.set(
             `Nelze upravovat lekci, protože ji právě upravuje ${response.holder}.`,
           );
@@ -218,7 +210,7 @@
 
   function discard(): void {
     destroyMutex();
-    navigate(-1);
+    history.back();
   }
 </script>
 
