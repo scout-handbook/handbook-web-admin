@@ -3,10 +3,8 @@
 
   import { adminUri } from "../../ts/admin/stores";
   import FieldProvider from "./components/swr-wrappers/FieldProvider.svelte";
-  import TopBar from "./components/TopBar.svelte";
   import AddLessonView from "./views/AddLessonView.svelte";
   import EditLessonView from "./views/EditLessonView.svelte";
-  import GroupView from "./views/GroupView.svelte";
   import RestoreLessonView from "./views/RestoreLessonView.svelte";
 
   // Remove https:// and domain
@@ -23,30 +21,4 @@
   <Route path="/lessons/:id/versions/:version/restore" let:params>
     <RestoreLessonView lessonID={params["id"]} version={params["version"]} />
   </Route>
-
-  <Route path="/groups">
-    <TopBar />
-    <div class="main-page-container">
-      <div class="main-page">
-        <GroupView />
-      </div>
-    </div>
-  </Route>
 </Router>
-
-<style>
-  .main-page {
-    margin: 0 auto;
-    max-width: 770px;
-    padding: 20px;
-  }
-
-  .main-page-container {
-    bottom: 0;
-    left: 0;
-    overflow-y: auto;
-    position: absolute;
-    right: 0;
-    top: 81px;
-  }
-</style>

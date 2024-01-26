@@ -1,32 +1,24 @@
 <script lang="ts" strictEvents>
+  import type { Event } from "$lib/interfaces/Event";
+  import type { Group } from "$lib/interfaces/Group";
+  import type { Participant } from "$lib/interfaces/Participant";
+  import type { Payload } from "$lib/interfaces/Payload";
+  import type { User } from "$lib/interfaces/User";
+  import type { UserListResponse } from "$lib/interfaces/UserListResponse";
+
+  import Button from "$lib/components/Button.svelte";
+  import Dialog from "$lib/components/Dialog.svelte";
+  import CheckboxGroup from "$lib/components/forms/CheckboxGroup.svelte";
+  import RadioGroup from "$lib/components/forms/RadioGroup.svelte";
+  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
+  import SidePanel from "$lib/components/SidePanel.svelte";
+  import { apiUri } from "$lib/stores";
+  import { queryClient } from "$lib/utils/queryClient";
+  import { authFailHandler, reAuth, request } from "$lib/utils/request";
   import { createMutation } from "@tanstack/svelte-query";
-  import { useNavigate } from "svelte-navigator";
-
-  import type { Event } from "../../../../ts/admin/interfaces/Event";
-  import type { Group } from "../../../../ts/admin/interfaces/Group";
-  import type { Participant } from "../../../../ts/admin/interfaces/Participant";
-  import type { Payload } from "../../../../ts/admin/interfaces/Payload";
-  import type { User } from "../../../../ts/admin/interfaces/User";
-  import type { UserListResponse } from "../../../../ts/admin/interfaces/UserListResponse";
-
-  import { apiUri } from "../../../../ts/admin/stores";
-  import { queryClient } from "../../../../ts/admin/utils/queryClient";
-  import {
-    authFailHandler,
-    reAuth,
-    request,
-  } from "../../../../ts/admin/utils/request";
-  import Button from "../Button.svelte";
-  import Dialog from "../Dialog.svelte";
-  import CheckboxGroup from "../forms/CheckboxGroup.svelte";
-  import RadioGroup from "../forms/RadioGroup.svelte";
-  import LoadingIndicator from "../LoadingIndicator.svelte";
-  import SidePanel from "../SidePanel.svelte";
 
   export let group: Group;
   export let groupId: string;
-
-  const navigate = useNavigate();
 
   let error = "";
   let step = "event-selection-loading";
@@ -153,7 +145,7 @@
   <Dialog
     confirmButtonText="OK"
     on:confirm={() => {
-      navigate(-1);
+      history.back();
     }}
   >
     Akce byla úspěšná.
@@ -162,7 +154,7 @@
   <Dialog
     confirmButtonText="OK"
     on:confirm={() => {
-      navigate(-1);
+      history.back();
     }}
   >
     {error}
@@ -173,7 +165,7 @@
       icon="cancel"
       yellow
       on:click={() => {
-        navigate(-1);
+        history.back();
       }}
     >
       Zrušit
