@@ -1,17 +1,13 @@
 <script lang="ts" strictEvents>
-  import { useNavigate } from "svelte-navigator";
-
-  import { apiUri } from "../../../../ts/admin/stores";
-  import { queryClient } from "../../../../ts/admin/utils/queryClient";
-  import { authFailHandler, request } from "../../../../ts/admin/utils/request";
-  import Button from "../Button.svelte";
-  import Dialog from "../Dialog.svelte";
-  import FileInput from "../forms/FileInput.svelte";
-  import LoadingIndicator from "../LoadingIndicator.svelte";
-  import Overlay from "../Overlay.svelte";
-  import SidePanel from "../SidePanel.svelte";
-
-  const navigate = useNavigate();
+  import Button from "$lib/components/Button.svelte";
+  import Dialog from "$lib/components/Dialog.svelte";
+  import FileInput from "$lib/components/forms/FileInput.svelte";
+  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
+  import Overlay from "$lib/components/Overlay.svelte";
+  import SidePanel from "$lib/components/SidePanel.svelte";
+  import { apiUri } from "$lib/stores";
+  import { queryClient } from "$lib/utils/queryClient";
+  import { authFailHandler, request } from "$lib/utils/request";
 
   let stage: "done" | "error" | "select" | "upload" = "select";
   let files: FileList | undefined;
@@ -48,7 +44,7 @@
       icon="cancel"
       yellow
       on:click={() => {
-        navigate(-1);
+        history.back();
       }}
     >
       Zrušit
@@ -66,7 +62,7 @@
   <Dialog
     confirmButtonText="OK"
     on:confirm={() => {
-      navigate(-1);
+      history.back();
     }}
   >
     Akce byla úspěšná.
@@ -75,7 +71,7 @@
   <Dialog
     confirmButtonText="OK"
     on:confirm={() => {
-      navigate(-1);
+      history.back();
     }}
   >
     Tento prohlížeč nepodporuje nahrávání souborů.
