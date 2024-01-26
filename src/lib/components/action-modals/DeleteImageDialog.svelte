@@ -1,17 +1,13 @@
 <script lang="ts" strictEvents>
+  import { Action } from "$lib/actions/Action";
+  import { ActionQueue } from "$lib/actions/ActionQueue";
+  import Dialog from "$lib/components/Dialog.svelte";
+  import DoneDialog from "$lib/components/DoneDialog.svelte";
+  import { apiUri } from "$lib/stores";
+  import { queryClient } from "$lib/utils/queryClient";
   import { createMutation } from "@tanstack/svelte-query";
-  import { useNavigate } from "svelte-navigator";
-
-  import { Action } from "../../../../ts/admin/actions/Action";
-  import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
-  import { apiUri } from "../../../../ts/admin/stores";
-  import { queryClient } from "../../../../ts/admin/utils/queryClient";
-  import Dialog from "../Dialog.svelte";
-  import DoneDialog from "../DoneDialog.svelte";
 
   export let payload: { imageId: string };
-
-  const navigate = useNavigate();
 
   let donePromise: Promise<void> | null = null;
 
@@ -52,7 +48,7 @@
     dismissButtonText="Ne"
     on:confirm={confirmCallback}
     on:dismiss={() => {
-      navigate(-1);
+      history.back();
     }}
   >
     Opravdu si přejete smazat tento obrázek?
