@@ -25,7 +25,8 @@ function getConfig(mode: string): Record<string, string> {
     return {};
   }
   const location = loadEnv(mode, process.cwd()).VITE_CONFIG;
-  if (location === "undefined") {
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  if (location === undefined || location === "undefined") {
     throw new Error("No config specified");
   }
   return JSON.parse(readFileSync(location, "utf8")) as Record<string, string>;
