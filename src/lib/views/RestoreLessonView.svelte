@@ -1,34 +1,32 @@
 <script lang="ts" strictEvents>
   import { useSWR } from "sswr";
-  import { useLocation, useNavigate } from "svelte-navigator";
 
-  import { Action } from "../../../ts/admin/actions/Action";
-  import { ActionCallback } from "../../../ts/admin/actions/ActionCallback";
-  import { ActionQueue } from "../../../ts/admin/actions/ActionQueue";
+  import { goto } from "$app/navigation";
+  import { base } from "$app/paths";
+  import { page } from "$app/stores";
+  import { Action } from "$lib/actions/Action";
+  import { ActionCallback } from "$lib/actions/ActionCallback";
+  import { ActionQueue } from "$lib/actions/ActionQueue";
   import {
     populateCompetences,
     populateField,
     populateGroups,
-  } from "../../../ts/admin/actions/populateLessonActionQueue";
-  import type { Field } from "../../../ts/admin/interfaces/Field";
-  import type { Lesson } from "../../../ts/admin/interfaces/Lesson";
-  import { apiUri } from "../../../ts/admin/stores";
-  import type { SWRMutateFix } from "../../../ts/admin/SWRMutateFix";
-  import { constructURL } from "../../../ts/admin/utils/constructURL";
-  import { getQueryField } from "../../../ts/admin/utils/getQueryField";
-  import { authFailHandler, request } from "../../../ts/admin/utils/request";
-  import DoneDialog from "../components/DoneDialog.svelte";
-  import LessonEditor from "../components/LessonEditor.svelte";
-  import LoadingIndicator from "../components/LoadingIndicator.svelte";
+  } from "$lib/actions/populateLessonActionQueue";
+  import DoneDialog from "$lib/components/DoneDialog.svelte";
+  import LessonEditor from "$lib/components/LessonEditor.svelte";
+  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
+  import type { Field } from "$lib/interfaces/Field";
+  import type { Lesson } from "$lib/interfaces/Lesson";
+  import { apiUri } from "$lib/stores";
+  import type { SWRMutateFix } from "$lib/SWRMutateFix";
+  import { constructURL } from "$lib/utils/constructURL";
+  import { authFailHandler, request } from "$lib/utils/request";
 
   export let lessonID: string;
   export let version: string;
 
-  const location = useLocation<Record<string, never>>();
-  const navigate = useNavigate();
-
   let donePromise: Promise<void> | null = null;
-  let name = getQueryField($location.search, "name") ?? "Obnovená lekce";
+  let name = $page.url.searchParams.get("name") ?? "Obnovená lekce";
   let body = "";
   let competences: Array<string> = [];
   let field: string | null = null;
@@ -65,8 +63,8 @@
     populateField(saveActionQueue, null, field);
     populateGroups(saveActionQueue, null, groups);
     donePromise = saveActionQueue.dispatch().then(() => {
-      lessonRevalidate({ force: true });
-      fieldRevalidate({ force: true });
+      void lessonRevalidate({ force: true });
+      void fieldRevalidate({ force: true });
     });
   }
 </script>
@@ -75,7 +73,7 @@
   <DoneDialog
     {donePromise}
     on:confirm={() => {
-      navigate("/lessons");
+      void goto(base + "/lessons");
     }}
   >
     Lekce byla úspěšně obnovena.
@@ -92,8 +90,8 @@
       bind:field
       bind:groups
       on:discard={() => {
-        navigate(-1);
-        navigate(-1);
+        history.back();
+        history.back();
       }}
       on:save={save}
     />
