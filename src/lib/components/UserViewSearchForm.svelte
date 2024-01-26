@@ -2,19 +2,19 @@
   import { useSWR } from "sswr";
   import { createEventDispatcher } from "svelte";
 
-  import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
-  import type { Role } from "../../../ts/admin/interfaces/Role";
-  import { filter, map } from "../../../ts/admin/utils/arrayUtils";
-  import { constructURL } from "../../../ts/admin/utils/constructURL";
-  import Button from "../components/Button.svelte";
-  import GroupProvider from "../components/swr-wrappers/GroupProvider.svelte";
-  import Select from "./forms/Select.svelte";
+  import Button from "$lib/components/Button.svelte";
+  import Select from "$lib/components/forms/Select.svelte";
+  import GroupProvider from "$lib/components/swr-wrappers/GroupProvider.svelte";
+  import type { Loginstate } from "$lib/interfaces/Loginstate";
+  import type { Role } from "$lib/interfaces/Role";
+  import { filter, map } from "$lib/utils/arrayUtils";
+  import { constructURL } from "$lib/utils/constructURL";
 
   export let group: string;
   export let role: Role | "all";
   export let searchName: string;
 
-  const dispatch = createEventDispatcher<{ change: never }>();
+  const dispatch = createEventDispatcher<{ change: null }>();
 
   const { data: loginstate } = useSWR<Loginstate>(constructURL("v1.0/account"));
   $: isSuperuser = $loginstate?.role === "superuser";

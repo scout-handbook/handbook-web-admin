@@ -1,23 +1,20 @@
 <script lang="ts" strictEvents>
   import { useSWR } from "sswr";
-  import { useNavigate } from "svelte-navigator";
 
-  import { Action } from "../../../../ts/admin/actions/Action";
-  import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
-  import type { Loginstate } from "../../../../ts/admin/interfaces/Loginstate";
-  import type { User } from "../../../../ts/admin/interfaces/User";
-  import { apiUri } from "../../../../ts/admin/stores";
-  import { constructURL } from "../../../../ts/admin/utils/constructURL";
-  import Button from "../Button.svelte";
-  import DoneDialog from "../DoneDialog.svelte";
-  import RadioGroup from "../forms/RadioGroup.svelte";
-  import SidePanel from "../SidePanel.svelte";
+  import { Action } from "$lib/actions/Action";
+  import { ActionQueue } from "$lib/actions/ActionQueue";
+  import Button from "$lib/components/Button.svelte";
+  import DoneDialog from "$lib/components/DoneDialog.svelte";
+  import RadioGroup from "$lib/components/forms/RadioGroup.svelte";
+  import SidePanel from "$lib/components/SidePanel.svelte";
+  import type { Loginstate } from "$lib/interfaces/Loginstate";
+  import type { User } from "$lib/interfaces/User";
+  import { apiUri } from "$lib/stores";
+  import { constructURL } from "$lib/utils/constructURL";
 
   export let payload: { user: User };
   export let revalidate: ((ops?: { force?: boolean }) => void) | undefined =
     undefined;
-
-  const navigate = useNavigate();
 
   const { data: loginstate } = useSWR<Loginstate>(constructURL("v1.0/account"));
   $: isSuperuser = $loginstate?.role === "superuser";
@@ -69,7 +66,7 @@
       icon="cancel"
       yellow
       on:click={() => {
-        navigate(-1);
+        history.back();
       }}
     >
       Zrušit
