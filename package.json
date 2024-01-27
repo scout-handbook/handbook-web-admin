@@ -28,7 +28,7 @@
   "scripts": {
     "clean": "rimraf dist/*",
     "prebuild": "npm run clean",
-    "build": "gulp build",
+    "build": "VITE_CONFIG=$npm_config_config THEME=$npm_config_theme npx vite build",
     "lint:css:stylelint": "stylelint --color 'src/**/*.css' '!src/lib/font/fontello.css'",
     "lint:css": "run-p -c --aggregate-output lint:css:*",
     "lint:svelte:svelte-check": "svelte-check",
