@@ -5,6 +5,7 @@
   import "@fontsource/open-sans/700.css";
   import "@fontsource/open-sans/700-italic.css";
 
+  import { base } from "$app/paths";
   import { setupActionQueue } from "$lib/actions/ActionQueue";
   import Dialog from "$lib/components/Dialog.svelte";
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
@@ -32,6 +33,26 @@
 
 <svelte:head>
   <title>{$siteName}</title>
+  <link
+    href="{base}/apple-touch-icon.png"
+    rel="apple-touch-icon"
+    sizes="180x180"
+  />
+  <link
+    href="{base}/favicon-32x32.png"
+    rel="icon"
+    sizes="32x32"
+    type="image/png"
+  />
+  <link
+    href="{base}/favicon-16x16.png"
+    rel="icon"
+    sizes="16x16"
+    type="image/png"
+  />
+  <link href="{base}/safari-pinned-tab.svg" rel="mask-icon" />
+  <link href="{base}/favicon.ico" rel="shortcut icon" />
+  <meta name="msapplication-config" content="{base}/browserconfig.xml" />
 </svelte:head>
 
 {#if $globalLoadingIndicator}
