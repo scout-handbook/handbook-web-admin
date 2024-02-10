@@ -19,11 +19,12 @@
 </script>
 
 <!-- eslint-disable svelte/require-optimized-style-attribute -->
-<div
+<button
   class:cyan
   class:green
   class:red
   class:yellow
+  type="button"
   on:click={callback}
   on:keypress={callback}
 >
@@ -31,18 +32,20 @@
     <i class={"icon-" + icon} />
   {/if}
   <slot />
-</div>
+</button>
 
 <style>
-  div {
+  button {
     background-clip: padding-box;
     background-color: var(--button-border);
     border: 1px solid #fff;
     border: 1px solid rgba(255, 255, 255, 0%);
     border-radius: 5px;
+    box-sizing: content-box;
     color: #fff;
     cursor: pointer;
     display: inline-block;
+    font: inherit;
     height: 35px;
     line-height: 35px;
     margin-bottom: -10px;
@@ -57,7 +60,7 @@
       border-color ease 0.15s;
   }
 
-  div:hover {
+  button:hover {
     border-color: var(--button-border);
     box-shadow: rgba(0, 0, 0, 20%) 1px 1px 4px 1px;
     text-decoration: none;
