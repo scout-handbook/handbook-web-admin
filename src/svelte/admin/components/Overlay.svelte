@@ -7,11 +7,9 @@
 </script>
 
 <!-- eslint-disable svelte/no-inline-styles -->
-<div
+<button
+  type="button"
   on:click={() => {
-    dispatch("click");
-  }}
-  on:keypress={() => {
     dispatch("click");
   }}
   transition:fade={{ duration: 100 }}
@@ -20,8 +18,9 @@
 <!-- eslint-enable -->
 
 <style>
-  div {
+  button {
     background-color: var(--overlay-color);
+    border: none;
     height: 100%;
     left: 0;
     position: fixed;
