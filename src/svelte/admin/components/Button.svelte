@@ -26,7 +26,6 @@
   class:yellow
   type="button"
   on:click={callback}
-  on:keypress={callback}
 >
   {#if icon !== ""}
     <i class={"icon-" + icon} />
