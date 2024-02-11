@@ -17,7 +17,7 @@
 
   const navigate = useNavigate();
 
-  let number = 0;
+  let number = "";
   let name = "Nová kompetence";
   let description = "Popis nové kompetence";
   let donePromise: Promise<void> | null = null;
