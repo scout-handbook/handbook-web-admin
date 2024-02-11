@@ -28,7 +28,7 @@ export function SWRSetup(): void {
 }
 
 function competenceComparator(first: Competence, second: Competence): number {
-  return first.number - second.number;
+  return parseInt(first.number) - parseInt(second.number);
 }
 
 function lessonComparator(

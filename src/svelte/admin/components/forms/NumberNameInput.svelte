@@ -1,5 +1,5 @@
 <script lang="ts" strictEvents>
-  export let value: number;
+  export let value: string;
 </script>
 
 <input autocomplete="off" type="text" bind:value />
