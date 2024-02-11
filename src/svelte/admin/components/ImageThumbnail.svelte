@@ -8,23 +8,30 @@
   const dispatch = createEventDispatcher<{ click: never }>();
 </script>
 
-<img
-  alt={"Image " + id}
-  src={$apiUri + "/v1.0/image/" + id + "?quality=thumbnail"}
+<button
+  type="button"
   on:click={() => {
     dispatch("click");
   }}
-  on:keypress={() => {
-    dispatch("click");
-  }}
-/>
+>
+  <img
+    alt={"Image " + id}
+    src={$apiUri + "/v1.0/image/" + id + "?quality=thumbnail"}
+  />
+</button>
 
 <style>
-  img {
+  button {
+    background-color: unset;
+    border: none;
     cursor: pointer;
+    padding: 0;
+    vertical-align: middle;
+  }
+
+  img {
     transform: scale(0.9);
     transition: transform ease 0.15s;
-    vertical-align: middle;
   }
 
   img:hover {

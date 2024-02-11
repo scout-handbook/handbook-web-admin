@@ -10,26 +10,24 @@
   const dispatch = createEventDispatcher<{ click: never }>();
 </script>
 
-<div
-  class="button"
+<button
   class:active
+  type="button"
   on:click={() => {
-    dispatch("click");
-  }}
-  on:keypress={() => {
     dispatch("click");
   }}
 >
   <slot />
-</div>
+</button>
 
 <style>
-  .button {
+  button {
     background-color: var(--background-darker);
     border: 1px solid var(--border-color);
     border-radius: 3px;
     cursor: pointer;
     display: inline-block;
+    font: inherit;
     margin: 0 8px;
     padding: 3px 5px;
     transition:
@@ -38,7 +36,7 @@
       background-color ease 0.15s;
   }
 
-  .button:hover,
+  button:hover,
   .active {
     background-color: var(--background-darkest);
     border-color: var(--accent-color);

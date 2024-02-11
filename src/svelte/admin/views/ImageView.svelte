@@ -46,17 +46,18 @@
       openImage = null;
     }}
   />
-  <img
+  <button
     class="image-preview"
-    alt={"Image " + openImage}
-    src={$apiUri + "/v1.0/image/" + openImage}
+    type="button"
     on:click={() => {
       openImage = null;
     }}
-    on:keypress={() => {
-      openImage = null;
-    }}
-  />
+  >
+    <img
+      alt={"Image " + openImage}
+      src={$apiUri + "/v1.0/image/" + openImage}
+    />
+  </button>
 {/if}
 <h1>{$siteName + " - Obrázky"}</h1>
 <Button
@@ -114,9 +115,12 @@
   }
 
   .image-preview {
+    border: none;
     cursor: pointer;
     bottom: 0;
+    height: fit-content;
     left: 0;
+    padding: 0;
     margin: auto;
     max-height: 100%;
     position: absolute;
