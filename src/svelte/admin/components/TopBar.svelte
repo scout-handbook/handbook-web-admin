@@ -14,80 +14,70 @@
 
 <div class="wrapper">
   <UserAccountBox />
-  <div
-    class="tab"
+  <button
     class:active-tab={$rootMatcher !== null || $lessonMatcher !== null}
+    type="button"
     on:click={() => {
-      navigate("/lessons");
-    }}
-    on:keypress={() => {
       navigate("/lessons");
     }}
   >
     Lekce
-  </div>
-  <div
-    class="tab"
+  </button>
+  <button
     class:active-tab={$competenceMatcher !== null}
+    type="button"
     on:click={() => {
-      navigate("/competences");
-    }}
-    on:keypress={() => {
       navigate("/competences");
     }}
   >
     Kompetence
-  </div>
-  <div
-    class="tab"
+  </button>
+  <button
     class:active-tab={$imageMatcher !== null}
+    type="button"
     on:click={() => {
-      navigate("/images");
-    }}
-    on:keypress={() => {
       navigate("/images");
     }}
   >
     Obrázky
-  </div>
-  <div
-    class="tab"
+  </button>
+  <button
     class:active-tab={$userMatcher !== null}
+    type="button"
     on:click={() => {
-      navigate("/users");
-    }}
-    on:keypress={() => {
       navigate("/users");
     }}
   >
     Uživatelé
-  </div>
-  <div
-    class="groups tab"
+  </button>
+  <button
+    class="groups"
     class:active-tab={$groupMatcher !== null}
-    on:keypress={() => {
-      navigate("/groups");
-    }}
+    type="button"
     on:click={() => {
       navigate("/groups");
     }}
   >
     Uživatelské skupiny
-  </div>
+  </button>
 </div>
 
 <style>
-  .tab {
+  button {
+    background: none;
+    border: none;
     border-left: 1px solid var(--border-color);
     border-right: 1px solid var(--border-color);
+    box-sizing: content-box;
     color: var(--background);
     cursor: pointer;
     display: inline-block;
+    font: inherit;
     font-size: 1.1em;
     font-weight: bold;
     height: 52px;
     margin-left: -5px;
-    padding-top: 28px;
+    padding: 15px 0 13px 0;
     text-align: center;
     transition:
       color ease 0.15s,
@@ -98,15 +88,15 @@
   }
 
   .active-tab,
-  .tab:hover {
+  button:hover {
     background-color: var(--background-darkest);
     border-color: var(--accent-color);
     color: var(--accent-color);
   }
 
   .groups {
-    padding-bottom: 11px;
-    padding-top: 17px;
+    padding-bottom: 12px;
+    padding-top: 16px;
   }
 
   .wrapper {
