@@ -22,13 +22,9 @@ export class ActionQueue {
   }
 
   public async dispatch(): Promise<void> {
-    if (this.actions.length === 0) {
+    if (this.actions.length < 1) {
       return;
     }
-    await this.pop();
-  }
-
-  private async pop(): Promise<void> {
     this.actions[0].exceptionHandler.AuthenticationException = (): void => {
       this.authException();
     };
@@ -40,9 +36,7 @@ export class ActionQueue {
     ).then(async (response) => {
       this.actions[0].callback(response, this);
       this.actions.shift();
-      if (this.actions.length > 0) {
-        await this.pop();
-      }
+      await this.dispatch();
     });
   }
 
