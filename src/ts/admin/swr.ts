@@ -28,7 +28,11 @@ export function SWRSetup(): void {
 }
 
 function competenceComparator(first: Competence, second: Competence): number {
-  return parseInt(first.number) - parseInt(second.number);
+  const numberComparison =
+    parseInt(first.number, 10) - parseInt(second.number, 10);
+  return numberComparison !== 0
+    ? numberComparison
+    : first.number.localeCompare(second.number);
 }
 
 function lessonComparator(
