@@ -76,29 +76,24 @@ export async function request<T extends RequestResponse>(
   payload: FormData | Payload,
   exceptionHandler: ExceptionHandler = {},
 ): Promise<T> {
-  return new Promise((resolve, reject) => {
-    void rawRequest<T>(url, method, payload).then(
-      (response: APIResponse<T>): void => {
-        if (Math.floor(response.status / 100) === 2) {
-          resolve(response.response!);
-        } else if (
-          Object.prototype.hasOwnProperty.call(exceptionHandler, response.type!)
-        ) {
-          exceptionHandler[response.type!]!(response);
-          reject(new Error());
-        } else if (
-          response.status === 401 &&
-          Object.prototype.hasOwnProperty.call(exceptionHandler, "401")
-        ) {
-          exceptionHandler["401"]!(response);
-          reject(new Error());
-        } else {
-          globalDialogMessage.set(
-            "Nastala neznámá chyba. Chybová hláška: " + response.message!,
-          );
-          reject(new Error());
-        }
-      },
+  const response = await rawRequest<T>(url, method, payload);
+  if (Math.floor(response.status / 100) === 2) {
+    return response.response!;
+  } else if (
+    Object.prototype.hasOwnProperty.call(exceptionHandler, response.type!)
+  ) {
+    exceptionHandler[response.type!]!(response);
+    throw new Error();
+  } else if (
+    response.status === 401 &&
+    Object.prototype.hasOwnProperty.call(exceptionHandler, "401")
+  ) {
+    exceptionHandler["401"]!(response);
+    throw new Error();
+  } else {
+    globalDialogMessage.set(
+      "Nastala neznámá chyba. Chybová hláška: " + response.message!,
     );
-  });
+    throw new Error();
+  }
 }
