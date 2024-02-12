@@ -123,7 +123,7 @@
     padding: 0;
     margin: auto;
     max-height: 100%;
-    position: absolute;
+    position: fixed;
     right: 0;
     top: 0;
     z-index: 9;
