@@ -22,36 +22,21 @@ export class ActionQueue {
   }
 
   public async dispatch(): Promise<void> {
-    if (this.actions.length == 0) {
-      return new Promise((resolve) => {
-        resolve();
-      });
-    }
-    return new Promise((resolve) => {
-      this.pop(resolve, true);
-    });
-  }
-
-  private pop(resolve: () => void, propagate: boolean): void {
-    if (this.actions.length <= 1) {
-      propagate = false;
+    if (this.actions.length < 1) {
+      return;
     }
     this.actions[0].exceptionHandler.AuthenticationException = (): void => {
       this.authException();
     };
-    void request(
+    await request(
       this.actions[0].url,
       this.actions[0].method,
       this.actions[0].payload,
       this.actions[0].exceptionHandler,
-    ).then((response) => {
+    ).then(async (response) => {
       this.actions[0].callback(response, this);
       this.actions.shift();
-      if (propagate) {
-        this.pop(resolve, true);
-      } else {
-        resolve();
-      }
+      await this.dispatch();
     });
   }
 

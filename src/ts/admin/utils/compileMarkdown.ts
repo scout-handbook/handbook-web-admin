@@ -54,8 +54,6 @@ export async function compileMarkdown(markdown: string): Promise<string> {
     }
     return promise;
   } else {
-    return new Promise((resolve) => {
-      resolve(filterXSS(converter!.makeHtml(markdown), xssOptions()));
-    });
+    return filterXSS(converter!.makeHtml(markdown), xssOptions());
   }
 }
