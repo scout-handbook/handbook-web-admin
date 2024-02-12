@@ -65,7 +65,7 @@
 </script>
 
 {#if donePromise !== null}
-  <DoneDialog {donePromise}>Kompetence byla úspěšně smazána.</DoneDialog>
+  <DoneDialog {donePromise}>Bod byl úspěšně smazán.</DoneDialog>
 {:else}
   <Dialog
     confirmButtonText="Ano"
@@ -75,6 +75,6 @@
       navigate(-1);
     }}
   >
-    Opravdu si přejete smazat kompetenci {competence.number}: "{competence.name}"?
+    Opravdu si přejete smazat bod {competence.number}: "{competence.name}"?
   </Dialog>
 {/if}

@@ -62,7 +62,7 @@
   {/if}
 </FieldProvider>
 <br />
-<h1>Kompetence</h1>
+<h1>Body</h1>
 <Button
   cyan
   icon="pencil"
