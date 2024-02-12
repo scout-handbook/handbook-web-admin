@@ -28,18 +28,11 @@ export class ActionQueue {
       });
     }
     return new Promise((resolve, reject) => {
-      this.pop(resolve, reject, true);
+      this.pop(resolve, reject);
     });
   }
 
-  private pop(
-    resolve: () => void,
-    reject: () => void,
-    propagate: boolean,
-  ): void {
-    if (this.actions.length <= 1) {
-      propagate = false;
-    }
+  private pop(resolve: () => void, reject: () => void): void {
     this.actions[0].exceptionHandler.AuthenticationException = (): void => {
       this.authException();
     };
@@ -52,8 +45,8 @@ export class ActionQueue {
       .then((response) => {
         this.actions[0].callback(response, this);
         this.actions.shift();
-        if (propagate) {
-          this.pop(resolve, reject, true);
+        if (this.actions.length > 0) {
+          this.pop(resolve, reject);
         } else {
           resolve();
         }
