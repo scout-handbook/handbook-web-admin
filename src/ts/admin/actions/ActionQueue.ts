@@ -27,32 +27,38 @@ export class ActionQueue {
         resolve();
       });
     }
-    return new Promise((resolve) => {
-      this.pop(resolve, true);
+    return new Promise((resolve, reject) => {
+      this.pop(resolve, reject, true);
     });
   }
 
-  private pop(resolve: () => void, propagate: boolean): void {
+  private pop(
+    resolve: () => void,
+    reject: () => void,
+    propagate: boolean,
+  ): void {
     if (this.actions.length <= 1) {
       propagate = false;
     }
     this.actions[0].exceptionHandler.AuthenticationException = (): void => {
       this.authException();
     };
-    void request(
+    request(
       this.actions[0].url,
       this.actions[0].method,
       this.actions[0].payload,
       this.actions[0].exceptionHandler,
-    ).then((response) => {
-      this.actions[0].callback(response, this);
-      this.actions.shift();
-      if (propagate) {
-        this.pop(resolve, true);
-      } else {
-        resolve();
-      }
-    });
+    )
+      .then((response) => {
+        this.actions[0].callback(response, this);
+        this.actions.shift();
+        if (propagate) {
+          this.pop(resolve, reject, true);
+        } else {
+          resolve();
+        }
+      })
+      .catch(reject);
   }
 
   private authException(): void {
