@@ -29,7 +29,7 @@
     navigate(-1);
   }}>Uložit</Button
 >
-<h1>Změnit kompetence</h1>
+<h1>Změnit body</h1>
 <form>
   <CompetenceProvider let:competences={allCompetences}>
     <CheckboxGroup

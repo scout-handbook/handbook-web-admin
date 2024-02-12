@@ -64,7 +64,7 @@
 </script>
 
 {#if donePromise !== null}
-  <DoneDialog {donePromise}>Kompetence byla úspěšně upravena.</DoneDialog>
+  <DoneDialog {donePromise}>Bod byl úspěšně upraven.</DoneDialog>
 {:else}
   <SidePanel>
     <Button
@@ -77,9 +77,9 @@
       Zrušit
     </Button>
     <Button green icon="floppy" on:click={saveCallback}>Uložit</Button>
-    <h1>Upravit kompetenci</h1>
+    <h1>Upravit bod</h1>
     <form>
-      <span class="competence-heading">Kompetence</span>
+      <span class="competence-heading">Bod</span>
       <NumberNameInput bind:value={number} />
       <br />
       <NameInput bind:value={name} />
