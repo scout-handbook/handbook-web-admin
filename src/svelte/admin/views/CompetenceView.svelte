@@ -38,7 +38,7 @@
   </CompetenceProvider>
 {/if}
 
-<h1>{$siteName + " - Kompetence"}</h1>
+<h1>{$siteName + " - Body"}</h1>
 {#if adminOrSuperuser}
   <Button
     green

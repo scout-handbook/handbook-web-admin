@@ -30,7 +30,7 @@
       navigate("/competences");
     }}
   >
-    Kompetence
+    Body
   </button>
   <button
     class:active-tab={$imageMatcher !== null}

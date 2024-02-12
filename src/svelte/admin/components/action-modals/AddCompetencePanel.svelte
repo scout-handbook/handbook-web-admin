@@ -17,9 +17,9 @@
 
   const navigate = useNavigate();
 
-  let number = "";
-  let name = "Nová kompetence";
-  let description = "Popis nové kompetence";
+  let number = "0";
+  let name = "Nový bod";
+  let description = "Popis nového bodu";
   let donePromise: Promise<void> | null = null;
   const { revalidate } = useSWR<SWRMutateFix<Record<string, Competence>>>(
     constructURL("v1.0/competence"),
@@ -41,7 +41,7 @@
 </script>
 
 {#if donePromise !== null}
-  <DoneDialog {donePromise}>Kompetence byla úspěšně přidána.</DoneDialog>
+  <DoneDialog {donePromise}>Bod byl úspěšně přidán.</DoneDialog>
 {:else}
   <SidePanel>
     <Button
@@ -54,9 +54,9 @@
       Zrušit
     </Button>
     <Button green icon="floppy" on:click={saveCallback}>Uložit</Button>
-    <h1>Přidat kompetenci</h1>
+    <h1>Přidat bod</h1>
     <form>
-      <span class="competence-heading">Kompetence</span>
+      <span class="competence-heading">Bod</span>
       <NumberNameInput bind:value={number} />
       <br />
       <NameInput bind:value={name} />
