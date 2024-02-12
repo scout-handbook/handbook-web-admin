@@ -72,6 +72,7 @@
       {
         AuthenticationException: reAuth,
         LockedException: (response: APIResponse<RequestResponse>): void => {
+          navigate(-1);
           globalDialogMessage.set(
             "Nelze upravovat lekci, protože ji právě upravuje " +
               response.holder! +
