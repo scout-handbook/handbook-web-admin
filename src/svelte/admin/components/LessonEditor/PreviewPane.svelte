@@ -6,6 +6,7 @@
 
   let html = "";
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-expressions -- Incorrect with svelte reactive statements
   $: name && body && onChange();
 
   refreshPreview();

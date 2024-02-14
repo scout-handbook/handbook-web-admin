@@ -14,6 +14,7 @@
   let editor: EasyMDE | undefined;
   let editorArea: HTMLElement;
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-expressions -- Incorrect with svelte reactive statements
   $: editor !== undefined && value !== editor.value() && editor.value(value);
 
   onMount(() => {
