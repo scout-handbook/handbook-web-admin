@@ -64,6 +64,15 @@
   };
   const discardExceptionHandler = { NotFoundException: null };
 
+  function sendBeacon(id: string): void {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions
+    if (navigator.sendBeacon) {
+      navigator.sendBeacon(
+        $apiUri + "/v1.0/mutex-beacon/" + encodeURIComponent(id),
+      );
+    }
+  }
+
   let lessonDataPromise = Promise.all([
     request(
       $apiUri + "/v1.0/mutex/" + encodeURIComponent(lessonID),
@@ -109,15 +118,6 @@
     }),
   ]);
 
-  onDestroy(() => {
-    afterReAuthAction.set(null);
-  });
-  onMount(() => {
-    afterReAuthAction.set(() => {
-      lessonEditMutexExtend(lessonID);
-    });
-  });
-
   function lessonEditMutexExtend(id: string): void {
     void new ActionQueue([
       new Action(
@@ -130,14 +130,14 @@
     ]).dispatch();
   }
 
-  function sendBeacon(id: string): void {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions
-    if (navigator.sendBeacon) {
-      navigator.sendBeacon(
-        $apiUri + "/v1.0/mutex-beacon/" + encodeURIComponent(id),
-      );
-    }
-  }
+  onDestroy(() => {
+    afterReAuthAction.set(null);
+  });
+  onMount(() => {
+    afterReAuthAction.set(() => {
+      lessonEditMutexExtend(lessonID);
+    });
+  });
 
   function destroyMutex(): void {
     void new ActionQueue([
