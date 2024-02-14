@@ -6,11 +6,6 @@
 
   let html = "";
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-expressions -- Incorrect with svelte reactive statements
-  $: name && body && onChange();
-
-  refreshPreview();
-
   function refreshPreview(): void {
     void compileMarkdown(body).then((compiled) => {
       html = compiled;
@@ -20,6 +15,11 @@
   function onChange(): void {
     refreshPreview();
   }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-expressions -- Incorrect with svelte reactive statements
+  $: name && body && onChange();
+
+  refreshPreview();
 </script>
 
 <div class="outer-container">

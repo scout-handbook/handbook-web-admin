@@ -4,15 +4,15 @@
   import { default as EasyMDE } from "easymde";
   import { onMount } from "svelte";
 
+  let editor: EasyMDE | undefined;
+  let editorArea: HTMLElement;
+
   export let imageSelectorOpen: boolean;
   export let value: string;
   export const insertAtCursor = (content: string): void => {
     const doc = editor!.codemirror.getDoc();
     doc.replaceRange(content, doc.getCursor());
   };
-
-  let editor: EasyMDE | undefined;
-  let editorArea: HTMLElement;
 
   // eslint-disable-next-line @typescript-eslint/no-unused-expressions -- Incorrect with svelte reactive statements
   $: editor !== undefined && value !== editor.value() && editor.value(value);
