@@ -165,9 +165,9 @@
             ])}
             bind:selected={selectedVersion}
           >
-            <span slot="option" let:id={version} let:value={name}>
+            <span slot="option" let:id={version} let:value={versionName}>
               <span class="version-name">
-                {name}
+                {versionName}
               </span>
               —
               <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-argument -->

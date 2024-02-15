@@ -51,11 +51,11 @@
         .dispatch()
         .then(() => {
           mutate(
-            SWRMutateFnWrapper((competences) => {
-              competences[payload.competenceId].number = number;
-              competences[payload.competenceId].name = name;
-              competences[payload.competenceId].description = description;
-              return competences;
+            SWRMutateFnWrapper((cachedCompetences) => {
+              cachedCompetences[payload.competenceId].number = number;
+              cachedCompetences[payload.competenceId].name = name;
+              cachedCompetences[payload.competenceId].description = description;
+              return cachedCompetences;
             }),
           );
         });

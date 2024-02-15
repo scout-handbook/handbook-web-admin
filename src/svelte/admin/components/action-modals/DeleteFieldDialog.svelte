@@ -34,9 +34,9 @@
       .dispatch()
       .then(() => {
         mutate(
-          SWRMutateFnWrapper((fields) => {
-            delete fields[payload.fieldId];
-            return fields;
+          SWRMutateFnWrapper((cachedFields) => {
+            delete cachedFields[payload.fieldId];
+            return cachedFields;
           }),
         );
       });

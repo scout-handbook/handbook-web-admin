@@ -69,7 +69,7 @@
           // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
           filter(groups, (id) => id !== "00000000-0000-0000-0000-000000000000"),
           // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-          (group) => group.name,
+          (item) => item.name,
         ),
       )}
       bind:selected={group}

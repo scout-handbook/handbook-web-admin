@@ -40,7 +40,7 @@
   let body = "";
   let competences: Array<string> = get(lessons, lessonID)?.competences ?? [];
   let field: string | null =
-    fields.find(([_, field]) => field.lessons.includes(lessonID))?.[0] ?? null;
+    fields.find(([_, item]) => item.lessons.includes(lessonID))?.[0] ?? null;
   let groups: Array<string> = [];
 
   const initialName = name;
@@ -63,6 +63,15 @@
     },
   };
   const discardExceptionHandler = { NotFoundException: null };
+
+  function sendBeacon(id: string): void {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions
+    if (navigator.sendBeacon) {
+      navigator.sendBeacon(
+        $apiUri + "/v1.0/mutex-beacon/" + encodeURIComponent(id),
+      );
+    }
+  }
 
   let lessonDataPromise = Promise.all([
     request(
@@ -109,15 +118,6 @@
     }),
   ]);
 
-  onDestroy(() => {
-    afterReAuthAction.set(null);
-  });
-  onMount(() => {
-    afterReAuthAction.set(() => {
-      lessonEditMutexExtend(lessonID);
-    });
-  });
-
   function lessonEditMutexExtend(id: string): void {
     void new ActionQueue([
       new Action(
@@ -130,14 +130,14 @@
     ]).dispatch();
   }
 
-  function sendBeacon(id: string): void {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions
-    if (navigator.sendBeacon) {
-      navigator.sendBeacon(
-        $apiUri + "/v1.0/mutex-beacon/" + encodeURIComponent(id),
-      );
-    }
-  }
+  onDestroy(() => {
+    afterReAuthAction.set(null);
+  });
+  onMount(() => {
+    afterReAuthAction.set(() => {
+      lessonEditMutexExtend(lessonID);
+    });
+  });
 
   function destroyMutex(): void {
     void new ActionQueue([
@@ -145,7 +145,7 @@
         $apiUri + "/v1.0/mutex/" + encodeURIComponent(lessonID),
         "DELETE",
         undefined,
-        [ActionCallback.RemoveBeacon],
+        [ActionCallback.removeBeacon],
         discardExceptionHandler,
       ),
     ]).dispatch();
@@ -162,7 +162,7 @@
             name: encodeURIComponent(name),
             body: encodeURIComponent(body),
           },
-          [ActionCallback.RemoveBeacon],
+          [ActionCallback.removeBeacon],
           saveExceptionHandler,
         ),
       );
@@ -179,24 +179,24 @@
     populateGroups(saveActionQueue, lessonID, groups, initialGroups);
     donePromise = saveActionQueue.dispatch().then(() => {
       lessonMutate(
-        SWRMutateFnWrapper((lessons) => {
-          lessons[lessonID].name = name;
-          lessons[lessonID].competences = competences;
-          return lessons;
+        SWRMutateFnWrapper((cachedLessons) => {
+          cachedLessons[lessonID].name = name;
+          cachedLessons[lessonID].competences = competences;
+          return cachedLessons;
         }),
       );
       fieldMutate(
-        SWRMutateFnWrapper((fields) => {
+        SWRMutateFnWrapper((cachedFields) => {
           if (initialField !== null) {
-            fields[initialField].lessons.splice(
-              fields[initialField].lessons.indexOf(lessonID),
+            cachedFields[initialField].lessons.splice(
+              cachedFields[initialField].lessons.indexOf(lessonID),
               1,
             );
           }
           if (field !== null) {
-            fields[field].lessons.push(lessonID);
+            cachedFields[field].lessons.push(lessonID);
           }
-          return fields;
+          return cachedFields;
         }),
       );
     });

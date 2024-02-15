@@ -43,9 +43,9 @@
         .dispatch()
         .then(() => {
           mutate(
-            SWRMutateFnWrapper((groups) => {
-              groups[payload.groupId].name = name;
-              return groups;
+            SWRMutateFnWrapper((cachedGroups) => {
+              cachedGroups[payload.groupId].name = name;
+              return cachedGroups;
             }),
           );
         });

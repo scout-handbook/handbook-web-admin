@@ -63,9 +63,9 @@
       .dispatch()
       .then(() => {
         lessonMutate(
-          SWRMutateFnWrapper((lessons) => {
-            delete lessons[payload.lessonId];
-            return lessons;
+          SWRMutateFnWrapper((cachedLessons) => {
+            delete cachedLessons[payload.lessonId];
+            return cachedLessons;
           }),
         );
         fieldMutate(

@@ -60,7 +60,7 @@ export class ActionQueue {
   }
 }
 
-export function ActionQueueSetup(): void {
+export function setupActionQueue(): void {
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions
   if (window.sessionStorage && sessionStorage.getItem("ActionQueue") !== null) {
     const aq = new ActionQueue(
