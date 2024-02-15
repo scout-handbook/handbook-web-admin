@@ -6,10 +6,10 @@ import { filterXSS } from "xss";
 import type { WorkerPayload } from "../../common/WorkerPayload";
 import { xssOptions } from "../../common/xssOptions";
 
-let converter: showdown.Converter | undefined;
-let worker: Worker | undefined;
+let converter: showdown.Converter | null = null;
+let worker: Worker | null = null;
 let workerRunning = false;
-let nextPayload: WorkerPayload | null;
+let nextPayload: WorkerPayload | null = null;
 const promiseResolvers: Record<string, (value: string) => void> = {};
 
 export function compileMarkdownSetup(): void {
