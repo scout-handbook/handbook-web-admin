@@ -53,12 +53,12 @@
         .dispatch()
         .then(() => {
           mutate(
-            SWRMutateFnWrapper((fields) => {
-              fields[payload.fieldId].name = name;
-              fields[payload.fieldId].description = description;
-              fields[payload.fieldId].image = image;
-              fields[payload.fieldId].icon = icon;
-              return fields;
+            SWRMutateFnWrapper((cachedFields) => {
+              cachedFields[payload.fieldId].name = name;
+              cachedFields[payload.fieldId].description = description;
+              cachedFields[payload.fieldId].image = image;
+              cachedFields[payload.fieldId].icon = icon;
+              return cachedFields;
             }),
           );
         });

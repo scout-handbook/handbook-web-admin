@@ -34,9 +34,9 @@
       .dispatch()
       .then(() => {
         mutate(
-          SWRMutateFnWrapper((groups) => {
-            delete groups[payload.groupId];
-            return groups;
+          SWRMutateFnWrapper((cachedGroups) => {
+            delete cachedGroups[payload.groupId];
+            return cachedGroups;
           }),
         );
       });
