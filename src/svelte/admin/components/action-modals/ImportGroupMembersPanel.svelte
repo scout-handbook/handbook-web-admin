@@ -86,6 +86,7 @@
     const userPromise = request<UserListResponse>(
       $apiUri + "/v1.0/user",
       "GET",
+      // eslint-disable-next-line @typescript-eslint/naming-convention -- HTTP argument
       { page: 1, "per-page": 1000, group: payload.groupId },
       {
         AuthenticationException: reAuth,

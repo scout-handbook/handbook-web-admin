@@ -50,6 +50,7 @@ export default defineConfig(({ mode }) => ({
     outDir: "../dist",
   },
   define: {
+    // eslint-disable-next-line @typescript-eslint/naming-convention -- CLI variable
     CONFIG: JSON.stringify(getConfig(mode)),
   },
 }));
