@@ -129,9 +129,9 @@
       ),
     ).then(() => {
       mutate(
-        SWRMutateFnWrapper((groups) => {
-          groups[payload.groupId].count += selectedParticipants.length;
-          return groups;
+        SWRMutateFnWrapper((cachedGroups) => {
+          cachedGroups[payload.groupId].count += selectedParticipants.length;
+          return cachedGroups;
         }),
       );
       step = "done";

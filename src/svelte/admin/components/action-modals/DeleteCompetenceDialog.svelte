@@ -40,9 +40,9 @@
       .dispatch()
       .then(() => {
         competenceMutate(
-          SWRMutateFnWrapper((competences) => {
-            delete competences[payload.competenceId];
-            return competences;
+          SWRMutateFnWrapper((cachedCompetences) => {
+            delete cachedCompetences[payload.competenceId];
+            return cachedCompetences;
           }),
         );
         lessonMutate(

@@ -40,7 +40,7 @@
   let body = "";
   let competences: Array<string> = get(lessons, lessonID)?.competences ?? [];
   let field: string | null =
-    fields.find(([_, field]) => field.lessons.includes(lessonID))?.[0] ?? null;
+    fields.find(([_, item]) => item.lessons.includes(lessonID))?.[0] ?? null;
   let groups: Array<string> = [];
 
   const initialName = name;
@@ -179,24 +179,24 @@
     populateGroups(saveActionQueue, lessonID, groups, initialGroups);
     donePromise = saveActionQueue.dispatch().then(() => {
       lessonMutate(
-        SWRMutateFnWrapper((lessons) => {
-          lessons[lessonID].name = name;
-          lessons[lessonID].competences = competences;
-          return lessons;
+        SWRMutateFnWrapper((cachedLessons) => {
+          cachedLessons[lessonID].name = name;
+          cachedLessons[lessonID].competences = competences;
+          return cachedLessons;
         }),
       );
       fieldMutate(
-        SWRMutateFnWrapper((fields) => {
+        SWRMutateFnWrapper((cachedFields) => {
           if (initialField !== null) {
-            fields[initialField].lessons.splice(
-              fields[initialField].lessons.indexOf(lessonID),
+            cachedFields[initialField].lessons.splice(
+              cachedFields[initialField].lessons.indexOf(lessonID),
               1,
             );
           }
           if (field !== null) {
-            fields[field].lessons.push(lessonID);
+            cachedFields[field].lessons.push(lessonID);
           }
-          return fields;
+          return cachedFields;
         }),
       );
     });
