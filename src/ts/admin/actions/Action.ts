@@ -29,10 +29,10 @@ export class Action {
   public callback(response: RequestResponse, actionQueue: ActionQueue): void {
     for (const callback of this.callbacks) {
       switch (callback) {
-        case ActionCallback.FillID:
+        case ActionCallback.fillID:
           actionQueue.fillID(response as string);
           break;
-        case ActionCallback.RemoveBeacon:
+        case ActionCallback.removeBeacon:
           window.onbeforeunload = null;
           break;
       }

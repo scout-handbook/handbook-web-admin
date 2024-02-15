@@ -8,11 +8,11 @@ import { filterXSS } from "xss";
 import type { WorkerPayload } from "./common/WorkerPayload";
 import { xssOptions } from "./common/xssOptions";
 
-let converter: Converter;
+let converter: Converter | null = null;
 
 function convert(payload: MessageEvent): void {
   const data = payload.data as WorkerPayload;
-  const html = filterXSS(converter.makeHtml(data.body), xssOptions());
+  const html = filterXSS(converter!.makeHtml(data.body), xssOptions());
   postMessage({ id: data.id, body: html });
 }
 
