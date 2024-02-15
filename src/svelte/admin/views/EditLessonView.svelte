@@ -145,7 +145,7 @@
         $apiUri + "/v1.0/mutex/" + encodeURIComponent(lessonID),
         "DELETE",
         undefined,
-        [ActionCallback.RemoveBeacon],
+        [ActionCallback.removeBeacon],
         discardExceptionHandler,
       ),
     ]).dispatch();
@@ -162,7 +162,7 @@
             name: encodeURIComponent(name),
             body: encodeURIComponent(body),
           },
-          [ActionCallback.RemoveBeacon],
+          [ActionCallback.removeBeacon],
           saveExceptionHandler,
         ),
       );

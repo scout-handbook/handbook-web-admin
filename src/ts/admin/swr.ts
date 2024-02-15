@@ -8,7 +8,7 @@ import type { RequestResponse } from "./interfaces/RequestResponse";
 import { get, map, sort } from "./utils/arrayUtils";
 import { reAuth, request } from "./utils/request";
 
-export function SWRSetup(): void {
+export function setupSWR(): void {
   createDefaultSWR({
     dedupingInterval: 60000,
     fetcher: async (url: string): Promise<RequestResponse> =>

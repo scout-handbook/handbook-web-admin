@@ -5,6 +5,7 @@
   type ValueType = $$Generic;
 
   interface $$Slots {
+    // eslint-disable-next-line @typescript-eslint/naming-convention -- Attributes should be hyphenated
     "null-option": Record<string, never>;
     option: { id: KeyType; value: ValueType };
   }
