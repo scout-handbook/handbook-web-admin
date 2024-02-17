@@ -1,5 +1,5 @@
 /// <reference types="svelte" />
-// eslint-disable-next-line @typescript-eslint/triple-slash-reference
+// eslint-disable-next-line @typescript-eslint/triple-slash-reference -- Here it is appropriate
 /// <reference path="../d.ts/CONFIG.d.ts" />
 
 import App from "../svelte/admin/App.svelte";

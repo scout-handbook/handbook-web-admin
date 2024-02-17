@@ -65,7 +65,7 @@
   const discardExceptionHandler = { NotFoundException: null };
 
   function sendBeacon(id: string): void {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions -- Older browsers don't include this function
     if (navigator.sendBeacon) {
       navigator.sendBeacon(
         $apiUri + "/v1.0/mutex-beacon/" + encodeURIComponent(id),

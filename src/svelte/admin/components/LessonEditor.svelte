@@ -19,7 +19,7 @@
 
   const dispatch = createEventDispatcher<{ discard: never; save: never }>();
   const location = useLocation<{ view: string }>();
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- The typings for svelte-navigator incorrectly don't include undefined for $location.state
   $: view = $location.state?.view;
 
   let imageSelectorOpen = false;
