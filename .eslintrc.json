@@ -183,7 +183,7 @@
       "parserOptions": {
         "project": null
       },
-      "files": ["gulpfile.js", "postcss.config.js"],
+      "files": ["postcss.config.js", "svelte.config.js"],
       "rules": {
         "deprecation/deprecation": "off",
         "@typescript-eslint/await-thenable": "off",
