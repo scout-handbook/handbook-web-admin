@@ -19,9 +19,9 @@
     action: string;
     actionPayload: { user: User };
   }>();
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- The typings for svelte-navigator incorrectly don't include undefined for $location.state
   $: action = $location.state?.action;
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- The typings for svelte-navigator incorrectly don't include undefined for $location.state
   $: actionPayload = $location.state?.actionPayload;
 
   let page = 1;

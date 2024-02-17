@@ -13,7 +13,7 @@ let nextPayload: WorkerPayload | null = null;
 const promiseResolvers: Record<string, (value: string) => void> = {};
 
 export function compileMarkdownSetup(): void {
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions -- Worker isn't present in older browsers
   if (Worker) {
     worker = new Worker(new URL("../../admin-worker.ts", import.meta.url));
     worker.onmessage = (payload): void => {
@@ -35,7 +35,7 @@ export function compileMarkdownSetup(): void {
 }
 
 export async function compileMarkdown(markdown: string): Promise<string> {
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions -- Worker isn't present in older browsers
   if (Worker) {
     let id = "";
     const characters =

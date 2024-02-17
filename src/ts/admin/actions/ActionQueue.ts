@@ -41,7 +41,7 @@ export class ActionQueue {
   }
 
   private authException(): void {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions -- window.sessionStorage is not present in older browsers
     if (!this.isRetryAfterLogin && window.sessionStorage) {
       sessionStorage.setItem(
         "ActionQueue",
@@ -61,7 +61,7 @@ export class ActionQueue {
 }
 
 export function setupActionQueue(): void {
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions -- window.sessionStorage is not present in older browsers
   if (window.sessionStorage && sessionStorage.getItem("ActionQueue") !== null) {
     const aq = new ActionQueue(
       (
