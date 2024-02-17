@@ -237,5 +237,8 @@
         "@typescript-eslint/unbound-method": "off"
       }
     }
-  ]
+  ],
+  "globals": {
+    "$$Generic": "readonly"
+  }
 }

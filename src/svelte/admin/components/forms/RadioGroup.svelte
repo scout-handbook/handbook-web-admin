@@ -1,7 +1,5 @@
 <script lang="ts" strictEvents>
-  // eslint-disable-next-line no-undef
   type KeyType = $$Generic<number | string>;
-  // eslint-disable-next-line no-undef
   type ValueType = $$Generic;
 
   interface $$Slots {
@@ -11,11 +9,10 @@
   }
 
   export let options: Array<[KeyType, ValueType]>;
-  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
+  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents -- Eslint can't handle $$Generic
   export let selected: KeyType | null;
 
   const name = Math.random().toString();
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
   $: nullOptionPresent = $$slots["null-option"];
 </script>
 

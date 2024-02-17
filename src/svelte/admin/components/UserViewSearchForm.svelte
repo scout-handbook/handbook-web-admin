@@ -66,9 +66,9 @@
     <Select
       options={groupList.concat(
         map(
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument -- Eslint cannot handle slot props
           filter(groups, (id) => id !== "00000000-0000-0000-0000-000000000000"),
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-return -- Eslint cannot handle slot props
           (item) => item.name,
         ),
       )}

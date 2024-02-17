@@ -25,7 +25,7 @@
     if (files === undefined || files.length === 0) {
       return;
     }
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions -- FormData isn't present in very old browsers
     if (!FormData) {
       stage = "error";
       return;
