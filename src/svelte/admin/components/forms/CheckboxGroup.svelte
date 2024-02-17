@@ -1,7 +1,5 @@
 <script lang="ts" strictEvents>
-  // eslint-disable-next-line no-undef
   type KeyType = $$Generic<number | string>;
-  // eslint-disable-next-line no-undef
   type ValueType = $$Generic;
 
   export let options: Array<[KeyType, ValueType]>;

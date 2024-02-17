@@ -1,13 +1,11 @@
 <script lang="ts" strictEvents>
   import { createEventDispatcher } from "svelte";
 
-  // eslint-disable-next-line no-undef
   type KeyType = $$Generic<number | string>;
-  // eslint-disable-next-line no-undef
   type ValueType = $$Generic;
 
   export let options: Array<[KeyType, ValueType]>;
-  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
+  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents -- Eslint can't handle $$Generic
   export let selected: KeyType | null;
 
   const dispatch = createEventDispatcher<{ change: never }>();
