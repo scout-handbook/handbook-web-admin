@@ -2,17 +2,24 @@
   import Button from "../Button.svelte";
 
   export let files: FileList | undefined;
+
+  let inputElement: HTMLInputElement;
 </script>
 
 <label>
-  <input type="file" bind:files />
-  <Button icon="upload">
+  <Button
+    icon="upload"
+    on:click={() => {
+      inputElement.click();
+    }}
+  >
     {#if files === undefined || files.length === 0}
       Vybrat soubor
     {:else}
       {files[0].name}
     {/if}
   </Button>
+  <input bind:this={inputElement} type="file" bind:files />
 </label>
 
 <style>
