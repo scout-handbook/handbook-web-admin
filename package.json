@@ -34,6 +34,7 @@
     "lint:svelte:svelte-check": "svelte-check",
     "lint:svelte": "run-p -c --aggregate-output lint:svelte:*",
     "lint:ts:eslint": "eslint --color 'src/**/*.svelte' 'src/**/*.ts' 'gulpfile.js' 'postcss.config.js' 'svelte.config.js' 'vite.config.ts'",
+    "lint:ts:typecheck": "tsc --noEmit",
     "lint:ts": "run-p -c --aggregate-output lint:ts:*",
     "lint": "run-p -c --aggregate-output lint:*"
   },
