@@ -23,7 +23,7 @@
   "dependencies": {
     "easymde": "^2.14.0",
     "showdown": "^2.1.0",
-    "xss": "^1.0.9"
+    "xss": "^1.0.15"
   },
   "scripts": {
     "clean": "rimraf dist/*",
