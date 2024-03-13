@@ -1,6 +1,6 @@
 {
   "name": "skaut-handbook-web-admin",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "A web administration interface for a Scout handbook",
   "keywords": [
     "education",
@@ -74,7 +74,7 @@
     "svelte-check": "^3.6.7",
     "svelte-navigator": "^3.2.2",
     "ts-loader": "^9.5.1",
-    "typescript": "^5.3.3",
+    "typescript": "^5.3.3 <5.4",
     "vite": "^4.5.2",
     "vite-plugin-html": "^3.2.2",
     "yargs": "^17.7.2"
