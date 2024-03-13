@@ -45,7 +45,7 @@ export default defineConfig(({ mode }) => ({
     }),
   ],
   root: "src",
-  base: "./",
+  base: getConfig(mode)["admin-uri"],
   build: {
     outDir: "../dist",
   },
