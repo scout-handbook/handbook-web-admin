@@ -1,9 +1,9 @@
-import { svelte } from "@sveltejs/vite-plugin-svelte";
-import legacy, { cspHashes } from "@vitejs/plugin-legacy";
+import { sveltekit } from "@sveltejs/kit/vite";
+//import legacy, { cspHashes } from "@vitejs/plugin-legacy";
 import { readFileSync } from "fs";
-import { defineConfig, loadEnv, splitVendorChunkPlugin } from "vite";
-import { createHtmlPlugin } from "vite-plugin-html";
+import { defineConfig, loadEnv } from "vite";
 
+/*
 if (
   JSON.stringify(cspHashes) !==
   JSON.stringify([
@@ -18,10 +18,15 @@ if (
       JSON.stringify(cspHashes),
   );
 }
+*/
 
 function getConfig(mode: string): Record<string, string> {
+  if (process.env.npm_lifecycle_script !== "vite") {
+    return {};
+  }
   const location = loadEnv(mode, process.cwd()).VITE_CONFIG;
-  if (location === "undefined") {
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  if (location === undefined || location === "undefined") {
     throw new Error("No config specified");
   }
   return JSON.parse(readFileSync(location, "utf8")) as Record<string, string>;
@@ -29,28 +34,14 @@ function getConfig(mode: string): Record<string, string> {
 
 export default defineConfig(({ mode }) => ({
   plugins: [
-    createHtmlPlugin({
-      minify: true,
-      entry: "ts/admin.ts",
-      inject: {
-        data: {
-          title: getConfig(mode)["site-name"] + " - administrace",
-        },
-      },
-    }),
-    legacy(),
-    splitVendorChunkPlugin(),
-    svelte({
-      configFile: "../svelte.config.js",
-    }),
+    //legacy(),
+    sveltekit(),
   ],
-  root: "src",
-  base: getConfig(mode)["admin-uri"],
-  build: {
-    outDir: "../dist",
-  },
   define: {
     // eslint-disable-next-line @typescript-eslint/naming-convention -- CLI variable
     CONFIG: JSON.stringify(getConfig(mode)),
+  },
+  build: {
+    minify: false,
   },
 }));
