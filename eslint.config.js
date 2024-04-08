@@ -203,6 +203,7 @@ export default tseslint.config(
       "svelte/no-dupe-on-directives": "error",
       "svelte/no-dupe-use-directives": "error",
       "svelte/no-extra-reactive-curlies": "error",
+      "svelte/no-goto-without-base": "error",
       "svelte/no-ignored-unsubscribe": "error",
       "svelte/no-immutable-reactive-statements": "error",
       "svelte/no-inline-styles": "error",
