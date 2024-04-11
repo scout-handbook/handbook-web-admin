@@ -1,7 +1,10 @@
 import { clear } from "sswr";
+import { get } from "svelte/store";
+import { navigate } from "svelte-navigator";
 
 import type { SerializedAction } from "../interfaces/SerializedAction";
 import { globalDialogMessage, globalLoadingIndicator } from "../stores";
+import { adminUri } from "../stores";
 import { request } from "../utils/request";
 import type { Action } from "./Action";
 import { deserializeAction, serializeAction } from "./Action";
@@ -23,11 +26,19 @@ export class ActionQueue {
 
   public async dispatch(): Promise<void> {
     if (this.actions.length < 1) {
+      localStorage.clear();
       return;
     }
     this.actions[0].exceptionHandler.AuthenticationException = (): void => {
       this.authException();
     };
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions -- window.localStorage is not present in older browsers
+    if (window.localStorage) {
+      localStorage.setItem(
+        "ActionQueue",
+        JSON.stringify(this.actions.map(serializeAction)),
+      );
+    }
     await request(
       this.actions[0].url,
       this.actions[0].method,
@@ -41,12 +52,8 @@ export class ActionQueue {
   }
 
   private authException(): void {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions -- window.sessionStorage is not present in older browsers
-    if (!this.isRetryAfterLogin && window.sessionStorage) {
-      sessionStorage.setItem(
-        "ActionQueue",
-        JSON.stringify(this.actions.map(serializeAction)),
-      );
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions -- window.localStorage is not present in older browsers
+    if (!this.isRetryAfterLogin && window.localStorage) {
       window.location.replace(
         CONFIG["api-uri"] +
           "/v1.0/login?return-uri=" +
@@ -61,20 +68,20 @@ export class ActionQueue {
 }
 
 export function setupActionQueue(): void {
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions -- window.sessionStorage is not present in older browsers
-  if (window.sessionStorage && sessionStorage.getItem("ActionQueue") !== null) {
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions -- window.localStorage is not present in older browsers
+  if (window.localStorage && localStorage.getItem("ActionQueue") !== null) {
     const aq = new ActionQueue(
       (
         JSON.parse(
-          sessionStorage.getItem("ActionQueue")!,
+          localStorage.getItem("ActionQueue")!,
         ) as Array<SerializedAction>
       ).map(deserializeAction),
       true,
     );
-    sessionStorage.clear();
     globalLoadingIndicator.set(true);
     void aq.dispatch().then(() => {
       clear(undefined, { broadcast: true });
+      navigate("/" + get(adminUri).split("/").slice(3).join("/"));
       globalLoadingIndicator.set(false);
       globalDialogMessage.set("Akce byla úspěšná");
     });
