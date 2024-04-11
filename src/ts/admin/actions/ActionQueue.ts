@@ -1,7 +1,10 @@
 import { clear } from "sswr";
+import { get } from "svelte/store";
+import { navigate } from "svelte-navigator";
 
 import type { SerializedAction } from "../interfaces/SerializedAction";
 import { globalDialogMessage, globalLoadingIndicator } from "../stores";
+import { adminUri } from "../stores";
 import { request } from "../utils/request";
 import type { Action } from "./Action";
 import { deserializeAction, serializeAction } from "./Action";
@@ -78,6 +81,7 @@ export function setupActionQueue(): void {
     globalLoadingIndicator.set(true);
     void aq.dispatch().then(() => {
       clear(undefined, { broadcast: true });
+      navigate("/" + get(adminUri).split("/").slice(3).join("/"));
       globalLoadingIndicator.set(false);
       globalDialogMessage.set("Akce byla úspěšná");
     });
