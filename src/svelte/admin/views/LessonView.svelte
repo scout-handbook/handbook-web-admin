@@ -119,6 +119,7 @@
         green
         icon="plus"
         on:click={() => {
+          // eslint-disable-next-line @typescript-eslint/restrict-plus-operands -- It's a string, but TS doesn't work in templates
           navigate("/lessons/add?field=" + fieldId);
         }}
       >

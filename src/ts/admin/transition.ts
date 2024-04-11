@@ -12,7 +12,7 @@ export function fade(
   return {
     ...params,
     tick: (t: number): void => {
-      node.style.setProperty("opacity", `${t * o}`);
+      node.style.setProperty("opacity", (t * o).toString());
     },
   };
 }
@@ -37,7 +37,10 @@ export const fly = (
 ): TransitionConfig => ({
   ...params,
   tick: (t: number, u: number): void => {
-    node.style.setProperty("transform", `${dirs[from]}${u * 100.0}%)`);
-    node.style.setProperty("opacity", `${t}`);
+    node.style.setProperty(
+      "transform",
+      `${dirs[from]}${(u * 100.0).toString()}%)`,
+    );
+    node.style.setProperty("opacity", t.toString());
   },
 });
