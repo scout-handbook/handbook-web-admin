@@ -13,122 +13,136 @@ function getConfig(mode: string): Record<string, string> {
   return JSON.parse(readFileSync(location, "utf8")) as Record<string, string>;
 }
 
-export default defineConfig(({ mode }) => ({
-  plugins: [
-    createHtmlPlugin({
-      minify: true,
-      entry: "ts/admin.ts",
-      inject: {
-        data: {
-          title: getConfig(mode)["site-name"] + " - administrace",
+export default defineConfig(({ mode }) => {
+  const config = getConfig(mode);
+  return {
+    plugins: [
+      createHtmlPlugin({
+        minify: true,
+        entry: "ts/admin.ts",
+        inject: {
+          data: {
+            title: config["site-name"] + " - administrace",
+          },
         },
-      },
-    }),
-    legacy(),
-    splitVendorChunkPlugin(),
-    svelte({
-      configFile: "../svelte.config.js",
-    }),
-    /* eslint-disable @typescript-eslint/naming-convention -- Most of these are things like header names */
-    htaccess({
-      template: "txt/htaccess.txt",
-      spec: {
-        Header: [
-          {
-            action: "set",
-            header: "Content-Security-Policy",
-            value: {
-              "upgrade-insecure-requests": true,
-              "default-src": { self: true },
-              "script-src": {
-                self: true,
-                hosts: ["https://ajax.googleapis.com/ajax/libs/webfont/"],
-                hashes: {
-                  sha256: cspHashes,
+      }),
+      legacy(),
+      splitVendorChunkPlugin(),
+      svelte({
+        configFile: "../svelte.config.js",
+      }),
+      /* eslint-disable @typescript-eslint/naming-convention -- Most of these are things like header names */
+      htaccess({
+        template: "txt/htaccess.txt",
+        spec: {
+          Header: [
+            {
+              action: "set",
+              header: "Content-Security-Policy",
+              value: {
+                "upgrade-insecure-requests": true,
+                "default-src": { self: true },
+                "script-src": {
+                  self: true,
+                  hosts: ["https://ajax.googleapis.com/ajax/libs/webfont/"],
+                  hashes: {
+                    sha256: cspHashes,
+                  },
                 },
+                "connect-src": {
+                  self: true,
+                  hosts: [
+                    "https://fonts.gstatic.com/",
+                    "https://ajax.googleapis.com/ajax/libs/webfont/",
+                    "https://fonts.googleapis.com",
+                  ],
+                },
+                "style-src": {
+                  self: true,
+                  "unsafe-inline": true,
+                  hosts: ["https://fonts.googleapis.com"],
+                },
+                "font-src": {
+                  self: true,
+                  schemes: { data: true },
+                  hosts: ["https://fonts.gstatic.com"],
+                },
+                "img-src": {
+                  self: true,
+                  schemes: { data: true },
+                },
+                "object-src": {},
+                ...(config["csp-report-uri"] && {
+                  "report-uri": [config["csp-report-uri"]],
+                }),
               },
-              "style-src": {
-                self: true,
-                "unsafe-inline": true,
-                hosts: ["https://fonts.googleapis.com"],
+              always: true,
+            },
+            {
+              action: "set",
+              header: "Permissions-Policy",
+              value: {
+                camera: {},
+                "display-capture": {},
+                fullscreen: { self: true },
+                geolocation: {},
+                microphone: {},
+                "publickey-credentials-get": {},
+                "screen-wake-lock": {},
+                "web-share": {},
               },
-              "font-src": {
-                self: true,
-                schemes: { data: true },
-                hosts: ["https://fonts.gstatic.com"],
+              always: true,
+            },
+            {
+              action: "set",
+              header: "Referrer-Policy",
+              value: "same-origin",
+              always: true,
+            },
+            {
+              action: "set",
+              header: "Strict-Transport-Security",
+              value: {
+                maxAge: 31536000,
+                includeSubDomains: true,
               },
-              "img-src": {
-                self: true,
-                schemes: { data: true },
+              always: true,
+            },
+            {
+              action: "set",
+              header: "X-Content-Type-Options",
+              value: {
+                nosniff: true,
               },
-              "object-src": {},
+              always: true,
             },
-            always: true,
-          },
-          {
-            action: "set",
-            header: "Permissions-Policy",
-            value: {
-              camera: {},
-              "display-capture": {},
-              fullscreen: { self: true },
-              geolocation: {},
-              microphone: {},
-              "publickey-credentials-get": {},
-              "screen-wake-lock": {},
-              "web-share": {},
+            {
+              action: "set",
+              header: "X-Xss-Protection",
+              value: {
+                mode: "block",
+              },
+              always: true,
             },
-            always: true,
-          },
-          {
-            action: "set",
-            header: "Referrer-Policy",
-            value: "same-origin",
-            always: true,
-          },
-          {
-            action: "set",
-            header: "Strict-Transport-Security",
-            value: {
-              maxAge: 31536000,
-              includeSubDomains: true,
+            {
+              action: "set",
+              header: "X-Frame-Options",
+              value: "deny",
+              always: true,
             },
-            always: true,
-          },
-          {
-            action: "set",
-            header: "X-Content-Type-Options",
-            value: {
-              nosniff: true,
-            },
-            always: true,
-          },
-          {
-            action: "set",
-            header: "X-Xss-Protection",
-            value: {
-              mode: "block",
-            },
-            always: true,
-          },
-          {
-            action: "set",
-            header: "X-Frame-Options",
-            value: "deny",
-            always: true,
-          },
-        ],
-      },
-    }),
-    /* eslint-enable */
-  ],
-  root: "src",
-  base: getConfig(mode)["admin-uri"],
-  build: {
-    outDir: "../dist",
-  },
-  define: {
-    // eslint-disable-next-line @typescript-eslint/naming-convention -- CLI variable
-    CONFIG: JSON.stringify(getConfig(mode)),
-  },
-}));
+          ],
+        },
+      }),
+      /* eslint-enable */
+    ],
+    root: "src",
+    base: config["admin-uri"],
+    build: {
+      outDir: "../dist",
+    },
+    define: {
+      // eslint-disable-next-line @typescript-eslint/naming-convention -- CLI variable
+      CONFIG: JSON.stringify(config),
+    },
+  };
+});
