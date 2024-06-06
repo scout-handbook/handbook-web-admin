@@ -5,21 +5,6 @@ import htaccess from "rollup-plugin-htaccess";
 import { defineConfig, loadEnv, splitVendorChunkPlugin } from "vite";
 import { createHtmlPlugin } from "vite-plugin-html";
 
-if (
-  JSON.stringify(cspHashes) !==
-  JSON.stringify([
-    "MS6/3FCg4WjP9gwgaBGwLpRCY6fZBgwmhVCdrPrNf3E=",
-    "tQjf8gvb2ROOMapIxFvFAYBeUJ0v1HCbOcSmDNXGtDo=",
-    "4y/gEB2/KIwZFTfNqwXJq4olzvmQ0S214m9jwKgNXoc=",
-    "+5XkZFazzJo8n0iOP4ti/cLCMUudTf//Mzkb7xNPXIc=",
-  ])
-) {
-  throw new Error(
-    "CSP Hashes are out of date in htaccess. New hashes: " +
-      JSON.stringify(cspHashes),
-  );
-}
-
 function getConfig(mode: string): Record<string, string> {
   const location = loadEnv(mode, process.cwd()).VITE_CONFIG;
   if (location === "undefined") {
@@ -59,21 +44,8 @@ export default defineConfig(({ mode }) => ({
                 self: true,
                 hosts: ["https://ajax.googleapis.com/ajax/libs/webfont/"],
                 hashes: {
-                  sha256: [ // TODO: Use dynamic
-                    "MS6/3FCg4WjP9gwgaBGwLpRCY6fZBgwmhVCdrPrNf3E=",
-                    "tQjf8gvb2ROOMapIxFvFAYBeUJ0v1HCbOcSmDNXGtDo=",
-                    "4y/gEB2/KIwZFTfNqwXJq4olzvmQ0S214m9jwKgNXoc=",
-                    "+5XkZFazzJo8n0iOP4ti/cLCMUudTf//Mzkb7xNPXIc=",
-                  ],
+                  sha256: cspHashes,
                 },
-              },
-              "connect-src": {
-                self: true,
-                hosts: [
-                  "https://fonts.gstatic.com/",
-                  "https://ajax.googleapis.com/ajax/libs/webfont/",
-                  "https://fonts.googleapis.com",
-                ],
               },
               "style-src": {
                 self: true,
