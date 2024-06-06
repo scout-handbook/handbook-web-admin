@@ -51,6 +51,65 @@ export default defineConfig(({ mode }) => ({
         Header: [
           {
             action: "set",
+            header: "Content-Security-Policy",
+            value: {
+              "upgrade-insecure-requests": true,
+              "default-src": { self: true },
+              "script-src": {
+                self: true,
+                hosts: ["https://ajax.googleapis.com/ajax/libs/webfont/"],
+                hashes: {
+                  sha256: [ // TODO: Use dynamic
+                    "MS6/3FCg4WjP9gwgaBGwLpRCY6fZBgwmhVCdrPrNf3E=",
+                    "tQjf8gvb2ROOMapIxFvFAYBeUJ0v1HCbOcSmDNXGtDo=",
+                    "4y/gEB2/KIwZFTfNqwXJq4olzvmQ0S214m9jwKgNXoc=",
+                    "+5XkZFazzJo8n0iOP4ti/cLCMUudTf//Mzkb7xNPXIc=",
+                  ],
+                },
+              },
+              "connect-src": {
+                self: true,
+                hosts: [
+                  "https://fonts.gstatic.com/",
+                  "https://ajax.googleapis.com/ajax/libs/webfont/",
+                  "https://fonts.googleapis.com",
+                ],
+              },
+              "style-src": {
+                self: true,
+                "unsafe-inline": true,
+                hosts: ["https://fonts.googleapis.com"],
+              },
+              "font-src": {
+                self: true,
+                schemes: { data: true },
+                hosts: ["https://fonts.gstatic.com"],
+              },
+              "img-src": {
+                self: true,
+                schemes: { data: true },
+              },
+              "object-src": {},
+            },
+            always: true,
+          },
+          {
+            action: "set",
+            header: "Permissions-Policy",
+            value: {
+              camera: {},
+              "display-capture": {},
+              fullscreen: { self: true },
+              geolocation: {},
+              microphone: {},
+              "publickey-credentials-get": {},
+              "screen-wake-lock": {},
+              "web-share": {},
+            },
+            always: true,
+          },
+          {
+            action: "set",
             header: "Referrer-Policy",
             value: "same-origin",
             always: true,
@@ -62,6 +121,28 @@ export default defineConfig(({ mode }) => ({
               maxAge: 31536000,
               includeSubDomains: true,
             },
+            always: true,
+          },
+          {
+            action: "set",
+            header: "X-Content-Type-Options",
+            value: {
+              nosniff: true,
+            },
+            always: true,
+          },
+          {
+            action: "set",
+            header: "X-Xss-Protection",
+            value: {
+              mode: "block",
+            },
+            always: true,
+          },
+          {
+            action: "set",
+            header: "X-Frame-Options",
+            value: "deny",
             always: true,
           },
         ],
