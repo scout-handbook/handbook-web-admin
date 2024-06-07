@@ -63,7 +63,7 @@
     "postcss": "^8.4.38",
     "postcss-custom-properties": "^13.3.10",
     "prettier": "^3.3.1",
-    "prettier-plugin-svelte": "^3.2.3",
+    "prettier-plugin-svelte": "^3.2.4",
     "rimraf": "^5.0.7",
     "sswr": "^1.10.0 <1.11",
     "stylelint": "^16.6.1",
