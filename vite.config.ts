@@ -44,9 +44,30 @@ export default defineConfig(({ mode }) => ({
     svelte({
       configFile: "../svelte.config.js",
     }),
+    /* eslint-disable @typescript-eslint/naming-convention -- Most of these are things like header names */
     htaccess({
       template: "txt/htaccess.txt",
+      spec: {
+        Header: [
+          {
+            action: "set",
+            header: "Referrer-Policy",
+            value: "same-origin",
+            always: true,
+          },
+          {
+            action: "set",
+            header: "Strict-Transport-Security",
+            value: {
+              maxAge: 31536000,
+              includeSubDomains: true,
+            },
+            always: true,
+          },
+        ],
+      },
     }),
+    /* eslint-enable */
   ],
   root: "src",
   base: getConfig(mode)["admin-uri"],
