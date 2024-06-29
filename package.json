@@ -65,6 +65,7 @@
     "prettier": "^3.3.2",
     "prettier-plugin-svelte": "^3.2.5",
     "rimraf": "^5.0.7",
+    "rollup-plugin-htaccess": "^0.4.0",
     "sswr": "^1.10.0 <1.11",
     "stylelint": "^16.6.1",
     "stylelint-config-standard": "^36.0.1",
