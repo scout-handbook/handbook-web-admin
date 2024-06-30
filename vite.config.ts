@@ -148,6 +148,50 @@ export default defineConfig(({ mode }) => {
               always: true,
             },
           ],
+          rewrite: {
+            rules: [
+              // Force HTTPS
+              {
+                conditions: [
+                  {
+                    testString: "%{HTTPS}",
+                    conditionPattern: "off",
+                  },
+                ],
+                pattern: "(.*)",
+                substitution: "https://%{HTTP_HOST}%{REQUEST_URI}",
+                flags: {
+                  last: true,
+                  qsappend: true,
+                  redirect: 301,
+                },
+              },
+              // Pages rewrite
+              {
+                conditions: [
+                  {
+                    testString: "%{REQUEST_URI}",
+                    conditionPattern:
+                      "^/admin/(lessons|competences|images|users|groups)(/|$)",
+                  },
+                ],
+                pattern: "(.*)",
+                substitution: "/admin/",
+                flags: {
+                  last: true,
+                  qsappend: true,
+                },
+              },
+              // PDF rewrite
+              {
+                pattern: "^lesson/(.*)",
+                substitution: "lesson.php?id=$1",
+                flags: {
+                  qsappend: true,
+                },
+              },
+            ],
+          },
         },
       }),
       /* eslint-enable */
