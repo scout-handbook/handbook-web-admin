@@ -17,10 +17,3 @@ RewriteRule (.*) /admin/ [QSA,L]
 
 # PDF rewrite
 RewriteRule ^lesson/(.*) lesson.php?id=$1 [QSA]
-
-# Compression
-AddOutputFilterByType DEFLATE text/plain
-AddOutputFilterByType DEFLATE text/html
-AddOutputFilterByType DEFLATE text/css
-AddOutputFilterByType DEFLATE application/javascript
-AddOutputFilterByType DEFLATE application/json

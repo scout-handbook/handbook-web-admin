@@ -35,6 +35,18 @@ export default defineConfig(({ mode }) => {
       htaccess({
         template: "txt/htaccess.txt",
         spec: {
+          AddOutputFilterByType: [
+            {
+              filters: ["DEFLATE"],
+              mediaTypes: [
+                "text/plain",
+                "text/html",
+                "text/css",
+                "application/javascript",
+                "application/json",
+              ],
+            },
+          ],
           Header: [
             {
               action: "set",
