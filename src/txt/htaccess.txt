@@ -1,14 +1,1 @@
 Options -Indexes
-
-RewriteEngine On
-
-# Force HTTPS
-RewriteCond %{HTTPS} off
-RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,QSA,L]
-
-# Pages rewrite
-RewriteCond %{REQUEST_URI} ^/admin/(lessons|competences|images|users|groups)(/|$)
-RewriteRule (.*) /admin/ [QSA,L]
-
-# PDF rewrite
-RewriteRule ^lesson/(.*) lesson.php?id=$1 [QSA]
