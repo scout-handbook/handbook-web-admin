@@ -6,7 +6,7 @@ import postcss from "gulp-postcss";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 
-gulp.task("build:main", (cb) => {
+gulp.task("build", (cb) => {
   const config = yargs(hideBin(process.argv)).string("config").argv.config;
   exec('VITE_CONFIG="' + config + '" npx vite build', (err, stdout, stderr) => {
     console.log(stdout);
@@ -14,9 +14,3 @@ gulp.task("build:main", (cb) => {
     cb(err);
   });
 });
-
-gulp.task("build:error:css", () =>
-  gulp.src(["src/css/error.css"]).pipe(postcss()).pipe(gulp.dest("dist/")),
-);
-
-gulp.task("build", gulp.parallel("build:main", "build:error:css"));
