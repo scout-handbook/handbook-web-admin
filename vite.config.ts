@@ -47,6 +47,11 @@ export default defineConfig(({ mode }) => {
               ],
             },
           ],
+          ErrorDocument: {
+            403: "/admin/403.html",
+            404: "/admin/404.html",
+            500: "/admin/500.html",
+          },
           Header: [
             {
               action: "set",
