@@ -6,8 +6,10 @@ import { defineConfig, loadEnv, splitVendorChunkPlugin } from "vite";
 import { createHtmlPlugin } from "vite-plugin-html";
 
 function getConfig(mode: string): Record<string, string> {
-  const location = loadEnv(mode, process.cwd()).VITE_CONFIG;
-  if (location === "undefined") {
+  const location = loadEnv(mode, process.cwd()).VITE_CONFIG as
+    | string
+    | undefined;
+  if (location === undefined || location === "undefined") {
     throw new Error("No config specified");
   }
   return JSON.parse(readFileSync(location, "utf8")) as Record<string, string>;
