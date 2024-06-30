@@ -1,6 +1,7 @@
 import { svelte } from "@sveltejs/vite-plugin-svelte";
 import legacy, { cspHashes } from "@vitejs/plugin-legacy";
 import { readFileSync } from "fs";
+import htaccess from "rollup-plugin-htaccess";
 import { defineConfig, loadEnv, splitVendorChunkPlugin } from "vite";
 import { createHtmlPlugin } from "vite-plugin-html";
 
@@ -42,6 +43,9 @@ export default defineConfig(({ mode }) => ({
     splitVendorChunkPlugin(),
     svelte({
       configFile: "../svelte.config.js",
+    }),
+    htaccess({
+      template: "txt/htaccess.txt",
     }),
   ],
   root: "src",
