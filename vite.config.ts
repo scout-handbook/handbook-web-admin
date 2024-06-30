@@ -33,7 +33,6 @@ export default defineConfig(({ mode }) => {
       }),
       /* eslint-disable @typescript-eslint/naming-convention -- Most of these are things like header names */
       htaccess({
-        template: "txt/htaccess.txt",
         spec: {
           AddOutputFilterByType: [
             {
@@ -51,6 +50,9 @@ export default defineConfig(({ mode }) => {
             403: "/admin/403.html",
             404: "/admin/404.html",
             500: "/admin/500.html",
+          },
+          Options: {
+            minus: ["Indexes"],
           },
           Header: [
             {
