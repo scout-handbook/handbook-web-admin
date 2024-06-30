@@ -31,10 +31,6 @@ gulp.task("build:php", () =>
   gulp.src(["src/php/lesson.php"]).pipe(gulp.dest("dist/")),
 );
 
-gulp.task("build:txt", () =>
-  gulp.src(["src/txt/htaccess.txt"]).pipe(gulp.dest("dist/")),
-);
-
 gulp.task("build:png", () =>
   gulp.src(["src/png/avatar.png"]).pipe(gulp.dest("dist/")),
 );
@@ -59,7 +55,6 @@ gulp.task(
     "build:main",
     "build:error",
     "build:php",
-    "build:txt",
     "build:png",
     "build:icon",
   ),
