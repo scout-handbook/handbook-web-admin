@@ -107,14 +107,6 @@ const options: (
         },
         always: true,
       },
-      {
-        action: "set",
-        header: "X-Xss-Protection",
-        value: {
-          mode: "block",
-        },
-        always: true,
-      },
     ],
     rewrite: {
       rules: [
