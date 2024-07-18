@@ -115,12 +115,6 @@ const options: (
         },
         always: true,
       },
-      {
-        action: "set",
-        header: "X-Frame-Options",
-        value: "deny",
-        always: true,
-      },
     ],
     rewrite: {
       rules: [
