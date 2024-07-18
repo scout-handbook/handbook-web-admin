@@ -107,20 +107,6 @@ const options: (
         },
         always: true,
       },
-      {
-        action: "set",
-        header: "X-Xss-Protection",
-        value: {
-          mode: "block",
-        },
-        always: true,
-      },
-      {
-        action: "set",
-        header: "X-Frame-Options",
-        value: "deny",
-        always: true,
-      },
     ],
     rewrite: {
       rules: [
