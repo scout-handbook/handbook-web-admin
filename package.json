@@ -64,7 +64,7 @@
     "rimraf": "^6.0.1",
     "rollup-plugin-htaccess": "^0.5.2",
     "sswr": "^1.10.0 <1.11",
-    "stylelint": "^16.8.1",
+    "stylelint": "^16.8.2",
     "stylelint-config-standard": "^36.0.1",
     "stylelint-no-unsupported-browser-features": "^8.0.1",
     "stylelint-prettier": "^5.0.2",
