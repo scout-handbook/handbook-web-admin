@@ -40,6 +40,7 @@
   },
   "devDependencies": {
     "@csstools/postcss-global-data": "^3.0.0",
+    "@eslint-community/eslint-plugin-eslint-comments": "^4.4.0",
     "@fontsource/open-sans": "^5.0.28",
     "@sveltejs/vite-plugin-svelte": "^2.5.2",
     "@types/codemirror": "5.60.15",
@@ -52,7 +53,6 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-compat": "^6.0.0",
     "eslint-plugin-deprecation": "^3.0.0",
-    "eslint-plugin-eslint-comments": "^3.2.0",
     "eslint-plugin-prefer-arrow-functions": "^3.4.1",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-simple-import-sort": "^12.1.1",
