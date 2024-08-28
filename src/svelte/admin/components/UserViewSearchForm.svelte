@@ -12,7 +12,7 @@
   import Select from "./forms/Select.svelte";
 
   export let group: string;
-  export let role: Role | "all";
+  export let role: "all" | Role;
   export let searchName: string;
 
   const dispatch = createEventDispatcher<{ change: never }>();
