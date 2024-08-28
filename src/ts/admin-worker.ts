@@ -1,5 +1,3 @@
-/* eslint-env worker */
-
 import "./common/HandbookMarkdown";
 
 import { Converter } from "showdown";
