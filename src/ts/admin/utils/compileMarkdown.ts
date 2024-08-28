@@ -53,7 +53,6 @@ export async function compileMarkdown(markdown: string): Promise<string> {
       worker!.postMessage({ id, body: markdown });
     }
     return promise;
-  } else {
-    return filterXSS(converter!.makeHtml(markdown), xssOptions());
   }
+  return filterXSS(converter!.makeHtml(markdown), xssOptions());
 }
