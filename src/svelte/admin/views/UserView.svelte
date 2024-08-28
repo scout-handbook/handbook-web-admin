@@ -27,7 +27,7 @@
 
   let page = 1;
   const perPage = 25;
-  let role: Role | "all" = "all";
+  let role: "all" | Role = "all";
   let searchName = "";
   let group = "00000000-0000-0000-0000-000000000000";
 
