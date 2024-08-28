@@ -3,6 +3,7 @@
   import { derived } from "svelte/store";
 
   import type { Competence } from "../../../../ts/admin/interfaces/Competence";
+
   import { processCompetences } from "../../../../ts/admin/swr";
   import { constructURL } from "../../../../ts/admin/utils/constructURL";
   import LoadingIndicator from "../LoadingIndicator.svelte";

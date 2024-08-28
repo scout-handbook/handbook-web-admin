@@ -1,9 +1,9 @@
-import "./common/HandbookMarkdown";
-
 import { Converter } from "showdown";
 import { filterXSS } from "xss";
 
 import type { WorkerPayload } from "./common/WorkerPayload";
+
+import "./common/HandbookMarkdown";
 import { xssOptions } from "./common/xssOptions";
 
 let converter: Converter | null = null;

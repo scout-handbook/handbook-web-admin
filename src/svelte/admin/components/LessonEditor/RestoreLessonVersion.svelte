@@ -2,6 +2,7 @@
   import { useNavigate } from "svelte-navigator";
 
   import type { LessonVersion } from "../../../../ts/admin/interfaces/LessonVersion";
+
   import { apiUri } from "../../../../ts/admin/stores";
   import { get } from "../../../../ts/admin/utils/arrayUtils";
   import { compileMarkdown } from "../../../../ts/admin/utils/compileMarkdown";

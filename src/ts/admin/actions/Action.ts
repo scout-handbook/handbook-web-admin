@@ -2,8 +2,9 @@ import type { ExceptionHandler } from "../interfaces/ExceptionHandler";
 import type { Payload } from "../interfaces/Payload";
 import type { RequestResponse } from "../interfaces/RequestResponse";
 import type { SerializedAction } from "../interfaces/SerializedAction";
-import { ActionCallback } from "./ActionCallback";
 import type { ActionQueue } from "./ActionQueue";
+
+import { ActionCallback } from "./ActionCallback";
 
 export class Action {
   public url: string;

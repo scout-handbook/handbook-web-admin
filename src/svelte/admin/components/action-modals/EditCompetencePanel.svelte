@@ -2,9 +2,10 @@
   import { useSWR } from "sswr";
   import { useNavigate } from "svelte-navigator";
 
+  import type { Competence } from "../../../../ts/admin/interfaces/Competence";
+
   import { Action } from "../../../../ts/admin/actions/Action";
   import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
-  import type { Competence } from "../../../../ts/admin/interfaces/Competence";
   import { apiUri } from "../../../../ts/admin/stores";
   import {
     type SWRMutateFix,
