@@ -36,6 +36,7 @@ export class Action {
         case ActionCallback.removeBeacon:
           window.onbeforeunload = null;
           break;
+        default:
       }
     }
   }
