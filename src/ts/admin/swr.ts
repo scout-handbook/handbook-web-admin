@@ -5,6 +5,7 @@ import type { Field } from "./interfaces/Field";
 import type { Group } from "./interfaces/Group";
 import type { Lesson } from "./interfaces/Lesson";
 import type { RequestResponse } from "./interfaces/RequestResponse";
+
 import { get, map, sort } from "./utils/arrayUtils";
 import { reAuth, request } from "./utils/request";
 

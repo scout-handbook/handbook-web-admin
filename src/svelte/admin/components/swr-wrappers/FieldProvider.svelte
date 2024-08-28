@@ -5,6 +5,7 @@
   import type { Competence } from "../../../../ts/admin/interfaces/Competence";
   import type { Field } from "../../../../ts/admin/interfaces/Field";
   import type { Lesson } from "../../../../ts/admin/interfaces/Lesson";
+
   import {
     processCompetences,
     processFields,

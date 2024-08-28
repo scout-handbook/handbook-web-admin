@@ -3,6 +3,11 @@
   import { onDestroy, onMount } from "svelte";
   import { useNavigate } from "svelte-navigator";
 
+  import type { APIResponse } from "../../../ts/admin/interfaces/APIResponse";
+  import type { Field } from "../../../ts/admin/interfaces/Field";
+  import type { Lesson } from "../../../ts/admin/interfaces/Lesson";
+  import type { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
+
   import { Action } from "../../../ts/admin/actions/Action";
   import { ActionCallback } from "../../../ts/admin/actions/ActionCallback";
   import { ActionQueue } from "../../../ts/admin/actions/ActionQueue";
@@ -11,10 +16,6 @@
     populateField,
     populateGroups,
   } from "../../../ts/admin/actions/populateLessonActionQueue";
-  import type { APIResponse } from "../../../ts/admin/interfaces/APIResponse";
-  import type { Field } from "../../../ts/admin/interfaces/Field";
-  import type { Lesson } from "../../../ts/admin/interfaces/Lesson";
-  import type { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
   import {
     afterReAuthAction,
     apiUri,

@@ -2,9 +2,10 @@
   import { useSWR } from "sswr";
   import { useNavigate } from "svelte-navigator";
 
+  import type { Group } from "../../../../ts/admin/interfaces/Group";
+
   import { Action } from "../../../../ts/admin/actions/Action";
   import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
-  import type { Group } from "../../../../ts/admin/interfaces/Group";
   import { apiUri } from "../../../../ts/admin/stores";
   import {
     type SWRMutateFix,
