@@ -33,7 +33,7 @@
 
   $: payload = {
     name: searchName,
-    page: page,
+    page,
     // eslint-disable-next-line @typescript-eslint/naming-convention -- HTTP argument
     "per-page": perPage,
     role: role !== "all" ? role : undefined,
