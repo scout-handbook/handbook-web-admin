@@ -1,5 +1,4 @@
-import type { ShowdownExtension } from "showdown";
-import { extension } from "showdown";
+import { extension, type ShowdownExtension } from "showdown";
 
 function getArgumentString(
   lines: Array<string>,
