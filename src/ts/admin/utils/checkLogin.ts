@@ -4,15 +4,12 @@ import { request } from "../utils/request";
 
 export function checkLogin(): void {
   void request<Loginstate>(
-    CONFIG["api-uri"] + "/v1.0/account",
+    `${CONFIG["api-uri"]}/v1.0/account`,
     "GET",
     {},
     {
       401: () => {
-        window.location.href =
-          CONFIG["api-uri"] +
-          "/v1.0/login?return-uri=" +
-          encodeURIComponent(window.location.href);
+        window.location.href = `${CONFIG["api-uri"]}/v1.0/login?return-uri=${encodeURIComponent(window.location.href)}`;
       },
     },
   ).then((response) => {

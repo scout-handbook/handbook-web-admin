@@ -8,8 +8,8 @@
 
   const { data: loginstate } = useSWR<Loginstate>(constructURL("v1.0/account"));
   $: avatar = $loginstate
-    ? "data:image/png;base64," + $loginstate.avatar
-    : $adminUri + "/avatar.png";
+    ? `data:image/png;base64,${$loginstate.avatar}`
+    : `${$adminUri}/avatar.png`;
   $: name = $loginstate?.name;
 </script>
 
@@ -24,9 +24,7 @@
   </div>
   <div class="links">
     <a
-      href={$apiUri +
-        "/v1.0/logout?redirect-uri=" +
-        encodeURIComponent($frontendUri)}
+      href={`${$apiUri}/v1.0/logout?redirect-uri=${encodeURIComponent($frontendUri)}`}
     >
       Odhlásit
     </a>

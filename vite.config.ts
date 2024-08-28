@@ -26,7 +26,7 @@ export default defineConfig(({ mode }) => {
         entry: "ts/admin.ts",
         inject: {
           data: {
-            title: config["site-name"] + " - administrace",
+            title: `${config["site-name"]} - administrace`,
           },
         },
       }),

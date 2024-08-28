@@ -10,10 +10,7 @@ import { constructQuery } from "./constructURL";
 
 export function reAuth(): void {
   if (!get(suspendReAuth)) {
-    window.location.href =
-      CONFIG["api-uri"] +
-      "/v1.0/login?return-uri=" +
-      encodeURIComponent(window.location.href);
+    window.location.href = `${CONFIG["api-uri"]}/v1.0/login?return-uri=${encodeURIComponent(window.location.href)}`;
   }
 }
 
@@ -40,7 +37,7 @@ async function rawRequest<T extends RequestResponse>(
     query = constructQuery(payload as Payload);
   }
   if ((method === "GET" || method === "DELETE") && query) {
-    fullUrl += "?" + query;
+    fullUrl += `?${query}`;
   }
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
@@ -93,7 +90,7 @@ export async function request<T extends RequestResponse>(
     throw new Error();
   } else {
     globalDialogMessage.set(
-      "Nastala neznámá chyba. Chybová hláška: " + response.message!,
+      `Nastala neznámá chyba. Chybová hláška: ${response.message!}`,
     );
     throw new Error();
   }

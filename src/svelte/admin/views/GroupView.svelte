@@ -44,7 +44,7 @@
   </GroupProvider>
 {/if}
 
-<h1>{$siteName + " - Uživatelské skupiny"}</h1>
+<h1>{`${$siteName} - Uživatelské skupiny`}</h1>
 {#if adminOrSuperuser}
   <Button
     green
@@ -107,8 +107,8 @@
     {#if id !== "00000000-0000-0000-0000-000000000000"}
       <br />
       <span>
-        <!-- eslint-disable-next-line @typescript-eslint/restrict-plus-operands @typescript-eslint/no-unsafe-call -->
-        {"Uživatelů: " + group.count.toString()}
+        <!-- eslint-disable-next-line @typescript-eslint/restrict-template-expressions @typescript-eslint/no-unsafe-call -->
+        {`Uživatelů: ${group.count.toString()}`}
       </span>
     {/if}
   {/each}

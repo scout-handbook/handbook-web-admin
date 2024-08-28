@@ -24,7 +24,7 @@
 
   function saveCallback(): void {
     donePromise = new ActionQueue([
-      new Action($apiUri + "/v1.0/group", "POST", {
+      new Action(`${$apiUri}/v1.0/group`, "POST", {
         name: encodeURIComponent(name),
       }),
     ])

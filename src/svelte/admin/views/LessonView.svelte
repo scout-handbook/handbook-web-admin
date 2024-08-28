@@ -53,7 +53,7 @@
   <RestoreLessonPanel />
 {/if}
 
-<h1>{$siteName + " - Lekce"}</h1>
+<h1>{`${$siteName} - Lekce`}</h1>
 {#if adminOrSuperuser}
   <Button
     green
@@ -120,8 +120,8 @@
         green
         icon="plus"
         on:click={() => {
-          // eslint-disable-next-line @typescript-eslint/restrict-plus-operands -- It's a string, but TS doesn't work in templates
-          navigate("/lessons/add?field=" + fieldId);
+          // eslint-disable-next-line @typescript-eslint/restrict-template-expressions -- It's a string, but TS doesn't work in templates
+          navigate(`/lessons/add?field=${fieldId}`);
         }}
       >
         Přidat lekci

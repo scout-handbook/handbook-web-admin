@@ -29,7 +29,7 @@
       : versionList.find((x) => x.version === selectedVersion)!.name;
 
   void request<Array<LessonVersion>>(
-    $apiUri + "/v1.0/lesson/" + lessonId! + "/history",
+    `${$apiUri}/v1.0/lesson/${lessonId!}/history`,
     "GET",
     {},
     {},
@@ -43,11 +43,7 @@
           resolve(body);
         })
       : request<string>(
-          $apiUri +
-            "/v1.0/lesson/" +
-            lessonId! +
-            "/history/" +
-            selectedVersion.toString(),
+          `${$apiUri}/v1.0/lesson/${lessonId!}/history/${selectedVersion.toString()}`,
           "GET",
           {},
           authFailHandler,

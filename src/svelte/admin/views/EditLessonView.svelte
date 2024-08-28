@@ -71,14 +71,14 @@
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions -- Older browsers don't include this function
     if (navigator.sendBeacon) {
       navigator.sendBeacon(
-        $apiUri + "/v1.0/mutex-beacon/" + encodeURIComponent(id),
+        `${$apiUri}/v1.0/mutex-beacon/${encodeURIComponent(id)}`,
       );
     }
   }
 
   let lessonDataPromise = Promise.all([
     request(
-      $apiUri + "/v1.0/mutex/" + encodeURIComponent(lessonID),
+      `${$apiUri}/v1.0/mutex/${encodeURIComponent(lessonID)}`,
       "POST",
       {},
       {
@@ -86,9 +86,7 @@
         LockedException: (response: APIResponse<RequestResponse>): void => {
           navigate(-1);
           globalDialogMessage.set(
-            "Nelze upravovat lekci, protože ji právě upravuje " +
-              response.holder! +
-              ".",
+            `Nelze upravovat lekci, protože ji právě upravuje ${response.holder!}.`,
           );
         },
       },
@@ -98,7 +96,7 @@
       };
     }),
     request<Array<string>>(
-      $apiUri + "/v1.0/lesson/" + encodeURIComponent(lessonID) + "/group",
+      `${$apiUri}/v1.0/lesson/${encodeURIComponent(lessonID)}/group`,
       "GET",
       {},
       {
@@ -109,7 +107,7 @@
       initialGroups = groups;
     }),
     request<string>(
-      $apiUri + "/v1.0/lesson/" + encodeURIComponent(lessonID),
+      `${$apiUri}/v1.0/lesson/${encodeURIComponent(lessonID)}`,
       "GET",
       {},
       {
@@ -124,7 +122,7 @@
   function lessonEditMutexExtend(id: string): void {
     void new ActionQueue([
       new Action(
-        $apiUri + "/v1.0/mutex/" + encodeURIComponent(id),
+        `${$apiUri}/v1.0/mutex/${encodeURIComponent(id)}`,
         "PUT",
         undefined,
         undefined,
@@ -145,7 +143,7 @@
   function destroyMutex(): void {
     void new ActionQueue([
       new Action(
-        $apiUri + "/v1.0/mutex/" + encodeURIComponent(lessonID),
+        `${$apiUri}/v1.0/mutex/${encodeURIComponent(lessonID)}`,
         "DELETE",
         undefined,
         [ActionCallback.removeBeacon],
@@ -159,7 +157,7 @@
     if (initialName !== name || initialBody !== body) {
       saveActionQueue.actions.push(
         new Action(
-          $apiUri + "/v1.0/lesson/" + encodeURIComponent(lessonID),
+          `${$apiUri}/v1.0/lesson/${encodeURIComponent(lessonID)}`,
           "PUT",
           {
             name: encodeURIComponent(name),

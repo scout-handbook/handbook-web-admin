@@ -31,7 +31,7 @@
   let lockedError: string | null = null;
   let expiredError = false;
   const mutexPromise = request(
-    $apiUri + "/v1.0/mutex/" + encodeURIComponent(payload.lessonId),
+    `${$apiUri}/v1.0/mutex/${encodeURIComponent(payload.lessonId)}`,
     "POST",
     {},
     {
@@ -52,7 +52,7 @@
   function confirmCallback(): void {
     donePromise = new ActionQueue([
       new Action(
-        $apiUri + "/v1.0/lesson/" + encodeURIComponent(payload.lessonId),
+        `${$apiUri}/v1.0/lesson/${encodeURIComponent(payload.lessonId)}`,
         "DELETE",
         undefined,
         [],
@@ -91,7 +91,7 @@
   function dismissCallback(): void {
     void new ActionQueue([
       new Action(
-        $apiUri + "/v1.0/mutex/" + encodeURIComponent(payload.lessonId),
+        `${$apiUri}/v1.0/mutex/${encodeURIComponent(payload.lessonId)}`,
         "DELETE",
         undefined,
         [],

@@ -5,7 +5,7 @@ import { reAuth, request } from "./request";
 
 function refreshLogin(): void {
   void request(
-    CONFIG["api-uri"] + "/v1.0/refresh",
+    `${CONFIG["api-uri"]}/v1.0/refresh`,
     "GET",
     {},
     {

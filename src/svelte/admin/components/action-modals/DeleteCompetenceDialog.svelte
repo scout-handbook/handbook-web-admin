@@ -34,9 +34,7 @@
   function confirmCallback(): void {
     donePromise = new ActionQueue([
       new Action(
-        $apiUri +
-          "/v1.0/competence/" +
-          encodeURIComponent(payload.competenceId),
+        `${$apiUri}/v1.0/competence/${encodeURIComponent(payload.competenceId)}`,
         "DELETE",
       ),
     ])

@@ -43,7 +43,7 @@
   function save(): void {
     const saveActionQueue = new ActionQueue([
       new Action(
-        $apiUri + "/v1.0/lesson",
+        `${$apiUri}/v1.0/lesson`,
         "POST",
         {
           name: encodeURIComponent(name),
