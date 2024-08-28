@@ -30,7 +30,7 @@
   function confirmCallback(): void {
     donePromise = new ActionQueue([
       new Action(
-        $apiUri + "/v1.0/field/" + encodeURIComponent(payload.fieldId),
+        `${$apiUri}/v1.0/field/${encodeURIComponent(payload.fieldId)}`,
         "DELETE",
       ),
     ])

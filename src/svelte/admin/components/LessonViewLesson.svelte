@@ -27,7 +27,7 @@
     cyan
     icon="pencil"
     on:click={() => {
-      navigate("/lessons/" + id + "/edit");
+      navigate(`/lessons/${id}/edit`);
     }}
   >
     Upravit
@@ -48,7 +48,7 @@
   <Button
     icon="file-pdf"
     on:click={() => {
-      window.open($adminUri + "/lesson/" + id, "_blank", "noopener,noreferrer");
+      window.open(`${$adminUri}/lesson/${id}`, "_blank", "noopener,noreferrer");
     }}
   >
     PDF

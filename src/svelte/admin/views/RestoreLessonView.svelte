@@ -42,7 +42,7 @@
   >(constructURL("v1.0/field?override-group=true"));
 
   let bodyPromise = request<string>(
-    $apiUri + "/v1.0/deleted-lesson/" + lessonID + "/history/" + version,
+    `${$apiUri}/v1.0/deleted-lesson/${lessonID}/history/${version}`,
     "GET",
     {},
     authFailHandler,
@@ -53,7 +53,7 @@
   function save(): void {
     const saveActionQueue = new ActionQueue([
       new Action(
-        $apiUri + "/v1.0/lesson",
+        `${$apiUri}/v1.0/lesson`,
         "POST",
         {
           name: encodeURIComponent(name),

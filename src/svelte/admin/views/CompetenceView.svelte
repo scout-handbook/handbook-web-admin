@@ -39,7 +39,7 @@
   </CompetenceProvider>
 {/if}
 
-<h1>{$siteName + " - Body"}</h1>
+<h1>{`${$siteName} - Body`}</h1>
 {#if adminOrSuperuser}
   <Button
     green
@@ -55,8 +55,8 @@
 <CompetenceProvider let:competences>
   {#each competences as [id, competence] (id)}
     <h3>
-      <!-- eslint-disable-next-line @typescript-eslint/restrict-plus-operands @typescript-eslint/no-unsafe-call -->
-      {competence.number.toString() + ": " + competence.name}
+      <!-- eslint-disable-next-line @typescript-eslint/restrict-template-expressions @typescript-eslint/no-unsafe-call -->
+      {`${competence.number.toString()}: ${competence.name}`}
     </h3>
     {#if adminOrSuperuser}
       <div class="buttons">

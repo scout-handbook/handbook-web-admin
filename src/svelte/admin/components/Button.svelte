@@ -28,7 +28,7 @@
   on:click={callback}
 >
   {#if icon !== ""}
-    <i class={"icon-" + icon} />
+    <i class={`icon-${icon}`} />
   {/if}
   <slot />
 </button>

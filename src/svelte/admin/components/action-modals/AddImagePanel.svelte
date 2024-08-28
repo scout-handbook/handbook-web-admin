@@ -35,7 +35,7 @@
     const formData = new FormData();
     formData.append("image", files[0]);
     void request(
-      $apiUri + "/v1.0/image",
+      `${$apiUri}/v1.0/image`,
       "POST",
       formData,
       authFailHandler,

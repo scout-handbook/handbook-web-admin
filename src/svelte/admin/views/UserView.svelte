@@ -57,7 +57,7 @@
   <EditUserRolePanel payload={actionPayload} {revalidate} />
 {/if}
 
-<h1>{$siteName + " - Uživatelé"}</h1>
+<h1>{`${$siteName} - Uživatelé`}</h1>
 <UserViewSearchForm
   bind:searchName
   bind:role

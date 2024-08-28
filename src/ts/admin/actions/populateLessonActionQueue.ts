@@ -21,7 +21,7 @@ export function populateField(
   const encodedID = lessonID !== null ? encodeURIComponent(lessonID) : "{id}";
   actionQueue.actions.push(
     new Action(
-      get(apiUri) + "/v1.0/lesson/" + encodedID + "/field",
+      `${get(apiUri)}/v1.0/lesson/${encodedID}/field`,
       "PUT",
       field !== null
         ? {
@@ -43,13 +43,9 @@ export function populateCompetences(
   }
   const encodedID = lessonID !== null ? encodeURIComponent(lessonID) : "{id}";
   actionQueue.actions.push(
-    new Action(
-      get(apiUri) + "/v1.0/lesson/" + encodedID + "/competence",
-      "PUT",
-      {
-        competence: competences.map(encodeURIComponent),
-      },
-    ),
+    new Action(`${get(apiUri)}/v1.0/lesson/${encodedID}/competence`, "PUT", {
+      competence: competences.map(encodeURIComponent),
+    }),
   );
 }
 
@@ -64,7 +60,7 @@ export function populateGroups(
   }
   const encodedID = lessonID !== null ? encodeURIComponent(lessonID) : "{id}";
   actionQueue.actions.push(
-    new Action(get(apiUri) + "/v1.0/lesson/" + encodedID + "/group", "PUT", {
+    new Action(`${get(apiUri)}/v1.0/lesson/${encodedID}/group`, "PUT", {
       group: groups.map(encodeURIComponent),
     }),
   );

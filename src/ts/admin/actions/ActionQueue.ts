@@ -58,9 +58,7 @@ export class ActionQueue {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions -- window.localStorage is not present in older browsers
     if (!this.isRetryAfterLogin && window.localStorage) {
       window.location.replace(
-        CONFIG["api-uri"] +
-          "/v1.0/login?return-uri=" +
-          window.location.pathname,
+        `${CONFIG["api-uri"]}/v1.0/login?return-uri=${window.location.pathname}`,
       );
     } else {
       globalDialogMessage.set(
@@ -84,7 +82,7 @@ export function setupActionQueue(): void {
     globalLoadingIndicator.set(true);
     void aq.dispatch().then(() => {
       clear(undefined, { broadcast: true });
-      navigate("/" + get(adminUri).split("/").slice(3).join("/"));
+      navigate(`/${get(adminUri).split("/").slice(3).join("/")}`);
       globalLoadingIndicator.set(false);
       globalDialogMessage.set("Akce byla úspěšná");
     });

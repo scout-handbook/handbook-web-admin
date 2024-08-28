@@ -38,7 +38,7 @@
     } else {
       donePromise = new ActionQueue([
         new Action(
-          $apiUri + "/v1.0/group/" + encodeURIComponent(payload.groupId),
+          `${$apiUri}/v1.0/group/${encodeURIComponent(payload.groupId)}`,
           "PUT",
           { name },
         ),

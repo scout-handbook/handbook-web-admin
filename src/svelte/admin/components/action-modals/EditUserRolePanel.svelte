@@ -46,10 +46,7 @@
     } else {
       donePromise = new ActionQueue([
         new Action(
-          $apiUri +
-            "/v1.0/user/" +
-            encodeURIComponent(payload.user.id) +
-            "/role",
+          `${$apiUri}/v1.0/user/${encodeURIComponent(payload.user.id)}/role`,
           "PUT",
           { role: selectedRole },
         ),
