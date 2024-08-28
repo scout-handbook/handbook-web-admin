@@ -30,6 +30,7 @@ async function rawRequest<T extends RequestResponse>(
   method: string,
   payload: FormData | Payload = {},
 ): Promise<APIResponse<T>> {
+  let fullUrl = url;
   let query = "";
   if (
     method === "GET" ||
@@ -39,7 +40,7 @@ async function rawRequest<T extends RequestResponse>(
     query = constructQuery(payload as Payload);
   }
   if ((method === "GET" || method === "DELETE") && query) {
-    url += "?" + query;
+    fullUrl += "?" + query;
   }
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
@@ -52,7 +53,7 @@ async function rawRequest<T extends RequestResponse>(
         }
       }
     };
-    xhr.open(method, url, true);
+    xhr.open(method, fullUrl, true);
     if (
       method === "GET" ||
       method === "DELETE" ||
