@@ -17,8 +17,8 @@
   interface $$Slots {
     default: {
       competences: Array<[string, Competence]>;
-      lessons: Array<[string, Lesson]>;
       fields: Array<[string, Field]>;
+      lessons: Array<[string, Lesson]>;
     };
   }
 
