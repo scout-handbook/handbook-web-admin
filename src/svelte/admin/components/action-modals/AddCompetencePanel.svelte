@@ -29,9 +29,9 @@
   function saveCallback(): void {
     donePromise = new ActionQueue([
       new Action(`${$apiUri}/v1.0/competence`, "POST", {
-        number: encodeURIComponent(number),
-        name: encodeURIComponent(name),
         description: encodeURIComponent(description),
+        name: encodeURIComponent(name),
+        number: encodeURIComponent(number),
       }),
     ])
       .dispatch()

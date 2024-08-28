@@ -27,7 +27,7 @@
   const navigate = useNavigate();
 
   const field = get(fields, payload.fieldId)!;
-  let { name, description, image, icon } = field;
+  let { description, icon, image, name } = field;
   let imageSelectorOpen = false;
   let iconSelectorOpen = false;
   let donePromise: Promise<void> | null = null;
@@ -50,7 +50,7 @@
         new Action(
           `${$apiUri}/v1.0/field/${encodeURIComponent(payload.fieldId)}`,
           "PUT",
-          { name, description, image, icon },
+          { description, icon, image, name },
         ),
       ])
         .dispatch()

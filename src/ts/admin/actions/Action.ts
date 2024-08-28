@@ -48,10 +48,10 @@ export class Action {
 
 export function serializeAction(action: Action): SerializedAction {
   return {
-    url: action.url,
+    callbacks: action.callbacks,
     method: action.method,
     payload: action.payload,
-    callbacks: action.callbacks,
+    url: action.url,
   };
 }
 

@@ -32,12 +32,12 @@
   let group = "00000000-0000-0000-0000-000000000000";
 
   $: payload = {
+    group: group !== "00000000-0000-0000-0000-000000000000" ? group : undefined,
     name: searchName,
     page,
     // eslint-disable-next-line @typescript-eslint/naming-convention -- HTTP argument
     "per-page": perPage,
     role: role !== "all" ? role : undefined,
-    group: group !== "00000000-0000-0000-0000-000000000000" ? group : undefined,
   };
   $: ({ data: userList, revalidate } = useSWR<UserListResponse>(
     () => constructURL("v1.0/user", payload),

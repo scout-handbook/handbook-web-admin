@@ -26,7 +26,7 @@
   const navigate = useNavigate();
 
   const competence = get(competences, payload.competenceId)!;
-  let { number, name, description } = competence;
+  let { description, name, number } = competence;
   let donePromise: Promise<void> | null = null;
   const { mutate } = useSWR<SWRMutateFix<Record<string, Competence>>>(
     constructURL("v1.0/competence"),
@@ -46,7 +46,7 @@
         new Action(
           `${$apiUri}/v1.0/competence/${encodeURIComponent(payload.competenceId)}`,
           "PUT",
-          { number, name, description },
+          { description, name, number },
         ),
       ])
         .dispatch()
