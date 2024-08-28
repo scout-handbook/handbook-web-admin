@@ -4,8 +4,7 @@ import type { APIResponse } from "../interfaces/APIResponse";
 import type { ExceptionHandler } from "../interfaces/ExceptionHandler";
 import type { Payload } from "../interfaces/Payload";
 import type { RequestResponse } from "../interfaces/RequestResponse";
-import { globalDialogMessage } from "../stores";
-import { suspendReAuth } from "../stores";
+import { globalDialogMessage, suspendReAuth } from "../stores";
 import { constructQuery } from "./constructURL";
 
 export function reAuth(): void {

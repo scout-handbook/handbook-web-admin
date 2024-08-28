@@ -3,11 +3,13 @@ import { get } from "svelte/store";
 import { navigate } from "svelte-navigator";
 
 import type { SerializedAction } from "../interfaces/SerializedAction";
-import { globalDialogMessage, globalLoadingIndicator } from "../stores";
-import { adminUri } from "../stores";
+import {
+  adminUri,
+  globalDialogMessage,
+  globalLoadingIndicator,
+} from "../stores";
 import { request } from "../utils/request";
-import type { Action } from "./Action";
-import { deserializeAction, serializeAction } from "./Action";
+import { type Action, deserializeAction, serializeAction } from "./Action";
 
 export class ActionQueue {
   public actions: Array<Action>;
