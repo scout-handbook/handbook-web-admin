@@ -11,7 +11,7 @@ let converter: Converter | null = null;
 function convert(payload: MessageEvent): void {
   const data = payload.data as WorkerPayload;
   const html = filterXSS(converter!.makeHtml(data.body), xssOptions());
-  postMessage({ id: data.id, body: html });
+  postMessage({ body: html, id: data.id });
 }
 
 function main(): void {

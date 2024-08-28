@@ -46,8 +46,8 @@
         `${$apiUri}/v1.0/lesson`,
         "POST",
         {
-          name: encodeURIComponent(name),
           body: encodeURIComponent(body),
+          name: encodeURIComponent(name),
         },
         [ActionCallback.fillID],
       ),

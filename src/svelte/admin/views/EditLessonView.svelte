@@ -160,8 +160,8 @@
           `${$apiUri}/v1.0/lesson/${encodeURIComponent(lessonID)}`,
           "PUT",
           {
-            name: encodeURIComponent(name),
             body: encodeURIComponent(body),
+            name: encodeURIComponent(name),
           },
           [ActionCallback.removeBeacon],
           saveExceptionHandler,

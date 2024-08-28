@@ -47,10 +47,10 @@ export async function compileMarkdown(markdown: string): Promise<string> {
       promiseResolvers[id] = resolve;
     });
     if (workerRunning) {
-      nextPayload = { id, body: markdown };
+      nextPayload = { body: markdown, id };
     } else {
       workerRunning = true;
-      worker!.postMessage({ id, body: markdown });
+      worker!.postMessage({ body: markdown, id });
     }
     return promise;
   }
