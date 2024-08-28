@@ -13,7 +13,7 @@ export function checkLogin(): void {
       },
     },
   ).then((response) => {
-    if (!["editor", "administrator", "superuser"].includes(response.role)) {
+    if (!["administrator", "editor", "superuser"].includes(response.role)) {
       window.location.replace(CONFIG["frontend-uri"]);
     }
   });

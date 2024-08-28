@@ -17,8 +17,8 @@ export function xssOptions(): XSS.IFilterXSSOptions {
           ["td", "th"].includes(tag) &&
           name === "style" &&
           [
-            "text-align:left;",
             "text-align:center;",
+            "text-align:left;",
             "text-align:right;",
           ].includes(value)
         ) {
