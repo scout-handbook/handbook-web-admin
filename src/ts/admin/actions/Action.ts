@@ -7,11 +7,11 @@ import type { ActionQueue } from "./ActionQueue";
 import { ActionCallback } from "./ActionCallback";
 
 export class Action {
-  public url: string;
-  public method: string;
-  public payload: Payload;
   public callbacks: Array<ActionCallback>;
   public exceptionHandler: ExceptionHandler;
+  public method: string;
+  public payload: Payload;
+  public url: string;
 
   public constructor(
     url: string,
