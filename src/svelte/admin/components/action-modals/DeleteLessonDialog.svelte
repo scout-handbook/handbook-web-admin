@@ -2,15 +2,18 @@
   import { useSWR } from "sswr";
   import { useNavigate } from "svelte-navigator";
 
-  import { Action } from "../../../../ts/admin/actions/Action";
-  import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
   import type { APIResponse } from "../../../../ts/admin/interfaces/APIResponse";
   import type { Field } from "../../../../ts/admin/interfaces/Field";
   import type { Lesson } from "../../../../ts/admin/interfaces/Lesson";
   import type { RequestResponse } from "../../../../ts/admin/interfaces/RequestResponse";
+
+  import { Action } from "../../../../ts/admin/actions/Action";
+  import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
   import { apiUri } from "../../../../ts/admin/stores";
-  import type { SWRMutateFix } from "../../../../ts/admin/SWRMutateFix";
-  import { SWRMutateFnWrapper } from "../../../../ts/admin/SWRMutateFix";
+  import {
+    type SWRMutateFix,
+    SWRMutateFnWrapper,
+  } from "../../../../ts/admin/SWRMutateFix";
   import { get } from "../../../../ts/admin/utils/arrayUtils";
   import { constructURL } from "../../../../ts/admin/utils/constructURL";
   import { reAuth, request } from "../../../../ts/admin/utils/request";
@@ -28,7 +31,7 @@
   let lockedError: string | null = null;
   let expiredError = false;
   const mutexPromise = request(
-    $apiUri + "/v1.0/mutex/" + encodeURIComponent(payload.lessonId),
+    `${$apiUri}/v1.0/mutex/${encodeURIComponent(payload.lessonId)}`,
     "POST",
     {},
     {
@@ -49,7 +52,7 @@
   function confirmCallback(): void {
     donePromise = new ActionQueue([
       new Action(
-        $apiUri + "/v1.0/lesson/" + encodeURIComponent(payload.lessonId),
+        `${$apiUri}/v1.0/lesson/${encodeURIComponent(payload.lessonId)}`,
         "DELETE",
         undefined,
         [],
@@ -88,7 +91,7 @@
   function dismissCallback(): void {
     void new ActionQueue([
       new Action(
-        $apiUri + "/v1.0/mutex/" + encodeURIComponent(payload.lessonId),
+        `${$apiUri}/v1.0/mutex/${encodeURIComponent(payload.lessonId)}`,
         "DELETE",
         undefined,
         [],

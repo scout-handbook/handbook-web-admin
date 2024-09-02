@@ -3,6 +3,11 @@
   import { onDestroy, onMount } from "svelte";
   import { useNavigate } from "svelte-navigator";
 
+  import type { APIResponse } from "../../../ts/admin/interfaces/APIResponse";
+  import type { Field } from "../../../ts/admin/interfaces/Field";
+  import type { Lesson } from "../../../ts/admin/interfaces/Lesson";
+  import type { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
+
   import { Action } from "../../../ts/admin/actions/Action";
   import { ActionCallback } from "../../../ts/admin/actions/ActionCallback";
   import { ActionQueue } from "../../../ts/admin/actions/ActionQueue";
@@ -11,17 +16,15 @@
     populateField,
     populateGroups,
   } from "../../../ts/admin/actions/populateLessonActionQueue";
-  import type { APIResponse } from "../../../ts/admin/interfaces/APIResponse";
-  import type { Field } from "../../../ts/admin/interfaces/Field";
-  import type { Lesson } from "../../../ts/admin/interfaces/Lesson";
-  import type { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
   import {
     afterReAuthAction,
     apiUri,
     globalDialogMessage,
   } from "../../../ts/admin/stores";
-  import type { SWRMutateFix } from "../../../ts/admin/SWRMutateFix";
-  import { SWRMutateFnWrapper } from "../../../ts/admin/SWRMutateFix";
+  import {
+    type SWRMutateFix,
+    SWRMutateFnWrapper,
+  } from "../../../ts/admin/SWRMutateFix";
   import { get } from "../../../ts/admin/utils/arrayUtils";
   import { constructURL } from "../../../ts/admin/utils/constructURL";
   import { reAuth, request } from "../../../ts/admin/utils/request";
@@ -68,14 +71,14 @@
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions -- Older browsers don't include this function
     if (navigator.sendBeacon) {
       navigator.sendBeacon(
-        $apiUri + "/v1.0/mutex-beacon/" + encodeURIComponent(id),
+        `${$apiUri}/v1.0/mutex-beacon/${encodeURIComponent(id)}`,
       );
     }
   }
 
   let lessonDataPromise = Promise.all([
     request(
-      $apiUri + "/v1.0/mutex/" + encodeURIComponent(lessonID),
+      `${$apiUri}/v1.0/mutex/${encodeURIComponent(lessonID)}`,
       "POST",
       {},
       {
@@ -83,9 +86,7 @@
         LockedException: (response: APIResponse<RequestResponse>): void => {
           navigate(-1);
           globalDialogMessage.set(
-            "Nelze upravovat lekci, protože ji právě upravuje " +
-              response.holder! +
-              ".",
+            `Nelze upravovat lekci, protože ji právě upravuje ${response.holder!}.`,
           );
         },
       },
@@ -95,7 +96,7 @@
       };
     }),
     request<Array<string>>(
-      $apiUri + "/v1.0/lesson/" + encodeURIComponent(lessonID) + "/group",
+      `${$apiUri}/v1.0/lesson/${encodeURIComponent(lessonID)}/group`,
       "GET",
       {},
       {
@@ -106,7 +107,7 @@
       initialGroups = groups;
     }),
     request<string>(
-      $apiUri + "/v1.0/lesson/" + encodeURIComponent(lessonID),
+      `${$apiUri}/v1.0/lesson/${encodeURIComponent(lessonID)}`,
       "GET",
       {},
       {
@@ -121,7 +122,7 @@
   function lessonEditMutexExtend(id: string): void {
     void new ActionQueue([
       new Action(
-        $apiUri + "/v1.0/mutex/" + encodeURIComponent(id),
+        `${$apiUri}/v1.0/mutex/${encodeURIComponent(id)}`,
         "PUT",
         undefined,
         undefined,
@@ -142,7 +143,7 @@
   function destroyMutex(): void {
     void new ActionQueue([
       new Action(
-        $apiUri + "/v1.0/mutex/" + encodeURIComponent(lessonID),
+        `${$apiUri}/v1.0/mutex/${encodeURIComponent(lessonID)}`,
         "DELETE",
         undefined,
         [ActionCallback.removeBeacon],
@@ -156,11 +157,11 @@
     if (initialName !== name || initialBody !== body) {
       saveActionQueue.actions.push(
         new Action(
-          $apiUri + "/v1.0/lesson/" + encodeURIComponent(lessonID),
+          `${$apiUri}/v1.0/lesson/${encodeURIComponent(lessonID)}`,
           "PUT",
           {
-            name: encodeURIComponent(name),
             body: encodeURIComponent(body),
+            name: encodeURIComponent(name),
           },
           [ActionCallback.removeBeacon],
           saveExceptionHandler,

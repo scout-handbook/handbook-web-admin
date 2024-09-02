@@ -3,6 +3,7 @@
 
   import type { DeletedLesson } from "../../../../ts/admin/interfaces/DeletedLesson";
   import type { LessonVersion } from "../../../../ts/admin/interfaces/LessonVersion";
+
   import { apiUri } from "../../../../ts/admin/stores";
   import { compileMarkdown } from "../../../../ts/admin/utils/compileMarkdown";
   import { parseVersion } from "../../../../ts/admin/utils/parseVersion";
@@ -38,18 +39,14 @@
           resolve("");
         })
       : request<string>(
-          $apiUri +
-            "/v1.0/deleted-lesson/" +
-            selectedLesson +
-            "/history/" +
-            selectedVersion.toString(),
+          `${$apiUri}/v1.0/deleted-lesson/${selectedLesson}/history/${selectedVersion.toString()}`,
           "GET",
           {},
           authFailHandler,
         ).then(compileMarkdown);
 
   void request<Record<string, DeletedLesson>>(
-    $apiUri + "/v1.0/deleted-lesson",
+    `${$apiUri}/v1.0/deleted-lesson`,
     "GET",
     {},
     {
@@ -69,7 +66,7 @@
     }
     step = "version-selection-loading";
     void request<Array<LessonVersion>>(
-      $apiUri + "/v1.0/deleted-lesson/" + selectedLesson + "/history",
+      `${$apiUri}/v1.0/deleted-lesson/${selectedLesson}/history`,
       "GET",
       {},
       {
@@ -83,12 +80,7 @@
 
   function selectVersionCallback(): void {
     navigate(
-      "/lessons/" +
-        selectedLesson +
-        "/versions/" +
-        selectedVersion!.toString() +
-        "/restore?name=" +
-        name,
+      `/lessons/${selectedLesson}/versions/${selectedVersion!.toString()}/restore?name=${name}`,
     );
   }
 </script>

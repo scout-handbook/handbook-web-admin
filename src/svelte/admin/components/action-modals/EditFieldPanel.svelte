@@ -2,12 +2,15 @@
   import { useSWR } from "sswr";
   import { useNavigate } from "svelte-navigator";
 
+  import type { Field } from "../../../../ts/admin/interfaces/Field";
+
   import { Action } from "../../../../ts/admin/actions/Action";
   import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
-  import type { Field } from "../../../../ts/admin/interfaces/Field";
   import { apiUri } from "../../../../ts/admin/stores";
-  import type { SWRMutateFix } from "../../../../ts/admin/SWRMutateFix";
-  import { SWRMutateFnWrapper } from "../../../../ts/admin/SWRMutateFix";
+  import {
+    type SWRMutateFix,
+    SWRMutateFnWrapper,
+  } from "../../../../ts/admin/SWRMutateFix";
   import { get } from "../../../../ts/admin/utils/arrayUtils";
   import { constructURL } from "../../../../ts/admin/utils/constructURL";
   import Button from "../Button.svelte";
@@ -24,7 +27,7 @@
   const navigate = useNavigate();
 
   const field = get(fields, payload.fieldId)!;
-  let { name, description, image, icon } = field;
+  let { description, icon, image, name } = field;
   let imageSelectorOpen = false;
   let iconSelectorOpen = false;
   let donePromise: Promise<void> | null = null;
@@ -45,9 +48,9 @@
     } else {
       donePromise = new ActionQueue([
         new Action(
-          $apiUri + "/v1.0/field/" + encodeURIComponent(payload.fieldId),
+          `${$apiUri}/v1.0/field/${encodeURIComponent(payload.fieldId)}`,
           "PUT",
-          { name, description, image, icon },
+          { description, icon, image, name },
         ),
       ])
         .dispatch()

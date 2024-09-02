@@ -2,11 +2,12 @@
   import { useSWR } from "sswr";
   import { useNavigate } from "svelte-navigator";
 
+  import type { Competence } from "../../../../ts/admin/interfaces/Competence";
+  import type { SWRMutateFix } from "../../../../ts/admin/SWRMutateFix";
+
   import { Action } from "../../../../ts/admin/actions/Action";
   import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
-  import type { Competence } from "../../../../ts/admin/interfaces/Competence";
   import { apiUri } from "../../../../ts/admin/stores";
-  import type { SWRMutateFix } from "../../../../ts/admin/SWRMutateFix";
   import { constructURL } from "../../../../ts/admin/utils/constructURL";
   import Button from "../Button.svelte";
   import DoneDialog from "../DoneDialog.svelte";
@@ -27,10 +28,10 @@
 
   function saveCallback(): void {
     donePromise = new ActionQueue([
-      new Action($apiUri + "/v1.0/competence", "POST", {
-        number: encodeURIComponent(number),
-        name: encodeURIComponent(name),
+      new Action(`${$apiUri}/v1.0/competence`, "POST", {
         description: encodeURIComponent(description),
+        name: encodeURIComponent(name),
+        number: encodeURIComponent(number),
       }),
     ])
       .dispatch()

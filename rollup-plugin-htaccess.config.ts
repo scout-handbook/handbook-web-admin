@@ -23,54 +23,52 @@ const options: (
       404: "/admin/404.html",
       500: "/admin/500.html",
     },
-    Options: {
-      minus: ["Indexes"],
-    },
     Header: [
       {
         action: "set",
+        always: true,
         header: "Content-Security-Policy",
         value: {
-          "upgrade-insecure-requests": true,
-          "default-src": { self: true },
-          "script-src": {
-            self: true,
-            hosts: ["https://ajax.googleapis.com/ajax/libs/webfont/"],
-            hashes: {
-              sha256: cspHashes,
-            },
-          },
           "connect-src": {
-            self: true,
             hosts: [
               "https://fonts.gstatic.com/",
               "https://ajax.googleapis.com/ajax/libs/webfont/",
               "https://fonts.googleapis.com",
             ],
-          },
-          "style-src": {
             self: true,
-            "unsafe-inline": true,
-            hosts: ["https://fonts.googleapis.com"],
           },
+          "default-src": { self: true },
           "font-src": {
-            self: true,
-            schemes: { data: true },
             hosts: ["https://fonts.gstatic.com"],
+            schemes: { data: true },
+            self: true,
           },
           "img-src": {
-            self: true,
             schemes: { data: true },
+            self: true,
           },
           "object-src": {},
+          "script-src": {
+            hashes: {
+              sha256: cspHashes,
+            },
+            hosts: ["https://ajax.googleapis.com/ajax/libs/webfont/"],
+            self: true,
+          },
+          "style-src": {
+            hosts: ["https://fonts.googleapis.com"],
+            self: true,
+            "unsafe-inline": true,
+          },
+          "upgrade-insecure-requests": true,
           ...(config["csp-report-uri"] && {
             "report-uri": [config["csp-report-uri"]],
           }),
         },
-        always: true,
       },
       {
         action: "set",
+        always: true,
         header: "Permissions-Policy",
         value: {
           camera: {},
@@ -82,73 +80,75 @@ const options: (
           "screen-wake-lock": {},
           "web-share": {},
         },
-        always: true,
       },
       {
         action: "set",
+        always: true,
         header: "Referrer-Policy",
         value: "same-origin",
-        always: true,
       },
       {
         action: "set",
+        always: true,
         header: "Strict-Transport-Security",
         value: {
-          maxAge: 31536000,
           includeSubDomains: true,
+          maxAge: 31536000,
         },
-        always: true,
       },
       {
         action: "set",
+        always: true,
         header: "X-Content-Type-Options",
         value: {
           nosniff: true,
         },
-        always: true,
       },
     ],
+    Options: {
+      minus: ["Indexes"],
+    },
     rewrite: {
       rules: [
         // Force HTTPS
         {
           conditions: [
             {
-              testString: "%{HTTPS}",
               conditionPattern: "off",
+              testString: "%{HTTPS}",
             },
           ],
-          pattern: "(.*)",
-          substitution: "https://%{HTTP_HOST}%{REQUEST_URI}",
           flags: {
             last: true,
             qsappend: true,
             redirect: 301,
           },
+          pattern: "(.*)",
+          substitution: "https://%{HTTP_HOST}%{REQUEST_URI}",
         },
         // Pages rewrite
         {
           conditions: [
             {
-              testString: "%{REQUEST_URI}",
               conditionPattern:
                 "^/admin/(lessons|competences|images|users|groups)(/|$)",
+              testString: "%{REQUEST_URI}",
             },
           ],
-          pattern: "(.*)",
-          substitution: "/admin/",
           flags: {
             last: true,
             qsappend: true,
           },
+          pattern: "(.*)",
+          substitution: "/admin/",
         },
         // PDF rewrite
         {
-          pattern: "^lesson/(.*)",
-          substitution: "lesson.php?id=$1",
           flags: {
             qsappend: true,
           },
+          pattern: "^lesson/(.*)",
+          substitution: "lesson.php?id=$1",
         },
       ],
     },

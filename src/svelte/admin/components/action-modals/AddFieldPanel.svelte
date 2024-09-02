@@ -2,11 +2,12 @@
   import { useSWR } from "sswr";
   import { useNavigate } from "svelte-navigator";
 
+  import type { Field } from "../../../../ts/admin/interfaces/Field";
+  import type { SWRMutateFix } from "../../../../ts/admin/SWRMutateFix";
+
   import { Action } from "../../../../ts/admin/actions/Action";
   import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
-  import type { Field } from "../../../../ts/admin/interfaces/Field";
   import { apiUri } from "../../../../ts/admin/stores";
-  import type { SWRMutateFix } from "../../../../ts/admin/SWRMutateFix";
   import { constructURL } from "../../../../ts/admin/utils/constructURL";
   import Button from "../Button.svelte";
   import DoneDialog from "../DoneDialog.svelte";
@@ -32,11 +33,11 @@
 
   function saveCallback(): void {
     donePromise = new ActionQueue([
-      new Action($apiUri + "/v1.0/field", "POST", {
-        name: encodeURIComponent(name),
+      new Action(`${$apiUri}/v1.0/field`, "POST", {
         description: encodeURIComponent(description),
-        image: encodeURIComponent(image),
         icon: encodeURIComponent(icon),
+        image: encodeURIComponent(image),
+        name: encodeURIComponent(name),
       }),
     ])
       .dispatch()

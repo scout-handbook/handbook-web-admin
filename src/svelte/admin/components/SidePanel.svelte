@@ -9,7 +9,7 @@
 
 <Overlay />
 <!-- eslint-disable-next-line svelte/no-inline-styles -->
-<div transition:fly={{ from: "right", duration: 300 }}>
+<div transition:fly={{ duration: 300, from: "right" }}>
   <slot />
 </div>
 

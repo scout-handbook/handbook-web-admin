@@ -2,12 +2,15 @@
   import { useSWR } from "sswr";
   import { useNavigate } from "svelte-navigator";
 
+  import type { Group } from "../../../../ts/admin/interfaces/Group";
+
   import { Action } from "../../../../ts/admin/actions/Action";
   import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
-  import type { Group } from "../../../../ts/admin/interfaces/Group";
   import { apiUri } from "../../../../ts/admin/stores";
-  import type { SWRMutateFix } from "../../../../ts/admin/SWRMutateFix";
-  import { SWRMutateFnWrapper } from "../../../../ts/admin/SWRMutateFix";
+  import {
+    type SWRMutateFix,
+    SWRMutateFnWrapper,
+  } from "../../../../ts/admin/SWRMutateFix";
   import { get } from "../../../../ts/admin/utils/arrayUtils";
   import { constructURL } from "../../../../ts/admin/utils/constructURL";
   import Button from "../Button.svelte";
@@ -35,7 +38,7 @@
     } else {
       donePromise = new ActionQueue([
         new Action(
-          $apiUri + "/v1.0/group/" + encodeURIComponent(payload.groupId),
+          `${$apiUri}/v1.0/group/${encodeURIComponent(payload.groupId)}`,
           "PUT",
           { name },
         ),

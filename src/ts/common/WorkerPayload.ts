@@ -1,4 +1,4 @@
 export interface WorkerPayload {
-  id: string;
   body: string;
+  id: string;
 }

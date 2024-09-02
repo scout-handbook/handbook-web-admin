@@ -4,16 +4,13 @@ import type { APIResponse } from "../interfaces/APIResponse";
 import type { ExceptionHandler } from "../interfaces/ExceptionHandler";
 import type { Payload } from "../interfaces/Payload";
 import type { RequestResponse } from "../interfaces/RequestResponse";
-import { globalDialogMessage } from "../stores";
-import { suspendReAuth } from "../stores";
+
+import { globalDialogMessage, suspendReAuth } from "../stores";
 import { constructQuery } from "./constructURL";
 
 export function reAuth(): void {
   if (!get(suspendReAuth)) {
-    window.location.href =
-      CONFIG["api-uri"] +
-      "/v1.0/login?return-uri=" +
-      encodeURIComponent(window.location.href);
+    window.location.href = `${CONFIG["api-uri"]}/v1.0/login?return-uri=${encodeURIComponent(window.location.href)}`;
   }
 }
 
@@ -30,6 +27,7 @@ async function rawRequest<T extends RequestResponse>(
   method: string,
   payload: FormData | Payload = {},
 ): Promise<APIResponse<T>> {
+  let fullUrl = url;
   let query = "";
   if (
     method === "GET" ||
@@ -39,7 +37,7 @@ async function rawRequest<T extends RequestResponse>(
     query = constructQuery(payload as Payload);
   }
   if ((method === "GET" || method === "DELETE") && query) {
-    url += "?" + query;
+    fullUrl += `?${query}`;
   }
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
@@ -52,7 +50,7 @@ async function rawRequest<T extends RequestResponse>(
         }
       }
     };
-    xhr.open(method, url, true);
+    xhr.open(method, fullUrl, true);
     if (
       method === "GET" ||
       method === "DELETE" ||
@@ -92,7 +90,7 @@ export async function request<T extends RequestResponse>(
     throw new Error();
   } else {
     globalDialogMessage.set(
-      "Nastala neznámá chyba. Chybová hláška: " + response.message!,
+      `Nastala neznámá chyba. Chybová hláška: ${response.message!}`,
     );
     throw new Error();
   }

@@ -5,6 +5,7 @@
   import type { Role } from "../../../ts/admin/interfaces/Role";
   import type { User } from "../../../ts/admin/interfaces/User";
   import type { UserListResponse } from "../../../ts/admin/interfaces/UserListResponse";
+
   import { siteName } from "../../../ts/admin/stores";
   import { constructURL } from "../../../ts/admin/utils/constructURL";
   import EditUserGroupsPanel from "../components/action-modals/EditUserGroupsPanel.svelte";
@@ -26,17 +27,17 @@
 
   let page = 1;
   const perPage = 25;
-  let role: Role | "all" = "all";
+  let role: "all" | Role = "all";
   let searchName = "";
   let group = "00000000-0000-0000-0000-000000000000";
 
   $: payload = {
+    group: group !== "00000000-0000-0000-0000-000000000000" ? group : undefined,
     name: searchName,
-    page: page,
+    page,
     // eslint-disable-next-line @typescript-eslint/naming-convention -- HTTP argument
     "per-page": perPage,
     role: role !== "all" ? role : undefined,
-    group: group !== "00000000-0000-0000-0000-000000000000" ? group : undefined,
   };
   $: ({ data: userList, revalidate } = useSWR<UserListResponse>(
     () => constructURL("v1.0/user", payload),
@@ -56,7 +57,7 @@
   <EditUserRolePanel payload={actionPayload} {revalidate} />
 {/if}
 
-<h1>{$siteName + " - Uživatelé"}</h1>
+<h1>{`${$siteName} - Uživatelé`}</h1>
 <UserViewSearchForm
   bind:searchName
   bind:role

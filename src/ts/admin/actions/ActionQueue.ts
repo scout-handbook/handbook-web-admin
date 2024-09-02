@@ -3,24 +3,34 @@ import { get } from "svelte/store";
 import { navigate } from "svelte-navigator";
 
 import type { SerializedAction } from "../interfaces/SerializedAction";
-import { globalDialogMessage, globalLoadingIndicator } from "../stores";
-import { adminUri } from "../stores";
+
+import {
+  adminUri,
+  globalDialogMessage,
+  globalLoadingIndicator,
+} from "../stores";
 import { request } from "../utils/request";
-import type { Action } from "./Action";
-import { deserializeAction, serializeAction } from "./Action";
+import { type Action, deserializeAction, serializeAction } from "./Action";
 
 export class ActionQueue {
-  public actions: Array<Action>;
   private readonly isRetryAfterLogin: boolean;
+  public actions: Array<Action>;
 
   public constructor(actions: Array<Action> = [], isRetryAfterLogin = false) {
     this.actions = actions;
     this.isRetryAfterLogin = isRetryAfterLogin;
   }
 
-  public fillID(id: string): void {
-    for (const action of this.actions) {
-      action.fillID(id);
+  private authException(): void {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions -- window.localStorage is not present in older browsers
+    if (!this.isRetryAfterLogin && window.localStorage) {
+      window.location.replace(
+        `${CONFIG["api-uri"]}/v1.0/login?return-uri=${window.location.pathname}`,
+      );
+    } else {
+      globalDialogMessage.set(
+        "Byl jste odhlášen a akce se nepodařila. Přihlašte se prosím a zkuste to znovu.",
+      );
     }
   }
 
@@ -51,18 +61,9 @@ export class ActionQueue {
     });
   }
 
-  private authException(): void {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions -- window.localStorage is not present in older browsers
-    if (!this.isRetryAfterLogin && window.localStorage) {
-      window.location.replace(
-        CONFIG["api-uri"] +
-          "/v1.0/login?return-uri=" +
-          window.location.pathname,
-      );
-    } else {
-      globalDialogMessage.set(
-        "Byl jste odhlášen a akce se nepodařila. Přihlašte se prosím a zkuste to znovu.",
-      );
+  public fillID(id: string): void {
+    for (const action of this.actions) {
+      action.fillID(id);
     }
   }
 }
@@ -81,7 +82,7 @@ export function setupActionQueue(): void {
     globalLoadingIndicator.set(true);
     void aq.dispatch().then(() => {
       clear(undefined, { broadcast: true });
-      navigate("/" + get(adminUri).split("/").slice(3).join("/"));
+      navigate(`/${get(adminUri).split("/").slice(3).join("/")}`);
       globalLoadingIndicator.set(false);
       globalDialogMessage.set("Akce byla úspěšná");
     });

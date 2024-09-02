@@ -28,11 +28,7 @@
 
   function insertImage(event: CustomEvent<string>): void {
     insertAtCursor(
-      "![Text po najetí kurzorem](" +
-        $apiUri +
-        "/v1.0/image/" +
-        event.detail +
-        ")",
+      `![Text po najetí kurzorem](${$apiUri}/v1.0/image/${event.detail})`,
     );
   }
 

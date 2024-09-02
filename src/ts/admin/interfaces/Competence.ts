@@ -1,5 +1,5 @@
 export interface Competence {
-  number: string;
-  name: string;
   description: string;
+  name: string;
+  number: string;
 }
