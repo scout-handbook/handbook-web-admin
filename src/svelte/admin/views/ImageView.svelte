@@ -54,12 +54,12 @@
     }}
   >
     <img
-      alt={"Image " + openImage}
-      src={$apiUri + "/v1.0/image/" + openImage}
+      alt={`Image ${openImage}`}
+      src={`${$apiUri}/v1.0/image/${openImage}`}
     />
   </button>
 {/if}
-<h1>{$siteName + " - Obrázky"}</h1>
+<h1>{`${$siteName} - Obrázky`}</h1>
 <Button
   green
   icon="plus"

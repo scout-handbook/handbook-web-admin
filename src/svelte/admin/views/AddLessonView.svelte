@@ -2,6 +2,10 @@
   import { useSWR } from "sswr";
   import { useLocation, useNavigate } from "svelte-navigator";
 
+  import type { Field } from "../../../ts/admin/interfaces/Field";
+  import type { Lesson } from "../../../ts/admin/interfaces/Lesson";
+  import type { SWRMutateFix } from "../../../ts/admin/SWRMutateFix";
+
   import { Action } from "../../../ts/admin/actions/Action";
   import { ActionCallback } from "../../../ts/admin/actions/ActionCallback";
   import { ActionQueue } from "../../../ts/admin/actions/ActionQueue";
@@ -10,10 +14,7 @@
     populateField,
     populateGroups,
   } from "../../../ts/admin/actions/populateLessonActionQueue";
-  import type { Field } from "../../../ts/admin/interfaces/Field";
-  import type { Lesson } from "../../../ts/admin/interfaces/Lesson";
   import { apiUri } from "../../../ts/admin/stores";
-  import type { SWRMutateFix } from "../../../ts/admin/SWRMutateFix";
   import { constructURL } from "../../../ts/admin/utils/constructURL";
   import {
     defaultBody,
@@ -42,11 +43,11 @@
   function save(): void {
     const saveActionQueue = new ActionQueue([
       new Action(
-        $apiUri + "/v1.0/lesson",
+        `${$apiUri}/v1.0/lesson`,
         "POST",
         {
-          name: encodeURIComponent(name),
           body: encodeURIComponent(body),
+          name: encodeURIComponent(name),
         },
         [ActionCallback.fillID],
       ),

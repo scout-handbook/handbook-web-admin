@@ -2,6 +2,7 @@
   import { useNavigate } from "svelte-navigator";
 
   import type { LessonVersion } from "../../../../ts/admin/interfaces/LessonVersion";
+
   import { apiUri } from "../../../../ts/admin/stores";
   import { get } from "../../../../ts/admin/utils/arrayUtils";
   import { compileMarkdown } from "../../../../ts/admin/utils/compileMarkdown";
@@ -28,7 +29,7 @@
       : versionList.find((x) => x.version === selectedVersion)!.name;
 
   void request<Array<LessonVersion>>(
-    $apiUri + "/v1.0/lesson/" + lessonId! + "/history",
+    `${$apiUri}/v1.0/lesson/${lessonId!}/history`,
     "GET",
     {},
     {},
@@ -42,11 +43,7 @@
           resolve(body);
         })
       : request<string>(
-          $apiUri +
-            "/v1.0/lesson/" +
-            lessonId! +
-            "/history/" +
-            selectedVersion.toString(),
+          `${$apiUri}/v1.0/lesson/${lessonId!}/history/${selectedVersion.toString()}`,
           "GET",
           {},
           authFailHandler,

@@ -20,15 +20,23 @@ function getConfig(mode: string): Record<string, string> {
 export default defineConfig(({ mode }) => {
   const config = getConfig(mode);
   return {
+    base: config["admin-uri"],
+    build: {
+      outDir: "../dist",
+    },
+    define: {
+      // eslint-disable-next-line @typescript-eslint/naming-convention -- CLI variable
+      CONFIG: JSON.stringify(config),
+    },
     plugins: [
       createHtmlPlugin({
-        minify: true,
         entry: "ts/admin.ts",
         inject: {
           data: {
-            title: config["site-name"] + " - administrace",
+            title: `${config["site-name"]} - administrace`,
           },
         },
+        minify: true,
       }),
       legacy(),
       splitVendorChunkPlugin(),
@@ -38,13 +46,5 @@ export default defineConfig(({ mode }) => {
       htaccess(options(config, cspHashes)),
     ],
     root: "src",
-    base: config["admin-uri"],
-    build: {
-      outDir: "../dist",
-    },
-    define: {
-      // eslint-disable-next-line @typescript-eslint/naming-convention -- CLI variable
-      CONFIG: JSON.stringify(config),
-    },
   };
 });

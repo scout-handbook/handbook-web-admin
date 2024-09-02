@@ -2,8 +2,9 @@
   import { useSWR } from "sswr";
   import { useNavigate } from "svelte-navigator";
 
-  import { apiUri } from "../../../../ts/admin/stores";
   import type { SWRMutateFix } from "../../../../ts/admin/SWRMutateFix";
+
+  import { apiUri } from "../../../../ts/admin/stores";
   import { constructURL } from "../../../../ts/admin/utils/constructURL";
   import { authFailHandler, request } from "../../../../ts/admin/utils/request";
   import Button from "../Button.svelte";
@@ -34,7 +35,7 @@
     const formData = new FormData();
     formData.append("image", files[0]);
     void request(
-      $apiUri + "/v1.0/image",
+      `${$apiUri}/v1.0/image`,
       "POST",
       formData,
       authFailHandler,

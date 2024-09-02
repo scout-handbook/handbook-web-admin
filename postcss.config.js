@@ -1,5 +1,3 @@
-/* eslint-env node */
-
 import postcssGlobalData from "@csstools/postcss-global-data";
 import autoprefixer from "autoprefixer";
 import postcssCustomProperties from "postcss-custom-properties";

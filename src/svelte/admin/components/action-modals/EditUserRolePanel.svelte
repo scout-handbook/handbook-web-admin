@@ -2,10 +2,11 @@
   import { useSWR } from "sswr";
   import { useNavigate } from "svelte-navigator";
 
-  import { Action } from "../../../../ts/admin/actions/Action";
-  import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
   import type { Loginstate } from "../../../../ts/admin/interfaces/Loginstate";
   import type { User } from "../../../../ts/admin/interfaces/User";
+
+  import { Action } from "../../../../ts/admin/actions/Action";
+  import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
   import { apiUri } from "../../../../ts/admin/stores";
   import { constructURL } from "../../../../ts/admin/utils/constructURL";
   import Button from "../Button.svelte";
@@ -45,10 +46,7 @@
     } else {
       donePromise = new ActionQueue([
         new Action(
-          $apiUri +
-            "/v1.0/user/" +
-            encodeURIComponent(payload.user.id) +
-            "/role",
+          `${$apiUri}/v1.0/user/${encodeURIComponent(payload.user.id)}/role`,
           "PUT",
           { role: selectedRole },
         ),

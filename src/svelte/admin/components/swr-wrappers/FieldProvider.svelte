@@ -5,6 +5,7 @@
   import type { Competence } from "../../../../ts/admin/interfaces/Competence";
   import type { Field } from "../../../../ts/admin/interfaces/Field";
   import type { Lesson } from "../../../../ts/admin/interfaces/Lesson";
+
   import {
     processCompetences,
     processFields,
@@ -16,8 +17,8 @@
   interface $$Slots {
     default: {
       competences: Array<[string, Competence]>;
-      lessons: Array<[string, Lesson]>;
       fields: Array<[string, Field]>;
+      lessons: Array<[string, Lesson]>;
     };
   }
 

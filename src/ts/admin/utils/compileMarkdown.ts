@@ -1,9 +1,9 @@
-import "../../common/HandbookMarkdown";
-
 import { Converter } from "showdown";
 import { filterXSS } from "xss";
 
 import type { WorkerPayload } from "../../common/WorkerPayload";
+
+import "../../common/HandbookMarkdown";
 import { xssOptions } from "../../common/xssOptions";
 
 let converter: showdown.Converter | null = null;
@@ -47,13 +47,12 @@ export async function compileMarkdown(markdown: string): Promise<string> {
       promiseResolvers[id] = resolve;
     });
     if (workerRunning) {
-      nextPayload = { id, body: markdown };
+      nextPayload = { body: markdown, id };
     } else {
       workerRunning = true;
-      worker!.postMessage({ id, body: markdown });
+      worker!.postMessage({ body: markdown, id });
     }
     return promise;
-  } else {
-    return filterXSS(converter!.makeHtml(markdown), xssOptions());
   }
+  return filterXSS(converter!.makeHtml(markdown), xssOptions());
 }

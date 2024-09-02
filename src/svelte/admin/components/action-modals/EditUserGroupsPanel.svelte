@@ -1,10 +1,11 @@
 <script lang="ts" strictEvents>
   import { useNavigate } from "svelte-navigator";
 
-  import { Action } from "../../../../ts/admin/actions/Action";
-  import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
   import type { Group } from "../../../../ts/admin/interfaces/Group";
   import type { User } from "../../../../ts/admin/interfaces/User";
+
+  import { Action } from "../../../../ts/admin/actions/Action";
+  import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
   import { apiUri } from "../../../../ts/admin/stores";
   import { filter, get } from "../../../../ts/admin/utils/arrayUtils";
   import Button from "../Button.svelte";
@@ -38,10 +39,7 @@
     } else {
       donePromise = new ActionQueue([
         new Action(
-          $apiUri +
-            "/v1.0/user/" +
-            encodeURIComponent(payload.user.id) +
-            "/group",
+          `${$apiUri}/v1.0/user/${encodeURIComponent(payload.user.id)}/group`,
           "PUT",
           { group: selectedGroups.map(encodeURIComponent) },
         ),

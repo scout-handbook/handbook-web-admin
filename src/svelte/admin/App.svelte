@@ -4,7 +4,6 @@
   import "@fontsource/open-sans/400-italic.css";
   import "@fontsource/open-sans/700.css";
   import "@fontsource/open-sans/700-italic.css";
-
   import { Route, Router } from "svelte-navigator";
 
   import {

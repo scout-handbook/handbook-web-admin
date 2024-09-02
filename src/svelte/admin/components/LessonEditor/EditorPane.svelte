@@ -1,8 +1,8 @@
 <script lang="ts" strictEvents>
-  import "../../../../../node_modules/easymde/dist/easymde.min.css";
-
   import { default as EasyMDE } from "easymde";
   import { onMount } from "svelte";
+
+  import "../../../../../node_modules/easymde/dist/easymde.min.css";
 
   let editor: EasyMDE | undefined;
   let editorArea: HTMLElement;
@@ -32,55 +32,55 @@
       tabSize: 4,
       toolbar: [
         {
-          name: "bold",
           action: EasyMDE.toggleBold,
           className: "icon-bold",
+          name: "bold",
           title: "Tučné",
         },
         {
-          name: "italic",
           action: EasyMDE.toggleItalic,
           className: "icon-italic",
+          name: "italic",
           title: "Kurzíva",
         },
         {
-          name: "heading",
           action: EasyMDE.toggleHeadingSmaller,
           className: "icon-header",
+          name: "heading",
           title: "Nadpis",
         },
         "|",
         {
-          name: "unordered-list",
           action: EasyMDE.toggleUnorderedList,
           className: "icon-list-bullet",
+          name: "unordered-list",
           title: "Seznam s odrážkami",
         },
         {
-          name: "ordered-list",
           action: EasyMDE.toggleOrderedList,
           className: "icon-list-numbered",
+          name: "ordered-list",
           title: "Číslovaný seznam",
         },
         "|",
         {
-          name: "link",
           action: EasyMDE.drawLink,
           className: "icon-link",
+          name: "link",
           title: "Vložit odkaz",
         },
         {
-          name: "image",
           action: (): void => {
             imageSelectorOpen = true;
           },
           className: "icon-picture",
+          name: "image",
           title: "Vložit obrázek",
         },
         {
-          name: "table",
           action: EasyMDE.drawTable,
           className: "icon-table",
+          name: "table",
           title: "Vložit tabulku",
         },
       ],

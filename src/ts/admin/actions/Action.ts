@@ -2,15 +2,16 @@ import type { ExceptionHandler } from "../interfaces/ExceptionHandler";
 import type { Payload } from "../interfaces/Payload";
 import type { RequestResponse } from "../interfaces/RequestResponse";
 import type { SerializedAction } from "../interfaces/SerializedAction";
-import { ActionCallback } from "./ActionCallback";
 import type { ActionQueue } from "./ActionQueue";
 
+import { ActionCallback } from "./ActionCallback";
+
 export class Action {
-  public url: string;
-  public method: string;
-  public payload: Payload;
   public callbacks: Array<ActionCallback>;
   public exceptionHandler: ExceptionHandler;
+  public method: string;
+  public payload: Payload;
+  public url: string;
 
   public constructor(
     url: string,
@@ -35,6 +36,7 @@ export class Action {
         case ActionCallback.removeBeacon:
           window.onbeforeunload = null;
           break;
+        default:
       }
     }
   }
@@ -46,10 +48,10 @@ export class Action {
 
 export function serializeAction(action: Action): SerializedAction {
   return {
-    url: action.url,
+    callbacks: action.callbacks,
     method: action.method,
     payload: action.payload,
-    callbacks: action.callbacks,
+    url: action.url,
   };
 }
 

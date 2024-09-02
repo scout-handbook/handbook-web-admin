@@ -15,8 +15,8 @@
   }}
 >
   <img
-    alt={"Image " + id}
-    src={$apiUri + "/v1.0/image/" + id + "?quality=thumbnail"}
+    alt={`Image ${id}`}
+    src={`${$apiUri}/v1.0/image/${id}?quality=thumbnail`}
   />
 </button>
 

@@ -8,9 +8,12 @@
   import type { Payload } from "../../../../ts/admin/interfaces/Payload";
   import type { User } from "../../../../ts/admin/interfaces/User";
   import type { UserListResponse } from "../../../../ts/admin/interfaces/UserListResponse";
+
   import { apiUri } from "../../../../ts/admin/stores";
-  import type { SWRMutateFix } from "../../../../ts/admin/SWRMutateFix";
-  import { SWRMutateFnWrapper } from "../../../../ts/admin/SWRMutateFix";
+  import {
+    type SWRMutateFix,
+    SWRMutateFnWrapper,
+  } from "../../../../ts/admin/SWRMutateFix";
   import { get } from "../../../../ts/admin/utils/arrayUtils";
   import { constructURL } from "../../../../ts/admin/utils/constructURL";
   import {
@@ -42,7 +45,7 @@
   );
 
   void request<Array<Event>>(
-    $apiUri + "/v1.0/event",
+    `${$apiUri}/v1.0/event`,
     "GET",
     {},
     {
@@ -73,7 +76,7 @@
     }
     step = "participant-selection-loading";
     const participantPromise = request<Array<Participant>>(
-      $apiUri + "/v1.0/event/" + selectedEvent.toString() + "/participant",
+      `${$apiUri}/v1.0/event/${selectedEvent.toString()}/participant`,
       "GET",
       {},
       {
@@ -84,10 +87,10 @@
       },
     );
     const userPromise = request<UserListResponse>(
-      $apiUri + "/v1.0/user",
+      `${$apiUri}/v1.0/user`,
       "GET",
       // eslint-disable-next-line @typescript-eslint/naming-convention -- HTTP argument
-      { page: 1, "per-page": 1000, group: payload.groupId },
+      { group: payload.groupId, page: 1, "per-page": 1000 },
       {
         AuthenticationException: reAuth,
       },
@@ -112,7 +115,7 @@
     void Promise.all(
       selectedParticipants.map(async (participant) =>
         request(
-          $apiUri + "/v1.0/user",
+          `${$apiUri}/v1.0/user`,
           "POST",
           {
             id: participant,
@@ -121,7 +124,7 @@
           authFailHandler,
         ).then(async () =>
           request(
-            $apiUri + "/v1.0/user/" + participant.toString() + "/group",
+            `${$apiUri}/v1.0/user/${participant.toString()}/group`,
             "PUT",
             { group: payload.groupId },
             authFailHandler,

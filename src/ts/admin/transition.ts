@@ -25,10 +25,10 @@ const dirs = {
 };
 
 interface FlyParams {
-  from: "bottom" | "left" | "right" | "top";
   delay?: number;
   duration?: number;
   easing?: EasingFunction;
+  from: "bottom" | "left" | "right" | "top";
 }
 
 export const fly = (

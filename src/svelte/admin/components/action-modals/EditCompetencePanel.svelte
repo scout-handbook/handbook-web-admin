@@ -2,12 +2,15 @@
   import { useSWR } from "sswr";
   import { useNavigate } from "svelte-navigator";
 
+  import type { Competence } from "../../../../ts/admin/interfaces/Competence";
+
   import { Action } from "../../../../ts/admin/actions/Action";
   import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
-  import type { Competence } from "../../../../ts/admin/interfaces/Competence";
   import { apiUri } from "../../../../ts/admin/stores";
-  import type { SWRMutateFix } from "../../../../ts/admin/SWRMutateFix";
-  import { SWRMutateFnWrapper } from "../../../../ts/admin/SWRMutateFix";
+  import {
+    type SWRMutateFix,
+    SWRMutateFnWrapper,
+  } from "../../../../ts/admin/SWRMutateFix";
   import { get } from "../../../../ts/admin/utils/arrayUtils";
   import { constructURL } from "../../../../ts/admin/utils/constructURL";
   import Button from "../Button.svelte";
@@ -23,7 +26,7 @@
   const navigate = useNavigate();
 
   const competence = get(competences, payload.competenceId)!;
-  let { number, name, description } = competence;
+  let { description, name, number } = competence;
   let donePromise: Promise<void> | null = null;
   const { mutate } = useSWR<SWRMutateFix<Record<string, Competence>>>(
     constructURL("v1.0/competence"),
@@ -41,11 +44,9 @@
     } else {
       donePromise = new ActionQueue([
         new Action(
-          $apiUri +
-            "/v1.0/competence/" +
-            encodeURIComponent(payload.competenceId),
+          `${$apiUri}/v1.0/competence/${encodeURIComponent(payload.competenceId)}`,
           "PUT",
-          { number, name, description },
+          { description, name, number },
         ),
       ])
         .dispatch()

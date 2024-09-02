@@ -5,8 +5,10 @@
   import { Action } from "../../../../ts/admin/actions/Action";
   import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
   import { apiUri } from "../../../../ts/admin/stores";
-  import type { SWRMutateFix } from "../../../../ts/admin/SWRMutateFix";
-  import { SWRMutateFnWrapper } from "../../../../ts/admin/SWRMutateFix";
+  import {
+    type SWRMutateFix,
+    SWRMutateFnWrapper,
+  } from "../../../../ts/admin/SWRMutateFix";
   import { constructURL } from "../../../../ts/admin/utils/constructURL";
   import Dialog from "../Dialog.svelte";
   import DoneDialog from "../DoneDialog.svelte";
@@ -23,7 +25,7 @@
   function confirmCallback(): void {
     donePromise = new ActionQueue([
       new Action(
-        $apiUri + "/v1.0/image/" + encodeURIComponent(payload.imageId),
+        `${$apiUri}/v1.0/image/${encodeURIComponent(payload.imageId)}`,
         "DELETE",
       ),
     ])
