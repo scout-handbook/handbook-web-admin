@@ -47,11 +47,11 @@
   <Route component={AddLessonView} path="/lessons/add" />
   <Route path="/lessons/:id/edit" let:params>
     <FieldProvider let:fields let:lessons>
-      <EditLessonView {fields} lessonID={params.id} {lessons} />
+      <EditLessonView {fields} lessonID={params["id"]} {lessons} />
     </FieldProvider>
   </Route>
   <Route path="/lessons/:id/versions/:version/restore" let:params>
-    <RestoreLessonView lessonID={params.id} version={params.version} />
+    <RestoreLessonView lessonID={params["id"]} version={params["version"]} />
   </Route>
 
   <Route path="/">

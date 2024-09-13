@@ -8,7 +8,7 @@ import { createHtmlPlugin } from "vite-plugin-html";
 import options from "./rollup-plugin-htaccess.config";
 
 function getConfig(mode: string): Record<string, string> {
-  const location = loadEnv(mode, process.cwd()).VITE_CONFIG as
+  const location = loadEnv(mode, process.cwd())["VITE_CONFIG"] as
     | string
     | undefined;
   if (location === undefined || location === "undefined") {
