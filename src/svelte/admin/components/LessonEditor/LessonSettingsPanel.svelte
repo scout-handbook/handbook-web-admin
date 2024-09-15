@@ -20,7 +20,7 @@
   $: action = $location.state?.action;
 </script>
 
-{#if action === "restore-version" && id !== null}
+{#if action === "restore-version" && id !== null && name !== null}
   <RestoreLessonVersion lessonId={id} bind:lessonName={name} bind:body />
 {:else}
   <SidePanel>

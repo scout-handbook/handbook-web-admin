@@ -113,18 +113,20 @@
     }
     step = "importing";
     void Promise.all(
-      selectedParticipants.map(async (participant) =>
+      selectedParticipants.map(async (participantId) =>
         request(
           `${$apiUri}/v1.0/user`,
           "POST",
           {
-            id: participant,
-            name: participantList.find((p) => p.id === participant)!.name,
+            id: participantId,
+            name:
+              participantList.find((p) => p.id === participantId)?.name ??
+              "Účastník",
           } as unknown as Payload,
           authFailHandler,
         ).then(async () =>
           request(
-            `${$apiUri}/v1.0/user/${participant.toString()}/group`,
+            `${$apiUri}/v1.0/user/${participantId.toString()}/group`,
             "PUT",
             { group: payload.groupId },
             authFailHandler,

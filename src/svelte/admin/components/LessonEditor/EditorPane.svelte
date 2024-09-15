@@ -10,7 +10,10 @@
   export let imageSelectorOpen: boolean;
   export let value: string;
   export const insertAtCursor = (content: string): void => {
-    const doc = editor!.codemirror.getDoc();
+    if (editor === undefined) {
+      return;
+    }
+    const doc = editor.codemirror.getDoc();
     doc.replaceRange(content, doc.getCursor());
   };
 
@@ -87,7 +90,9 @@
     });
     editor.codemirror.getDoc().clearHistory();
     editor.codemirror.on("change", () => {
-      value = editor!.value();
+      if (editor !== undefined) {
+        value = editor.value();
+      }
     });
   });
 </script>

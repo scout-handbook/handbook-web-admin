@@ -70,21 +70,24 @@ export class ActionQueue {
 
 export function setupActionQueue(): void {
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions -- window.localStorage is not present in older browsers
-  if (window.localStorage && localStorage.getItem("ActionQueue") !== null) {
-    const aq = new ActionQueue(
-      (
-        JSON.parse(
-          localStorage.getItem("ActionQueue")!,
-        ) as Array<SerializedAction>
-      ).map(deserializeAction),
-      true,
-    );
-    globalLoadingIndicator.set(true);
-    void aq.dispatch().then(() => {
-      clear(undefined, { broadcast: true });
-      navigate(`/${get(adminUri).split("/").slice(3).join("/")}`);
-      globalLoadingIndicator.set(false);
-      globalDialogMessage.set("Akce byla úspěšná");
-    });
+  if (!window.localStorage) {
+    return;
   }
+  const serializedQueue = localStorage.getItem("ActionQueue");
+  if (serializedQueue === null) {
+    return;
+  }
+  const aq = new ActionQueue(
+    (JSON.parse(serializedQueue) as Array<SerializedAction>).map(
+      deserializeAction,
+    ),
+    true,
+  );
+  globalLoadingIndicator.set(true);
+  void aq.dispatch().then(() => {
+    clear(undefined, { broadcast: true });
+    navigate(`/${get(adminUri).split("/").slice(3).join("/")}`);
+    globalLoadingIndicator.set(false);
+    globalDialogMessage.set("Akce byla úspěšná");
+  });
 }
