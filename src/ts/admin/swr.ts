@@ -41,19 +41,18 @@ function lessonComparator(
   second: Lesson,
   competences: Array<[string, Competence]>,
 ): number {
-  if (first.competences.length === 0) {
-    if (second.competences.length === 0) {
+  const firstCompetence = get(competences, first.competences[0]);
+  const secondCompetence = get(competences, second.competences[0]);
+  if (firstCompetence === undefined) {
+    if (secondCompetence === undefined) {
       return 0;
     }
     return 1;
   }
-  if (second.competences.length === 0) {
+  if (secondCompetence === undefined) {
     return -1;
   }
-  return competenceComparator(
-    get(competences, first.competences[0])!,
-    get(competences, second.competences[0])!,
-  );
+  return competenceComparator(firstCompetence, secondCompetence);
 }
 
 function fieldComparator(
@@ -62,19 +61,16 @@ function fieldComparator(
   lessons: Array<[string, Lesson]>,
   competences: Array<[string, Competence]>,
 ): number {
-  if (first.lessons.length === 0) {
-    if (second.lessons.length === 0) {
+  const firstFirstLesson = get(lessons, first.lessons[0]);
+  const secondFirstLesson = get(lessons, second.lessons[0]);
+  if (firstFirstLesson === undefined) {
+    if (secondFirstLesson === undefined) {
       return 0;
     }
     return 1;
   }
-  if (second.lessons.length === 0) {
+  if (secondFirstLesson === undefined) {
     return -1;
-  }
-  const firstFirstLesson = get(lessons, first.lessons[0]);
-  const secondFirstLesson = get(lessons, first.lessons[0]);
-  if (firstFirstLesson === undefined || secondFirstLesson === undefined) {
-    return 0;
   }
   return lessonComparator(firstFirstLesson, secondFirstLesson, competences);
 }
@@ -141,9 +137,20 @@ export function processLessons(
     return undefined;
   }
   const lessons = map(Object.entries(rawLessons), (lesson) => {
-    lesson.competences.sort((first: string, second: string): number =>
-      competenceComparator(get(competences, first)!, get(competences, second)!),
-    );
+    lesson.competences.sort((first: string, second: string): number => {
+      const firstCompetence = get(competences, first);
+      const secondCompetence = get(competences, second);
+      if (firstCompetence === undefined) {
+        if (secondCompetence === undefined) {
+          return 0;
+        }
+        return 1;
+      }
+      if (secondCompetence === undefined) {
+        return -1;
+      }
+      return competenceComparator(firstCompetence, secondCompetence);
+    });
     return lesson;
   });
   return sort(lessons, (first, second) =>
