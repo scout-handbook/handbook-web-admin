@@ -33,7 +33,6 @@
 <h1>Změnit skupiny</h1>
 <form>
   <GroupProvider inline let:groups={allGroups}>
-    <!-- eslint-disable @typescript-eslint/no-unsafe-return -->
     <CheckboxGroup
       options={allGroups}
       bind:selected={groups}
@@ -44,7 +43,6 @@
         >{group.name}</span
       >
     </CheckboxGroup>
-    <!-- eslint-enable -->
   </GroupProvider>
 </form>
 <br />
