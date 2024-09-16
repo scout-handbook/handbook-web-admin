@@ -81,7 +81,6 @@ export default tseslint.config(
       ],
       "@typescript-eslint/no-dynamic-delete": "off",
       "@typescript-eslint/no-import-type-side-effects": "error",
-      "@typescript-eslint/no-non-null-assertion": "off",
       "@typescript-eslint/no-shadow": "error",
       "@typescript-eslint/no-unnecessary-parameter-property-assignment":
         "error",
