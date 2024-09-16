@@ -5,6 +5,7 @@
   import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
 
   import { siteName } from "../../../ts/admin/stores";
+  import { get } from "../../../ts/admin/utils/arrayUtils";
   import { constructURL } from "../../../ts/admin/utils/constructURL";
   import AddCompetencePanel from "../components/action-modals/AddCompetencePanel.svelte";
   import DeleteCompetenceDialog from "../components/action-modals/DeleteCompetenceDialog.svelte";
@@ -31,11 +32,23 @@
   <AddCompetencePanel />
 {:else if action === "change-competence"}
   <CompetenceProvider silent let:competences>
-    <EditCompetencePanel {competences} payload={actionPayload} />
+    {@const competence = get(competences, actionPayload.competenceId)}
+    {#if competence !== undefined}
+      <EditCompetencePanel
+        {competence}
+        competenceId={actionPayload.competenceId}
+      />
+    {/if}
   </CompetenceProvider>
 {:else if action === "delete-competence"}
   <CompetenceProvider silent let:competences>
-    <DeleteCompetenceDialog {competences} payload={actionPayload} />
+    {@const competence = get(competences, actionPayload.competenceId)}
+    {#if competence !== undefined}
+      <DeleteCompetenceDialog
+        {competence}
+        competenceId={actionPayload.competenceId}
+      />
+    {/if}
   </CompetenceProvider>
 {/if}
 
