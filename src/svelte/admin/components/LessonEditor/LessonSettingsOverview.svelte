@@ -74,7 +74,6 @@
   Upravit
 </Button>
 <CompetenceProvider inline let:competences={allCompetences}>
-  <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-call -->
   {#each allCompetences.filter( ([competenceId, _]) => competences.includes(competenceId), ) as [competenceId, competence] (competenceId)}
     <br />
     <span class="competence-number">{competence.number}:</span>
@@ -96,7 +95,6 @@
 </Button>
 <br />
 <GroupProvider inline let:groups={allGroups}>
-  <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-call -->
   {#each allGroups.filter( ([groupId, _]) => groups.includes(groupId), ) as [groupId, group] (groupId)}
     {#if groupId === "00000000-0000-0000-0000-000000000000"}
       <span class="public">{group.name}</span>

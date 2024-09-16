@@ -85,7 +85,7 @@
   </Button>
 {/if}
 <FieldProvider let:fields let:lessons>
-  <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-call @typescript-eslint/no-unsafe-return -->
+  <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-return -->
   {#each lessons.filter(([lessonId, _1]) => fields.filter( ([_2, field]) => field.lessons.includes(lessonId), ).length === 0) as [lessonId, lesson] (lessonId)}
     <LessonViewLesson id={lessonId} {lesson} />
   {/each}
@@ -127,7 +127,6 @@
         Přidat lekci
       </Button>
       {#each lessons as [lessonId, lesson] (lessonId)}
-        <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-call -->
         {#if field.lessons.includes(lessonId)}
           <LessonViewLesson id={lessonId} {lesson} secondLevel={true} />
         {/if}
