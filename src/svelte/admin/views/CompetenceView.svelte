@@ -55,7 +55,6 @@
 <CompetenceProvider let:competences>
   {#each competences as [id, competence] (id)}
     <h3>
-      <!-- eslint-disable-next-line @typescript-eslint/restrict-template-expressions -->
       {`${competence.number.toString()}: ${competence.name}`}
     </h3>
     {#if adminOrSuperuser}
