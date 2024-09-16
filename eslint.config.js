@@ -249,6 +249,7 @@ export default tseslint.config(
       svelte: {
         ignoreWarnings: [
           "@typescript-eslint/explicit-function-return-type",
+          "@typescript-eslint/no-unsafe-argument",
           "@typescript-eslint/no-unsafe-assignment",
           "@typescript-eslint/no-unsafe-member-access",
         ],

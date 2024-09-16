@@ -56,7 +56,7 @@
   <br />
   Body:
   <CompetenceProvider silent let:competences>
-    <!-- eslint-disable @typescript-eslint/no-unsafe-call @typescript-eslint/no-unsafe-argument @typescript-eslint/no-unsafe-return -->
+    <!-- eslint-disable @typescript-eslint/no-unsafe-call @typescript-eslint/no-unsafe-return -->
     {competences
       .filter(([competenceId, _]) => lesson.competences.includes(competenceId))
       .map(([_, competence]) => competence.number)
