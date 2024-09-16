@@ -33,7 +33,6 @@
 <h1>Změnit skupiny</h1>
 <form>
   <GroupProvider inline let:groups={allGroups}>
-    <!-- eslint-disable @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-return -->
     <CheckboxGroup
       options={allGroups}
       bind:selected={groups}
@@ -44,7 +43,6 @@
         >{group.name}</span
       >
     </CheckboxGroup>
-    <!-- eslint-enable -->
   </GroupProvider>
 </form>
 <br />
@@ -54,7 +52,6 @@ uživatelů). Pokud není vybrána žádná skupiny, nebude lekce pro běžné u
 přístupná (pouze v administraci). Pokud je vybrána skupina "
 <span class="public">
   <GroupProvider silent let:groups={allGroups}>
-    <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-argument -->
     {get(allGroups, "00000000-0000-0000-0000-000000000000")?.name ?? ""}
   </GroupProvider>
 </span>

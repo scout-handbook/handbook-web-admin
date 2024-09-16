@@ -11,19 +11,17 @@
     type SWRMutateFix,
     SWRMutateFnWrapper,
   } from "../../../../ts/admin/SWRMutateFix";
-  import { get } from "../../../../ts/admin/utils/arrayUtils";
   import { constructURL } from "../../../../ts/admin/utils/constructURL";
   import Button from "../Button.svelte";
   import DoneDialog from "../DoneDialog.svelte";
   import NameInput from "../forms/NameInput.svelte";
   import SidePanel from "../SidePanel.svelte";
 
-  export let groups: Array<[string, Group]>;
-  export let payload: { groupId: string };
+  export let group: Group;
+  export let groupId: string;
 
   const navigate = useNavigate();
 
-  const group = get(groups, payload.groupId)!;
   let { name } = group;
   let donePromise: Promise<void> | null = null;
   const { mutate } = useSWR<SWRMutateFix<Record<string, Group>>>(
@@ -38,7 +36,7 @@
     } else {
       donePromise = new ActionQueue([
         new Action(
-          `${$apiUri}/v1.0/group/${encodeURIComponent(payload.groupId)}`,
+          `${$apiUri}/v1.0/group/${encodeURIComponent(groupId)}`,
           "PUT",
           { name },
         ),
@@ -47,7 +45,7 @@
         .then(() => {
           mutate(
             SWRMutateFnWrapper((cachedGroups) => {
-              cachedGroups[payload.groupId].name = name;
+              cachedGroups[groupId].name = name;
               return cachedGroups;
             }),
           );

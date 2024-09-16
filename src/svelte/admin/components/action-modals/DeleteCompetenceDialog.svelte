@@ -12,17 +12,15 @@
     type SWRMutateFix,
     SWRMutateFnWrapper,
   } from "../../../../ts/admin/SWRMutateFix";
-  import { get } from "../../../../ts/admin/utils/arrayUtils";
   import { constructURL } from "../../../../ts/admin/utils/constructURL";
   import Dialog from "../Dialog.svelte";
   import DoneDialog from "../DoneDialog.svelte";
 
-  export let competences: Array<[string, Competence]>;
-  export let payload: { competenceId: string };
+  export let competenceId: string;
+  export let competence: Competence;
 
   const navigate = useNavigate();
 
-  const competence = get(competences, payload.competenceId)!;
   let donePromise: Promise<void> | null = null;
   const { mutate: competenceMutate } = useSWR<
     SWRMutateFix<Record<string, Competence>>
@@ -34,7 +32,7 @@
   function confirmCallback(): void {
     donePromise = new ActionQueue([
       new Action(
-        `${$apiUri}/v1.0/competence/${encodeURIComponent(payload.competenceId)}`,
+        `${$apiUri}/v1.0/competence/${encodeURIComponent(competenceId)}`,
         "DELETE",
       ),
     ])
@@ -42,18 +40,16 @@
       .then(() => {
         competenceMutate(
           SWRMutateFnWrapper((cachedCompetences) => {
-            delete cachedCompetences[payload.competenceId];
+            delete cachedCompetences[competenceId];
             return cachedCompetences;
           }),
         );
         lessonMutate(
           SWRMutateFnWrapper((lessons) => {
             for (const lessonId in lessons) {
-              if (
-                lessons[lessonId].competences.includes(payload.competenceId)
-              ) {
+              if (lessons[lessonId].competences.includes(competenceId)) {
                 lessons[lessonId].competences.splice(
-                  lessons[lessonId].competences.indexOf(payload.competenceId),
+                  lessons[lessonId].competences.indexOf(competenceId),
                   1,
                 );
               }

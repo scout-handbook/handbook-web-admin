@@ -16,7 +16,7 @@
   import LessonProvider from "../swr-wrappers/LessonProvider.svelte";
 
   export let lessonId: string;
-  export let lessonName: string | null;
+  export let lessonName: string;
   export let body: string;
 
   const navigate = useNavigate();
@@ -25,11 +25,11 @@
   let versionList: Array<LessonVersion> | null = null;
   $: selectedVersionName =
     selectedVersion === null || versionList === null
-      ? lessonName!
-      : versionList.find((x) => x.version === selectedVersion)!.name;
+      ? lessonName
+      : (versionList.find((x) => x.version === selectedVersion)?.name ?? "");
 
   void request<Array<LessonVersion>>(
-    `${$apiUri}/v1.0/lesson/${lessonId!}/history`,
+    `${$apiUri}/v1.0/lesson/${lessonId}/history`,
     "GET",
     {},
     {},
@@ -43,7 +43,7 @@
           resolve(body);
         })
       : request<string>(
-          `${$apiUri}/v1.0/lesson/${lessonId!}/history/${selectedVersion.toString()}`,
+          `${$apiUri}/v1.0/lesson/${lessonId}/history/${selectedVersion.toString()}`,
           "GET",
           {},
           authFailHandler,
@@ -106,7 +106,6 @@
               {name}
             </span>
             —
-            <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-argument -->
             {parseVersion(version)}
           </span>
         </RadioGroup>

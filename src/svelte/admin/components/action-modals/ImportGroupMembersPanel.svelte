@@ -14,7 +14,6 @@
     type SWRMutateFix,
     SWRMutateFnWrapper,
   } from "../../../../ts/admin/SWRMutateFix";
-  import { get } from "../../../../ts/admin/utils/arrayUtils";
   import { constructURL } from "../../../../ts/admin/utils/constructURL";
   import {
     authFailHandler,
@@ -28,14 +27,13 @@
   import LoadingIndicator from "../LoadingIndicator.svelte";
   import SidePanel from "../SidePanel.svelte";
 
-  export let groups: Array<[string, Group]>;
-  export let payload: { groupId: string };
+  export let group: Group;
+  export let groupId: string;
 
   const navigate = useNavigate();
 
   let error = "";
   let step = "event-selection-loading";
-  const group = get(groups, payload.groupId)!;
   let eventList: Array<Event> = [];
   let selectedEvent: number;
   let participantList: Array<Participant> = [];
@@ -90,7 +88,7 @@
       `${$apiUri}/v1.0/user`,
       "GET",
       // eslint-disable-next-line @typescript-eslint/naming-convention -- HTTP argument
-      { group: payload.groupId, page: 1, "per-page": 1000 },
+      { group: groupId, page: 1, "per-page": 1000 },
       {
         AuthenticationException: reAuth,
       },
@@ -113,20 +111,22 @@
     }
     step = "importing";
     void Promise.all(
-      selectedParticipants.map(async (participant) =>
+      selectedParticipants.map(async (participantId) =>
         request(
           `${$apiUri}/v1.0/user`,
           "POST",
           {
-            id: participant,
-            name: participantList.find((p) => p.id === participant)!.name,
+            id: participantId,
+            name:
+              participantList.find((p) => p.id === participantId)?.name ??
+              "Účastník",
           } as unknown as Payload,
           authFailHandler,
         ).then(async () =>
           request(
-            `${$apiUri}/v1.0/user/${participant.toString()}/group`,
+            `${$apiUri}/v1.0/user/${participantId.toString()}/group`,
             "PUT",
-            { group: payload.groupId },
+            { group: groupId },
             authFailHandler,
           ),
         ),
@@ -134,7 +134,7 @@
     ).then(() => {
       mutate(
         SWRMutateFnWrapper((cachedGroups) => {
-          cachedGroups[payload.groupId].count += selectedParticipants.length;
+          cachedGroups[groupId].count += selectedParticipants.length;
           return cachedGroups;
         }),
       );

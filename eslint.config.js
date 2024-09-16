@@ -81,7 +81,6 @@ export default tseslint.config(
       ],
       "@typescript-eslint/no-dynamic-delete": "off",
       "@typescript-eslint/no-import-type-side-effects": "error",
-      "@typescript-eslint/no-non-null-assertion": "off",
       "@typescript-eslint/no-shadow": "error",
       "@typescript-eslint/no-unnecessary-parameter-property-assignment":
         "error",
@@ -249,8 +248,12 @@ export default tseslint.config(
       svelte: {
         ignoreWarnings: [
           "@typescript-eslint/explicit-function-return-type",
+          "@typescript-eslint/no-unsafe-argument",
           "@typescript-eslint/no-unsafe-assignment",
+          "@typescript-eslint/no-unsafe-call",
           "@typescript-eslint/no-unsafe-member-access",
+          "@typescript-eslint/no-unsafe-return",
+          "@typescript-eslint/restrict-template-expressions",
         ],
       },
     },

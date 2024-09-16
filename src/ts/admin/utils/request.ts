@@ -76,21 +76,30 @@ export async function request<T extends RequestResponse>(
 ): Promise<T> {
   const response = await rawRequest<T>(url, method, payload);
   if (Math.floor(response.status / 100) === 2) {
-    return response.response!;
+    if (response.response === undefined) {
+      throw new Error();
+    }
+    return response.response;
   } else if (
-    Object.prototype.hasOwnProperty.call(exceptionHandler, response.type!)
+    response.type !== undefined &&
+    Object.prototype.hasOwnProperty.call(exceptionHandler, response.type)
   ) {
-    exceptionHandler[response.type!]!(response);
+    const handler = exceptionHandler[response.type];
+    if (handler !== undefined && handler !== null) {
+      handler(response);
+    }
     throw new Error();
   } else if (
     response.status === 401 &&
-    Object.prototype.hasOwnProperty.call(exceptionHandler, "401")
+    Object.prototype.hasOwnProperty.call(exceptionHandler, "401") &&
+    exceptionHandler["401"] !== undefined &&
+    exceptionHandler["401"] !== null
   ) {
-    exceptionHandler["401"]!(response);
+    exceptionHandler["401"](response);
     throw new Error();
   } else {
     globalDialogMessage.set(
-      `Nastala neznámá chyba. Chybová hláška: ${response.message!}`,
+      `Nastala neznámá chyba. Chybová hláška: ${response.message ?? ""}`,
     );
     throw new Error();
   }

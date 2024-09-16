@@ -14,7 +14,6 @@
     type SWRMutateFix,
     SWRMutateFnWrapper,
   } from "../../../../ts/admin/SWRMutateFix";
-  import { get } from "../../../../ts/admin/utils/arrayUtils";
   import { constructURL } from "../../../../ts/admin/utils/constructURL";
   import { reAuth, request } from "../../../../ts/admin/utils/request";
   import Dialog from "../Dialog.svelte";
@@ -22,22 +21,21 @@
   import LoadingIndicator from "../LoadingIndicator.svelte";
   import Overlay from "../Overlay.svelte";
 
-  export let lessons: Array<[string, Lesson]>;
-  export let payload: { lessonId: string };
+  export let lesson: Lesson;
+  export let lessonId: string;
 
   const navigate = useNavigate();
 
-  const name = get(lessons, payload.lessonId)!.name;
   let lockedError: string | null = null;
   let expiredError = false;
   const mutexPromise = request(
-    `${$apiUri}/v1.0/mutex/${encodeURIComponent(payload.lessonId)}`,
+    `${$apiUri}/v1.0/mutex/${encodeURIComponent(lessonId)}`,
     "POST",
     {},
     {
       AuthenticationException: reAuth,
       LockedException: (response: APIResponse<RequestResponse>): void => {
-        lockedError = response.holder!;
+        lockedError = response.holder ?? "jiný uživatel";
       },
     },
   );
@@ -52,7 +50,7 @@
   function confirmCallback(): void {
     donePromise = new ActionQueue([
       new Action(
-        `${$apiUri}/v1.0/lesson/${encodeURIComponent(payload.lessonId)}`,
+        `${$apiUri}/v1.0/lesson/${encodeURIComponent(lessonId)}`,
         "DELETE",
         undefined,
         [],
@@ -67,16 +65,16 @@
       .then(() => {
         lessonMutate(
           SWRMutateFnWrapper((cachedLessons) => {
-            delete cachedLessons[payload.lessonId];
+            delete cachedLessons[lessonId];
             return cachedLessons;
           }),
         );
         fieldMutate(
           SWRMutateFnWrapper((fields) => {
             for (const fieldId in fields) {
-              if (fields[fieldId].lessons.includes(payload.lessonId)) {
+              if (fields[fieldId].lessons.includes(lessonId)) {
                 fields[fieldId].lessons.splice(
-                  fields[fieldId].lessons.indexOf(payload.lessonId),
+                  fields[fieldId].lessons.indexOf(lessonId),
                   1,
                 );
                 break;
@@ -91,7 +89,7 @@
   function dismissCallback(): void {
     void new ActionQueue([
       new Action(
-        `${$apiUri}/v1.0/mutex/${encodeURIComponent(payload.lessonId)}`,
+        `${$apiUri}/v1.0/mutex/${encodeURIComponent(lessonId)}`,
         "DELETE",
         undefined,
         [],
@@ -134,7 +132,7 @@
       on:confirm={confirmCallback}
       on:dismiss={dismissCallback}
     >
-      Opravdu si přejete smazat lekci "{name}"?
+      Opravdu si přejete smazat lekci "{lesson.name}"?
     </Dialog>
   {/await}
 {/if}

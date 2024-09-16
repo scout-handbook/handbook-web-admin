@@ -58,12 +58,10 @@
       </td>
       <td>
         <GroupProvider silent let:groups>
-          <!-- eslint-disable @typescript-eslint/no-unsafe-call @typescript-eslint/no-unsafe-argument @typescript-eslint/no-unsafe-return -->
           {groups
             .filter(([id, _]) => user.groups.includes(id))
             .map(([_, group]) => group.name)
             .join(", ")}
-          <!-- eslint-enable -->
         </GroupProvider>
         {#if user.groups.length > 0}
           <br />

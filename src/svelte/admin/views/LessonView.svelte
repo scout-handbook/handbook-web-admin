@@ -5,6 +5,7 @@
   import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
 
   import { siteName } from "../../../ts/admin/stores";
+  import { get } from "../../../ts/admin/utils/arrayUtils";
   import { constructURL } from "../../../ts/admin/utils/constructURL";
   import AddFieldPanel from "../components/action-modals/AddFieldPanel.svelte";
   import DeleteFieldDialog from "../components/action-modals/DeleteFieldDialog.svelte";
@@ -38,16 +39,25 @@
   <AddFieldPanel />
 {:else if action === "change-field"}
   <FieldProvider silent let:fields>
-    <EditFieldPanel {fields} payload={actionPayload} />
-    <!-- TODO: This is too slow for some reason -->
+    {@const field = get(fields, actionPayload.fieldId)}
+    {#if field !== undefined}
+      <!-- TODO: This is too slow for some reason -->
+      <EditFieldPanel {field} fieldId={actionPayload.fieldId} />
+    {/if}
   </FieldProvider>
 {:else if action === "delete-field"}
   <FieldProvider silent let:fields>
-    <DeleteFieldDialog {fields} payload={actionPayload} />
+    {@const field = get(fields, actionPayload.fieldId)}
+    {#if field !== undefined}
+      <DeleteFieldDialog {field} fieldId={actionPayload.fieldId} />
+    {/if}
   </FieldProvider>
 {:else if action === "delete-lesson"}
   <LessonProvider silent let:lessons>
-    <DeleteLessonDialog {lessons} payload={actionPayload} />
+    {@const lesson = get(lessons, actionPayload.lessonId)}
+    {#if lesson !== undefined}
+      <DeleteLessonDialog {lesson} lessonId={actionPayload.lessonId} />
+    {/if}
   </LessonProvider>
 {:else if action === "restore-lesson"}
   <RestoreLessonPanel />
@@ -85,7 +95,6 @@
   </Button>
 {/if}
 <FieldProvider let:fields let:lessons>
-  <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-call @typescript-eslint/no-unsafe-return -->
   {#each lessons.filter(([lessonId, _1]) => fields.filter( ([_2, field]) => field.lessons.includes(lessonId), ).length === 0) as [lessonId, lesson] (lessonId)}
     <LessonViewLesson id={lessonId} {lesson} />
   {/each}
@@ -127,7 +136,6 @@
         Přidat lekci
       </Button>
       {#each lessons as [lessonId, lesson] (lessonId)}
-        <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-call -->
         {#if field.lessons.includes(lessonId)}
           <LessonViewLesson id={lessonId} {lesson} secondLevel={true} />
         {/if}
