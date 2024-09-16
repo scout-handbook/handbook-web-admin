@@ -58,7 +58,7 @@
       </td>
       <td>
         <GroupProvider silent let:groups>
-          <!-- eslint-disable @typescript-eslint/no-unsafe-call @typescript-eslint/no-unsafe-return -->
+          <!-- eslint-disable @typescript-eslint/no-unsafe-return -->
           {groups
             .filter(([id, _]) => user.groups.includes(id))
             .map(([_, group]) => group.name)
