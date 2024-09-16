@@ -11,7 +11,6 @@
     type SWRMutateFix,
     SWRMutateFnWrapper,
   } from "../../../../ts/admin/SWRMutateFix";
-  import { get } from "../../../../ts/admin/utils/arrayUtils";
   import { constructURL } from "../../../../ts/admin/utils/constructURL";
   import Button from "../Button.svelte";
   import DoneDialog from "../DoneDialog.svelte";
@@ -20,12 +19,11 @@
   import NumberNameInput from "../forms/NumberNameInput.svelte";
   import SidePanel from "../SidePanel.svelte";
 
-  export let competences: Array<[string, Competence]>;
-  export let payload: { competenceId: string };
+  export let competence: Competence;
+  export let competenceId: string;
 
   const navigate = useNavigate();
 
-  const competence = get(competences, payload.competenceId)!;
   let { description, name, number } = competence;
   let donePromise: Promise<void> | null = null;
   const { mutate } = useSWR<SWRMutateFix<Record<string, Competence>>>(
@@ -44,7 +42,7 @@
     } else {
       donePromise = new ActionQueue([
         new Action(
-          `${$apiUri}/v1.0/competence/${encodeURIComponent(payload.competenceId)}`,
+          `${$apiUri}/v1.0/competence/${encodeURIComponent(competenceId)}`,
           "PUT",
           { description, name, number },
         ),
@@ -53,9 +51,9 @@
         .then(() => {
           mutate(
             SWRMutateFnWrapper((cachedCompetences) => {
-              cachedCompetences[payload.competenceId].number = number;
-              cachedCompetences[payload.competenceId].name = name;
-              cachedCompetences[payload.competenceId].description = description;
+              cachedCompetences[competenceId].number = number;
+              cachedCompetences[competenceId].name = name;
+              cachedCompetences[competenceId].description = description;
               return cachedCompetences;
             }),
           );
