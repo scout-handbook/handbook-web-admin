@@ -32,7 +32,7 @@
   $: name =
     selectedVersion === null
       ? ""
-      : versionList.find((x) => x.version === selectedVersion)!.name;
+      : (versionList.find((x) => x.version === selectedVersion)?.name ?? "");
   $: contentPromise =
     selectedVersion === null
       ? new Promise((resolve) => {
@@ -79,9 +79,11 @@
   }
 
   function selectVersionCallback(): void {
-    navigate(
-      `/lessons/${selectedLesson}/versions/${selectedVersion!.toString()}/restore?name=${name}`,
-    );
+    if (selectedVersion !== null) {
+      navigate(
+        `/lessons/${selectedLesson}/versions/${selectedVersion.toString()}/restore?name=${name}`,
+      );
+    }
   }
 </script>
 
@@ -162,7 +164,6 @@
                 {versionName}
               </span>
               —
-              <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-argument -->
               {parseVersion(version)}
             </span>
           </RadioGroup>

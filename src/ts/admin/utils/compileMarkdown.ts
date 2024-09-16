@@ -17,10 +17,13 @@ export function compileMarkdownSetup(): void {
   if (Worker) {
     worker = new Worker(new URL("../../admin-worker.ts", import.meta.url));
     worker.onmessage = (payload): void => {
+      if (worker === null) {
+        return;
+      }
       const data = payload.data as WorkerPayload;
       promiseResolvers[data.id](data.body);
       if (nextPayload) {
-        worker!.postMessage(nextPayload);
+        worker.postMessage(nextPayload);
         nextPayload = null;
       } else {
         workerRunning = false;
@@ -35,8 +38,11 @@ export function compileMarkdownSetup(): void {
 }
 
 export async function compileMarkdown(markdown: string): Promise<string> {
+  if (converter === null) {
+    return "";
+  }
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions -- Worker isn't present in older browsers
-  if (Worker) {
+  if (Worker && worker !== null) {
     let id = "";
     const characters =
       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -50,9 +56,9 @@ export async function compileMarkdown(markdown: string): Promise<string> {
       nextPayload = { body: markdown, id };
     } else {
       workerRunning = true;
-      worker!.postMessage({ body: markdown, id });
+      worker.postMessage({ body: markdown, id });
     }
     return promise;
   }
-  return filterXSS(converter!.makeHtml(markdown), xssOptions());
+  return filterXSS(converter.makeHtml(markdown), xssOptions());
 }

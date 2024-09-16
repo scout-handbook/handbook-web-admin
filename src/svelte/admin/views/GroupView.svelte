@@ -5,6 +5,7 @@
   import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
 
   import { siteName } from "../../../ts/admin/stores";
+  import { get } from "../../../ts/admin/utils/arrayUtils";
   import { constructURL } from "../../../ts/admin/utils/constructURL";
   import AddGroupPanel from "../components/action-modals/AddGroupPanel.svelte";
   import DeleteGroupDialog from "../components/action-modals/DeleteGroupDialog.svelte";
@@ -32,15 +33,24 @@
   <AddGroupPanel />
 {:else if action === "change-group"}
   <GroupProvider silent let:groups>
-    <EditGroupPanel {groups} payload={actionPayload} />
+    {@const group = get(groups, actionPayload.groupId)}
+    {#if group !== undefined}
+      <EditGroupPanel {group} groupId={actionPayload.groupId} />
+    {/if}
   </GroupProvider>
 {:else if action === "delete-group"}
   <GroupProvider silent let:groups>
-    <DeleteGroupDialog {groups} payload={actionPayload} />
+    {@const group = get(groups, actionPayload.groupId)}
+    {#if group !== undefined}
+      <DeleteGroupDialog {group} groupId={actionPayload.groupId} />
+    {/if}
   </GroupProvider>
 {:else if action === "import-group-members"}
   <GroupProvider silent let:groups>
-    <ImportGroupMembersPanel {groups} payload={actionPayload} />
+    {@const group = get(groups, actionPayload.groupId)}
+    {#if group !== undefined}
+      <ImportGroupMembersPanel {group} groupId={actionPayload.groupId} />
+    {/if}
   </GroupProvider>
 {/if}
 
@@ -107,7 +117,6 @@
     {#if id !== "00000000-0000-0000-0000-000000000000"}
       <br />
       <span>
-        <!-- eslint-disable-next-line @typescript-eslint/restrict-template-expressions @typescript-eslint/no-unsafe-call -->
         {`Uživatelů: ${group.count.toString()}`}
       </span>
     {/if}

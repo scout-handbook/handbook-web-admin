@@ -18,7 +18,6 @@
   }
 </script>
 
-<!-- eslint-disable svelte/require-optimized-style-attribute -->
 <button
   class:cyan
   class:green
