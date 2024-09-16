@@ -11,17 +11,15 @@
     type SWRMutateFix,
     SWRMutateFnWrapper,
   } from "../../../../ts/admin/SWRMutateFix";
-  import { get } from "../../../../ts/admin/utils/arrayUtils";
   import { constructURL } from "../../../../ts/admin/utils/constructURL";
   import Dialog from "../Dialog.svelte";
   import DoneDialog from "../DoneDialog.svelte";
 
-  export let groups: Array<[string, Group]>;
-  export let payload: { groupId: string };
+  export let group: Group;
+  export let groupId: string;
 
   const navigate = useNavigate();
 
-  const group = get(groups, payload.groupId)!;
   let donePromise: Promise<void> | null = null;
   const { mutate } = useSWR<SWRMutateFix<Record<string, Group>>>(
     constructURL("v1.0/group"),
@@ -30,7 +28,7 @@
   function confirmCallback(): void {
     donePromise = new ActionQueue([
       new Action(
-        `${$apiUri}/v1.0/group/${encodeURIComponent(payload.groupId)}`,
+        `${$apiUri}/v1.0/group/${encodeURIComponent(groupId)}`,
         "DELETE",
       ),
     ])
@@ -38,7 +36,7 @@
       .then(() => {
         mutate(
           SWRMutateFnWrapper((cachedGroups) => {
-            delete cachedGroups[payload.groupId];
+            delete cachedGroups[groupId];
             return cachedGroups;
           }),
         );
