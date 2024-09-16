@@ -56,12 +56,10 @@
   <br />
   Body:
   <CompetenceProvider silent let:competences>
-    <!-- eslint-disable @typescript-eslint/no-unsafe-return -->
     {competences
       .filter(([competenceId, _]) => lesson.competences.includes(competenceId))
       .map(([_, competence]) => competence.number)
       .join(", ")}
-    <!-- eslint-enable -->
   </CompetenceProvider>
 </div>
 
