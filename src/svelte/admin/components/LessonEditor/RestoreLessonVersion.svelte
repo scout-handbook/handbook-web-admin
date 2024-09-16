@@ -106,7 +106,6 @@
               {name}
             </span>
             —
-            <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-argument -->
             {parseVersion(version)}
           </span>
         </RadioGroup>
