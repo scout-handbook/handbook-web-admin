@@ -11,17 +11,15 @@
     type SWRMutateFix,
     SWRMutateFnWrapper,
   } from "../../../../ts/admin/SWRMutateFix";
-  import { get } from "../../../../ts/admin/utils/arrayUtils";
   import { constructURL } from "../../../../ts/admin/utils/constructURL";
   import Dialog from "../Dialog.svelte";
   import DoneDialog from "../DoneDialog.svelte";
 
-  export let fields: Array<[string, Field]>;
-  export let payload: { fieldId: string };
+  export let field: Field;
+  export let fieldId: string;
 
   const navigate = useNavigate();
 
-  const field = get(fields, payload.fieldId)!;
   let donePromise: Promise<void> | null = null;
   const { mutate } = useSWR<SWRMutateFix<Record<string, Field>>>(
     constructURL("v1.0/field?override-group=true"),
@@ -30,7 +28,7 @@
   function confirmCallback(): void {
     donePromise = new ActionQueue([
       new Action(
-        `${$apiUri}/v1.0/field/${encodeURIComponent(payload.fieldId)}`,
+        `${$apiUri}/v1.0/field/${encodeURIComponent(fieldId)}`,
         "DELETE",
       ),
     ])
@@ -38,7 +36,7 @@
       .then(() => {
         mutate(
           SWRMutateFnWrapper((cachedFields) => {
-            delete cachedFields[payload.fieldId];
+            delete cachedFields[fieldId];
             return cachedFields;
           }),
         );
