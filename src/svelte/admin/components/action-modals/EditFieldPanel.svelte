@@ -11,7 +11,6 @@
     type SWRMutateFix,
     SWRMutateFnWrapper,
   } from "../../../../ts/admin/SWRMutateFix";
-  import { get } from "../../../../ts/admin/utils/arrayUtils";
   import { constructURL } from "../../../../ts/admin/utils/constructURL";
   import Button from "../Button.svelte";
   import DoneDialog from "../DoneDialog.svelte";
@@ -21,12 +20,11 @@
   import SidePanel from "../SidePanel.svelte";
   import SidePanelImageSelector from "../SidePanelImageSelector.svelte";
 
-  export let fields: Array<[string, Field]>;
-  export let payload: { fieldId: string };
+  export let field: Field;
+  export let fieldId: string;
 
   const navigate = useNavigate();
 
-  const field = get(fields, payload.fieldId)!;
   let { description, icon, image, name } = field;
   let imageSelectorOpen = false;
   let iconSelectorOpen = false;
@@ -48,7 +46,7 @@
     } else {
       donePromise = new ActionQueue([
         new Action(
-          `${$apiUri}/v1.0/field/${encodeURIComponent(payload.fieldId)}`,
+          `${$apiUri}/v1.0/field/${encodeURIComponent(fieldId)}`,
           "PUT",
           { description, icon, image, name },
         ),
@@ -57,10 +55,10 @@
         .then(() => {
           mutate(
             SWRMutateFnWrapper((cachedFields) => {
-              cachedFields[payload.fieldId].name = name;
-              cachedFields[payload.fieldId].description = description;
-              cachedFields[payload.fieldId].image = image;
-              cachedFields[payload.fieldId].icon = icon;
+              cachedFields[fieldId].name = name;
+              cachedFields[fieldId].description = description;
+              cachedFields[fieldId].image = image;
+              cachedFields[fieldId].icon = icon;
               return cachedFields;
             }),
           );
