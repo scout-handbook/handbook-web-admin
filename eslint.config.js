@@ -1,6 +1,7 @@
 import js from "@eslint/js";
 import eslintComments from "@eslint-community/eslint-plugin-eslint-comments";
 import commentsConfig from "@eslint-community/eslint-plugin-eslint-comments/configs";
+import query from "@tanstack/eslint-plugin-query";
 import compat from "eslint-plugin-compat";
 import perfectionist from "eslint-plugin-perfectionist";
 import preferArrowFunctions from "eslint-plugin-prefer-arrow-functions";
@@ -17,6 +18,7 @@ export default tseslint.config(
   prettierRecommended,
   commentsConfig.recommended,
   compat.configs["flat/recommended"],
+  ...query.configs["flat/recommended"],
   ...tseslint.configs.strictTypeChecked,
   ...tseslint.configs.stylisticTypeChecked,
   ...svelte.configs["flat/recommended"],
