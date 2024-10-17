@@ -4,7 +4,7 @@
   import "@fontsource/open-sans/400-italic.css";
   import "@fontsource/open-sans/700.css";
   import "@fontsource/open-sans/700-italic.css";
-  import { QueryClient, QueryClientProvider } from "@tanstack/svelte-query";
+  import { QueryClientProvider } from "@tanstack/svelte-query";
   import { Route, Router } from "svelte-navigator";
 
   import {
@@ -12,6 +12,7 @@
     globalDialogMessage,
     globalLoadingIndicator,
   } from "../../ts/admin/stores";
+  import { queryClient } from "../../ts/admin/utils/queryClient";
   import Dialog from "./components/Dialog.svelte";
   import LoadingIndicator from "./components/LoadingIndicator.svelte";
   import Overlay from "./components/Overlay.svelte";
@@ -28,8 +29,6 @@
 
   // Remove https:// and domain
   const basepath = $adminUri.split("/").slice(3).join("/");
-
-  const queryClient = new QueryClient();
 </script>
 
 <QueryClientProvider client={queryClient}>
