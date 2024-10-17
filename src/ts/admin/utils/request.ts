@@ -1,12 +1,21 @@
 import { get } from "svelte/store";
 
-import type { APIResponse } from "../interfaces/APIResponse";
+import type {
+  APIResponse,
+  APISuccessResponse,
+} from "../interfaces/APIResponse";
 import type { ExceptionHandler } from "../interfaces/ExceptionHandler";
 import type { Payload } from "../interfaces/Payload";
 import type { RequestResponse } from "../interfaces/RequestResponse";
 
 import { globalDialogMessage, suspendReAuth } from "../stores";
 import { constructQuery } from "./constructURL";
+
+function isSuccessResponse<T extends RequestResponse>(
+  response: APIResponse<T>,
+): response is APISuccessResponse<T> {
+  return Math.floor(response.status / 100) === 2;
+}
 
 export function reAuth(): void {
   if (!get(suspendReAuth)) {
@@ -75,13 +84,10 @@ export async function request<T extends RequestResponse>(
   exceptionHandler: ExceptionHandler = {},
 ): Promise<T> {
   const response = await rawRequest<T>(url, method, payload);
-  if (Math.floor(response.status / 100) === 2) {
-    if (response.response === undefined) {
-      throw new Error();
-    }
+  if (isSuccessResponse(response)) {
     return response.response;
   } else if (
-    response.type !== undefined &&
+    "type" in response &&
     Object.prototype.hasOwnProperty.call(exceptionHandler, response.type)
   ) {
     const handler = exceptionHandler[response.type];
@@ -98,9 +104,13 @@ export async function request<T extends RequestResponse>(
     exceptionHandler["401"](response);
     throw new Error();
   } else {
-    globalDialogMessage.set(
-      `Nastala neznámá chyba. Chybová hláška: ${response.message ?? ""}`,
-    );
+    if ("message" in response) {
+      globalDialogMessage.set(
+        `Nastala neznámá chyba. Chybová hláška: ${response.message}`,
+      );
+    } else {
+      globalDialogMessage.set("Nastala neznámá chyba.");
+    }
     throw new Error();
   }
 }

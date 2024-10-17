@@ -35,7 +35,7 @@
     {
       AuthenticationException: reAuth,
       LockedException: (response: APIResponse<RequestResponse>): void => {
-        lockedError = response.holder ?? "jiný uživatel";
+        lockedError = (response as { holder: string }).holder;
       },
     },
   );
