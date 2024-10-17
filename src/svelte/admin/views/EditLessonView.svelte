@@ -86,7 +86,7 @@
         LockedException: (response: APIResponse<RequestResponse>): void => {
           navigate(-1);
           globalDialogMessage.set(
-            `Nelze upravovat lekci, protože ji právě upravuje ${response.holder ?? "jiný uživatel"}.`,
+            `Nelze upravovat lekci, protože ji právě upravuje ${(response as { holder: string }).holder}.`,
           );
         },
       },
