@@ -92,7 +92,8 @@ export async function request<T extends RequestResponse>(
   ) {
     const handler = exceptionHandler[response.type];
     if (handler !== undefined && handler !== null) {
-      handler(response);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-explicit-any -- Cannot dynamically get response type
+      handler(response as any);
     }
     throw new Error();
   } else if (
