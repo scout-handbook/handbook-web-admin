@@ -2,10 +2,9 @@
   import { useSWR } from "sswr";
   import { useNavigate } from "svelte-navigator";
 
-  import type { APIResponse } from "../../../../ts/admin/interfaces/APIResponse";
+  import type { LockedExceptionResponse } from "../../../../ts/admin/interfaces/APIResponse";
   import type { Field } from "../../../../ts/admin/interfaces/Field";
   import type { Lesson } from "../../../../ts/admin/interfaces/Lesson";
-  import type { RequestResponse } from "../../../../ts/admin/interfaces/RequestResponse";
 
   import { Action } from "../../../../ts/admin/actions/Action";
   import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
@@ -34,8 +33,8 @@
     {},
     {
       AuthenticationException: reAuth,
-      LockedException: (response: APIResponse<RequestResponse>): void => {
-        lockedError = response.holder ?? "jiný uživatel";
+      LockedException: (response: LockedExceptionResponse): void => {
+        lockedError = response.holder;
       },
     },
   );

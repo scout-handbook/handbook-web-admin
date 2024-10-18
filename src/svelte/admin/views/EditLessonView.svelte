@@ -3,10 +3,9 @@
   import { onDestroy, onMount } from "svelte";
   import { useNavigate } from "svelte-navigator";
 
-  import type { APIResponse } from "../../../ts/admin/interfaces/APIResponse";
+  import type { LockedExceptionResponse } from "../../../ts/admin/interfaces/APIResponse";
   import type { Field } from "../../../ts/admin/interfaces/Field";
   import type { Lesson } from "../../../ts/admin/interfaces/Lesson";
-  import type { RequestResponse } from "../../../ts/admin/interfaces/RequestResponse";
 
   import { Action } from "../../../ts/admin/actions/Action";
   import { ActionCallback } from "../../../ts/admin/actions/ActionCallback";
@@ -83,10 +82,10 @@
       {},
       {
         AuthenticationException: reAuth,
-        LockedException: (response: APIResponse<RequestResponse>): void => {
+        LockedException: (response: LockedExceptionResponse): void => {
           navigate(-1);
           globalDialogMessage.set(
-            `Nelze upravovat lekci, protože ji právě upravuje ${response.holder ?? "jiný uživatel"}.`,
+            `Nelze upravovat lekci, protože ji právě upravuje ${response.holder}.`,
           );
         },
       },
