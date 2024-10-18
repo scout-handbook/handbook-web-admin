@@ -1,16 +1,23 @@
-import type { APIResponse } from "./APIResponse";
-import type { RequestResponse } from "./RequestResponse";
+import type {
+  AuthenticationExceptionResponse,
+  Error401Response,
+  LockedExceptionResponse,
+  NotFoundExceptionResponse,
+  NotLockedExceptionResponse,
+  RoleExceptionResponse,
+  SkautISAuthorizationExceptionResponse,
+} from "./APIResponse";
 
 export interface ExceptionHandler {
+  401?: ((response: Error401Response) => void) | null;
   AuthenticationException?:
-    | ((response: APIResponse<RequestResponse>) => void)
+    | ((response: AuthenticationExceptionResponse) => void)
     | null;
-  LockedException?: ((response: APIResponse<RequestResponse>) => void) | null;
-  readonly [key: string]:
-    | ((response: APIResponse<RequestResponse>) => void)
-    | null
-    | undefined;
+  LockedException?: ((response: LockedExceptionResponse) => void) | null;
+  NotFoundException?: ((response: NotFoundExceptionResponse) => void) | null;
+  NotLockedException?: ((response: NotLockedExceptionResponse) => void) | null;
+  RoleException?: ((response: RoleExceptionResponse) => void) | null;
   SkautISAuthorizationException?:
-    | ((response: APIResponse<RequestResponse>) => void)
+    | ((response: SkautISAuthorizationExceptionResponse) => void)
     | null;
 }
