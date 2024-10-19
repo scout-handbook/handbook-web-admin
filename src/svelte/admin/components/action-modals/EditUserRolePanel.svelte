@@ -1,5 +1,5 @@
 <script lang="ts" strictEvents>
-  import { useSWR } from "sswr";
+  import { createQuery } from "@tanstack/svelte-query";
   import { useNavigate } from "svelte-navigator";
 
   import type { Loginstate } from "../../../../ts/admin/interfaces/Loginstate";
@@ -8,7 +8,6 @@
   import { Action } from "../../../../ts/admin/actions/Action";
   import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
   import { apiUri } from "../../../../ts/admin/stores";
-  import { constructURL } from "../../../../ts/admin/utils/constructURL";
   import Button from "../Button.svelte";
   import DoneDialog from "../DoneDialog.svelte";
   import RadioGroup from "../forms/RadioGroup.svelte";
@@ -20,8 +19,10 @@
 
   const navigate = useNavigate();
 
-  const { data: loginstate } = useSWR<Loginstate>(constructURL("v1.0/account"));
-  $: isSuperuser = $loginstate?.role === "superuser";
+  const accountQuery = createQuery<Loginstate>({
+    queryKey: ["v1.0", "account"],
+  });
+  $: isSuperuser = $accountQuery.data?.role === "superuser";
 
   let selectedRole = payload.user.role;
   let donePromise: Promise<void> | null = null;
