@@ -1,12 +1,11 @@
 <script lang="ts" strictEvents>
-  import { useSWR } from "sswr";
+  import { createQuery } from "@tanstack/svelte-query";
   import { createEventDispatcher } from "svelte";
 
   import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
   import type { Role } from "../../../ts/admin/interfaces/Role";
 
   import { filter, map } from "../../../ts/admin/utils/arrayUtils";
-  import { constructURL } from "../../../ts/admin/utils/constructURL";
   import Button from "../components/Button.svelte";
   import GroupProvider from "../components/swr-wrappers/GroupProvider.svelte";
   import Select from "./forms/Select.svelte";
@@ -17,9 +16,13 @@
 
   const dispatch = createEventDispatcher<{ change: never }>();
 
-  const { data: loginstate } = useSWR<Loginstate>(constructURL("v1.0/account"));
-  $: isSuperuser = $loginstate?.role === "superuser";
-  $: adminOrSuperuser = $loginstate?.role === "administrator" || isSuperuser;
+  const accountQuery = createQuery<Loginstate>({
+    queryKey: ["v1.0", "account"],
+  });
+  $: isSuperuser = $accountQuery.data?.role === "superuser";
+  $: adminOrSuperuser =
+    $accountQuery.data?.role === "administrator" ||
+    $accountQuery.data?.role === "superuser";
   $: roleList = ([] as Array<[string, string]>).concat(
     [
       ["all", "Všechny role"],
