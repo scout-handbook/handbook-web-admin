@@ -1,8 +1,7 @@
 <script lang="ts" strictEvents>
-  import { useSWR } from "sswr";
+  import { createQuery } from "@tanstack/svelte-query";
   import { createEventDispatcher } from "svelte";
 
-  import { constructURL } from "../../../ts/admin/utils/constructURL";
   import Button from "./Button.svelte";
   import DoubleSidePanel from "./DoubleSidePanel.svelte";
   import ImageGridCell from "./ImageGridCell.svelte";
@@ -17,9 +16,11 @@
   $: pageStart = perPage * (page - 1);
   $: pageEnd = pageStart + perPage;
 
-  const imageList = useSWR<Array<string>>(constructURL("v1.0/image")).data;
-  $: totalImageCount = $imageList?.length;
-  $: currentPageList = $imageList?.slice(pageStart, pageEnd);
+  const imageQuery = createQuery<Array<string>>({
+    queryKey: ["v1.0", "image"],
+  });
+  $: totalImageCount = $imageQuery.data?.length;
+  $: currentPageList = $imageQuery.data?.slice(pageStart, pageEnd);
 </script>
 
 <DoubleSidePanel>
