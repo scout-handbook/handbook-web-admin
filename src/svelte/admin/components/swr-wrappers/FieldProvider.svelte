@@ -10,7 +10,7 @@
     processCompetences,
     processFields,
     processLessons,
-  } from "../../../../ts/admin/swr";
+  } from "../../../../ts/admin/resourceProcessing";
   import LoadingIndicator from "../LoadingIndicator.svelte";
 
   interface $$Slots {
