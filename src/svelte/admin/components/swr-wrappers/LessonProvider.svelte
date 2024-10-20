@@ -1,12 +1,11 @@
 <script lang="ts" strictEvents>
-  import { useSWR } from "sswr";
+  import { createQuery } from "@tanstack/svelte-query";
   import { derived } from "svelte/store";
 
   import type { Competence } from "../../../../ts/admin/interfaces/Competence";
   import type { Lesson } from "../../../../ts/admin/interfaces/Lesson";
 
   import { processCompetences, processLessons } from "../../../../ts/admin/swr";
-  import { constructURL } from "../../../../ts/admin/utils/constructURL";
   import LoadingIndicator from "../LoadingIndicator.svelte";
 
   export let silent = false;
@@ -20,18 +19,21 @@
   }
 
   const competences = derived(
-    useSWR<Record<string, Competence>>(constructURL("v1.0/competence")).data,
-    processCompetences,
+    createQuery<Record<string, Competence>>({
+      queryKey: ["v1.0", "competence"],
+    }),
+    (competenceQuery) => processCompetences(competenceQuery.data),
     undefined,
   );
   const lessons = derived(
     [
-      useSWR<Record<string, Lesson>>(
-        constructURL("v1.0/lesson?override-group=true"),
-      ).data,
+      createQuery<Record<string, Lesson>>({
+        queryKey: ["v1.0", "lesson", { "override-group": true }],
+      }),
       competences,
     ],
-    processLessons,
+    ([lessonQuery, $competences]) =>
+      processLessons([lessonQuery.data, $competences]),
     undefined,
   );
 </script>

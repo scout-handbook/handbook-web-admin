@@ -1,11 +1,10 @@
 <script lang="ts" strictEvents>
-  import { useSWR } from "sswr";
+  import { createQuery } from "@tanstack/svelte-query";
   import { derived } from "svelte/store";
 
   import type { Group } from "../../../../ts/admin/interfaces/Group";
 
   import { processGroups } from "../../../../ts/admin/swr";
-  import { constructURL } from "../../../../ts/admin/utils/constructURL";
   import LoadingIndicator from "../LoadingIndicator.svelte";
 
   interface $$Slots {
@@ -16,8 +15,10 @@
   export let inline = false;
 
   const groups = derived(
-    useSWR<Record<string, Group>>(constructURL("v1.0/group")).data,
-    processGroups,
+    createQuery<Record<string, Group>>({
+      queryKey: ["v1.0", "group"],
+    }),
+    (groupQuery) => processGroups(groupQuery.data),
     undefined,
   );
 </script>
