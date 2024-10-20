@@ -18,33 +18,31 @@
     };
   }
 
-  const competenceQuery = createQuery<Record<string, Competence>>({
-    queryKey: ["v1.0", "competence"],
-  });
-  const { data: rawCompetences, isSuccess: competenceIsSuccess } =
-    $competenceQuery;
+  const competences = derived(
+    createQuery<Record<string, Competence>>({
+      queryKey: ["v1.0", "competence"],
+    }),
+    ({ data, isSuccess }) => (isSuccess ? processCompetences(data) : undefined),
+    undefined,
+  );
 
   const lessons = derived(
     [
       createQuery<Record<string, Lesson>>({
         queryKey: ["v1.0", "lesson", { "override-group": true }],
       }),
-      competenceQuery,
+      competences,
     ],
-    ([lessonQuery, $competenceQuery]) =>
-      $competenceQuery.isSuccess
-        ? processLessons([
-            lessonQuery.data,
-            // TODO: Deduplicate
-            processCompetences($competenceQuery.data),
-          ])
+    ([$lessonQuery, $competences]) =>
+      $lessonQuery.isSuccess && $competences !== undefined
+        ? processLessons($lessonQuery.data, $competences)
         : undefined,
     undefined,
   );
 </script>
 
-{#if competenceIsSuccess && $lessons !== undefined}
-  <slot competences={processCompetences(rawCompetences)} lessons={$lessons} />
+{#if $competences !== undefined && $lessons !== undefined}
+  <slot competences={$competences} lessons={$lessons} />
 {:else if !silent}
   <LoadingIndicator {inline} />
 {/if}

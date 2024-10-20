@@ -121,15 +121,9 @@ export function processGroups(
 }
 
 export function processLessons(
-  values: [
-    Record<string, Lesson> | undefined,
-    Array<[string, Competence]> | undefined,
-  ],
-): Array<[string, Lesson]> | undefined {
-  const [rawLessons, competences] = values;
-  if (rawLessons === undefined || competences === undefined) {
-    return undefined;
-  }
+  rawLessons: Record<string, Lesson>,
+  competences: Array<[string, Competence]>,
+): Array<[string, Lesson]> {
   const lessons = map(Object.entries(rawLessons), (lesson) => {
     lesson.competences.sort((first: string, second: string): number => {
       const firstCompetence = get(competences, first);

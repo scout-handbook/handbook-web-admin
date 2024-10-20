@@ -24,26 +24,24 @@
   export let silent = false;
   export let inline = false;
 
-  const competenceQuery = createQuery<Record<string, Competence>>({
-    queryKey: ["v1.0", "competence"],
-  });
-  const { data: rawCompetences, isSuccess: competenceIsSuccess } =
-    $competenceQuery;
+  const competences = derived(
+    createQuery<Record<string, Competence>>({
+      queryKey: ["v1.0", "competence"],
+    }),
+    ({ data, isSuccess }) => (isSuccess ? processCompetences(data) : undefined),
+    undefined,
+  );
 
   const lessons = derived(
     [
       createQuery<Record<string, Lesson>>({
         queryKey: ["v1.0", "lesson", { "override-group": true }],
       }),
-      competenceQuery,
+      competences,
     ],
-    ([lessonQuery, $competenceQuery]) =>
-      $competenceQuery.isSuccess
-        ? processLessons([
-            lessonQuery.data,
-            // TODO: Deduplicate
-            processCompetences($competenceQuery.data),
-          ])
+    ([$lessonQuery, $competences]) =>
+      $lessonQuery.isSuccess && $competences !== undefined
+        ? processLessons($lessonQuery.data, $competences)
         : undefined,
     undefined,
   );
@@ -53,27 +51,18 @@
         queryKey: ["v1.0", "field", { "override-group": true }],
       }),
       lessons,
-      competenceQuery,
+      competences,
     ],
-    ([fieldQuery, $lessons, $competenceQuery]) =>
-      $competenceQuery.isSuccess
-        ? processFields([
-            fieldQuery.data,
-            $lessons,
-            // TODO: Deduplicate
-            processCompetences($competenceQuery.data),
-          ])
+    ([fieldQuery, $lessons, $competences]) =>
+      $competences !== undefined
+        ? processFields([fieldQuery.data, $lessons, $competences])
         : undefined,
     undefined,
   );
 </script>
 
-{#if competenceIsSuccess && $lessons !== undefined && $fields !== undefined}
-  <slot
-    competences={processCompetences(rawCompetences)}
-    fields={$fields}
-    lessons={$lessons}
-  />
+{#if $competences !== undefined && $lessons !== undefined && $fields !== undefined}
+  <slot competences={$competences} fields={$fields} lessons={$lessons} />
 {:else if !silent}
   <LoadingIndicator {inline} />
 {/if}
