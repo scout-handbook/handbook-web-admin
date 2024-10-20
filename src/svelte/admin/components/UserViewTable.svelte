@@ -1,11 +1,10 @@
 <script lang="ts" strictEvents>
-  import { useSWR } from "sswr";
+  import { createQuery } from "@tanstack/svelte-query";
   import { useNavigate } from "svelte-navigator";
 
   import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
   import type { User } from "../../../ts/admin/interfaces/User";
 
-  import { constructURL } from "../../../ts/admin/utils/constructURL";
   import Button from "../components/Button.svelte";
   import GroupProvider from "../components/swr-wrappers/GroupProvider.svelte";
 
@@ -13,9 +12,12 @@
 
   const navigate = useNavigate();
 
-  const { data: loginstate } = useSWR<Loginstate>(constructURL("v1.0/account"));
-  $: isSuperuser = $loginstate?.role === "superuser";
-  $: adminOrSuperuser = $loginstate?.role === "administrator" || isSuperuser;
+  const accountQuery = createQuery<Loginstate>({
+    queryKey: ["v1.0", "account"],
+  });
+  $: adminOrSuperuser =
+    $accountQuery.data?.role === "administrator" ||
+    $accountQuery.data?.role === "superuser";
 </script>
 
 <table>

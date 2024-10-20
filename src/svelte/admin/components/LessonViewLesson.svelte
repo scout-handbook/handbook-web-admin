@@ -1,12 +1,11 @@
 <script lang="ts" strictEvents>
-  import { useSWR } from "sswr";
+  import { createQuery } from "@tanstack/svelte-query";
   import { useNavigate } from "svelte-navigator";
 
   import type { Lesson } from "../../../ts/admin/interfaces/Lesson";
   import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
 
   import { adminUri } from "../../../ts/admin/stores";
-  import { constructURL } from "../../../ts/admin/utils/constructURL";
   import Button from "./Button.svelte";
   import CompetenceProvider from "./swr-wrappers/CompetenceProvider.svelte";
 
@@ -16,9 +15,12 @@
 
   const navigate = useNavigate();
 
-  const { data: loginstate } = useSWR<Loginstate>(constructURL("v1.0/account"));
+  const accountQuery = createQuery<Loginstate>({
+    queryKey: ["v1.0", "account"],
+  });
   $: adminOrSuperuser =
-    $loginstate?.role === "administrator" || $loginstate?.role === "superuser";
+    $accountQuery.data?.role === "administrator" ||
+    $accountQuery.data?.role === "superuser";
 </script>
 
 <div class:second-level={secondLevel}>

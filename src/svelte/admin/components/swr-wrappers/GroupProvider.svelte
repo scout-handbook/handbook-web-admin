@@ -1,11 +1,9 @@
 <script lang="ts" strictEvents>
-  import { useSWR } from "sswr";
-  import { derived } from "svelte/store";
+  import { createQuery } from "@tanstack/svelte-query";
 
   import type { Group } from "../../../../ts/admin/interfaces/Group";
 
-  import { processGroups } from "../../../../ts/admin/swr";
-  import { constructURL } from "../../../../ts/admin/utils/constructURL";
+  import { processGroups } from "../../../../ts/admin/resourceProcessing";
   import LoadingIndicator from "../LoadingIndicator.svelte";
 
   interface $$Slots {
@@ -15,17 +13,14 @@
   export let silent = false;
   export let inline = false;
 
-  const groups = derived(
-    useSWR<Record<string, Group>>(constructURL("v1.0/group")).data,
-    processGroups,
-    undefined,
-  );
+  const groupQuery = createQuery<Record<string, Group>>({
+    queryKey: ["v1.0", "group"],
+  });
+  const { data: rawGroups, isSuccess } = $groupQuery;
 </script>
 
-{#if $groups === undefined}
-  {#if !silent}
-    <LoadingIndicator {inline} />
-  {/if}
-{:else}
-  <slot groups={$groups} />
+{#if isSuccess}
+  <slot groups={processGroups(rawGroups)} />
+{:else if !silent}
+  <LoadingIndicator {inline} />
 {/if}
