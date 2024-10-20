@@ -4,7 +4,7 @@
 
   import type { Competence } from "../../../../ts/admin/interfaces/Competence";
 
-  import { processCompetences } from "../../../../ts/admin/swr";
+  import { processCompetences } from "../../../../ts/admin/resourceProcessing";
   import LoadingIndicator from "../LoadingIndicator.svelte";
 
   export let silent = false;
