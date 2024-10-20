@@ -76,11 +76,8 @@ function fieldComparator(
 }
 
 export function processCompetences(
-  rawCompetences: Record<string, Competence> | undefined,
-): Array<[string, Competence]> | undefined {
-  if (rawCompetences === undefined) {
-    return undefined;
-  }
+  rawCompetences: Record<string, Competence>,
+): Array<[string, Competence]> {
   return sort(Object.entries(rawCompetences), competenceComparator);
 }
 

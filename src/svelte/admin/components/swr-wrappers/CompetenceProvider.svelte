@@ -1,6 +1,5 @@
 <script lang="ts" strictEvents>
   import { createQuery } from "@tanstack/svelte-query";
-  import { derived } from "svelte/store";
 
   import type { Competence } from "../../../../ts/admin/interfaces/Competence";
 
@@ -14,19 +13,14 @@
     default: { competences: Array<[string, Competence]> };
   }
 
-  const competences = derived(
-    createQuery<Record<string, Competence>>({
-      queryKey: ["v1.0", "competence"],
-    }),
-    (competenceQuery) => processCompetences(competenceQuery.data),
-    undefined,
-  );
+  const competenceQuery = createQuery<Record<string, Competence>>({
+    queryKey: ["v1.0", "competence"],
+  });
+  const { data: rawCompetences, isSuccess } = $competenceQuery;
 </script>
 
-{#if $competences === undefined}
-  {#if !silent}
-    <LoadingIndicator {inline} />
-  {/if}
-{:else}
-  <slot competences={$competences} />
+{#if isSuccess}
+  <slot competences={processCompetences(rawCompetences)} />
+{:else if !silent}
+  <LoadingIndicator {inline} />
 {/if}
