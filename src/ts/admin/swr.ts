@@ -82,20 +82,10 @@ export function processCompetences(
 }
 
 export function processFields(
-  values: [
-    Record<string, Field> | undefined,
-    Array<[string, Lesson]> | undefined,
-    Array<[string, Competence]> | undefined,
-  ],
-): Array<[string, Field]> | undefined {
-  const [rawFields, lessons, competences] = values;
-  if (
-    rawFields === undefined ||
-    lessons === undefined ||
-    competences === undefined
-  ) {
-    return undefined;
-  }
+  rawFields: Record<string, Field>,
+  lessons: Array<[string, Lesson]>,
+  competences: Array<[string, Competence]>,
+): Array<[string, Field]> {
   const fields = map(Object.entries(rawFields), (field) => {
     field.lessons.sort((first: string, second: string): number => {
       const firstLesson = get(lessons, first);

@@ -53,9 +53,11 @@
       lessons,
       competences,
     ],
-    ([fieldQuery, $lessons, $competences]) =>
+    ([$fieldQuery, $lessons, $competences]) =>
+      $fieldQuery.isSuccess &&
+      $lessons !== undefined &&
       $competences !== undefined
-        ? processFields([fieldQuery.data, $lessons, $competences])
+        ? processFields($fieldQuery.data, $lessons, $competences)
         : undefined,
     undefined,
   );
