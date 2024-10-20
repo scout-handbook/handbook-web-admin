@@ -1,5 +1,5 @@
 <script lang="ts" strictEvents>
-  import { useSWR } from "sswr";
+  import { createQuery } from "@tanstack/svelte-query";
   import { derived } from "svelte/store";
 
   import type { Competence } from "../../../../ts/admin/interfaces/Competence";
@@ -11,7 +11,6 @@
     processFields,
     processLessons,
   } from "../../../../ts/admin/swr";
-  import { constructURL } from "../../../../ts/admin/utils/constructURL";
   import LoadingIndicator from "../LoadingIndicator.svelte";
 
   interface $$Slots {
@@ -26,37 +25,46 @@
   export let inline = false;
 
   const competences = derived(
-    useSWR<Record<string, Competence>>(constructURL("v1.0/competence")).data,
-    processCompetences,
+    createQuery<Record<string, Competence>>({
+      queryKey: ["v1.0", "competence"],
+    }),
+    ({ data, isSuccess }) => (isSuccess ? processCompetences(data) : undefined),
     undefined,
   );
+
   const lessons = derived(
     [
-      useSWR<Record<string, Lesson>>(
-        constructURL("v1.0/lesson?override-group=true"),
-      ).data,
+      createQuery<Record<string, Lesson>>({
+        queryKey: ["v1.0", "lesson", { "override-group": true }],
+      }),
       competences,
     ],
-    processLessons,
+    ([$lessonQuery, $competences]) =>
+      $lessonQuery.isSuccess && $competences !== undefined
+        ? processLessons($lessonQuery.data, $competences)
+        : undefined,
     undefined,
   );
   const fields = derived(
     [
-      useSWR<Record<string, Field>>(
-        constructURL("v1.0/field?override-group=true"),
-      ).data,
+      createQuery<Record<string, Field>>({
+        queryKey: ["v1.0", "field", { "override-group": true }],
+      }),
       lessons,
       competences,
     ],
-    processFields,
+    ([$fieldQuery, $lessons, $competences]) =>
+      $fieldQuery.isSuccess &&
+      $lessons !== undefined &&
+      $competences !== undefined
+        ? processFields($fieldQuery.data, $lessons, $competences)
+        : undefined,
     undefined,
   );
 </script>
 
-{#if $competences === undefined || $lessons === undefined || $fields === undefined}
-  {#if !silent}
-    <LoadingIndicator {inline} />
-  {/if}
-{:else}
+{#if $competences !== undefined && $lessons !== undefined && $fields !== undefined}
   <slot competences={$competences} fields={$fields} lessons={$lessons} />
+{:else if !silent}
+  <LoadingIndicator {inline} />
 {/if}

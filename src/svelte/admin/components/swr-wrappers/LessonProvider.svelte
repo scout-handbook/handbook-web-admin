@@ -1,12 +1,11 @@
 <script lang="ts" strictEvents>
-  import { useSWR } from "sswr";
+  import { createQuery } from "@tanstack/svelte-query";
   import { derived } from "svelte/store";
 
   import type { Competence } from "../../../../ts/admin/interfaces/Competence";
   import type { Lesson } from "../../../../ts/admin/interfaces/Lesson";
 
   import { processCompetences, processLessons } from "../../../../ts/admin/swr";
-  import { constructURL } from "../../../../ts/admin/utils/constructURL";
   import LoadingIndicator from "../LoadingIndicator.svelte";
 
   export let silent = false;
@@ -20,26 +19,30 @@
   }
 
   const competences = derived(
-    useSWR<Record<string, Competence>>(constructURL("v1.0/competence")).data,
-    processCompetences,
+    createQuery<Record<string, Competence>>({
+      queryKey: ["v1.0", "competence"],
+    }),
+    ({ data, isSuccess }) => (isSuccess ? processCompetences(data) : undefined),
     undefined,
   );
+
   const lessons = derived(
     [
-      useSWR<Record<string, Lesson>>(
-        constructURL("v1.0/lesson?override-group=true"),
-      ).data,
+      createQuery<Record<string, Lesson>>({
+        queryKey: ["v1.0", "lesson", { "override-group": true }],
+      }),
       competences,
     ],
-    processLessons,
+    ([$lessonQuery, $competences]) =>
+      $lessonQuery.isSuccess && $competences !== undefined
+        ? processLessons($lessonQuery.data, $competences)
+        : undefined,
     undefined,
   );
 </script>
 
-{#if $competences === undefined || $lessons === undefined}
-  {#if !silent}
-    <LoadingIndicator {inline} />
-  {/if}
-{:else}
+{#if $competences !== undefined && $lessons !== undefined}
   <slot competences={$competences} lessons={$lessons} />
+{:else if !silent}
+  <LoadingIndicator {inline} />
 {/if}

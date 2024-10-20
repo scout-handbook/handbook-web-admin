@@ -55,7 +55,7 @@ export default tseslint.config(
           filter: {
             match: false,
             regex:
-              "^(401|AuthenticationException|LockedException|NotFoundException|NotLockedException|RoleException|SkautISAuthorizationException)$",
+              "^(401|AuthenticationException|LockedException|NotFoundException|NotLockedException|RoleException|SkautISAuthorizationException|override-group)$",
           },
           format: ["camelCase"],
           leadingUnderscore: "allow",
