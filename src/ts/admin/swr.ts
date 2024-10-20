@@ -113,11 +113,8 @@ export function processFields(
 }
 
 export function processGroups(
-  rawGroups: Record<string, Group> | undefined,
-): Array<[string, Group]> | undefined {
-  if (rawGroups === undefined) {
-    return undefined;
-  }
+  rawGroups: Record<string, Group>,
+): Array<[string, Group]> {
   return sort(Object.entries(rawGroups), (first, second) =>
     first.name.localeCompare(second.name),
   );
