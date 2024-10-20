@@ -1,4 +1,4 @@
 export type Payload = Record<
   string,
-  Array<string> | number | string | undefined
+  Array<string> | boolean | number | string | undefined
 >;
