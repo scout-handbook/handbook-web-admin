@@ -91,7 +91,7 @@ export default tseslint.config(
         "error",
         {
           argsIgnorePattern: "^_",
-          varsIgnorePattern: "^\\$\\$Slots$",
+          varsIgnorePattern: "^_|^\\$\\$Slots$",
         },
       ],
       "@typescript-eslint/no-use-before-define": "error",
