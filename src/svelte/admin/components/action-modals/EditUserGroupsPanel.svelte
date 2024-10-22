@@ -8,6 +8,7 @@
   import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
   import { apiUri } from "../../../../ts/admin/stores";
   import { filter, get } from "../../../../ts/admin/utils/arrayUtils";
+  import { queryClient } from "../../../../ts/admin/utils/queryClient";
   import Button from "../Button.svelte";
   import DoneDialog from "../DoneDialog.svelte";
   import CheckboxGroup from "../forms/CheckboxGroup.svelte";
@@ -15,8 +16,6 @@
 
   export let groups: Array<[string, Group]>;
   export let payload: { user: User };
-  export let revalidate: ((ops?: { force?: boolean }) => void) | undefined =
-    undefined;
 
   const navigate = useNavigate();
 
@@ -46,7 +45,9 @@
       ])
         .dispatch()
         .then(() => {
-          revalidate?.({ force: true });
+          void queryClient.invalidateQueries({
+            queryKey: ["v1.0", "user"],
+          });
         });
     }
   }
