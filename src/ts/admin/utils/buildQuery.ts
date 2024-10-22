@@ -1,6 +1,6 @@
 import type { Payload } from "../interfaces/Payload";
 
-export function constructQuery(searchParams: Payload): string {
+export function buildQuery(searchParams: Payload): string {
   const pairs: Array<string> = [];
   for (const key in searchParams) {
     if (!Object.prototype.hasOwnProperty.call(searchParams, key)) {
