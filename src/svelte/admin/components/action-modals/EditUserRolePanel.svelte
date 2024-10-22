@@ -8,14 +8,13 @@
   import { Action } from "../../../../ts/admin/actions/Action";
   import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
   import { apiUri } from "../../../../ts/admin/stores";
+  import { queryClient } from "../../../../ts/admin/utils/queryClient";
   import Button from "../Button.svelte";
   import DoneDialog from "../DoneDialog.svelte";
   import RadioGroup from "../forms/RadioGroup.svelte";
   import SidePanel from "../SidePanel.svelte";
 
   export let payload: { user: User };
-  export let revalidate: ((ops?: { force?: boolean }) => void) | undefined =
-    undefined;
 
   const navigate = useNavigate();
 
@@ -54,7 +53,9 @@
       ])
         .dispatch()
         .then(() => {
-          revalidate?.({ force: true });
+          void queryClient.invalidateQueries({
+            queryKey: ["v1.0", "user"],
+          });
         });
     }
   }

@@ -1,5 +1,5 @@
 <script lang="ts" strictEvents>
-  import { useSWR } from "sswr";
+  import { createQuery } from "@tanstack/svelte-query";
   import { useLocation } from "svelte-navigator";
 
   import type { Role } from "../../../ts/admin/interfaces/Role";
@@ -7,7 +7,6 @@
   import type { UserListResponse } from "../../../ts/admin/interfaces/UserListResponse";
 
   import { siteName } from "../../../ts/admin/stores";
-  import { constructURL } from "../../../ts/admin/utils/constructURL";
   import EditUserGroupsPanel from "../components/action-modals/EditUserGroupsPanel.svelte";
   import EditUserRolePanel from "../components/action-modals/EditUserRolePanel.svelte";
   import LoadingIndicator from "../components/LoadingIndicator.svelte";
@@ -39,22 +38,20 @@
     "per-page": perPage,
     role: role !== "all" ? role : undefined,
   };
-  $: ({ data: userList, revalidate } = useSWR<UserListResponse>(
-    () => constructURL("v1.0/user", payload),
-    // TODO: Remove this when ConsoleTVs/sswr#43 is fixed
-    { dedupingInterval: 0 },
-  ));
-  $: userListCount = $userList?.count;
+  $: userQuery = createQuery<UserListResponse>({
+    queryKey: ["v1.0", "user", payload],
+  });
+  $: userListCount = $userQuery.data?.count;
   let users: Array<User> | undefined;
-  $: users = $userList?.users;
+  $: users = $userQuery.data?.users;
 </script>
 
 {#if action === "change-user-groups"}
   <GroupProvider silent let:groups>
-    <EditUserGroupsPanel {groups} payload={actionPayload} {revalidate} />
+    <EditUserGroupsPanel {groups} payload={actionPayload} />
   </GroupProvider>
 {:else if action === "change-user-role"}
-  <EditUserRolePanel payload={actionPayload} {revalidate} />
+  <EditUserRolePanel payload={actionPayload} />
 {/if}
 
 <h1>{`${$siteName} - Uživatelé`}</h1>
