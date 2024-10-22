@@ -1,15 +1,11 @@
 <script lang="ts" strictEvents>
-  import { useSWR } from "sswr";
+  import { createMutation } from "@tanstack/svelte-query";
   import { useNavigate } from "svelte-navigator";
 
   import { Action } from "../../../../ts/admin/actions/Action";
   import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
   import { apiUri } from "../../../../ts/admin/stores";
-  import {
-    type SWRMutateFix,
-    SWRMutateFnWrapper,
-  } from "../../../../ts/admin/SWRMutateFix";
-  import { constructURL } from "../../../../ts/admin/utils/constructURL";
+  import { queryClient } from "../../../../ts/admin/utils/queryClient";
   import Dialog from "../Dialog.svelte";
   import DoneDialog from "../DoneDialog.svelte";
 
@@ -18,9 +14,21 @@
   const navigate = useNavigate();
 
   let donePromise: Promise<void> | null = null;
-  const { mutate } = useSWR<SWRMutateFix<Array<string>>>(
-    constructURL("v1.0/image"),
-  );
+
+  const mutation = createMutation({
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: ["v1.0", "image"] });
+      const cachedImages = queryClient.getQueryData<Array<string>>([
+        "v1.0",
+        "image",
+      ]);
+      if (cachedImages !== undefined) {
+        const newImages = structuredClone(cachedImages);
+        newImages.splice(newImages.indexOf(payload.imageId), 1);
+        queryClient.setQueryData<Array<string>>(["v1.0", "image"], newImages);
+      }
+    },
+  });
 
   function confirmCallback(): void {
     donePromise = new ActionQueue([
@@ -31,12 +39,7 @@
     ])
       .dispatch()
       .then(() => {
-        mutate(
-          SWRMutateFnWrapper((images) => {
-            images.splice(images.indexOf(payload.imageId), 1);
-            return images;
-          }),
-        );
+        $mutation.mutate();
       });
   }
 </script>
