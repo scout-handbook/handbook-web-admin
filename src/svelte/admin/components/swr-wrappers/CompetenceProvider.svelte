@@ -1,11 +1,10 @@
 <script lang="ts" strictEvents>
-  import { useSWR } from "sswr";
+  import { createQuery } from "@tanstack/svelte-query";
   import { derived } from "svelte/store";
 
   import type { Competence } from "../../../../ts/admin/interfaces/Competence";
 
-  import { processCompetences } from "../../../../ts/admin/swr";
-  import { constructURL } from "../../../../ts/admin/utils/constructURL";
+  import { processCompetences } from "../../../../ts/admin/resourceProcessing";
   import LoadingIndicator from "../LoadingIndicator.svelte";
 
   export let silent = false;
@@ -16,16 +15,16 @@
   }
 
   const competences = derived(
-    useSWR<Record<string, Competence>>(constructURL("v1.0/competence")).data,
-    processCompetences,
+    createQuery<Record<string, Competence>>({
+      queryKey: ["v1.0", "competence"],
+    }),
+    ({ data, isSuccess }) => (isSuccess ? processCompetences(data) : undefined),
     undefined,
   );
 </script>
 
-{#if $competences === undefined}
-  {#if !silent}
-    <LoadingIndicator {inline} />
-  {/if}
-{:else}
+{#if $competences !== undefined}
   <slot competences={$competences} />
+{:else if !silent}
+  <LoadingIndicator {inline} />
 {/if}

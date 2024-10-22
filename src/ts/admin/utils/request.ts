@@ -9,7 +9,7 @@ import type { Payload } from "../interfaces/Payload";
 import type { RequestResponse } from "../interfaces/RequestResponse";
 
 import { globalDialogMessage, suspendReAuth } from "../stores";
-import { constructQuery } from "./constructURL";
+import { buildQuery } from "./buildQuery";
 
 function isSuccessResponse<T extends RequestResponse>(
   response: APIResponse<T>,
@@ -43,7 +43,7 @@ async function rawRequest<T extends RequestResponse>(
     method === "DELETE" ||
     payload.toString() !== "[object FormData]"
   ) {
-    query = constructQuery(payload as Payload);
+    query = buildQuery(payload as Payload);
   }
   if ((method === "GET" || method === "DELETE") && query) {
     fullUrl += `?${query}`;

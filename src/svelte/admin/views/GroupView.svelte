@@ -1,12 +1,11 @@
 <script lang="ts" strictEvents>
-  import { useSWR } from "sswr";
+  import { createQuery } from "@tanstack/svelte-query";
   import { useLocation, useNavigate } from "svelte-navigator";
 
   import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
 
   import { siteName } from "../../../ts/admin/stores";
   import { get } from "../../../ts/admin/utils/arrayUtils";
-  import { constructURL } from "../../../ts/admin/utils/constructURL";
   import AddGroupPanel from "../components/action-modals/AddGroupPanel.svelte";
   import DeleteGroupDialog from "../components/action-modals/DeleteGroupDialog.svelte";
   import EditGroupPanel from "../components/action-modals/EditGroupPanel.svelte";
@@ -24,9 +23,12 @@
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- The typings for svelte-navigator incorrectly don't include undefined for $location.state
   $: actionPayload = $location.state?.actionPayload;
 
-  const { data: loginstate } = useSWR<Loginstate>(constructURL("v1.0/account"));
+  const accountQuery = createQuery<Loginstate>({
+    queryKey: ["v1.0", "account"],
+  });
   $: adminOrSuperuser =
-    $loginstate?.role === "administrator" || $loginstate?.role === "superuser";
+    $accountQuery.data?.role === "administrator" ||
+    $accountQuery.data?.role === "superuser";
 </script>
 
 {#if action === "add-group"}

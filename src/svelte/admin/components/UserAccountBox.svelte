@@ -1,16 +1,17 @@
 <script lang="ts" strictEvents>
-  import { useSWR } from "sswr";
+  import { createQuery } from "@tanstack/svelte-query";
 
   import type { Loginstate } from "../../../ts/admin/interfaces/Loginstate";
 
   import { adminUri, apiUri, frontendUri } from "../../../ts/admin/stores";
-  import { constructURL } from "../../../ts/admin/utils/constructURL";
 
-  const { data: loginstate } = useSWR<Loginstate>(constructURL("v1.0/account"));
-  $: avatar = $loginstate
-    ? `data:image/png;base64,${$loginstate.avatar}`
+  const accountQuery = createQuery<Loginstate>({
+    queryKey: ["v1.0", "account"],
+  });
+  $: avatar = $accountQuery.isSuccess
+    ? `data:image/png;base64,${$accountQuery.data.avatar}`
     : `${$adminUri}/avatar.png`;
-  $: name = $loginstate?.name;
+  $: name = $accountQuery.data?.name;
 </script>
 
 <div class="container">

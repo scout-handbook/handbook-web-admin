@@ -1,5 +1,5 @@
 <script lang="ts" strictEvents>
-  import { useSWR } from "sswr";
+  import { createMutation } from "@tanstack/svelte-query";
   import { useNavigate } from "svelte-navigator";
 
   import type { LockedExceptionResponse } from "../../../../ts/admin/interfaces/APIResponse";
@@ -9,11 +9,7 @@
   import { Action } from "../../../../ts/admin/actions/Action";
   import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
   import { apiUri } from "../../../../ts/admin/stores";
-  import {
-    type SWRMutateFix,
-    SWRMutateFnWrapper,
-  } from "../../../../ts/admin/SWRMutateFix";
-  import { constructURL } from "../../../../ts/admin/utils/constructURL";
+  import { queryClient } from "../../../../ts/admin/utils/queryClient";
   import { reAuth, request } from "../../../../ts/admin/utils/request";
   import Dialog from "../Dialog.svelte";
   import DoneDialog from "../DoneDialog.svelte";
@@ -39,12 +35,48 @@
     },
   );
   let donePromise: Promise<void> | null = null;
-  const { mutate: lessonMutate } = useSWR<SWRMutateFix<Record<string, Lesson>>>(
-    constructURL("v1.0/lesson?override-group=true"),
-  );
-  const { mutate: fieldMutate } = useSWR<SWRMutateFix<Record<string, Field>>>(
-    constructURL("v1.0/field?override-group=true"),
-  );
+
+  const mutation = createMutation({
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: ["v1.0", "lesson"] });
+      await queryClient.cancelQueries({ queryKey: ["v1.0", "field"] });
+
+      const cachedLessons = queryClient.getQueryData<Record<string, Lesson>>([
+        "v1.0",
+        "lesson",
+        { "override-group": true },
+      ]);
+      const cachedFields = queryClient.getQueryData<Record<string, Field>>([
+        "v1.0",
+        "field",
+        { "override-group": true },
+      ]);
+
+      if (cachedLessons !== undefined) {
+        const { [lessonId]: _, ...newLessons } = structuredClone(cachedLessons);
+        queryClient.setQueryData<Record<string, Lesson>>(
+          ["v1.0", "lesson", { "override-group": true }],
+          newLessons,
+        );
+      }
+      if (cachedFields !== undefined) {
+        const newFields = structuredClone(cachedFields);
+        for (const fieldId in newFields) {
+          if (newFields[fieldId].lessons.includes(lessonId)) {
+            newFields[fieldId].lessons.splice(
+              newFields[fieldId].lessons.indexOf(lessonId),
+              1,
+            );
+            break;
+          }
+        }
+        queryClient.setQueryData<Record<string, Field>>(
+          ["v1.0", "field", { "override-group": true }],
+          newFields,
+        );
+      }
+    },
+  });
 
   function confirmCallback(): void {
     donePromise = new ActionQueue([
@@ -62,26 +94,7 @@
     ])
       .dispatch()
       .then(() => {
-        lessonMutate(
-          SWRMutateFnWrapper((cachedLessons) => {
-            delete cachedLessons[lessonId];
-            return cachedLessons;
-          }),
-        );
-        fieldMutate(
-          SWRMutateFnWrapper((fields) => {
-            for (const fieldId in fields) {
-              if (fields[fieldId].lessons.includes(lessonId)) {
-                fields[fieldId].lessons.splice(
-                  fields[fieldId].lessons.indexOf(lessonId),
-                  1,
-                );
-                break;
-              }
-            }
-            return fields;
-          }),
-        );
+        $mutation.mutate();
       });
   }
 
