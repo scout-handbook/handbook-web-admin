@@ -1,5 +1,5 @@
 <script lang="ts" strictEvents>
-  import { useSWR } from "sswr";
+  import { createMutation } from "@tanstack/svelte-query";
   import { useNavigate } from "svelte-navigator";
 
   import type { Field } from "../../../../ts/admin/interfaces/Field";
@@ -7,11 +7,7 @@
   import { Action } from "../../../../ts/admin/actions/Action";
   import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
   import { apiUri } from "../../../../ts/admin/stores";
-  import {
-    type SWRMutateFix,
-    SWRMutateFnWrapper,
-  } from "../../../../ts/admin/SWRMutateFix";
-  import { constructURL } from "../../../../ts/admin/utils/constructURL";
+  import { queryClient } from "../../../../ts/admin/utils/queryClient";
   import Button from "../Button.svelte";
   import DoneDialog from "../DoneDialog.svelte";
   import DescriptionInput from "../forms/DescriptionInput.svelte";
@@ -29,9 +25,28 @@
   let imageSelectorOpen = false;
   let iconSelectorOpen = false;
   let donePromise: Promise<void> | null = null;
-  const { mutate } = useSWR<SWRMutateFix<Record<string, Field>>>(
-    constructURL("v1.0/field?override-group=true"),
-  );
+
+  const mutation = createMutation({
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: ["v1.0", "field"] });
+      const cachedFields = queryClient.getQueryData<Record<string, Field>>([
+        "v1.0",
+        "field",
+        { "override-group": true },
+      ]);
+      if (cachedFields !== undefined) {
+        const newFields = structuredClone(cachedFields);
+        newFields[fieldId].name = name;
+        newFields[fieldId].description = description;
+        newFields[fieldId].image = image;
+        newFields[fieldId].icon = icon;
+        queryClient.setQueryData<Record<string, Field>>(
+          ["v1.0", "field", { "override-group": true }],
+          newFields,
+        );
+      }
+    },
+  });
 
   function saveCallback(): void {
     if (
@@ -53,15 +68,7 @@
       ])
         .dispatch()
         .then(() => {
-          mutate(
-            SWRMutateFnWrapper((cachedFields) => {
-              cachedFields[fieldId].name = name;
-              cachedFields[fieldId].description = description;
-              cachedFields[fieldId].image = image;
-              cachedFields[fieldId].icon = icon;
-              return cachedFields;
-            }),
-          );
+          $mutation.mutate();
         });
     }
   }
