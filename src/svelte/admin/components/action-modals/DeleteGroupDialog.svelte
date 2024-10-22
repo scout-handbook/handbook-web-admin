@@ -1,5 +1,5 @@
 <script lang="ts" strictEvents>
-  import { useSWR } from "sswr";
+  import { createMutation } from "@tanstack/svelte-query";
   import { useNavigate } from "svelte-navigator";
 
   import type { Group } from "../../../../ts/admin/interfaces/Group";
@@ -7,11 +7,7 @@
   import { Action } from "../../../../ts/admin/actions/Action";
   import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
   import { apiUri } from "../../../../ts/admin/stores";
-  import {
-    type SWRMutateFix,
-    SWRMutateFnWrapper,
-  } from "../../../../ts/admin/SWRMutateFix";
-  import { constructURL } from "../../../../ts/admin/utils/constructURL";
+  import { queryClient } from "../../../../ts/admin/utils/queryClient";
   import Dialog from "../Dialog.svelte";
   import DoneDialog from "../DoneDialog.svelte";
 
@@ -21,9 +17,23 @@
   const navigate = useNavigate();
 
   let donePromise: Promise<void> | null = null;
-  const { mutate } = useSWR<SWRMutateFix<Record<string, Group>>>(
-    constructURL("v1.0/group"),
-  );
+
+  const mutation = createMutation({
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: ["v1.0", "group"] });
+      const cachedGroups = queryClient.getQueryData<Record<string, Group>>([
+        "v1.0",
+        "group",
+      ]);
+      if (cachedGroups !== undefined) {
+        const { [groupId]: _, ...newGroups } = structuredClone(cachedGroups);
+        queryClient.setQueryData<Record<string, Group>>(
+          ["v1.0", "group"],
+          newGroups,
+        );
+      }
+    },
+  });
 
   function confirmCallback(): void {
     donePromise = new ActionQueue([
@@ -34,12 +44,7 @@
     ])
       .dispatch()
       .then(() => {
-        mutate(
-          SWRMutateFnWrapper((cachedGroups) => {
-            delete cachedGroups[groupId];
-            return cachedGroups;
-          }),
-        );
+        $mutation.mutate();
       });
   }
 </script>
