@@ -1,10 +1,5 @@
 <script lang="ts" strictEvents>
-  import { useSWR } from "sswr";
   import { useLocation, useNavigate } from "svelte-navigator";
-
-  import type { Field } from "../../../ts/admin/interfaces/Field";
-  import type { Lesson } from "../../../ts/admin/interfaces/Lesson";
-  import type { SWRMutateFix } from "../../../ts/admin/SWRMutateFix";
 
   import { Action } from "../../../ts/admin/actions/Action";
   import { ActionCallback } from "../../../ts/admin/actions/ActionCallback";
@@ -15,12 +10,12 @@
     populateGroups,
   } from "../../../ts/admin/actions/populateLessonActionQueue";
   import { apiUri } from "../../../ts/admin/stores";
-  import { constructURL } from "../../../ts/admin/utils/constructURL";
   import {
     defaultBody,
     defaultName,
   } from "../../../ts/admin/utils/defaultLessonContent";
   import { getQueryField } from "../../../ts/admin/utils/getQueryField";
+  import { queryClient } from "../../../ts/admin/utils/queryClient";
   import DoneDialog from "../components/DoneDialog.svelte";
   import LessonEditor from "../components/LessonEditor.svelte";
 
@@ -33,12 +28,6 @@
   let competences: Array<string> = [];
   let field: string | null = getQueryField($location.search, "field");
   let groups: Array<string> = [];
-  const { revalidate: lessonRevalidate } = useSWR<
-    SWRMutateFix<Record<string, Lesson>>
-  >(constructURL("v1.0/lesson?override-group=true"));
-  const { revalidate: fieldRevalidate } = useSWR<
-    SWRMutateFix<Record<string, Field>>
-  >(constructURL("v1.0/field?override-group=true"));
 
   function save(): void {
     const saveActionQueue = new ActionQueue([
@@ -56,8 +45,12 @@
     populateField(saveActionQueue, null, field);
     populateGroups(saveActionQueue, null, groups);
     donePromise = saveActionQueue.dispatch().then(() => {
-      lessonRevalidate({ force: true });
-      fieldRevalidate({ force: true });
+      void queryClient.invalidateQueries({
+        queryKey: ["v1.0", "lesson"],
+      });
+      void queryClient.invalidateQueries({
+        queryKey: ["v1.0", "field"],
+      });
     });
   }
 </script>
