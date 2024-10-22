@@ -1,14 +1,10 @@
 <script lang="ts" strictEvents>
-  import { useSWR } from "sswr";
   import { useNavigate } from "svelte-navigator";
-
-  import type { Group } from "../../../../ts/admin/interfaces/Group";
-  import type { SWRMutateFix } from "../../../../ts/admin/SWRMutateFix";
 
   import { Action } from "../../../../ts/admin/actions/Action";
   import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
   import { apiUri } from "../../../../ts/admin/stores";
-  import { constructURL } from "../../../../ts/admin/utils/constructURL";
+  import { queryClient } from "../../../../ts/admin/utils/queryClient";
   import Button from "../Button.svelte";
   import DoneDialog from "../DoneDialog.svelte";
   import NameInput from "../forms/NameInput.svelte";
@@ -18,9 +14,6 @@
 
   let name = "Nová skupina";
   let donePromise: Promise<void> | null = null;
-  const { revalidate } = useSWR<SWRMutateFix<Record<string, Group>>>(
-    constructURL("v1.0/group"),
-  );
 
   function saveCallback(): void {
     donePromise = new ActionQueue([
@@ -30,7 +23,9 @@
     ])
       .dispatch()
       .then(() => {
-        revalidate({ force: true });
+        void queryClient.invalidateQueries({
+          queryKey: ["v1.0", "group"],
+        });
       });
   }
 </script>
