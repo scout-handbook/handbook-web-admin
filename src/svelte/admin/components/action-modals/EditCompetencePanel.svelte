@@ -1,5 +1,5 @@
 <script lang="ts" strictEvents>
-  import { useSWR } from "sswr";
+  import { createMutation } from "@tanstack/svelte-query";
   import { useNavigate } from "svelte-navigator";
 
   import type { Competence } from "../../../../ts/admin/interfaces/Competence";
@@ -7,11 +7,7 @@
   import { Action } from "../../../../ts/admin/actions/Action";
   import { ActionQueue } from "../../../../ts/admin/actions/ActionQueue";
   import { apiUri } from "../../../../ts/admin/stores";
-  import {
-    type SWRMutateFix,
-    SWRMutateFnWrapper,
-  } from "../../../../ts/admin/SWRMutateFix";
-  import { constructURL } from "../../../../ts/admin/utils/constructURL";
+  import { queryClient } from "../../../../ts/admin/utils/queryClient";
   import Button from "../Button.svelte";
   import DoneDialog from "../DoneDialog.svelte";
   import DescriptionInput from "../forms/DescriptionInput.svelte";
@@ -26,9 +22,25 @@
 
   let { description, name, number } = competence;
   let donePromise: Promise<void> | null = null;
-  const { mutate } = useSWR<SWRMutateFix<Record<string, Competence>>>(
-    constructURL("v1.0/competence"),
-  );
+
+  const mutation = createMutation({
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: ["v1.0", "competence"] });
+      const cachedCompetences = queryClient.getQueryData<
+        Record<string, Competence>
+      >(["v1.0", "competence"]);
+      if (cachedCompetences !== undefined) {
+        const newCompetences = structuredClone(cachedCompetences);
+        newCompetences[competenceId].number = number;
+        newCompetences[competenceId].name = name;
+        newCompetences[competenceId].description = description;
+        queryClient.setQueryData<Record<string, Competence>>(
+          ["v1.0", "competence"],
+          newCompetences,
+        );
+      }
+    },
+  });
 
   function saveCallback(): void {
     if (
@@ -49,14 +61,7 @@
       ])
         .dispatch()
         .then(() => {
-          mutate(
-            SWRMutateFnWrapper((cachedCompetences) => {
-              cachedCompetences[competenceId].number = number;
-              cachedCompetences[competenceId].name = name;
-              cachedCompetences[competenceId].description = description;
-              return cachedCompetences;
-            }),
-          );
+          $mutation.mutate();
         });
     }
   }
