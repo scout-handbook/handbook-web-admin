@@ -1,11 +1,8 @@
 <script lang="ts" strictEvents>
-  import { useSWR } from "sswr";
   import { useNavigate } from "svelte-navigator";
 
-  import type { SWRMutateFix } from "../../../../ts/admin/SWRMutateFix";
-
   import { apiUri } from "../../../../ts/admin/stores";
-  import { constructURL } from "../../../../ts/admin/utils/constructURL";
+  import { queryClient } from "../../../../ts/admin/utils/queryClient";
   import { authFailHandler, request } from "../../../../ts/admin/utils/request";
   import Button from "../Button.svelte";
   import Dialog from "../Dialog.svelte";
@@ -18,9 +15,6 @@
 
   let stage: "done" | "error" | "select" | "upload" = "select";
   let files: FileList | undefined;
-  const { revalidate } = useSWR<SWRMutateFix<Array<string>>>(
-    constructURL("v1.0/image"),
-  );
 
   function saveCallback(): void {
     if (files === undefined || files.length === 0) {
@@ -40,7 +34,9 @@
       formData,
       authFailHandler,
     ).then(() => {
-      revalidate({ force: true });
+      void queryClient.invalidateQueries({
+        queryKey: ["v1.0", "image"],
+      });
       stage = "done";
     });
   }
