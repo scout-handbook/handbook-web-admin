@@ -1,5 +1,5 @@
 <script lang="ts" strictEvents>
-  import { useSWR } from "sswr";
+  import { createMutation } from "@tanstack/svelte-query";
   import { useNavigate } from "svelte-navigator";
 
   import type { Event } from "../../../../ts/admin/interfaces/Event";
@@ -10,11 +10,7 @@
   import type { UserListResponse } from "../../../../ts/admin/interfaces/UserListResponse";
 
   import { apiUri } from "../../../../ts/admin/stores";
-  import {
-    type SWRMutateFix,
-    SWRMutateFnWrapper,
-  } from "../../../../ts/admin/SWRMutateFix";
-  import { constructURL } from "../../../../ts/admin/utils/constructURL";
+  import { queryClient } from "../../../../ts/admin/utils/queryClient";
   import {
     authFailHandler,
     reAuth,
@@ -38,9 +34,24 @@
   let selectedEvent: number;
   let participantList: Array<Participant> = [];
   let selectedParticipants: Array<number> = [];
-  const { mutate } = useSWR<SWRMutateFix<Record<string, Group>>>(
-    constructURL("v1.0/group"),
-  );
+
+  const mutation = createMutation({
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: ["v1.0", "group"] });
+      const cachedGroups = queryClient.getQueryData<Record<string, Group>>([
+        "v1.0",
+        "group",
+      ]);
+      if (cachedGroups !== undefined) {
+        const newGroups = structuredClone(cachedGroups);
+        newGroups[groupId].count += selectedParticipants.length;
+        queryClient.setQueryData<Record<string, Group>>(
+          ["v1.0", "group"],
+          newGroups,
+        );
+      }
+    },
+  });
 
   void request<Array<Event>>(
     `${$apiUri}/v1.0/event`,
@@ -132,12 +143,7 @@
         ),
       ),
     ).then(() => {
-      mutate(
-        SWRMutateFnWrapper((cachedGroups) => {
-          cachedGroups[groupId].count += selectedParticipants.length;
-          return cachedGroups;
-        }),
-      );
+      $mutation.mutate();
       step = "done";
     });
   }

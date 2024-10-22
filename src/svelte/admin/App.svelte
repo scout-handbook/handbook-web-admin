@@ -4,6 +4,7 @@
   import "@fontsource/open-sans/400-italic.css";
   import "@fontsource/open-sans/700.css";
   import "@fontsource/open-sans/700-italic.css";
+  import { QueryClientProvider } from "@tanstack/svelte-query";
   import { Route, Router } from "svelte-navigator";
 
   import {
@@ -11,6 +12,7 @@
     globalDialogMessage,
     globalLoadingIndicator,
   } from "../../ts/admin/stores";
+  import { queryClient } from "../../ts/admin/utils/queryClient";
   import Dialog from "./components/Dialog.svelte";
   import LoadingIndicator from "./components/LoadingIndicator.svelte";
   import Overlay from "./components/Overlay.svelte";
@@ -29,80 +31,82 @@
   const basepath = $adminUri.split("/").slice(3).join("/");
 </script>
 
-{#if $globalLoadingIndicator}
-  <Overlay />
-  <LoadingIndicator darkBackground />
-{/if}
-{#if $globalDialogMessage !== null}
-  <Dialog
-    confirmButtonText="OK"
-    on:confirm={() => {
-      globalDialogMessage.set(null);
-    }}
-  >
-    {$globalDialogMessage}
-  </Dialog>
-{/if}
-<Router {basepath} primary={false}>
-  <Route component={AddLessonView} path="/lessons/add" />
-  <Route path="/lessons/:id/edit" let:params>
-    <FieldProvider let:fields let:lessons>
-      <EditLessonView {fields} lessonID={params["id"]} {lessons} />
-    </FieldProvider>
-  </Route>
-  <Route path="/lessons/:id/versions/:version/restore" let:params>
-    <RestoreLessonView lessonID={params["id"]} version={params["version"]} />
-  </Route>
+<QueryClientProvider client={queryClient}>
+  {#if $globalLoadingIndicator}
+    <Overlay />
+    <LoadingIndicator darkBackground />
+  {/if}
+  {#if $globalDialogMessage !== null}
+    <Dialog
+      confirmButtonText="OK"
+      on:confirm={() => {
+        globalDialogMessage.set(null);
+      }}
+    >
+      {$globalDialogMessage}
+    </Dialog>
+  {/if}
+  <Router {basepath} primary={false}>
+    <Route component={AddLessonView} path="/lessons/add" />
+    <Route path="/lessons/:id/edit" let:params>
+      <FieldProvider let:fields let:lessons>
+        <EditLessonView {fields} lessonID={params["id"]} {lessons} />
+      </FieldProvider>
+    </Route>
+    <Route path="/lessons/:id/versions/:version/restore" let:params>
+      <RestoreLessonView lessonID={params["id"]} version={params["version"]} />
+    </Route>
 
-  <Route path="/">
-    <TopBar />
-    <div class="main-page-container">
-      <div class="main-page">
-        <LessonView />
+    <Route path="/">
+      <TopBar />
+      <div class="main-page-container">
+        <div class="main-page">
+          <LessonView />
+        </div>
       </div>
-    </div>
-  </Route>
-  <Route path="/lessons">
-    <TopBar />
-    <div class="main-page-container">
-      <div class="main-page">
-        <LessonView />
+    </Route>
+    <Route path="/lessons">
+      <TopBar />
+      <div class="main-page-container">
+        <div class="main-page">
+          <LessonView />
+        </div>
       </div>
-    </div>
-  </Route>
-  <Route path="/competences">
-    <TopBar />
-    <div class="main-page-container">
-      <div class="main-page">
-        <CompetenceView />
+    </Route>
+    <Route path="/competences">
+      <TopBar />
+      <div class="main-page-container">
+        <div class="main-page">
+          <CompetenceView />
+        </div>
       </div>
-    </div>
-  </Route>
-  <Route path="/images">
-    <TopBar />
-    <div class="main-page-container">
-      <div class="main-page">
-        <ImageView />
+    </Route>
+    <Route path="/images">
+      <TopBar />
+      <div class="main-page-container">
+        <div class="main-page">
+          <ImageView />
+        </div>
       </div>
-    </div>
-  </Route>
-  <Route path="/users">
-    <TopBar />
-    <div class="main-page-container">
-      <div class="main-page">
-        <UserView />
+    </Route>
+    <Route path="/users">
+      <TopBar />
+      <div class="main-page-container">
+        <div class="main-page">
+          <UserView />
+        </div>
       </div>
-    </div>
-  </Route>
-  <Route path="/groups">
-    <TopBar />
-    <div class="main-page-container">
-      <div class="main-page">
-        <GroupView />
+    </Route>
+    <Route path="/groups">
+      <TopBar />
+      <div class="main-page-container">
+        <div class="main-page">
+          <GroupView />
+        </div>
       </div>
-    </div>
-  </Route>
-</Router>
+    </Route>
+  </Router>
+</QueryClientProvider>
 
 <style>
   .main-page {
