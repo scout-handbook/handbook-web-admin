@@ -4,14 +4,12 @@
 
 import App from "../svelte/admin/App.svelte";
 import { setupActionQueue } from "./admin/actions/ActionQueue";
-import { setupSWR } from "./admin/swr";
 import { checkLogin } from "./admin/utils/checkLogin";
 import { compileMarkdownSetup } from "./admin/utils/compileMarkdown";
 import { loginRefreshSetup } from "./admin/utils/loginRefresh";
 
 function main(): void {
   checkLogin();
-  setupSWR();
   compileMarkdownSetup();
   loginRefreshSetup();
   setupActionQueue();
