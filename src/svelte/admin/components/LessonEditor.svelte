@@ -17,7 +17,7 @@
   export let field: string | null;
   export let groups: Array<string>;
 
-  const dispatch = createEventDispatcher<{ discard: never; save: never }>();
+  const dispatch = createEventDispatcher<{ discard: null; save: null }>();
   const location = useLocation<{ view: string }>();
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- The typings for svelte-navigator incorrectly don't include undefined for $location.state
   $: view = $location.state?.view;

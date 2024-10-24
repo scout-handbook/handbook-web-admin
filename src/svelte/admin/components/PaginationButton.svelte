@@ -7,7 +7,7 @@
 
   export let active = false;
 
-  const dispatch = createEventDispatcher<{ click: never }>();
+  const dispatch = createEventDispatcher<{ click: null }>();
 </script>
 
 <button

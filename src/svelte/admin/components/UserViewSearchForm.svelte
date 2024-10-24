@@ -14,7 +14,7 @@
   export let role: "all" | Role;
   export let searchName: string;
 
-  const dispatch = createEventDispatcher<{ change: never }>();
+  const dispatch = createEventDispatcher<{ change: null }>();
 
   const accountQuery = createQuery<Loginstate>({
     queryKey: ["v1.0", "account"],

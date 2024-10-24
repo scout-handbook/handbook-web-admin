@@ -3,7 +3,7 @@
 
   import { fade } from "../../../ts/admin/transition";
 
-  const dispatch = createEventDispatcher<{ click: never }>();
+  const dispatch = createEventDispatcher<{ click: null }>();
 </script>
 
 <!-- eslint-disable svelte/no-inline-styles -->

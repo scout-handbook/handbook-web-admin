@@ -6,7 +6,7 @@
 
   export let name: string;
 
-  const dispatch = createEventDispatcher<{ discard: never; save: never }>();
+  const dispatch = createEventDispatcher<{ discard: null; save: null }>();
   const location = useLocation<Record<string, never>>();
   const navigate = useNavigate();
   $: currentUri = $location.pathname + $location.search;
