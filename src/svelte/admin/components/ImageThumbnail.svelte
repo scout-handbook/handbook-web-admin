@@ -5,7 +5,7 @@
 
   export let id: string;
 
-  const dispatch = createEventDispatcher<{ click: never }>();
+  const dispatch = createEventDispatcher<{ click: null }>();
 </script>
 
 <button

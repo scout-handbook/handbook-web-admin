@@ -11,7 +11,7 @@
   export let dismissButtonText = "";
   export let confirmButtonText: string;
 
-  const dispatch = createEventDispatcher<{ confirm: never; dismiss: never }>();
+  const dispatch = createEventDispatcher<{ confirm: null; dismiss: null }>();
 
   function keypressHandler(event: KeyboardEvent): void {
     if (event.key === "Enter") {
