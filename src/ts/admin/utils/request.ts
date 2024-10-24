@@ -55,7 +55,7 @@ async function rawRequest<T extends RequestResponse>(
         try {
           resolve(JSON.parse(this.responseText) as APIResponse<T>);
         } catch {
-          reject(new Error());
+          reject(new Error("Failed to parse JSON in request response."));
         }
       }
     };
