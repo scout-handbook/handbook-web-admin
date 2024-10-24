@@ -7,7 +7,7 @@
   export let name: string;
   export let value: string;
 
-  const dispatch = createEventDispatcher<{ select: never }>();
+  const dispatch = createEventDispatcher<{ select: null }>();
 </script>
 
 <label>

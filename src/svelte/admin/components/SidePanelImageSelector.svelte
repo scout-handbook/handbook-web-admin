@@ -9,7 +9,7 @@
   import LoadingIndicator from "./LoadingIndicator.svelte";
   import Pagination from "./Pagination.svelte";
 
-  const dispatch = createEventDispatcher<{ cancel: never; select: string }>();
+  const dispatch = createEventDispatcher<{ cancel: null; select: string }>();
 
   let page = 1;
   const perPage = 15;
