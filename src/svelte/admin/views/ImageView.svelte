@@ -48,7 +48,6 @@
     }}
   />
   <button
-    class="image-preview"
     type="button"
     on:click={() => {
       openImage = null;
@@ -115,7 +114,7 @@
     right: 5%;
   }
 
-  .image-preview {
+  button {
     border: none;
     cursor: pointer;
     bottom: 0;
