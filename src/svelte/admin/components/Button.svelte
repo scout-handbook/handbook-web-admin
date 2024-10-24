@@ -11,7 +11,7 @@
   export let yellow = false;
   export let icon = "";
 
-  const dispatch = createEventDispatcher<{ click: never }>();
+  const dispatch = createEventDispatcher<{ click: null }>();
 
   function callback(): void {
     dispatch("click");

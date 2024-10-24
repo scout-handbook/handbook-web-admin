@@ -8,7 +8,7 @@
   // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents -- Eslint can't handle $$Generic
   export let selected: KeyType | null;
 
-  const dispatch = createEventDispatcher<{ change: never }>();
+  const dispatch = createEventDispatcher<{ change: null }>();
 </script>
 
 <select
