@@ -1,0 +1,33 @@
+<script lang="ts" strictEvents>
+  import Button from "$lib/components/Button.svelte";
+  import { apiUri } from "$lib/stores";
+  import { createEventDispatcher } from "svelte";
+
+  export let name: string;
+  export let value: string;
+
+  const dispatch = createEventDispatcher<{ select: null }>();
+</script>
+
+<label>
+  <div>{name}:</div>
+  <input type="hidden" {value} />
+</label>
+<img alt={name} src={`${$apiUri}/v1.0/image/${value}?quality=thumbnail`} />
+<br />
+<Button
+  icon="pencil"
+  on:click={() => {
+    dispatch("select");
+  }}>Změnit</Button
+>
+
+<style>
+  div {
+    font-size: 1.1em;
+    font-style: italic;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    margin-top: 15px;
+  }
+</style>
