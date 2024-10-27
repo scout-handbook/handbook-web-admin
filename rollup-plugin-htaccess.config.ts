@@ -1,9 +1,12 @@
 import type { Options } from "rollup-plugin-htaccess";
 
 /* eslint-disable @typescript-eslint/naming-convention -- Most of these are things like header names */
-const options: (config: Record<string, string>) => Partial<Options> = (
-  config,
-) => ({
+const options: Partial<Options> = {
+  extractMetaCSP: {
+    enabled: true,
+    files: ["dist/index.html"],
+    htaccessFile: "dist/.htaccess",
+  },
   spec: {
     AddOutputFilterByType: [
       {
@@ -23,34 +26,6 @@ const options: (config: Record<string, string>) => Partial<Options> = (
       500: "/admin/500.html",
     },
     Header: [
-      {
-        action: "set",
-        always: true,
-        header: "Content-Security-Policy",
-        value: {
-          "default-src": { self: true },
-          "font-src": {
-            schemes: { data: true },
-            self: true,
-          },
-          "img-src": {
-            schemes: { data: true },
-            self: true,
-          },
-          "object-src": {},
-          "script-src": {
-            self: true,
-          },
-          "style-src": {
-            self: true,
-            "unsafe-inline": true,
-          },
-          "upgrade-insecure-requests": true,
-          ...(config["csp-report-uri"] && {
-            "report-uri": [config["csp-report-uri"]],
-          }),
-        },
-      },
       {
         action: "set",
         always: true,
@@ -138,7 +113,7 @@ const options: (config: Record<string, string>) => Partial<Options> = (
       ],
     },
   },
-});
+};
 /* eslint-enable */
 
 export default options;

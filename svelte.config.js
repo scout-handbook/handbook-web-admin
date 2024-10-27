@@ -28,6 +28,22 @@ export default {
       precompress: false,
       strict: true,
     }),
+    csp: {
+      /* eslint-disable @typescript-eslint/naming-convention -- These are CSP directive names */
+      directives: {
+        "default-src": ["self"],
+        "font-src": ["self", "data:"],
+        "img-src": ["self", "data:"],
+        "object-src": ["none"],
+        "style-src": ["self", "unsafe-inline"],
+        "upgrade-insecure-requests": true,
+        ...(config["csp-report-uri"] !== undefined && {
+          "report-uri": [config["csp-report-uri"]],
+        }),
+      },
+      /* eslint-enable @typescript-eslint/naming-convention */
+      mode: "hash",
+    },
     paths: {
       base: basePath,
     },
