@@ -25,6 +25,6 @@ export default defineConfig(({ mode }) => {
       // eslint-disable-next-line @typescript-eslint/naming-convention -- CLI variable
       CONFIG: JSON.stringify(config),
     },
-    plugins: [sveltekit(), htaccess(options(config))],
+    plugins: [sveltekit(), htaccess(options)],
   };
 });
