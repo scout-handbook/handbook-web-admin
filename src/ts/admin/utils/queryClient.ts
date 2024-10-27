@@ -40,6 +40,7 @@ export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       queryFn,
+      staleTime: 60 * 1000, // 1 minute
     },
   },
 });
