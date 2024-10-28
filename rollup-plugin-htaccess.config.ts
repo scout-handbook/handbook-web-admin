@@ -29,17 +29,8 @@ const options: (
         always: true,
         header: "Content-Security-Policy",
         value: {
-          "connect-src": {
-            hosts: [
-              "https://fonts.gstatic.com/",
-              "https://ajax.googleapis.com/ajax/libs/webfont/",
-              "https://fonts.googleapis.com",
-            ],
-            self: true,
-          },
           "default-src": { self: true },
           "font-src": {
-            hosts: ["https://fonts.gstatic.com"],
             schemes: { data: true },
             self: true,
           },
@@ -52,11 +43,9 @@ const options: (
             hashes: {
               sha256: cspHashes,
             },
-            hosts: ["https://ajax.googleapis.com/ajax/libs/webfont/"],
             self: true,
           },
           "style-src": {
-            hosts: ["https://fonts.googleapis.com"],
             self: true,
             "unsafe-inline": true,
           },
