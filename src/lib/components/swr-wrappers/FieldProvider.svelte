@@ -8,7 +8,7 @@
     processCompetences,
     processFields,
     processLessons,
-  } from "$lib/resourceProcessing";
+  } from "$lib/utils/resourceProcessing";
   import { createQuery } from "@tanstack/svelte-query";
   import { derived } from "svelte/store";
 
