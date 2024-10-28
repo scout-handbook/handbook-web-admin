@@ -53,9 +53,3 @@ export type PageStateFix =
         | "restore-version";
       view?: "lesson-settings";
     };
-
-declare global {
-  namespace App {
-    export type PageState = PageStateFix;
-  }
-}
