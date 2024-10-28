@@ -3,7 +3,10 @@
   import type { Lesson } from "$lib/interfaces/Lesson";
 
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
-  import { processCompetences, processLessons } from "$lib/resourceProcessing";
+  import {
+    processCompetences,
+    processLessons,
+  } from "$lib/utils/resourceProcessing";
   import { createQuery } from "@tanstack/svelte-query";
   import { derived } from "svelte/store";
 

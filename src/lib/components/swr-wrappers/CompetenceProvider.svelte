@@ -2,7 +2,7 @@
   import type { Competence } from "$lib/interfaces/Competence";
 
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
-  import { processCompetences } from "$lib/resourceProcessing";
+  import { processCompetences } from "$lib/utils/resourceProcessing";
   import { createQuery } from "@tanstack/svelte-query";
   import { derived } from "svelte/store";
 
