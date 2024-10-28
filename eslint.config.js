@@ -203,6 +203,7 @@ export default tseslint.config(
       "svelte/no-dupe-on-directives": "error",
       "svelte/no-dupe-use-directives": "error",
       "svelte/no-extra-reactive-curlies": "error",
+      "svelte/no-goto-without-base": "error",
       "svelte/no-ignored-unsubscribe": "error",
       "svelte/no-immutable-reactive-statements": "error",
       "svelte/no-inline-styles": "error",
@@ -273,6 +274,9 @@ export default tseslint.config(
     rules: {
       "@typescript-eslint/explicit-function-return-type": "off",
       "@typescript-eslint/no-unsafe-argument": "off",
+      "@typescript-eslint/no-unsafe-assignment": "off",
+      "@typescript-eslint/no-unsafe-member-access": "off",
+      "@typescript-eslint/no-unsafe-return": "off",
     },
   },
 );
