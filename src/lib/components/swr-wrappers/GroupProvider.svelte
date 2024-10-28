@@ -2,7 +2,7 @@
   import type { Group } from "$lib/interfaces/Group";
 
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
-  import { processGroups } from "$lib/resourceProcessing";
+  import { processGroups } from "$lib/utils/resourceProcessing";
   import { createQuery } from "@tanstack/svelte-query";
   import { derived } from "svelte/store";
 
