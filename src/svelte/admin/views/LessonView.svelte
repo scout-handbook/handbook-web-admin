@@ -43,7 +43,6 @@
   <FieldProvider silent let:fields>
     {@const field = get(fields, actionPayload.fieldId)}
     {#if field !== undefined}
-      <!-- TODO: This is too slow for some reason -->
       <EditFieldPanel {field} fieldId={actionPayload.fieldId} />
     {/if}
   </FieldProvider>
