@@ -1,13 +1,14 @@
-import { svelte } from "@sveltejs/vite-plugin-svelte";
-import legacy, { cspHashes } from "@vitejs/plugin-legacy";
+import { sveltekit } from "@sveltejs/kit/vite";
 import { readFileSync } from "fs";
 import htaccess from "rollup-plugin-htaccess";
 import { defineConfig, loadEnv } from "vite";
-import { createHtmlPlugin } from "vite-plugin-html";
 
 import options from "./rollup-plugin-htaccess.config";
 
 function getConfig(mode: string): Record<string, string> {
+  if (!(process.env["npm_lifecycle_script"]?.startsWith("vite") ?? false)) {
+    return {};
+  }
   const location = loadEnv(mode, process.cwd())["VITE_CONFIG"] as
     | string
     | undefined;
@@ -20,30 +21,10 @@ function getConfig(mode: string): Record<string, string> {
 export default defineConfig(({ mode }) => {
   const config = getConfig(mode);
   return {
-    base: config["admin-uri"],
-    build: {
-      outDir: "../dist",
-    },
     define: {
       // eslint-disable-next-line @typescript-eslint/naming-convention -- CLI variable
       CONFIG: JSON.stringify(config),
     },
-    plugins: [
-      createHtmlPlugin({
-        entry: "ts/admin.ts",
-        inject: {
-          data: {
-            title: `${config["site-name"]} - administrace`,
-          },
-        },
-        minify: true,
-      }),
-      legacy(),
-      svelte({
-        configFile: "../svelte.config.js",
-      }),
-      htaccess(options(config, cspHashes)),
-    ],
-    root: "src",
+    plugins: [sveltekit(), htaccess(options)],
   };
 });
