@@ -1,6 +1,6 @@
 <script lang="ts" strictEvents>
   import Overlay from "$lib/components/Overlay.svelte";
-  import { fly } from "$lib/transition";
+  import { fly } from "$lib/utils/transition";
 
   interface $$Slots {
     default: Record<string, never>;
