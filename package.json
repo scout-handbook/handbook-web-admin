@@ -46,7 +46,7 @@
     "@sveltejs/adapter-static": "^3.0.6",
     "@sveltejs/kit": "^2.7.7",
     "@tanstack/eslint-plugin-query": "^5.59.7",
-    "@tanstack/svelte-query": "^5.59.17",
+    "@tanstack/svelte-query": "^5.59.20",
     "@types/codemirror": "5.60.15",
     "@types/showdown": "^2.0.6",
     "autoprefixer": "^10.4.20",
