@@ -18,66 +18,70 @@
 </script>
 
 <table>
-  <tr>
-    <th>Jméno</th>
-    <th>Role</th>
-    <th>Skupiny</th>
-  </tr>
-  {#each users as user (user.id)}
+  <thead>
     <tr>
-      <td>{user.name}</td>
-      <td>
-        {#if user.role === "superuser"}
-          Superuser
-        {:else if user.role === "administrator"}
-          Administrátor
-        {:else if user.role === "editor"}
-          Editor
-        {:else}
-          Uživatel
-        {/if}
-        {#if adminOrSuperuser}
-          <br />
+      <th>Jméno</th>
+      <th>Role</th>
+      <th>Skupiny</th>
+    </tr>
+  </thead>
+  <tbody>
+    {#each users as user (user.id)}
+      <tr>
+        <td>{user.name}</td>
+        <td>
+          {#if user.role === "superuser"}
+            Superuser
+          {:else if user.role === "administrator"}
+            Administrátor
+          {:else if user.role === "editor"}
+            Editor
+          {:else}
+            Uživatel
+          {/if}
+          {#if adminOrSuperuser}
+            <br />
+            <Button
+              cyan
+              icon="pencil"
+              on:click={() => {
+                pushState("", {
+                  action: "change-user-role",
+                  actionPayload: { user },
+                });
+              }}
+            >
+              Upravit
+            </Button>
+            <br />
+          {/if}
+        </td>
+        <td>
+          <GroupProvider silent let:groups>
+            {groups
+              .filter(([id, _]) => user.groups.includes(id))
+              .map(([_, group]) => group.name)
+              .join(", ")}
+          </GroupProvider>
+          {#if user.groups.length > 0}
+            <br />
+          {/if}
           <Button
             cyan
             icon="pencil"
             on:click={() => {
               pushState("", {
-                action: "change-user-role",
+                action: "change-user-groups",
                 actionPayload: { user },
               });
             }}
           >
             Upravit
           </Button>
-          <br />
-        {/if}
-      </td>
-      <td>
-        <GroupProvider silent let:groups>
-          {groups
-            .filter(([id, _]) => user.groups.includes(id))
-            .map(([_, group]) => group.name)
-            .join(", ")}
-        </GroupProvider>
-        {#if user.groups.length > 0}
-          <br />
-        {/if}
-        <Button
-          cyan
-          icon="pencil"
-          on:click={() => {
-            pushState("", {
-              action: "change-user-groups",
-              actionPayload: { user },
-            });
-          }}
-        >
-          Upravit
-        </Button>
-      </td>
-    </tr>
-  {/each}
+        </td>
+      </tr>
+    {/each}
+  </tbody>
 </table>
 
 <style>
