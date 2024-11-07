@@ -82,6 +82,10 @@ export default tseslint.config(
         { ignoredTypeNames: ["FormData", "Payload"] },
       ],
       "@typescript-eslint/no-import-type-side-effects": "error",
+      "@typescript-eslint/no-invalid-void-type": [
+        "error",
+        { allowAsThisParameter: true },
+      ],
       "@typescript-eslint/no-shadow": "error",
       "@typescript-eslint/no-unnecessary-parameter-property-assignment":
         "error",
@@ -195,20 +199,13 @@ export default tseslint.config(
       ],
       "svelte/button-has-type": "error",
       "svelte/derived-has-same-inputs-outputs": "error",
-      "svelte/experimental-require-slot-types": "error",
-      "svelte/experimental-require-strict-events": "error",
       "svelte/infinite-reactive-loop": "error",
       "svelte/no-dom-manipulating": "error",
-      "svelte/no-dupe-on-directives": "error",
       "svelte/no-dupe-use-directives": "error",
       "svelte/no-extra-reactive-curlies": "error",
       "svelte/no-goto-without-base": "error",
       "svelte/no-ignored-unsubscribe": "error",
-      "svelte/no-immutable-reactive-statements": "error",
       "svelte/no-inline-styles": "error",
-      "svelte/no-reactive-functions": "error",
-      "svelte/no-reactive-literals": "error",
-      "svelte/no-reactive-reassign": "error",
       "svelte/no-store-async": "error",
       "svelte/no-target-blank": "error",
       "svelte/no-unused-class-name": [
@@ -220,7 +217,6 @@ export default tseslint.config(
       "svelte/prefer-destructured-store-props": "error",
       "svelte/prefer-style-directive": "error",
       "svelte/require-each-key": "error",
-      "svelte/require-event-dispatcher-types": "error",
       "svelte/require-optimized-style-attribute": "error",
       "svelte/require-store-callbacks-use-set-param": "error",
       "svelte/require-store-reactive-access": "error",
@@ -235,16 +231,16 @@ export default tseslint.config(
   {
     files: ["**/*.svelte", "*.svelte"],
     languageOptions: {
-      globals: {
-        $$Generic: "readonly",
-      },
       parser: svelteParser,
       parserOptions: {
         parser: tseslint.parser,
+        svelteFeatures: {
+          experimentalGenerics: true,
+        },
       },
     },
     rules: {
-      "@typescript-eslint/init-declarations": "off",
+      "@typescript-eslint/no-unsafe-assignment": "off",
     },
     settings: {
       svelte: {
