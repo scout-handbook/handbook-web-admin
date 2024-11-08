@@ -59,8 +59,8 @@
   <Dialog
     confirmButtonText="Ano"
     dismissButtonText="Ne"
-    on:confirm={ondiscard}
-    on:dismiss={() => {
+    onconfirm={ondiscard}
+    ondismiss={() => {
       discardConfirmation = false;
     }}
   >

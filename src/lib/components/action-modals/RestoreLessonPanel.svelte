@@ -86,7 +86,7 @@
 {#if error !== ""}
   <Dialog
     confirmButtonText="OK"
-    on:confirm={() => {
+    onconfirm={() => {
       history.back();
     }}
   >

@@ -148,7 +148,7 @@
 {#if step === "done"}
   <Dialog
     confirmButtonText="OK"
-    on:confirm={() => {
+    onconfirm={() => {
       history.back();
     }}
   >
@@ -157,7 +157,7 @@
 {:else if error !== ""}
   <Dialog
     confirmButtonText="OK"
-    on:confirm={() => {
+    onconfirm={() => {
       history.back();
     }}
   >
