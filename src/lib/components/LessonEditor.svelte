@@ -7,7 +7,7 @@
   import LessonSettingsPanel from "$lib/components/LessonEditor/LessonSettingsPanel.svelte";
   import PreviewPane from "$lib/components/LessonEditor/PreviewPane.svelte";
   import { apiUri, suspendReAuth } from "$lib/stores";
-  import { createEventDispatcher, onDestroy, onMount } from "svelte";
+  import { onDestroy, onMount } from "svelte";
 
   import type { PageStateFix } from "../../app";
 
@@ -18,6 +18,8 @@
     groups: Array<string>;
     id: string | null;
     name: string;
+    ondiscard(this: void): void;
+    onsave(this: void): void;
   }
 
   let {
@@ -27,9 +29,9 @@
     groups = $bindable(),
     id,
     name = $bindable(),
+    ondiscard,
+    onsave,
   }: Props = $props();
-
-  const dispatch = createEventDispatcher<{ discard: null; save: null }>();
 
   let pageState = $derived($page.state as PageStateFix);
   let view = $derived("view" in pageState ? pageState.view : undefined);
@@ -57,9 +59,7 @@
   <Dialog
     confirmButtonText="Ano"
     dismissButtonText="Ne"
-    on:confirm={() => {
-      dispatch("discard");
-    }}
+    on:confirm={ondiscard}
     on:dismiss={() => {
       discardConfirmation = false;
     }}
@@ -83,9 +83,7 @@
   ondiscard={() => {
     discardConfirmation = true;
   }}
-  onsave={() => {
-    dispatch("save");
-  }}
+  {onsave}
   bind:name
 />
 <ImageSelector
