@@ -70,7 +70,7 @@
 {#if donePromise !== null}
   <DoneDialog
     {donePromise}
-    on:confirm={() => {
+    onconfirm={() => {
       void goto(`${base}/lessons`);
     }}
   >
