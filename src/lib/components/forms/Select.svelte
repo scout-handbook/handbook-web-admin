@@ -1,22 +1,14 @@
 <script generics="KeyType extends number | string, ValueType" lang="ts">
-  import { createEventDispatcher } from "svelte";
-
   interface Props {
+    onchange(this: void): void;
     options: Array<[KeyType, ValueType]>;
     selected: KeyType | null;
   }
 
-  let { options, selected = $bindable() }: Props = $props();
-
-  const dispatch = createEventDispatcher<{ change: null }>();
+  let { onchange, options, selected = $bindable() }: Props = $props();
 </script>
 
-<select
-  onchange={() => {
-    dispatch("change");
-  }}
-  bind:value={selected}
->
+<select {onchange} bind:value={selected}>
   {#each options as [id, value] (id)}
     <option value={id}>{value}</option>
   {/each}
