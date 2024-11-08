@@ -50,8 +50,8 @@
   <Dialog
     confirmButtonText="Ano"
     dismissButtonText="Ne"
-    on:confirm={confirmCallback}
-    on:dismiss={() => {
+    onconfirm={confirmCallback}
+    ondismiss={() => {
       history.back();
     }}
   >

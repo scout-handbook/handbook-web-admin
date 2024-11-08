@@ -1,21 +1,28 @@
 <script lang="ts">
+  import type { Snippet } from "svelte";
+
   import Button from "$lib/components/Button.svelte";
   import Overlay from "$lib/components/Overlay.svelte";
-  import { createEventDispatcher, type Snippet } from "svelte";
 
   interface Props {
     children: Snippet;
     confirmButtonText: string;
     dismissButtonText?: string;
+    onconfirm(this: void): void;
+    ondismiss?(this: void): void;
   }
 
-  let { children, confirmButtonText, dismissButtonText = "" }: Props = $props();
-
-  const dispatch = createEventDispatcher<{ confirm: null; dismiss: null }>();
+  let {
+    children,
+    confirmButtonText,
+    dismissButtonText = "",
+    onconfirm,
+    ondismiss,
+  }: Props = $props();
 
   function keypressHandler(event: KeyboardEvent): void {
     if (event.key === "Enter") {
-      dispatch("confirm");
+      onconfirm();
     }
   }
 </script>
@@ -30,19 +37,14 @@
       <Button
         icon="cancel"
         onclick={() => {
-          dispatch("dismiss");
+          ondismiss?.();
         }}
         yellow
       >
         {dismissButtonText}
       </Button>
     {/if}
-    <Button
-      icon="ok"
-      onclick={() => {
-        dispatch("confirm");
-      }}
-    >
+    <Button icon="ok" onclick={onconfirm}>
       {confirmButtonText}
     </Button>
   </div>

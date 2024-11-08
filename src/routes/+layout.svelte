@@ -67,7 +67,7 @@
   {#if $globalDialogMessage !== null}
     <Dialog
       confirmButtonText="OK"
-      on:confirm={() => {
+      onconfirm={() => {
         globalDialogMessage.set(null);
       }}
     >

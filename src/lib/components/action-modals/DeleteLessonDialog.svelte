@@ -115,7 +115,7 @@
 {#if lockedError !== null}
   <Dialog
     confirmButtonText="OK"
-    on:confirm={() => {
+    onconfirm={() => {
       history.back();
     }}
   >
@@ -124,7 +124,7 @@
 {:else if expiredError}
   <Dialog
     confirmButtonText="OK"
-    on:confirm={() => {
+    onconfirm={() => {
       history.back();
     }}
   >
@@ -141,8 +141,8 @@
     <Dialog
       confirmButtonText="Ano"
       dismissButtonText="Ne"
-      on:confirm={confirmCallback}
-      on:dismiss={dismissCallback}
+      onconfirm={confirmCallback}
+      ondismiss={dismissCallback}
     >
       Opravdu si přejete smazat lekci "{lesson.name}"?
     </Dialog>
