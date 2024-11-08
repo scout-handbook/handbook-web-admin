@@ -1,23 +1,16 @@
 <script lang="ts">
-  import { createEventDispatcher, type Snippet } from "svelte";
+  import type { Snippet } from "svelte";
 
   interface Props {
     active?: boolean;
     children: Snippet;
+    onclick?(this: void): void;
   }
 
-  let { active = false, children }: Props = $props();
-
-  const dispatch = createEventDispatcher<{ click: null }>();
+  let { active = false, children, onclick }: Props = $props();
 </script>
 
-<button
-  class:active
-  onclick={() => {
-    dispatch("click");
-  }}
-  type="button"
->
+<button class:active {onclick} type="button">
   {@render children()}
 </button>
 
