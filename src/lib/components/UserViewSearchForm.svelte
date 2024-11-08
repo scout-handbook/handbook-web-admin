@@ -69,16 +69,19 @@
   />
   {#if adminOrSuperuser}
     <Select
-      options={roleList}
-      bind:selected={role}
-      on:change={() => {
+      onchange={() => {
         dispatch("change");
       }}
+      options={roleList}
+      bind:selected={role}
     />
   {/if}
   <GroupProvider silent>
     {#snippet children(groups)}
       <Select
+        onchange={() => {
+          dispatch("change");
+        }}
         options={groupList.concat(
           map(
             filter(
@@ -90,9 +93,6 @@
           ),
         )}
         bind:selected={group}
-        on:change={() => {
-          dispatch("change");
-        }}
       />
     {/snippet}
   </GroupProvider>
