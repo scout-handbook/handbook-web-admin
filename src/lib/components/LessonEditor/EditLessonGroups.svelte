@@ -1,10 +1,14 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import Button from "$lib/components/Button.svelte";
   import CheckboxGroup from "$lib/components/forms/CheckboxGroup.svelte";
   import GroupProvider from "$lib/components/swr-wrappers/GroupProvider.svelte";
   import { get } from "$lib/utils/arrayUtils";
 
-  export let groups: Array<string>;
+  interface Props {
+    groups: Array<string>;
+  }
+
+  let { groups = $bindable() }: Props = $props();
 
   const initialGroups = groups;
 </script>
@@ -28,27 +32,29 @@
 >
 <h1>Změnit skupiny</h1>
 <form>
-  <GroupProvider inline let:groups={allGroups}>
-    <CheckboxGroup
-      options={allGroups}
-      bind:selected={groups}
-      let:id
-      let:value={group}
-    >
-      <span class:public={id === "00000000-0000-0000-0000-000000000000"}
-        >{group.name}</span
-      >
-    </CheckboxGroup>
+  <GroupProvider inline>
+    {#snippet children(allGroups)}
+      <CheckboxGroup options={allGroups} bind:selected={groups}>
+        <!-- eslint-disable-next-line @typescript-eslint/no-shadow -- Not applicable to snippets -->
+        {#snippet children(id, group)}
+          <span class:public={id === "00000000-0000-0000-0000-000000000000"}
+            >{group.name}</span
+          >
+        {/snippet}
+      </CheckboxGroup>
+    {/snippet}
   </GroupProvider>
 </form>
 <br />
-<i class="icon-info-circled" />
+<i class="icon-info-circled"></i>
 U každé lekce lze zvolit, kteří uživatelé ji budou moct zobrazit (resp. které skupiny
 uživatelů). Pokud není vybrána žádná skupiny, nebude lekce pro běžné uživatele vůbec
 přístupná (pouze v administraci). Pokud je vybrána skupina "
 <span class="public">
-  <GroupProvider silent let:groups={allGroups}>
-    {get(allGroups, "00000000-0000-0000-0000-000000000000")?.name ?? ""}
+  <GroupProvider silent>
+    {#snippet children(allGroups)}
+      {get(allGroups, "00000000-0000-0000-0000-000000000000")?.name ?? ""}
+    {/snippet}
   </GroupProvider>
 </span>
 ", bude lekce přístupná všem uživatelům (i nepřihlášeným návštěvníkům webu) bez ohledu

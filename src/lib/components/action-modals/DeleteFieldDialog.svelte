@@ -1,4 +1,4 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import type { Field } from "$lib/interfaces/Field";
 
   import { Action } from "$lib/actions/Action";
@@ -9,10 +9,14 @@
   import { queryClient } from "$lib/utils/queryClient";
   import { createMutation } from "@tanstack/svelte-query";
 
-  export let field: Field;
-  export let fieldId: string;
+  interface Props {
+    field: Field;
+    fieldId: string;
+  }
 
-  let donePromise: Promise<void> | null = null;
+  let { field, fieldId }: Props = $props();
+
+  let donePromise: Promise<void> | null = $state(null);
 
   const mutation = createMutation({
     onMutate: async () => {

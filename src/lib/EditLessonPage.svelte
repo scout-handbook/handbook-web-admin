@@ -1,4 +1,4 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import type { LockedExceptionResponse } from "$lib/interfaces/APIResponse";
   import type { Field } from "$lib/interfaces/Field";
   import type { Lesson } from "$lib/interfaces/Lesson";
@@ -21,22 +21,32 @@
   import { createMutation } from "@tanstack/svelte-query";
   import { onDestroy, onMount } from "svelte";
 
-  export let lessonID: string;
-  export let fields: Array<[string, Field]>;
-  export let lessons: Array<[string, Lesson]>;
+  interface Props {
+    fields: Array<[string, Field]>;
+    lessonID: string;
+    lessons: Array<[string, Lesson]>;
+  }
 
-  let donePromise: Promise<void> | null = null;
-  let name = get(lessons, lessonID)?.name ?? "";
-  let body = "";
-  let competences: Array<string> = get(lessons, lessonID)?.competences ?? [];
-  let field: string | null =
-    fields.find(([_, item]) => item.lessons.includes(lessonID))?.[0] ?? null;
-  let groups: Array<string> = [];
+  let { fields, lessonID, lessons }: Props = $props();
 
-  const initialName = name;
+  let donePromise: Promise<void> | null = $state(null);
+  let name = $state(get(lessons, lessonID)?.name ?? "");
+  let body = $state("");
+  let competences: Array<string> = $state(
+    get(lessons, lessonID)?.competences ?? [],
+  );
+  let field: string | null = $state(
+    fields.find(([_, item]) => item.lessons.includes(lessonID))?.[0] ?? null,
+  );
+  let groups: Array<string> = $state([]);
+
+  // svelte-ignore state_referenced_locally
+  const initialName = $state.snapshot(name);
   let initialBody = "";
-  const initialCompetences = competences;
-  const initialField = field;
+  // svelte-ignore state_referenced_locally
+  const initialCompetences = $state.snapshot(competences);
+  // svelte-ignore state_referenced_locally
+  const initialField = $state.snapshot(field);
   let initialGroups: Array<string> = [];
 
   const mutation = createMutation({

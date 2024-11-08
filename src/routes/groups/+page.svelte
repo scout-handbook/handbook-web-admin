@@ -1,4 +1,4 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import type { Loginstate } from "$lib/interfaces/Loginstate";
 
   import { pushState } from "$app/navigation";
@@ -17,43 +17,53 @@
 
   import type { PageStateFix } from "../../app";
 
-  $: state = $page.state as PageStateFix;
+  let pageState = $derived($page.state as PageStateFix);
 
   const accountQuery = createQuery<Loginstate>({
     queryKey: ["v1.0", "account"],
   });
-  $: adminOrSuperuser =
+  let adminOrSuperuser = $derived(
     $accountQuery.data?.role === "administrator" ||
-    $accountQuery.data?.role === "superuser";
+      $accountQuery.data?.role === "superuser",
+  );
 </script>
 
 <TopBar />
 <MainPageContainer>
-  {#if state.action === "add-group"}
+  {#if pageState.action === "add-group"}
     <AddGroupPanel />
-  {:else if state.action === "change-group"}
-    <GroupProvider silent let:groups>
-      {@const group = get(groups, state.actionPayload.groupId)}
-      {#if group !== undefined}
-        <EditGroupPanel {group} groupId={state.actionPayload.groupId} />
-      {/if}
+  {:else if pageState.action === "change-group"}
+    <GroupProvider silent>
+      {#snippet children(groups)}
+        {@const group = get(groups, pageState.actionPayload.groupId)}
+        {#if group !== undefined}
+          <EditGroupPanel {group} groupId={pageState.actionPayload.groupId} />
+        {/if}
+      {/snippet}
     </GroupProvider>
-  {:else if state.action === "delete-group"}
-    <GroupProvider silent let:groups>
-      {@const group = get(groups, state.actionPayload.groupId)}
-      {#if group !== undefined}
-        <DeleteGroupDialog {group} groupId={state.actionPayload.groupId} />
-      {/if}
+  {:else if pageState.action === "delete-group"}
+    <GroupProvider silent>
+      {#snippet children(groups)}
+        {@const group = get(groups, pageState.actionPayload.groupId)}
+        {#if group !== undefined}
+          <DeleteGroupDialog
+            {group}
+            groupId={pageState.actionPayload.groupId}
+          />
+        {/if}
+      {/snippet}
     </GroupProvider>
-  {:else if state.action === "import-group-members"}
-    <GroupProvider silent let:groups>
-      {@const group = get(groups, state.actionPayload.groupId)}
-      {#if group !== undefined}
-        <ImportGroupMembersPanel
-          {group}
-          groupId={state.actionPayload.groupId}
-        />
-      {/if}
+  {:else if pageState.action === "import-group-members"}
+    <GroupProvider silent>
+      {#snippet children(groups)}
+        {@const group = get(groups, pageState.actionPayload.groupId)}
+        {#if group !== undefined}
+          <ImportGroupMembersPanel
+            {group}
+            groupId={pageState.actionPayload.groupId}
+          />
+        {/if}
+      {/snippet}
     </GroupProvider>
   {/if}
 
@@ -69,61 +79,63 @@
       Přidat
     </Button>
   {/if}
-  <GroupProvider let:groups>
-    {#each groups as [id, group] (id)}
-      {#if id === "00000000-0000-0000-0000-000000000000"}
-        <br />
-        <h3 class="public">{group.name}</h3>
-      {:else}
-        <br />
-        <h3>{group.name}</h3>
-      {/if}
-      {#if adminOrSuperuser}
-        <Button
-          cyan
-          icon="pencil"
-          on:click={() => {
-            pushState("", {
-              action: "change-group",
-              actionPayload: { groupId: id },
-            });
-          }}
-        >
-          Upravit
-        </Button>
-        {#if id !== "00000000-0000-0000-0000-000000000000"}
-          <Button
-            icon="trash-empty"
-            red
-            on:click={() => {
-              pushState("", {
-                action: "delete-group",
-                actionPayload: { groupId: id },
-              });
-            }}
-          >
-            Smazat
-          </Button>
-          <Button
-            icon="user-plus"
-            on:click={() => {
-              pushState("", {
-                action: "import-group-members",
-                actionPayload: { groupId: id },
-              });
-            }}
-          >
-            Importovat ze SkautISu
-          </Button>
+  <GroupProvider>
+    {#snippet children(groups)}
+      {#each groups as [id, group] (id)}
+        {#if id === "00000000-0000-0000-0000-000000000000"}
+          <br />
+          <h3 class="public">{group.name}</h3>
+        {:else}
+          <br />
+          <h3>{group.name}</h3>
         {/if}
-      {/if}
-      {#if id !== "00000000-0000-0000-0000-000000000000"}
-        <br />
-        <span>
-          {`Uživatelů: ${group.count.toString()}`}
-        </span>
-      {/if}
-    {/each}
+        {#if adminOrSuperuser}
+          <Button
+            cyan
+            icon="pencil"
+            on:click={() => {
+              pushState("", {
+                action: "change-group",
+                actionPayload: { groupId: id },
+              });
+            }}
+          >
+            Upravit
+          </Button>
+          {#if id !== "00000000-0000-0000-0000-000000000000"}
+            <Button
+              icon="trash-empty"
+              red
+              on:click={() => {
+                pushState("", {
+                  action: "delete-group",
+                  actionPayload: { groupId: id },
+                });
+              }}
+            >
+              Smazat
+            </Button>
+            <Button
+              icon="user-plus"
+              on:click={() => {
+                pushState("", {
+                  action: "import-group-members",
+                  actionPayload: { groupId: id },
+                });
+              }}
+            >
+              Importovat ze SkautISu
+            </Button>
+          {/if}
+        {/if}
+        {#if id !== "00000000-0000-0000-0000-000000000000"}
+          <br />
+          <span>
+            {`Uživatelů: ${group.count.toString()}`}
+          </span>
+        {/if}
+      {/each}
+    {/snippet}
   </GroupProvider>
 </MainPageContainer>
 

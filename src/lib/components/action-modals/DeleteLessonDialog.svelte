@@ -1,4 +1,4 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import type { LockedExceptionResponse } from "$lib/interfaces/APIResponse";
   import type { Field } from "$lib/interfaces/Field";
   import type { Lesson } from "$lib/interfaces/Lesson";
@@ -14,11 +14,15 @@
   import { reAuth, request } from "$lib/utils/request";
   import { createMutation } from "@tanstack/svelte-query";
 
-  export let lesson: Lesson;
-  export let lessonId: string;
+  interface Props {
+    lesson: Lesson;
+    lessonId: string;
+  }
 
-  let lockedError: string | null = null;
-  let expiredError = false;
+  let { lesson, lessonId }: Props = $props();
+
+  let lockedError: string | null = $state(null);
+  let expiredError = $state(false);
   const mutexPromise = request(
     `${$apiUri}/v1.0/mutex/${encodeURIComponent(lessonId)}`,
     "POST",
@@ -30,7 +34,7 @@
       },
     },
   );
-  let donePromise: Promise<void> | null = null;
+  let donePromise: Promise<void> | null = $state(null);
 
   const mutation = createMutation({
     onMutate: async () => {

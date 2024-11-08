@@ -1,4 +1,4 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import Button from "$lib/components/Button.svelte";
   import Dialog from "$lib/components/Dialog.svelte";
   import FileInput from "$lib/components/forms/FileInput.svelte";
@@ -9,8 +9,8 @@
   import { queryClient } from "$lib/utils/queryClient";
   import { authFailHandler, request } from "$lib/utils/request";
 
-  let stage: "done" | "error" | "select" | "upload" = "select";
-  let files: FileList | undefined;
+  let stage: "done" | "error" | "select" | "upload" = $state("select");
+  let files: FileList | undefined = $state();
 
   function saveCallback(): void {
     if (files === undefined || files.length === 0) {

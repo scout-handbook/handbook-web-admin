@@ -1,16 +1,20 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import Button from "$lib/components/Button.svelte";
 
-  export let files: FileList | undefined;
+  interface Props {
+    files: FileList | undefined;
+  }
 
-  let inputElement: HTMLInputElement;
+  let { files = $bindable() }: Props = $props();
+
+  let inputElement: HTMLInputElement | undefined = $state();
 </script>
 
 <label>
   <Button
     icon="upload"
     on:click={() => {
-      inputElement.click();
+      inputElement?.click();
     }}
   >
     {#if files === undefined || files.length === 0}

@@ -1,4 +1,4 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import { base } from "$app/paths";
   import { page } from "$app/stores";
   import UserAccountBox from "$lib/components/UserAccountBox.svelte";

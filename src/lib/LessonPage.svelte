@@ -1,4 +1,4 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import type { Loginstate } from "$lib/interfaces/Loginstate";
 
   import { goto, pushState } from "$app/navigation";
@@ -21,14 +21,15 @@
 
   import type { PageStateFix } from "../app";
 
-  $: state = $page.state as PageStateFix;
+  let state = $derived($page.state as PageStateFix);
 
   const accountQuery = createQuery<Loginstate>({
     queryKey: ["v1.0", "account"],
   });
-  $: adminOrSuperuser =
+  let adminOrSuperuser = $derived(
     $accountQuery.data?.role === "administrator" ||
-    $accountQuery.data?.role === "superuser";
+      $accountQuery.data?.role === "superuser",
+  );
 </script>
 
 <TopBar />
@@ -36,25 +37,34 @@
   {#if state.action === "add-field"}
     <AddFieldPanel />
   {:else if state.action === "change-field"}
-    <FieldProvider silent let:fields>
-      {@const field = get(fields, state.actionPayload.fieldId)}
-      {#if field !== undefined}
-        <EditFieldPanel {field} fieldId={state.actionPayload.fieldId} />
-      {/if}
+    <FieldProvider silent>
+      {#snippet children(_, fields)}
+        {@const field = get(fields, state.actionPayload.fieldId)}
+        {#if field !== undefined}
+          <EditFieldPanel {field} fieldId={state.actionPayload.fieldId} />
+        {/if}
+      {/snippet}
     </FieldProvider>
   {:else if state.action === "delete-field"}
-    <FieldProvider silent let:fields>
-      {@const field = get(fields, state.actionPayload.fieldId)}
-      {#if field !== undefined}
-        <DeleteFieldDialog {field} fieldId={state.actionPayload.fieldId} />
-      {/if}
+    <FieldProvider silent>
+      {#snippet children(_, fields)}
+        {@const field = get(fields, state.actionPayload.fieldId)}
+        {#if field !== undefined}
+          <DeleteFieldDialog {field} fieldId={state.actionPayload.fieldId} />
+        {/if}
+      {/snippet}
     </FieldProvider>
   {:else if state.action === "delete-lesson"}
-    <LessonProvider silent let:lessons>
-      {@const lesson = get(lessons, state.actionPayload.lessonId)}
-      {#if lesson !== undefined}
-        <DeleteLessonDialog {lesson} lessonId={state.actionPayload.lessonId} />
-      {/if}
+    <LessonProvider silent>
+      {#snippet children(_, lessons)}
+        {@const lesson = get(lessons, state.actionPayload.lessonId)}
+        {#if lesson !== undefined}
+          <DeleteLessonDialog
+            {lesson}
+            lessonId={state.actionPayload.lessonId}
+          />
+        {/if}
+      {/snippet}
     </LessonProvider>
   {:else if state.action === "restore-lesson"}
     <RestoreLessonPanel />
@@ -91,56 +101,58 @@
       Smazané lekce
     </Button>
   {/if}
-  <FieldProvider let:fields let:lessons>
-    {#each lessons.filter(([lessonId, _1]) => fields.filter( ([_2, field]) => field.lessons.includes(lessonId), ).length === 0) as [lessonId, lesson] (lessonId)}
-      <LessonViewLesson id={lessonId} {lesson} />
-    {/each}
-    {#each fields as [fieldId, field] (fieldId)}
-      <div>
-        <h2>{field.name}</h2>
-        {#if adminOrSuperuser}
-          <Button
-            cyan
-            icon="pencil"
-            on:click={() => {
-              pushState("", {
-                action: "change-field",
-                actionPayload: { fieldId },
-              });
-            }}
-          >
-            Upravit
-          </Button>
-          <Button
-            icon="trash-empty"
-            red
-            on:click={() => {
-              pushState("", {
-                action: "delete-field",
-                actionPayload: { fieldId },
-              });
-            }}
-          >
-            Smazat
-          </Button>
-        {/if}
-        <Button
-          green
-          icon="plus"
-          on:click={() => {
-            // eslint-disable-next-line @typescript-eslint/restrict-template-expressions -- It's a string, but TS doesn't work in templates
-            void goto(`${base}/lessons/add?field=${fieldId}`);
-          }}
-        >
-          Přidat lekci
-        </Button>
-        {#each lessons as [lessonId, lesson] (lessonId)}
-          {#if field.lessons.includes(lessonId)}
-            <LessonViewLesson id={lessonId} {lesson} secondLevel={true} />
+  <FieldProvider>
+    {#snippet children(_, fields, lessons)}
+      {#each lessons.filter(([lessonId, _1]) => fields.filter( ([_2, field]) => field.lessons.includes(lessonId), ).length === 0) as [lessonId, lesson] (lessonId)}
+        <LessonViewLesson id={lessonId} {lesson} />
+      {/each}
+      {#each fields as [fieldId, field] (fieldId)}
+        <div>
+          <h2>{field.name}</h2>
+          {#if adminOrSuperuser}
+            <Button
+              cyan
+              icon="pencil"
+              on:click={() => {
+                pushState("", {
+                  action: "change-field",
+                  actionPayload: { fieldId },
+                });
+              }}
+            >
+              Upravit
+            </Button>
+            <Button
+              icon="trash-empty"
+              red
+              on:click={() => {
+                pushState("", {
+                  action: "delete-field",
+                  actionPayload: { fieldId },
+                });
+              }}
+            >
+              Smazat
+            </Button>
           {/if}
-        {/each}
-      </div>
-    {/each}
+          <Button
+            green
+            icon="plus"
+            on:click={() => {
+              // eslint-disable-next-line @typescript-eslint/restrict-template-expressions -- It's a string, but TS doesn't work in templates
+              void goto(`${base}/lessons/add?field=${fieldId}`);
+            }}
+          >
+            Přidat lekci
+          </Button>
+          {#each lessons as [lessonId, lesson] (lessonId)}
+            {#if field.lessons.includes(lessonId)}
+              <LessonViewLesson id={lessonId} {lesson} secondLevel={true} />
+            {/if}
+          {/each}
+        </div>
+      {/each}
+    {/snippet}
   </FieldProvider>
 </MainPageContainer>
 

@@ -1,4 +1,4 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import type { Event } from "$lib/interfaces/Event";
   import type { Group } from "$lib/interfaces/Group";
   import type { Participant } from "$lib/interfaces/Participant";
@@ -17,15 +17,19 @@
   import { authFailHandler, reAuth, request } from "$lib/utils/request";
   import { createMutation } from "@tanstack/svelte-query";
 
-  export let group: Group;
-  export let groupId: string;
+  interface Props {
+    group: Group;
+    groupId: string;
+  }
 
-  let error = "";
-  let step = "event-selection-loading";
-  let eventList: Array<Event> = [];
-  let selectedEvent: number;
-  let participantList: Array<Participant> = [];
-  let selectedParticipants: Array<number> = [];
+  let { group, groupId }: Props = $props();
+
+  let error = $state("");
+  let step = $state("event-selection-loading");
+  let eventList: Array<Event> = $state([]);
+  let selectedEvent: number | null = $state(null);
+  let participantList: Array<Participant> = $state([]);
+  let selectedParticipants: Array<number> = $state([]);
 
   const mutation = createMutation({
     onMutate: async () => {
@@ -72,7 +76,7 @@
   }
 
   function getParticipantList(): void {
-    if (!selectedEvent) {
+    if (selectedEvent === null) {
       return;
     }
     step = "participant-selection-loading";
@@ -193,9 +197,9 @@
           options={eventList.map((event) => [event.id, event.name])}
           bind:selected={selectedEvent}
         >
-          <span slot="option" let:value={name}>
+          {#snippet option(_, name)}
             {name}
-          </span>
+          {/snippet}
         </RadioGroup>
       </form>
     {:else if step === "participant-selection"}
@@ -207,9 +211,10 @@
             participant.name,
           ])}
           bind:selected={selectedParticipants}
-          let:value={name}
         >
-          {name}
+          {#snippet children(name)}
+            {name}
+          {/snippet}
         </CheckboxGroup>
       </form>
     {/if}

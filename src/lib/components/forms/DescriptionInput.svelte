@@ -1,8 +1,12 @@
-<script lang="ts" strictEvents>
-  export let value: string;
+<script lang="ts">
+  interface Props {
+    value: string;
+  }
+
+  let { value = $bindable() }: Props = $props();
 </script>
 
-<textarea autocomplete="off" rows="5" bind:value />
+<textarea autocomplete="off" rows="5" bind:value></textarea>
 
 <style>
   textarea {

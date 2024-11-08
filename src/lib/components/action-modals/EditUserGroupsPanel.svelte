@@ -1,4 +1,4 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import type { Group } from "$lib/interfaces/Group";
   import type { User } from "$lib/interfaces/User";
 
@@ -12,14 +12,19 @@
   import { filter, get } from "$lib/utils/arrayUtils";
   import { queryClient } from "$lib/utils/queryClient";
 
-  export let groups: Array<[string, Group]>;
-  export let payload: { user: User };
+  interface Props {
+    groups: Array<[string, Group]>;
+    payload: { user: User };
+  }
 
-  let selectedGroups = payload.user.groups;
-  let donePromise: Promise<void> | null = null;
+  let { groups, payload }: Props = $props();
 
-  $: publicName =
-    get(groups, "00000000-0000-0000-0000-000000000000")?.name ?? "";
+  let selectedGroups = $state(payload.user.groups);
+  let donePromise: Promise<void> | null = $state(null);
+
+  let publicName = $derived(
+    get(groups, "00000000-0000-0000-0000-000000000000")?.name ?? "",
+  );
 
   function saveCallback(): void {
     if (
@@ -73,13 +78,14 @@
           (id) => id !== "00000000-0000-0000-0000-000000000000",
         )}
         bind:selected={selectedGroups}
-        let:value={group}
       >
-        {group.name}
+        {#snippet children(_, group)}
+          {group.name}
+        {/snippet}
       </CheckboxGroup>
     </form>
     <br />
-    <i class="icon-info-circled" />
+    <i class="icon-info-circled"></i>
     Každého uživatele lze zařadit do několika skupin (nebo i žádné). Podle toho poté
     tento uživatel bude moct zobrazit pouze lekce, které byly těmto skupiným zveřejněny.
     Lekce ve skupině "<span class="public">{publicName}</span>" uvidí všichni

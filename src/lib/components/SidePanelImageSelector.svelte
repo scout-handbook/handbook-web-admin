@@ -1,4 +1,4 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import Button from "$lib/components/Button.svelte";
   import DoubleSidePanel from "$lib/components/DoubleSidePanel.svelte";
   import ImageGridCell from "$lib/components/ImageGridCell.svelte";
@@ -10,16 +10,16 @@
 
   const dispatch = createEventDispatcher<{ cancel: null; select: string }>();
 
-  let page = 1;
+  let page = $state(1);
   const perPage = 15;
-  $: pageStart = perPage * (page - 1);
-  $: pageEnd = pageStart + perPage;
+  let pageStart = $derived(perPage * (page - 1));
+  let pageEnd = $derived(pageStart + perPage);
 
   const imageQuery = createQuery<Array<string>>({
     queryKey: ["v1.0", "image"],
   });
-  $: totalImageCount = $imageQuery.data?.length;
-  $: currentPageList = $imageQuery.data?.slice(pageStart, pageEnd);
+  let totalImageCount = $derived($imageQuery.data?.length);
+  let currentPageList = $derived($imageQuery.data?.slice(pageStart, pageEnd));
 </script>
 
 <DoubleSidePanel>

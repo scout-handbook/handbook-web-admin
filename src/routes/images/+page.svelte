@@ -1,4 +1,4 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import { pushState } from "$app/navigation";
   import { page as kitPage } from "$app/stores";
   import AddImagePanel from "$lib/components/action-modals/AddImagePanel.svelte";
@@ -16,27 +16,27 @@
 
   import type { PageStateFix } from "../../app";
 
-  $: state = $kitPage.state as PageStateFix;
+  let pageState = $derived($kitPage.state as PageStateFix);
 
-  let openImage: string | null = null;
-  let page = 1;
+  let openImage: string | null = $state(null);
+  let page = $state(1);
   const perPage = 15;
-  $: pageStart = perPage * (page - 1);
-  $: pageEnd = pageStart + perPage;
+  let pageStart = $derived(perPage * (page - 1));
+  let pageEnd = $derived(pageStart + perPage);
 
   const imageQuery = createQuery<Array<string>>({
     queryKey: ["v1.0", "image"],
   });
-  $: totalImageCount = $imageQuery.data?.length;
-  $: currentPageList = $imageQuery.data?.slice(pageStart, pageEnd);
+  let totalImageCount = $derived($imageQuery.data?.length);
+  let currentPageList = $derived($imageQuery.data?.slice(pageStart, pageEnd));
 </script>
 
 <TopBar />
 <MainPageContainer>
-  {#if state.action === "add-image"}
+  {#if pageState.action === "add-image"}
     <AddImagePanel />
-  {:else if state.action === "delete-image"}
-    <DeleteImageDialog payload={state.actionPayload} />
+  {:else if pageState.action === "delete-image"}
+    <DeleteImageDialog payload={pageState.actionPayload} />
   {/if}
 
   {#if openImage !== null}
@@ -46,10 +46,10 @@
       }}
     />
     <button
-      type="button"
-      on:click={() => {
+      onclick={() => {
         openImage = null;
       }}
+      type="button"
     >
       <img
         alt={`Image ${openImage}`}

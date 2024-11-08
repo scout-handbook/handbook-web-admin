@@ -1,4 +1,4 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import { page } from "$app/stores";
   import { Action } from "$lib/actions/Action";
   import { ActionCallback } from "$lib/actions/ActionCallback";
@@ -14,12 +14,12 @@
   import { defaultBody, defaultName } from "$lib/utils/defaultLessonContent";
   import { queryClient } from "$lib/utils/queryClient";
 
-  let donePromise: Promise<void> | null = null;
-  let name = defaultName;
-  let body = defaultBody;
-  let competences: Array<string> = [];
-  let field: string | null = $page.url.searchParams.get("field");
-  let groups: Array<string> = [];
+  let donePromise: Promise<void> | null = $state(null);
+  let name = $state(defaultName);
+  let body = $state(defaultBody);
+  let competences: Array<string> = $state([]);
+  let field: string | null = $state($page.url.searchParams.get("field"));
+  let groups: Array<string> = $state([]);
 
   function save(): void {
     const saveActionQueue = new ActionQueue([

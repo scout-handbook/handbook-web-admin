@@ -1,4 +1,4 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import { Action } from "$lib/actions/Action";
   import { ActionQueue } from "$lib/actions/ActionQueue";
   import Button from "$lib/components/Button.svelte";
@@ -8,8 +8,8 @@
   import { apiUri } from "$lib/stores";
   import { queryClient } from "$lib/utils/queryClient";
 
-  let name = "Nová skupina";
-  let donePromise: Promise<void> | null = null;
+  let name = $state("Nová skupina");
+  let donePromise: Promise<void> | null = $state(null);
 
   function saveCallback(): void {
     donePromise = new ActionQueue([

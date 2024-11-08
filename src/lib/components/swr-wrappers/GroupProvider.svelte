@@ -1,17 +1,19 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import type { Group } from "$lib/interfaces/Group";
+  import type { Snippet } from "svelte";
 
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import { processGroups } from "$lib/utils/resourceProcessing";
   import { createQuery } from "@tanstack/svelte-query";
   import { derived } from "svelte/store";
 
-  interface $$Slots {
-    default: { groups: Array<[string, Group]> };
+  interface Props {
+    children: Snippet<[Array<[string, Group]>]>;
+    inline?: boolean;
+    silent?: boolean;
   }
 
-  export let silent = false;
-  export let inline = false;
+  let { children, inline = false, silent = false }: Props = $props();
 
   const groups = derived(
     createQuery<Record<string, Group>>({
@@ -23,7 +25,7 @@
 </script>
 
 {#if $groups !== undefined}
-  <slot groups={$groups} />
+  {@render children($groups)}
 {:else if !silent}
   <LoadingIndicator {inline} />
 {/if}

@@ -1,4 +1,4 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import type { Loginstate } from "$lib/interfaces/Loginstate";
 
   import { adminUri, apiUri, frontendUri } from "$lib/stores";
@@ -7,10 +7,12 @@
   const accountQuery = createQuery<Loginstate>({
     queryKey: ["v1.0", "account"],
   });
-  $: avatar = $accountQuery.isSuccess
-    ? `data:image/png;base64,${$accountQuery.data.avatar}`
-    : `${$adminUri}/avatar.png`;
-  $: name = $accountQuery.data?.name;
+  let avatar = $derived(
+    $accountQuery.isSuccess
+      ? `data:image/png;base64,${$accountQuery.data.avatar}`
+      : `${$adminUri}/avatar.png`,
+  );
+  let name = $derived($accountQuery.data?.name);
 </script>
 
 <div class="container">

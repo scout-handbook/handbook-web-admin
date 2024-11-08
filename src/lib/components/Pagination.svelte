@@ -1,8 +1,12 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import PaginationButton from "$lib/components/PaginationButton.svelte";
 
-  export let current: number;
-  export let total: number;
+  interface Props {
+    current: number;
+    total: number;
+  }
+
+  let { current = $bindable(), total }: Props = $props();
 </script>
 
 {#if total > 1}
