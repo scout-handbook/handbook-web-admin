@@ -72,7 +72,7 @@
     <Button
       green
       icon="plus"
-      on:click={() => {
+      onclick={() => {
         pushState("", { action: "add-group" });
       }}
     >
@@ -93,7 +93,7 @@
           <Button
             cyan
             icon="pencil"
-            on:click={() => {
+            onclick={() => {
               pushState("", {
                 action: "change-group",
                 actionPayload: { groupId: id },
@@ -105,19 +105,19 @@
           {#if id !== "00000000-0000-0000-0000-000000000000"}
             <Button
               icon="trash-empty"
-              red
-              on:click={() => {
+              onclick={() => {
                 pushState("", {
                   action: "delete-group",
                   actionPayload: { groupId: id },
                 });
               }}
+              red
             >
               Smazat
             </Button>
             <Button
               icon="user-plus"
-              on:click={() => {
+              onclick={() => {
                 pushState("", {
                   action: "import-group-members",
                   actionPayload: { groupId: id },

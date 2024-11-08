@@ -28,12 +28,12 @@
 
 <div class="selector" class:selector-open={imageSelectorOpen}>
   <div class="button-wrapper">
-    <Button icon="up-open" yellow on:click={closeImageSelector}>Zavřít</Button>
+    <Button icon="up-open" onclick={closeImageSelector} yellow>Zavřít</Button>
     <!-- TODO: Re-enable uploads in editor without discarding its contents
     <Button
-      icon="plus"
       green
-      on:click={() => {
+      icon="plus"
+      onclick={() => {
         addImage(true); // Removed
       }}>
       Nahrát

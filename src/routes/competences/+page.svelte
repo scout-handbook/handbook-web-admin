@@ -62,7 +62,7 @@
     <Button
       green
       icon="plus"
-      on:click={() => {
+      onclick={() => {
         pushState("", { action: "add-competence" });
       }}
     >
@@ -81,7 +81,7 @@
             <Button
               cyan
               icon="pencil"
-              on:click={() => {
+              onclick={() => {
                 pushState("", {
                   action: "change-competence",
                   actionPayload: { competenceId: id },
@@ -92,13 +92,13 @@
             </Button>
             <Button
               icon="trash-empty"
-              red
-              on:click={() => {
+              onclick={() => {
                 pushState("", {
                   action: "delete-competence",
                   actionPayload: { competenceId: id },
                 });
               }}
+              red
             >
               Smazat
             </Button>

@@ -29,17 +29,17 @@
     {#if dismissButtonText !== ""}
       <Button
         icon="cancel"
-        yellow
-        on:click={() => {
+        onclick={() => {
           dispatch("dismiss");
         }}
+        yellow
       >
         {dismissButtonText}
       </Button>
     {/if}
     <Button
       icon="ok"
-      on:click={() => {
+      onclick={() => {
         dispatch("confirm");
       }}
     >

@@ -61,7 +61,7 @@
   <Button
     green
     icon="plus"
-    on:click={() => {
+    onclick={() => {
       pushState("", { action: "add-image" });
     }}
   >
@@ -82,13 +82,13 @@
         <div class="delete-image">
           <Button
             icon="trash-empty"
-            red
-            on:click={() => {
+            onclick={() => {
               pushState("", {
                 action: "delete-image",
                 actionPayload: { imageId: image },
               });
             }}
+            red
           >
             Smazat
           </Button>

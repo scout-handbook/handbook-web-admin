@@ -17,7 +17,7 @@
 </label>
 <img alt={name} src={`${$apiUri}/v1.0/image/${value}?quality=thumbnail`} />
 <br />
-<Button icon="pencil" on:click={onselect}>Změnit</Button>
+<Button icon="pencil" onclick={onselect}>Změnit</Button>
 
 <style>
   div {

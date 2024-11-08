@@ -13,7 +13,7 @@
 <label>
   <Button
     icon="upload"
-    on:click={() => {
+    onclick={() => {
       inputElement?.click();
     }}
   >

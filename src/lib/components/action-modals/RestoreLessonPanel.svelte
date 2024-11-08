@@ -96,15 +96,15 @@
   <SidePanel>
     <Button
       icon="cancel"
-      yellow
-      on:click={() => {
+      onclick={() => {
         history.back();
-      }}>Zrušit</Button
+      }}
+      yellow>Zrušit</Button
     >
     <Button
       green
       icon="fast-fw"
-      on:click={() => {
+      onclick={() => {
         if (step === "lesson-selection") {
           loadVersionList();
         }
@@ -131,15 +131,15 @@
     <div class="version-list">
       <Button
         icon="cancel"
-        yellow
-        on:click={() => {
+        onclick={() => {
           history.back();
         }}
+        yellow
       >
         Zrušit
       </Button>
       {#if selectedVersion !== null}
-        <Button green icon="history" on:click={selectVersionCallback}
+        <Button green icon="history" onclick={selectVersionCallback}
           >Obnovit</Button
         >
       {/if}

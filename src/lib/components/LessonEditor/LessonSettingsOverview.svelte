@@ -18,17 +18,17 @@
 
 <Button
   icon="right-open"
-  yellow
-  on:click={() => {
+  onclick={() => {
     history.back();
   }}
+  yellow
 >
   Zavřít
 </Button>
 {#if id !== null}
   <Button
     icon="history"
-    on:click={() => {
+    onclick={() => {
       pushState("", {
         action: "restore-version",
         view: "lesson-settings",
@@ -43,7 +43,7 @@
 <Button
   cyan
   icon="pencil"
-  on:click={() => {
+  onclick={() => {
     pushState("", {
       action: "change-lesson-field",
       view: "lesson-settings",
@@ -67,7 +67,7 @@
 <Button
   cyan
   icon="pencil"
-  on:click={() => {
+  onclick={() => {
     pushState("", {
       action: "change-lesson-competences",
       view: "lesson-settings",
@@ -90,7 +90,7 @@
 <Button
   cyan
   icon="pencil"
-  on:click={() => {
+  onclick={() => {
     pushState("", {
       action: "change-lesson-groups",
       view: "lesson-settings",

@@ -30,7 +30,7 @@
   {#if currentPageList === undefined || totalImageCount === undefined}
     <LoadingIndicator />
   {:else}
-    <Button icon="cancel" yellow on:click={oncancel}>Zrušit</Button>
+    <Button icon="cancel" onclick={oncancel} yellow>Zrušit</Button>
     <div class="container">
       {#each currentPageList as image (image)}
         <ImageGridCell>

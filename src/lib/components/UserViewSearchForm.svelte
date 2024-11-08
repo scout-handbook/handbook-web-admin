@@ -83,13 +83,13 @@
   {#if searchName || role !== "all" || group !== "00000000-0000-0000-0000-000000000000"}
     <Button
       icon="cancel"
-      yellow
-      on:click={() => {
+      onclick={() => {
         role = "all";
         searchName = "";
         group = "00000000-0000-0000-0000-000000000000";
         onchange();
       }}
+      yellow
     >
       Zrušit
     </Button>

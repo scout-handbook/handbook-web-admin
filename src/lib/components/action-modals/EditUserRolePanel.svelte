@@ -69,14 +69,14 @@
   <SidePanel>
     <Button
       icon="cancel"
-      yellow
-      on:click={() => {
+      onclick={() => {
         history.back();
       }}
+      yellow
     >
       Zrušit
     </Button>
-    <Button green icon="floppy" on:click={saveCallback}>Uložit</Button>
+    <Button green icon="floppy" onclick={saveCallback}>Uložit</Button>
     <h1>Změnit roli: {payload.user.name}</h1>
     <form>
       <RadioGroup options={roleList} bind:selected={selectedRole}>

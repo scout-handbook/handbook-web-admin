@@ -31,7 +31,7 @@
   <Button
     cyan
     icon="pencil"
-    on:click={() => {
+    onclick={() => {
       void goto(`${base}/lessons/${id}/edit`);
     }}
   >
@@ -40,20 +40,20 @@
   {#if adminOrSuperuser}
     <Button
       icon="trash-empty"
-      red
-      on:click={() => {
+      onclick={() => {
         pushState("", {
           action: "delete-lesson",
           actionPayload: { lessonId: id },
         });
       }}
+      red
     >
       Smazat
     </Button>
   {/if}
   <Button
     icon="file-pdf"
-    on:click={() => {
+    onclick={() => {
       window.open(`${$adminUri}/lesson/${id}`, "_blank", "noopener,noreferrer");
     }}
   >
