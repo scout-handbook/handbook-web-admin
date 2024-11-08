@@ -232,13 +232,13 @@
   {:then}
     <LessonEditor
       id={lessonID}
+      ondiscard={discard}
+      onsave={save}
       bind:body
       bind:name
       bind:competences
       bind:field
       bind:groups
-      on:discard={discard}
-      on:save={save}
     />
   {/await}
 {/if}

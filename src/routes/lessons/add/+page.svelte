@@ -52,14 +52,14 @@
 {:else}
   <LessonEditor
     id={null}
+    ondiscard={() => {
+      history.back();
+    }}
+    onsave={save}
     bind:body
     bind:name
     bind:competences
     bind:field
     bind:groups
-    on:discard={() => {
-      history.back();
-    }}
-    on:save={save}
   />
 {/if}

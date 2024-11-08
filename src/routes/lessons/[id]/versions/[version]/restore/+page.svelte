@@ -82,16 +82,16 @@
   {:then}
     <LessonEditor
       id={null}
+      ondiscard={() => {
+        history.back();
+        history.back();
+      }}
+      onsave={save}
       bind:body
       bind:name
       bind:competences
       bind:field
       bind:groups
-      on:discard={() => {
-        history.back();
-        history.back();
-      }}
-      on:save={save}
     />
   {/await}
 {/if}
