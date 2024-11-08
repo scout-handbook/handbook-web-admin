@@ -75,7 +75,7 @@
     <Button
       green
       icon="plus"
-      on:click={() => {
+      onclick={() => {
         pushState("", { action: "add-field" });
       }}
     >
@@ -85,7 +85,7 @@
   <Button
     green
     icon="plus"
-    on:click={() => {
+    onclick={() => {
       void goto(`${base}/lessons/add`);
     }}
   >
@@ -94,7 +94,7 @@
   {#if adminOrSuperuser}
     <Button
       icon="history"
-      on:click={() => {
+      onclick={() => {
         pushState("", { action: "restore-lesson" });
       }}
     >
@@ -113,7 +113,7 @@
             <Button
               cyan
               icon="pencil"
-              on:click={() => {
+              onclick={() => {
                 pushState("", {
                   action: "change-field",
                   actionPayload: { fieldId },
@@ -124,13 +124,13 @@
             </Button>
             <Button
               icon="trash-empty"
-              red
-              on:click={() => {
+              onclick={() => {
                 pushState("", {
                   action: "delete-field",
                   actionPayload: { fieldId },
                 });
               }}
+              red
             >
               Smazat
             </Button>
@@ -138,7 +138,7 @@
           <Button
             green
             icon="plus"
-            on:click={() => {
+            onclick={() => {
               // eslint-disable-next-line @typescript-eslint/restrict-template-expressions -- It's a string, but TS doesn't work in templates
               void goto(`${base}/lessons/add?field=${fieldId}`);
             }}

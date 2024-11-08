@@ -13,7 +13,7 @@
 
 <header>
   <div class="buttons-left">
-    <Button icon="cancel" yellow on:click={ondiscard}>Zrušit</Button>
+    <Button icon="cancel" onclick={ondiscard} yellow>Zrušit</Button>
     <form>
       <input autocomplete="off" type="text" bind:value={name} />
     </form>
@@ -21,7 +21,7 @@
   <div class="buttons-right">
     <Button
       icon="cog"
-      on:click={() => {
+      onclick={() => {
         pushState("", {
           view: "lesson-settings",
         });
@@ -29,7 +29,7 @@
     >
       Nastavení
     </Button>
-    <Button green icon="floppy" on:click={onsave}>Uložit</Button>
+    <Button green icon="floppy" onclick={onsave}>Uložit</Button>
   </div>
 </header>
 

@@ -1,11 +1,12 @@
 <script lang="ts">
-  import { createEventDispatcher, type Snippet } from "svelte";
+  import type { Snippet } from "svelte";
 
   interface Props {
     children: Snippet;
     cyan?: boolean;
     green?: boolean;
     icon?: string;
+    onclick(this: void): void;
     red?: boolean;
     yellow?: boolean;
   }
@@ -15,25 +16,13 @@
     cyan = false,
     green = false,
     icon = "",
+    onclick,
     red = false,
     yellow = false,
   }: Props = $props();
-
-  const dispatch = createEventDispatcher<{ click: null }>();
-
-  function callback(): void {
-    dispatch("click");
-  }
 </script>
 
-<button
-  class:cyan
-  class:green
-  class:red
-  class:yellow
-  onclick={callback}
-  type="button"
->
+<button class:cyan class:green class:red class:yellow {onclick} type="button">
   {#if icon !== ""}
     <i class={`icon-${icon}`}></i>
   {/if}

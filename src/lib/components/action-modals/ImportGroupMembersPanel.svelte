@@ -167,17 +167,17 @@
   <SidePanel>
     <Button
       icon="cancel"
-      yellow
-      on:click={() => {
+      onclick={() => {
         history.back();
       }}
+      yellow
     >
       Zrušit
     </Button>
     <Button
       green
       icon="fast-fw"
-      on:click={() => {
+      onclick={() => {
         if (step === "event-selection") {
           getParticipantList();
         } else if (step === "participant-selection") {

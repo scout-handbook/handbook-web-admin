@@ -15,18 +15,18 @@
 
 <Button
   icon="cancel"
-  yellow
-  on:click={() => {
+  onclick={() => {
     groups = initialGroups;
     history.back();
   }}
+  yellow
 >
   Zrušit
 </Button>
 <Button
   green
   icon="floppy"
-  on:click={() => {
+  onclick={() => {
     history.back();
   }}>Uložit</Button
 >

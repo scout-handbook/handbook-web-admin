@@ -9,10 +9,7 @@
   let { id, onclick }: Props = $props();
 </script>
 
-<button
-  {onclick}
-  type="button"
->
+<button {onclick} type="button">
   <img
     alt={`Image ${id}`}
     src={`${$apiUri}/v1.0/image/${id}?quality=thumbnail`}
