@@ -41,7 +41,7 @@
 
   {#if openImage !== null}
     <Overlay
-      on:click={() => {
+      onclick={() => {
         openImage = null;
       }}
     />

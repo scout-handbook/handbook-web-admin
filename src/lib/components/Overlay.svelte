@@ -1,16 +1,17 @@
 <script lang="ts">
   import { fade } from "$lib/utils/transition";
-  import { createEventDispatcher } from "svelte";
 
-  const dispatch = createEventDispatcher<{ click: null }>();
+  interface Props {
+    onclick?(this: void): void;
+  }
+
+  let { onclick }: Props = $props();
 </script>
 
 <!-- eslint-disable svelte/no-inline-styles -->
 <button
   aria-label="Body overlay"
-  onclick={() => {
-    dispatch("click");
-  }}
+  {onclick}
   type="button"
   transition:fade|global={{ duration: 100 }}
 ></button>
