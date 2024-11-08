@@ -39,9 +39,9 @@
   let editorPane: { insertAtCursor(content: string): void } | undefined =
     undefined;
 
-  function insertImage(event: CustomEvent<string>): void {
+  function insertImage(imageId: string): void {
     editorPane?.insertAtCursor(
-      `![Text po najetí kurzorem](${$apiUri}/v1.0/image/${event.detail})`,
+      `![Text po najetí kurzorem](${$apiUri}/v1.0/image/${imageId})`,
     );
   }
 
@@ -93,7 +93,7 @@
     imageSelectorOpen = false;
   }}
   {imageSelectorOpen}
-  on:insert={insertImage}
+  oninsert={insertImage}
 />
 <EditorPane
   bind:this={editorPane}
