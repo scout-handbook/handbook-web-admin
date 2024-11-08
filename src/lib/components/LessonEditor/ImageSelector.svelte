@@ -5,16 +5,14 @@
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import Pagination from "$lib/components/Pagination.svelte";
   import { createQuery } from "@tanstack/svelte-query";
-  import { createEventDispatcher } from "svelte";
 
   interface Props {
     closeImageSelector(this: void): void;
     imageSelectorOpen: boolean;
+    oninsert(this: void, id: string): void;
   }
 
-  let { closeImageSelector, imageSelectorOpen }: Props = $props();
-
-  const dispatch = createEventDispatcher<{ insert: string }>();
+  let { closeImageSelector, imageSelectorOpen, oninsert }: Props = $props();
 
   let page = $state(1);
   const perPage = 15;
@@ -52,7 +50,7 @@
             <ImageThumbnail
               id={image}
               on:click={() => {
-                dispatch("insert", image);
+                oninsert(image);
                 closeImageSelector();
               }}
             />
