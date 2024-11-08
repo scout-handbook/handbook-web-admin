@@ -75,7 +75,7 @@
       <ImageGridCell>
         <ImageThumbnail
           id={image}
-          on:click={() => {
+          onclick={() => {
             openImage = image;
           }}
         />

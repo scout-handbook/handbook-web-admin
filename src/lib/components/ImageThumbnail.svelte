@@ -1,20 +1,16 @@
 <script lang="ts">
   import { apiUri } from "$lib/stores";
-  import { createEventDispatcher } from "svelte";
 
   interface Props {
     id: string;
+    onclick(this: void): void;
   }
 
-  let { id }: Props = $props();
-
-  const dispatch = createEventDispatcher<{ click: null }>();
+  let { id, onclick }: Props = $props();
 </script>
 
 <button
-  onclick={() => {
-    dispatch("click");
-  }}
+  {onclick}
   type="button"
 >
   <img
