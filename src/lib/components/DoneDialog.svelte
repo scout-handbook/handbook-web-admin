@@ -1,17 +1,17 @@
 <script lang="ts">
+  import type { Snippet } from "svelte";
+
   import Dialog from "$lib/components/Dialog.svelte";
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import Overlay from "$lib/components/Overlay.svelte";
-  import { createEventDispatcher, type Snippet } from "svelte";
 
   interface Props {
     children: Snippet;
     donePromise: Promise<void>;
+    onconfirm?(this: void): void;
   }
 
-  let { children, donePromise }: Props = $props();
-
-  const dispatch = createEventDispatcher<{ confirm: null; dismiss: null }>();
+  let { children, donePromise, onconfirm }: Props = $props();
 </script>
 
 {#await donePromise}
@@ -22,7 +22,7 @@
     confirmButtonText="OK"
     on:confirm={() => {
       history.back();
-      dispatch("confirm");
+      onconfirm?.();
     }}
   >
     {@render children()}
