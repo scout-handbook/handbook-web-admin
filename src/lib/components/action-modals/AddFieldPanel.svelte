@@ -1,4 +1,4 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import { Action } from "$lib/actions/Action";
   import { ActionQueue } from "$lib/actions/ActionQueue";
   import Button from "$lib/components/Button.svelte";
@@ -11,14 +11,23 @@
   import { apiUri } from "$lib/stores";
   import { queryClient } from "$lib/utils/queryClient";
 
-  export let name = "Nová oblast";
-  export let description = "Popis nové oblasti";
-  export let image = "00000000-0000-0000-0000-000000000000";
-  export let icon = "00000000-0000-0000-0000-000000000000";
+  interface Props {
+    description?: string;
+    icon?: string;
+    image?: string;
+    name?: string;
+  }
 
-  let imageSelectorOpen = false;
-  let iconSelectorOpen = false;
-  let donePromise: Promise<void> | null = null;
+  let {
+    description = $bindable("Popis nové oblasti"),
+    icon = $bindable("00000000-0000-0000-0000-000000000000"),
+    image = $bindable("00000000-0000-0000-0000-000000000000"),
+    name = $bindable("Nová oblast"),
+  }: Props = $props();
+
+  let imageSelectorOpen = $state(false);
+  let iconSelectorOpen = $state(false);
+  let donePromise: Promise<void> | null = $state(null);
 
   function saveCallback(): void {
     donePromise = new ActionQueue([

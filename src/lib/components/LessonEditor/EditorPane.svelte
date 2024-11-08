@@ -1,25 +1,36 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import { default as EasyMDE } from "easymde";
   import { onMount } from "svelte";
   import "easymde/dist/easymde.min.css";
 
-  let editor: EasyMDE | undefined;
-  let editorArea: HTMLElement;
+  let editor: EasyMDE | undefined = $state();
+  let editorArea: HTMLElement | undefined = $state();
 
-  export let imageSelectorOpen: boolean;
-  export let value: string;
-  export const insertAtCursor = (content: string): void => {
+  interface Props {
+    openImageSelector(this: void): void;
+    value: string;
+  }
+
+  let { openImageSelector, value = $bindable() }: Props = $props();
+
+  export function insertAtCursor(content: string): void {
     if (editor === undefined) {
       return;
     }
     const doc = editor.codemirror.getDoc();
     doc.replaceRange(content, doc.getCursor());
-  };
+  }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-expressions -- Incorrect with svelte reactive statements
-  $: editor !== undefined && value !== editor.value() && editor.value(value);
+  $effect(() => {
+    if (editor !== undefined && value !== editor.value()) {
+      editor.value(value);
+    }
+  });
 
   onMount(() => {
+    if (editorArea === undefined) {
+      return;
+    }
     editor = new EasyMDE({
       autoDownloadFontAwesome: false,
       autofocus: true,
@@ -72,9 +83,7 @@
           title: "Vložit odkaz",
         },
         {
-          action: (): void => {
-            imageSelectorOpen = true;
-          },
+          action: openImageSelector,
           className: "icon-picture",
           name: "image",
           title: "Vložit obrázek",
@@ -97,7 +106,7 @@
 </script>
 
 <div>
-  <textarea bind:this={editorArea} />
+  <textarea bind:this={editorArea}></textarea>
 </div>
 
 <style>

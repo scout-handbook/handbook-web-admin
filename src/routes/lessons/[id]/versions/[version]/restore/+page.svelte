@@ -1,4 +1,4 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import { goto } from "$app/navigation";
   import { base } from "$app/paths";
   import { page } from "$app/stores";
@@ -19,14 +19,18 @@
 
   import type { PageData } from "./$types";
 
-  export let data: PageData;
+  interface Props {
+    data: PageData;
+  }
 
-  let donePromise: Promise<void> | null = null;
-  let name = $page.url.searchParams.get("name") ?? "Obnovená lekce";
-  let body = "";
-  let competences: Array<string> = [];
-  let field: string | null = null;
-  let groups: Array<string> = [];
+  let { data }: Props = $props();
+
+  let donePromise: Promise<void> | null = $state(null);
+  let name = $state($page.url.searchParams.get("name") ?? "Obnovená lekce");
+  let body = $state("");
+  let competences: Array<string> = $state([]);
+  let field: string | null = $state(null);
+  let groups: Array<string> = $state([]);
 
   let bodyPromise = request<string>(
     `${$apiUri}/v1.0/deleted-lesson/${data.id}/history/${data.version}`,

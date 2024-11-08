@@ -1,9 +1,13 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import { pushState } from "$app/navigation";
   import Button from "$lib/components/Button.svelte";
   import { createEventDispatcher } from "svelte";
 
-  export let name: string;
+  interface Props {
+    name: string;
+  }
+
+  let { name = $bindable() }: Props = $props();
 
   const dispatch = createEventDispatcher<{ discard: null; save: null }>();
 </script>

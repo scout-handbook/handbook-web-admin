@@ -1,4 +1,4 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import type { Lesson } from "$lib/interfaces/Lesson";
   import type { Loginstate } from "$lib/interfaces/Loginstate";
 
@@ -9,16 +9,21 @@
   import { adminUri } from "$lib/stores";
   import { createQuery } from "@tanstack/svelte-query";
 
-  export let id: string;
-  export let lesson: Lesson;
-  export let secondLevel = false;
+  interface Props {
+    id: string;
+    lesson: Lesson;
+    secondLevel?: boolean;
+  }
+
+  let { id, lesson, secondLevel = false }: Props = $props();
 
   const accountQuery = createQuery<Loginstate>({
     queryKey: ["v1.0", "account"],
   });
-  $: adminOrSuperuser =
+  let adminOrSuperuser = $derived(
     $accountQuery.data?.role === "administrator" ||
-    $accountQuery.data?.role === "superuser";
+      $accountQuery.data?.role === "superuser",
+  );
 </script>
 
 <div class:second-level={secondLevel}>
@@ -56,11 +61,15 @@
   </Button>
   <br />
   Body:
-  <CompetenceProvider silent let:competences>
-    {competences
-      .filter(([competenceId, _]) => lesson.competences.includes(competenceId))
-      .map(([_, competence]) => competence.number)
-      .join(", ")}
+  <CompetenceProvider silent>
+    {#snippet children(competences)}
+      {competences
+        .filter(([competenceId, _]) =>
+          lesson.competences.includes(competenceId),
+        )
+        .map(([_, competence]) => competence.number)
+        .join(", ")}
+    {/snippet}
   </CompetenceProvider>
 </div>
 

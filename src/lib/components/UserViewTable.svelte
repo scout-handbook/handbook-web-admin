@@ -1,4 +1,4 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import type { Loginstate } from "$lib/interfaces/Loginstate";
   import type { User } from "$lib/interfaces/User";
 
@@ -7,14 +7,19 @@
   import GroupProvider from "$lib/components/swr-wrappers/GroupProvider.svelte";
   import { createQuery } from "@tanstack/svelte-query";
 
-  export let users: Array<User>;
+  interface Props {
+    users: Array<User>;
+  }
+
+  let { users }: Props = $props();
 
   const accountQuery = createQuery<Loginstate>({
     queryKey: ["v1.0", "account"],
   });
-  $: adminOrSuperuser =
+  let adminOrSuperuser = $derived(
     $accountQuery.data?.role === "administrator" ||
-    $accountQuery.data?.role === "superuser";
+      $accountQuery.data?.role === "superuser",
+  );
 </script>
 
 <table>
@@ -57,11 +62,13 @@
           {/if}
         </td>
         <td>
-          <GroupProvider silent let:groups>
-            {groups
-              .filter(([id, _]) => user.groups.includes(id))
-              .map(([_, group]) => group.name)
-              .join(", ")}
+          <GroupProvider silent>
+            {#snippet children(groups)}
+              {groups
+                .filter(([id, _]) => user.groups.includes(id))
+                .map(([_, group]) => group.name)
+                .join(", ")}
+            {/snippet}
           </GroupProvider>
           {#if user.groups.length > 0}
             <br />

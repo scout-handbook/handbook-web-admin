@@ -1,4 +1,4 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import type { Competence } from "$lib/interfaces/Competence";
   import type { Lesson } from "$lib/interfaces/Lesson";
 
@@ -10,10 +10,14 @@
   import { queryClient } from "$lib/utils/queryClient";
   import { createMutation } from "@tanstack/svelte-query";
 
-  export let competenceId: string;
-  export let competence: Competence;
+  interface Props {
+    competence: Competence;
+    competenceId: string;
+  }
 
-  let donePromise: Promise<void> | null = null;
+  let { competence, competenceId }: Props = $props();
+
+  let donePromise: Promise<void> | null = $state(null);
 
   const mutation = createMutation({
     onMutate: async () => {

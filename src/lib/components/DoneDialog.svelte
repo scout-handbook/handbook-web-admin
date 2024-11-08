@@ -1,14 +1,15 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import Dialog from "$lib/components/Dialog.svelte";
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import Overlay from "$lib/components/Overlay.svelte";
-  import { createEventDispatcher } from "svelte";
+  import { createEventDispatcher, type Snippet } from "svelte";
 
-  interface $$Slots {
-    default: Record<string, never>;
+  interface Props {
+    children: Snippet;
+    donePromise: Promise<void>;
   }
 
-  export let donePromise: Promise<void>;
+  let { children, donePromise }: Props = $props();
 
   const dispatch = createEventDispatcher<{ confirm: null; dismiss: null }>();
 </script>
@@ -24,6 +25,6 @@
       dispatch("confirm");
     }}
   >
-    <slot />
+    {@render children()}
   </Dialog>
 {/await}

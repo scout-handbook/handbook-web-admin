@@ -1,4 +1,4 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import { Action } from "$lib/actions/Action";
   import { ActionQueue } from "$lib/actions/ActionQueue";
   import Dialog from "$lib/components/Dialog.svelte";
@@ -7,9 +7,13 @@
   import { queryClient } from "$lib/utils/queryClient";
   import { createMutation } from "@tanstack/svelte-query";
 
-  export let payload: { imageId: string };
+  interface Props {
+    payload: { imageId: string };
+  }
 
-  let donePromise: Promise<void> | null = null;
+  let { payload }: Props = $props();
+
+  let donePromise: Promise<void> | null = $state(null);
 
   const mutation = createMutation({
     onMutate: async () => {

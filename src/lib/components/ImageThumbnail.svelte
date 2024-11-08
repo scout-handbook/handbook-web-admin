@@ -1,17 +1,21 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import { apiUri } from "$lib/stores";
   import { createEventDispatcher } from "svelte";
 
-  export let id: string;
+  interface Props {
+    id: string;
+  }
+
+  let { id }: Props = $props();
 
   const dispatch = createEventDispatcher<{ click: null }>();
 </script>
 
 <button
-  type="button"
-  on:click={() => {
+  onclick={() => {
     dispatch("click");
   }}
+  type="button"
 >
   <img
     alt={`Image ${id}`}

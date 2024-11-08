@@ -1,10 +1,14 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import Button from "$lib/components/Button.svelte";
   import { apiUri } from "$lib/stores";
   import { createEventDispatcher } from "svelte";
 
-  export let name: string;
-  export let value: string;
+  interface Props {
+    name: string;
+    value: string;
+  }
+
+  let { name, value }: Props = $props();
 
   const dispatch = createEventDispatcher<{ select: null }>();
 </script>

@@ -1,14 +1,15 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import Button from "$lib/components/Button.svelte";
   import Overlay from "$lib/components/Overlay.svelte";
-  import { createEventDispatcher } from "svelte";
+  import { createEventDispatcher, type Snippet } from "svelte";
 
-  interface $$Slots {
-    default: Record<string, never>;
+  interface Props {
+    children: Snippet;
+    confirmButtonText: string;
+    dismissButtonText?: string;
   }
 
-  export let dismissButtonText = "";
-  export let confirmButtonText: string;
+  let { children, confirmButtonText, dismissButtonText = "" }: Props = $props();
 
   const dispatch = createEventDispatcher<{ confirm: null; dismiss: null }>();
 
@@ -19,11 +20,11 @@
   }
 </script>
 
-<svelte:window on:keypress={keypressHandler} />
+<svelte:window onkeypress={keypressHandler} />
 
 <Overlay />
 <div class="dialog">
-  <slot />
+  {@render children()}
   <div class="buttons">
     {#if dismissButtonText !== ""}
       <Button

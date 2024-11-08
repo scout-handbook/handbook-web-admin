@@ -1,4 +1,4 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import type { Loginstate } from "$lib/interfaces/Loginstate";
   import type { Role } from "$lib/interfaces/Role";
 
@@ -9,31 +9,42 @@
   import { createQuery } from "@tanstack/svelte-query";
   import { createEventDispatcher } from "svelte";
 
-  export let group: string;
-  export let role: "all" | Role;
-  export let searchName: string;
+  interface Props {
+    group: string;
+    role: "all" | Role;
+    searchName: string;
+  }
+
+  let {
+    group = $bindable(),
+    role = $bindable(),
+    searchName = $bindable(),
+  }: Props = $props();
 
   const dispatch = createEventDispatcher<{ change: null }>();
 
   const accountQuery = createQuery<Loginstate>({
     queryKey: ["v1.0", "account"],
   });
-  $: isSuperuser = $accountQuery.data?.role === "superuser";
-  $: adminOrSuperuser =
+  let isSuperuser = $derived($accountQuery.data?.role === "superuser");
+  let adminOrSuperuser = $derived(
     $accountQuery.data?.role === "administrator" ||
-    $accountQuery.data?.role === "superuser";
-  $: roleList = ([] as Array<[string, string]>).concat(
-    [
-      ["all", "Všechny role"],
-      ["user", "Uživatel"],
-      ["editor", "Editor"],
-    ],
-    isSuperuser
-      ? [
-          ["administrator", "Administrátor"],
-          ["superuser", "Superuser"],
-        ]
-      : [],
+      $accountQuery.data?.role === "superuser",
+  );
+  let roleList = $derived(
+    ([] as Array<[string, string]>).concat(
+      [
+        ["all", "Všechny role"],
+        ["user", "Uživatel"],
+        ["editor", "Editor"],
+      ],
+      isSuperuser
+        ? [
+            ["administrator", "Administrátor"],
+            ["superuser", "Superuser"],
+          ]
+        : [],
+    ),
   );
 
   const groupList = [
@@ -43,18 +54,18 @@
 
 <form
   class="search-form"
-  on:submit={() => {
+  onsubmit={() => {
     dispatch("change");
   }}
 >
   <input
     class="search-box"
+    oninput={() => {
+      dispatch("change");
+    }}
     placeholder="Jméno uživatele"
     type="text"
     bind:value={searchName}
-    on:input={() => {
-      dispatch("change");
-    }}
   />
   {#if adminOrSuperuser}
     <Select
@@ -65,21 +76,25 @@
       }}
     />
   {/if}
-  <GroupProvider silent let:groups>
-    <Select
-      options={groupList.concat(
-        map(
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument -- Eslint cannot handle slot props
-          filter(groups, (id) => id !== "00000000-0000-0000-0000-000000000000"),
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-return -- Eslint cannot handle slot props
-          (item) => item.name,
-        ),
-      )}
-      bind:selected={group}
-      on:change={() => {
-        dispatch("change");
-      }}
-    />
+  <GroupProvider silent>
+    {#snippet children(groups)}
+      <Select
+        options={groupList.concat(
+          map(
+            filter(
+              groups,
+              (id) => id !== "00000000-0000-0000-0000-000000000000",
+            ),
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-return -- Eslint cannot handle slot props
+            (item) => item.name,
+          ),
+        )}
+        bind:selected={group}
+        on:change={() => {
+          dispatch("change");
+        }}
+      />
+    {/snippet}
   </GroupProvider>
   {#if searchName || role !== "all" || group !== "00000000-0000-0000-0000-000000000000"}
     <Button

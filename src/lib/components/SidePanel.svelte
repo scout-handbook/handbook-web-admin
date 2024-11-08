@@ -1,16 +1,20 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
+  import type { Snippet } from "svelte";
+
   import Overlay from "$lib/components/Overlay.svelte";
   import { fly } from "$lib/utils/transition";
 
-  interface $$Slots {
-    default: Record<string, never>;
+  interface Props {
+    children: Snippet;
   }
+
+  let { children }: Props = $props();
 </script>
 
 <Overlay />
 <!-- eslint-disable-next-line svelte/no-inline-styles -->
 <div transition:fly|global={{ duration: 300, from: "right" }}>
-  <slot />
+  {@render children()}
 </div>
 
 <style>

@@ -1,4 +1,4 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import { page } from "$app/stores";
   import EditLessonCompetences from "$lib/components/LessonEditor/EditLessonCompetences.svelte";
   import EditLessonField from "$lib/components/LessonEditor/EditLessonField.svelte";
@@ -9,14 +9,25 @@
 
   import type { PageStateFix } from "../../../app";
 
-  $: state = $page.state as PageStateFix;
+  let state = $derived($page.state as PageStateFix);
 
-  export let id: string | null;
-  export let name: string | null;
-  export let competences: Array<string>;
-  export let field: string | null;
-  export let groups: Array<string>;
-  export let body: string;
+  interface Props {
+    body: string;
+    competences: Array<string>;
+    field: string | null;
+    groups: Array<string>;
+    id: string | null;
+    name: string | null;
+  }
+
+  let {
+    body = $bindable(),
+    competences = $bindable(),
+    field = $bindable(),
+    groups = $bindable(),
+    id,
+    name = $bindable(),
+  }: Props = $props();
 </script>
 
 {#if state.action === "restore-version" && id !== null && name !== null}

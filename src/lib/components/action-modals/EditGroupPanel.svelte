@@ -1,4 +1,4 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import type { Group } from "$lib/interfaces/Group";
 
   import { Action } from "$lib/actions/Action";
@@ -11,11 +11,15 @@
   import { queryClient } from "$lib/utils/queryClient";
   import { createMutation } from "@tanstack/svelte-query";
 
-  export let group: Group;
-  export let groupId: string;
+  interface Props {
+    group: Group;
+    groupId: string;
+  }
 
-  let { name } = group;
-  let donePromise: Promise<void> | null = null;
+  let { group, groupId }: Props = $props();
+
+  let { name } = $state(group);
+  let donePromise: Promise<void> | null = $state(null);
 
   const mutation = createMutation({
     onMutate: async () => {

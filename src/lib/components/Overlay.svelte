@@ -1,4 +1,4 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import { fade } from "$lib/utils/transition";
   import { createEventDispatcher } from "svelte";
 
@@ -7,12 +7,13 @@
 
 <!-- eslint-disable svelte/no-inline-styles -->
 <button
-  type="button"
-  on:click={() => {
+  aria-label="Body overlay"
+  onclick={() => {
     dispatch("click");
   }}
+  type="button"
   transition:fade|global={{ duration: 100 }}
-/>
+></button>
 
 <!-- eslint-enable -->
 
