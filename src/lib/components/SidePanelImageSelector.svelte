@@ -6,9 +6,13 @@
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import Pagination from "$lib/components/Pagination.svelte";
   import { createQuery } from "@tanstack/svelte-query";
-  import { createEventDispatcher } from "svelte";
 
-  const dispatch = createEventDispatcher<{ cancel: null; select: string }>();
+  interface Props {
+    oncancel(this: void): void;
+    onselect(this: void, id: string): void;
+  }
+
+  let { oncancel, onselect }: Props = $props();
 
   let page = $state(1);
   const perPage = 15;
@@ -26,20 +30,14 @@
   {#if currentPageList === undefined || totalImageCount === undefined}
     <LoadingIndicator />
   {:else}
-    <Button
-      icon="cancel"
-      yellow
-      on:click={() => {
-        dispatch("cancel");
-      }}>Zrušit</Button
-    >
+    <Button icon="cancel" yellow on:click={oncancel}>Zrušit</Button>
     <div class="container">
       {#each currentPageList as image (image)}
         <ImageGridCell>
           <ImageThumbnail
             id={image}
             on:click={() => {
-              dispatch("select", image);
+              onselect(image);
             }}
           />
         </ImageGridCell>

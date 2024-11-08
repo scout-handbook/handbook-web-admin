@@ -76,22 +76,22 @@
 
 {#if imageSelectorOpen}
   <SidePanelImageSelector
-    on:cancel={() => {
+    oncancel={() => {
       imageSelectorOpen = false;
     }}
-    on:select={(event) => {
-      image = event.detail;
+    onselect={(id) => {
+      image = id;
       imageSelectorOpen = false;
     }}
   />
 {/if}
 {#if iconSelectorOpen}
   <SidePanelImageSelector
-    on:cancel={() => {
+    oncancel={() => {
       iconSelectorOpen = false;
     }}
-    on:select={(event) => {
-      icon = event.detail;
+    onselect={(id) => {
+      icon = id;
       iconSelectorOpen = false;
     }}
   />
