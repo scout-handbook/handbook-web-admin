@@ -1,16 +1,14 @@
 <script lang="ts">
   import Button from "$lib/components/Button.svelte";
   import { apiUri } from "$lib/stores";
-  import { createEventDispatcher } from "svelte";
 
   interface Props {
     name: string;
+    onselect(this: void): void;
     value: string;
   }
 
-  let { name, value }: Props = $props();
-
-  const dispatch = createEventDispatcher<{ select: null }>();
+  let { name, onselect, value }: Props = $props();
 </script>
 
 <label>
@@ -19,12 +17,7 @@
 </label>
 <img alt={name} src={`${$apiUri}/v1.0/image/${value}?quality=thumbnail`} />
 <br />
-<Button
-  icon="pencil"
-  on:click={() => {
-    dispatch("select");
-  }}>Změnit</Button
->
+<Button icon="pencil" on:click={onselect}>Změnit</Button>
 
 <style>
   div {

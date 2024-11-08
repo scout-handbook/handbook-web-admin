@@ -87,17 +87,17 @@
       <DescriptionInput bind:value={description} />
       <ImageInput
         name="Náhledový obrázek"
-        value={image}
-        on:select={() => {
+        onselect={() => {
           imageSelectorOpen = true;
         }}
+        value={image}
       />
       <ImageInput
         name="Ikona"
-        value={icon}
-        on:select={() => {
+        onselect={() => {
           iconSelectorOpen = true;
         }}
+        value={icon}
       />
     </form>
   </SidePanel>
