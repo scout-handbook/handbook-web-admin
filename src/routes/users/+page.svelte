@@ -57,12 +57,12 @@
 
   <h1>{`${$siteName} - Uživatelé`}</h1>
   <UserViewSearchForm
+    onchange={() => {
+      page = 1;
+    }}
     bind:searchName
     bind:role
     bind:group
-    on:change={() => {
-      page = 1;
-    }}
   />
   {#if users === undefined || userListCount === undefined}
     <LoadingIndicator />
