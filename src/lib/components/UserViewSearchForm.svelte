@@ -7,21 +7,20 @@
   import GroupProvider from "$lib/components/swr-wrappers/GroupProvider.svelte";
   import { filter, map } from "$lib/utils/arrayUtils";
   import { createQuery } from "@tanstack/svelte-query";
-  import { createEventDispatcher } from "svelte";
 
   interface Props {
     group: string;
+    onchange(this: void): void;
     role: "all" | Role;
     searchName: string;
   }
 
   let {
     group = $bindable(),
+    onchange,
     role = $bindable(),
     searchName = $bindable(),
   }: Props = $props();
-
-  const dispatch = createEventDispatcher<{ change: null }>();
 
   const accountQuery = createQuery<Loginstate>({
     queryKey: ["v1.0", "account"],
@@ -52,36 +51,21 @@
   ] as Array<[string, string]>;
 </script>
 
-<form
-  class="search-form"
-  onsubmit={() => {
-    dispatch("change");
-  }}
->
+<form class="search-form" onsubmit={onchange}>
   <input
     class="search-box"
-    oninput={() => {
-      dispatch("change");
-    }}
+    oninput={onchange}
     placeholder="Jméno uživatele"
     type="text"
     bind:value={searchName}
   />
   {#if adminOrSuperuser}
-    <Select
-      onchange={() => {
-        dispatch("change");
-      }}
-      options={roleList}
-      bind:selected={role}
-    />
+    <Select {onchange} options={roleList} bind:selected={role} />
   {/if}
   <GroupProvider silent>
     {#snippet children(groups)}
       <Select
-        onchange={() => {
-          dispatch("change");
-        }}
+        {onchange}
         options={groupList.concat(
           map(
             filter(
@@ -104,7 +88,7 @@
         role = "all";
         searchName = "";
         group = "00000000-0000-0000-0000-000000000000";
-        dispatch("change");
+        onchange();
       }}
     >
       Zrušit
