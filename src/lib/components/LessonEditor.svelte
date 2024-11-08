@@ -80,13 +80,13 @@
 {/if}
 
 <EditorHeader
-  bind:name
-  on:discard={() => {
+  ondiscard={() => {
     discardConfirmation = true;
   }}
-  on:save={() => {
+  onsave={() => {
     dispatch("save");
   }}
+  bind:name
 />
 <ImageSelector
   closeImageSelector={() => {
