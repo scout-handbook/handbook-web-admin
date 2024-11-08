@@ -1,26 +1,19 @@
 <script lang="ts">
   import { pushState } from "$app/navigation";
   import Button from "$lib/components/Button.svelte";
-  import { createEventDispatcher } from "svelte";
 
   interface Props {
     name: string;
+    ondiscard(this: void): void;
+    onsave(this: void): void;
   }
 
-  let { name = $bindable() }: Props = $props();
-
-  const dispatch = createEventDispatcher<{ discard: null; save: null }>();
+  let { name = $bindable(), ondiscard, onsave }: Props = $props();
 </script>
 
 <header>
   <div class="buttons-left">
-    <Button
-      icon="cancel"
-      yellow
-      on:click={() => {
-        dispatch("discard");
-      }}>Zrušit</Button
-    >
+    <Button icon="cancel" yellow on:click={ondiscard}>Zrušit</Button>
     <form>
       <input autocomplete="off" type="text" bind:value={name} />
     </form>
@@ -36,13 +29,7 @@
     >
       Nastavení
     </Button>
-    <Button
-      green
-      icon="floppy"
-      on:click={() => {
-        dispatch("save");
-      }}>Uložit</Button
-    >
+    <Button green icon="floppy" on:click={onsave}>Uložit</Button>
   </div>
 </header>
 
