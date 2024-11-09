@@ -7,14 +7,9 @@ import {
   deserializeAction,
   serializeAction,
 } from "$lib/actions/Action";
-import {
-  adminUri,
-  globalDialogMessage,
-  globalLoadingIndicator,
-} from "$lib/stores";
+import { globalDialogMessage, globalLoadingIndicator } from "$lib/stores";
 import { queryClient } from "$lib/utils/queryClient";
 import { request } from "$lib/utils/request";
-import { get } from "svelte/store";
 
 export class ActionQueue {
   private readonly isRetryAfterLogin: boolean;
@@ -90,7 +85,7 @@ export function setupActionQueue(): void {
   globalLoadingIndicator.set(true);
   void aq.dispatch().then(() => {
     void queryClient.invalidateQueries();
-    void goto(`${base}/${get(adminUri).split("/").slice(3).join("/")}`);
+    void goto(`${base}/${CONFIG["admin-uri"].split("/").slice(3).join("/")}`);
     globalLoadingIndicator.set(false);
     globalDialogMessage.set("Akce byla úspěšná");
   });

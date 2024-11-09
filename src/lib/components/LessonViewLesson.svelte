@@ -6,7 +6,6 @@
   import { base } from "$app/paths";
   import Button from "$lib/components/Button.svelte";
   import CompetenceProvider from "$lib/components/swr-wrappers/CompetenceProvider.svelte";
-  import { adminUri } from "$lib/stores";
   import { createQuery } from "@tanstack/svelte-query";
 
   interface Props {
@@ -54,7 +53,11 @@
   <Button
     icon="file-pdf"
     onclick={() => {
-      window.open(`${$adminUri}/lesson/${id}`, "_blank", "noopener,noreferrer");
+      window.open(
+        `${CONFIG["admin-uri"]}/lesson/${id}`,
+        "_blank",
+        "noopener,noreferrer",
+      );
     }}
   >
     PDF
