@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Loginstate } from "$lib/interfaces/Loginstate";
 
-  import { adminUri, apiUri, frontendUri } from "$lib/stores";
+  import { apiUri, frontendUri } from "$lib/stores";
   import { createQuery } from "@tanstack/svelte-query";
 
   const accountQuery = createQuery<Loginstate>({
@@ -10,7 +10,7 @@
   let avatar = $derived(
     $accountQuery.isSuccess
       ? `data:image/png;base64,${$accountQuery.data.avatar}`
-      : `${$adminUri}/avatar.png`,
+      : `${CONFIG["admin-uri"]}/avatar.png`,
   );
   let name = $derived($accountQuery.data?.name);
 </script>
