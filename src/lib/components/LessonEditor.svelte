@@ -6,7 +6,7 @@
   import ImageSelector from "$lib/components/LessonEditor/ImageSelector.svelte";
   import LessonSettingsPanel from "$lib/components/LessonEditor/LessonSettingsPanel.svelte";
   import PreviewPane from "$lib/components/LessonEditor/PreviewPane.svelte";
-  import { suspendReAuth } from "$lib/stores";
+  import { reAuthSuspended } from "$lib/reAuthSuspension.svelte";
   import { onDestroy, onMount } from "svelte";
 
   import type { PageStateFix } from "../../app";
@@ -48,10 +48,10 @@
   }
 
   onDestroy(() => {
-    suspendReAuth.set(false);
+    reAuthSuspended.value = false;
   });
   onMount(() => {
-    suspendReAuth.set(true);
+    reAuthSuspended.value = true;
   });
 </script>
 
