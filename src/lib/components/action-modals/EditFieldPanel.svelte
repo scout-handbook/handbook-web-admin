@@ -10,7 +10,6 @@
   import NameInput from "$lib/components/forms/NameInput.svelte";
   import SidePanel from "$lib/components/SidePanel.svelte";
   import SidePanelImageSelector from "$lib/components/SidePanelImageSelector.svelte";
-  import { apiUri } from "$lib/stores";
   import { queryClient } from "$lib/utils/queryClient";
   import { createMutation } from "@tanstack/svelte-query";
 
@@ -61,7 +60,7 @@
     } else {
       donePromise = new ActionQueue([
         new Action(
-          `${$apiUri}/v1.0/field/${encodeURIComponent(fieldId)}`,
+          `${CONFIG["api-uri"]}/v1.0/field/${encodeURIComponent(fieldId)}`,
           "PUT",
           { description, icon, image, name },
         ),

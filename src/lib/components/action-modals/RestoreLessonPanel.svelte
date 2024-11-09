@@ -11,7 +11,6 @@
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import Overlay from "$lib/components/Overlay.svelte";
   import SidePanel from "$lib/components/SidePanel.svelte";
-  import { apiUri } from "$lib/stores";
   import { compileMarkdown } from "$lib/utils/compileMarkdown";
   import { parseVersion } from "$lib/utils/parseVersion";
   import { authFailHandler, reAuth, request } from "$lib/utils/request";
@@ -34,7 +33,7 @@
           resolve("");
         })
       : request<string>(
-          `${$apiUri}/v1.0/deleted-lesson/${selectedLesson}/history/${selectedVersion.toString()}`,
+          `${CONFIG["api-uri"]}/v1.0/deleted-lesson/${selectedLesson}/history/${selectedVersion.toString()}`,
           "GET",
           {},
           authFailHandler,
@@ -42,7 +41,7 @@
   );
 
   void request<Record<string, DeletedLesson>>(
-    `${$apiUri}/v1.0/deleted-lesson`,
+    `${CONFIG["api-uri"]}/v1.0/deleted-lesson`,
     "GET",
     {},
     {
@@ -62,7 +61,7 @@
     }
     step = "version-selection-loading";
     void request<Array<LessonVersion>>(
-      `${$apiUri}/v1.0/deleted-lesson/${selectedLesson}/history`,
+      `${CONFIG["api-uri"]}/v1.0/deleted-lesson/${selectedLesson}/history`,
       "GET",
       {},
       {

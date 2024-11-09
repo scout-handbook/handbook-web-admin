@@ -7,7 +7,6 @@
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import Overlay from "$lib/components/Overlay.svelte";
   import LessonProvider from "$lib/components/swr-wrappers/LessonProvider.svelte";
-  import { apiUri } from "$lib/stores";
   import { get } from "$lib/utils/arrayUtils";
   import { compileMarkdown } from "$lib/utils/compileMarkdown";
   import { parseVersion } from "$lib/utils/parseVersion";
@@ -34,7 +33,7 @@
   );
 
   void request<Array<LessonVersion>>(
-    `${$apiUri}/v1.0/lesson/${lessonId}/history`,
+    `${CONFIG["api-uri"]}/v1.0/lesson/${lessonId}/history`,
     "GET",
     {},
     {},
@@ -48,7 +47,7 @@
           resolve(body);
         })
       : request<string>(
-          `${$apiUri}/v1.0/lesson/${lessonId}/history/${selectedVersion.toString()}`,
+          `${CONFIG["api-uri"]}/v1.0/lesson/${lessonId}/history/${selectedVersion.toString()}`,
           "GET",
           {},
           authFailHandler,

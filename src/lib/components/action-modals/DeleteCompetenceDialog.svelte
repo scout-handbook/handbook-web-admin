@@ -6,7 +6,6 @@
   import { ActionQueue } from "$lib/actions/ActionQueue";
   import Dialog from "$lib/components/Dialog.svelte";
   import DoneDialog from "$lib/components/DoneDialog.svelte";
-  import { apiUri } from "$lib/stores";
   import { queryClient } from "$lib/utils/queryClient";
   import { createMutation } from "@tanstack/svelte-query";
 
@@ -63,7 +62,7 @@
   function confirmCallback(): void {
     donePromise = new ActionQueue([
       new Action(
-        `${$apiUri}/v1.0/competence/${encodeURIComponent(competenceId)}`,
+        `${CONFIG["api-uri"]}/v1.0/competence/${encodeURIComponent(competenceId)}`,
         "DELETE",
       ),
     ])

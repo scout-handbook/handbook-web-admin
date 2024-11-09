@@ -14,7 +14,7 @@
   import DoneDialog from "$lib/components/DoneDialog.svelte";
   import LessonEditor from "$lib/components/LessonEditor.svelte";
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
-  import { afterReAuthAction, apiUri, globalDialogMessage } from "$lib/stores";
+  import { afterReAuthAction, globalDialogMessage } from "$lib/stores";
   import { get } from "$lib/utils/arrayUtils";
   import { queryClient } from "$lib/utils/queryClient";
   import { reAuth, request } from "$lib/utils/request";
@@ -106,14 +106,14 @@
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions -- Older browsers don't include this function
     if (navigator.sendBeacon) {
       navigator.sendBeacon(
-        `${$apiUri}/v1.0/mutex-beacon/${encodeURIComponent(id)}`,
+        `${CONFIG["api-uri"]}/v1.0/mutex-beacon/${encodeURIComponent(id)}`,
       );
     }
   }
 
   let lessonDataPromise = Promise.all([
     request(
-      `${$apiUri}/v1.0/mutex/${encodeURIComponent(lessonID)}`,
+      `${CONFIG["api-uri"]}/v1.0/mutex/${encodeURIComponent(lessonID)}`,
       "POST",
       {},
       {
@@ -131,7 +131,7 @@
       };
     }),
     request<Array<string>>(
-      `${$apiUri}/v1.0/lesson/${encodeURIComponent(lessonID)}/group`,
+      `${CONFIG["api-uri"]}/v1.0/lesson/${encodeURIComponent(lessonID)}/group`,
       "GET",
       {},
       {
@@ -142,7 +142,7 @@
       initialGroups = groups;
     }),
     request<string>(
-      `${$apiUri}/v1.0/lesson/${encodeURIComponent(lessonID)}`,
+      `${CONFIG["api-uri"]}/v1.0/lesson/${encodeURIComponent(lessonID)}`,
       "GET",
       {},
       {
@@ -157,7 +157,7 @@
   function lessonEditMutexExtend(id: string): void {
     void new ActionQueue([
       new Action(
-        `${$apiUri}/v1.0/mutex/${encodeURIComponent(id)}`,
+        `${CONFIG["api-uri"]}/v1.0/mutex/${encodeURIComponent(id)}`,
         "PUT",
         undefined,
         undefined,
@@ -178,7 +178,7 @@
   function destroyMutex(): void {
     void new ActionQueue([
       new Action(
-        `${$apiUri}/v1.0/mutex/${encodeURIComponent(lessonID)}`,
+        `${CONFIG["api-uri"]}/v1.0/mutex/${encodeURIComponent(lessonID)}`,
         "DELETE",
         undefined,
         [ActionCallback.removeBeacon],
@@ -192,7 +192,7 @@
     if (initialName !== name || initialBody !== body) {
       saveActionQueue.actions.push(
         new Action(
-          `${$apiUri}/v1.0/lesson/${encodeURIComponent(lessonID)}`,
+          `${CONFIG["api-uri"]}/v1.0/lesson/${encodeURIComponent(lessonID)}`,
           "PUT",
           {
             body: encodeURIComponent(body),
