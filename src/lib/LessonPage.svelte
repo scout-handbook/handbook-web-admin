@@ -15,7 +15,6 @@
   import FieldProvider from "$lib/components/swr-wrappers/FieldProvider.svelte";
   import LessonProvider from "$lib/components/swr-wrappers/LessonProvider.svelte";
   import TopBar from "$lib/components/TopBar.svelte";
-  import { siteName } from "$lib/stores";
   import { get } from "$lib/utils/arrayUtils";
   import { createQuery } from "@tanstack/svelte-query";
 
@@ -70,7 +69,7 @@
     <RestoreLessonPanel />
   {/if}
 
-  <h1>{`${$siteName} - Lekce`}</h1>
+  <h1>{`${CONFIG["site-name"]} - Lekce`}</h1>
   {#if adminOrSuperuser}
     <Button
       green

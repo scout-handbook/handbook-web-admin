@@ -1,6 +1,4 @@
-import { readable, writable } from "svelte/store";
-
-export const siteName = readable<string>(CONFIG["site-name"]);
+import { writable } from "svelte/store";
 
 export const suspendReAuth = writable<boolean>(false);
 export const afterReAuthAction = writable<(() => void) | null>(null);

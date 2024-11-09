@@ -10,7 +10,6 @@
   import MainPageContainer from "$lib/components/MainPageContainer.svelte";
   import CompetenceProvider from "$lib/components/swr-wrappers/CompetenceProvider.svelte";
   import TopBar from "$lib/components/TopBar.svelte";
-  import { siteName } from "$lib/stores";
   import { get } from "$lib/utils/arrayUtils";
   import { createQuery } from "@tanstack/svelte-query";
 
@@ -57,7 +56,7 @@
     </CompetenceProvider>
   {/if}
 
-  <h1>{`${$siteName} - Body`}</h1>
+  <h1>{`${CONFIG["site-name"]} - Body`}</h1>
   {#if adminOrSuperuser}
     <Button
       green
