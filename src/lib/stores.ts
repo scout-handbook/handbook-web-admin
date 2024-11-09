@@ -1,6 +1,5 @@
 import { readable, writable } from "svelte/store";
 
-export const frontendUri = readable<string>(CONFIG["frontend-uri"]);
 export const siteName = readable<string>(CONFIG["site-name"]);
 
 export const suspendReAuth = writable<boolean>(false);
