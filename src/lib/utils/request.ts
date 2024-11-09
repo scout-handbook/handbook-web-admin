@@ -6,9 +6,9 @@ import type { ExceptionHandler } from "$lib/interfaces/ExceptionHandler";
 import type { Payload } from "$lib/interfaces/Payload";
 import type { RequestResponse } from "$lib/interfaces/RequestResponse";
 
-import { globalDialogMessage, suspendReAuth } from "$lib/stores";
+import { reAuthSuspended } from "$lib/reAuthSuspension.svelte";
+import { globalDialogMessage } from "$lib/stores";
 import { buildQuery } from "$lib/utils/buildQuery";
-import { get } from "svelte/store";
 
 function isSuccessResponse<T extends RequestResponse>(
   response: APIResponse<T>,
@@ -17,7 +17,7 @@ function isSuccessResponse<T extends RequestResponse>(
 }
 
 export function reAuth(): void {
-  if (!get(suspendReAuth)) {
+  if (!reAuthSuspended.value) {
     window.location.href = `${CONFIG["api-uri"]}/v1.0/login?return-uri=${encodeURIComponent(window.location.href)}`;
   }
 }
