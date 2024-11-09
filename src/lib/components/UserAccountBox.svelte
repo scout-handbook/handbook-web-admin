@@ -1,7 +1,6 @@
 <script lang="ts">
   import type { Loginstate } from "$lib/interfaces/Loginstate";
 
-  import { frontendUri } from "$lib/stores";
   import { createQuery } from "@tanstack/svelte-query";
 
   const accountQuery = createQuery<Loginstate>({
@@ -26,7 +25,7 @@
   </div>
   <div class="links">
     <a
-      href={`${CONFIG["api-uri"]}/v1.0/logout?redirect-uri=${encodeURIComponent($frontendUri)}`}
+      href={`${CONFIG["api-uri"]}/v1.0/logout?redirect-uri=${encodeURIComponent(CONFIG["frontend-uri"])}`}
     >
       Odhlásit
     </a>
