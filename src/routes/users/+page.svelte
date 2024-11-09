@@ -13,7 +13,6 @@
   import TopBar from "$lib/components/TopBar.svelte";
   import UserViewSearchForm from "$lib/components/UserViewSearchForm.svelte";
   import UserViewTable from "$lib/components/UserViewTable.svelte";
-  import { siteName } from "$lib/stores";
   import { createQuery } from "@tanstack/svelte-query";
 
   import type { PageStateFix } from "../../app";
@@ -55,7 +54,7 @@
     <EditUserRolePanel payload={pageState.actionPayload} />
   {/if}
 
-  <h1>{`${$siteName} - Uživatelé`}</h1>
+  <h1>{`${CONFIG["site-name"]} - Uživatelé`}</h1>
   <UserViewSearchForm
     onchange={() => {
       page = 1;

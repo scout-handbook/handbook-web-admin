@@ -11,7 +11,6 @@
   import Overlay from "$lib/components/Overlay.svelte";
   import Pagination from "$lib/components/Pagination.svelte";
   import TopBar from "$lib/components/TopBar.svelte";
-  import { siteName } from "$lib/stores";
   import { createQuery } from "@tanstack/svelte-query";
 
   import type { PageStateFix } from "../../app";
@@ -57,7 +56,7 @@
       />
     </button>
   {/if}
-  <h1>{`${$siteName} - Obrázky`}</h1>
+  <h1>{`${CONFIG["site-name"]} - Obrázky`}</h1>
   <Button
     green
     icon="plus"
