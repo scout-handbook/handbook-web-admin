@@ -6,7 +6,7 @@
   import ImageSelector from "$lib/components/LessonEditor/ImageSelector.svelte";
   import LessonSettingsPanel from "$lib/components/LessonEditor/LessonSettingsPanel.svelte";
   import PreviewPane from "$lib/components/LessonEditor/PreviewPane.svelte";
-  import { apiUri, suspendReAuth } from "$lib/stores";
+  import { suspendReAuth } from "$lib/stores";
   import { onDestroy, onMount } from "svelte";
 
   import type { PageStateFix } from "../../app";
@@ -43,7 +43,7 @@
 
   function insertImage(imageId: string): void {
     editorPane?.insertAtCursor(
-      `![Text po najetí kurzorem](${$apiUri}/v1.0/image/${imageId})`,
+      `![Text po najetí kurzorem](${CONFIG["api-uri"]}/v1.0/image/${imageId})`,
     );
   }
 

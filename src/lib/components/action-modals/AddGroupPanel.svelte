@@ -5,7 +5,6 @@
   import DoneDialog from "$lib/components/DoneDialog.svelte";
   import NameInput from "$lib/components/forms/NameInput.svelte";
   import SidePanel from "$lib/components/SidePanel.svelte";
-  import { apiUri } from "$lib/stores";
   import { queryClient } from "$lib/utils/queryClient";
 
   let name = $state("Nová skupina");
@@ -13,7 +12,7 @@
 
   function saveCallback(): void {
     donePromise = new ActionQueue([
-      new Action(`${$apiUri}/v1.0/group`, "POST", {
+      new Action(`${CONFIG["api-uri"]}/v1.0/group`, "POST", {
         name: encodeURIComponent(name),
       }),
     ])

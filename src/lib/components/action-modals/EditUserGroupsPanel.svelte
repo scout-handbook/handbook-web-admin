@@ -8,7 +8,6 @@
   import DoneDialog from "$lib/components/DoneDialog.svelte";
   import CheckboxGroup from "$lib/components/forms/CheckboxGroup.svelte";
   import SidePanel from "$lib/components/SidePanel.svelte";
-  import { apiUri } from "$lib/stores";
   import { filter, get } from "$lib/utils/arrayUtils";
   import { queryClient } from "$lib/utils/queryClient";
 
@@ -39,7 +38,7 @@
     } else {
       donePromise = new ActionQueue([
         new Action(
-          `${$apiUri}/v1.0/user/${encodeURIComponent(payload.user.id)}/group`,
+          `${CONFIG["api-uri"]}/v1.0/user/${encodeURIComponent(payload.user.id)}/group`,
           "PUT",
           { group: selectedGroups.map(encodeURIComponent) },
         ),

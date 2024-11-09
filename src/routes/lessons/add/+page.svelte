@@ -10,7 +10,6 @@
   } from "$lib/actions/populateLessonActionQueue";
   import DoneDialog from "$lib/components/DoneDialog.svelte";
   import LessonEditor from "$lib/components/LessonEditor.svelte";
-  import { apiUri } from "$lib/stores";
   import { defaultBody, defaultName } from "$lib/utils/defaultLessonContent";
   import { queryClient } from "$lib/utils/queryClient";
 
@@ -24,7 +23,7 @@
   function save(): void {
     const saveActionQueue = new ActionQueue([
       new Action(
-        `${$apiUri}/v1.0/lesson`,
+        `${CONFIG["api-uri"]}/v1.0/lesson`,
         "POST",
         {
           body: encodeURIComponent(body),

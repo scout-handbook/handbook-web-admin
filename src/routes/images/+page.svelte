@@ -11,7 +11,7 @@
   import Overlay from "$lib/components/Overlay.svelte";
   import Pagination from "$lib/components/Pagination.svelte";
   import TopBar from "$lib/components/TopBar.svelte";
-  import { apiUri, siteName } from "$lib/stores";
+  import { siteName } from "$lib/stores";
   import { createQuery } from "@tanstack/svelte-query";
 
   import type { PageStateFix } from "../../app";
@@ -53,7 +53,7 @@
     >
       <img
         alt={`Image ${openImage}`}
-        src={`${$apiUri}/v1.0/image/${openImage}`}
+        src={`${CONFIG["api-uri"]}/v1.0/image/${openImage}`}
       />
     </button>
   {/if}

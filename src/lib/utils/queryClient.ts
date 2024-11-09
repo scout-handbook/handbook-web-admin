@@ -2,11 +2,9 @@ import type { Payload } from "$lib/interfaces/Payload";
 import type { RequestResponse } from "$lib/interfaces/RequestResponse";
 
 import { browser } from "$app/environment";
-import { apiUri } from "$lib/stores";
 import { buildQuery } from "$lib/utils/buildQuery";
 import { reAuth, request } from "$lib/utils/request";
 import { QueryClient } from "@tanstack/svelte-query";
-import { get } from "svelte/store";
 
 async function queryFn({
   queryKey,
@@ -23,7 +21,7 @@ async function queryFn({
     uri += `?${query}`;
   }
   return request(
-    `${get(apiUri)}/${uri}`,
+    `${CONFIG["api-uri"]}/${uri}`,
     "GET",
     {},
     {

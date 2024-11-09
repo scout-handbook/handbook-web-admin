@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { apiUri } from "$lib/stores";
-
   interface Props {
     id: string;
     onclick(this: void): void;
@@ -12,7 +10,7 @@
 <button {onclick} type="button">
   <img
     alt={`Image ${id}`}
-    src={`${$apiUri}/v1.0/image/${id}?quality=thumbnail`}
+    src={`${CONFIG["api-uri"]}/v1.0/image/${id}?quality=thumbnail`}
   />
 </button>
 
