@@ -147,6 +147,7 @@ export default tseslint.config(
       "no-self-compare": "error",
       "no-sequences": "error",
       "no-template-curly-in-string": "error",
+      "no-undef": "off", // Should be disabled by typescript-eslint
       "no-unreachable-loop": "error",
       "no-useless-call": "error",
       "no-useless-computed-key": "error",

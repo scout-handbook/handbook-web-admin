@@ -1,4 +1,9 @@
+import type { Config } from "$lib/interfaces/Config";
 import type { User } from "$lib/interfaces/User";
+
+declare global {
+  const CONFIG: Config;
+}
 
 export type PageStateFix =
   | {
