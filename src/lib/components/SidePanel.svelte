@@ -2,7 +2,7 @@
   import type { Snippet } from "svelte";
 
   import Overlay from "$lib/components/Overlay.svelte";
-  import { fly } from "$lib/utils/transition";
+  import { fly } from "svelte/transition";
 
   interface Props {
     children: Snippet;
@@ -12,8 +12,7 @@
 </script>
 
 <Overlay />
-<!-- eslint-disable-next-line svelte/no-inline-styles -->
-<div transition:fly|global={{ duration: 300, from: "right" }}>
+<div transition:fly|global={{ duration: 300, x: 539 }}>
   {@render children()}
 </div>
 
