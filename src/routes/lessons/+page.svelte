@@ -1,4 +1,4 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import LessonPage from "$lib/LessonPage.svelte";
 </script>
 

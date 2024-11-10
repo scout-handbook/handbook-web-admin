@@ -1,43 +1,48 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import Button from "$lib/components/Button.svelte";
   import CheckboxGroup from "$lib/components/forms/CheckboxGroup.svelte";
   import CompetenceProvider from "$lib/components/swr-wrappers/CompetenceProvider.svelte";
 
-  export let competences: Array<string>;
+  interface Props {
+    competences: Array<string>;
+  }
+
+  let { competences = $bindable() }: Props = $props();
 
   const initialCompetences = competences;
 </script>
 
 <Button
   icon="cancel"
-  yellow
-  on:click={() => {
+  onclick={() => {
     competences = initialCompetences;
     history.back();
   }}
+  yellow
 >
   Zrušit
 </Button>
 <Button
   green
   icon="floppy"
-  on:click={() => {
+  onclick={() => {
     history.back();
   }}>Uložit</Button
 >
 <h1>Změnit body</h1>
 <form>
-  <CompetenceProvider let:competences={allCompetences}>
-    <CheckboxGroup
-      options={allCompetences}
-      bind:selected={competences}
-      let:value={competence}
-    >
-      <span class="competence-number">
-        {competence.number}:
-      </span>
-      {competence.name}
-    </CheckboxGroup>
+  <CompetenceProvider>
+    {#snippet children(allCompetences)}
+      <CheckboxGroup options={allCompetences} bind:selected={competences}>
+        <!-- eslint-disable-next-line @typescript-eslint/no-shadow -- Not applicable to snippets -->
+        {#snippet children(_, competence)}
+          <span class="competence-number">
+            {competence.number}:
+          </span>
+          {competence.name}
+        {/snippet}
+      </CheckboxGroup>
+    {/snippet}
   </CompetenceProvider>
 </form>
 

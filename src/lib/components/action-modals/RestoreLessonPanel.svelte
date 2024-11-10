@@ -1,4 +1,4 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import type { DeletedLesson } from "$lib/interfaces/DeletedLesson";
   import type { LessonVersion } from "$lib/interfaces/LessonVersion";
 
@@ -11,36 +11,37 @@
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import Overlay from "$lib/components/Overlay.svelte";
   import SidePanel from "$lib/components/SidePanel.svelte";
-  import { apiUri } from "$lib/stores";
   import { compileMarkdown } from "$lib/utils/compileMarkdown";
   import { parseVersion } from "$lib/utils/parseVersion";
   import { authFailHandler, reAuth, request } from "$lib/utils/request";
 
-  let error = "";
-  let step = "lesson-selection-loading";
-  let lessonList: Array<[string, DeletedLesson]>;
-  let selectedLesson = "";
-  let versionList: Array<LessonVersion> = [];
-  let selectedVersion: number | null = null;
+  let error = $state("");
+  let step = $state("lesson-selection-loading");
+  let lessonList: Array<[string, DeletedLesson]> = $state([]);
+  let selectedLesson = $state("");
+  let versionList: Array<LessonVersion> = $state([]);
+  let selectedVersion = $state<number | null>(null);
 
-  $: name =
+  let name = $derived(
     selectedVersion === null
       ? ""
-      : (versionList.find((x) => x.version === selectedVersion)?.name ?? "");
-  $: contentPromise =
+      : (versionList.find((x) => x.version === selectedVersion)?.name ?? ""),
+  );
+  let contentPromise = $derived(
     selectedVersion === null
       ? new Promise((resolve) => {
           resolve("");
         })
       : request<string>(
-          `${$apiUri}/v1.0/deleted-lesson/${selectedLesson}/history/${selectedVersion.toString()}`,
+          `${CONFIG["api-uri"]}/v1.0/deleted-lesson/${selectedLesson}/history/${selectedVersion.toString()}`,
           "GET",
           {},
           authFailHandler,
-        ).then(compileMarkdown);
+        ).then(compileMarkdown),
+  );
 
   void request<Record<string, DeletedLesson>>(
-    `${$apiUri}/v1.0/deleted-lesson`,
+    `${CONFIG["api-uri"]}/v1.0/deleted-lesson`,
     "GET",
     {},
     {
@@ -60,7 +61,7 @@
     }
     step = "version-selection-loading";
     void request<Array<LessonVersion>>(
-      `${$apiUri}/v1.0/deleted-lesson/${selectedLesson}/history`,
+      `${CONFIG["api-uri"]}/v1.0/deleted-lesson/${selectedLesson}/history`,
       "GET",
       {},
       {
@@ -84,7 +85,7 @@
 {#if error !== ""}
   <Dialog
     confirmButtonText="OK"
-    on:confirm={() => {
+    onconfirm={() => {
       history.back();
     }}
   >
@@ -94,15 +95,15 @@
   <SidePanel>
     <Button
       icon="cancel"
-      yellow
-      on:click={() => {
+      onclick={() => {
         history.back();
-      }}>Zrušit</Button
+      }}
+      yellow>Zrušit</Button
     >
     <Button
       green
       icon="fast-fw"
-      on:click={() => {
+      onclick={() => {
         if (step === "lesson-selection") {
           loadVersionList();
         }
@@ -116,9 +117,9 @@
     {:else if step === "lesson-selection"}
       <form>
         <RadioGroup options={lessonList} bind:selected={selectedLesson}>
-          <span slot="option" let:value={lesson}>
+          {#snippet option(_, lesson)}
             {lesson.name}
-          </span>
+          {/snippet}
         </RadioGroup>
       </form>
     {/if}
@@ -129,15 +130,15 @@
     <div class="version-list">
       <Button
         icon="cancel"
-        yellow
-        on:click={() => {
+        onclick={() => {
           history.back();
         }}
+        yellow
       >
         Zrušit
       </Button>
       {#if selectedVersion !== null}
-        <Button green icon="history" on:click={selectVersionCallback}
+        <Button green icon="history" onclick={selectVersionCallback}
           >Obnovit</Button
         >
       {/if}
@@ -153,13 +154,13 @@
             ])}
             bind:selected={selectedVersion}
           >
-            <span slot="option" let:id={version} let:value={versionName}>
+            {#snippet option(version, versionName)}
               <span class="version-name">
                 {versionName}
               </span>
               —
               {parseVersion(version)}
-            </span>
+            {/snippet}
           </RadioGroup>
         </form>
       {/if}

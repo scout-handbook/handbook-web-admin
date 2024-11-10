@@ -1,4 +1,4 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import { pushState } from "$app/navigation";
   import { page as kitPage } from "$app/stores";
   import AddImagePanel from "$lib/components/action-modals/AddImagePanel.svelte";
@@ -11,57 +11,56 @@
   import Overlay from "$lib/components/Overlay.svelte";
   import Pagination from "$lib/components/Pagination.svelte";
   import TopBar from "$lib/components/TopBar.svelte";
-  import { apiUri, siteName } from "$lib/stores";
   import { createQuery } from "@tanstack/svelte-query";
 
   import type { PageStateFix } from "../../app";
 
-  $: state = $kitPage.state as PageStateFix;
+  let pageState = $derived($kitPage.state as PageStateFix);
 
-  let openImage: string | null = null;
-  let page = 1;
+  let openImage: string | null = $state(null);
+  let page = $state(1);
   const perPage = 15;
-  $: pageStart = perPage * (page - 1);
-  $: pageEnd = pageStart + perPage;
+  let pageStart = $derived(perPage * (page - 1));
+  let pageEnd = $derived(pageStart + perPage);
 
   const imageQuery = createQuery<Array<string>>({
     queryKey: ["v1.0", "image"],
   });
-  $: totalImageCount = $imageQuery.data?.length;
-  $: currentPageList = $imageQuery.data?.slice(pageStart, pageEnd);
+  let totalImageCount = $derived($imageQuery.data?.length);
+  let currentPageList = $derived($imageQuery.data?.slice(pageStart, pageEnd));
 </script>
 
 <TopBar />
 <MainPageContainer>
-  {#if state.action === "add-image"}
+  {#if pageState.action === "add-image"}
     <AddImagePanel />
-  {:else if state.action === "delete-image"}
-    <DeleteImageDialog payload={state.actionPayload} />
+  {:else if pageState.action === "delete-image"}
+    <DeleteImageDialog payload={pageState.actionPayload} />
   {/if}
 
   {#if openImage !== null}
     <Overlay
-      on:click={() => {
+      onclick={() => {
         openImage = null;
       }}
     />
     <button
-      type="button"
-      on:click={() => {
+      onclick={() => {
         openImage = null;
       }}
+      type="button"
     >
       <img
         alt={`Image ${openImage}`}
-        src={`${$apiUri}/v1.0/image/${openImage}`}
+        src={`${CONFIG["api-uri"]}/v1.0/image/${openImage}`}
       />
     </button>
   {/if}
-  <h1>{`${$siteName} - Obrázky`}</h1>
+  <h1>{`${CONFIG["site-name"]} - Obrázky`}</h1>
   <Button
     green
     icon="plus"
-    on:click={() => {
+    onclick={() => {
       pushState("", { action: "add-image" });
     }}
   >
@@ -75,20 +74,20 @@
       <ImageGridCell>
         <ImageThumbnail
           id={image}
-          on:click={() => {
+          onclick={() => {
             openImage = image;
           }}
         />
         <div class="delete-image">
           <Button
             icon="trash-empty"
-            red
-            on:click={() => {
+            onclick={() => {
               pushState("", {
                 action: "delete-image",
                 actionPayload: { imageId: image },
               });
             }}
+            red
           >
             Smazat
           </Button>

@@ -1,4 +1,4 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import type { LockedExceptionResponse } from "$lib/interfaces/APIResponse";
   import type { Field } from "$lib/interfaces/Field";
   import type { Lesson } from "$lib/interfaces/Lesson";
@@ -9,18 +9,21 @@
   import DoneDialog from "$lib/components/DoneDialog.svelte";
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import Overlay from "$lib/components/Overlay.svelte";
-  import { apiUri } from "$lib/stores";
   import { queryClient } from "$lib/utils/queryClient";
   import { reAuth, request } from "$lib/utils/request";
   import { createMutation } from "@tanstack/svelte-query";
 
-  export let lesson: Lesson;
-  export let lessonId: string;
+  interface Props {
+    lesson: Lesson;
+    lessonId: string;
+  }
 
-  let lockedError: string | null = null;
-  let expiredError = false;
+  let { lesson, lessonId }: Props = $props();
+
+  let lockedError: string | null = $state(null);
+  let expiredError = $state(false);
   const mutexPromise = request(
-    `${$apiUri}/v1.0/mutex/${encodeURIComponent(lessonId)}`,
+    `${CONFIG["api-uri"]}/v1.0/mutex/${encodeURIComponent(lessonId)}`,
     "POST",
     {},
     {
@@ -30,7 +33,7 @@
       },
     },
   );
-  let donePromise: Promise<void> | null = null;
+  let donePromise: Promise<void> | null = $state(null);
 
   const mutation = createMutation({
     onMutate: async () => {
@@ -77,7 +80,7 @@
   function confirmCallback(): void {
     donePromise = new ActionQueue([
       new Action(
-        `${$apiUri}/v1.0/lesson/${encodeURIComponent(lessonId)}`,
+        `${CONFIG["api-uri"]}/v1.0/lesson/${encodeURIComponent(lessonId)}`,
         "DELETE",
         undefined,
         [],
@@ -97,7 +100,7 @@
   function dismissCallback(): void {
     void new ActionQueue([
       new Action(
-        `${$apiUri}/v1.0/mutex/${encodeURIComponent(lessonId)}`,
+        `${CONFIG["api-uri"]}/v1.0/mutex/${encodeURIComponent(lessonId)}`,
         "DELETE",
         undefined,
         [],
@@ -111,7 +114,7 @@
 {#if lockedError !== null}
   <Dialog
     confirmButtonText="OK"
-    on:confirm={() => {
+    onconfirm={() => {
       history.back();
     }}
   >
@@ -120,7 +123,7 @@
 {:else if expiredError}
   <Dialog
     confirmButtonText="OK"
-    on:confirm={() => {
+    onconfirm={() => {
       history.back();
     }}
   >
@@ -137,8 +140,8 @@
     <Dialog
       confirmButtonText="Ano"
       dismissButtonText="Ne"
-      on:confirm={confirmCallback}
-      on:dismiss={dismissCallback}
+      onconfirm={confirmCallback}
+      ondismiss={dismissCallback}
     >
       Opravdu si přejete smazat lekci "{lesson.name}"?
     </Dialog>

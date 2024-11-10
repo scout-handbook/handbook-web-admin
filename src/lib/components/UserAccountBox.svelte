@@ -1,16 +1,17 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import type { Loginstate } from "$lib/interfaces/Loginstate";
 
-  import { adminUri, apiUri, frontendUri } from "$lib/stores";
   import { createQuery } from "@tanstack/svelte-query";
 
   const accountQuery = createQuery<Loginstate>({
     queryKey: ["v1.0", "account"],
   });
-  $: avatar = $accountQuery.isSuccess
-    ? `data:image/png;base64,${$accountQuery.data.avatar}`
-    : `${$adminUri}/avatar.png`;
-  $: name = $accountQuery.data?.name;
+  let avatar = $derived(
+    $accountQuery.isSuccess
+      ? `data:image/png;base64,${$accountQuery.data.avatar}`
+      : `${CONFIG["admin-uri"]}/avatar.png`,
+  );
+  let name = $derived($accountQuery.data?.name);
 </script>
 
 <div class="container">
@@ -24,7 +25,7 @@
   </div>
   <div class="links">
     <a
-      href={`${$apiUri}/v1.0/logout?redirect-uri=${encodeURIComponent($frontendUri)}`}
+      href={`${CONFIG["api-uri"]}/v1.0/logout?redirect-uri=${encodeURIComponent(CONFIG["frontend-uri"])}`}
     >
       Odhlásit
     </a>

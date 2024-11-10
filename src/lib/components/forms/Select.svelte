@@ -1,22 +1,14 @@
-<script lang="ts" strictEvents>
-  import { createEventDispatcher } from "svelte";
+<script generics="KeyType extends number | string, ValueType" lang="ts">
+  interface Props {
+    onchange(this: void): void;
+    options: Array<[KeyType, ValueType]>;
+    selected: KeyType | null;
+  }
 
-  type KeyType = $$Generic<number | string>;
-  type ValueType = $$Generic;
-
-  export let options: Array<[KeyType, ValueType]>;
-  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents -- Eslint can't handle $$Generic
-  export let selected: KeyType | null;
-
-  const dispatch = createEventDispatcher<{ change: null }>();
+  let { onchange, options, selected = $bindable() }: Props = $props();
 </script>
 
-<select
-  bind:value={selected}
-  on:change={() => {
-    dispatch("change");
-  }}
->
+<select {onchange} bind:value={selected}>
   {#each options as [id, value] (id)}
     <option value={id}>{value}</option>
   {/each}

@@ -1,47 +1,50 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
+  import type { Snippet } from "svelte";
+
   import Button from "$lib/components/Button.svelte";
   import Overlay from "$lib/components/Overlay.svelte";
-  import { createEventDispatcher } from "svelte";
 
-  interface $$Slots {
-    default: Record<string, never>;
+  interface Props {
+    children: Snippet;
+    confirmButtonText: string;
+    dismissButtonText?: string;
+    onconfirm(this: void): void;
+    ondismiss?(this: void): void;
   }
 
-  export let dismissButtonText = "";
-  export let confirmButtonText: string;
-
-  const dispatch = createEventDispatcher<{ confirm: null; dismiss: null }>();
+  let {
+    children,
+    confirmButtonText,
+    dismissButtonText = "",
+    onconfirm,
+    ondismiss,
+  }: Props = $props();
 
   function keypressHandler(event: KeyboardEvent): void {
     if (event.key === "Enter") {
-      dispatch("confirm");
+      onconfirm();
     }
   }
 </script>
 
-<svelte:window on:keypress={keypressHandler} />
+<svelte:window onkeypress={keypressHandler} />
 
 <Overlay />
 <div class="dialog">
-  <slot />
+  {@render children()}
   <div class="buttons">
     {#if dismissButtonText !== ""}
       <Button
         icon="cancel"
-        yellow
-        on:click={() => {
-          dispatch("dismiss");
+        onclick={() => {
+          ondismiss?.();
         }}
+        yellow
       >
         {dismissButtonText}
       </Button>
     {/if}
-    <Button
-      icon="ok"
-      on:click={() => {
-        dispatch("confirm");
-      }}
-    >
+    <Button icon="ok" onclick={onconfirm}>
       {confirmButtonText}
     </Button>
   </div>

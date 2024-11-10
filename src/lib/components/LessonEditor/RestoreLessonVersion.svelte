@@ -1,4 +1,4 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import type { LessonVersion } from "$lib/interfaces/LessonVersion";
 
   import Button from "$lib/components/Button.svelte";
@@ -7,25 +7,33 @@
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import Overlay from "$lib/components/Overlay.svelte";
   import LessonProvider from "$lib/components/swr-wrappers/LessonProvider.svelte";
-  import { apiUri } from "$lib/stores";
   import { get } from "$lib/utils/arrayUtils";
   import { compileMarkdown } from "$lib/utils/compileMarkdown";
   import { parseVersion } from "$lib/utils/parseVersion";
   import { authFailHandler, request } from "$lib/utils/request";
 
-  export let lessonId: string;
-  export let lessonName: string;
-  export let body: string;
+  interface Props {
+    body: string;
+    lessonId: string;
+    lessonName: string;
+  }
 
-  let selectedVersion: number | null = null;
-  let versionList: Array<LessonVersion> | null = null;
-  $: selectedVersionName =
+  let {
+    body = $bindable(),
+    lessonId,
+    lessonName = $bindable(),
+  }: Props = $props();
+
+  let selectedVersion = $state<number | null>(null);
+  let versionList = $state<Array<LessonVersion> | null>(null);
+  let selectedVersionName = $derived(
     selectedVersion === null || versionList === null
       ? lessonName
-      : (versionList.find((x) => x.version === selectedVersion)?.name ?? "");
+      : (versionList.find((x) => x.version === selectedVersion)?.name ?? ""),
+  );
 
   void request<Array<LessonVersion>>(
-    `${$apiUri}/v1.0/lesson/${lessonId}/history`,
+    `${CONFIG["api-uri"]}/v1.0/lesson/${lessonId}/history`,
     "GET",
     {},
     {},
@@ -33,17 +41,18 @@
     versionList = response;
   });
 
-  $: markdownPromise =
+  let markdownPromise = $derived(
     selectedVersion === null
       ? new Promise<string>((resolve) => {
           resolve(body);
         })
       : request<string>(
-          `${$apiUri}/v1.0/lesson/${lessonId}/history/${selectedVersion.toString()}`,
+          `${CONFIG["api-uri"]}/v1.0/lesson/${lessonId}/history/${selectedVersion.toString()}`,
           "GET",
           {},
           authFailHandler,
-        );
+        ),
+  );
 
   function saveCallback(markdown: string): void {
     lessonName = selectedVersionName;
@@ -57,10 +66,10 @@
   <div class="version-list">
     <Button
       icon="cancel"
-      yellow
-      on:click={() => {
+      onclick={() => {
         history.back();
       }}
+      yellow
     >
       Zrušit
     </Button>
@@ -69,7 +78,7 @@
         <Button
           green
           icon="history"
-          on:click={() => {
+          onclick={() => {
             saveCallback(markdown);
           }}
         >
@@ -89,21 +98,23 @@
           ])}
           bind:selected={selectedVersion}
         >
-          <span slot="null-option">
+          {#snippet nullOption()}
             <span class="current-version version-name">Současná verze</span>
             —
-            <LessonProvider silent let:lessons>
-              <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-argument -->
-              {parseVersion(get(lessons, lessonId)?.version ?? 0)}
+            <LessonProvider silent>
+              {#snippet children(_, lessons)}
+                <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-argument -->
+                {parseVersion(get(lessons, lessonId)?.version ?? 0)}
+              {/snippet}
             </LessonProvider>
-          </span>
-          <span slot="option" let:id={version} let:value={name}>
+          {/snippet}
+          {#snippet option(version, name)}
             <span class="version-name">
               {name}
             </span>
             —
             {parseVersion(version)}
-          </span>
+          {/snippet}
         </RadioGroup>
       </form>
     {/if}

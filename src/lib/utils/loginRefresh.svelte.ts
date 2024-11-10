@@ -1,6 +1,8 @@
-import { afterReAuthAction } from "$lib/stores";
 import { reAuth, request } from "$lib/utils/request";
-import { get } from "svelte/store";
+
+export const afterRefreshCallback: { value: (() => void) | null } = $state({
+  value: null,
+});
 
 function refreshLogin(): void {
   void request(
@@ -12,9 +14,8 @@ function refreshLogin(): void {
     },
   ).then(() => {
     setTimeout(refreshLogin, 20 * 60 * 1000);
-    const afterAction = get(afterReAuthAction);
-    if (afterAction !== null) {
-      afterAction();
+    if (afterRefreshCallback.value !== null) {
+      afterRefreshCallback.value();
     }
   });
 }

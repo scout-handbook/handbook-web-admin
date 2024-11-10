@@ -1,7 +1,8 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import type { Competence } from "$lib/interfaces/Competence";
   import type { Field } from "$lib/interfaces/Field";
   import type { Lesson } from "$lib/interfaces/Lesson";
+  import type { Snippet } from "svelte";
 
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import {
@@ -12,16 +13,19 @@
   import { createQuery } from "@tanstack/svelte-query";
   import { derived } from "svelte/store";
 
-  interface $$Slots {
-    default: {
-      competences: Array<[string, Competence]>;
-      fields: Array<[string, Field]>;
-      lessons: Array<[string, Lesson]>;
-    };
+  interface Props {
+    children: Snippet<
+      [
+        Array<[string, Competence]>,
+        Array<[string, Field]>,
+        Array<[string, Lesson]>,
+      ]
+    >;
+    inline?: boolean;
+    silent?: boolean;
   }
 
-  export let silent = false;
-  export let inline = false;
+  let { children, inline = false, silent = false }: Props = $props();
 
   const competences = derived(
     createQuery<Record<string, Competence>>({
@@ -63,7 +67,7 @@
 </script>
 
 {#if $competences !== undefined && $lessons !== undefined && $fields !== undefined}
-  <slot competences={$competences} fields={$fields} lessons={$lessons} />
+  {@render children($competences, $fields, $lessons)}
 {:else if !silent}
   <LoadingIndicator {inline} />
 {/if}

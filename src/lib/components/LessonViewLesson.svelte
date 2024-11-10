@@ -1,4 +1,4 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import type { Lesson } from "$lib/interfaces/Lesson";
   import type { Loginstate } from "$lib/interfaces/Loginstate";
 
@@ -6,19 +6,23 @@
   import { base } from "$app/paths";
   import Button from "$lib/components/Button.svelte";
   import CompetenceProvider from "$lib/components/swr-wrappers/CompetenceProvider.svelte";
-  import { adminUri } from "$lib/stores";
   import { createQuery } from "@tanstack/svelte-query";
 
-  export let id: string;
-  export let lesson: Lesson;
-  export let secondLevel = false;
+  interface Props {
+    id: string;
+    lesson: Lesson;
+    secondLevel?: boolean;
+  }
+
+  let { id, lesson, secondLevel = false }: Props = $props();
 
   const accountQuery = createQuery<Loginstate>({
     queryKey: ["v1.0", "account"],
   });
-  $: adminOrSuperuser =
+  let adminOrSuperuser = $derived(
     $accountQuery.data?.role === "administrator" ||
-    $accountQuery.data?.role === "superuser";
+      $accountQuery.data?.role === "superuser",
+  );
 </script>
 
 <div class:second-level={secondLevel}>
@@ -26,7 +30,7 @@
   <Button
     cyan
     icon="pencil"
-    on:click={() => {
+    onclick={() => {
       void goto(`${base}/lessons/${id}/edit`);
     }}
   >
@@ -35,32 +39,40 @@
   {#if adminOrSuperuser}
     <Button
       icon="trash-empty"
-      red
-      on:click={() => {
+      onclick={() => {
         pushState("", {
           action: "delete-lesson",
           actionPayload: { lessonId: id },
         });
       }}
+      red
     >
       Smazat
     </Button>
   {/if}
   <Button
     icon="file-pdf"
-    on:click={() => {
-      window.open(`${$adminUri}/lesson/${id}`, "_blank", "noopener,noreferrer");
+    onclick={() => {
+      window.open(
+        `${CONFIG["admin-uri"]}/lesson/${id}`,
+        "_blank",
+        "noopener,noreferrer",
+      );
     }}
   >
     PDF
   </Button>
   <br />
   Body:
-  <CompetenceProvider silent let:competences>
-    {competences
-      .filter(([competenceId, _]) => lesson.competences.includes(competenceId))
-      .map(([_, competence]) => competence.number)
-      .join(", ")}
+  <CompetenceProvider silent>
+    {#snippet children(competences)}
+      {competences
+        .filter(([competenceId, _]) =>
+          lesson.competences.includes(competenceId),
+        )
+        .map(([_, competence]) => competence.number)
+        .join(", ")}
+    {/snippet}
   </CompetenceProvider>
 </div>
 

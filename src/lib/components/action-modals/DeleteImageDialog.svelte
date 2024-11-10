@@ -1,15 +1,18 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import { Action } from "$lib/actions/Action";
   import { ActionQueue } from "$lib/actions/ActionQueue";
   import Dialog from "$lib/components/Dialog.svelte";
   import DoneDialog from "$lib/components/DoneDialog.svelte";
-  import { apiUri } from "$lib/stores";
   import { queryClient } from "$lib/utils/queryClient";
   import { createMutation } from "@tanstack/svelte-query";
 
-  export let payload: { imageId: string };
+  interface Props {
+    payload: { imageId: string };
+  }
 
-  let donePromise: Promise<void> | null = null;
+  let { payload }: Props = $props();
+
+  let donePromise: Promise<void> | null = $state(null);
 
   const mutation = createMutation({
     onMutate: async () => {
@@ -29,7 +32,7 @@
   function confirmCallback(): void {
     donePromise = new ActionQueue([
       new Action(
-        `${$apiUri}/v1.0/image/${encodeURIComponent(payload.imageId)}`,
+        `${CONFIG["api-uri"]}/v1.0/image/${encodeURIComponent(payload.imageId)}`,
         "DELETE",
       ),
     ])
@@ -46,8 +49,8 @@
   <Dialog
     confirmButtonText="Ano"
     dismissButtonText="Ne"
-    on:confirm={confirmCallback}
-    on:dismiss={() => {
+    onconfirm={confirmCallback}
+    ondismiss={() => {
       history.back();
     }}
   >

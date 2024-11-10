@@ -1,33 +1,33 @@
-<script lang="ts" strictEvents>
-  type KeyType = $$Generic<number | string>;
-  type ValueType = $$Generic;
+<script generics="KeyType extends number | string, ValueType" lang="ts">
+  import type { Snippet } from "svelte";
 
-  interface $$Slots {
-    // eslint-disable-next-line @typescript-eslint/naming-convention -- Attributes should be hyphenated
-    "null-option": Record<string, never>;
-    option: { id: KeyType; value: ValueType };
+  interface Props {
+    nullOption?: Snippet;
+    option: Snippet<[KeyType, ValueType]>;
+    options: Array<[KeyType, ValueType]>;
+    selected: KeyType | null;
   }
 
-  export let options: Array<[KeyType, ValueType]>;
-  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents -- Eslint can't handle $$Generic
-  export let selected: KeyType | null;
+  let { nullOption, option, options, selected = $bindable() }: Props = $props();
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-expressions -- Workaround for sveltejs/language-tools#2268
+  selected;
 
   const name = Math.random().toString();
-  $: nullOptionPresent = $$slots["null-option"];
 </script>
 
-{#if nullOptionPresent}
+{#if nullOption !== undefined}
   <label>
     <input {name} type="radio" value={null} bind:group={selected} />
-    <span />
-    <slot name="null-option" />
+    <span></span>
+    {@render nullOption()}
   </label>
 {/if}
 {#each options as [id, value] (id)}
   <label>
     <input {name} type="radio" value={id} bind:group={selected} />
-    <span />
-    <slot {id} name="option" {value} />
+    <span></span>
+    {@render option(id, value)}
   </label>
 {/each}
 

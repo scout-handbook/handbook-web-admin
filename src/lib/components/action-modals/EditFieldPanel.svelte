@@ -1,4 +1,4 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import type { Field } from "$lib/interfaces/Field";
 
   import { Action } from "$lib/actions/Action";
@@ -10,17 +10,20 @@
   import NameInput from "$lib/components/forms/NameInput.svelte";
   import SidePanel from "$lib/components/SidePanel.svelte";
   import SidePanelImageSelector from "$lib/components/SidePanelImageSelector.svelte";
-  import { apiUri } from "$lib/stores";
   import { queryClient } from "$lib/utils/queryClient";
   import { createMutation } from "@tanstack/svelte-query";
 
-  export let field: Field;
-  export let fieldId: string;
+  interface Props {
+    field: Field;
+    fieldId: string;
+  }
 
-  let { description, icon, image, name } = field;
-  let imageSelectorOpen = false;
-  let iconSelectorOpen = false;
-  let donePromise: Promise<void> | null = null;
+  let { field, fieldId }: Props = $props();
+
+  let { description, icon, image, name } = $state(field);
+  let imageSelectorOpen = $state(false);
+  let iconSelectorOpen = $state(false);
+  let donePromise: Promise<void> | null = $state(null);
 
   const mutation = createMutation({
     onMutate: async () => {
@@ -57,7 +60,7 @@
     } else {
       donePromise = new ActionQueue([
         new Action(
-          `${$apiUri}/v1.0/field/${encodeURIComponent(fieldId)}`,
+          `${CONFIG["api-uri"]}/v1.0/field/${encodeURIComponent(fieldId)}`,
           "PUT",
           { description, icon, image, name },
         ),
@@ -72,22 +75,22 @@
 
 {#if imageSelectorOpen}
   <SidePanelImageSelector
-    on:cancel={() => {
+    oncancel={() => {
       imageSelectorOpen = false;
     }}
-    on:select={(event) => {
-      image = event.detail;
+    onselect={(id) => {
+      image = id;
       imageSelectorOpen = false;
     }}
   />
 {/if}
 {#if iconSelectorOpen}
   <SidePanelImageSelector
-    on:cancel={() => {
+    oncancel={() => {
       iconSelectorOpen = false;
     }}
-    on:select={(event) => {
-      icon = event.detail;
+    onselect={(id) => {
+      icon = id;
       iconSelectorOpen = false;
     }}
   />
@@ -98,31 +101,31 @@
   <SidePanel>
     <Button
       icon="cancel"
-      yellow
-      on:click={() => {
+      onclick={() => {
         history.back();
       }}
+      yellow
     >
       Zrušit
     </Button>
-    <Button green icon="floppy" on:click={saveCallback}>Uložit</Button>
+    <Button green icon="floppy" onclick={saveCallback}>Uložit</Button>
     <h1>Upravit oblast</h1>
     <form>
       <NameInput bind:value={name} />
       <DescriptionInput bind:value={description} />
       <ImageInput
         name="Náhledový obrázek"
-        value={image}
-        on:select={() => {
+        onselect={() => {
           imageSelectorOpen = true;
         }}
+        value={image}
       />
       <ImageInput
         name="Ikona"
-        value={icon}
-        on:select={() => {
+        onselect={() => {
           iconSelectorOpen = true;
         }}
+        value={icon}
       />
     </form>
   </SidePanel>

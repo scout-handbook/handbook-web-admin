@@ -1,10 +1,14 @@
-<script lang="ts" strictEvents>
-  export let darkBackground = false;
-  export let inline = false;
+<script lang="ts">
+  interface Props {
+    darkBackground?: boolean;
+    inline?: boolean;
+  }
+
+  let { darkBackground = false, inline = false }: Props = $props();
 </script>
 
 <div class:container={inline}>
-  <div class="indicator" class:dark-background={darkBackground} />
+  <div class="indicator" class:dark-background={darkBackground}></div>
 </div>
 
 <style>

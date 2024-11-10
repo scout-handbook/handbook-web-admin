@@ -1,10 +1,14 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import { compileMarkdown } from "$lib/utils/compileMarkdown";
 
-  export let name: string;
-  export let body: string;
+  interface Props {
+    body: string;
+    name: string;
+  }
 
-  let html = "";
+  let { body, name }: Props = $props();
+
+  let html = $state("");
 
   function refreshPreview(): void {
     void compileMarkdown(body).then((compiled) => {
@@ -16,8 +20,10 @@
     refreshPreview();
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-expressions -- Incorrect with svelte reactive statements
-  $: name && body && onChange();
+  $effect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions -- This is a way of running the effect on variable change
+    name && body && onChange();
+  });
 
   refreshPreview();
 </script>

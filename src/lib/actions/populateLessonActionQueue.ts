@@ -1,8 +1,6 @@
 import type { ActionQueue } from "$lib/actions/ActionQueue";
 
 import { Action } from "$lib/actions/Action";
-import { apiUri } from "$lib/stores";
-import { get } from "svelte/store";
 
 function arrayEquals<T>(a: Array<T>, b: Array<T>): boolean {
   return a.length === b.length && a.every((v, i) => v === b[i]);
@@ -20,7 +18,7 @@ export function populateField(
   const encodedID = lessonID !== null ? encodeURIComponent(lessonID) : "{id}";
   actionQueue.actions.push(
     new Action(
-      `${get(apiUri)}/v1.0/lesson/${encodedID}/field`,
+      `${CONFIG["api-uri"]}/v1.0/lesson/${encodedID}/field`,
       "PUT",
       field !== null
         ? {
@@ -42,9 +40,13 @@ export function populateCompetences(
   }
   const encodedID = lessonID !== null ? encodeURIComponent(lessonID) : "{id}";
   actionQueue.actions.push(
-    new Action(`${get(apiUri)}/v1.0/lesson/${encodedID}/competence`, "PUT", {
-      competence: competences.map(encodeURIComponent),
-    }),
+    new Action(
+      `${CONFIG["api-uri"]}/v1.0/lesson/${encodedID}/competence`,
+      "PUT",
+      {
+        competence: competences.map(encodeURIComponent),
+      },
+    ),
   );
 }
 
@@ -59,7 +61,7 @@ export function populateGroups(
   }
   const encodedID = lessonID !== null ? encodeURIComponent(lessonID) : "{id}";
   actionQueue.actions.push(
-    new Action(`${get(apiUri)}/v1.0/lesson/${encodedID}/group`, "PUT", {
+    new Action(`${CONFIG["api-uri"]}/v1.0/lesson/${encodedID}/group`, "PUT", {
       group: groups.map(encodeURIComponent),
     }),
   );
