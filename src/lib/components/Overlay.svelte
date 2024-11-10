@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { fade } from "$lib/utils/transition";
+  import { fade } from "svelte/transition";
 
   interface Props {
     onclick?(this: void): void;
