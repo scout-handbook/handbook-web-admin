@@ -6,8 +6,8 @@ import type { ExceptionHandler } from "$lib/interfaces/ExceptionHandler";
 import type { Payload } from "$lib/interfaces/Payload";
 import type { RequestResponse } from "$lib/interfaces/RequestResponse";
 
+import { globalUI } from "$lib/globalUI.svelte";
 import { reAuthSuspended } from "$lib/reAuthSuspension.svelte";
-import { globalDialogMessage } from "$lib/stores";
 import { buildQuery } from "$lib/utils/buildQuery";
 
 function isSuccessResponse<T extends RequestResponse>(
@@ -24,9 +24,8 @@ export function reAuth(): void {
 
 export const authFailHandler: ExceptionHandler = {
   AuthenticationException: (): void => {
-    globalDialogMessage.set(
-      "Proběhlo automatické odhlášení. Přihlašte se prosím a zkuste to znovu.",
-    );
+    globalUI.dialogMessage =
+      "Proběhlo automatické odhlášení. Přihlašte se prosím a zkuste to znovu.";
   },
 };
 
@@ -105,11 +104,9 @@ export async function request<T extends RequestResponse>(
     throw new Error();
   } else {
     if ("message" in response) {
-      globalDialogMessage.set(
-        `Nastala neznámá chyba. Chybová hláška: ${response.message}`,
-      );
+      globalUI.dialogMessage = `Nastala neznámá chyba. Chybová hláška: ${response.message}`;
     } else {
-      globalDialogMessage.set("Nastala neznámá chyba.");
+      globalUI.dialogMessage = "Nastala neznámá chyba.";
     }
     throw new Error();
   }

@@ -7,7 +7,7 @@ import {
   deserializeAction,
   serializeAction,
 } from "$lib/actions/Action";
-import { globalDialogMessage, globalLoadingIndicator } from "$lib/stores";
+import { globalUI } from "$lib/globalUI.svelte";
 import { queryClient } from "$lib/utils/queryClient";
 import { request } from "$lib/utils/request";
 
@@ -27,9 +27,8 @@ export class ActionQueue {
         `${CONFIG["api-uri"]}/v1.0/login?return-uri=${window.location.pathname}`,
       );
     } else {
-      globalDialogMessage.set(
-        "Byl jste odhlášen a akce se nepodařila. Přihlašte se prosím a zkuste to znovu.",
-      );
+      globalUI.dialogMessage =
+        "Byl jste odhlášen a akce se nepodařila. Přihlašte se prosím a zkuste to znovu.";
     }
   }
 
@@ -82,11 +81,11 @@ export function setupActionQueue(): void {
     ),
     true,
   );
-  globalLoadingIndicator.set(true);
+  globalUI.loadingIndicator = true;
   void aq.dispatch().then(() => {
     void queryClient.invalidateQueries();
     void goto(`${base}/${CONFIG["admin-uri"].split("/").slice(3).join("/")}`);
-    globalLoadingIndicator.set(false);
-    globalDialogMessage.set("Akce byla úspěšná");
+    globalUI.loadingIndicator = false;
+    globalUI.dialogMessage = "Akce byla úspěšná";
   });
 }
