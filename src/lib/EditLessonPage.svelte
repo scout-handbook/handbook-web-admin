@@ -14,8 +14,9 @@
   import DoneDialog from "$lib/components/DoneDialog.svelte";
   import LessonEditor from "$lib/components/LessonEditor.svelte";
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
-  import { afterReAuthAction, globalDialogMessage } from "$lib/stores";
+  import { globalDialogMessage } from "$lib/stores";
   import { get } from "$lib/utils/arrayUtils";
+  import { afterRefreshCallback } from "$lib/utils/loginRefresh.svelte";
   import { queryClient } from "$lib/utils/queryClient";
   import { reAuth, request } from "$lib/utils/request";
   import { createMutation } from "@tanstack/svelte-query";
@@ -167,12 +168,12 @@
   }
 
   onDestroy(() => {
-    afterReAuthAction.set(null);
+    afterRefreshCallback.value = null;
   });
   onMount(() => {
-    afterReAuthAction.set(() => {
+    afterRefreshCallback.value = (): void => {
       lessonEditMutexExtend(lessonID);
-    });
+    };
   });
 
   function destroyMutex(): void {
