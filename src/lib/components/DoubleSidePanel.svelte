@@ -10,7 +10,6 @@
   let { children }: Props = $props();
 </script>
 
-<!-- eslint-disable-next-line svelte/no-inline-styles -->
 <div transition:fly|global={{ duration: 300, x: 939 }}>
   {@render children()}
 </div>

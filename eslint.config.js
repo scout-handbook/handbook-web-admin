@@ -206,7 +206,12 @@ export default tseslint.config(
       "svelte/no-extra-reactive-curlies": "error",
       "svelte/no-goto-without-base": "error",
       "svelte/no-ignored-unsubscribe": "error",
-      "svelte/no-inline-styles": "error",
+      "svelte/no-inline-styles": [
+        "error",
+        {
+          allowTransitions: true,
+        },
+      ],
       "svelte/no-store-async": "error",
       "svelte/no-target-blank": "error",
       "svelte/no-unused-class-name": [
