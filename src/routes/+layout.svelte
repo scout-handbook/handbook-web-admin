@@ -1,28 +1,29 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import "$lib/font/fontello.css";
   import "@fontsource/open-sans/400.css";
   import "@fontsource/open-sans/400-italic.css";
   import "@fontsource/open-sans/700.css";
   import "@fontsource/open-sans/700-italic.css";
+
+  import type { Snippet } from "svelte";
+
   import { base } from "$app/paths";
   import { setupActionQueue } from "$lib/actions/ActionQueue";
   import Dialog from "$lib/components/Dialog.svelte";
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import Overlay from "$lib/components/Overlay.svelte";
-  import {
-    globalDialogMessage,
-    globalLoadingIndicator,
-    siteName,
-  } from "$lib/stores";
+  import { globalUI } from "$lib/globalUI.svelte";
   import { checkLogin } from "$lib/utils/checkLogin";
   import { compileMarkdownSetup } from "$lib/utils/compileMarkdown";
-  import { loginRefreshSetup } from "$lib/utils/loginRefresh";
+  import { loginRefreshSetup } from "$lib/utils/loginRefresh.svelte";
   import { queryClient } from "$lib/utils/queryClient";
   import { QueryClientProvider } from "@tanstack/svelte-query";
 
-  interface $$Slots {
-    default: Record<string, never>;
+  interface Props {
+    children: Snippet;
   }
+
+  let { children }: Props = $props();
 
   checkLogin();
   compileMarkdownSetup();
@@ -31,7 +32,7 @@
 </script>
 
 <svelte:head>
-  <title>{$siteName}</title>
+  <title>{CONFIG["site-name"]}</title>
   <link
     href="{base}/apple-touch-icon.png"
     rel="apple-touch-icon"
@@ -55,21 +56,21 @@
 </svelte:head>
 
 <QueryClientProvider client={queryClient}>
-  {#if $globalLoadingIndicator}
+  {#if globalUI.loadingIndicator}
     <Overlay />
     <LoadingIndicator darkBackground />
   {/if}
-  {#if $globalDialogMessage !== null}
+  {#if globalUI.dialogMessage !== null}
     <Dialog
       confirmButtonText="OK"
-      on:confirm={() => {
-        globalDialogMessage.set(null);
+      onconfirm={() => {
+        globalUI.dialogMessage = null;
       }}
     >
-      {$globalDialogMessage}
+      {globalUI.dialogMessage}
     </Dialog>
   {/if}
-  <slot />
+  {@render children()}
 </QueryClientProvider>
 
 <style>

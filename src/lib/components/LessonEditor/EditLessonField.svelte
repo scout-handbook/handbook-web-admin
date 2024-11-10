@@ -1,39 +1,47 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import Button from "$lib/components/Button.svelte";
   import RadioGroup from "$lib/components/forms/RadioGroup.svelte";
   import FieldProvider from "$lib/components/swr-wrappers/FieldProvider.svelte";
 
-  export let field: string | null;
+  interface Props {
+    field: string | null;
+  }
+
+  let { field = $bindable() }: Props = $props();
 
   const initialField = field;
 </script>
 
 <Button
   icon="cancel"
-  yellow
-  on:click={() => {
+  onclick={() => {
     field = initialField;
     history.back();
   }}
+  yellow
 >
   Zrušit
 </Button>
 <Button
   green
   icon="floppy"
-  on:click={() => {
+  onclick={() => {
     history.back();
   }}>Uložit</Button
 >
 <h1>Změnit oblast</h1>
 <form>
-  <FieldProvider let:fields>
-    <RadioGroup options={fields} bind:selected={field}>
-      <span slot="null-option" class="anonymous">Nezařazeno</span>
-      <span slot="option" let:value={currentField}>
-        {currentField.name}
-      </span>
-    </RadioGroup>
+  <FieldProvider>
+    {#snippet children(_, fields)}
+      <RadioGroup options={fields} bind:selected={field}>
+        {#snippet nullOption()}
+          <span class="anonymous">Nezařazeno</span>
+        {/snippet}
+        {#snippet option(_2, currentField)}
+          {currentField.name}
+        {/snippet}
+      </RadioGroup>
+    {/snippet}
   </FieldProvider>
 </form>
 

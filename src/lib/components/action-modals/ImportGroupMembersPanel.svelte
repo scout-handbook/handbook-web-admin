@@ -1,4 +1,4 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import type { Event } from "$lib/interfaces/Event";
   import type { Group } from "$lib/interfaces/Group";
   import type { Participant } from "$lib/interfaces/Participant";
@@ -12,20 +12,23 @@
   import RadioGroup from "$lib/components/forms/RadioGroup.svelte";
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import SidePanel from "$lib/components/SidePanel.svelte";
-  import { apiUri } from "$lib/stores";
   import { queryClient } from "$lib/utils/queryClient";
   import { authFailHandler, reAuth, request } from "$lib/utils/request";
   import { createMutation } from "@tanstack/svelte-query";
 
-  export let group: Group;
-  export let groupId: string;
+  interface Props {
+    group: Group;
+    groupId: string;
+  }
 
-  let error = "";
-  let step = "event-selection-loading";
-  let eventList: Array<Event> = [];
-  let selectedEvent: number;
-  let participantList: Array<Participant> = [];
-  let selectedParticipants: Array<number> = [];
+  let { group, groupId }: Props = $props();
+
+  let error = $state("");
+  let step = $state("event-selection-loading");
+  let eventList: Array<Event> = $state([]);
+  let selectedEvent: number | null = $state(null);
+  let participantList: Array<Participant> = $state([]);
+  let selectedParticipants: Array<number> = $state([]);
 
   const mutation = createMutation({
     onMutate: async () => {
@@ -46,7 +49,7 @@
   });
 
   void request<Array<Event>>(
-    `${$apiUri}/v1.0/event`,
+    `${CONFIG["api-uri"]}/v1.0/event`,
     "GET",
     {},
     {
@@ -72,12 +75,12 @@
   }
 
   function getParticipantList(): void {
-    if (!selectedEvent) {
+    if (selectedEvent === null) {
       return;
     }
     step = "participant-selection-loading";
     const participantPromise = request<Array<Participant>>(
-      `${$apiUri}/v1.0/event/${selectedEvent.toString()}/participant`,
+      `${CONFIG["api-uri"]}/v1.0/event/${selectedEvent.toString()}/participant`,
       "GET",
       {},
       {
@@ -88,7 +91,7 @@
       },
     );
     const userPromise = request<UserListResponse>(
-      `${$apiUri}/v1.0/user`,
+      `${CONFIG["api-uri"]}/v1.0/user`,
       "GET",
       // eslint-disable-next-line @typescript-eslint/naming-convention -- HTTP argument
       { group: groupId, page: 1, "per-page": 1000 },
@@ -116,7 +119,7 @@
     void Promise.all(
       selectedParticipants.map(async (participantId) =>
         request(
-          `${$apiUri}/v1.0/user`,
+          `${CONFIG["api-uri"]}/v1.0/user`,
           "POST",
           {
             id: participantId,
@@ -127,7 +130,7 @@
           authFailHandler,
         ).then(async () =>
           request(
-            `${$apiUri}/v1.0/user/${participantId.toString()}/group`,
+            `${CONFIG["api-uri"]}/v1.0/user/${participantId.toString()}/group`,
             "PUT",
             { group: groupId },
             authFailHandler,
@@ -144,7 +147,7 @@
 {#if step === "done"}
   <Dialog
     confirmButtonText="OK"
-    on:confirm={() => {
+    onconfirm={() => {
       history.back();
     }}
   >
@@ -153,7 +156,7 @@
 {:else if error !== ""}
   <Dialog
     confirmButtonText="OK"
-    on:confirm={() => {
+    onconfirm={() => {
       history.back();
     }}
   >
@@ -163,17 +166,17 @@
   <SidePanel>
     <Button
       icon="cancel"
-      yellow
-      on:click={() => {
+      onclick={() => {
         history.back();
       }}
+      yellow
     >
       Zrušit
     </Button>
     <Button
       green
       icon="fast-fw"
-      on:click={() => {
+      onclick={() => {
         if (step === "event-selection") {
           getParticipantList();
         } else if (step === "participant-selection") {
@@ -193,9 +196,9 @@
           options={eventList.map((event) => [event.id, event.name])}
           bind:selected={selectedEvent}
         >
-          <span slot="option" let:value={name}>
+          {#snippet option(_, name)}
             {name}
-          </span>
+          {/snippet}
         </RadioGroup>
       </form>
     {:else if step === "participant-selection"}
@@ -207,9 +210,10 @@
             participant.name,
           ])}
           bind:selected={selectedParticipants}
-          let:value={name}
         >
-          {name}
+          {#snippet children(name)}
+            {name}
+          {/snippet}
         </CheckboxGroup>
       </form>
     {/if}

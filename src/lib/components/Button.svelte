@@ -1,35 +1,32 @@
-<script lang="ts" strictEvents>
-  import { createEventDispatcher } from "svelte";
+<script lang="ts">
+  import type { Snippet } from "svelte";
 
-  interface $$Slots {
-    default: Record<string, never>;
+  interface Props {
+    children: Snippet;
+    cyan?: boolean;
+    green?: boolean;
+    icon?: string;
+    onclick(this: void): void;
+    red?: boolean;
+    yellow?: boolean;
   }
 
-  export let cyan = false;
-  export let green = false;
-  export let red = false;
-  export let yellow = false;
-  export let icon = "";
-
-  const dispatch = createEventDispatcher<{ click: null }>();
-
-  function callback(): void {
-    dispatch("click");
-  }
+  let {
+    children,
+    cyan = false,
+    green = false,
+    icon = "",
+    onclick,
+    red = false,
+    yellow = false,
+  }: Props = $props();
 </script>
 
-<button
-  class:cyan
-  class:green
-  class:red
-  class:yellow
-  type="button"
-  on:click={callback}
->
+<button class:cyan class:green class:red class:yellow {onclick} type="button">
   {#if icon !== ""}
-    <i class={`icon-${icon}`} />
+    <i class={`icon-${icon}`}></i>
   {/if}
-  <slot />
+  {@render children()}
 </button>
 
 <style>

@@ -1,16 +1,15 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import Button from "$lib/components/Button.svelte";
   import Dialog from "$lib/components/Dialog.svelte";
   import FileInput from "$lib/components/forms/FileInput.svelte";
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import Overlay from "$lib/components/Overlay.svelte";
   import SidePanel from "$lib/components/SidePanel.svelte";
-  import { apiUri } from "$lib/stores";
   import { queryClient } from "$lib/utils/queryClient";
   import { authFailHandler, request } from "$lib/utils/request";
 
-  let stage: "done" | "error" | "select" | "upload" = "select";
-  let files: FileList | undefined;
+  let stage: "done" | "error" | "select" | "upload" = $state("select");
+  let files: FileList | undefined = $state();
 
   function saveCallback(): void {
     if (files === undefined || files.length === 0) {
@@ -25,7 +24,7 @@
     const formData = new FormData();
     formData.append("image", files[0]);
     void request(
-      `${$apiUri}/v1.0/image`,
+      `${CONFIG["api-uri"]}/v1.0/image`,
       "POST",
       formData,
       authFailHandler,
@@ -42,14 +41,14 @@
   <SidePanel>
     <Button
       icon="cancel"
-      yellow
-      on:click={() => {
+      onclick={() => {
         history.back();
       }}
+      yellow
     >
       Zrušit
     </Button>
-    <Button green icon="floppy" on:click={saveCallback}>Uložit</Button>
+    <Button green icon="floppy" onclick={saveCallback}>Uložit</Button>
     <h1>Nahrát obrázek</h1>
     <form>
       <FileInput bind:files />
@@ -61,7 +60,7 @@
 {:else if stage === "done"}
   <Dialog
     confirmButtonText="OK"
-    on:confirm={() => {
+    onconfirm={() => {
       history.back();
     }}
   >
@@ -70,7 +69,7 @@
 {:else}
   <Dialog
     confirmButtonText="OK"
-    on:confirm={() => {
+    onconfirm={() => {
       history.back();
     }}
   >

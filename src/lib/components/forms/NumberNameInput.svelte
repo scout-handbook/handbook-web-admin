@@ -1,5 +1,9 @@
-<script lang="ts" strictEvents>
-  export let value: string;
+<script lang="ts">
+  interface Props {
+    value: string;
+  }
+
+  let { value = $bindable() }: Props = $props();
 </script>
 
 <input autocomplete="off" type="text" bind:value />

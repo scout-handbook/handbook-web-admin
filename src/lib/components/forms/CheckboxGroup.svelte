@@ -1,20 +1,23 @@
-<script lang="ts" strictEvents>
-  type KeyType = $$Generic<number | string>;
-  type ValueType = $$Generic;
+<script generics="KeyType extends number | string, ValueType" lang="ts">
+  import type { Snippet } from "svelte";
 
-  export let options: Array<[KeyType, ValueType]>;
-  export let selected: Array<KeyType>;
-
-  interface $$Slots {
-    default: { id: KeyType; value: ValueType };
+  interface Props {
+    children: Snippet<[KeyType, ValueType]>;
+    options: Array<[KeyType, ValueType]>;
+    selected: Array<KeyType>;
   }
+
+  let { children, options, selected = $bindable() }: Props = $props();
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-expressions -- Workaround for sveltejs/language-tools#2268
+  selected;
 </script>
 
 {#each options as [id, value] (id)}
   <label>
     <input type="checkbox" value={id} bind:group={selected} />
-    <span />
-    <slot {id} {value} />
+    <span></span>
+    {@render children(id, value)}
   </label>
 {/each}
 

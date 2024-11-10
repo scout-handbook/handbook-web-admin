@@ -1,4 +1,4 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import { Action } from "$lib/actions/Action";
   import { ActionQueue } from "$lib/actions/ActionQueue";
   import Button from "$lib/components/Button.svelte";
@@ -8,21 +8,29 @@
   import NameInput from "$lib/components/forms/NameInput.svelte";
   import SidePanel from "$lib/components/SidePanel.svelte";
   import SidePanelImageSelector from "$lib/components/SidePanelImageSelector.svelte";
-  import { apiUri } from "$lib/stores";
   import { queryClient } from "$lib/utils/queryClient";
 
-  export let name = "Nová oblast";
-  export let description = "Popis nové oblasti";
-  export let image = "00000000-0000-0000-0000-000000000000";
-  export let icon = "00000000-0000-0000-0000-000000000000";
+  interface Props {
+    description?: string;
+    icon?: string;
+    image?: string;
+    name?: string;
+  }
 
-  let imageSelectorOpen = false;
-  let iconSelectorOpen = false;
-  let donePromise: Promise<void> | null = null;
+  let {
+    description = $bindable("Popis nové oblasti"),
+    icon = $bindable("00000000-0000-0000-0000-000000000000"),
+    image = $bindable("00000000-0000-0000-0000-000000000000"),
+    name = $bindable("Nová oblast"),
+  }: Props = $props();
+
+  let imageSelectorOpen = $state(false);
+  let iconSelectorOpen = $state(false);
+  let donePromise: Promise<void> | null = $state(null);
 
   function saveCallback(): void {
     donePromise = new ActionQueue([
-      new Action(`${$apiUri}/v1.0/field`, "POST", {
+      new Action(`${CONFIG["api-uri"]}/v1.0/field`, "POST", {
         description: encodeURIComponent(description),
         icon: encodeURIComponent(icon),
         image: encodeURIComponent(image),
@@ -40,22 +48,22 @@
 
 {#if imageSelectorOpen}
   <SidePanelImageSelector
-    on:cancel={() => {
+    oncancel={() => {
       imageSelectorOpen = false;
     }}
-    on:select={(event) => {
-      image = event.detail;
+    onselect={(id) => {
+      image = id;
       imageSelectorOpen = false;
     }}
   />
 {/if}
 {#if iconSelectorOpen}
   <SidePanelImageSelector
-    on:cancel={() => {
+    oncancel={() => {
       iconSelectorOpen = false;
     }}
-    on:select={(event) => {
-      icon = event.detail;
+    onselect={(id) => {
+      icon = id;
       iconSelectorOpen = false;
     }}
   />
@@ -66,29 +74,29 @@
   <SidePanel>
     <Button
       icon="cancel"
-      yellow
-      on:click={() => {
+      onclick={() => {
         history.back();
-      }}>Zrušit</Button
+      }}
+      yellow>Zrušit</Button
     >
-    <Button green icon="floppy" on:click={saveCallback}>Uložit</Button>
+    <Button green icon="floppy" onclick={saveCallback}>Uložit</Button>
     <h1>Přidat oblast</h1>
     <form>
       <NameInput bind:value={name} />
       <DescriptionInput bind:value={description} />
       <ImageInput
         name="Náhledový obrázek"
-        value={image}
-        on:select={() => {
+        onselect={() => {
           imageSelectorOpen = true;
         }}
+        value={image}
       />
       <ImageInput
         name="Ikona"
-        value={icon}
-        on:select={() => {
+        onselect={() => {
           iconSelectorOpen = true;
         }}
+        value={icon}
       />
     </form>
   </SidePanel>

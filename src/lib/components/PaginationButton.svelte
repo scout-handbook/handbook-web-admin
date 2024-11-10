@@ -1,23 +1,17 @@
-<script lang="ts" strictEvents>
-  import { createEventDispatcher } from "svelte";
+<script lang="ts">
+  import type { Snippet } from "svelte";
 
-  interface $$Slots {
-    default: Record<string, never>;
+  interface Props {
+    active?: boolean;
+    children: Snippet;
+    onclick?(this: void): void;
   }
 
-  export let active = false;
-
-  const dispatch = createEventDispatcher<{ click: null }>();
+  let { active = false, children, onclick }: Props = $props();
 </script>
 
-<button
-  class:active
-  type="button"
-  on:click={() => {
-    dispatch("click");
-  }}
->
-  <slot />
+<button class:active {onclick} type="button">
+  {@render children()}
 </button>
 
 <style>

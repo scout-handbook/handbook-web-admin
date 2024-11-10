@@ -1,4 +1,4 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import Button from "$lib/components/Button.svelte";
   import DoubleSidePanel from "$lib/components/DoubleSidePanel.svelte";
   import ImageGridCell from "$lib/components/ImageGridCell.svelte";
@@ -6,40 +6,38 @@
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import Pagination from "$lib/components/Pagination.svelte";
   import { createQuery } from "@tanstack/svelte-query";
-  import { createEventDispatcher } from "svelte";
 
-  const dispatch = createEventDispatcher<{ cancel: null; select: string }>();
+  interface Props {
+    oncancel(this: void): void;
+    onselect(this: void, id: string): void;
+  }
 
-  let page = 1;
+  let { oncancel, onselect }: Props = $props();
+
+  let page = $state(1);
   const perPage = 15;
-  $: pageStart = perPage * (page - 1);
-  $: pageEnd = pageStart + perPage;
+  let pageStart = $derived(perPage * (page - 1));
+  let pageEnd = $derived(pageStart + perPage);
 
   const imageQuery = createQuery<Array<string>>({
     queryKey: ["v1.0", "image"],
   });
-  $: totalImageCount = $imageQuery.data?.length;
-  $: currentPageList = $imageQuery.data?.slice(pageStart, pageEnd);
+  let totalImageCount = $derived($imageQuery.data?.length);
+  let currentPageList = $derived($imageQuery.data?.slice(pageStart, pageEnd));
 </script>
 
 <DoubleSidePanel>
   {#if currentPageList === undefined || totalImageCount === undefined}
     <LoadingIndicator />
   {:else}
-    <Button
-      icon="cancel"
-      yellow
-      on:click={() => {
-        dispatch("cancel");
-      }}>Zrušit</Button
-    >
+    <Button icon="cancel" onclick={oncancel} yellow>Zrušit</Button>
     <div class="container">
       {#each currentPageList as image (image)}
         <ImageGridCell>
           <ImageThumbnail
             id={image}
-            on:click={() => {
-              dispatch("select", image);
+            onclick={() => {
+              onselect(image);
             }}
           />
         </ImageGridCell>

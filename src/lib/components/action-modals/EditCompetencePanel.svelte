@@ -1,4 +1,4 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import type { Competence } from "$lib/interfaces/Competence";
 
   import { Action } from "$lib/actions/Action";
@@ -9,15 +9,18 @@
   import NameInput from "$lib/components/forms/NameInput.svelte";
   import NumberNameInput from "$lib/components/forms/NumberNameInput.svelte";
   import SidePanel from "$lib/components/SidePanel.svelte";
-  import { apiUri } from "$lib/stores";
   import { queryClient } from "$lib/utils/queryClient";
   import { createMutation } from "@tanstack/svelte-query";
 
-  export let competence: Competence;
-  export let competenceId: string;
+  interface Props {
+    competence: Competence;
+    competenceId: string;
+  }
 
-  let { description, name, number } = competence;
-  let donePromise: Promise<void> | null = null;
+  let { competence, competenceId }: Props = $props();
+
+  let { description, name, number } = $state(competence);
+  let donePromise: Promise<void> | null = $state(null);
 
   const mutation = createMutation({
     onMutate: async () => {
@@ -50,7 +53,7 @@
     } else {
       donePromise = new ActionQueue([
         new Action(
-          `${$apiUri}/v1.0/competence/${encodeURIComponent(competenceId)}`,
+          `${CONFIG["api-uri"]}/v1.0/competence/${encodeURIComponent(competenceId)}`,
           "PUT",
           { description, name, number },
         ),
@@ -69,14 +72,14 @@
   <SidePanel>
     <Button
       icon="cancel"
-      yellow
-      on:click={() => {
+      onclick={() => {
         history.back();
       }}
+      yellow
     >
       Zrušit
     </Button>
-    <Button green icon="floppy" on:click={saveCallback}>Uložit</Button>
+    <Button green icon="floppy" onclick={saveCallback}>Uložit</Button>
     <h1>Upravit bod</h1>
     <form>
       <span class="competence-heading">Bod</span>

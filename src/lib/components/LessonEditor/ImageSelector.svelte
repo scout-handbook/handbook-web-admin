@@ -1,42 +1,39 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import Button from "$lib/components/Button.svelte";
   import ImageGridCell from "$lib/components/ImageGridCell.svelte";
   import ImageThumbnail from "$lib/components/ImageThumbnail.svelte";
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import Pagination from "$lib/components/Pagination.svelte";
   import { createQuery } from "@tanstack/svelte-query";
-  import { createEventDispatcher } from "svelte";
 
-  export let imageSelectorOpen: boolean;
+  interface Props {
+    closeImageSelector(this: void): void;
+    imageSelectorOpen: boolean;
+    oninsert(this: void, id: string): void;
+  }
 
-  const dispatch = createEventDispatcher<{ insert: string }>();
+  let { closeImageSelector, imageSelectorOpen, oninsert }: Props = $props();
 
-  let page = 1;
+  let page = $state(1);
   const perPage = 15;
-  $: pageStart = perPage * (page - 1);
-  $: pageEnd = pageStart + perPage;
+  let pageStart = $derived(perPage * (page - 1));
+  let pageEnd = $derived(pageStart + perPage);
 
   const imageQuery = createQuery<Array<string>>({
     queryKey: ["v1.0", "image"],
   });
-  $: totalImageCount = $imageQuery.data?.length;
-  $: currentPageList = $imageQuery.data?.slice(pageStart, pageEnd);
+  let totalImageCount = $derived($imageQuery.data?.length);
+  let currentPageList = $derived($imageQuery.data?.slice(pageStart, pageEnd));
 </script>
 
 <div class="selector" class:selector-open={imageSelectorOpen}>
   <div class="button-wrapper">
-    <Button
-      icon="up-open"
-      yellow
-      on:click={() => {
-        imageSelectorOpen = false;
-      }}>Zavřít</Button
-    >
+    <Button icon="up-open" onclick={closeImageSelector} yellow>Zavřít</Button>
     <!-- TODO: Re-enable uploads in editor without discarding its contents
     <Button
-      icon="plus"
       green
-      on:click={() => {
+      icon="plus"
+      onclick={() => {
         addImage(true); // Removed
       }}>
       Nahrát
@@ -52,9 +49,9 @@
           <ImageGridCell>
             <ImageThumbnail
               id={image}
-              on:click={() => {
-                dispatch("insert", image);
-                imageSelectorOpen = false;
+              onclick={() => {
+                oninsert(image);
+                closeImageSelector();
               }}
             />
           </ImageGridCell>

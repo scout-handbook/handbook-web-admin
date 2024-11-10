@@ -1,4 +1,4 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import { page } from "$app/stores";
   import Dialog from "$lib/components/Dialog.svelte";
   import EditorHeader from "$lib/components/LessonEditor/EditorHeader.svelte";
@@ -6,38 +6,52 @@
   import ImageSelector from "$lib/components/LessonEditor/ImageSelector.svelte";
   import LessonSettingsPanel from "$lib/components/LessonEditor/LessonSettingsPanel.svelte";
   import PreviewPane from "$lib/components/LessonEditor/PreviewPane.svelte";
-  import { apiUri, suspendReAuth } from "$lib/stores";
-  import { createEventDispatcher, onDestroy, onMount } from "svelte";
+  import { reAuthSuspended } from "$lib/reAuthSuspension.svelte";
+  import { onDestroy, onMount } from "svelte";
 
   import type { PageStateFix } from "../../app";
 
-  export let id: string | null;
-  export let name: string;
-  export let body: string;
-  export let competences: Array<string>;
-  export let field: string | null;
-  export let groups: Array<string>;
+  interface Props {
+    body: string;
+    competences: Array<string>;
+    field: string | null;
+    groups: Array<string>;
+    id: string | null;
+    name: string;
+    ondiscard(this: void): void;
+    onsave(this: void): void;
+  }
 
-  const dispatch = createEventDispatcher<{ discard: null; save: null }>();
+  let {
+    body = $bindable(),
+    competences = $bindable(),
+    field = $bindable(),
+    groups = $bindable(),
+    id,
+    name = $bindable(),
+    ondiscard,
+    onsave,
+  }: Props = $props();
 
-  $: state = $page.state as PageStateFix;
-  $: view = "view" in state ? state.view : undefined;
+  let pageState = $derived($page.state as PageStateFix);
+  let view = $derived("view" in pageState ? pageState.view : undefined);
 
-  let imageSelectorOpen = false;
-  let discardConfirmation = false;
-  let insertAtCursor: (content: string) => void;
+  let imageSelectorOpen = $state(false);
+  let discardConfirmation = $state(false);
+  let editorPane: { insertAtCursor(content: string): void } | undefined =
+    undefined;
 
-  function insertImage(event: CustomEvent<string>): void {
-    insertAtCursor(
-      `![Text po najetí kurzorem](${$apiUri}/v1.0/image/${event.detail})`,
+  function insertImage(imageId: string): void {
+    editorPane?.insertAtCursor(
+      `![Text po najetí kurzorem](${CONFIG["api-uri"]}/v1.0/image/${imageId})`,
     );
   }
 
   onDestroy(() => {
-    suspendReAuth.set(false);
+    reAuthSuspended.value = false;
   });
   onMount(() => {
-    suspendReAuth.set(true);
+    reAuthSuspended.value = true;
   });
 </script>
 
@@ -45,10 +59,8 @@
   <Dialog
     confirmButtonText="Ano"
     dismissButtonText="Ne"
-    on:confirm={() => {
-      dispatch("discard");
-    }}
-    on:dismiss={() => {
+    onconfirm={ondiscard}
+    ondismiss={() => {
       discardConfirmation = false;
     }}
   >
@@ -68,14 +80,24 @@
 {/if}
 
 <EditorHeader
-  bind:name
-  on:discard={() => {
+  ondiscard={() => {
     discardConfirmation = true;
   }}
-  on:save={() => {
-    dispatch("save");
-  }}
+  {onsave}
+  bind:name
 />
-<ImageSelector bind:imageSelectorOpen on:insert={insertImage} />
-<EditorPane bind:imageSelectorOpen bind:insertAtCursor bind:value={body} />
+<ImageSelector
+  closeImageSelector={() => {
+    imageSelectorOpen = false;
+  }}
+  {imageSelectorOpen}
+  oninsert={insertImage}
+/>
+<EditorPane
+  bind:this={editorPane}
+  openImageSelector={() => {
+    imageSelectorOpen = true;
+  }}
+  bind:value={body}
+/>
 <PreviewPane {name} {body} />

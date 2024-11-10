@@ -1,4 +1,4 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import type { Loginstate } from "$lib/interfaces/Loginstate";
 
   import { pushState } from "$app/navigation";
@@ -10,20 +10,20 @@
   import MainPageContainer from "$lib/components/MainPageContainer.svelte";
   import CompetenceProvider from "$lib/components/swr-wrappers/CompetenceProvider.svelte";
   import TopBar from "$lib/components/TopBar.svelte";
-  import { siteName } from "$lib/stores";
   import { get } from "$lib/utils/arrayUtils";
   import { createQuery } from "@tanstack/svelte-query";
 
   import type { PageStateFix } from "../../app";
 
-  $: state = $page.state as PageStateFix;
+  let state = $derived($page.state as PageStateFix);
 
   const accountQuery = createQuery<Loginstate>({
     queryKey: ["v1.0", "account"],
   });
-  $: adminOrSuperuser =
+  let adminOrSuperuser = $derived(
     $accountQuery.data?.role === "administrator" ||
-    $accountQuery.data?.role === "superuser";
+      $accountQuery.data?.role === "superuser",
+  );
 </script>
 
 <TopBar />
@@ -31,33 +31,37 @@
   {#if state.action === "add-competence"}
     <AddCompetencePanel />
   {:else if state.action === "change-competence"}
-    <CompetenceProvider silent let:competences>
-      {@const competence = get(competences, state.actionPayload.competenceId)}
-      {#if competence !== undefined}
-        <EditCompetencePanel
-          {competence}
-          competenceId={state.actionPayload.competenceId}
-        />
-      {/if}
+    <CompetenceProvider silent>
+      {#snippet children(competences)}
+        {@const competence = get(competences, state.actionPayload.competenceId)}
+        {#if competence !== undefined}
+          <EditCompetencePanel
+            {competence}
+            competenceId={state.actionPayload.competenceId}
+          />
+        {/if}
+      {/snippet}
     </CompetenceProvider>
   {:else if state.action === "delete-competence"}
-    <CompetenceProvider silent let:competences>
-      {@const competence = get(competences, state.actionPayload.competenceId)}
-      {#if competence !== undefined}
-        <DeleteCompetenceDialog
-          {competence}
-          competenceId={state.actionPayload.competenceId}
-        />
-      {/if}
+    <CompetenceProvider silent>
+      {#snippet children(competences)}
+        {@const competence = get(competences, state.actionPayload.competenceId)}
+        {#if competence !== undefined}
+          <DeleteCompetenceDialog
+            {competence}
+            competenceId={state.actionPayload.competenceId}
+          />
+        {/if}
+      {/snippet}
     </CompetenceProvider>
   {/if}
 
-  <h1>{`${$siteName} - Body`}</h1>
+  <h1>{`${CONFIG["site-name"]} - Body`}</h1>
   {#if adminOrSuperuser}
     <Button
       green
       icon="plus"
-      on:click={() => {
+      onclick={() => {
         pushState("", { action: "add-competence" });
       }}
     >
@@ -65,41 +69,43 @@
     </Button>
     <br />
   {/if}
-  <CompetenceProvider let:competences>
-    {#each competences as [id, competence] (id)}
-      <h3>
-        {`${competence.number.toString()}: ${competence.name}`}
-      </h3>
-      {#if adminOrSuperuser}
-        <div class="buttons">
-          <Button
-            cyan
-            icon="pencil"
-            on:click={() => {
-              pushState("", {
-                action: "change-competence",
-                actionPayload: { competenceId: id },
-              });
-            }}
-          >
-            Upravit
-          </Button>
-          <Button
-            icon="trash-empty"
-            red
-            on:click={() => {
-              pushState("", {
-                action: "delete-competence",
-                actionPayload: { competenceId: id },
-              });
-            }}
-          >
-            Smazat
-          </Button>
-        </div>
-      {/if}
-      <div>{competence.description}</div>
-    {/each}
+  <CompetenceProvider>
+    {#snippet children(competences)}
+      {#each competences as [id, competence] (id)}
+        <h3>
+          {`${competence.number.toString()}: ${competence.name}`}
+        </h3>
+        {#if adminOrSuperuser}
+          <div class="buttons">
+            <Button
+              cyan
+              icon="pencil"
+              onclick={() => {
+                pushState("", {
+                  action: "change-competence",
+                  actionPayload: { competenceId: id },
+                });
+              }}
+            >
+              Upravit
+            </Button>
+            <Button
+              icon="trash-empty"
+              onclick={() => {
+                pushState("", {
+                  action: "delete-competence",
+                  actionPayload: { competenceId: id },
+                });
+              }}
+              red
+            >
+              Smazat
+            </Button>
+          </div>
+        {/if}
+        <div>{competence.description}</div>
+      {/each}
+    {/snippet}
   </CompetenceProvider>
 </MainPageContainer>
 

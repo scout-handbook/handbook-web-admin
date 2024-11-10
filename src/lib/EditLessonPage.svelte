@@ -1,4 +1,4 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import type { LockedExceptionResponse } from "$lib/interfaces/APIResponse";
   import type { Field } from "$lib/interfaces/Field";
   import type { Lesson } from "$lib/interfaces/Lesson";
@@ -14,29 +14,40 @@
   import DoneDialog from "$lib/components/DoneDialog.svelte";
   import LessonEditor from "$lib/components/LessonEditor.svelte";
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
-  import { afterReAuthAction, apiUri, globalDialogMessage } from "$lib/stores";
+  import { globalUI } from "$lib/globalUI.svelte";
   import { get } from "$lib/utils/arrayUtils";
+  import { afterRefreshCallback } from "$lib/utils/loginRefresh.svelte";
   import { queryClient } from "$lib/utils/queryClient";
   import { reAuth, request } from "$lib/utils/request";
   import { createMutation } from "@tanstack/svelte-query";
   import { onDestroy, onMount } from "svelte";
 
-  export let lessonID: string;
-  export let fields: Array<[string, Field]>;
-  export let lessons: Array<[string, Lesson]>;
+  interface Props {
+    fields: Array<[string, Field]>;
+    lessonID: string;
+    lessons: Array<[string, Lesson]>;
+  }
 
-  let donePromise: Promise<void> | null = null;
-  let name = get(lessons, lessonID)?.name ?? "";
-  let body = "";
-  let competences: Array<string> = get(lessons, lessonID)?.competences ?? [];
-  let field: string | null =
-    fields.find(([_, item]) => item.lessons.includes(lessonID))?.[0] ?? null;
-  let groups: Array<string> = [];
+  let { fields, lessonID, lessons }: Props = $props();
 
-  const initialName = name;
+  let donePromise: Promise<void> | null = $state(null);
+  let name = $state(get(lessons, lessonID)?.name ?? "");
+  let body = $state("");
+  let competences: Array<string> = $state(
+    get(lessons, lessonID)?.competences ?? [],
+  );
+  let field: string | null = $state(
+    fields.find(([_, item]) => item.lessons.includes(lessonID))?.[0] ?? null,
+  );
+  let groups: Array<string> = $state([]);
+
+  // svelte-ignore state_referenced_locally
+  const initialName = $state.snapshot(name);
   let initialBody = "";
-  const initialCompetences = competences;
-  const initialField = field;
+  // svelte-ignore state_referenced_locally
+  const initialCompetences = $state.snapshot(competences);
+  // svelte-ignore state_referenced_locally
+  const initialField = $state.snapshot(field);
   let initialGroups: Array<string> = [];
 
   const mutation = createMutation({
@@ -85,9 +96,8 @@
 
   const saveExceptionHandler = {
     NotLockedException: (): void => {
-      globalDialogMessage.set(
-        "Kvůli příliš malé aktivitě byla lekce odemknuta a již ji upravil někdo jiný. Zkuste to prosím znovu.",
-      );
+      globalUI.dialogMessage =
+        "Kvůli příliš malé aktivitě byla lekce odemknuta a již ji upravil někdo jiný. Zkuste to prosím znovu.";
     },
   };
   const discardExceptionHandler = { NotFoundException: null };
@@ -96,23 +106,21 @@
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions -- Older browsers don't include this function
     if (navigator.sendBeacon) {
       navigator.sendBeacon(
-        `${$apiUri}/v1.0/mutex-beacon/${encodeURIComponent(id)}`,
+        `${CONFIG["api-uri"]}/v1.0/mutex-beacon/${encodeURIComponent(id)}`,
       );
     }
   }
 
   let lessonDataPromise = Promise.all([
     request(
-      `${$apiUri}/v1.0/mutex/${encodeURIComponent(lessonID)}`,
+      `${CONFIG["api-uri"]}/v1.0/mutex/${encodeURIComponent(lessonID)}`,
       "POST",
       {},
       {
         AuthenticationException: reAuth,
         LockedException: (response: LockedExceptionResponse): void => {
           history.back();
-          globalDialogMessage.set(
-            `Nelze upravovat lekci, protože ji právě upravuje ${response.holder}.`,
-          );
+          globalUI.dialogMessage = `Nelze upravovat lekci, protože ji právě upravuje ${response.holder}.`;
         },
       },
     ).then(() => {
@@ -121,7 +129,7 @@
       };
     }),
     request<Array<string>>(
-      `${$apiUri}/v1.0/lesson/${encodeURIComponent(lessonID)}/group`,
+      `${CONFIG["api-uri"]}/v1.0/lesson/${encodeURIComponent(lessonID)}/group`,
       "GET",
       {},
       {
@@ -132,7 +140,7 @@
       initialGroups = groups;
     }),
     request<string>(
-      `${$apiUri}/v1.0/lesson/${encodeURIComponent(lessonID)}`,
+      `${CONFIG["api-uri"]}/v1.0/lesson/${encodeURIComponent(lessonID)}`,
       "GET",
       {},
       {
@@ -147,7 +155,7 @@
   function lessonEditMutexExtend(id: string): void {
     void new ActionQueue([
       new Action(
-        `${$apiUri}/v1.0/mutex/${encodeURIComponent(id)}`,
+        `${CONFIG["api-uri"]}/v1.0/mutex/${encodeURIComponent(id)}`,
         "PUT",
         undefined,
         undefined,
@@ -157,18 +165,18 @@
   }
 
   onDestroy(() => {
-    afterReAuthAction.set(null);
+    afterRefreshCallback.value = null;
   });
   onMount(() => {
-    afterReAuthAction.set(() => {
+    afterRefreshCallback.value = (): void => {
       lessonEditMutexExtend(lessonID);
-    });
+    };
   });
 
   function destroyMutex(): void {
     void new ActionQueue([
       new Action(
-        `${$apiUri}/v1.0/mutex/${encodeURIComponent(lessonID)}`,
+        `${CONFIG["api-uri"]}/v1.0/mutex/${encodeURIComponent(lessonID)}`,
         "DELETE",
         undefined,
         [ActionCallback.removeBeacon],
@@ -182,7 +190,7 @@
     if (initialName !== name || initialBody !== body) {
       saveActionQueue.actions.push(
         new Action(
-          `${$apiUri}/v1.0/lesson/${encodeURIComponent(lessonID)}`,
+          `${CONFIG["api-uri"]}/v1.0/lesson/${encodeURIComponent(lessonID)}`,
           "PUT",
           {
             body: encodeURIComponent(body),
@@ -222,13 +230,13 @@
   {:then}
     <LessonEditor
       id={lessonID}
+      ondiscard={discard}
+      onsave={save}
       bind:body
       bind:name
       bind:competences
       bind:field
       bind:groups
-      on:discard={discard}
-      on:save={save}
     />
   {/await}
 {/if}

@@ -1,26 +1,25 @@
-<script lang="ts" strictEvents>
+<script lang="ts">
   import Button from "$lib/components/Button.svelte";
-  import { apiUri } from "$lib/stores";
-  import { createEventDispatcher } from "svelte";
 
-  export let name: string;
-  export let value: string;
+  interface Props {
+    name: string;
+    onselect(this: void): void;
+    value: string;
+  }
 
-  const dispatch = createEventDispatcher<{ select: null }>();
+  let { name, onselect, value }: Props = $props();
 </script>
 
 <label>
   <div>{name}:</div>
   <input type="hidden" {value} />
 </label>
-<img alt={name} src={`${$apiUri}/v1.0/image/${value}?quality=thumbnail`} />
+<img
+  alt={name}
+  src={`${CONFIG["api-uri"]}/v1.0/image/${value}?quality=thumbnail`}
+/>
 <br />
-<Button
-  icon="pencil"
-  on:click={() => {
-    dispatch("select");
-  }}>Změnit</Button
->
+<Button icon="pencil" onclick={onselect}>Změnit</Button>
 
 <style>
   div {
