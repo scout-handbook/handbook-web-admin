@@ -15,7 +15,7 @@
   import { globalDialogMessage, globalLoadingIndicator } from "$lib/stores";
   import { checkLogin } from "$lib/utils/checkLogin";
   import { compileMarkdownSetup } from "$lib/utils/compileMarkdown";
-  import { loginRefreshSetup } from "$lib/utils/loginRefresh";
+  import { loginRefreshSetup } from "$lib/utils/loginRefresh.svelte";
   import { queryClient } from "$lib/utils/queryClient";
   import { QueryClientProvider } from "@tanstack/svelte-query";
 
