@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Snippet } from "svelte";
 
-  import { fly } from "$lib/utils/transition";
+  import { fly } from "svelte/transition";
 
   interface Props {
     children: Snippet;
@@ -10,8 +10,7 @@
   let { children }: Props = $props();
 </script>
 
-<!-- eslint-disable-next-line svelte/no-inline-styles -->
-<div transition:fly|global={{ duration: 300, from: "right" }}>
+<div transition:fly|global={{ duration: 300, x: 939 }}>
   {@render children()}
 </div>
 
