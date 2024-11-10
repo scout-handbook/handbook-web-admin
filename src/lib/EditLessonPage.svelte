@@ -14,7 +14,7 @@
   import DoneDialog from "$lib/components/DoneDialog.svelte";
   import LessonEditor from "$lib/components/LessonEditor.svelte";
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
-  import { globalDialogMessage } from "$lib/stores";
+  import { globalUI } from "$lib/globalUI.svelte";
   import { get } from "$lib/utils/arrayUtils";
   import { afterRefreshCallback } from "$lib/utils/loginRefresh.svelte";
   import { queryClient } from "$lib/utils/queryClient";
@@ -96,9 +96,8 @@
 
   const saveExceptionHandler = {
     NotLockedException: (): void => {
-      globalDialogMessage.set(
-        "Kvůli příliš malé aktivitě byla lekce odemknuta a již ji upravil někdo jiný. Zkuste to prosím znovu.",
-      );
+      globalUI.dialogMessage =
+        "Kvůli příliš malé aktivitě byla lekce odemknuta a již ji upravil někdo jiný. Zkuste to prosím znovu.";
     },
   };
   const discardExceptionHandler = { NotFoundException: null };
@@ -121,9 +120,7 @@
         AuthenticationException: reAuth,
         LockedException: (response: LockedExceptionResponse): void => {
           history.back();
-          globalDialogMessage.set(
-            `Nelze upravovat lekci, protože ji právě upravuje ${response.holder}.`,
-          );
+          globalUI.dialogMessage = `Nelze upravovat lekci, protože ji právě upravuje ${response.holder}.`;
         },
       },
     ).then(() => {

@@ -12,7 +12,7 @@
   import Dialog from "$lib/components/Dialog.svelte";
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import Overlay from "$lib/components/Overlay.svelte";
-  import { globalDialogMessage, globalLoadingIndicator } from "$lib/stores";
+  import { globalUI } from "$lib/globalUI.svelte";
   import { checkLogin } from "$lib/utils/checkLogin";
   import { compileMarkdownSetup } from "$lib/utils/compileMarkdown";
   import { loginRefreshSetup } from "$lib/utils/loginRefresh.svelte";
@@ -56,18 +56,18 @@
 </svelte:head>
 
 <QueryClientProvider client={queryClient}>
-  {#if $globalLoadingIndicator}
+  {#if globalUI.loadingIndicator}
     <Overlay />
     <LoadingIndicator darkBackground />
   {/if}
-  {#if $globalDialogMessage !== null}
+  {#if globalUI.dialogMessage !== null}
     <Dialog
       confirmButtonText="OK"
       onconfirm={() => {
-        globalDialogMessage.set(null);
+        globalUI.dialogMessage = null;
       }}
     >
-      {$globalDialogMessage}
+      {globalUI.dialogMessage}
     </Dialog>
   {/if}
   {@render children()}
