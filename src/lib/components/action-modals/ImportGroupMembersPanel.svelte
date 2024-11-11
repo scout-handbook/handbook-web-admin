@@ -8,7 +8,7 @@
 
   import Button from "$lib/components/Button.svelte";
   import Dialog from "$lib/components/Dialog.svelte";
-  import CheckboxGroup from "$lib/components/forms/CheckboxGroup.svelte";
+  import CheckboxGroup from "$lib/components/forms/OldCheckboxGroup.svelte";
   import RadioGroup from "$lib/components/forms/RadioGroup.svelte";
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import SidePanel from "$lib/components/SidePanel.svelte";

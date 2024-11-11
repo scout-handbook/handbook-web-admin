@@ -6,7 +6,7 @@
   import { ActionQueue } from "$lib/actions/ActionQueue";
   import Button from "$lib/components/Button.svelte";
   import DoneDialog from "$lib/components/DoneDialog.svelte";
-  import CheckboxGroup from "$lib/components/forms/CheckboxGroup.svelte";
+  import CheckboxGroup from "$lib/components/forms/OldCheckboxGroup.svelte";
   import SidePanel from "$lib/components/SidePanel.svelte";
   import { filter, get } from "$lib/utils/arrayUtils";
   import { queryClient } from "$lib/utils/queryClient";

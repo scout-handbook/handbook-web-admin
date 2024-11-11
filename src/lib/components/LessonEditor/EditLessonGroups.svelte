@@ -1,6 +1,6 @@
 <script lang="ts">
   import Button from "$lib/components/Button.svelte";
-  import CheckboxGroup from "$lib/components/forms/CheckboxGroup.svelte";
+  import CheckboxGroup from "$lib/components/forms/OldCheckboxGroup.svelte";
   import GroupProvider from "$lib/components/swr-wrappers/GroupProvider.svelte";
   import { get } from "$lib/utils/arrayUtils";
 
