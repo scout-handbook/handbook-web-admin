@@ -5,7 +5,7 @@
   import { goto, pushState } from "$app/navigation";
   import { base } from "$app/paths";
   import Button from "$lib/components/Button.svelte";
-  import CompetenceProvider from "$lib/components/swr-wrappers/CompetenceProvider.svelte";
+  import { competences } from "$lib/resources/competences";
   import { createQuery } from "@tanstack/svelte-query";
 
   interface Props {
@@ -64,16 +64,13 @@
   </Button>
   <br />
   Body:
-  <CompetenceProvider silent>
-    {#snippet children(competences)}
-      {competences
-        .filter(([competenceId, _]) =>
-          lesson.competences.includes(competenceId),
-        )
-        .map(([_, competence]) => competence.number)
-        .join(", ")}
-    {/snippet}
-  </CompetenceProvider>
+  {#if $competences !== undefined}
+    {[...$competences]
+      .filter((item) => lesson.competences.includes(item[0]))
+      .map((item) => item[1].number)
+      .sort()
+      .join(", ")}
+  {/if}
 </div>
 
 <style>

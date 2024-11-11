@@ -1,9 +1,13 @@
 <script lang="ts">
   import { pushState } from "$app/navigation";
   import Button from "$lib/components/Button.svelte";
-  import CompetenceProvider from "$lib/components/swr-wrappers/CompetenceProvider.svelte";
+  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import FieldProvider from "$lib/components/swr-wrappers/FieldProvider.svelte";
   import GroupProvider from "$lib/components/swr-wrappers/GroupProvider.svelte";
+  import {
+    competences as allCompetences,
+    competenceComparator,
+  } from "$lib/resources/competences";
   import { get } from "$lib/utils/arrayUtils";
 
   interface Props {
@@ -76,15 +80,17 @@
 >
   Upravit
 </Button>
-<CompetenceProvider inline>
-  {#snippet children(allCompetences)}
-    {#each allCompetences.filter( ([competenceId, _]) => competences.includes(competenceId), ) as [competenceId, competence] (competenceId)}
-      <br />
-      <span class="competence-number">{competence.number}:</span>
-      {competence.name}
-    {/each}
-  {/snippet}
-</CompetenceProvider>
+{#if $allCompetences === undefined}
+  <LoadingIndicator inline />
+{:else}
+  {#each [...$allCompetences]
+    .filter((item) => competences.includes(item[0]))
+    .sort( (first, second) => competenceComparator(first[1], second[1]), ) as [competenceId, competence] (competenceId)}
+    <br />
+    <span class="competence-number">{competence.number}:</span>
+    {competence.name}
+  {/each}
+{/if}
 <br />
 <h1>Skupiny</h1>
 <Button
