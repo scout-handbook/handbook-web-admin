@@ -74,7 +74,7 @@
     "svelte-eslint-parser": "^0.41.1",
     "typescript": "^5.5.0",
     "typescript-eslint": "^8.13.0",
-    "vite": "^5.4.10"
+    "vite": "^5.4.11"
   },
   "browserslist": [
     "cover 95%",
