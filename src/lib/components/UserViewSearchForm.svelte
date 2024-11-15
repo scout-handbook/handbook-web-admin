@@ -4,8 +4,8 @@
 
   import Button from "$lib/components/Button.svelte";
   import Select from "$lib/components/forms/Select.svelte";
-  import GroupProvider from "$lib/components/swr-wrappers/GroupProvider.svelte";
-  import { filter, map } from "$lib/utils/arrayUtils";
+  import { groups, sortGroups } from "$lib/resources/groups";
+  import { map } from "$lib/utils/arrayUtils";
   import { createQuery } from "@tanstack/svelte-query";
 
   interface Props {
@@ -62,24 +62,21 @@
   {#if adminOrSuperuser}
     <Select {onchange} options={roleList} bind:selected={role} />
   {/if}
-  <GroupProvider silent>
-    {#snippet children(groups)}
-      <Select
-        {onchange}
-        options={groupList.concat(
-          map(
-            filter(
-              groups,
-              (id) => id !== "00000000-0000-0000-0000-000000000000",
-            ),
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-return -- Eslint cannot handle slot props
-            (item) => item.name,
+  {#if $groups !== undefined}
+    <Select
+      {onchange}
+      options={groupList.concat(
+        map(
+          [...sortGroups($groups)].filter(
+            ([id]) => id !== "00000000-0000-0000-0000-000000000000",
           ),
-        )}
-        bind:selected={group}
-      />
-    {/snippet}
-  </GroupProvider>
+
+          (item) => item.name,
+        ),
+      )}
+      bind:selected={group}
+    />
+  {/if}
   {#if searchName || role !== "all" || group !== "00000000-0000-0000-0000-000000000000"}
     <Button
       icon="cancel"

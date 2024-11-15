@@ -4,7 +4,7 @@
 
   import { pushState } from "$app/navigation";
   import Button from "$lib/components/Button.svelte";
-  import GroupProvider from "$lib/components/swr-wrappers/GroupProvider.svelte";
+  import { groups, sortGroups } from "$lib/resources/groups";
   import { createQuery } from "@tanstack/svelte-query";
 
   interface Props {
@@ -62,14 +62,12 @@
           {/if}
         </td>
         <td>
-          <GroupProvider silent>
-            {#snippet children(groups)}
-              {groups
-                .filter(([id, _]) => user.groups.includes(id))
-                .map(([_, group]) => group.name)
-                .join(", ")}
-            {/snippet}
-          </GroupProvider>
+          {#if $groups !== undefined}
+            {[...sortGroups($groups)]
+              .filter(([id, _]) => user.groups.includes(id))
+              .map(([_, group]) => group.name)
+              .join(", ")}
+          {/if}
           {#if user.groups.length > 0}
             <br />
           {/if}

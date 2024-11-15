@@ -8,10 +8,10 @@
   import EditGroupPanel from "$lib/components/action-modals/EditGroupPanel.svelte";
   import ImportGroupMembersPanel from "$lib/components/action-modals/ImportGroupMembersPanel.svelte";
   import Button from "$lib/components/Button.svelte";
+  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import MainPageContainer from "$lib/components/MainPageContainer.svelte";
-  import GroupProvider from "$lib/components/swr-wrappers/GroupProvider.svelte";
   import TopBar from "$lib/components/TopBar.svelte";
-  import { get } from "$lib/utils/arrayUtils";
+  import { groups, sortGroups } from "$lib/resources/groups";
   import { createQuery } from "@tanstack/svelte-query";
 
   import type { PageStateFix } from "../../app";
@@ -32,38 +32,23 @@
   {#if pageState.action === "add-group"}
     <AddGroupPanel />
   {:else if pageState.action === "change-group"}
-    <GroupProvider silent>
-      {#snippet children(groups)}
-        {@const group = get(groups, pageState.actionPayload.groupId)}
-        {#if group !== undefined}
-          <EditGroupPanel {group} groupId={pageState.actionPayload.groupId} />
-        {/if}
-      {/snippet}
-    </GroupProvider>
+    {@const group = $groups?.get(pageState.actionPayload.groupId)}
+    {#if group !== undefined}
+      <EditGroupPanel {group} groupId={pageState.actionPayload.groupId} />
+    {/if}
   {:else if pageState.action === "delete-group"}
-    <GroupProvider silent>
-      {#snippet children(groups)}
-        {@const group = get(groups, pageState.actionPayload.groupId)}
-        {#if group !== undefined}
-          <DeleteGroupDialog
-            {group}
-            groupId={pageState.actionPayload.groupId}
-          />
-        {/if}
-      {/snippet}
-    </GroupProvider>
+    {@const group = $groups?.get(pageState.actionPayload.groupId)}
+    {#if group !== undefined}
+      <DeleteGroupDialog {group} groupId={pageState.actionPayload.groupId} />
+    {/if}
   {:else if pageState.action === "import-group-members"}
-    <GroupProvider silent>
-      {#snippet children(groups)}
-        {@const group = get(groups, pageState.actionPayload.groupId)}
-        {#if group !== undefined}
-          <ImportGroupMembersPanel
-            {group}
-            groupId={pageState.actionPayload.groupId}
-          />
-        {/if}
-      {/snippet}
-    </GroupProvider>
+    {@const group = $groups?.get(pageState.actionPayload.groupId)}
+    {#if group !== undefined}
+      <ImportGroupMembersPanel
+        {group}
+        groupId={pageState.actionPayload.groupId}
+      />
+    {/if}
   {/if}
 
   <h1>{`${CONFIG["site-name"]} - Uživatelské skupiny`}</h1>
@@ -78,64 +63,64 @@
       Přidat
     </Button>
   {/if}
-  <GroupProvider>
-    {#snippet children(groups)}
-      {#each groups as [id, group] (id)}
-        {#if id === "00000000-0000-0000-0000-000000000000"}
-          <br />
-          <h3 class="public">{group.name}</h3>
-        {:else}
-          <br />
-          <h3>{group.name}</h3>
-        {/if}
-        {#if adminOrSuperuser}
+  {#if $groups === undefined}
+    <LoadingIndicator />
+  {:else}
+    {#each sortGroups($groups) as [id, group] (id)}
+      {#if id === "00000000-0000-0000-0000-000000000000"}
+        <br />
+        <h3 class="public">{group.name}</h3>
+      {:else}
+        <br />
+        <h3>{group.name}</h3>
+      {/if}
+      {#if adminOrSuperuser}
+        <Button
+          cyan
+          icon="pencil"
+          onclick={() => {
+            pushState("", {
+              action: "change-group",
+              actionPayload: { groupId: id },
+            });
+          }}
+        >
+          Upravit
+        </Button>
+        {#if id !== "00000000-0000-0000-0000-000000000000"}
           <Button
-            cyan
-            icon="pencil"
+            icon="trash-empty"
             onclick={() => {
               pushState("", {
-                action: "change-group",
+                action: "delete-group",
+                actionPayload: { groupId: id },
+              });
+            }}
+            red
+          >
+            Smazat
+          </Button>
+          <Button
+            icon="user-plus"
+            onclick={() => {
+              pushState("", {
+                action: "import-group-members",
                 actionPayload: { groupId: id },
               });
             }}
           >
-            Upravit
+            Importovat ze SkautISu
           </Button>
-          {#if id !== "00000000-0000-0000-0000-000000000000"}
-            <Button
-              icon="trash-empty"
-              onclick={() => {
-                pushState("", {
-                  action: "delete-group",
-                  actionPayload: { groupId: id },
-                });
-              }}
-              red
-            >
-              Smazat
-            </Button>
-            <Button
-              icon="user-plus"
-              onclick={() => {
-                pushState("", {
-                  action: "import-group-members",
-                  actionPayload: { groupId: id },
-                });
-              }}
-            >
-              Importovat ze SkautISu
-            </Button>
-          {/if}
         {/if}
-        {#if id !== "00000000-0000-0000-0000-000000000000"}
-          <br />
-          <span>
-            {`Uživatelů: ${group.count.toString()}`}
-          </span>
-        {/if}
-      {/each}
-    {/snippet}
-  </GroupProvider>
+      {/if}
+      {#if id !== "00000000-0000-0000-0000-000000000000"}
+        <br />
+        <span>
+          {`Uživatelů: ${group.count.toString()}`}
+        </span>
+      {/if}
+    {/each}
+  {/if}
 </MainPageContainer>
 
 <style>

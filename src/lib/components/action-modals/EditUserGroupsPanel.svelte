@@ -8,11 +8,11 @@
   import DoneDialog from "$lib/components/DoneDialog.svelte";
   import CheckboxGroup from "$lib/components/forms/OldCheckboxGroup.svelte";
   import SidePanel from "$lib/components/SidePanel.svelte";
-  import { filter, get } from "$lib/utils/arrayUtils";
+  import { filter } from "$lib/utils/arrayUtils";
   import { queryClient } from "$lib/utils/queryClient";
 
   interface Props {
-    groups: Array<[string, Group]>;
+    groups: Map<string, Group>;
     payload: { user: User };
   }
 
@@ -22,7 +22,7 @@
   let donePromise: Promise<void> | null = $state(null);
 
   let publicName = $derived(
-    get(groups, "00000000-0000-0000-0000-000000000000")?.name ?? "",
+    groups.get("00000000-0000-0000-0000-000000000000")?.name ?? "",
   );
 
   function saveCallback(): void {
@@ -73,7 +73,7 @@
     <form>
       <CheckboxGroup
         options={filter(
-          groups,
+          [...groups],
           (id) => id !== "00000000-0000-0000-0000-000000000000",
         )}
         bind:selected={selectedGroups}

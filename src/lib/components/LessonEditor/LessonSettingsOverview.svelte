@@ -2,12 +2,12 @@
   import { pushState } from "$app/navigation";
   import Button from "$lib/components/Button.svelte";
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
-  import GroupProvider from "$lib/components/swr-wrappers/GroupProvider.svelte";
   import {
     competences as allCompetences,
     competenceComparator,
   } from "$lib/resources/competences";
   import { fields } from "$lib/resources/fields";
+  import { groups as allGroups, sortGroups } from "$lib/resources/groups";
 
   interface Props {
     competences: Array<string>;
@@ -103,19 +103,19 @@
   Upravit
 </Button>
 <br />
-<GroupProvider inline>
-  {#snippet children(allGroups)}
-    {#each allGroups.filter( ([groupId, _]) => groups.includes(groupId), ) as [groupId, group] (groupId)}
-      {#if groupId === "00000000-0000-0000-0000-000000000000"}
-        <span class="public">{group.name}</span>
-        <br />
-      {:else}
-        {group.name}
-        <br />
-      {/if}
-    {/each}
-  {/snippet}
-</GroupProvider>
+{#if $allGroups === undefined}
+  <LoadingIndicator inline />
+{:else}
+  {#each [...sortGroups($allGroups)].filter( ([groupId, _]) => groups.includes(groupId), ) as [groupId, group] (groupId)}
+    {#if groupId === "00000000-0000-0000-0000-000000000000"}
+      <span class="public">{group.name}</span>
+      <br />
+    {:else}
+      {group.name}
+      <br />
+    {/if}
+  {/each}
+{/if}
 
 <style>
   .competence-number {
