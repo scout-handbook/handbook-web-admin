@@ -6,8 +6,7 @@
   import RadioGroup from "$lib/components/forms/RadioGroup.svelte";
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import Overlay from "$lib/components/Overlay.svelte";
-  import LessonProvider from "$lib/components/swr-wrappers/LessonProvider.svelte";
-  import { get } from "$lib/utils/arrayUtils";
+  import { lessons } from "$lib/resources/lessons";
   import { compileMarkdown } from "$lib/utils/compileMarkdown";
   import { parseVersion } from "$lib/utils/parseVersion";
   import { authFailHandler, request } from "$lib/utils/request";
@@ -101,12 +100,10 @@
           {#snippet nullOption()}
             <span class="current-version version-name">Současná verze</span>
             —
-            <LessonProvider silent>
-              {#snippet children(_, lessons)}
-                <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-argument -->
-                {parseVersion(get(lessons, lessonId)?.version ?? 0)}
-              {/snippet}
-            </LessonProvider>
+            {@const lessonVersion = $lessons?.get(lessonId)?.version}
+            {#if lessonVersion !== undefined}
+              {parseVersion(lessonVersion)}
+            {/if}
           {/snippet}
           {#snippet option(version, name)}
             <span class="version-name">

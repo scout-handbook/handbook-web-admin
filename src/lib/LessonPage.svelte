@@ -13,8 +13,9 @@
   import LessonViewLesson from "$lib/components/LessonViewLesson.svelte";
   import MainPageContainer from "$lib/components/MainPageContainer.svelte";
   import FieldProvider from "$lib/components/swr-wrappers/FieldProvider.svelte";
-  import LessonProvider from "$lib/components/swr-wrappers/LessonProvider.svelte";
   import TopBar from "$lib/components/TopBar.svelte";
+  import { competences } from "$lib/resources/competences";
+  import { lessons, sortLessons } from "$lib/resources/lessons";
   import { get } from "$lib/utils/arrayUtils";
   import { createQuery } from "@tanstack/svelte-query";
 
@@ -54,17 +55,10 @@
       {/snippet}
     </FieldProvider>
   {:else if state.action === "delete-lesson"}
-    <LessonProvider silent>
-      {#snippet children(_, lessons)}
-        {@const lesson = get(lessons, state.actionPayload.lessonId)}
-        {#if lesson !== undefined}
-          <DeleteLessonDialog
-            {lesson}
-            lessonId={state.actionPayload.lessonId}
-          />
-        {/if}
-      {/snippet}
-    </LessonProvider>
+    {@const lesson = $lessons?.get(state.actionPayload.lessonId)}
+    {#if lesson !== undefined}
+      <DeleteLessonDialog {lesson} lessonId={state.actionPayload.lessonId} />
+    {/if}
   {:else if state.action === "restore-lesson"}
     <RestoreLessonPanel />
   {/if}
@@ -101,10 +95,12 @@
     </Button>
   {/if}
   <FieldProvider>
-    {#snippet children(_, fields, lessons)}
-      {#each lessons.filter(([lessonId, _1]) => fields.filter( ([_2, field]) => field.lessons.includes(lessonId), ).length === 0) as [lessonId, lesson] (lessonId)}
-        <LessonViewLesson id={lessonId} {lesson} />
-      {/each}
+    {#snippet children(_, fields)}
+      {#if $lessons !== undefined && $competences !== undefined}
+        {#each [...sortLessons($lessons, $competences)].filter(([lessonId]) => fields.filter( ([_1, field]) => field.lessons.includes(lessonId), ).length === 0) as [lessonId, lesson] (lessonId)}
+          <LessonViewLesson id={lessonId} {lesson} />
+        {/each}
+      {/if}
       {#each fields as [fieldId, field] (fieldId)}
         <div>
           <h2>{field.name}</h2>
@@ -144,11 +140,11 @@
           >
             Přidat lekci
           </Button>
-          {#each lessons as [lessonId, lesson] (lessonId)}
-            {#if field.lessons.includes(lessonId)}
+          {#if $lessons !== undefined && $competences !== undefined}
+            {#each [...sortLessons($lessons, $competences)].filter( ([lessonId]) => field.lessons.includes(lessonId), ) as [lessonId, lesson] (lessonId)}
               <LessonViewLesson id={lessonId} {lesson} secondLevel={true} />
-            {/if}
-          {/each}
+            {/each}
+          {/if}
         </div>
       {/each}
     {/snippet}
