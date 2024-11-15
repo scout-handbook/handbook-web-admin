@@ -9,10 +9,10 @@
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import MainPageContainer from "$lib/components/MainPageContainer.svelte";
   import Pagination from "$lib/components/Pagination.svelte";
-  import GroupProvider from "$lib/components/swr-wrappers/GroupProvider.svelte";
   import TopBar from "$lib/components/TopBar.svelte";
   import UserViewSearchForm from "$lib/components/UserViewSearchForm.svelte";
   import UserViewTable from "$lib/components/UserViewTable.svelte";
+  import { groups, sortGroups } from "$lib/resources/groups";
   import { createQuery } from "@tanstack/svelte-query";
 
   import type { PageStateFix } from "../../app";
@@ -45,11 +45,13 @@
 <TopBar />
 <MainPageContainer>
   {#if pageState.action === "change-user-groups"}
-    <GroupProvider silent>
-      {#snippet children(groups)}
-        <EditUserGroupsPanel {groups} payload={pageState.actionPayload} />
-      {/snippet}
-    </GroupProvider>
+    {#if $groups !== undefined}
+      <!-- TODO: DO in component? -->
+      <EditUserGroupsPanel
+        groups={sortGroups($groups)}
+        payload={pageState.actionPayload}
+      />
+    {/if}
   {:else if pageState.action === "change-user-role"}
     <EditUserRolePanel payload={pageState.actionPayload} />
   {/if}

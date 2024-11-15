@@ -1,8 +1,8 @@
 <script lang="ts">
   import Button from "$lib/components/Button.svelte";
-  import CheckboxGroup from "$lib/components/forms/OldCheckboxGroup.svelte";
-  import GroupProvider from "$lib/components/swr-wrappers/GroupProvider.svelte";
-  import { get } from "$lib/utils/arrayUtils";
+  import CheckboxGroup from "$lib/components/forms/CheckboxGroup.svelte";
+  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
+  import { groups as allGroups, sortGroups } from "$lib/resources/groups";
 
   interface Props {
     groups: Array<string>;
@@ -32,18 +32,18 @@
 >
 <h1>Změnit skupiny</h1>
 <form>
-  <GroupProvider inline>
-    {#snippet children(allGroups)}
-      <CheckboxGroup options={allGroups} bind:selected={groups}>
-        <!-- eslint-disable-next-line @typescript-eslint/no-shadow -- Not applicable to snippets -->
-        {#snippet children(id, group)}
-          <span class:public={id === "00000000-0000-0000-0000-000000000000"}
-            >{group.name}</span
-          >
-        {/snippet}
-      </CheckboxGroup>
-    {/snippet}
-  </GroupProvider>
+  {#if $allGroups === undefined}
+    <LoadingIndicator inline />
+  {:else}
+    <CheckboxGroup options={sortGroups($allGroups)} bind:selected={groups}>
+      <!-- eslint-disable-next-line @typescript-eslint/no-shadow -- Not applicable to snippets -->
+      {#snippet children(id, group)}
+        <span class:public={id === "00000000-0000-0000-0000-000000000000"}
+          >{group.name}</span
+        >
+      {/snippet}
+    </CheckboxGroup>
+  {/if}
 </form>
 <br />
 <i class="icon-info-circled"></i>
@@ -51,11 +51,7 @@ U každé lekce lze zvolit, kteří uživatelé ji budou moct zobrazit (resp. kt
 uživatelů). Pokud není vybrána žádná skupiny, nebude lekce pro běžné uživatele vůbec
 přístupná (pouze v administraci). Pokud je vybrána skupina "
 <span class="public">
-  <GroupProvider silent>
-    {#snippet children(allGroups)}
-      {get(allGroups, "00000000-0000-0000-0000-000000000000")?.name ?? ""}
-    {/snippet}
-  </GroupProvider>
+  {$allGroups?.get("00000000-0000-0000-0000-000000000000")?.name ?? ""}
 </span>
 ", bude lekce přístupná všem uživatelům (i nepřihlášeným návštěvníkům webu) bez ohledu
 na skupiny.
