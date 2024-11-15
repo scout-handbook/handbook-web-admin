@@ -19,7 +19,7 @@ export const lessons = derived(
   undefined,
 );
 
-function lessonComparator(
+export function lessonComparator(
   first: Lesson,
   second: Lesson,
   competences: SvelteMap<string, Competence>,

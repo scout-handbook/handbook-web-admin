@@ -6,7 +6,7 @@
   import { ActionQueue } from "$lib/actions/ActionQueue";
   import Button from "$lib/components/Button.svelte";
   import DoneDialog from "$lib/components/DoneDialog.svelte";
-  import RadioGroup from "$lib/components/forms/RadioGroup.svelte";
+  import RadioGroup from "$lib/components/forms/OldRadioGroup.svelte";
   import SidePanel from "$lib/components/SidePanel.svelte";
   import { queryClient } from "$lib/utils/queryClient";
   import { createQuery } from "@tanstack/svelte-query";

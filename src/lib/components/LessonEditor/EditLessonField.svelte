@@ -1,7 +1,10 @@
 <script lang="ts">
   import Button from "$lib/components/Button.svelte";
   import RadioGroup from "$lib/components/forms/RadioGroup.svelte";
-  import FieldProvider from "$lib/components/swr-wrappers/FieldProvider.svelte";
+  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
+  import { competences } from "$lib/resources/competences";
+  import { fields, sortFields } from "$lib/resources/fields";
+  import { lessons } from "$lib/resources/lessons";
 
   interface Props {
     field: string | null;
@@ -31,18 +34,21 @@
 >
 <h1>Změnit oblast</h1>
 <form>
-  <FieldProvider>
-    {#snippet children(_, fields)}
-      <RadioGroup options={fields} bind:selected={field}>
-        {#snippet nullOption()}
-          <span class="anonymous">Nezařazeno</span>
-        {/snippet}
-        {#snippet option(_2, currentField)}
-          {currentField.name}
-        {/snippet}
-      </RadioGroup>
-    {/snippet}
-  </FieldProvider>
+  {#if $fields === undefined || $lessons === undefined || $competences === undefined}
+    <LoadingIndicator />
+  {:else}
+    <RadioGroup
+      options={sortFields($fields, $lessons, $competences)}
+      bind:selected={field}
+    >
+      {#snippet nullOption()}
+        <span class="anonymous">Nezařazeno</span>
+      {/snippet}
+      {#snippet option(_2, currentField)}
+        {currentField.name}
+      {/snippet}
+    </RadioGroup>
+  {/if}
 </form>
 
 <style>
