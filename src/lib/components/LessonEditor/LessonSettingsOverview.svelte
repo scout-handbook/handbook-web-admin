@@ -2,13 +2,12 @@
   import { pushState } from "$app/navigation";
   import Button from "$lib/components/Button.svelte";
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
-  import FieldProvider from "$lib/components/swr-wrappers/FieldProvider.svelte";
   import GroupProvider from "$lib/components/swr-wrappers/GroupProvider.svelte";
   import {
     competences as allCompetences,
     competenceComparator,
   } from "$lib/resources/competences";
-  import { get } from "$lib/utils/arrayUtils";
+  import { fields } from "$lib/resources/fields";
 
   interface Props {
     competences: Array<string>;
@@ -57,15 +56,13 @@
   Upravit
 </Button>
 <br />
-<FieldProvider inline>
-  {#snippet children(_, fields)}
-    {#if field !== null}
-      {get(fields, field)?.name ?? ""}
-    {:else}
-      <span class="anonymous">Nezařazeno</span>
-    {/if}
-  {/snippet}
-</FieldProvider>
+{#if field === null}
+  <span class="anonymous">Nezařazeno</span>
+{:else if $fields === undefined}
+  <LoadingIndicator inline />
+{:else}
+  {$fields.get(field)?.name ?? ""}
+{/if}
 <br />
 <h1>Body</h1>
 <Button

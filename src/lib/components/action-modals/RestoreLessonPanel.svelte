@@ -7,7 +7,7 @@
   import Button from "$lib/components/Button.svelte";
   import Dialog from "$lib/components/Dialog.svelte";
   import DoubleSidePanel from "$lib/components/DoubleSidePanel.svelte";
-  import RadioGroup from "$lib/components/forms/RadioGroup.svelte";
+  import RadioGroup from "$lib/components/forms/OldRadioGroup.svelte";
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import Overlay from "$lib/components/Overlay.svelte";
   import SidePanel from "$lib/components/SidePanel.svelte";

@@ -3,7 +3,7 @@
 
   import Button from "$lib/components/Button.svelte";
   import DoubleSidePanel from "$lib/components/DoubleSidePanel.svelte";
-  import RadioGroup from "$lib/components/forms/RadioGroup.svelte";
+  import RadioGroup from "$lib/components/forms/OldRadioGroup.svelte";
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import Overlay from "$lib/components/Overlay.svelte";
   import { lessons } from "$lib/resources/lessons";
