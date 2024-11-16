@@ -1,7 +1,7 @@
 <script generics="KeyType extends number | string, ValueType" lang="ts">
   interface Props {
     onchange(this: void): void;
-    options: Array<[KeyType, ValueType]>;
+    options: Map<KeyType, ValueType>;
     selected: KeyType | null;
   }
 

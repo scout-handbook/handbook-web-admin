@@ -17,6 +17,7 @@
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import { globalUI } from "$lib/globalUI.svelte";
   import { afterRefreshCallback } from "$lib/utils/loginRefresh.svelte";
+  import { find } from "$lib/utils/mapUtils";
   import { queryClient } from "$lib/utils/queryClient";
   import { reAuth, request } from "$lib/utils/request";
   import { createMutation } from "@tanstack/svelte-query";
@@ -37,8 +38,7 @@
     lessons.get(lessonID)?.competences ?? [],
   );
   let field: string | null = $state(
-    [...fields].find(([_, item]) => item.lessons.includes(lessonID))?.[0] ??
-      null,
+    find(fields, (item) => item.lessons.includes(lessonID))?.[0] ?? null,
   );
   let groups: Array<string> = $state([]);
 

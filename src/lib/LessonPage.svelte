@@ -17,6 +17,7 @@
   import { competences } from "$lib/resources/competences";
   import { fields, sortFields } from "$lib/resources/fields";
   import { lessons, sortLessons } from "$lib/resources/lessons";
+  import { filter } from "$lib/utils/mapUtils";
   import { createQuery } from "@tanstack/svelte-query";
 
   import type { PageStateFix } from "../app";
@@ -89,7 +90,7 @@
   {#if $fields === undefined || $lessons === undefined || $competences === undefined}
     <LoadingIndicator />
   {:else}
-    {#each [...sortLessons($lessons, $competences)].filter(([lessonId]) => [...$fields].filter( ([_, field]) => field.lessons.includes(lessonId), ).length === 0) as [lessonId, lesson] (lessonId)}
+    {#each sortLessons( filter($lessons, (lessonId) => filter( $fields, (_, field) => field.lessons.includes(lessonId), ).size === 0), $competences, ) as [lessonId, lesson] (lessonId)}
       <LessonViewLesson id={lessonId} {lesson} />
     {/each}
     {#each sortFields($fields, $lessons, $competences) as [fieldId, field] (fieldId)}
@@ -130,11 +131,9 @@
         >
           Přidat lekci
         </Button>
-        {#if $lessons !== undefined && $competences !== undefined}
-          {#each [...sortLessons($lessons, $competences)].filter( ([lessonId]) => field.lessons.includes(lessonId), ) as [lessonId, lesson] (lessonId)}
-            <LessonViewLesson id={lessonId} {lesson} secondLevel={true} />
-          {/each}
-        {/if}
+        {#each sortLessons( filter( $lessons, (lessonId) => field.lessons.includes(lessonId), ), $competences, ) as [lessonId, lesson] (lessonId)}
+          <LessonViewLesson id={lessonId} {lesson} secondLevel={true} />
+        {/each}
       </div>
     {/each}
   {/if}
