@@ -4,10 +4,11 @@
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import {
     competences as allCompetences,
-    competenceComparator,
+    sortCompetences,
   } from "$lib/resources/competences";
   import { fields } from "$lib/resources/fields";
   import { groups as allGroups, sortGroups } from "$lib/resources/groups";
+  import { filter } from "$lib/utils/mapUtils";
 
   interface Props {
     competences: Array<string>;
@@ -80,9 +81,7 @@
 {#if $allCompetences === undefined}
   <LoadingIndicator inline />
 {:else}
-  {#each [...$allCompetences]
-    .filter((item) => competences.includes(item[0]))
-    .sort( (first, second) => competenceComparator(first[1], second[1]), ) as [competenceId, competence] (competenceId)}
+  {#each sortCompetences(filter( $allCompetences, (competenceId) => competences.includes(competenceId), )) as [competenceId, competence] (competenceId)}
     <br />
     <span class="competence-number">{competence.number}:</span>
     {competence.name}
@@ -106,7 +105,7 @@
 {#if $allGroups === undefined}
   <LoadingIndicator inline />
 {:else}
-  {#each [...sortGroups($allGroups)].filter( ([groupId, _]) => groups.includes(groupId), ) as [groupId, group] (groupId)}
+  {#each sortGroups(filter( $allGroups, (groupId) => groups.includes(groupId), )) as [groupId, group] (groupId)}
     {#if groupId === "00000000-0000-0000-0000-000000000000"}
       <span class="public">{group.name}</span>
       <br />
