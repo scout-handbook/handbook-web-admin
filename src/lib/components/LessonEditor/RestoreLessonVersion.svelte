@@ -3,13 +3,14 @@
 
   import Button from "$lib/components/Button.svelte";
   import DoubleSidePanel from "$lib/components/DoubleSidePanel.svelte";
-  import RadioGroup from "$lib/components/forms/OldRadioGroup.svelte";
+  import RadioGroup from "$lib/components/forms/RadioGroup.svelte";
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import Overlay from "$lib/components/Overlay.svelte";
   import { lessons } from "$lib/resources/lessons";
   import { compileMarkdown } from "$lib/utils/compileMarkdown";
   import { parseVersion } from "$lib/utils/parseVersion";
   import { authFailHandler, request } from "$lib/utils/request";
+  import { SvelteMap } from "svelte/reactivity";
 
   interface Props {
     body: string;
@@ -23,8 +24,9 @@
     lessonName = $bindable(),
   }: Props = $props();
 
-  let selectedVersion = $state<number | null>(null);
+  let currentLessonVersion = $derived($lessons?.get(lessonId)?.version);
   let versionList = $state<Array<LessonVersion> | null>(null);
+  let selectedVersion = $state<number | null>(null);
   let selectedVersionName = $derived(
     selectedVersion === null || versionList === null
       ? lessonName
@@ -91,18 +93,16 @@
     {:else}
       <form>
         <RadioGroup
-          options={versionList.map((version) => [
-            version.version,
-            version.name,
-          ])}
+          options={new SvelteMap(
+            versionList.map((version) => [version.version, version.name]),
+          )}
           bind:selected={selectedVersion}
         >
           {#snippet nullOption()}
             <span class="current-version version-name">Současná verze</span>
             —
-            {@const lessonVersion = $lessons?.get(lessonId)?.version}
-            {#if lessonVersion !== undefined}
-              {parseVersion(lessonVersion)}
+            {#if currentLessonVersion !== undefined}
+              {parseVersion(currentLessonVersion)}
             {/if}
           {/snippet}
           {#snippet option(version, name)}

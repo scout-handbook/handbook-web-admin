@@ -41,7 +41,7 @@
             ["administrator", "Administrátor"],
             ["superuser", "Superuser"],
           ] as const)
-        : ([] as Array<[string, string]>)),
+        : []),
     ]),
   );
 

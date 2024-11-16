@@ -6,10 +6,11 @@
   import { ActionQueue } from "$lib/actions/ActionQueue";
   import Button from "$lib/components/Button.svelte";
   import DoneDialog from "$lib/components/DoneDialog.svelte";
-  import RadioGroup from "$lib/components/forms/OldRadioGroup.svelte";
+  import RadioGroup from "$lib/components/forms/RadioGroup.svelte";
   import SidePanel from "$lib/components/SidePanel.svelte";
   import { queryClient } from "$lib/utils/queryClient";
   import { createQuery } from "@tanstack/svelte-query";
+  import { SvelteMap } from "svelte/reactivity";
 
   interface Props {
     payload: { user: User };
@@ -25,18 +26,16 @@
   let selectedRole = $state(payload.user.role);
   let donePromise: Promise<void> | null = $state(null);
   let roleList = $derived(
-    ([] as Array<[string, string]>).concat(
-      [
-        ["user", "Uživatel"],
-        ["editor", "Editor"],
-      ],
-      isSuperuser
-        ? [
+    new SvelteMap([
+      ["user", "Uživatel"],
+      ["editor", "Editor"],
+      ...(isSuperuser
+        ? ([
             ["administrator", "Administrátor"],
             ["superuser", "Superuser"],
-          ]
-        : [],
-    ),
+          ] as const)
+        : []),
+    ]),
   );
 
   function saveCallback(): void {
