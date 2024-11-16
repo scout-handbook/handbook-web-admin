@@ -8,13 +8,14 @@
 
   import Button from "$lib/components/Button.svelte";
   import Dialog from "$lib/components/Dialog.svelte";
-  import CheckboxGroup from "$lib/components/forms/OldCheckboxGroup.svelte";
-  import RadioGroup from "$lib/components/forms/OldRadioGroup.svelte";
+  import CheckboxGroup from "$lib/components/forms/CheckboxGroup.svelte";
+  import RadioGroup from "$lib/components/forms/RadioGroup.svelte";
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import SidePanel from "$lib/components/SidePanel.svelte";
   import { queryClient } from "$lib/utils/queryClient";
   import { authFailHandler, reAuth, request } from "$lib/utils/request";
   import { createMutation } from "@tanstack/svelte-query";
+  import { SvelteMap } from "svelte/reactivity";
 
   interface Props {
     group: Group;
@@ -193,7 +194,9 @@
       <h4>Volba kurzu:</h4>
       <form>
         <RadioGroup
-          options={eventList.map((event) => [event.id, event.name])}
+          options={new SvelteMap(
+            eventList.map((event) => [event.id, event.name]),
+          )}
           bind:selected={selectedEvent}
         >
           {#snippet option(_, name)}
@@ -205,10 +208,12 @@
       <h4>Výběr účastníků:</h4>
       <form>
         <CheckboxGroup
-          options={participantList.map((participant) => [
-            participant.id,
-            participant.name,
-          ])}
+          options={new SvelteMap(
+            participantList.map((participant) => [
+              participant.id,
+              participant.name,
+            ]),
+          )}
           bind:selected={selectedParticipants}
         >
           {#snippet children(name)}

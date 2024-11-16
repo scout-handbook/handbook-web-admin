@@ -1,18 +1,19 @@
 <script lang="ts">
   import type { Group } from "$lib/interfaces/Group";
   import type { User } from "$lib/interfaces/User";
+  import type { SvelteMap } from "svelte/reactivity";
 
   import { Action } from "$lib/actions/Action";
   import { ActionQueue } from "$lib/actions/ActionQueue";
   import Button from "$lib/components/Button.svelte";
   import DoneDialog from "$lib/components/DoneDialog.svelte";
-  import CheckboxGroup from "$lib/components/forms/OldCheckboxGroup.svelte";
+  import CheckboxGroup from "$lib/components/forms/CheckboxGroup.svelte";
   import SidePanel from "$lib/components/SidePanel.svelte";
-  import { filter } from "$lib/utils/arrayUtils";
+  import { filter } from "$lib/utils/mapUtils";
   import { queryClient } from "$lib/utils/queryClient";
 
   interface Props {
-    groups: Map<string, Group>;
+    groups: SvelteMap<string, Group>;
     payload: { user: User };
   }
 
@@ -73,7 +74,7 @@
     <form>
       <CheckboxGroup
         options={filter(
-          [...groups],
+          groups,
           (id) => id !== "00000000-0000-0000-0000-000000000000",
         )}
         bind:selected={selectedGroups}
