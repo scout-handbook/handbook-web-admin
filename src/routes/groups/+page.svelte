@@ -67,13 +67,10 @@
     <LoadingIndicator />
   {:else}
     {#each sortGroups($groups) as [id, group] (id)}
-      {#if id === "00000000-0000-0000-0000-000000000000"}
-        <br />
-        <h3 class="public">{group.name}</h3>
-      {:else}
-        <br />
-        <h3>{group.name}</h3>
-      {/if}
+      <br />
+      <h3 class:public={id === "00000000-0000-0000-0000-000000000000"}>
+        {group.name}
+      </h3>
       {#if adminOrSuperuser}
         <Button
           cyan
