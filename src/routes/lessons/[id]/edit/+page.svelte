@@ -13,7 +13,6 @@
   let { data }: Props = $props();
 </script>
 
-<!-- TODO: Merge EditLessonPage here -->
 {#if $fields === undefined || $lessons === undefined}
   <LoadingIndicator />
 {:else}
