@@ -1,6 +1,6 @@
-import js from "@eslint/js";
 import eslintComments from "@eslint-community/eslint-plugin-eslint-comments";
 import commentsConfig from "@eslint-community/eslint-plugin-eslint-comments/configs";
+import js from "@eslint/js";
 import query from "@tanstack/eslint-plugin-query";
 import compat from "eslint-plugin-compat";
 import perfectionist from "eslint-plugin-perfectionist";
@@ -97,7 +97,10 @@ export default tseslint.config(
           varsIgnorePattern: "^_|^\\$\\$Slots$",
         },
       ],
-      "@typescript-eslint/no-use-before-define": "error",
+      "@typescript-eslint/no-use-before-define": [
+        "error",
+        { functions: false },
+      ],
       "@typescript-eslint/no-useless-empty-export": "error",
       "@typescript-eslint/parameter-properties": "error",
       "@typescript-eslint/prefer-enum-initializers": "error",

@@ -11,6 +11,32 @@ let workerRunning = false;
 let nextPayload: WorkerPayload | null = null;
 const promiseResolvers: Record<string, (value: string) => void> = {};
 
+export async function compileMarkdown(markdown: string): Promise<string> {
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions -- Worker isn't present in older browsers
+  if (Worker && worker !== null) {
+    let id = "";
+    const characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    for (let i = 0; i < 16; i++) {
+      id += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    const promise = new Promise<string>((resolve) => {
+      promiseResolvers[id] = resolve;
+    });
+    if (workerRunning) {
+      nextPayload = { body: markdown, id };
+    } else {
+      workerRunning = true;
+      worker.postMessage({ body: markdown, id });
+    }
+    return promise;
+  }
+  if (converter === null) {
+    return "";
+  }
+  return filterXSS(converter.makeHtml(markdown), xssOptions());
+}
+
 export function compileMarkdownSetup(): void {
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions -- Worker isn't present in older browsers
   if (Worker) {
@@ -36,30 +62,4 @@ export function compileMarkdownSetup(): void {
     converter.setOption("tables", "true");
     converter.setOption("smoothLivePreview", "true");
   }
-}
-
-export async function compileMarkdown(markdown: string): Promise<string> {
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions -- Worker isn't present in older browsers
-  if (Worker && worker !== null) {
-    let id = "";
-    const characters =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    for (let i = 0; i < 16; i++) {
-      id += characters.charAt(Math.floor(Math.random() * characters.length));
-    }
-    const promise = new Promise<string>((resolve) => {
-      promiseResolvers[id] = resolve;
-    });
-    if (workerRunning) {
-      nextPayload = { body: markdown, id };
-    } else {
-      workerRunning = true;
-      worker.postMessage({ body: markdown, id });
-    }
-    return promise;
-  }
-  if (converter === null) {
-    return "";
-  }
-  return filterXSS(converter.makeHtml(markdown), xssOptions());
 }
