@@ -12,24 +12,12 @@ import { queryClient } from "$lib/utils/queryClient";
 import { request } from "$lib/utils/request";
 
 export class ActionQueue {
-  private readonly isRetryAfterLogin: boolean;
   public actions: Array<Action>;
+  private readonly isRetryAfterLogin: boolean;
 
   public constructor(actions: Array<Action> = [], isRetryAfterLogin = false) {
     this.actions = actions;
     this.isRetryAfterLogin = isRetryAfterLogin;
-  }
-
-  private authException(): void {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions -- window.localStorage is not present in older browsers
-    if (!this.isRetryAfterLogin && window.localStorage) {
-      window.location.replace(
-        `${CONFIG["api-uri"]}/v1.0/login?return-uri=${window.location.pathname}`,
-      );
-    } else {
-      globalUI.dialogMessage =
-        "Byl jste odhlášen a akce se nepodařila. Přihlašte se prosím a zkuste to znovu.";
-    }
   }
 
   public async dispatch(): Promise<void> {
@@ -62,6 +50,18 @@ export class ActionQueue {
   public fillID(id: string): void {
     for (const action of this.actions) {
       action.fillID(id);
+    }
+  }
+
+  private authException(): void {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions -- window.localStorage is not present in older browsers
+    if (!this.isRetryAfterLogin && window.localStorage) {
+      window.location.replace(
+        `${CONFIG["api-uri"]}/v1.0/login?return-uri=${window.location.pathname}`,
+      );
+    } else {
+      globalUI.dialogMessage =
+        "Byl jste odhlášen a akce se nepodařila. Přihlašte se prosím a zkuste to znovu.";
     }
   }
 }

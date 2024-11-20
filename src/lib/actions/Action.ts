@@ -46,15 +46,6 @@ export class Action {
   }
 }
 
-export function serializeAction(action: Action): SerializedAction {
-  return {
-    callbacks: action.callbacks,
-    method: action.method,
-    payload: action.payload,
-    url: action.url,
-  };
-}
-
 export function deserializeAction(action: SerializedAction): Action {
   return new Action(
     action.url,
@@ -63,4 +54,13 @@ export function deserializeAction(action: SerializedAction): Action {
     action.callbacks,
     undefined,
   );
+}
+
+export function serializeAction(action: Action): SerializedAction {
+  return {
+    callbacks: action.callbacks,
+    method: action.method,
+    payload: action.payload,
+    url: action.url,
+  };
 }
