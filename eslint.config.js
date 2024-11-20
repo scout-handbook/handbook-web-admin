@@ -97,7 +97,10 @@ export default tseslint.config(
           varsIgnorePattern: "^_|^\\$\\$Slots$",
         },
       ],
-      "@typescript-eslint/no-use-before-define": "error",
+      "@typescript-eslint/no-use-before-define": [
+        "error",
+        { functions: false },
+      ],
       "@typescript-eslint/no-useless-empty-export": "error",
       "@typescript-eslint/parameter-properties": "error",
       "@typescript-eslint/prefer-enum-initializers": "error",
