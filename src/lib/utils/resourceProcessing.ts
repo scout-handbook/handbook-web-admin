@@ -5,53 +5,6 @@ import type { Lesson } from "$lib/interfaces/Lesson";
 
 import { get, map, sort } from "$lib/utils/arrayUtils";
 
-function competenceComparator(first: Competence, second: Competence): number {
-  const numberComparison =
-    parseInt(first.number, 10) - parseInt(second.number, 10);
-  return numberComparison !== 0
-    ? numberComparison
-    : first.number.localeCompare(second.number);
-}
-
-function lessonComparator(
-  first: Lesson,
-  second: Lesson,
-  competences: Array<[string, Competence]>,
-): number {
-  const firstCompetence = get(competences, first.competences[0]);
-  const secondCompetence = get(competences, second.competences[0]);
-  if (firstCompetence === undefined) {
-    if (secondCompetence === undefined) {
-      return 0;
-    }
-    return 1;
-  }
-  if (secondCompetence === undefined) {
-    return -1;
-  }
-  return competenceComparator(firstCompetence, secondCompetence);
-}
-
-function fieldComparator(
-  first: Field,
-  second: Field,
-  lessons: Array<[string, Lesson]>,
-  competences: Array<[string, Competence]>,
-): number {
-  const firstFirstLesson = get(lessons, first.lessons[0]);
-  const secondFirstLesson = get(lessons, second.lessons[0]);
-  if (firstFirstLesson === undefined) {
-    if (secondFirstLesson === undefined) {
-      return 0;
-    }
-    return 1;
-  }
-  if (secondFirstLesson === undefined) {
-    return -1;
-  }
-  return lessonComparator(firstFirstLesson, secondFirstLesson, competences);
-}
-
 export function processCompetences(
   rawCompetences: Record<string, Competence>,
 ): Array<[string, Competence]> {
@@ -111,4 +64,51 @@ export function processLessons(
   return sort(lessons, (first, second) =>
     lessonComparator(first, second, competences),
   );
+}
+
+function competenceComparator(first: Competence, second: Competence): number {
+  const numberComparison =
+    parseInt(first.number, 10) - parseInt(second.number, 10);
+  return numberComparison !== 0
+    ? numberComparison
+    : first.number.localeCompare(second.number);
+}
+
+function fieldComparator(
+  first: Field,
+  second: Field,
+  lessons: Array<[string, Lesson]>,
+  competences: Array<[string, Competence]>,
+): number {
+  const firstFirstLesson = get(lessons, first.lessons[0]);
+  const secondFirstLesson = get(lessons, second.lessons[0]);
+  if (firstFirstLesson === undefined) {
+    if (secondFirstLesson === undefined) {
+      return 0;
+    }
+    return 1;
+  }
+  if (secondFirstLesson === undefined) {
+    return -1;
+  }
+  return lessonComparator(firstFirstLesson, secondFirstLesson, competences);
+}
+
+function lessonComparator(
+  first: Lesson,
+  second: Lesson,
+  competences: Array<[string, Competence]>,
+): number {
+  const firstCompetence = get(competences, first.competences[0]);
+  const secondCompetence = get(competences, second.competences[0]);
+  if (firstCompetence === undefined) {
+    if (secondCompetence === undefined) {
+      return 0;
+    }
+    return 1;
+  }
+  if (secondCompetence === undefined) {
+    return -1;
+  }
+  return competenceComparator(firstCompetence, secondCompetence);
 }

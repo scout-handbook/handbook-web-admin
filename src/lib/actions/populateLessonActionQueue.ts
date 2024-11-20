@@ -2,8 +2,25 @@ import type { ActionQueue } from "$lib/actions/ActionQueue";
 
 import { Action } from "$lib/actions/Action";
 
-function arrayEquals<T>(a: Array<T>, b: Array<T>): boolean {
-  return a.length === b.length && a.every((v, i) => v === b[i]);
+export function populateCompetences(
+  actionQueue: ActionQueue,
+  lessonID: string | null,
+  competences: Array<string>,
+  initialCompetences: Array<string> = [],
+): void {
+  if (arrayEquals(initialCompetences, competences)) {
+    return;
+  }
+  const encodedID = lessonID !== null ? encodeURIComponent(lessonID) : "{id}";
+  actionQueue.actions.push(
+    new Action(
+      `${CONFIG["api-uri"]}/v1.0/lesson/${encodedID}/competence`,
+      "PUT",
+      {
+        competence: competences.map(encodeURIComponent),
+      },
+    ),
+  );
 }
 
 export function populateField(
@@ -29,27 +46,6 @@ export function populateField(
   );
 }
 
-export function populateCompetences(
-  actionQueue: ActionQueue,
-  lessonID: string | null,
-  competences: Array<string>,
-  initialCompetences: Array<string> = [],
-): void {
-  if (arrayEquals(initialCompetences, competences)) {
-    return;
-  }
-  const encodedID = lessonID !== null ? encodeURIComponent(lessonID) : "{id}";
-  actionQueue.actions.push(
-    new Action(
-      `${CONFIG["api-uri"]}/v1.0/lesson/${encodedID}/competence`,
-      "PUT",
-      {
-        competence: competences.map(encodeURIComponent),
-      },
-    ),
-  );
-}
-
 export function populateGroups(
   actionQueue: ActionQueue,
   lessonID: string | null,
@@ -65,4 +61,8 @@ export function populateGroups(
       group: groups.map(encodeURIComponent),
     }),
   );
+}
+
+function arrayEquals<T>(a: Array<T>, b: Array<T>): boolean {
+  return a.length === b.length && a.every((v, i) => v === b[i]);
 }

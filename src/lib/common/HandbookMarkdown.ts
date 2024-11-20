@@ -1,5 +1,26 @@
 import showdown from "showdown";
 
+// Specific commands
+// Generic command processing functions
+function filterCommand(
+  text: string,
+  commandName: string,
+  command: (args: Record<string, boolean | string>) => string,
+): string {
+  const lines = text.split("\n");
+  let ret = "";
+  for (let i = 0; i < lines.length; i++) {
+    if (lines[i].trim().startsWith(`!${commandName}`)) {
+      const arr = getArgumentString(lines, i, commandName);
+      i = arr[1];
+      ret += `${command(parseArgumentString(arr[0]))}\n`;
+    } else {
+      ret += `${lines[i]}\n`;
+    }
+  }
+  return ret;
+}
+
 function getArgumentString(
   lines: Array<string>,
   current: number,
@@ -31,6 +52,15 @@ function getArgumentString(
   return [argumentString, next];
 }
 
+function notesCommand(): string {
+  //return "<textarea class=\"notes\" placeholder=\"Tvoje poznámky\"></textarea>";
+  return "";
+}
+
+function pagebreakCommand(): string {
+  return "";
+}
+
 function parseArgumentString(
   argumentString: string,
 ): Record<string, boolean | string> {
@@ -47,36 +77,6 @@ function parseArgumentString(
     }
   }
   return output;
-}
-
-// Specific commands
-// Generic command processing functions
-function filterCommand(
-  text: string,
-  commandName: string,
-  command: (args: Record<string, boolean | string>) => string,
-): string {
-  const lines = text.split("\n");
-  let ret = "";
-  for (let i = 0; i < lines.length; i++) {
-    if (lines[i].trim().startsWith(`!${commandName}`)) {
-      const arr = getArgumentString(lines, i, commandName);
-      i = arr[1];
-      ret += `${command(parseArgumentString(arr[0]))}\n`;
-    } else {
-      ret += `${lines[i]}\n`;
-    }
-  }
-  return ret;
-}
-
-function notesCommand(): string {
-  //return "<textarea class=\"notes\" placeholder=\"Tvoje poznámky\"></textarea>";
-  return "";
-}
-
-function pagebreakCommand(): string {
-  return "";
 }
 
 // Showdown extensions definitions
