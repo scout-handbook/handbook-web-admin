@@ -115,6 +115,7 @@
     cursor: pointer;
     bottom: 0;
     height: fit-content;
+    width: fit-content;
     left: 0;
     padding: 0;
     margin: auto;
@@ -123,5 +124,9 @@
     right: 0;
     top: 0;
     z-index: 9;
+  }
+
+  img {
+    display: block;
   }
 </style>
