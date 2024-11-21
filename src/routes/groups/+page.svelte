@@ -11,7 +11,7 @@
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import MainPageContainer from "$lib/components/MainPageContainer.svelte";
   import TopBar from "$lib/components/TopBar.svelte";
-  import { groups, sortGroups } from "$lib/resources/groups";
+  import { groups, sortGroups } from "$lib/resources/groups.svelte";
   import { createQuery } from "@tanstack/svelte-query";
 
   import type { PageStateFix } from "../../app";
@@ -32,17 +32,17 @@
   {#if pageState.action === "add-group"}
     <AddGroupPanel />
   {:else if pageState.action === "change-group"}
-    {@const group = $groups?.get(pageState.actionPayload.groupId)}
+    {@const group = groups.current?.get(pageState.actionPayload.groupId)}
     {#if group !== undefined}
       <EditGroupPanel {group} groupId={pageState.actionPayload.groupId} />
     {/if}
   {:else if pageState.action === "delete-group"}
-    {@const group = $groups?.get(pageState.actionPayload.groupId)}
+    {@const group = groups.current?.get(pageState.actionPayload.groupId)}
     {#if group !== undefined}
       <DeleteGroupDialog {group} groupId={pageState.actionPayload.groupId} />
     {/if}
   {:else if pageState.action === "import-group-members"}
-    {@const group = $groups?.get(pageState.actionPayload.groupId)}
+    {@const group = groups.current?.get(pageState.actionPayload.groupId)}
     {#if group !== undefined}
       <ImportGroupMembersPanel
         {group}
@@ -63,10 +63,10 @@
       Přidat
     </Button>
   {/if}
-  {#if $groups === undefined}
+  {#if groups.current === undefined}
     <LoadingIndicator />
   {:else}
-    {#each sortGroups($groups) as [id, group] (id)}
+    {#each sortGroups(groups.current) as [id, group] (id)}
       <br />
       <h3 class:public={id === "00000000-0000-0000-0000-000000000000"}>
         {group.name}

@@ -8,7 +8,7 @@
   import CheckboxGroup from "$lib/components/forms/CheckboxGroup.svelte";
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import SidePanel from "$lib/components/SidePanel.svelte";
-  import { groups, sortGroups } from "$lib/resources/groups";
+  import { groups, sortGroups } from "$lib/resources/groups.svelte";
   import { filter } from "$lib/utils/mapUtils";
   import { queryClient } from "$lib/utils/queryClient";
 
@@ -22,7 +22,7 @@
   let donePromise: Promise<void> | null = $state(null);
 
   let publicName = $derived(
-    $groups?.get("00000000-0000-0000-0000-000000000000")?.name ?? "",
+    groups.current?.get("00000000-0000-0000-0000-000000000000")?.name ?? "",
   );
 
   function saveCallback(): void {
@@ -70,14 +70,14 @@
     </Button>
     <Button green icon="floppy" onclick={saveCallback}>Uložit</Button>
     <h1>Změnit skupiny: {payload.user.name}</h1>
-    {#if $groups === undefined}
+    {#if groups.current === undefined}
       <LoadingIndicator inline />
     {:else}
       <form>
         <CheckboxGroup
           options={sortGroups(
             filter(
-              $groups,
+              groups.current,
               (id) => id !== "00000000-0000-0000-0000-000000000000",
             ),
           )}

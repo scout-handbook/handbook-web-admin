@@ -4,7 +4,7 @@
 
   import { pushState } from "$app/navigation";
   import Button from "$lib/components/Button.svelte";
-  import { groups, sortGroups } from "$lib/resources/groups";
+  import { groups, sortGroups } from "$lib/resources/groups.svelte";
   import { filter } from "$lib/utils/mapUtils";
   import { createQuery } from "@tanstack/svelte-query";
 
@@ -63,8 +63,12 @@
           {/if}
         </td>
         <td>
-          {#if $groups !== undefined}
-            {[...sortGroups(filter($groups, (id) => user.groups.includes(id)))]
+          {#if groups.current !== undefined}
+            {[
+              ...sortGroups(
+                filter(groups.current, (id) => user.groups.includes(id)),
+              ),
+            ]
               .map(([_, group]) => group.name)
               .join(", ")}
           {/if}
