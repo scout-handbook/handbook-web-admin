@@ -5,7 +5,7 @@
   import {
     competences as allCompetences,
     sortCompetences,
-  } from "$lib/resources/competences";
+  } from "$lib/resources/competences.svelte";
   import { fields } from "$lib/resources/fields.svelte";
   import {
     groups as allGroups,
@@ -81,10 +81,10 @@
 >
   Upravit
 </Button>
-{#if $allCompetences === undefined}
+{#if allCompetences.current === undefined}
   <LoadingIndicator inline />
 {:else}
-  {#each sortCompetences(filter( $allCompetences, (competenceId) => competences.includes(competenceId), )) as [competenceId, competence] (competenceId)}
+  {#each sortCompetences(filter( allCompetences.current, (competenceId) => competences.includes(competenceId), )) as [competenceId, competence] (competenceId)}
     <br />
     <span class="competence-number">{competence.number}:</span>
     {competence.name}

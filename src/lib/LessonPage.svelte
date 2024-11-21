@@ -14,7 +14,7 @@
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import MainPageContainer from "$lib/components/MainPageContainer.svelte";
   import TopBar from "$lib/components/TopBar.svelte";
-  import { competences } from "$lib/resources/competences";
+  import { competences } from "$lib/resources/competences.svelte";
   import { fields, sortFields } from "$lib/resources/fields.svelte";
   import { lessons, sortLessons } from "$lib/resources/lessons.svelte";
   import { filter } from "$lib/utils/mapUtils";
@@ -88,13 +88,13 @@
     </Button>
   {/if}
   {@const fieldsValue = fields.current}
-  {#if fieldsValue === undefined || lessons.current === undefined || $competences === undefined}
+  {#if fieldsValue === undefined || lessons.current === undefined || competences.current === undefined}
     <LoadingIndicator />
   {:else}
-    {#each sortLessons( filter(lessons.current, (lessonId) => filter( fieldsValue, (_, field) => field.lessons.includes(lessonId), ).size === 0), $competences, ) as [lessonId, lesson] (lessonId)}
+    {#each sortLessons( filter(lessons.current, (lessonId) => filter( fieldsValue, (_, field) => field.lessons.includes(lessonId), ).size === 0), competences.current, ) as [lessonId, lesson] (lessonId)}
       <LessonViewLesson id={lessonId} {lesson} />
     {/each}
-    {#each sortFields(fieldsValue, lessons.current, $competences) as [fieldId, field] (fieldId)}
+    {#each sortFields(fieldsValue, lessons.current, competences.current) as [fieldId, field] (fieldId)}
       <div>
         <h2>{field.name}</h2>
         {#if adminOrSuperuser}
@@ -132,7 +132,7 @@
         >
           Přidat lekci
         </Button>
-        {#each sortLessons( filter( lessons.current, (lessonId) => field.lessons.includes(lessonId), ), $competences, ) as [lessonId, lesson] (lessonId)}
+        {#each sortLessons( filter( lessons.current, (lessonId) => field.lessons.includes(lessonId), ), competences.current, ) as [lessonId, lesson] (lessonId)}
           <LessonViewLesson id={lessonId} {lesson} secondLevel={true} />
         {/each}
       </div>

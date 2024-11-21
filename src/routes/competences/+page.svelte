@@ -10,7 +10,10 @@
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import MainPageContainer from "$lib/components/MainPageContainer.svelte";
   import TopBar from "$lib/components/TopBar.svelte";
-  import { competences, sortCompetences } from "$lib/resources/competences";
+  import {
+    competences,
+    sortCompetences,
+  } from "$lib/resources/competences.svelte";
   import { createQuery } from "@tanstack/svelte-query";
 
   import type { PageStateFix } from "../../app";
@@ -31,7 +34,9 @@
   {#if state.action === "add-competence"}
     <AddCompetencePanel />
   {:else if state.action === "change-competence"}
-    {@const competence = $competences?.get(state.actionPayload.competenceId)}
+    {@const competence = competences.current?.get(
+      state.actionPayload.competenceId,
+    )}
     {#if competence !== undefined}
       <EditCompetencePanel
         {competence}
@@ -39,7 +44,9 @@
       />
     {/if}
   {:else if state.action === "delete-competence"}
-    {@const competence = $competences?.get(state.actionPayload.competenceId)}
+    {@const competence = competences.current?.get(
+      state.actionPayload.competenceId,
+    )}
     {#if competence !== undefined}
       <DeleteCompetenceDialog
         {competence}
@@ -61,10 +68,10 @@
     </Button>
     <br />
   {/if}
-  {#if $competences === undefined}
+  {#if competences.current === undefined}
     <LoadingIndicator />
   {:else}
-    {#each sortCompetences($competences) as [id, competence] (id)}
+    {#each sortCompetences(competences.current) as [id, competence] (id)}
       <h3>
         {`${competence.number.toString()}: ${competence.name}`}
       </h3>

@@ -5,7 +5,10 @@
   import { goto, pushState } from "$app/navigation";
   import { base } from "$app/paths";
   import Button from "$lib/components/Button.svelte";
-  import { competences, sortCompetences } from "$lib/resources/competences";
+  import {
+    competences,
+    sortCompetences,
+  } from "$lib/resources/competences.svelte";
   import { filter } from "$lib/utils/mapUtils";
   import { createQuery } from "@tanstack/svelte-query";
 
@@ -65,10 +68,10 @@
   </Button>
   <br />
   Body:
-  {#if $competences !== undefined}
+  {#if competences.current !== undefined}
     {[
       ...sortCompetences(
-        filter($competences, (competenceId) =>
+        filter(competences.current, (competenceId) =>
           lesson.competences.includes(competenceId),
         ),
       ),
