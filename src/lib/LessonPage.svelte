@@ -16,7 +16,7 @@
   import TopBar from "$lib/components/TopBar.svelte";
   import { competences } from "$lib/resources/competences";
   import { fields, sortFields } from "$lib/resources/fields.svelte";
-  import { lessons, sortLessons } from "$lib/resources/lessons";
+  import { lessons, sortLessons } from "$lib/resources/lessons.svelte";
   import { filter } from "$lib/utils/mapUtils";
   import { createQuery } from "@tanstack/svelte-query";
 
@@ -48,7 +48,7 @@
       <DeleteFieldDialog {field} fieldId={state.actionPayload.fieldId} />
     {/if}
   {:else if state.action === "delete-lesson"}
-    {@const lesson = $lessons?.get(state.actionPayload.lessonId)}
+    {@const lesson = lessons.current?.get(state.actionPayload.lessonId)}
     {#if lesson !== undefined}
       <DeleteLessonDialog {lesson} lessonId={state.actionPayload.lessonId} />
     {/if}
@@ -88,13 +88,13 @@
     </Button>
   {/if}
   {@const fieldsValue = fields.current}
-  {#if fieldsValue === undefined || $lessons === undefined || $competences === undefined}
+  {#if fieldsValue === undefined || lessons.current === undefined || $competences === undefined}
     <LoadingIndicator />
   {:else}
-    {#each sortLessons( filter($lessons, (lessonId) => filter( fieldsValue, (_, field) => field.lessons.includes(lessonId), ).size === 0), $competences, ) as [lessonId, lesson] (lessonId)}
+    {#each sortLessons( filter(lessons.current, (lessonId) => filter( fieldsValue, (_, field) => field.lessons.includes(lessonId), ).size === 0), $competences, ) as [lessonId, lesson] (lessonId)}
       <LessonViewLesson id={lessonId} {lesson} />
     {/each}
-    {#each sortFields(fieldsValue, $lessons, $competences) as [fieldId, field] (fieldId)}
+    {#each sortFields(fieldsValue, lessons.current, $competences) as [fieldId, field] (fieldId)}
       <div>
         <h2>{field.name}</h2>
         {#if adminOrSuperuser}
@@ -132,7 +132,7 @@
         >
           Přidat lekci
         </Button>
-        {#each sortLessons( filter( $lessons, (lessonId) => field.lessons.includes(lessonId), ), $competences, ) as [lessonId, lesson] (lessonId)}
+        {#each sortLessons( filter( lessons.current, (lessonId) => field.lessons.includes(lessonId), ), $competences, ) as [lessonId, lesson] (lessonId)}
           <LessonViewLesson id={lessonId} {lesson} secondLevel={true} />
         {/each}
       </div>

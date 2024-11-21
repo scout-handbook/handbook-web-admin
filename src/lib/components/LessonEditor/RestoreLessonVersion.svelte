@@ -6,7 +6,7 @@
   import RadioGroup from "$lib/components/forms/RadioGroup.svelte";
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import Overlay from "$lib/components/Overlay.svelte";
-  import { lessons } from "$lib/resources/lessons";
+  import { lessons } from "$lib/resources/lessons.svelte";
   import { compileMarkdown } from "$lib/utils/compileMarkdown";
   import { parseVersion } from "$lib/utils/parseVersion";
   import { authFailHandler, request } from "$lib/utils/request";
@@ -24,7 +24,7 @@
     lessonName = $bindable(),
   }: Props = $props();
 
-  let currentLessonVersion = $derived($lessons?.get(lessonId)?.version);
+  let currentLessonVersion = $derived(lessons.current?.get(lessonId)?.version);
   let versionList = $state<Array<LessonVersion> | null>(null);
   let selectedVersion = $state<number | null>(null);
   let selectedVersionName = $derived(
