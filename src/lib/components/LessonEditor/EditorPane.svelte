@@ -1,9 +1,14 @@
 <script lang="ts">
-  import { default as EasyMDE } from "easymde";
+  //import { default as EasyMDE } from "easymde";
+  import { ProseMirrorView } from "$lib/utils/ProseMirrorView";
   import { onMount } from "svelte";
+  import "prosemirror-view/style/prosemirror.css";
+  import "prosemirror-example-setup/style/style.css";
+  import "prosemirror-menu/style/menu.css";
   import "easymde/dist/easymde.min.css";
 
-  let editor: EasyMDE | undefined = $state();
+  let view: ProseMirrorView | undefined = $state();
+  //let editor: EasyMDE | undefined = $state();
   let editorArea: HTMLElement | undefined = $state();
 
   interface Props {
@@ -14,23 +19,25 @@
   let { openImageSelector, value = $bindable() }: Props = $props();
 
   export function insertAtCursor(content: string): void {
-    if (editor === undefined) {
-      return;
-    }
-    const doc = editor.codemirror.getDoc();
-    doc.replaceRange(content, doc.getCursor());
+    //if (editor === undefined) {
+      //return;
+    //}
+    //const doc = editor.codemirror.getDoc();
+    //doc.replaceRange(content, doc.getCursor());
   }
 
   $effect(() => {
-    if (editor !== undefined && value !== editor.value()) {
-      editor.value(value);
-    }
+    //if (editor !== undefined && value !== editor.value()) {
+      //editor.value(value);
+    //}
   });
 
   onMount(() => {
     if (editorArea === undefined) {
       return;
     }
+    view = new ProseMirrorView(editorArea, value);
+    /*
     editor = new EasyMDE({
       autoDownloadFontAwesome: false,
       autofocus: true,
@@ -102,12 +109,11 @@
         value = editor.value();
       }
     });
+    */
   });
 </script>
 
-<div>
-  <textarea bind:this={editorArea}></textarea>
-</div>
+<div bind:this={editorArea}></div>
 
 <style>
   :global(.editor-toolbar) {
