@@ -2,7 +2,7 @@ import type { Competence } from "$lib/interfaces/Competence";
 import type { Field } from "$lib/interfaces/Field";
 import type { Lesson } from "$lib/interfaces/Lesson";
 
-import { lessonComparator } from "$lib/resources/lessons";
+import { lessonComparator } from "$lib/resources/lessons.svelte";
 import { queryClient } from "$lib/utils/queryClient";
 import { createQuery } from "@tanstack/svelte-query";
 import { SvelteMap } from "svelte/reactivity";

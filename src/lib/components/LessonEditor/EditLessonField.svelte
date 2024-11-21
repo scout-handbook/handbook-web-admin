@@ -4,7 +4,7 @@
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import { competences } from "$lib/resources/competences";
   import { fields, sortFields } from "$lib/resources/fields.svelte";
-  import { lessons } from "$lib/resources/lessons";
+  import { lessons } from "$lib/resources/lessons.svelte";
 
   interface Props {
     field: string | null;
@@ -34,11 +34,11 @@
 >
 <h1>Změnit oblast</h1>
 <form>
-  {#if fields.current === undefined || $lessons === undefined || $competences === undefined}
+  {#if fields.current === undefined || lessons.current === undefined || $competences === undefined}
     <LoadingIndicator />
   {:else}
     <RadioGroup
-      options={sortFields(fields.current, $lessons, $competences)}
+      options={sortFields(fields.current, lessons.current, $competences)}
       bind:selected={field}
     >
       {#snippet nullOption()}
