@@ -6,7 +6,7 @@
     competences as allCompetences,
     sortCompetences,
   } from "$lib/resources/competences";
-  import { fields } from "$lib/resources/fields";
+  import { fields } from "$lib/resources/fields.svelte";
   import {
     groups as allGroups,
     sortGroups,
@@ -62,10 +62,10 @@
 <br />
 {#if field === null}
   <span class="anonymous">Nezařazeno</span>
-{:else if $fields === undefined}
+{:else if fields.current === undefined}
   <LoadingIndicator inline />
 {:else}
-  {$fields.get(field)?.name ?? ""}
+  {fields.current.get(field)?.name ?? ""}
 {/if}
 <br />
 <h1>Body</h1>

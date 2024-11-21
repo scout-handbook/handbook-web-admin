@@ -6,18 +6,22 @@ import { lessonComparator } from "$lib/resources/lessons";
 import { queryClient } from "$lib/utils/queryClient";
 import { createQuery } from "@tanstack/svelte-query";
 import { SvelteMap } from "svelte/reactivity";
-import { derived } from "svelte/store";
+import { derived, fromStore } from "svelte/store";
 
-export const fields = derived(
-  createQuery<Record<string, Field>>(
-    {
-      queryKey: ["v1.0", "field", { "override-group": true }],
-    },
-    queryClient,
+export const fields = fromStore(
+  derived(
+    createQuery<Record<string, Field>>(
+      {
+        queryKey: ["v1.0", "field", { "override-group": true }],
+      },
+      queryClient,
+    ),
+    ({ data, isSuccess }) =>
+      isSuccess
+        ? new SvelteMap<string, Field>(Object.entries(data))
+        : undefined,
+    undefined,
   ),
-  ({ data, isSuccess }) =>
-    isSuccess ? new SvelteMap<string, Field>(Object.entries(data)) : undefined,
-  undefined,
 );
 
 export function sortFields(

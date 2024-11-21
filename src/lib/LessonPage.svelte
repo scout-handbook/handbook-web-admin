@@ -15,7 +15,7 @@
   import MainPageContainer from "$lib/components/MainPageContainer.svelte";
   import TopBar from "$lib/components/TopBar.svelte";
   import { competences } from "$lib/resources/competences";
-  import { fields, sortFields } from "$lib/resources/fields";
+  import { fields, sortFields } from "$lib/resources/fields.svelte";
   import { lessons, sortLessons } from "$lib/resources/lessons";
   import { filter } from "$lib/utils/mapUtils";
   import { createQuery } from "@tanstack/svelte-query";
@@ -38,12 +38,12 @@
   {#if state.action === "add-field"}
     <AddFieldPanel />
   {:else if state.action === "change-field"}
-    {@const field = $fields?.get(state.actionPayload.fieldId)}
+    {@const field = fields.current?.get(state.actionPayload.fieldId)}
     {#if field !== undefined}
       <EditFieldPanel {field} fieldId={state.actionPayload.fieldId} />
     {/if}
   {:else if state.action === "delete-field"}
-    {@const field = $fields?.get(state.actionPayload.fieldId)}
+    {@const field = fields.current?.get(state.actionPayload.fieldId)}
     {#if field !== undefined}
       <DeleteFieldDialog {field} fieldId={state.actionPayload.fieldId} />
     {/if}
@@ -87,13 +87,14 @@
       Smazané lekce
     </Button>
   {/if}
-  {#if $fields === undefined || $lessons === undefined || $competences === undefined}
+  {@const fieldsValue = fields.current}
+  {#if fieldsValue === undefined || $lessons === undefined || $competences === undefined}
     <LoadingIndicator />
   {:else}
-    {#each sortLessons( filter($lessons, (lessonId) => filter( $fields, (_, field) => field.lessons.includes(lessonId), ).size === 0), $competences, ) as [lessonId, lesson] (lessonId)}
+    {#each sortLessons( filter($lessons, (lessonId) => filter( fieldsValue, (_, field) => field.lessons.includes(lessonId), ).size === 0), $competences, ) as [lessonId, lesson] (lessonId)}
       <LessonViewLesson id={lessonId} {lesson} />
     {/each}
-    {#each sortFields($fields, $lessons, $competences) as [fieldId, field] (fieldId)}
+    {#each sortFields(fieldsValue, $lessons, $competences) as [fieldId, field] (fieldId)}
       <div>
         <h2>{field.name}</h2>
         {#if adminOrSuperuser}
