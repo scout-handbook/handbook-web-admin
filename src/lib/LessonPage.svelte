@@ -11,11 +11,13 @@
   import RestoreLessonPanel from "$lib/components/action-modals/RestoreLessonPanel.svelte";
   import Button from "$lib/components/Button.svelte";
   import LessonViewLesson from "$lib/components/LessonViewLesson.svelte";
+  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import MainPageContainer from "$lib/components/MainPageContainer.svelte";
-  import FieldProvider from "$lib/components/swr-wrappers/FieldProvider.svelte";
-  import LessonProvider from "$lib/components/swr-wrappers/LessonProvider.svelte";
   import TopBar from "$lib/components/TopBar.svelte";
-  import { get } from "$lib/utils/arrayUtils";
+  import { competences } from "$lib/resources/competences.svelte";
+  import { fields, sortFields } from "$lib/resources/fields.svelte";
+  import { lessons, sortLessons } from "$lib/resources/lessons.svelte";
+  import { filter } from "$lib/utils/mapUtils";
   import { createQuery } from "@tanstack/svelte-query";
 
   import type { PageStateFix } from "../app";
@@ -36,35 +38,20 @@
   {#if state.action === "add-field"}
     <AddFieldPanel />
   {:else if state.action === "change-field"}
-    <FieldProvider silent>
-      {#snippet children(_, fields)}
-        {@const field = get(fields, state.actionPayload.fieldId)}
-        {#if field !== undefined}
-          <EditFieldPanel {field} fieldId={state.actionPayload.fieldId} />
-        {/if}
-      {/snippet}
-    </FieldProvider>
+    {@const field = fields.current?.get(state.actionPayload.fieldId)}
+    {#if field !== undefined}
+      <EditFieldPanel {field} fieldId={state.actionPayload.fieldId} />
+    {/if}
   {:else if state.action === "delete-field"}
-    <FieldProvider silent>
-      {#snippet children(_, fields)}
-        {@const field = get(fields, state.actionPayload.fieldId)}
-        {#if field !== undefined}
-          <DeleteFieldDialog {field} fieldId={state.actionPayload.fieldId} />
-        {/if}
-      {/snippet}
-    </FieldProvider>
+    {@const field = fields.current?.get(state.actionPayload.fieldId)}
+    {#if field !== undefined}
+      <DeleteFieldDialog {field} fieldId={state.actionPayload.fieldId} />
+    {/if}
   {:else if state.action === "delete-lesson"}
-    <LessonProvider silent>
-      {#snippet children(_, lessons)}
-        {@const lesson = get(lessons, state.actionPayload.lessonId)}
-        {#if lesson !== undefined}
-          <DeleteLessonDialog
-            {lesson}
-            lessonId={state.actionPayload.lessonId}
-          />
-        {/if}
-      {/snippet}
-    </LessonProvider>
+    {@const lesson = lessons.current?.get(state.actionPayload.lessonId)}
+    {#if lesson !== undefined}
+      <DeleteLessonDialog {lesson} lessonId={state.actionPayload.lessonId} />
+    {/if}
   {:else if state.action === "restore-lesson"}
     <RestoreLessonPanel />
   {/if}
@@ -100,59 +87,57 @@
       Smazané lekce
     </Button>
   {/if}
-  <FieldProvider>
-    {#snippet children(_, fields, lessons)}
-      {#each lessons.filter(([lessonId, _1]) => fields.filter( ([_2, field]) => field.lessons.includes(lessonId), ).length === 0) as [lessonId, lesson] (lessonId)}
-        <LessonViewLesson id={lessonId} {lesson} />
-      {/each}
-      {#each fields as [fieldId, field] (fieldId)}
-        <div>
-          <h2>{field.name}</h2>
-          {#if adminOrSuperuser}
-            <Button
-              cyan
-              icon="pencil"
-              onclick={() => {
-                pushState("", {
-                  action: "change-field",
-                  actionPayload: { fieldId },
-                });
-              }}
-            >
-              Upravit
-            </Button>
-            <Button
-              icon="trash-empty"
-              onclick={() => {
-                pushState("", {
-                  action: "delete-field",
-                  actionPayload: { fieldId },
-                });
-              }}
-              red
-            >
-              Smazat
-            </Button>
-          {/if}
+  {@const fieldsValue = fields.current}
+  {#if fieldsValue === undefined || lessons.current === undefined || competences.current === undefined}
+    <LoadingIndicator />
+  {:else}
+    {#each sortLessons( filter(lessons.current, (lessonId) => filter( fieldsValue, (_, field) => field.lessons.includes(lessonId), ).size === 0), competences.current, ) as [lessonId, lesson] (lessonId)}
+      <LessonViewLesson id={lessonId} {lesson} />
+    {/each}
+    {#each sortFields(fieldsValue, lessons.current, competences.current) as [fieldId, field] (fieldId)}
+      <div>
+        <h2>{field.name}</h2>
+        {#if adminOrSuperuser}
           <Button
-            green
-            icon="plus"
+            cyan
+            icon="pencil"
             onclick={() => {
-              // eslint-disable-next-line @typescript-eslint/restrict-template-expressions -- It's a string, but TS doesn't work in templates
-              void goto(`${base}/lessons/add?field=${fieldId}`);
+              pushState("", {
+                action: "change-field",
+                actionPayload: { fieldId },
+              });
             }}
           >
-            Přidat lekci
+            Upravit
           </Button>
-          {#each lessons as [lessonId, lesson] (lessonId)}
-            {#if field.lessons.includes(lessonId)}
-              <LessonViewLesson id={lessonId} {lesson} secondLevel={true} />
-            {/if}
-          {/each}
-        </div>
-      {/each}
-    {/snippet}
-  </FieldProvider>
+          <Button
+            icon="trash-empty"
+            onclick={() => {
+              pushState("", {
+                action: "delete-field",
+                actionPayload: { fieldId },
+              });
+            }}
+            red
+          >
+            Smazat
+          </Button>
+        {/if}
+        <Button
+          green
+          icon="plus"
+          onclick={() => {
+            void goto(`${base}/lessons/add?field=${fieldId}`);
+          }}
+        >
+          Přidat lekci
+        </Button>
+        {#each sortLessons( filter( lessons.current, (lessonId) => field.lessons.includes(lessonId), ), competences.current, ) as [lessonId, lesson] (lessonId)}
+          <LessonViewLesson id={lessonId} {lesson} secondLevel={true} />
+        {/each}
+      </div>
+    {/each}
+  {/if}
 </MainPageContainer>
 
 <style>

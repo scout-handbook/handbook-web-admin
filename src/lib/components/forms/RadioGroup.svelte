@@ -4,7 +4,7 @@
   interface Props {
     nullOption?: Snippet;
     option: Snippet<[KeyType, ValueType]>;
-    options: Array<[KeyType, ValueType]>;
+    options: Map<KeyType, ValueType>;
     selected: KeyType | null;
   }
 

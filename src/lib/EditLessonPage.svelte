@@ -2,6 +2,7 @@
   import type { LockedExceptionResponse } from "$lib/interfaces/APIResponse";
   import type { Field } from "$lib/interfaces/Field";
   import type { Lesson } from "$lib/interfaces/Lesson";
+  import type { SvelteMap } from "svelte/reactivity";
 
   import { Action } from "$lib/actions/Action";
   import { ActionCallback } from "$lib/actions/ActionCallback";
@@ -15,29 +16,29 @@
   import LessonEditor from "$lib/components/LessonEditor.svelte";
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import { globalUI } from "$lib/globalUI.svelte";
-  import { get } from "$lib/utils/arrayUtils";
   import { afterRefreshCallback } from "$lib/utils/loginRefresh.svelte";
+  import { find } from "$lib/utils/mapUtils";
   import { queryClient } from "$lib/utils/queryClient";
   import { reAuth, request } from "$lib/utils/request";
   import { createMutation } from "@tanstack/svelte-query";
   import { onDestroy, onMount } from "svelte";
 
   interface Props {
-    fields: Array<[string, Field]>;
+    fields: SvelteMap<string, Field>;
     lessonID: string;
-    lessons: Array<[string, Lesson]>;
+    lessons: SvelteMap<string, Lesson>;
   }
 
   let { fields, lessonID, lessons }: Props = $props();
 
   let donePromise: Promise<void> | null = $state(null);
-  let name = $state(get(lessons, lessonID)?.name ?? "");
+  let name = $state(lessons.get(lessonID)?.name ?? "");
   let body = $state("");
   let competences: Array<string> = $state(
-    get(lessons, lessonID)?.competences ?? [],
+    lessons.get(lessonID)?.competences ?? [],
   );
   let field: string | null = $state(
-    fields.find(([_, item]) => item.lessons.includes(lessonID))?.[0] ?? null,
+    find(fields, (item) => item.lessons.includes(lessonID))?.[0] ?? null,
   );
   let groups: Array<string> = $state([]);
 

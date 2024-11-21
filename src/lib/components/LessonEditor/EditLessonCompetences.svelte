@@ -1,7 +1,11 @@
 <script lang="ts">
   import Button from "$lib/components/Button.svelte";
   import CheckboxGroup from "$lib/components/forms/CheckboxGroup.svelte";
-  import CompetenceProvider from "$lib/components/swr-wrappers/CompetenceProvider.svelte";
+  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
+  import {
+    competences as allCompetences,
+    sortCompetences,
+  } from "$lib/resources/competences.svelte";
 
   interface Props {
     competences: Array<string>;
@@ -31,19 +35,22 @@
 >
 <h1>Změnit body</h1>
 <form>
-  <CompetenceProvider>
-    {#snippet children(allCompetences)}
-      <CheckboxGroup options={allCompetences} bind:selected={competences}>
-        <!-- eslint-disable-next-line @typescript-eslint/no-shadow -- Not applicable to snippets -->
-        {#snippet children(_, competence)}
-          <span class="competence-number">
-            {competence.number}:
-          </span>
-          {competence.name}
-        {/snippet}
-      </CheckboxGroup>
-    {/snippet}
-  </CompetenceProvider>
+  {#if allCompetences.current === undefined}
+    <LoadingIndicator />
+  {:else}
+    <CheckboxGroup
+      options={sortCompetences(allCompetences.current)}
+      bind:selected={competences}
+    >
+      <!-- eslint-disable-next-line @typescript-eslint/no-shadow -- Not applicable to snippets -->
+      {#snippet children(_, competence)}
+        <span class="competence-number">
+          {competence.number}:
+        </span>
+        {competence.name}
+      {/snippet}
+    </CheckboxGroup>
+  {/if}
 </form>
 
 <style>

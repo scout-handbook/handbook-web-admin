@@ -1,5 +1,4 @@
 <script lang="ts">
-  import type { Group } from "$lib/interfaces/Group";
   import type { User } from "$lib/interfaces/User";
 
   import { Action } from "$lib/actions/Action";
@@ -7,22 +6,23 @@
   import Button from "$lib/components/Button.svelte";
   import DoneDialog from "$lib/components/DoneDialog.svelte";
   import CheckboxGroup from "$lib/components/forms/CheckboxGroup.svelte";
+  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import SidePanel from "$lib/components/SidePanel.svelte";
-  import { filter, get } from "$lib/utils/arrayUtils";
+  import { groups, sortGroups } from "$lib/resources/groups.svelte";
+  import { filter } from "$lib/utils/mapUtils";
   import { queryClient } from "$lib/utils/queryClient";
 
   interface Props {
-    groups: Array<[string, Group]>;
     payload: { user: User };
   }
 
-  let { groups, payload }: Props = $props();
+  let { payload }: Props = $props();
 
   let selectedGroups = $state(payload.user.groups);
   let donePromise: Promise<void> | null = $state(null);
 
   let publicName = $derived(
-    get(groups, "00000000-0000-0000-0000-000000000000")?.name ?? "",
+    groups.current?.get("00000000-0000-0000-0000-000000000000")?.name ?? "",
   );
 
   function saveCallback(): void {
@@ -70,19 +70,25 @@
     </Button>
     <Button green icon="floppy" onclick={saveCallback}>Uložit</Button>
     <h1>Změnit skupiny: {payload.user.name}</h1>
-    <form>
-      <CheckboxGroup
-        options={filter(
-          groups,
-          (id) => id !== "00000000-0000-0000-0000-000000000000",
-        )}
-        bind:selected={selectedGroups}
-      >
-        {#snippet children(_, group)}
-          {group.name}
-        {/snippet}
-      </CheckboxGroup>
-    </form>
+    {#if groups.current === undefined}
+      <LoadingIndicator inline />
+    {:else}
+      <form>
+        <CheckboxGroup
+          options={sortGroups(
+            filter(
+              groups.current,
+              (id) => id !== "00000000-0000-0000-0000-000000000000",
+            ),
+          )}
+          bind:selected={selectedGroups}
+        >
+          {#snippet children(_, group)}
+            {group.name}
+          {/snippet}
+        </CheckboxGroup>
+      </form>
+    {/if}
     <br />
     <i class="icon-info-circled"></i>
     Každého uživatele lze zařadit do několika skupin (nebo i žádné). Podle toho poté
