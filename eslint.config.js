@@ -223,7 +223,8 @@ export default tseslint.config(
       ],
       "svelte/no-useless-mustaches": "error",
       "svelte/prefer-class-directive": "error",
-      "svelte/prefer-destructured-store-props": "error",
+      // Turned off due to sveltejs/eslint-plugin-svelte#912
+      "svelte/prefer-destructured-store-props": "off",
       "svelte/prefer-style-directive": "error",
       "svelte/require-each-key": "error",
       "svelte/require-optimized-style-attribute": "error",

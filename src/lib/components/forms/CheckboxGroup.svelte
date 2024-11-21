@@ -3,7 +3,7 @@
 
   interface Props {
     children: Snippet<[KeyType, ValueType]>;
-    options: Array<[KeyType, ValueType]>;
+    options: Map<KeyType, ValueType>;
     selected: Array<KeyType>;
   }
 

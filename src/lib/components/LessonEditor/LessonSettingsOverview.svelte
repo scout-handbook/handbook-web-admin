@@ -1,10 +1,17 @@
 <script lang="ts">
   import { pushState } from "$app/navigation";
   import Button from "$lib/components/Button.svelte";
-  import CompetenceProvider from "$lib/components/swr-wrappers/CompetenceProvider.svelte";
-  import FieldProvider from "$lib/components/swr-wrappers/FieldProvider.svelte";
-  import GroupProvider from "$lib/components/swr-wrappers/GroupProvider.svelte";
-  import { get } from "$lib/utils/arrayUtils";
+  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
+  import {
+    competences as allCompetences,
+    sortCompetences,
+  } from "$lib/resources/competences.svelte";
+  import { fields } from "$lib/resources/fields.svelte";
+  import {
+    groups as allGroups,
+    sortGroups,
+  } from "$lib/resources/groups.svelte";
+  import { filter } from "$lib/utils/mapUtils";
 
   interface Props {
     competences: Array<string>;
@@ -53,15 +60,13 @@
   Upravit
 </Button>
 <br />
-<FieldProvider inline>
-  {#snippet children(_, fields)}
-    {#if field !== null}
-      {get(fields, field)?.name ?? ""}
-    {:else}
-      <span class="anonymous">Nezařazeno</span>
-    {/if}
-  {/snippet}
-</FieldProvider>
+{#if field === null}
+  <span class="anonymous">Nezařazeno</span>
+{:else if fields.current === undefined}
+  <LoadingIndicator inline />
+{:else}
+  {fields.current.get(field)?.name ?? ""}
+{/if}
 <br />
 <h1>Body</h1>
 <Button
@@ -76,15 +81,15 @@
 >
   Upravit
 </Button>
-<CompetenceProvider inline>
-  {#snippet children(allCompetences)}
-    {#each allCompetences.filter( ([competenceId, _]) => competences.includes(competenceId), ) as [competenceId, competence] (competenceId)}
-      <br />
-      <span class="competence-number">{competence.number}:</span>
-      {competence.name}
-    {/each}
-  {/snippet}
-</CompetenceProvider>
+{#if allCompetences.current === undefined}
+  <LoadingIndicator inline />
+{:else}
+  {#each sortCompetences(filter( allCompetences.current, (competenceId) => competences.includes(competenceId), )) as [competenceId, competence] (competenceId)}
+    <br />
+    <span class="competence-number">{competence.number}:</span>
+    {competence.name}
+  {/each}
+{/if}
 <br />
 <h1>Skupiny</h1>
 <Button
@@ -100,19 +105,19 @@
   Upravit
 </Button>
 <br />
-<GroupProvider inline>
-  {#snippet children(allGroups)}
-    {#each allGroups.filter( ([groupId, _]) => groups.includes(groupId), ) as [groupId, group] (groupId)}
-      {#if groupId === "00000000-0000-0000-0000-000000000000"}
-        <span class="public">{group.name}</span>
-        <br />
-      {:else}
-        {group.name}
-        <br />
-      {/if}
-    {/each}
-  {/snippet}
-</GroupProvider>
+{#if allGroups.current === undefined}
+  <LoadingIndicator inline />
+{:else}
+  {#each sortGroups(filter( allGroups.current, (groupId) => groups.includes(groupId), )) as [groupId, group] (groupId)}
+    {#if groupId === "00000000-0000-0000-0000-000000000000"}
+      <span class="public">{group.name}</span>
+      <br />
+    {:else}
+      {group.name}
+      <br />
+    {/if}
+  {/each}
+{/if}
 
 <style>
   .competence-number {

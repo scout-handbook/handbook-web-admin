@@ -4,9 +4,10 @@
 
   import Button from "$lib/components/Button.svelte";
   import Select from "$lib/components/forms/Select.svelte";
-  import GroupProvider from "$lib/components/swr-wrappers/GroupProvider.svelte";
-  import { filter, map } from "$lib/utils/arrayUtils";
+  import { groups, sortGroups } from "$lib/resources/groups.svelte";
+  import { filter, map } from "$lib/utils/mapUtils";
   import { createQuery } from "@tanstack/svelte-query";
+  import { SvelteMap } from "svelte/reactivity";
 
   interface Props {
     group: string;
@@ -31,24 +32,35 @@
       $accountQuery.data?.role === "superuser",
   );
   let roleList = $derived(
-    ([] as Array<[string, string]>).concat(
-      [
-        ["all", "Všechny role"],
-        ["user", "Uživatel"],
-        ["editor", "Editor"],
-      ],
-      isSuperuser
-        ? [
+    new SvelteMap([
+      ["all", "Všechny role"],
+      ["user", "Uživatel"],
+      ["editor", "Editor"],
+      ...(isSuperuser
+        ? ([
             ["administrator", "Administrátor"],
             ["superuser", "Superuser"],
-          ]
-        : [],
-    ),
+          ] as const)
+        : []),
+    ]),
   );
 
-  const groupList = [
-    ["00000000-0000-0000-0000-000000000000", "Všechny skupiny"],
-  ] as Array<[string, string]>;
+  const groupList = $derived(
+    groups.current !== undefined
+      ? new SvelteMap([
+          ["00000000-0000-0000-0000-000000000000", "Všechny skupiny"],
+          ...map(
+            sortGroups(
+              filter(
+                groups.current,
+                (groupId) => groupId !== "00000000-0000-0000-0000-000000000000",
+              ),
+            ),
+            (id, groupValue) => [id, groupValue.name],
+          ),
+        ])
+      : undefined,
+  );
 </script>
 
 <form class="search-form" onsubmit={onchange}>
@@ -62,24 +74,9 @@
   {#if adminOrSuperuser}
     <Select {onchange} options={roleList} bind:selected={role} />
   {/if}
-  <GroupProvider silent>
-    {#snippet children(groups)}
-      <Select
-        {onchange}
-        options={groupList.concat(
-          map(
-            filter(
-              groups,
-              (id) => id !== "00000000-0000-0000-0000-000000000000",
-            ),
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-return -- Eslint cannot handle slot props
-            (item) => item.name,
-          ),
-        )}
-        bind:selected={group}
-      />
-    {/snippet}
-  </GroupProvider>
+  {#if groupList !== undefined}
+    <Select {onchange} options={groupList} bind:selected={group} />
+  {/if}
   {#if searchName || role !== "all" || group !== "00000000-0000-0000-0000-000000000000"}
     <Button
       icon="cancel"

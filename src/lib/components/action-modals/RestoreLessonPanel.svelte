@@ -14,10 +14,11 @@
   import { compileMarkdown } from "$lib/utils/compileMarkdown";
   import { parseVersion } from "$lib/utils/parseVersion";
   import { authFailHandler, reAuth, request } from "$lib/utils/request";
+  import { SvelteMap } from "svelte/reactivity";
 
   let error = $state("");
   let step = $state("lesson-selection-loading");
-  let lessonList: Array<[string, DeletedLesson]> = $state([]);
+  let lessonList: SvelteMap<string, DeletedLesson> = $state(new SvelteMap());
   let selectedLesson = $state("");
   let versionList: Array<LessonVersion> = $state([]);
   let selectedVersion = $state<number | null>(null);
@@ -48,8 +49,8 @@
       AuthenticationException: reAuth,
     },
   ).then((response) => {
-    lessonList = Object.entries(response);
-    if (lessonList.length === 0) {
+    lessonList = new SvelteMap(Object.entries(response));
+    if (lessonList.size === 0) {
       error = "Nejsou žádné smazané lekce.";
     }
     step = "lesson-selection";
@@ -148,10 +149,9 @@
       {:else if step === "version-selection"}
         <form>
           <RadioGroup
-            options={versionList.map((version) => [
-              version.version,
-              version.name,
-            ])}
+            options={new SvelteMap(
+              versionList.map((version) => [version.version, version.name]),
+            )}
             bind:selected={selectedVersion}
           >
             {#snippet option(version, versionName)}

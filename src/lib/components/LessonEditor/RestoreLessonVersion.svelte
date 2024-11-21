@@ -6,11 +6,11 @@
   import RadioGroup from "$lib/components/forms/RadioGroup.svelte";
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import Overlay from "$lib/components/Overlay.svelte";
-  import LessonProvider from "$lib/components/swr-wrappers/LessonProvider.svelte";
-  import { get } from "$lib/utils/arrayUtils";
+  import { lessons } from "$lib/resources/lessons.svelte";
   import { compileMarkdown } from "$lib/utils/compileMarkdown";
   import { parseVersion } from "$lib/utils/parseVersion";
   import { authFailHandler, request } from "$lib/utils/request";
+  import { SvelteMap } from "svelte/reactivity";
 
   interface Props {
     body: string;
@@ -24,8 +24,9 @@
     lessonName = $bindable(),
   }: Props = $props();
 
-  let selectedVersion = $state<number | null>(null);
+  let currentLessonVersion = $derived(lessons.current?.get(lessonId)?.version);
   let versionList = $state<Array<LessonVersion> | null>(null);
+  let selectedVersion = $state<number | null>(null);
   let selectedVersionName = $derived(
     selectedVersion === null || versionList === null
       ? lessonName
@@ -92,21 +93,17 @@
     {:else}
       <form>
         <RadioGroup
-          options={versionList.map((version) => [
-            version.version,
-            version.name,
-          ])}
+          options={new SvelteMap(
+            versionList.map((version) => [version.version, version.name]),
+          )}
           bind:selected={selectedVersion}
         >
           {#snippet nullOption()}
             <span class="current-version version-name">Současná verze</span>
             —
-            <LessonProvider silent>
-              {#snippet children(_, lessons)}
-                <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-argument -->
-                {parseVersion(get(lessons, lessonId)?.version ?? 0)}
-              {/snippet}
-            </LessonProvider>
+            {#if currentLessonVersion !== undefined}
+              {parseVersion(currentLessonVersion)}
+            {/if}
           {/snippet}
           {#snippet option(version, name)}
             <span class="version-name">

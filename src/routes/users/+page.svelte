@@ -9,7 +9,6 @@
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import MainPageContainer from "$lib/components/MainPageContainer.svelte";
   import Pagination from "$lib/components/Pagination.svelte";
-  import GroupProvider from "$lib/components/swr-wrappers/GroupProvider.svelte";
   import TopBar from "$lib/components/TopBar.svelte";
   import UserViewSearchForm from "$lib/components/UserViewSearchForm.svelte";
   import UserViewTable from "$lib/components/UserViewTable.svelte";
@@ -45,11 +44,7 @@
 <TopBar />
 <MainPageContainer>
   {#if pageState.action === "change-user-groups"}
-    <GroupProvider silent>
-      {#snippet children(groups)}
-        <EditUserGroupsPanel {groups} payload={pageState.actionPayload} />
-      {/snippet}
-    </GroupProvider>
+    <EditUserGroupsPanel payload={pageState.actionPayload} />
   {:else if pageState.action === "change-user-role"}
     <EditUserRolePanel payload={pageState.actionPayload} />
   {/if}

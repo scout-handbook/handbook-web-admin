@@ -1,6 +1,8 @@
 <script lang="ts">
-  import FieldProvider from "$lib/components/swr-wrappers/FieldProvider.svelte";
+  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import EditLessonPage from "$lib/EditLessonPage.svelte";
+  import { fields } from "$lib/resources/fields.svelte";
+  import { lessons } from "$lib/resources/lessons.svelte";
 
   import type { PageData } from "./$types";
 
@@ -11,8 +13,12 @@
   let { data }: Props = $props();
 </script>
 
-<FieldProvider>
-  {#snippet children(_, fields, lessons)}
-    <EditLessonPage {fields} lessonID={data.id} {lessons} />
-  {/snippet}
-</FieldProvider>
+{#if fields.current === undefined || lessons.current === undefined}
+  <LoadingIndicator />
+{:else}
+  <EditLessonPage
+    fields={fields.current}
+    lessonID={data.id}
+    lessons={lessons.current}
+  />
+{/if}
