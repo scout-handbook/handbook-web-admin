@@ -1,7 +1,7 @@
 <script lang="ts">
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import EditLessonPage from "$lib/EditLessonPage.svelte";
-  import { fields } from "$lib/resources/fields";
+  import { fields } from "$lib/resources/fields.svelte";
   import { lessons } from "$lib/resources/lessons";
 
   import type { PageData } from "./$types";
@@ -13,8 +13,12 @@
   let { data }: Props = $props();
 </script>
 
-{#if $fields === undefined || $lessons === undefined}
+{#if fields.current === undefined || $lessons === undefined}
   <LoadingIndicator />
 {:else}
-  <EditLessonPage fields={$fields} lessonID={data.id} lessons={$lessons} />
+  <EditLessonPage
+    fields={fields.current}
+    lessonID={data.id}
+    lessons={$lessons}
+  />
 {/if}
