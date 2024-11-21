@@ -7,7 +7,10 @@
     sortCompetences,
   } from "$lib/resources/competences";
   import { fields } from "$lib/resources/fields";
-  import { groups as allGroups, sortGroups } from "$lib/resources/groups";
+  import {
+    groups as allGroups,
+    sortGroups,
+  } from "$lib/resources/groups.svelte";
   import { filter } from "$lib/utils/mapUtils";
 
   interface Props {
@@ -102,10 +105,10 @@
   Upravit
 </Button>
 <br />
-{#if $allGroups === undefined}
+{#if allGroups.current === undefined}
   <LoadingIndicator inline />
 {:else}
-  {#each sortGroups(filter( $allGroups, (groupId) => groups.includes(groupId), )) as [groupId, group] (groupId)}
+  {#each sortGroups(filter( allGroups.current, (groupId) => groups.includes(groupId), )) as [groupId, group] (groupId)}
     {#if groupId === "00000000-0000-0000-0000-000000000000"}
       <span class="public">{group.name}</span>
       <br />

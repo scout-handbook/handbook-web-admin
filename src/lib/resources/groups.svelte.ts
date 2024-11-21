@@ -3,18 +3,22 @@ import type { Group } from "$lib/interfaces/Group";
 import { queryClient } from "$lib/utils/queryClient";
 import { createQuery } from "@tanstack/svelte-query";
 import { SvelteMap } from "svelte/reactivity";
-import { derived } from "svelte/store";
+import { derived, fromStore } from "svelte/store";
 
-export const groups = derived(
-  createQuery<Record<string, Group>>(
-    {
-      queryKey: ["v1.0", "group"],
-    },
-    queryClient,
+export const groups = fromStore(
+  derived(
+    createQuery<Record<string, Group>>(
+      {
+        queryKey: ["v1.0", "group"],
+      },
+      queryClient,
+    ),
+    ({ data, isSuccess }) =>
+      isSuccess
+        ? new SvelteMap<string, Group>(Object.entries(data))
+        : undefined,
+    undefined,
   ),
-  ({ data, isSuccess }) =>
-    isSuccess ? new SvelteMap<string, Group>(Object.entries(data)) : undefined,
-  undefined,
 );
 
 export function sortGroups(

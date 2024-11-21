@@ -4,7 +4,7 @@
 
   import Button from "$lib/components/Button.svelte";
   import Select from "$lib/components/forms/Select.svelte";
-  import { groups, sortGroups } from "$lib/resources/groups";
+  import { groups, sortGroups } from "$lib/resources/groups.svelte";
   import { filter, map } from "$lib/utils/mapUtils";
   import { createQuery } from "@tanstack/svelte-query";
   import { SvelteMap } from "svelte/reactivity";
@@ -46,13 +46,13 @@
   );
 
   const groupList = $derived(
-    $groups !== undefined
+    groups.current !== undefined
       ? new SvelteMap([
           ["00000000-0000-0000-0000-000000000000", "Všechny skupiny"],
           ...map(
             sortGroups(
               filter(
-                $groups,
+                groups.current,
                 (groupId) => groupId !== "00000000-0000-0000-0000-000000000000",
               ),
             ),
