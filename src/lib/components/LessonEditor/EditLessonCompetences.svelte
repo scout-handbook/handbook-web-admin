@@ -5,7 +5,7 @@
   import {
     competences as allCompetences,
     sortCompetences,
-  } from "$lib/resources/competences";
+  } from "$lib/resources/competences.svelte";
 
   interface Props {
     competences: Array<string>;
@@ -35,11 +35,11 @@
 >
 <h1>Změnit body</h1>
 <form>
-  {#if $allCompetences === undefined}
+  {#if allCompetences.current === undefined}
     <LoadingIndicator />
   {:else}
     <CheckboxGroup
-      options={sortCompetences($allCompetences)}
+      options={sortCompetences(allCompetences.current)}
       bind:selected={competences}
     >
       <!-- eslint-disable-next-line @typescript-eslint/no-shadow -- Not applicable to snippets -->
