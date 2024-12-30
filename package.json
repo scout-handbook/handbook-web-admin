@@ -42,7 +42,7 @@
     "@csstools/postcss-global-data": "^3.0.0",
     "@eslint-community/eslint-plugin-eslint-comments": "^4.4.1",
     "@eslint/js": "^9.17.0",
-    "@fontsource/open-sans": "^5.1.0",
+    "@fontsource/open-sans": "^5.1.1",
     "@sveltejs/adapter-static": "^3.0.8",
     "@sveltejs/kit": "^2.15.1",
     "@tanstack/eslint-plugin-query": "^5.62.9",
