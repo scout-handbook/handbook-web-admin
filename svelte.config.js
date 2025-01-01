@@ -29,7 +29,6 @@ export default {
       strict: true,
     }),
     csp: {
-      /* eslint-disable @typescript-eslint/naming-convention -- These are CSP directive names */
       directives: {
         "default-src": ["self"],
         "font-src": ["self", "data:"],
@@ -41,7 +40,6 @@ export default {
           "report-uri": [config["csp-report-uri"]],
         }),
       },
-      /* eslint-enable @typescript-eslint/naming-convention */
       mode: "hash",
     },
     paths: {
