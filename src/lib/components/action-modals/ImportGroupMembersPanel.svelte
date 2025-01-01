@@ -94,7 +94,6 @@
     const userPromise = request<UserListResponse>(
       `${CONFIG["api-uri"]}/v1.0/user`,
       "GET",
-      // eslint-disable-next-line @typescript-eslint/naming-convention -- HTTP argument
       { group: groupId, page: 1, "per-page": 1000 },
       {
         AuthenticationException: reAuth,

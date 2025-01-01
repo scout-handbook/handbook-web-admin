@@ -11,8 +11,6 @@ import globals from "globals";
 import svelteParser from "svelte-eslint-parser";
 import tseslint from "typescript-eslint";
 
-/* eslint-disable @typescript-eslint/naming-convention -- Not applicable to this file */
-
 export default tseslint.config(
   js.configs.recommended,
   prettierRecommended,
@@ -49,34 +47,6 @@ export default tseslint.config(
       "@typescript-eslint/explicit-module-boundary-types": "error",
       "@typescript-eslint/init-declarations": "error",
       "@typescript-eslint/method-signature-style": ["error", "method"],
-      "@typescript-eslint/naming-convention": [
-        "error",
-        {
-          filter: {
-            match: false,
-            regex:
-              "^(401|AuthenticationException|LockedException|NotFoundException|NotLockedException|RoleException|SkautISAuthorizationException|override-group)$",
-          },
-          format: ["camelCase"],
-          leadingUnderscore: "allow",
-          selector: "default",
-          trailingUnderscore: "allow",
-        },
-        {
-          format: ["camelCase", "PascalCase"],
-          selector: "import",
-        },
-        {
-          format: ["camelCase", "UPPER_CASE"],
-          leadingUnderscore: "allow",
-          selector: "variable",
-          trailingUnderscore: "allow",
-        },
-        {
-          format: ["PascalCase"],
-          selector: "typeLike",
-        },
-      ],
       "@typescript-eslint/no-base-to-string": [
         "error",
         { ignoredTypeNames: ["FormData", "Payload"] },
@@ -285,5 +255,3 @@ export default tseslint.config(
     },
   },
 );
-
-/* eslint-enable @typescript-eslint/naming-convention */
