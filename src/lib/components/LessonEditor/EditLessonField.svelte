@@ -1,4 +1,6 @@
 <script lang="ts">
+  import type { Field } from "$lib/interfaces/Field";
+
   import Button from "$lib/components/Button.svelte";
   import RadioGroup from "$lib/components/forms/RadioGroup.svelte";
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
@@ -44,7 +46,7 @@
       {#snippet nullOption()}
         <span class="anonymous">Nezařazeno</span>
       {/snippet}
-      {#snippet option(_2, currentField)}
+      {#snippet option(_2, currentField: Field)}
         {currentField.name}
       {/snippet}
     </RadioGroup>
