@@ -118,7 +118,7 @@
     {:else if step === "lesson-selection"}
       <form>
         <RadioGroup options={lessonList} bind:selected={selectedLesson}>
-          {#snippet option(_, lesson)}
+          {#snippet option(_, lesson: DeletedLesson)}
             {lesson.name}
           {/snippet}
         </RadioGroup>
