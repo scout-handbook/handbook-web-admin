@@ -61,7 +61,7 @@
     <Button
       green
       icon="plus"
-      onclick={() => {
+      onclick={(): void => {
         pushState("", { action: "add-field" });
       }}
     >
@@ -71,7 +71,7 @@
   <Button
     green
     icon="plus"
-    onclick={() => {
+    onclick={(): void => {
       void goto(`${base}/lessons/add`);
     }}
   >
@@ -80,7 +80,7 @@
   {#if adminOrSuperuser}
     <Button
       icon="history"
-      onclick={() => {
+      onclick={(): void => {
         pushState("", { action: "restore-lesson" });
       }}
     >
@@ -101,7 +101,7 @@
           <Button
             cyan
             icon="pencil"
-            onclick={() => {
+            onclick={(): void => {
               pushState("", {
                 action: "change-field",
                 actionPayload: { fieldId },
@@ -112,7 +112,7 @@
           </Button>
           <Button
             icon="trash-empty"
-            onclick={() => {
+            onclick={(): void => {
               pushState("", {
                 action: "delete-field",
                 actionPayload: { fieldId },
@@ -126,7 +126,7 @@
         <Button
           green
           icon="plus"
-          onclick={() => {
+          onclick={(): void => {
             void goto(`${base}/lessons/add?field=${fieldId}`);
           }}
         >

@@ -63,7 +63,7 @@
   {#if globalUI.dialogMessage !== null}
     <Dialog
       confirmButtonText="OK"
-      onconfirm={() => {
+      onconfirm={(): void => {
         globalUI.dialogMessage = null;
       }}
     >

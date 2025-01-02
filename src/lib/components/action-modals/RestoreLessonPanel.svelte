@@ -86,7 +86,7 @@
 {#if error !== ""}
   <Dialog
     confirmButtonText="OK"
-    onconfirm={() => {
+    onconfirm={(): void => {
       history.back();
     }}
   >
@@ -96,7 +96,7 @@
   <SidePanel>
     <Button
       icon="cancel"
-      onclick={() => {
+      onclick={(): void => {
         history.back();
       }}
       yellow>Zrušit</Button
@@ -104,7 +104,7 @@
     <Button
       green
       icon="fast-fw"
-      onclick={() => {
+      onclick={(): void => {
         if (step === "lesson-selection") {
           loadVersionList();
         }
@@ -118,7 +118,7 @@
     {:else if step === "lesson-selection"}
       <form>
         <RadioGroup options={lessonList} bind:selected={selectedLesson}>
-          {#snippet option(_, lesson)}
+          {#snippet option(_, lesson: DeletedLesson)}
             {lesson.name}
           {/snippet}
         </RadioGroup>
@@ -131,7 +131,7 @@
     <div class="version-list">
       <Button
         icon="cancel"
-        onclick={() => {
+        onclick={(): void => {
           history.back();
         }}
         yellow
@@ -154,7 +154,7 @@
             )}
             bind:selected={selectedVersion}
           >
-            {#snippet option(version, versionName)}
+            {#snippet option(version: number, versionName: string)}
               <span class="version-name">
                 {versionName}
               </span>

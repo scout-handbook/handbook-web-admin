@@ -25,7 +25,7 @@
 
 <Button
   icon="right-open"
-  onclick={() => {
+  onclick={(): void => {
     history.back();
   }}
   yellow
@@ -35,7 +35,7 @@
 {#if id !== null}
   <Button
     icon="history"
-    onclick={() => {
+    onclick={(): void => {
       pushState("", {
         action: "restore-version",
         view: "lesson-settings",
@@ -50,7 +50,7 @@
 <Button
   cyan
   icon="pencil"
-  onclick={() => {
+  onclick={(): void => {
     pushState("", {
       action: "change-lesson-field",
       view: "lesson-settings",
@@ -72,7 +72,7 @@
 <Button
   cyan
   icon="pencil"
-  onclick={() => {
+  onclick={(): void => {
     pushState("", {
       action: "change-lesson-competences",
       view: "lesson-settings",
@@ -95,7 +95,7 @@
 <Button
   cyan
   icon="pencil"
-  onclick={() => {
+  onclick={(): void => {
     pushState("", {
       action: "change-lesson-groups",
       view: "lesson-settings",

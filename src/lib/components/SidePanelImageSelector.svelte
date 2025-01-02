@@ -36,7 +36,7 @@
         <ImageGridCell>
           <ImageThumbnail
             id={image}
-            onclick={() => {
+            onclick={(): void => {
               onselect(image);
             }}
           />

@@ -75,10 +75,10 @@
 
 {#if imageSelectorOpen}
   <SidePanelImageSelector
-    oncancel={() => {
+    oncancel={(): void => {
       imageSelectorOpen = false;
     }}
-    onselect={(id) => {
+    onselect={(id: string): void => {
       image = id;
       imageSelectorOpen = false;
     }}
@@ -86,10 +86,10 @@
 {/if}
 {#if iconSelectorOpen}
   <SidePanelImageSelector
-    oncancel={() => {
+    oncancel={(): void => {
       iconSelectorOpen = false;
     }}
-    onselect={(id) => {
+    onselect={(id: string): void => {
       icon = id;
       iconSelectorOpen = false;
     }}
@@ -101,7 +101,7 @@
   <SidePanel>
     <Button
       icon="cancel"
-      onclick={() => {
+      onclick={(): void => {
         history.back();
       }}
       yellow
@@ -115,14 +115,14 @@
       <DescriptionInput bind:value={description} />
       <ImageInput
         name="Náhledový obrázek"
-        onselect={() => {
+        onselect={(): void => {
           imageSelectorOpen = true;
         }}
         value={image}
       />
       <ImageInput
         name="Ikona"
-        onselect={() => {
+        onselect={(): void => {
           iconSelectorOpen = true;
         }}
         value={icon}

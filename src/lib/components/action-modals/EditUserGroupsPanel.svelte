@@ -1,4 +1,5 @@
 <script lang="ts">
+  import type { Group } from "$lib/interfaces/Group";
   import type { User } from "$lib/interfaces/User";
 
   import { Action } from "$lib/actions/Action";
@@ -61,7 +62,7 @@
   <SidePanel>
     <Button
       icon="cancel"
-      onclick={() => {
+      onclick={(): void => {
         history.back();
       }}
       yellow
@@ -83,7 +84,7 @@
           )}
           bind:selected={selectedGroups}
         >
-          {#snippet children(_, group)}
+          {#snippet children(_, group: Group)}
             {group.name}
           {/snippet}
         </CheckboxGroup>

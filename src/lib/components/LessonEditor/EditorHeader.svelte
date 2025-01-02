@@ -21,7 +21,7 @@
   <div class="buttons-right">
     <Button
       icon="cog"
-      onclick={() => {
+      onclick={(): void => {
         pushState("", {
           view: "lesson-settings",
         });
