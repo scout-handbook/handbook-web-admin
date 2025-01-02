@@ -80,7 +80,7 @@
     confirmButtonText="Ano"
     dismissButtonText="Ne"
     onconfirm={confirmCallback}
-    ondismiss={() => {
+    ondismiss={(): void => {
       history.back();
     }}
   >

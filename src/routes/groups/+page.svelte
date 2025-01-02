@@ -56,7 +56,7 @@
     <Button
       green
       icon="plus"
-      onclick={() => {
+      onclick={(): void => {
         pushState("", { action: "add-group" });
       }}
     >
@@ -75,7 +75,7 @@
         <Button
           cyan
           icon="pencil"
-          onclick={() => {
+          onclick={(): void => {
             pushState("", {
               action: "change-group",
               actionPayload: { groupId: id },
@@ -87,7 +87,7 @@
         {#if id !== "00000000-0000-0000-0000-000000000000"}
           <Button
             icon="trash-empty"
-            onclick={() => {
+            onclick={(): void => {
               pushState("", {
                 action: "delete-group",
                 actionPayload: { groupId: id },
@@ -99,7 +99,7 @@
           </Button>
           <Button
             icon="user-plus"
-            onclick={() => {
+            onclick={(): void => {
               pushState("", {
                 action: "import-group-members",
                 actionPayload: { groupId: id },

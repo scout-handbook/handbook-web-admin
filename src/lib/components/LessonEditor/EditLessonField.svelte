@@ -19,7 +19,7 @@
 
 <Button
   icon="cancel"
-  onclick={() => {
+  onclick={(): void => {
     field = initialField;
     history.back();
   }}
@@ -30,7 +30,7 @@
 <Button
   green
   icon="floppy"
-  onclick={() => {
+  onclick={(): void => {
     history.back();
   }}>Uložit</Button
 >

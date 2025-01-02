@@ -13,7 +13,7 @@
   <div class="container">
     {#if current > 3}
       <PaginationButton
-        onclick={() => {
+        onclick={(): void => {
           current = 1;
         }}>1</PaginationButton
       >
@@ -21,14 +21,14 @@
     {/if}
     {#if current > 2}
       <PaginationButton
-        onclick={() => {
+        onclick={(): void => {
           current -= 2;
         }}>{current - 2}</PaginationButton
       >
     {/if}
     {#if current > 1}
       <PaginationButton
-        onclick={() => {
+        onclick={(): void => {
           current -= 1;
         }}>{current - 1}</PaginationButton
       >
@@ -36,14 +36,14 @@
     <PaginationButton active>{current}</PaginationButton>
     {#if current < total}
       <PaginationButton
-        onclick={() => {
+        onclick={(): void => {
           current += 1;
         }}>{current + 1}</PaginationButton
       >
     {/if}
     {#if current < total - 1}
       <PaginationButton
-        onclick={() => {
+        onclick={(): void => {
           current += 2;
         }}>{current + 2}</PaginationButton
       >
@@ -51,7 +51,7 @@
     {#if current < total - 2}
       ...
       <PaginationButton
-        onclick={() => {
+        onclick={(): void => {
           current = total;
         }}>{total}</PaginationButton
       >

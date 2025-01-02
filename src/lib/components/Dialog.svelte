@@ -36,7 +36,7 @@
     {#if dismissButtonText !== ""}
       <Button
         icon="cancel"
-        onclick={() => {
+        onclick={(): void => {
           ondismiss?.();
         }}
         yellow

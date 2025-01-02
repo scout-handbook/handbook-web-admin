@@ -51,7 +51,7 @@
 {:else}
   <LessonEditor
     id={null}
-    ondiscard={() => {
+    ondiscard={(): void => {
       history.back();
     }}
     onsave={save}

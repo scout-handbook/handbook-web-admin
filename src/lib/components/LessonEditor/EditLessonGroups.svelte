@@ -20,7 +20,7 @@
 
 <Button
   icon="cancel"
-  onclick={() => {
+  onclick={(): void => {
     groups = initialGroups;
     history.back();
   }}
@@ -31,7 +31,7 @@
 <Button
   green
   icon="floppy"
-  onclick={() => {
+  onclick={(): void => {
     history.back();
   }}>Uložit</Button
 >

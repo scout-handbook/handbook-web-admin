@@ -20,7 +20,7 @@
 
 <Button
   icon="cancel"
-  onclick={() => {
+  onclick={(): void => {
     competences = initialCompetences;
     history.back();
   }}
@@ -31,7 +31,7 @@
 <Button
   green
   icon="floppy"
-  onclick={() => {
+  onclick={(): void => {
     history.back();
   }}>Uložit</Button
 >

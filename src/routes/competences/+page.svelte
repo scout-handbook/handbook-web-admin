@@ -60,7 +60,7 @@
     <Button
       green
       icon="plus"
-      onclick={() => {
+      onclick={(): void => {
         pushState("", { action: "add-competence" });
       }}
     >
@@ -80,7 +80,7 @@
           <Button
             cyan
             icon="pencil"
-            onclick={() => {
+            onclick={(): void => {
               pushState("", {
                 action: "change-competence",
                 actionPayload: { competenceId: id },
@@ -91,7 +91,7 @@
           </Button>
           <Button
             icon="trash-empty"
-            onclick={() => {
+            onclick={(): void => {
               pushState("", {
                 action: "delete-competence",
                 actionPayload: { competenceId: id },
