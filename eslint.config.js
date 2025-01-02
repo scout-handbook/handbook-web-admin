@@ -214,9 +214,6 @@ export default tseslint.config(
       parser: svelteParser,
       parserOptions: {
         parser: tseslint.parser,
-        svelteFeatures: {
-          experimentalGenerics: true,
-        },
       },
     },
   },
