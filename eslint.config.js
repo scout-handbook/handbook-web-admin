@@ -219,11 +219,6 @@ export default tseslint.config(
         },
       },
     },
-    settings: {
-      svelte: {
-        ignoreWarnings: ["@typescript-eslint/explicit-function-return-type"],
-      },
-    },
   },
   {
     files: ["*.config.js", "*.config.ts"],

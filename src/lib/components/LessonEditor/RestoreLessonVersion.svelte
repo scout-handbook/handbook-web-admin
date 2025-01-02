@@ -67,7 +67,7 @@
   <div class="version-list">
     <Button
       icon="cancel"
-      onclick={() => {
+      onclick={(): void => {
         history.back();
       }}
       yellow
@@ -79,7 +79,7 @@
         <Button
           green
           icon="history"
-          onclick={() => {
+          onclick={(): void => {
             saveCallback(markdown);
           }}
         >

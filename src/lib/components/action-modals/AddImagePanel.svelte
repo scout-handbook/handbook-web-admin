@@ -41,7 +41,7 @@
   <SidePanel>
     <Button
       icon="cancel"
-      onclick={() => {
+      onclick={(): void => {
         history.back();
       }}
       yellow
@@ -60,7 +60,7 @@
 {:else if stage === "done"}
   <Dialog
     confirmButtonText="OK"
-    onconfirm={() => {
+    onconfirm={(): void => {
       history.back();
     }}
   >
@@ -69,7 +69,7 @@
 {:else}
   <Dialog
     confirmButtonText="OK"
-    onconfirm={() => {
+    onconfirm={(): void => {
       history.back();
     }}
   >

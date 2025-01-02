@@ -69,7 +69,7 @@
 {#if donePromise !== null}
   <DoneDialog
     {donePromise}
-    onconfirm={() => {
+    onconfirm={(): void => {
       void goto(`${base}/lessons`);
     }}
   >
@@ -81,7 +81,7 @@
   {:then}
     <LessonEditor
       id={null}
-      ondiscard={() => {
+      ondiscard={(): void => {
         history.back();
         history.back();
       }}

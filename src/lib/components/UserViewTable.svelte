@@ -50,7 +50,7 @@
             <Button
               cyan
               icon="pencil"
-              onclick={() => {
+              onclick={(): void => {
                 pushState("", {
                   action: "change-user-role",
                   actionPayload: { user },
@@ -78,7 +78,7 @@
           <Button
             cyan
             icon="pencil"
-            onclick={() => {
+            onclick={(): void => {
               pushState("", {
                 action: "change-user-groups",
                 actionPayload: { user },

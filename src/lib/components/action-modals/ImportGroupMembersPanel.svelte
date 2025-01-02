@@ -147,7 +147,7 @@
 {#if step === "done"}
   <Dialog
     confirmButtonText="OK"
-    onconfirm={() => {
+    onconfirm={(): void => {
       history.back();
     }}
   >
@@ -156,7 +156,7 @@
 {:else if error !== ""}
   <Dialog
     confirmButtonText="OK"
-    onconfirm={() => {
+    onconfirm={(): void => {
       history.back();
     }}
   >
@@ -166,7 +166,7 @@
   <SidePanel>
     <Button
       icon="cancel"
-      onclick={() => {
+      onclick={(): void => {
         history.back();
       }}
       yellow
@@ -176,7 +176,7 @@
     <Button
       green
       icon="fast-fw"
-      onclick={() => {
+      onclick={(): void => {
         if (step === "event-selection") {
           getParticipantList();
         } else if (step === "participant-selection") {

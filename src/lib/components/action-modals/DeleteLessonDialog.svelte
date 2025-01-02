@@ -114,7 +114,7 @@
 {#if lockedError !== null}
   <Dialog
     confirmButtonText="OK"
-    onconfirm={() => {
+    onconfirm={(): void => {
       history.back();
     }}
   >
@@ -123,7 +123,7 @@
 {:else if expiredError}
   <Dialog
     confirmButtonText="OK"
-    onconfirm={() => {
+    onconfirm={(): void => {
       history.back();
     }}
   >
