@@ -105,7 +105,7 @@
               {parseVersion(currentLessonVersion)}
             {/if}
           {/snippet}
-          {#snippet option(version, name)}
+          {#snippet option(version: number, name: string)}
             <span class="version-name">
               {name}
             </span>

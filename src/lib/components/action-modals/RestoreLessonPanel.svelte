@@ -154,7 +154,7 @@
             )}
             bind:selected={selectedVersion}
           >
-            {#snippet option(version, versionName)}
+            {#snippet option(version: number, versionName: string)}
               <span class="version-name">
                 {versionName}
               </span>
