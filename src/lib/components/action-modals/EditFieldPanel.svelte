@@ -78,7 +78,7 @@
     oncancel={() => {
       imageSelectorOpen = false;
     }}
-    onselect={(id) => {
+    onselect={(id: string) => {
       image = id;
       imageSelectorOpen = false;
     }}
@@ -89,7 +89,7 @@
     oncancel={() => {
       iconSelectorOpen = false;
     }}
-    onselect={(id) => {
+    onselect={(id: string) => {
       icon = id;
       iconSelectorOpen = false;
     }}
