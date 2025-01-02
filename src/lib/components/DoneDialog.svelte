@@ -20,7 +20,7 @@
 {:then}
   <Dialog
     confirmButtonText="OK"
-    onconfirm={() => {
+    onconfirm={(): void => {
       history.back();
       onconfirm?.();
     }}

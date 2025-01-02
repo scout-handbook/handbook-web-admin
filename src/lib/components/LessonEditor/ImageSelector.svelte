@@ -49,7 +49,7 @@
           <ImageGridCell>
             <ImageThumbnail
               id={image}
-              onclick={() => {
+              onclick={(): void => {
                 oninsert(image);
                 closeImageSelector();
               }}

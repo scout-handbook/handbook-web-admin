@@ -60,7 +60,7 @@
     confirmButtonText="Ano"
     dismissButtonText="Ne"
     onconfirm={ondiscard}
-    ondismiss={() => {
+    ondismiss={(): void => {
       discardConfirmation = false;
     }}
   >
@@ -80,14 +80,14 @@
 {/if}
 
 <EditorHeader
-  ondiscard={() => {
+  ondiscard={(): void => {
     discardConfirmation = true;
   }}
   {onsave}
   bind:name
 />
 <ImageSelector
-  closeImageSelector={() => {
+  closeImageSelector={(): void => {
     imageSelectorOpen = false;
   }}
   {imageSelectorOpen}
@@ -95,7 +95,7 @@
 />
 <EditorPane
   bind:this={editorPane}
-  openImageSelector={() => {
+  openImageSelector={(): void => {
     imageSelectorOpen = true;
   }}
   bind:value={body}

@@ -50,7 +50,7 @@
 
   <h1>{`${CONFIG["site-name"]} - Uživatelé`}</h1>
   <UserViewSearchForm
-    onchange={() => {
+    onchange={(): void => {
       page = 1;
     }}
     bind:searchName

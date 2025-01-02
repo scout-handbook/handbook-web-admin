@@ -1,4 +1,6 @@
 <script lang="ts">
+  import type { Competence } from "$lib/interfaces/Competence";
+
   import Button from "$lib/components/Button.svelte";
   import CheckboxGroup from "$lib/components/forms/CheckboxGroup.svelte";
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
@@ -18,7 +20,7 @@
 
 <Button
   icon="cancel"
-  onclick={() => {
+  onclick={(): void => {
     competences = initialCompetences;
     history.back();
   }}
@@ -29,7 +31,7 @@
 <Button
   green
   icon="floppy"
-  onclick={() => {
+  onclick={(): void => {
     history.back();
   }}>Uložit</Button
 >
@@ -43,7 +45,7 @@
       bind:selected={competences}
     >
       <!-- eslint-disable-next-line @typescript-eslint/no-shadow -- Not applicable to snippets -->
-      {#snippet children(_, competence)}
+      {#snippet children(_, competence: Competence)}
         <span class="competence-number">
           {competence.number}:
         </span>

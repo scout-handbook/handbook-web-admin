@@ -34,7 +34,7 @@
   <Button
     cyan
     icon="pencil"
-    onclick={() => {
+    onclick={(): void => {
       void goto(`${base}/lessons/${id}/edit`);
     }}
   >
@@ -43,7 +43,7 @@
   {#if adminOrSuperuser}
     <Button
       icon="trash-empty"
-      onclick={() => {
+      onclick={(): void => {
         pushState("", {
           action: "delete-lesson",
           actionPayload: { lessonId: id },
@@ -56,7 +56,7 @@
   {/if}
   <Button
     icon="file-pdf"
-    onclick={() => {
+    onclick={(): void => {
       window.open(
         `${CONFIG["admin-uri"]}/lesson/${id}`,
         "_blank",

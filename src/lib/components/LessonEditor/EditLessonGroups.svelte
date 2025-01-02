@@ -1,4 +1,6 @@
 <script lang="ts">
+  import type { Group } from "$lib/interfaces/Group";
+
   import Button from "$lib/components/Button.svelte";
   import CheckboxGroup from "$lib/components/forms/CheckboxGroup.svelte";
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
@@ -18,7 +20,7 @@
 
 <Button
   icon="cancel"
-  onclick={() => {
+  onclick={(): void => {
     groups = initialGroups;
     history.back();
   }}
@@ -29,7 +31,7 @@
 <Button
   green
   icon="floppy"
-  onclick={() => {
+  onclick={(): void => {
     history.back();
   }}>Uložit</Button
 >
@@ -43,7 +45,7 @@
       bind:selected={groups}
     >
       <!-- eslint-disable-next-line @typescript-eslint/no-shadow -- Not applicable to snippets -->
-      {#snippet children(id, group)}
+      {#snippet children(id: string, group: Group)}
         <span class:public={id === "00000000-0000-0000-0000-000000000000"}
           >{group.name}</span
         >

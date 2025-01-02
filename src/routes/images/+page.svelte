@@ -40,12 +40,12 @@
 
   {#if openImage !== null}
     <Overlay
-      onclick={() => {
+      onclick={(): void => {
         openImage = null;
       }}
     />
     <button
-      onclick={() => {
+      onclick={(): void => {
         openImage = null;
       }}
       type="button"
@@ -60,7 +60,7 @@
   <Button
     green
     icon="plus"
-    onclick={() => {
+    onclick={(): void => {
       pushState("", { action: "add-image" });
     }}
   >
@@ -74,14 +74,14 @@
       <ImageGridCell>
         <ImageThumbnail
           id={image}
-          onclick={() => {
+          onclick={(): void => {
             openImage = image;
           }}
         />
         <div class="delete-image">
           <Button
             icon="trash-empty"
-            onclick={() => {
+            onclick={(): void => {
               pushState("", {
                 action: "delete-image",
                 actionPayload: { imageId: image },

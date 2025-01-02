@@ -80,7 +80,7 @@
   {#if searchName || role !== "all" || group !== "00000000-0000-0000-0000-000000000000"}
     <Button
       icon="cancel"
-      onclick={() => {
+      onclick={(): void => {
         role = "all";
         searchName = "";
         group = "00000000-0000-0000-0000-000000000000";
