@@ -3,7 +3,7 @@
   import type { User } from "$lib/interfaces/User";
   import type { UserListResponse } from "$lib/interfaces/UserListResponse";
 
-  import { page as kitPage } from "$app/stores";
+  import { page as kitPage } from "$app/state";
   import EditUserGroupsPanel from "$lib/components/action-modals/EditUserGroupsPanel.svelte";
   import EditUserRolePanel from "$lib/components/action-modals/EditUserRolePanel.svelte";
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
@@ -16,7 +16,7 @@
 
   import type { PageStateFix } from "../../app";
 
-  let pageState = $derived($kitPage.state as PageStateFix);
+  let pageState = $derived(kitPage.state as PageStateFix);
 
   let page = $state(1);
   const perPage = 25;

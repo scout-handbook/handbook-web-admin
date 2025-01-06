@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { page } from "$app/stores";
+  import { page } from "$app/state";
   import Dialog from "$lib/components/Dialog.svelte";
   import EditorHeader from "$lib/components/LessonEditor/EditorHeader.svelte";
   import EditorPane from "$lib/components/LessonEditor/EditorPane.svelte";
@@ -33,7 +33,7 @@
     onsave,
   }: Props = $props();
 
-  let pageState = $derived($page.state as PageStateFix);
+  let pageState = $derived(page.state as PageStateFix);
   let view = $derived("view" in pageState ? pageState.view : undefined);
 
   let imageSelectorOpen = $state(false);
