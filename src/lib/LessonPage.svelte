@@ -3,7 +3,7 @@
 
   import { goto, pushState } from "$app/navigation";
   import { base } from "$app/paths";
-  import { page } from "$app/stores";
+  import { page } from "$app/state";
   import AddFieldPanel from "$lib/components/action-modals/AddFieldPanel.svelte";
   import DeleteFieldDialog from "$lib/components/action-modals/DeleteFieldDialog.svelte";
   import DeleteLessonDialog from "$lib/components/action-modals/DeleteLessonDialog.svelte";
@@ -22,7 +22,7 @@
 
   import type { PageStateFix } from "../app";
 
-  let state = $derived($page.state as PageStateFix);
+  let state = $derived(page.state as PageStateFix);
 
   const accountQuery = createQuery<Loginstate>({
     queryKey: ["v1.0", "account"],

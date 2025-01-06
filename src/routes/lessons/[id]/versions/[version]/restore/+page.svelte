@@ -1,7 +1,7 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
   import { base } from "$app/paths";
-  import { page } from "$app/stores";
+  import { page } from "$app/state";
   import { Action } from "$lib/actions/Action";
   import { ActionCallback } from "$lib/actions/ActionCallback";
   import { ActionQueue } from "$lib/actions/ActionQueue";
@@ -25,7 +25,7 @@
   let { data }: Props = $props();
 
   let donePromise: Promise<void> | null = $state(null);
-  let name = $state($page.url.searchParams.get("name") ?? "Obnovená lekce");
+  let name = $state(page.url.searchParams.get("name") ?? "Obnovená lekce");
   let body = $state("");
   let competences: Array<string> = $state([]);
   let field: string | null = $state(null);

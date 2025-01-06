@@ -2,7 +2,7 @@
   import type { Loginstate } from "$lib/interfaces/Loginstate";
 
   import { pushState } from "$app/navigation";
-  import { page } from "$app/stores";
+  import { page } from "$app/state";
   import AddCompetencePanel from "$lib/components/action-modals/AddCompetencePanel.svelte";
   import DeleteCompetenceDialog from "$lib/components/action-modals/DeleteCompetenceDialog.svelte";
   import EditCompetencePanel from "$lib/components/action-modals/EditCompetencePanel.svelte";
@@ -18,7 +18,7 @@
 
   import type { PageStateFix } from "../../app";
 
-  let state = $derived($page.state as PageStateFix);
+  let state = $derived(page.state as PageStateFix);
 
   const accountQuery = createQuery<Loginstate>({
     queryKey: ["v1.0", "account"],

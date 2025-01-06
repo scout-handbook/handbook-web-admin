@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { page } from "$app/stores";
+  import { page } from "$app/state";
   import EditLessonCompetences from "$lib/components/LessonEditor/EditLessonCompetences.svelte";
   import EditLessonField from "$lib/components/LessonEditor/EditLessonField.svelte";
   import EditLessonGroups from "$lib/components/LessonEditor/EditLessonGroups.svelte";
@@ -9,7 +9,7 @@
 
   import type { PageStateFix } from "../../../app";
 
-  let state = $derived($page.state as PageStateFix);
+  let state = $derived(page.state as PageStateFix);
 
   interface Props {
     body: string;

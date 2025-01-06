@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { page } from "$app/stores";
+  import { page } from "$app/state";
   import { Action } from "$lib/actions/Action";
   import { ActionCallback } from "$lib/actions/ActionCallback";
   import { ActionQueue } from "$lib/actions/ActionQueue";
@@ -17,7 +17,7 @@
   let name = $state(defaultName);
   let body = $state(defaultBody);
   let competences: Array<string> = $state([]);
-  let field: string | null = $state($page.url.searchParams.get("field"));
+  let field: string | null = $state(page.url.searchParams.get("field"));
   let groups: Array<string> = $state([]);
 
   function save(): void {

@@ -2,7 +2,7 @@
   import type { Loginstate } from "$lib/interfaces/Loginstate";
 
   import { pushState } from "$app/navigation";
-  import { page } from "$app/stores";
+  import { page } from "$app/state";
   import AddGroupPanel from "$lib/components/action-modals/AddGroupPanel.svelte";
   import DeleteGroupDialog from "$lib/components/action-modals/DeleteGroupDialog.svelte";
   import EditGroupPanel from "$lib/components/action-modals/EditGroupPanel.svelte";
@@ -16,7 +16,7 @@
 
   import type { PageStateFix } from "../../app";
 
-  let pageState = $derived($page.state as PageStateFix);
+  let pageState = $derived(page.state as PageStateFix);
 
   const accountQuery = createQuery<Loginstate>({
     queryKey: ["v1.0", "account"],

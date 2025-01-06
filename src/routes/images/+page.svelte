@@ -1,6 +1,6 @@
 <script lang="ts">
   import { pushState } from "$app/navigation";
-  import { page as kitPage } from "$app/stores";
+  import { page as kitPage } from "$app/state";
   import AddImagePanel from "$lib/components/action-modals/AddImagePanel.svelte";
   import DeleteImageDialog from "$lib/components/action-modals/DeleteImageDialog.svelte";
   import Button from "$lib/components/Button.svelte";
@@ -15,7 +15,7 @@
 
   import type { PageStateFix } from "../../app";
 
-  let pageState = $derived($kitPage.state as PageStateFix);
+  let pageState = $derived(kitPage.state as PageStateFix);
 
   let openImage: string | null = $state(null);
   let page = $state(1);
