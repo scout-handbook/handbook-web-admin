@@ -45,7 +45,7 @@
     "@fontsource/open-sans": "^5.1.1",
     "@sveltejs/adapter-static": "^3.0.8",
     "@sveltejs/kit": "^2.15.1",
-    "@tanstack/eslint-plugin-query": "^5.62.9",
+    "@tanstack/eslint-plugin-query": "^5.62.15",
     "@tanstack/svelte-query": "^5.62.9",
     "@types/codemirror": "5.60.15",
     "@types/node": "^22.10.5",
