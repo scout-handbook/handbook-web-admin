@@ -2,7 +2,7 @@
   import type { Loginstate } from "$lib/interfaces/Loginstate";
 
   import { pushState } from "$app/navigation";
-  import { page } from "$app/stores";
+  import { page } from "$app/state";
   import AddGroupPanel from "$lib/components/action-modals/AddGroupPanel.svelte";
   import DeleteGroupDialog from "$lib/components/action-modals/DeleteGroupDialog.svelte";
   import EditGroupPanel from "$lib/components/action-modals/EditGroupPanel.svelte";
@@ -13,10 +13,6 @@
   import TopBar from "$lib/components/TopBar.svelte";
   import { groups, sortGroups } from "$lib/resources/groups.svelte";
   import { createQuery } from "@tanstack/svelte-query";
-
-  import type { PageStateFix } from "../../app";
-
-  let pageState = $derived($page.state as PageStateFix);
 
   const accountQuery = createQuery<Loginstate>({
     queryKey: ["v1.0", "account"],
@@ -29,25 +25,22 @@
 
 <TopBar />
 <MainPageContainer>
-  {#if pageState.action === "add-group"}
+  {#if page.state.action.name === "add-group"}
     <AddGroupPanel />
-  {:else if pageState.action === "change-group"}
-    {@const group = groups.current?.get(pageState.actionPayload.groupId)}
+  {:else if page.state.action.name === "change-group"}
+    {@const group = groups.current?.get(page.state.action.groupId)}
     {#if group !== undefined}
-      <EditGroupPanel {group} groupId={pageState.actionPayload.groupId} />
+      <EditGroupPanel {group} groupId={page.state.action.groupId} />
     {/if}
-  {:else if pageState.action === "delete-group"}
-    {@const group = groups.current?.get(pageState.actionPayload.groupId)}
+  {:else if page.state.action.name === "delete-group"}
+    {@const group = groups.current?.get(page.state.action.groupId)}
     {#if group !== undefined}
-      <DeleteGroupDialog {group} groupId={pageState.actionPayload.groupId} />
+      <DeleteGroupDialog {group} groupId={page.state.action.groupId} />
     {/if}
-  {:else if pageState.action === "import-group-members"}
-    {@const group = groups.current?.get(pageState.actionPayload.groupId)}
+  {:else if page.state.action.name === "import-group-members"}
+    {@const group = groups.current?.get(page.state.action.groupId)}
     {#if group !== undefined}
-      <ImportGroupMembersPanel
-        {group}
-        groupId={pageState.actionPayload.groupId}
-      />
+      <ImportGroupMembersPanel {group} groupId={page.state.action.groupId} />
     {/if}
   {/if}
 
@@ -57,7 +50,7 @@
       green
       icon="plus"
       onclick={(): void => {
-        pushState("", { action: "add-group" });
+        pushState("", { action: { name: "add-group" } });
       }}
     >
       Přidat
@@ -77,8 +70,10 @@
           icon="pencil"
           onclick={(): void => {
             pushState("", {
-              action: "change-group",
-              actionPayload: { groupId: id },
+              action: {
+                groupId: id,
+                name: "change-group",
+              },
             });
           }}
         >
@@ -89,8 +84,10 @@
             icon="trash-empty"
             onclick={(): void => {
               pushState("", {
-                action: "delete-group",
-                actionPayload: { groupId: id },
+                action: {
+                  groupId: id,
+                  name: "delete-group",
+                },
               });
             }}
             red
@@ -101,8 +98,10 @@
             icon="user-plus"
             onclick={(): void => {
               pushState("", {
-                action: "import-group-members",
-                actionPayload: { groupId: id },
+                action: {
+                  groupId: id,
+                  name: "import-group-members",
+                },
               });
             }}
           >

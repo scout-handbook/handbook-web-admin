@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { page } from "$app/stores";
+  import { page } from "$app/state";
   import Dialog from "$lib/components/Dialog.svelte";
   import EditorHeader from "$lib/components/LessonEditor/EditorHeader.svelte";
   import EditorPane from "$lib/components/LessonEditor/EditorPane.svelte";
@@ -8,8 +8,6 @@
   import PreviewPane from "$lib/components/LessonEditor/PreviewPane.svelte";
   import { reAuthSuspended } from "$lib/reAuthSuspension.svelte";
   import { onDestroy, onMount } from "svelte";
-
-  import type { PageStateFix } from "../../app";
 
   interface Props {
     body: string;
@@ -33,8 +31,7 @@
     onsave,
   }: Props = $props();
 
-  let pageState = $derived($page.state as PageStateFix);
-  let view = $derived("view" in pageState ? pageState.view : undefined);
+  let view = $derived("view" in page.state ? page.state.view : undefined);
 
   let imageSelectorOpen = $state(false);
   let discardConfirmation = $state(false);

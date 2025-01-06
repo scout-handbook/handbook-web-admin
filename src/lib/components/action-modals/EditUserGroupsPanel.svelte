@@ -14,12 +14,12 @@
   import { queryClient } from "$lib/utils/queryClient";
 
   interface Props {
-    payload: { user: User };
+    user: User;
   }
 
-  let { payload }: Props = $props();
+  let { user }: Props = $props();
 
-  let selectedGroups = $state(payload.user.groups);
+  let selectedGroups = $state(user.groups);
   let donePromise: Promise<void> | null = $state(null);
 
   let publicName = $derived(
@@ -28,10 +28,8 @@
 
   function saveCallback(): void {
     if (
-      selectedGroups.length === payload.user.groups.length &&
-      selectedGroups.every(
-        (value, index) => value === payload.user.groups[index],
-      )
+      selectedGroups.length === user.groups.length &&
+      selectedGroups.every((value, index) => value === user.groups[index])
     ) {
       donePromise = new Promise((resolve) => {
         resolve();
@@ -39,7 +37,7 @@
     } else {
       donePromise = new ActionQueue([
         new Action(
-          `${CONFIG["api-uri"]}/v1.0/user/${encodeURIComponent(payload.user.id)}/group`,
+          `${CONFIG["api-uri"]}/v1.0/user/${encodeURIComponent(user.id)}/group`,
           "PUT",
           { group: selectedGroups.map(encodeURIComponent) },
         ),
@@ -70,7 +68,7 @@
       Zrušit
     </Button>
     <Button green icon="floppy" onclick={saveCallback}>Uložit</Button>
-    <h1>Změnit skupiny: {payload.user.name}</h1>
+    <h1>Změnit skupiny: {user.name}</h1>
     {#if groups.current === undefined}
       <LoadingIndicator inline />
     {:else}

@@ -1,15 +1,11 @@
 <script lang="ts">
-  import { page } from "$app/stores";
+  import { page } from "$app/state";
   import EditLessonCompetences from "$lib/components/LessonEditor/EditLessonCompetences.svelte";
   import EditLessonField from "$lib/components/LessonEditor/EditLessonField.svelte";
   import EditLessonGroups from "$lib/components/LessonEditor/EditLessonGroups.svelte";
   import LessonSettingsOverview from "$lib/components/LessonEditor/LessonSettingsOverview.svelte";
   import RestoreLessonVersion from "$lib/components/LessonEditor/RestoreLessonVersion.svelte";
   import SidePanel from "$lib/components/SidePanel.svelte";
-
-  import type { PageStateFix } from "../../../app";
-
-  let state = $derived($page.state as PageStateFix);
 
   interface Props {
     body: string;
@@ -30,15 +26,15 @@
   }: Props = $props();
 </script>
 
-{#if state.action === "restore-version" && id !== null && name !== null}
+{#if page.state.action.name === "restore-version" && id !== null && name !== null}
   <RestoreLessonVersion lessonId={id} bind:lessonName={name} bind:body />
 {:else}
   <SidePanel>
-    {#if state.action === "change-lesson-competences"}
+    {#if page.state.action.name === "change-lesson-competences"}
       <EditLessonCompetences bind:competences />
-    {:else if state.action === "change-lesson-field"}
+    {:else if page.state.action.name === "change-lesson-field"}
       <EditLessonField bind:field />
-    {:else if state.action === "change-lesson-groups"}
+    {:else if page.state.action.name === "change-lesson-groups"}
       <EditLessonGroups bind:groups />
     {:else}
       <LessonSettingsOverview {id} {competences} {field} {groups} />
