@@ -16,10 +16,6 @@
   } from "$lib/resources/competences.svelte";
   import { createQuery } from "@tanstack/svelte-query";
 
-  import type { PageStateFix } from "../../app";
-
-  let state = $derived(page.state as PageStateFix);
-
   const accountQuery = createQuery<Loginstate>({
     queryKey: ["v1.0", "account"],
   });
@@ -31,26 +27,26 @@
 
 <TopBar />
 <MainPageContainer>
-  {#if state.action === "add-competence"}
+  {#if page.state.action.name === "add-competence"}
     <AddCompetencePanel />
-  {:else if state.action === "change-competence"}
+  {:else if page.state.action.name === "change-competence"}
     {@const competence = competences.current?.get(
-      state.actionPayload.competenceId,
+      page.state.action.competenceId,
     )}
     {#if competence !== undefined}
       <EditCompetencePanel
         {competence}
-        competenceId={state.actionPayload.competenceId}
+        competenceId={page.state.action.competenceId}
       />
     {/if}
-  {:else if state.action === "delete-competence"}
+  {:else if page.state.action.name === "delete-competence"}
     {@const competence = competences.current?.get(
-      state.actionPayload.competenceId,
+      page.state.action.competenceId,
     )}
     {#if competence !== undefined}
       <DeleteCompetenceDialog
         {competence}
-        competenceId={state.actionPayload.competenceId}
+        competenceId={page.state.action.competenceId}
       />
     {/if}
   {/if}
@@ -61,7 +57,7 @@
       green
       icon="plus"
       onclick={(): void => {
-        pushState("", { action: "add-competence" });
+        pushState("", { action: { name: "add-competence" } });
       }}
     >
       Přidat
@@ -82,8 +78,10 @@
             icon="pencil"
             onclick={(): void => {
               pushState("", {
-                action: "change-competence",
-                actionPayload: { competenceId: id },
+                action: {
+                  competenceId: id,
+                  name: "change-competence",
+                },
               });
             }}
           >
@@ -93,8 +91,10 @@
             icon="trash-empty"
             onclick={(): void => {
               pushState("", {
-                action: "delete-competence",
-                actionPayload: { competenceId: id },
+                action: {
+                  competenceId: id,
+                  name: "delete-competence",
+                },
               });
             }}
             red

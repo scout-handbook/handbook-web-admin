@@ -52,8 +52,10 @@
               icon="pencil"
               onclick={(): void => {
                 pushState("", {
-                  action: "change-user-role",
-                  actionPayload: { user },
+                  action: {
+                    name: "change-user-role",
+                    user,
+                  },
                 });
               }}
             >
@@ -80,8 +82,10 @@
             icon="pencil"
             onclick={(): void => {
               pushState("", {
-                action: "change-user-groups",
-                actionPayload: { user },
+                action: {
+                  name: "change-user-groups",
+                  user,
+                },
               });
             }}
           >

@@ -20,10 +20,6 @@
   import { filter } from "$lib/utils/mapUtils";
   import { createQuery } from "@tanstack/svelte-query";
 
-  import type { PageStateFix } from "../app";
-
-  let state = $derived(page.state as PageStateFix);
-
   const accountQuery = createQuery<Loginstate>({
     queryKey: ["v1.0", "account"],
   });
@@ -35,24 +31,24 @@
 
 <TopBar />
 <MainPageContainer>
-  {#if state.action === "add-field"}
+  {#if page.state.action.name === "add-field"}
     <AddFieldPanel />
-  {:else if state.action === "change-field"}
-    {@const field = fields.current?.get(state.actionPayload.fieldId)}
+  {:else if page.state.action.name === "change-field"}
+    {@const field = fields.current?.get(page.state.action.fieldId)}
     {#if field !== undefined}
-      <EditFieldPanel {field} fieldId={state.actionPayload.fieldId} />
+      <EditFieldPanel {field} fieldId={page.state.action.fieldId} />
     {/if}
-  {:else if state.action === "delete-field"}
-    {@const field = fields.current?.get(state.actionPayload.fieldId)}
+  {:else if page.state.action.name === "delete-field"}
+    {@const field = fields.current?.get(page.state.action.fieldId)}
     {#if field !== undefined}
-      <DeleteFieldDialog {field} fieldId={state.actionPayload.fieldId} />
+      <DeleteFieldDialog {field} fieldId={page.state.action.fieldId} />
     {/if}
-  {:else if state.action === "delete-lesson"}
-    {@const lesson = lessons.current?.get(state.actionPayload.lessonId)}
+  {:else if page.state.action.name === "delete-lesson"}
+    {@const lesson = lessons.current?.get(page.state.action.lessonId)}
     {#if lesson !== undefined}
-      <DeleteLessonDialog {lesson} lessonId={state.actionPayload.lessonId} />
+      <DeleteLessonDialog {lesson} lessonId={page.state.action.lessonId} />
     {/if}
-  {:else if state.action === "restore-lesson"}
+  {:else if page.state.action.name === "restore-lesson"}
     <RestoreLessonPanel />
   {/if}
 
@@ -62,7 +58,7 @@
       green
       icon="plus"
       onclick={(): void => {
-        pushState("", { action: "add-field" });
+        pushState("", { action: { name: "add-field" } });
       }}
     >
       Přidat oblast
@@ -81,7 +77,7 @@
     <Button
       icon="history"
       onclick={(): void => {
-        pushState("", { action: "restore-lesson" });
+        pushState("", { action: { name: "restore-lesson" } });
       }}
     >
       Smazané lekce
@@ -103,8 +99,10 @@
             icon="pencil"
             onclick={(): void => {
               pushState("", {
-                action: "change-field",
-                actionPayload: { fieldId },
+                action: {
+                  fieldId,
+                  name: "change-field",
+                },
               });
             }}
           >
@@ -114,8 +112,10 @@
             icon="trash-empty"
             onclick={(): void => {
               pushState("", {
-                action: "delete-field",
-                actionPayload: { fieldId },
+                action: {
+                  fieldId,
+                  name: "delete-field",
+                },
               });
             }}
             red

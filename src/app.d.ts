@@ -1,49 +1,33 @@
 import type { Config } from "$lib/interfaces/Config";
 import type { User } from "$lib/interfaces/User";
 
-declare global {
-  const CONFIG: Config;
-}
-
-export type PageStateFix =
+export type Action =
   | {
-      action: "change-competence" | "delete-competence";
-      actionPayload: {
-        competenceId: string;
-      };
+      competenceId: string;
+      name: "change-competence" | "delete-competence";
     }
   | {
-      action: "change-field" | "delete-field";
-      actionPayload: {
-        fieldId: string;
-      };
+      fieldId: string;
+      name: "change-field" | "delete-field";
     }
   | {
-      action: "change-group" | "delete-group" | "import-group-members";
-      actionPayload: {
-        groupId: string;
-      };
+      groupId: string;
+      name: "change-group" | "delete-group" | "import-group-members";
     }
   | {
-      action: "change-user-groups" | "change-user-role";
-      actionPayload: {
-        user: User;
-      };
+      imageId: string;
+      name: "delete-image";
     }
   | {
-      action: "delete-image";
-      actionPayload: {
-        imageId: string;
-      };
+      lessonId: string;
+      name: "delete-lesson";
     }
   | {
-      action: "delete-lesson";
-      actionPayload: {
-        lessonId: string;
-      };
+      name: "change-user-groups" | "change-user-role";
+      user: User;
     }
   | {
-      action:
+      name:
         | "add-competence"
         | "add-field"
         | "add-group"
@@ -51,10 +35,20 @@ export type PageStateFix =
         | "restore-lesson";
     }
   | {
-      action:
+      name:
         | "change-lesson-competences"
         | "change-lesson-field"
         | "change-lesson-groups"
-        | "restore-version";
-      view?: "lesson-settings";
+        | "restore-version"
+        | null;
+      view: "lesson-settings";
     };
+
+declare global {
+  const CONFIG: Config;
+  namespace App {
+    export interface PageState {
+      action: Action;
+    }
+  }
+}
