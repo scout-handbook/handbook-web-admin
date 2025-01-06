@@ -37,8 +37,10 @@
     icon="history"
     onclick={(): void => {
       pushState("", {
-        action: "restore-version",
-        view: "lesson-settings",
+        action: {
+          name: "restore-version",
+          view: "lesson-settings",
+        },
       });
     }}
   >
@@ -52,8 +54,10 @@
   icon="pencil"
   onclick={(): void => {
     pushState("", {
-      action: "change-lesson-field",
-      view: "lesson-settings",
+      action: {
+        name: "change-lesson-field",
+        view: "lesson-settings",
+      },
     });
   }}
 >
@@ -74,8 +78,10 @@
   icon="pencil"
   onclick={(): void => {
     pushState("", {
-      action: "change-lesson-competences",
-      view: "lesson-settings",
+      action: {
+        name: "change-lesson-competences",
+        view: "lesson-settings",
+      },
     });
   }}
 >
@@ -97,8 +103,10 @@
   icon="pencil"
   onclick={(): void => {
     pushState("", {
-      action: "change-lesson-groups",
-      view: "lesson-settings",
+      action: {
+        name: "change-lesson-groups",
+        view: "lesson-settings",
+      },
     });
   }}
 >

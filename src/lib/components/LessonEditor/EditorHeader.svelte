@@ -23,7 +23,10 @@
       icon="cog"
       onclick={(): void => {
         pushState("", {
-          view: "lesson-settings",
+          action: {
+            name: null,
+            view: "lesson-settings",
+          },
         });
       }}
     >

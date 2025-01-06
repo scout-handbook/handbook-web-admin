@@ -13,10 +13,6 @@
   import TopBar from "$lib/components/TopBar.svelte";
   import { createQuery } from "@tanstack/svelte-query";
 
-  import type { PageStateFix } from "../../app";
-
-  let pageState = $derived(kitPage.state as PageStateFix);
-
   let openImage: string | null = $state(null);
   let page = $state(1);
   const perPage = 15;
@@ -32,10 +28,10 @@
 
 <TopBar />
 <MainPageContainer>
-  {#if pageState.action === "add-image"}
+  {#if kitPage.state.action.name === "add-image"}
     <AddImagePanel />
-  {:else if pageState.action === "delete-image"}
-    <DeleteImageDialog payload={pageState.actionPayload} />
+  {:else if kitPage.state.action.name === "delete-image"}
+    <DeleteImageDialog imageId={kitPage.state.action.imageId} />
   {/if}
 
   {#if openImage !== null}
@@ -61,7 +57,7 @@
     green
     icon="plus"
     onclick={(): void => {
-      pushState("", { action: "add-image" });
+      pushState("", { action: { name: "add-image" } });
     }}
   >
     Nahrát
@@ -83,8 +79,10 @@
             icon="trash-empty"
             onclick={(): void => {
               pushState("", {
-                action: "delete-image",
-                actionPayload: { imageId: image },
+                action: {
+                  imageId: image,
+                  name: "delete-image",
+                },
               });
             }}
             red

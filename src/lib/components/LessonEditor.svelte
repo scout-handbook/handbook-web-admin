@@ -9,8 +9,6 @@
   import { reAuthSuspended } from "$lib/reAuthSuspension.svelte";
   import { onDestroy, onMount } from "svelte";
 
-  import type { PageStateFix } from "../../app";
-
   interface Props {
     body: string;
     competences: Array<string>;
@@ -33,8 +31,7 @@
     onsave,
   }: Props = $props();
 
-  let pageState = $derived(page.state as PageStateFix);
-  let view = $derived("view" in pageState ? pageState.view : undefined);
+  let view = $derived("view" in page.state ? page.state.view : undefined);
 
   let imageSelectorOpen = $state(false);
   let discardConfirmation = $state(false);
