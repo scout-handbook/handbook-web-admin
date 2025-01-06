@@ -45,8 +45,10 @@
       icon="trash-empty"
       onclick={(): void => {
         pushState("", {
-          action: "delete-lesson",
-          actionPayload: { lessonId: id },
+          action: {
+            lessonId: id,
+            name: "delete-lesson",
+          },
         });
       }}
       red

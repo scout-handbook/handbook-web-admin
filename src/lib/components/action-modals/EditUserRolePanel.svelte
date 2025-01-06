@@ -13,17 +13,17 @@
   import { SvelteMap } from "svelte/reactivity";
 
   interface Props {
-    payload: { user: User };
+    user: User;
   }
 
-  let { payload }: Props = $props();
+  let { user }: Props = $props();
 
   const accountQuery = createQuery<Loginstate>({
     queryKey: ["v1.0", "account"],
   });
   let isSuperuser = $derived($accountQuery.data?.role === "superuser");
 
-  let selectedRole = $state(payload.user.role);
+  let selectedRole = $state(user.role);
   let donePromise: Promise<void> | null = $state(null);
   let roleList = $derived(
     new SvelteMap([
@@ -39,14 +39,14 @@
   );
 
   function saveCallback(): void {
-    if (selectedRole === payload.user.role) {
+    if (selectedRole === user.role) {
       donePromise = new Promise((resolve) => {
         resolve();
       });
     } else {
       donePromise = new ActionQueue([
         new Action(
-          `${CONFIG["api-uri"]}/v1.0/user/${encodeURIComponent(payload.user.id)}/role`,
+          `${CONFIG["api-uri"]}/v1.0/user/${encodeURIComponent(user.id)}/role`,
           "PUT",
           { role: selectedRole },
         ),
@@ -75,7 +75,7 @@
       Zrušit
     </Button>
     <Button green icon="floppy" onclick={saveCallback}>Uložit</Button>
-    <h1>Změnit roli: {payload.user.name}</h1>
+    <h1>Změnit roli: {user.name}</h1>
     <form>
       <RadioGroup options={roleList} bind:selected={selectedRole}>
         {#snippet option(_, value)}

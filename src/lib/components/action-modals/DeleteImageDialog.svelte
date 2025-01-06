@@ -7,10 +7,10 @@
   import { createMutation } from "@tanstack/svelte-query";
 
   interface Props {
-    payload: { imageId: string };
+    imageId: string;
   }
 
-  let { payload }: Props = $props();
+  let { imageId }: Props = $props();
 
   let donePromise: Promise<void> | null = $state(null);
 
@@ -23,7 +23,7 @@
       ]);
       if (cachedImages !== undefined) {
         const newImages = structuredClone(cachedImages);
-        newImages.splice(newImages.indexOf(payload.imageId), 1);
+        newImages.splice(newImages.indexOf(imageId), 1);
         queryClient.setQueryData<Array<string>>(["v1.0", "image"], newImages);
       }
     },
@@ -32,7 +32,7 @@
   function confirmCallback(): void {
     donePromise = new ActionQueue([
       new Action(
-        `${CONFIG["api-uri"]}/v1.0/image/${encodeURIComponent(payload.imageId)}`,
+        `${CONFIG["api-uri"]}/v1.0/image/${encodeURIComponent(imageId)}`,
         "DELETE",
       ),
     ])

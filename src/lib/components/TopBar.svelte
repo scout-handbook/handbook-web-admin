@@ -1,11 +1,11 @@
 <script lang="ts">
   import { base } from "$app/paths";
-  import { page } from "$app/stores";
+  import { page } from "$app/state";
   import UserAccountBox from "$lib/components/UserAccountBox.svelte";
 
   const {
     route: { id: routeId },
-  } = $page;
+  } = page;
 </script>
 
 <div class="wrapper">
