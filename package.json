@@ -31,7 +31,7 @@
     "build": "vite build",
     "lint:css:stylelint": "stylelint --color 'src/**/*.css' 'static/**/*.css' '!src/lib/font/fontello.css'",
     "lint:css": "run-p -c --aggregate-output lint:css:*",
-    "lint:svelte:svelte-check": "svelte-check",
+    "lint:svelte:svelte-check": "FORCE_COLOR=1 svelte-check",
     "lint:svelte": "run-p -c --aggregate-output lint:svelte:*",
     "lint:ts:eslint": "eslint --color 'src/**/*.svelte' 'src/**/*.ts' '*.config.{js,ts}'",
     "lint:ts:typecheck": "tsc --noEmit",
