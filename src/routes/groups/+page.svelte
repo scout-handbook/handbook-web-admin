@@ -25,19 +25,19 @@
 
 <TopBar />
 <MainPageContainer>
-  {#if page.state.action.name === "add-group"}
+  {#if page.state.action?.name === "add-group"}
     <AddGroupPanel />
-  {:else if page.state.action.name === "change-group"}
+  {:else if page.state.action?.name === "change-group"}
     {@const group = groups.current?.get(page.state.action.groupId)}
     {#if group !== undefined}
       <EditGroupPanel {group} groupId={page.state.action.groupId} />
     {/if}
-  {:else if page.state.action.name === "delete-group"}
+  {:else if page.state.action?.name === "delete-group"}
     {@const group = groups.current?.get(page.state.action.groupId)}
     {#if group !== undefined}
       <DeleteGroupDialog {group} groupId={page.state.action.groupId} />
     {/if}
-  {:else if page.state.action.name === "import-group-members"}
+  {:else if page.state.action?.name === "import-group-members"}
     {@const group = groups.current?.get(page.state.action.groupId)}
     {#if group !== undefined}
       <ImportGroupMembersPanel {group} groupId={page.state.action.groupId} />

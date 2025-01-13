@@ -28,9 +28,9 @@
 
 <TopBar />
 <MainPageContainer>
-  {#if kitPage.state.action.name === "add-image"}
+  {#if kitPage.state.action?.name === "add-image"}
     <AddImagePanel />
-  {:else if kitPage.state.action.name === "delete-image"}
+  {:else if kitPage.state.action?.name === "delete-image"}
     <DeleteImageDialog imageId={kitPage.state.action.imageId} />
   {/if}
 
