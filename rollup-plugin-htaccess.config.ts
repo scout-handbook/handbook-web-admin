@@ -2,9 +2,9 @@ import type { Options } from "rollup-plugin-htaccess";
 
 const options: Partial<Options> = {
   extractMetaCSP: {
-    defaultPolicyFile: "dist/index.html",
+    defaultPolicyFile: "index.html",
     enabled: true,
-    htaccessFile: "dist/.htaccess",
+    outputDir: "dist",
   },
   spec: {
     AddOutputFilterByType: [
