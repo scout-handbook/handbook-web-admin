@@ -27,9 +27,9 @@
 
 <TopBar />
 <MainPageContainer>
-  {#if page.state.action.name === "add-competence"}
+  {#if page.state.action?.name === "add-competence"}
     <AddCompetencePanel />
-  {:else if page.state.action.name === "change-competence"}
+  {:else if page.state.action?.name === "change-competence"}
     {@const competence = competences.current?.get(
       page.state.action.competenceId,
     )}
@@ -39,7 +39,7 @@
         competenceId={page.state.action.competenceId}
       />
     {/if}
-  {:else if page.state.action.name === "delete-competence"}
+  {:else if page.state.action?.name === "delete-competence"}
     {@const competence = competences.current?.get(
       page.state.action.competenceId,
     )}

@@ -26,15 +26,15 @@
   }: Props = $props();
 </script>
 
-{#if page.state.action.name === "restore-version" && id !== null && name !== null}
+{#if page.state.action?.name === "restore-version" && id !== null && name !== null}
   <RestoreLessonVersion lessonId={id} bind:lessonName={name} bind:body />
 {:else}
   <SidePanel>
-    {#if page.state.action.name === "change-lesson-competences"}
+    {#if page.state.action?.name === "change-lesson-competences"}
       <EditLessonCompetences bind:competences />
-    {:else if page.state.action.name === "change-lesson-field"}
+    {:else if page.state.action?.name === "change-lesson-field"}
       <EditLessonField bind:field />
-    {:else if page.state.action.name === "change-lesson-groups"}
+    {:else if page.state.action?.name === "change-lesson-groups"}
       <EditLessonGroups bind:groups />
     {:else}
       <LessonSettingsOverview {id} {competences} {field} {groups} />
