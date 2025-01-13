@@ -48,7 +48,7 @@ declare global {
   const CONFIG: Config;
   namespace App {
     export interface PageState {
-      action: Action;
+      action?: Action;
     }
   }
 }

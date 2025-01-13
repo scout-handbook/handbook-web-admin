@@ -38,9 +38,9 @@
 
 <TopBar />
 <MainPageContainer>
-  {#if kitPage.state.action.name === "change-user-groups"}
+  {#if kitPage.state.action?.name === "change-user-groups"}
     <EditUserGroupsPanel user={kitPage.state.action.user} />
-  {:else if kitPage.state.action.name === "change-user-role"}
+  {:else if kitPage.state.action?.name === "change-user-role"}
     <EditUserRolePanel user={kitPage.state.action.user} />
   {/if}
 
