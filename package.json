@@ -68,7 +68,7 @@
     "rollup-plugin-htaccess": "^0.11.0",
     "stylelint": "^16.14.0",
     "stylelint-config-standard": "^37.0.0",
-    "stylelint-no-unsupported-browser-features": "^8.0.2",
+    "stylelint-no-unsupported-browser-features": "^8.0.4",
     "stylelint-prettier": "^5.0.3",
     "svelte": "^5.19.3",
     "svelte-check": "^4.1.4",
