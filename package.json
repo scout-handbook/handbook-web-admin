@@ -27,6 +27,7 @@
   },
   "scripts": {
     "clean": "rimraf dist/*",
+    "prepare": "svelte-kit sync",
     "prebuild": "npm run clean",
     "build": "vite build",
     "lint:css:stylelint": "stylelint --color 'src/**/*.css' 'static/**/*.css' '!src/lib/font/fontello.css'",
