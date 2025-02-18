@@ -21,7 +21,7 @@
     "url": "git+https://github.com/scout-handbook/handbook-web-admin.git"
   },
   "dependencies": {
-    "easymde": "^2.14.0",
+    "easymde": "^2.19.0",
     "showdown": "^2.1.0",
     "xss": "^1.0.15"
   },
