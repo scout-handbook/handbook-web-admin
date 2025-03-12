@@ -31,7 +31,7 @@
   let field: string | null = $state(null);
   let groups: Array<string> = $state([]);
 
-  let bodyPromise = request<string>(
+  const bodyPromise = request<string>(
     `${CONFIG["api-uri"]}/v1.0/deleted-lesson/${data.id}/history/${data.version}`,
     "GET",
     {},
