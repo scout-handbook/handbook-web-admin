@@ -82,7 +82,7 @@
     <Button green icon="floppy" onclick={saveCallback}>Uložit</Button>
     <h1>Upravit bod</h1>
     <form>
-      <span class="competence-heading">Bod</span>
+      <span>Bod</span>
       <NumberNameInput bind:value={number} />
       <br />
       <NameInput bind:value={name} />
@@ -93,7 +93,7 @@
 {/if}
 
 <style>
-  .competence-heading {
+  span {
     font-size: 1.5em;
     font-weight: bold;
   }

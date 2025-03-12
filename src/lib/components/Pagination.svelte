@@ -10,7 +10,7 @@
 </script>
 
 {#if total > 1}
-  <div class="container">
+  <div>
     {#if current > 3}
       <PaginationButton
         onclick={(): void => {
@@ -60,7 +60,7 @@
 {/if}
 
 <style>
-  .container {
+  div {
     margin-top: 40px;
     text-align: center;
   }
