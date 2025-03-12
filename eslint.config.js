@@ -209,7 +209,7 @@ export default tseslint.config(
     },
   },
   {
-    files: ["**/*.svelte", "*.svelte"],
+    files: ["**/*.svelte", "**/*.svelte.ts"],
     languageOptions: {
       parser: svelteParser,
       parserOptions: {
