@@ -44,7 +44,7 @@
       bind:selected={field}
     >
       {#snippet nullOption()}
-        <span class="anonymous">Nezařazeno</span>
+        <span>Nezařazeno</span>
       {/snippet}
       {#snippet option(_2, currentField: Field)}
         {currentField.name}
@@ -54,7 +54,7 @@
 </form>
 
 <style>
-  .anonymous {
+  span {
     font-style: italic;
   }
 </style>

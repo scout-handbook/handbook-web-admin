@@ -92,13 +92,13 @@
     <i class="icon-info-circled"></i>
     Každého uživatele lze zařadit do několika skupin (nebo i žádné). Podle toho poté
     tento uživatel bude moct zobrazit pouze lekce, které byly těmto skupiným zveřejněny.
-    Lekce ve skupině "<span class="public">{publicName}</span>" uvidí všichni
-    uživatelé bez ohledu na jejich skupiny.
+    Lekce ve skupině "<span>{publicName}</span>" uvidí všichni uživatelé bez
+    ohledu na jejich skupiny.
   </SidePanel>
 {/if}
 
 <style>
-  .public {
+  span {
     font-style: italic;
   }
 </style>
