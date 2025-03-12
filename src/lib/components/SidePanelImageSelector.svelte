@@ -31,7 +31,7 @@
     <LoadingIndicator />
   {:else}
     <Button icon="cancel" onclick={oncancel} yellow>Zrušit</Button>
-    <div class="container">
+    <div>
       {#each currentPageList as image (image)}
         <ImageGridCell>
           <ImageThumbnail
@@ -51,7 +51,7 @@
 </DoubleSidePanel>
 
 <style>
-  .container {
+  div {
     margin: 0 auto 30px;
     max-width: 770px;
   }

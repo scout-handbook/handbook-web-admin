@@ -8,7 +8,7 @@
   } = page;
 </script>
 
-<div class="wrapper">
+<div>
   <UserAccountBox />
   <a
     class:active-tab={routeId === "/" || routeId === "/lessons"}
@@ -65,7 +65,7 @@
     padding-top: 16px;
   }
 
-  .wrapper {
+  div {
     background-color: var(--background-darker);
     border-bottom: 1px solid var(--border-color);
     height: 80px;
