@@ -63,9 +63,8 @@
   );
 </script>
 
-<form class="search-form" onsubmit={onchange}>
+<form onsubmit={onchange}>
   <input
-    class="search-box"
     oninput={onchange}
     placeholder="Jméno uživatele"
     type="text"
@@ -94,7 +93,7 @@
 </form>
 
 <style>
-  .search-box {
+  input {
     border: 1px solid var(--border-color);
     border-radius: 3px;
     font-family: "Open Sans", sans-serif;
@@ -106,13 +105,13 @@
     width: 151px;
   }
 
-  .search-box:focus {
+  input:focus {
     background-color: var(--background-darkest);
     border-color: var(--accent-color);
     outline: none;
   }
 
-  .search-form {
+  form {
     margin-bottom: 30px;
   }
 </style>

@@ -155,7 +155,7 @@
             bind:selected={selectedVersion}
           >
             {#snippet option(version: number, versionName: string)}
-              <span class="version-name">
+              <span>
                 {versionName}
               </span>
               —
@@ -199,7 +199,7 @@
     width: 400px;
   }
 
-  .version-name {
+  span {
     font-weight: bold;
   }
 </style>

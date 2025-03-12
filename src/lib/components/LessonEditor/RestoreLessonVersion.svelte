@@ -99,14 +99,14 @@
           bind:selected={selectedVersion}
         >
           {#snippet nullOption()}
-            <span class="current-version version-name">Současná verze</span>
+            <span class="current-version">Současná verze</span>
             —
             {#if currentLessonVersion !== undefined}
               {parseVersion(currentLessonVersion)}
             {/if}
           {/snippet}
           {#snippet option(version: number, name: string)}
-            <span class="version-name">
+            <span>
               {name}
             </span>
             —
@@ -153,7 +153,7 @@
     width: 400px;
   }
 
-  .version-name {
+  span {
     font-weight: bold;
   }
 </style>

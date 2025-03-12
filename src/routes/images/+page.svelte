@@ -74,7 +74,7 @@
             openImage = image;
           }}
         />
-        <div class="delete-image">
+        <div>
           <Button
             icon="trash-empty"
             onclick={(): void => {
@@ -100,7 +100,7 @@
 </MainPageContainer>
 
 <style>
-  .delete-image {
+  div {
     bottom: 5%;
     margin-bottom: 9px;
     margin-right: -9px;

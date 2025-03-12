@@ -86,12 +86,12 @@
       </RadioGroup>
     </form>
     <br />
-    <div class="infobox">
+    <div>
       <i class="icon-info-circled"></i>
       <span class="infobox-name">Uživatel</span> - Kdokoliv, kdo se někdy přihlásil
       pomocí skautISu. Nemá žádná oprávnění navíc oproti nepřihlášeným návštěvníkům.
     </div>
-    <div class="infobox">
+    <div>
       <i class="icon-info-circled"></i>
       <span class="infobox-name">Editor</span> - Instruktor, který má základní přístup
       ke správě. Může přidávat lekce, měnit jejich obsah, body a přesouvat je mezi
@@ -99,13 +99,13 @@
       pouze hosty a uživatele.
     </div>
     {#if isSuperuser}
-      <div class="infobox">
+      <div>
         <i class="icon-info-circled"></i>
         <span class="infobox-name">Administrátor</span> - Instruktor, mající všechna
         práva editora. Navíc může i mazat lekce a přidávat, upravovat a mazat oblasti
         a body. Administrátor může navíc přidělovat a odebírat práva editorů.
       </div>
-      <div class="infobox">
+      <div>
         <i class="icon-info-circled"></i>
         <span class="infobox-name">Superuser</span> - Hlavní správce.
       </div>
@@ -114,7 +114,7 @@
 {/if}
 
 <style>
-  .infobox {
+  div {
     margin-top: 20px;
   }
 

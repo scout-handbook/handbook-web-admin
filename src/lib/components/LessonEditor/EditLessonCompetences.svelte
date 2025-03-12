@@ -46,7 +46,7 @@
     >
       <!-- eslint-disable-next-line @typescript-eslint/no-shadow -- Not applicable to snippets -->
       {#snippet children(_, competence: Competence)}
-        <span class="competence-number">
+        <span>
           {competence.number}:
         </span>
         {competence.name}
@@ -56,7 +56,7 @@
 </form>
 
 <style>
-  .competence-number {
+  span {
     font-weight: bold;
   }
 </style>
