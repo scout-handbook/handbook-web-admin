@@ -112,7 +112,7 @@
     }
   }
 
-  let lessonDataPromise = Promise.all([
+  const lessonDataPromise = Promise.all([
     request(
       `${CONFIG["api-uri"]}/v1.0/mutex/${encodeURIComponent(lessonID)}`,
       "POST",
