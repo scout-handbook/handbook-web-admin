@@ -24,12 +24,14 @@
     {/if}
   </div>
   <div class="links">
+    <!-- eslint-disable svelte/no-navigation-without-base -- Absolute URLs -->
     <a
       href={`${CONFIG["api-uri"]}/v1.0/logout?redirect-uri=${encodeURIComponent(CONFIG["frontend-uri"])}`}
     >
       Odhlásit
     </a>
-    <a class="frontend-link" href="/">Zpět na web</a>
+    <a class="frontend-link" href={CONFIG["frontend-uri"]}>Zpět na web</a>
+    <!-- eslint-enable -->
   </div>
 </div>
 
