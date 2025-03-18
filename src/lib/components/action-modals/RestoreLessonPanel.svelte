@@ -18,7 +18,7 @@
 
   let error = $state("");
   let step = $state("lesson-selection-loading");
-  let lessonList: SvelteMap<string, DeletedLesson> = $state(new SvelteMap());
+  const lessonList = new SvelteMap<string, DeletedLesson>();
   let selectedLesson = $state("");
   let versionList: Array<LessonVersion> = $state([]);
   let selectedVersion = $state<number | null>(null);
@@ -49,7 +49,12 @@
       AuthenticationException: reAuth,
     },
   ).then((response) => {
-    lessonList = new SvelteMap(Object.entries(response));
+    for (const key in response) {
+      if (!Object.hasOwn(response, key)) {
+        continue;
+      }
+      lessonList.set(key, response[key]);
+    }
     if (lessonList.size === 0) {
       error = "Nejsou žádné smazané lekce.";
     }
