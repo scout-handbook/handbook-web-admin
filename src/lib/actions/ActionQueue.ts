@@ -22,7 +22,7 @@ export class ActionQueue {
 
   public async dispatch(): Promise<void> {
     if (this.actions.length < 1) {
-      localStorage.clear();
+      localStorage.removeItem("ActionQueue");
       return;
     }
     this.actions[0].exceptionHandler.AuthenticationException = (): void => {
@@ -82,10 +82,19 @@ export function setupActionQueue(): void {
     true,
   );
   globalUI.loadingIndicator = true;
-  void aq.dispatch().then(() => {
-    void queryClient.invalidateQueries();
-    void goto(`${base}/${CONFIG["admin-uri"].split("/").slice(3).join("/")}`);
-    globalUI.loadingIndicator = false;
-    globalUI.dialogMessage = "Akce byla úspěšná";
-  });
+  void aq
+    .dispatch()
+    .then(() => {
+      void queryClient.invalidateQueries();
+      void goto(`${base}/${CONFIG["admin-uri"].split("/").slice(3).join("/")}`);
+      globalUI.loadingIndicator = false;
+      globalUI.dialogMessage = "Akce byla úspěšná";
+    })
+    .catch(() => {
+      const currentQueue = localStorage.getItem("ActionQueue");
+      if (currentQueue !== null) {
+        localStorage.setItem("ActionQueue-backup", currentQueue);
+        localStorage.removeItem("ActionQueue");
+      }
+    });
 }
