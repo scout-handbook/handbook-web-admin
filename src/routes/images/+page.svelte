@@ -1,4 +1,6 @@
 <script lang="ts">
+  import type { Loginstate } from "$lib/interfaces/Loginstate";
+
   import { pushState } from "$app/navigation";
   import { page as kitPage } from "$app/state";
   import AddImagePanel from "$lib/components/action-modals/AddImagePanel.svelte";
@@ -18,6 +20,14 @@
   const perPage = 15;
   let pageStart = $derived(perPage * (page - 1));
   let pageEnd = $derived(pageStart + perPage);
+
+  const accountQuery = createQuery<Loginstate>({
+    queryKey: ["v1.0", "account"],
+  });
+  let adminOrSuperuser = $derived(
+    $accountQuery.data?.role === "administrator" ||
+      $accountQuery.data?.role === "superuser",
+  );
 
   const imageQuery = createQuery<Array<string>>({
     queryKey: ["v1.0", "image"],
@@ -74,22 +84,24 @@
             openImage = image;
           }}
         />
-        <div>
-          <Button
-            icon="trash-empty"
-            onclick={(): void => {
-              pushState("", {
-                action: {
-                  imageId: image,
-                  name: "delete-image",
-                },
-              });
-            }}
-            red
-          >
-            Smazat
-          </Button>
-        </div>
+        {#if adminOrSuperuser}
+          <div>
+            <Button
+              icon="trash-empty"
+              onclick={(): void => {
+                pushState("", {
+                  action: {
+                    imageId: image,
+                    name: "delete-image",
+                  },
+                });
+              }}
+              red
+            >
+              Smazat
+            </Button>
+          </div>
+        {/if}
       </ImageGridCell>
     {/each}
     <Pagination
