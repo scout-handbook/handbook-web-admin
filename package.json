@@ -50,7 +50,7 @@
     "@tanstack/eslint-plugin-query": "^5.73.3",
     "@tanstack/svelte-query": "^5.74.4",
     "@types/codemirror": "5.60.15",
-    "@types/node": "^22.15.2",
+    "@types/node": "^22.15.3",
     "@types/showdown": "^2.0.6",
     "autoprefixer": "^10.4.21",
     "eslint": "^9.25.1",
