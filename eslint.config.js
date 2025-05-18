@@ -180,6 +180,7 @@ export default tseslint.config(
         },
       ],
       "svelte/derived-has-same-inputs-outputs": "error",
+      "svelte/no-add-event-listener": "error",
       "svelte/no-extra-reactive-curlies": "error",
       "svelte/no-ignored-unsubscribe": "error",
       "svelte/no-inline-styles": [
@@ -190,6 +191,7 @@ export default tseslint.config(
       ],
       "svelte/no-navigation-without-base": "error",
       "svelte/no-target-blank": "error",
+      "svelte/no-top-level-browser-globals": "error",
       "svelte/no-unused-class-name": [
         "error",
         { allowedClassNames: ["icon-info-circled"] },
@@ -198,6 +200,8 @@ export default tseslint.config(
       "svelte/prefer-const": "error",
       "svelte/prefer-destructured-store-props": "error",
       "svelte/prefer-style-directive": "error",
+      "svelte/prefer-writable-derived": "error",
+      "svelte/require-event-prefix": "error",
       "svelte/require-optimized-style-attribute": "error",
       "svelte/require-store-callbacks-use-set-param": "error",
       "svelte/require-stores-init": "error",
