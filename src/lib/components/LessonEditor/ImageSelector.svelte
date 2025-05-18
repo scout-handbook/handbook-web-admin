@@ -7,12 +7,12 @@
   import { createQuery } from "@tanstack/svelte-query";
 
   interface Props {
-    closeImageSelector(this: void): void;
     imageSelectorOpen: boolean;
+    oncloseImageSelector(this: void): void;
     oninsert(this: void, id: string): void;
   }
 
-  let { closeImageSelector, imageSelectorOpen, oninsert }: Props = $props();
+  let { imageSelectorOpen, oncloseImageSelector, oninsert }: Props = $props();
 
   let page = $state(1);
   const perPage = 15;
@@ -28,7 +28,7 @@
 
 <div class="selector" class:selector-open={imageSelectorOpen}>
   <div class="button-wrapper">
-    <Button icon="up-open" onclick={closeImageSelector} yellow>Zavřít</Button>
+    <Button icon="up-open" onclick={oncloseImageSelector} yellow>Zavřít</Button>
     <!-- TODO: Re-enable uploads in editor without discarding its contents
     <Button
       green
@@ -51,7 +51,7 @@
               id={image}
               onclick={(): void => {
                 oninsert(image);
-                closeImageSelector();
+                oncloseImageSelector();
               }}
             />
           </ImageGridCell>

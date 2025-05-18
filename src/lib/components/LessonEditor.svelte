@@ -84,15 +84,15 @@
   bind:name
 />
 <ImageSelector
-  closeImageSelector={(): void => {
+  {imageSelectorOpen}
+  oncloseImageSelector={(): void => {
     imageSelectorOpen = false;
   }}
-  {imageSelectorOpen}
   oninsert={insertImage}
 />
 <EditorPane
   bind:this={editorPane}
-  openImageSelector={(): void => {
+  onopenImageSelector={(): void => {
     imageSelectorOpen = true;
   }}
   bind:value={body}

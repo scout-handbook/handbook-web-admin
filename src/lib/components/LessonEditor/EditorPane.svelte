@@ -7,11 +7,11 @@
   let editorArea: HTMLElement | undefined = $state();
 
   interface Props {
-    openImageSelector(this: void): void;
+    onopenImageSelector(this: void): void;
     value: string;
   }
 
-  let { openImageSelector, value = $bindable() }: Props = $props();
+  let { onopenImageSelector, value = $bindable() }: Props = $props();
 
   export function insertAtCursor(content: string): void {
     if (editor === undefined) {
@@ -83,7 +83,7 @@
           title: "Vložit odkaz",
         },
         {
-          action: openImageSelector,
+          action: onopenImageSelector,
           className: "icon-picture",
           name: "image",
           title: "Vložit obrázek",
