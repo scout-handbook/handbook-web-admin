@@ -42,7 +42,7 @@
   "devDependencies": {
     "@csstools/postcss-global-data": "^3.0.0",
     "@eslint-community/eslint-plugin-eslint-comments": "^4.5.0",
-    "@eslint/js": "^9.27.0",
+    "@eslint/js": "^9.28.0",
     "@fontsource/open-sans": "^5.2.5",
     "@sveltejs/adapter-static": "^3.0.8",
     "@sveltejs/kit": "^2.21.1",
