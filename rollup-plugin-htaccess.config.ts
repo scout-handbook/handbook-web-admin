@@ -2,10 +2,10 @@ import type { Options } from "rollup-plugin-htaccess";
 
 const options: Partial<Options> = {
   extractMetaCSP: {
-    defaultPolicyFile: "index.html",
+    defaultPolicyFile: "fallback.html",
     enabled: true,
     outputDir: "dist",
-    perFilePolicyFiles: ["**/*.html", "!index.html"],
+    perFilePolicyFiles: ["**/*.html", "!fallback.html"],
   },
   spec: {
     AddOutputFilterByType: [
@@ -100,7 +100,7 @@ const options: Partial<Options> = {
           flags: {
             last: true,
           },
-          pattern: "^index\\.html$",
+          pattern: "^fallback\\.html$",
           substitution: null,
         },
         {
@@ -131,7 +131,7 @@ const options: Partial<Options> = {
             last: true,
           },
           pattern: ".",
-          substitution: "/admin/index.html",
+          substitution: "/admin/fallback.html",
         },
       ],
     },
