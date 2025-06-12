@@ -23,7 +23,7 @@ export default {
   kit: {
     adapter: adapter({
       assets: "dist",
-      fallback: "index.html",
+      fallback: "fallback.html",
       pages: "dist",
       precompress: false,
       strict: true,
