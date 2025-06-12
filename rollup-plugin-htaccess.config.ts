@@ -2,9 +2,10 @@ import type { Options } from "rollup-plugin-htaccess";
 
 const options: Partial<Options> = {
   extractMetaCSP: {
-    defaultPolicyFile: "index.html",
+    defaultPolicyFile: "fallback.html",
     enabled: true,
     outputDir: "dist",
+    perFilePolicyFiles: ["**/*.html", "!fallback.html"],
   },
   spec: {
     AddOutputFilterByType: [
@@ -69,11 +70,11 @@ const options: Partial<Options> = {
     },
     rewrite: {
       rules: [
-        // Force HTTPS
+        // Upgrade to HTTPS
         {
           conditions: [
             {
-              conditionPattern: "off",
+              conditionPattern: "!=on",
               testString: "%{HTTPS}",
             },
           ],
@@ -82,32 +83,55 @@ const options: Partial<Options> = {
             qsappend: true,
             redirect: 301,
           },
-          pattern: "(.*)",
+          pattern: "^(.*)$",
           substitution: "https://%{HTTP_HOST}%{REQUEST_URI}",
-        },
-        // Pages rewrite
-        {
-          conditions: [
-            {
-              conditionPattern:
-                "^/admin/(lessons|competences|images|users|groups)(/|$)",
-              testString: "%{REQUEST_URI}",
-            },
-          ],
-          flags: {
-            last: true,
-            qsappend: true,
-          },
-          pattern: "(.*)",
-          substitution: "/admin/",
         },
         // PDF rewrite
         {
           flags: {
+            last: true,
             qsappend: true,
           },
           pattern: "^lesson/(.*)",
           substitution: "lesson.php?id=$1",
+        },
+        // Rewrite non-existent paths to fallback.html
+        {
+          flags: {
+            last: true,
+          },
+          pattern: "^fallback\\.html$",
+          substitution: null,
+        },
+        {
+          conditions: [
+            {
+              conditionPattern: "!-f",
+              testString: "%{REQUEST_FILENAME}",
+            },
+            {
+              conditionPattern: "-f",
+              testString: "%{REQUEST_FILENAME}.html",
+            },
+          ],
+          flags: {
+            last: true,
+          },
+          pattern: "^(.*)$",
+          substitution: "/admin/$1.html",
+        },
+        {
+          conditions: [
+            {
+              conditionPattern: "!-f",
+              testString: "%{REQUEST_FILENAME}",
+            },
+          ],
+          flags: {
+            last: true,
+          },
+          pattern: ".",
+          substitution: "/admin/fallback.html",
         },
       ],
     },
