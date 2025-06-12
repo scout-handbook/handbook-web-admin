@@ -5,6 +5,7 @@ const options: Partial<Options> = {
     defaultPolicyFile: "index.html",
     enabled: true,
     outputDir: "dist",
+    perFilePolicyFiles: ["**/*.html", "!index.html"],
   },
   spec: {
     AddOutputFilterByType: [
