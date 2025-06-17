@@ -31,7 +31,11 @@
     onsave,
   }: Props = $props();
 
-  let view = $derived("view" in page.state ? page.state.view : undefined);
+  let view = $derived(
+    "action" in page.state && "view" in page.state.action
+      ? page.state.action.view
+      : undefined,
+  );
 
   let imageSelectorOpen = $state(false);
   let discardConfirmation = $state(false);
