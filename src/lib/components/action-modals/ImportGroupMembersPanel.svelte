@@ -215,7 +215,7 @@
           )}
           bind:selected={selectedParticipants}
         >
-          {#snippet children(name)}
+          {#snippet children(_, name)}
             {name}
           {/snippet}
         </CheckboxGroup>
