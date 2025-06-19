@@ -13,31 +13,35 @@
   "bugs": {
     "url": "https://github.com/scout-handbook/handbook-web-admin/issues"
   },
-  "license": "MIT",
-  "author": "Marek Dědič",
-  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/scout-handbook/handbook-web-admin.git"
   },
+  "license": "MIT",
+  "author": "Marek Dědič",
+  "type": "module",
+  "scripts": {
+    "prebuild": "npm run clean",
+    "build": "vite build",
+    "clean": "rimraf dist/*",
+    "lint": "run-p -c --aggregate-output lint:*",
+    "lint:css": "run-p -c --aggregate-output lint:css:*",
+    "lint:css:stylelint": "stylelint --color 'src/**/*.css' 'static/**/*.css' '!src/lib/font/fontello.css'",
+    "lint:eslint": "eslint --color",
+    "lint:svelte": "run-p -c --aggregate-output lint:svelte:*",
+    "lint:svelte:svelte-check": "FORCE_COLOR=1 svelte-check",
+    "lint:ts": "run-p -c --aggregate-output lint:ts:*",
+    "lint:ts:typecheck": "tsc --noEmit",
+    "prepare": "svelte-kit sync"
+  },
+  "browserslist": [
+    "defaults",
+    "not OperaMini all"
+  ],
   "dependencies": {
     "easymde": "^2.20.0",
     "showdown": "^2.1.0",
     "xss": "^1.0.15"
-  },
-  "scripts": {
-    "clean": "rimraf dist/*",
-    "prepare": "svelte-kit sync",
-    "prebuild": "npm run clean",
-    "build": "vite build",
-    "lint:css:stylelint": "stylelint --color 'src/**/*.css' 'static/**/*.css' '!src/lib/font/fontello.css'",
-    "lint:css": "run-p -c --aggregate-output lint:css:*",
-    "lint:svelte:svelte-check": "FORCE_COLOR=1 svelte-check",
-    "lint:svelte": "run-p -c --aggregate-output lint:svelte:*",
-    "lint:eslint": "eslint --color",
-    "lint:ts:typecheck": "tsc --noEmit",
-    "lint:ts": "run-p -c --aggregate-output lint:ts:*",
-    "lint": "run-p -c --aggregate-output lint:*"
   },
   "devDependencies": {
     "@csstools/postcss-global-data": "^3.0.0",
@@ -81,9 +85,5 @@
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.34.1",
     "vite": "^6.3.5"
-  },
-  "browserslist": [
-    "defaults",
-    "not OperaMini all"
-  ]
+  }
 }
