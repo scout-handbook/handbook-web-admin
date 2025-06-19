@@ -5,6 +5,7 @@ import js from "@eslint/js";
 import json from "@eslint/json";
 import query from "@tanstack/eslint-plugin-query";
 import compat from "eslint-plugin-compat";
+import packageJson from "eslint-plugin-package-json";
 import perfectionist from "eslint-plugin-perfectionist";
 import preferArrowFunctions from "eslint-plugin-prefer-arrow-functions";
 import prettierRecommended from "eslint-plugin-prettier/recommended";
@@ -16,6 +17,7 @@ import tseslint from "typescript-eslint";
 
 export default tseslint.config(
   globalIgnores([".svelte-kit/", "dist/", "package-lock.json"]),
+  packageJson.configs.recommended,
   {
     extends: [css.configs.recommended],
     files: ["**/*.css"],
@@ -24,6 +26,7 @@ export default tseslint.config(
   {
     extends: [json.configs.recommended],
     files: ["**/*.json"],
+    ignores: ["package.json"],
     language: "json/json",
   },
   {
