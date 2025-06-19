@@ -12,74 +12,21 @@ import svelteParser from "svelte-eslint-parser";
 import tseslint from "typescript-eslint";
 
 export default tseslint.config(
-  js.configs.recommended,
-  prettierRecommended,
-  commentsConfig.recommended,
-  compat.configs["flat/recommended"],
-  ...query.configs["flat/recommended"],
-  ...tseslint.configs.strictTypeChecked,
-  ...tseslint.configs.stylisticTypeChecked,
-  ...svelte.configs["flat/recommended"],
-  ...svelte.configs["flat/prettier"],
-  perfectionist.configs["recommended-natural"],
   {
-    languageOptions: {
-      parserOptions: {
-        extraFileExtensions: [".svelte"],
-        projectService: {
-          allowDefaultProject: ["*.js"],
-          defaultProject: "tsconfig.json",
-        },
-      },
-    },
+    extends: [
+      js.configs.recommended,
+      prettierRecommended,
+      commentsConfig.recommended,
+      compat.configs["flat/recommended"],
+      query.configs["flat/recommended"],
+      perfectionist.configs["recommended-natural"],
+    ],
+    files: ["**/*.js", "**/*.svelte", "**/*.ts"],
     plugins: {
       "eslint-comments": eslintComments,
       "prefer-arrow-functions": preferArrowFunctions,
     },
     rules: {
-      "@typescript-eslint/array-type": ["error", { default: "generic" }],
-      "@typescript-eslint/class-methods-use-this": "error",
-      "@typescript-eslint/consistent-type-exports": "error",
-      "@typescript-eslint/consistent-type-imports": "error",
-      "@typescript-eslint/default-param-last": "error",
-      "@typescript-eslint/explicit-function-return-type": "error",
-      "@typescript-eslint/explicit-member-accessibility": "error",
-      "@typescript-eslint/explicit-module-boundary-types": "error",
-      "@typescript-eslint/init-declarations": "error",
-      "@typescript-eslint/method-signature-style": ["error", "method"],
-      "@typescript-eslint/no-base-to-string": [
-        "error",
-        { ignoredTypeNames: ["FormData", "Payload"] },
-      ],
-      "@typescript-eslint/no-import-type-side-effects": "error",
-      "@typescript-eslint/no-invalid-void-type": [
-        "error",
-        { allowAsThisParameter: true },
-      ],
-      "@typescript-eslint/no-shadow": "error",
-      "@typescript-eslint/no-unnecessary-parameter-property-assignment":
-        "error",
-      "@typescript-eslint/no-unnecessary-qualifier": "error",
-      "@typescript-eslint/no-unused-vars": [
-        "error",
-        {
-          argsIgnorePattern: "^_",
-          varsIgnorePattern: "^_|^\\$\\$Slots$",
-        },
-      ],
-      "@typescript-eslint/no-use-before-define": [
-        "error",
-        { functions: false },
-      ],
-      "@typescript-eslint/no-useless-empty-export": "error",
-      "@typescript-eslint/parameter-properties": "error",
-      "@typescript-eslint/prefer-enum-initializers": "error",
-      "@typescript-eslint/prefer-readonly": "error",
-      "@typescript-eslint/promise-function-async": "error",
-      "@typescript-eslint/require-array-sort-compare": "error",
-      "@typescript-eslint/strict-boolean-expressions": "error",
-      "@typescript-eslint/switch-exhaustiveness-check": "error",
-      "@typescript-eslint/typedef": "error",
       "array-callback-return": "error",
       "arrow-body-style": ["error", "as-needed"],
       "block-scoped-var": "error",
@@ -156,7 +103,6 @@ export default tseslint.config(
           allowNamedFunctions: true,
         },
       ],
-      "prefer-const": "off",
       "prefer-exponentiation-operator": "error",
       "prefer-object-spread": "error",
       "prefer-regex-literals": "error",
@@ -164,6 +110,80 @@ export default tseslint.config(
       radix: "error",
       "require-atomic-updates": "error",
       strict: ["error", "never"],
+    },
+  },
+  {
+    extends: [
+      tseslint.configs.strictTypeChecked,
+      tseslint.configs.stylisticTypeChecked,
+    ],
+    files: ["**/*.svelte", "**/*.ts"],
+    languageOptions: {
+      parserOptions: {
+        extraFileExtensions: [".svelte"],
+        projectService: true,
+      },
+    },
+    rules: {
+      "@typescript-eslint/array-type": ["error", { default: "generic" }],
+      "@typescript-eslint/class-methods-use-this": "error",
+      "@typescript-eslint/consistent-type-exports": "error",
+      "@typescript-eslint/consistent-type-imports": "error",
+      "@typescript-eslint/default-param-last": "error",
+      "@typescript-eslint/explicit-function-return-type": "error",
+      "@typescript-eslint/explicit-member-accessibility": "error",
+      "@typescript-eslint/explicit-module-boundary-types": "error",
+      "@typescript-eslint/init-declarations": "error",
+      "@typescript-eslint/method-signature-style": ["error", "method"],
+      "@typescript-eslint/no-base-to-string": [
+        "error",
+        { ignoredTypeNames: ["FormData", "Payload"] },
+      ],
+      "@typescript-eslint/no-import-type-side-effects": "error",
+      "@typescript-eslint/no-invalid-void-type": [
+        "error",
+        { allowAsThisParameter: true },
+      ],
+      "@typescript-eslint/no-shadow": "error",
+      "@typescript-eslint/no-unnecessary-parameter-property-assignment":
+        "error",
+      "@typescript-eslint/no-unnecessary-qualifier": "error",
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_|^\\$\\$Slots$",
+        },
+      ],
+      "@typescript-eslint/no-use-before-define": [
+        "error",
+        { functions: false },
+      ],
+      "@typescript-eslint/no-useless-empty-export": "error",
+      "@typescript-eslint/parameter-properties": "error",
+      "@typescript-eslint/prefer-enum-initializers": "error",
+      "@typescript-eslint/prefer-readonly": "error",
+      "@typescript-eslint/promise-function-async": "error",
+      "@typescript-eslint/require-array-sort-compare": "error",
+      "@typescript-eslint/strict-boolean-expressions": "error",
+      "@typescript-eslint/switch-exhaustiveness-check": "error",
+      "@typescript-eslint/typedef": "error",
+    },
+  },
+  {
+    extends: [
+      svelte.configs["flat/recommended"],
+      svelte.configs["flat/prettier"],
+    ],
+    files: ["**/*.svelte", "**/*.svelte.ts"],
+    languageOptions: {
+      parser: svelteParser,
+      parserOptions: {
+        parser: tseslint.parser,
+      },
+    },
+    rules: {
+      "prefer-const": "off",
       "svelte/block-lang": [
         "error",
         {
@@ -213,30 +233,11 @@ export default tseslint.config(
     },
   },
   {
-    files: ["**/*.svelte", "**/*.svelte.ts"],
-    languageOptions: {
-      parser: svelteParser,
-      parserOptions: {
-        parser: tseslint.parser,
-      },
-    },
-  },
-  {
     files: ["*.config.js", "*.config.ts"],
     languageOptions: {
       globals: {
         ...globals.node,
       },
-    },
-  },
-  {
-    files: ["**/*.js"],
-    rules: {
-      "@typescript-eslint/explicit-function-return-type": "off",
-      "@typescript-eslint/no-unsafe-argument": "off",
-      "@typescript-eslint/no-unsafe-assignment": "off",
-      "@typescript-eslint/no-unsafe-member-access": "off",
-      "@typescript-eslint/no-unsafe-return": "off",
     },
   },
 );
