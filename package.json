@@ -34,7 +34,7 @@
     "lint:css": "run-p -c --aggregate-output lint:css:*",
     "lint:svelte:svelte-check": "FORCE_COLOR=1 svelte-check",
     "lint:svelte": "run-p -c --aggregate-output lint:svelte:*",
-    "lint:ts:eslint": "eslint --color 'src/**/*.svelte' 'src/**/*.ts' '*.config.{js,ts}'",
+    "lint:eslint": "eslint --color",
     "lint:ts:typecheck": "tsc --noEmit",
     "lint:ts": "run-p -c --aggregate-output lint:ts:*",
     "lint": "run-p -c --aggregate-output lint:*"
