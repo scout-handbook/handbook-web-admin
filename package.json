@@ -13,36 +13,43 @@
   "bugs": {
     "url": "https://github.com/scout-handbook/handbook-web-admin/issues"
   },
-  "license": "MIT",
-  "author": "Marek Dědič",
-  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/scout-handbook/handbook-web-admin.git"
   },
+  "license": "MIT",
+  "author": "Marek Dědič",
+  "type": "module",
+  "scripts": {
+    "prebuild": "npm run clean",
+    "build": "vite build",
+    "clean": "rimraf dist/*",
+    "lint": "run-p -c --aggregate-output lint:*",
+    "lint:css": "run-p -c --aggregate-output lint:css:*",
+    "lint:css:stylelint": "stylelint --color 'src/**/*.css' 'static/**/*.css' '!src/lib/font/fontello.css'",
+    "lint:eslint": "eslint --color",
+    "lint:svelte": "run-p -c --aggregate-output lint:svelte:*",
+    "lint:svelte:svelte-check": "FORCE_COLOR=1 svelte-check",
+    "lint:ts": "run-p -c --aggregate-output lint:ts:*",
+    "lint:ts:typecheck": "tsc --noEmit",
+    "prepare": "svelte-kit sync"
+  },
+  "browserslist": [
+    "defaults",
+    "not OperaMini all"
+  ],
   "dependencies": {
     "easymde": "^2.20.0",
     "showdown": "^2.1.0",
     "xss": "^1.0.15"
   },
-  "scripts": {
-    "clean": "rimraf dist/*",
-    "prepare": "svelte-kit sync",
-    "prebuild": "npm run clean",
-    "build": "vite build",
-    "lint:css:stylelint": "stylelint --color 'src/**/*.css' 'static/**/*.css' '!src/lib/font/fontello.css'",
-    "lint:css": "run-p -c --aggregate-output lint:css:*",
-    "lint:svelte:svelte-check": "FORCE_COLOR=1 svelte-check",
-    "lint:svelte": "run-p -c --aggregate-output lint:svelte:*",
-    "lint:ts:eslint": "eslint --color 'src/**/*.svelte' 'src/**/*.ts' '*.config.{js,ts}'",
-    "lint:ts:typecheck": "tsc --noEmit",
-    "lint:ts": "run-p -c --aggregate-output lint:ts:*",
-    "lint": "run-p -c --aggregate-output lint:*"
-  },
   "devDependencies": {
     "@csstools/postcss-global-data": "^3.0.0",
     "@eslint-community/eslint-plugin-eslint-comments": "^4.5.0",
+    "@eslint/css": "^0.9.0",
     "@eslint/js": "^9.29.0",
+    "@eslint/json": "^0.12.0",
+    "@eslint/markdown": "^6.5.0",
     "@fontsource/open-sans": "^5.2.6",
     "@sveltejs/adapter-static": "^3.0.8",
     "@sveltejs/kit": "^2.21.5",
@@ -56,6 +63,7 @@
     "eslint": "^9.29.0",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-compat": "^6.0.2",
+    "eslint-plugin-package-json": "^0.40.2",
     "eslint-plugin-perfectionist": "^4.15.0",
     "eslint-plugin-prefer-arrow-functions": "^3.6.2",
     "eslint-plugin-prettier": "^5.5.0",
@@ -77,9 +85,5 @@
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.34.1",
     "vite": "^6.3.5"
-  },
-  "browserslist": [
-    "defaults",
-    "not OperaMini all"
-  ]
+  }
 }
