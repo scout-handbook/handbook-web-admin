@@ -67,7 +67,7 @@
     "eslint-plugin-perfectionist": "^4.15.0",
     "eslint-plugin-prefer-arrow-functions": "^3.6.2",
     "eslint-plugin-prettier": "^5.5.0",
-    "eslint-plugin-svelte": "^3.9.2",
+    "eslint-plugin-svelte": "^3.9.3",
     "globals": "^16.2.0",
     "npm-run-all": "^4.1.5",
     "postcss-custom-properties": "^14.0.6",
