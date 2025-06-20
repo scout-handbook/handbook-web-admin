@@ -52,7 +52,7 @@
     "@eslint/markdown": "^6.5.0",
     "@fontsource/open-sans": "^5.2.6",
     "@sveltejs/adapter-static": "^3.0.8",
-    "@sveltejs/kit": "^2.21.5",
+    "@sveltejs/kit": "^2.22.0",
     "@sveltejs/vite-plugin-svelte": "^5.1.0",
     "@tanstack/eslint-plugin-query": "^5.78.0",
     "@tanstack/svelte-query": "^5.80.10",
