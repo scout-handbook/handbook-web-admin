@@ -42,6 +42,8 @@ export default tseslint.config(
       commentsConfig.recommended,
       compat.configs["flat/recommended"],
       query.configs["flat/recommended"],
+      tseslint.configs.strict,
+      tseslint.configs.stylistic,
       perfectionist.configs["recommended-natural"],
     ],
     files: ["**/*.js", "**/*.svelte", "**/*.ts"],
