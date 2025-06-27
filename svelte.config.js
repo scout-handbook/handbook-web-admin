@@ -36,9 +36,6 @@ export default {
         "object-src": ["none"],
         "style-src": ["self", "unsafe-inline"],
         "upgrade-insecure-requests": true,
-        ...(config["csp-report-uri"] !== undefined && {
-          "report-uri": [config["csp-report-uri"]],
-        }),
       },
       mode: "hash",
     },

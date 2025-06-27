@@ -2,6 +2,5 @@
 	"admin-uri": "https://handbook.example/admin",
 	"api-uri": "https://handbook.example/API",
 	"frontend-uri": "https://handbook.example",
-	"site-name": "Skaut handbook",
-	"csp-report-uri": "https://user.report-uri.com/r/d/csp/enforce"
+	"site-name": "Skaut handbook"
 }
