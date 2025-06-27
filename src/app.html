@@ -1,5 +1,16 @@
+<?php
+$config = mb_ereg_replace(
+	"\s+",
+	" ",
+	mb_ereg_replace(
+		"\n",
+		"",
+		htmlspecialchars(file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/client-config.json'))
+	)
+)
+?>
 <!doctype html>
-<html>
+<html data-config="<?= $config ?>">
 	<head>
 		<meta charset="utf-8">
 		<meta name="author" content="Marek Dědič (Mlha)">
