@@ -2,10 +2,10 @@ import type { Options } from "rollup-plugin-htaccess";
 
 const options: Partial<Options> = {
   extractMetaCSP: {
-    defaultPolicyFile: "fallback.html",
+    defaultPolicyFile: "fallback.php",
     enabled: true,
     outputDir: "dist",
-    perFilePolicyFiles: ["**/*.html", "!fallback.html"],
+    perFilePolicyFiles: ["**/*.php", "!fallback.php"],
   },
   spec: {
     AddOutputFilterByType: [
@@ -21,9 +21,9 @@ const options: Partial<Options> = {
       },
     ],
     ErrorDocument: {
-      403: "/admin/403.html",
-      404: "/admin/404.html",
-      500: "/admin/500.html",
+      403: "/admin/403.php",
+      404: "/admin/404.php",
+      500: "/admin/500.php",
     },
     Header: [
       {
@@ -95,12 +95,12 @@ const options: Partial<Options> = {
           pattern: "^lesson/(.*)",
           substitution: "lesson.php?id=$1",
         },
-        // Rewrite non-existent paths to fallback.html
+        // Rewrite non-existent paths to fallback.php
         {
           flags: {
             last: true,
           },
-          pattern: "^fallback\\.html$",
+          pattern: "^fallback\\.php",
           substitution: null,
         },
         {
@@ -126,12 +126,29 @@ const options: Partial<Options> = {
               conditionPattern: "!-f",
               testString: "%{REQUEST_FILENAME}",
             },
+            {
+              conditionPattern: "-f",
+              testString: "%{REQUEST_FILENAME}.php",
+            },
+          ],
+          flags: {
+            last: true,
+          },
+          pattern: "^(.*)$",
+          substitution: "/admin/$1.php",
+        },
+        {
+          conditions: [
+            {
+              conditionPattern: "!-f",
+              testString: "%{REQUEST_FILENAME}",
+            },
           ],
           flags: {
             last: true,
           },
           pattern: ".",
-          substitution: "/admin/fallback.html",
+          substitution: "/admin/fallback.php",
         },
       ],
     },

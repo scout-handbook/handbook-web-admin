@@ -4,6 +4,7 @@ import htaccess from "rollup-plugin-htaccess";
 import { defineConfig, loadEnv } from "vite";
 
 import options from "./rollup-plugin-htaccess.config";
+import { htmlToPhp } from "./rollup-plugin-html-to-php";
 
 function getConfig(mode: string): Record<string, string> {
   if (!(process.env["npm_lifecycle_script"]?.startsWith("vite") ?? false)) {
@@ -24,6 +25,6 @@ export default defineConfig(({ mode }) => {
     define: {
       CONFIG: JSON.stringify(config),
     },
-    plugins: [sveltekit(), htaccess(options)],
+    plugins: [sveltekit(), htmlToPhp("dist"), htaccess(options)],
   };
 });
