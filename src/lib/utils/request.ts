@@ -6,13 +6,14 @@ import type { ExceptionHandler } from "$lib/interfaces/ExceptionHandler";
 import type { Payload } from "$lib/interfaces/Payload";
 import type { RequestResponse } from "$lib/interfaces/RequestResponse";
 
+import { apiUri } from "$lib/config";
 import { globalUI } from "$lib/globalUI.svelte";
 import { reAuthSuspended } from "$lib/reAuthSuspension.svelte";
 import { buildQuery } from "$lib/utils/buildQuery";
 
 export function reAuth(): void {
   if (!reAuthSuspended.value) {
-    window.location.href = `${CONFIG["api-uri"]}/v1.0/login?return-uri=${encodeURIComponent(window.location.href)}`;
+    window.location.href = `${apiUri}/v1.0/login?return-uri=${encodeURIComponent(window.location.href)}`;
   }
 }
 

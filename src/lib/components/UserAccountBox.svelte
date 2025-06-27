@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { Loginstate } from "$lib/interfaces/Loginstate";
 
+  import { adminUri, apiUri, frontendUri } from "$lib/config";
   import { createQuery } from "@tanstack/svelte-query";
 
   const accountQuery = createQuery<Loginstate>({
@@ -9,7 +10,7 @@
   let avatar = $derived(
     $accountQuery.isSuccess
       ? `data:image/png;base64,${$accountQuery.data.avatar}`
-      : `${CONFIG["admin-uri"]}/avatar.png`,
+      : `${adminUri}/avatar.png`,
   );
   let name = $derived($accountQuery.data?.name);
 </script>
@@ -26,11 +27,11 @@
   <div class="links">
     <!-- eslint-disable svelte/no-navigation-without-base -- Absolute URLs -->
     <a
-      href={`${CONFIG["api-uri"]}/v1.0/logout?redirect-uri=${encodeURIComponent(CONFIG["frontend-uri"])}`}
+      href={`${apiUri}/v1.0/logout?redirect-uri=${encodeURIComponent(frontendUri)}`}
     >
       Odhlásit
     </a>
-    <a class="frontend-link" href={CONFIG["frontend-uri"]}>Zpět na web</a>
+    <a class="frontend-link" href={frontendUri}>Zpět na web</a>
     <!-- eslint-enable -->
   </div>
 </div>
