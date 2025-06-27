@@ -1,7 +1,11 @@
-export const adminUri = CONFIG["admin-uri"];
+const config = JSON.parse(
+  document.documentElement.dataset["config"] ?? "{}",
+) as Record<string, string>;
 
-export const apiUri = CONFIG["api-uri"];
+export const adminUri = config["admin-uri"];
 
-export const frontendUri = CONFIG["frontend-uri"];
+export const apiUri = config["api-uri"];
 
-export const siteName = CONFIG["site-name"];
+export const frontendUri = config["frontend-uri"];
+
+export const siteName = config["site-name"];

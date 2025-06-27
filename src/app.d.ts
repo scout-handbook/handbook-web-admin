@@ -1,4 +1,3 @@
-import type { Config } from "$lib/interfaces/Config";
 import type { User } from "$lib/interfaces/User";
 
 export type Action =
@@ -45,7 +44,6 @@ export type Action =
     };
 
 declare global {
-  const CONFIG: Config;
   namespace App {
     export interface PageState {
       action?: Action;
