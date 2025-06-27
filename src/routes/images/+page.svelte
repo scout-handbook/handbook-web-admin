@@ -13,6 +13,7 @@
   import Overlay from "$lib/components/Overlay.svelte";
   import Pagination from "$lib/components/Pagination.svelte";
   import TopBar from "$lib/components/TopBar.svelte";
+  import { apiUri, siteName } from "$lib/config";
   import { createQuery } from "@tanstack/svelte-query";
 
   let openImage: string | null = $state(null);
@@ -58,11 +59,11 @@
     >
       <img
         alt={`Image ${openImage}`}
-        src={`${CONFIG["api-uri"]}/v1.0/image/${openImage}`}
+        src={`${apiUri}/v1.0/image/${openImage}`}
       />
     </button>
   {/if}
-  <h1>{`${CONFIG["site-name"]} - Obrázky`}</h1>
+  <h1>{`${siteName} - Obrázky`}</h1>
   <Button
     green
     icon="plus"

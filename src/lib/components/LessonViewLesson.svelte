@@ -5,6 +5,7 @@
   import { goto, pushState } from "$app/navigation";
   import { base } from "$app/paths";
   import Button from "$lib/components/Button.svelte";
+  import { adminUri } from "$lib/config";
   import {
     competences,
     sortCompetences,
@@ -59,11 +60,7 @@
   <Button
     icon="file-pdf"
     onclick={(): void => {
-      window.open(
-        `${CONFIG["admin-uri"]}/lesson/${id}`,
-        "_blank",
-        "noopener,noreferrer",
-      );
+      window.open(`${adminUri}/lesson/${id}`, "_blank", "noopener,noreferrer");
     }}
   >
     PDF

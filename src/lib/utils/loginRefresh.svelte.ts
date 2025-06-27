@@ -1,3 +1,4 @@
+import { apiUri } from "$lib/config";
 import { reAuth, request } from "$lib/utils/request";
 
 export const afterRefreshCallback: { value: (() => void) | null } = $state({
@@ -10,7 +11,7 @@ export function loginRefreshSetup(): void {
 
 function refreshLogin(): void {
   void request(
-    `${CONFIG["api-uri"]}/v1.0/refresh`,
+    `${apiUri}/v1.0/refresh`,
     "GET",
     {},
     {

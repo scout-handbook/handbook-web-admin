@@ -9,6 +9,7 @@
   import CheckboxGroup from "$lib/components/forms/CheckboxGroup.svelte";
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import SidePanel from "$lib/components/SidePanel.svelte";
+  import { apiUri } from "$lib/config";
   import { groups, sortGroups } from "$lib/resources/groups.svelte";
   import { filter } from "$lib/utils/mapUtils";
   import { queryClient } from "$lib/utils/queryClient";
@@ -37,7 +38,7 @@
     } else {
       donePromise = new ActionQueue([
         new Action(
-          `${CONFIG["api-uri"]}/v1.0/user/${encodeURIComponent(user.id)}/group`,
+          `${apiUri}/v1.0/user/${encodeURIComponent(user.id)}/group`,
           "PUT",
           { group: selectedGroups.map(encodeURIComponent) },
         ),

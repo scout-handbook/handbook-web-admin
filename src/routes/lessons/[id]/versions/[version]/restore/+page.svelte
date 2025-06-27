@@ -13,6 +13,7 @@
   import DoneDialog from "$lib/components/DoneDialog.svelte";
   import LessonEditor from "$lib/components/LessonEditor.svelte";
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
+  import { apiUri } from "$lib/config";
   import { queryClient } from "$lib/utils/queryClient";
   import { authFailHandler, request } from "$lib/utils/request";
 
@@ -32,7 +33,7 @@
   let groups: Array<string> = $state([]);
 
   const bodyPromise = request<string>(
-    `${CONFIG["api-uri"]}/v1.0/deleted-lesson/${data.id}/history/${data.version}`,
+    `${apiUri}/v1.0/deleted-lesson/${data.id}/history/${data.version}`,
     "GET",
     {},
     authFailHandler,
@@ -43,7 +44,7 @@
   function save(): void {
     const saveActionQueue = new ActionQueue([
       new Action(
-        `${CONFIG["api-uri"]}/v1.0/lesson`,
+        `${apiUri}/v1.0/lesson`,
         "POST",
         {
           body: encodeURIComponent(body),

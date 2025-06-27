@@ -5,6 +5,7 @@
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import Overlay from "$lib/components/Overlay.svelte";
   import SidePanel from "$lib/components/SidePanel.svelte";
+  import { apiUri } from "$lib/config";
   import { queryClient } from "$lib/utils/queryClient";
   import { authFailHandler, request } from "$lib/utils/request";
 
@@ -24,7 +25,7 @@
     const formData = new FormData();
     formData.append("image", files[0]);
     void request(
-      `${CONFIG["api-uri"]}/v1.0/image`,
+      `${apiUri}/v1.0/image`,
       "POST",
       formData,
       authFailHandler,

@@ -1,5 +1,6 @@
 <script lang="ts">
   import Button from "$lib/components/Button.svelte";
+  import { apiUri } from "$lib/config";
 
   interface Props {
     name: string;
@@ -14,10 +15,7 @@
   <div>{name}:</div>
   <input type="hidden" {value} />
 </label>
-<img
-  alt={name}
-  src={`${CONFIG["api-uri"]}/v1.0/image/${value}?quality=thumbnail`}
-/>
+<img alt={name} src={`${apiUri}/v1.0/image/${value}?quality=thumbnail`} />
 <br />
 <Button icon="pencil" onclick={onselect}>Změnit</Button>
 

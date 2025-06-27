@@ -8,6 +8,7 @@
   import DoneDialog from "$lib/components/DoneDialog.svelte";
   import RadioGroup from "$lib/components/forms/RadioGroup.svelte";
   import SidePanel from "$lib/components/SidePanel.svelte";
+  import { apiUri } from "$lib/config";
   import { queryClient } from "$lib/utils/queryClient";
   import { createQuery } from "@tanstack/svelte-query";
   import { SvelteMap } from "svelte/reactivity";
@@ -46,7 +47,7 @@
     } else {
       donePromise = new ActionQueue([
         new Action(
-          `${CONFIG["api-uri"]}/v1.0/user/${encodeURIComponent(user.id)}/role`,
+          `${apiUri}/v1.0/user/${encodeURIComponent(user.id)}/role`,
           "PUT",
           { role: selectedRole },
         ),
