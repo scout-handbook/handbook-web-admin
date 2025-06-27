@@ -20,11 +20,6 @@ const options: Partial<Options> = {
         ],
       },
     ],
-    ErrorDocument: {
-      403: "/admin/403.php",
-      404: "/admin/404.php",
-      500: "/admin/500.php",
-    },
     Header: [
       {
         action: "set",
