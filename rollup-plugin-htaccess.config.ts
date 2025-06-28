@@ -20,6 +20,9 @@ const options: Partial<Options> = {
         ],
       },
     ],
+    DirectorySlash: {
+      value: false,
+    },
     Header: [
       {
         action: "set",
