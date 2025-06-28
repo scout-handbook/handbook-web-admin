@@ -116,7 +116,7 @@ const options: Partial<Options> = {
             last: true,
           },
           pattern: "^(.*)$",
-          substitution: "/admin/$1.html",
+          substitution: "$1.html",
         },
         {
           conditions: [
@@ -133,7 +133,7 @@ const options: Partial<Options> = {
             last: true,
           },
           pattern: "^(.*)$",
-          substitution: "/admin/$1.php",
+          substitution: "$1.php",
         },
         {
           conditions: [
@@ -146,7 +146,7 @@ const options: Partial<Options> = {
             last: true,
           },
           pattern: ".",
-          substitution: "/admin/fallback.php",
+          substitution: "fallback.php",
         },
       ],
     },
