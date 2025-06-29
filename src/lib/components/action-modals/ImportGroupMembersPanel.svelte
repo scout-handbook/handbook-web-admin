@@ -12,6 +12,7 @@
   import RadioGroup from "$lib/components/forms/RadioGroup.svelte";
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import SidePanel from "$lib/components/SidePanel.svelte";
+  import { apiUri } from "$lib/config";
   import { queryClient } from "$lib/utils/queryClient";
   import { authFailHandler, reAuth, request } from "$lib/utils/request";
   import { createMutation } from "@tanstack/svelte-query";
@@ -50,7 +51,7 @@
   });
 
   void request<Array<Event>>(
-    `${CONFIG["api-uri"]}/v1.0/event`,
+    `${apiUri}/v1.0/event`,
     "GET",
     {},
     {
@@ -81,7 +82,7 @@
     }
     step = "participant-selection-loading";
     const participantPromise = request<Array<Participant>>(
-      `${CONFIG["api-uri"]}/v1.0/event/${selectedEvent.toString()}/participant`,
+      `${apiUri}/v1.0/event/${selectedEvent.toString()}/participant`,
       "GET",
       {},
       {
@@ -92,7 +93,7 @@
       },
     );
     const userPromise = request<UserListResponse>(
-      `${CONFIG["api-uri"]}/v1.0/user`,
+      `${apiUri}/v1.0/user`,
       "GET",
       { group: groupId, page: 1, "per-page": 1000 },
       {
@@ -119,7 +120,7 @@
     void Promise.all(
       selectedParticipants.map(async (participantId) =>
         request(
-          `${CONFIG["api-uri"]}/v1.0/user`,
+          `${apiUri}/v1.0/user`,
           "POST",
           {
             id: participantId,
@@ -130,7 +131,7 @@
           authFailHandler,
         ).then(async () =>
           request(
-            `${CONFIG["api-uri"]}/v1.0/user/${participantId.toString()}/group`,
+            `${apiUri}/v1.0/user/${participantId.toString()}/group`,
             "PUT",
             { group: groupId },
             authFailHandler,

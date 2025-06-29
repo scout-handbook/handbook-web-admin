@@ -11,6 +11,7 @@
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import MainPageContainer from "$lib/components/MainPageContainer.svelte";
   import TopBar from "$lib/components/TopBar.svelte";
+  import { siteName } from "$lib/config";
   import { groups, sortGroups } from "$lib/resources/groups.svelte";
   import { createQuery } from "@tanstack/svelte-query";
 
@@ -44,7 +45,7 @@
     {/if}
   {/if}
 
-  <h1>{`${CONFIG["site-name"]} - Uživatelské skupiny`}</h1>
+  <h1>{`${siteName} - Uživatelské skupiny`}</h1>
   {#if adminOrSuperuser}
     <Button
       green

@@ -12,6 +12,7 @@
   import TopBar from "$lib/components/TopBar.svelte";
   import UserViewSearchForm from "$lib/components/UserViewSearchForm.svelte";
   import UserViewTable from "$lib/components/UserViewTable.svelte";
+  import { siteName } from "$lib/config";
   import { createQuery } from "@tanstack/svelte-query";
 
   let page = $state(1);
@@ -44,7 +45,7 @@
     <EditUserRolePanel user={kitPage.state.action.user} />
   {/if}
 
-  <h1>{`${CONFIG["site-name"]} - Uživatelé`}</h1>
+  <h1>{`${siteName} - Uživatelé`}</h1>
   <UserViewSearchForm
     onchange={(): void => {
       page = 1;

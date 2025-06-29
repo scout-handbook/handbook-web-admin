@@ -12,6 +12,7 @@
   import Dialog from "$lib/components/Dialog.svelte";
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import Overlay from "$lib/components/Overlay.svelte";
+  import { siteName } from "$lib/config";
   import { globalUI } from "$lib/globalUI.svelte";
   import { checkLogin } from "$lib/utils/checkLogin";
   import { compileMarkdownSetup } from "$lib/utils/compileMarkdown";
@@ -32,7 +33,7 @@
 </script>
 
 <svelte:head>
-  <title>{CONFIG["site-name"]}</title>
+  <title>{siteName}</title>
   <link
     href="{base}/apple-touch-icon.png"
     rel="apple-touch-icon"

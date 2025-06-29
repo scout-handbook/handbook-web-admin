@@ -9,6 +9,7 @@
   import DoneDialog from "$lib/components/DoneDialog.svelte";
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import Overlay from "$lib/components/Overlay.svelte";
+  import { apiUri } from "$lib/config";
   import { queryClient } from "$lib/utils/queryClient";
   import { reAuth, request } from "$lib/utils/request";
   import { createMutation } from "@tanstack/svelte-query";
@@ -23,7 +24,7 @@
   let lockedError: string | null = $state(null);
   let expiredError = $state(false);
   const mutexPromise = request(
-    `${CONFIG["api-uri"]}/v1.0/mutex/${encodeURIComponent(lessonId)}`,
+    `${apiUri}/v1.0/mutex/${encodeURIComponent(lessonId)}`,
     "POST",
     {},
     {
@@ -80,7 +81,7 @@
   function confirmCallback(): void {
     donePromise = new ActionQueue([
       new Action(
-        `${CONFIG["api-uri"]}/v1.0/lesson/${encodeURIComponent(lessonId)}`,
+        `${apiUri}/v1.0/lesson/${encodeURIComponent(lessonId)}`,
         "DELETE",
         undefined,
         [],
@@ -100,7 +101,7 @@
   function dismissCallback(): void {
     void new ActionQueue([
       new Action(
-        `${CONFIG["api-uri"]}/v1.0/mutex/${encodeURIComponent(lessonId)}`,
+        `${apiUri}/v1.0/mutex/${encodeURIComponent(lessonId)}`,
         "DELETE",
         undefined,
         [],

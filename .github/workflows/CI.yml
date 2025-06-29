@@ -32,7 +32,7 @@ jobs:
 
       - name: "Build"
         run: |
-          VITE_CONFIG="client-config.json.sample" npm run build
+          npm run build
 
   lint:
     name: "Lint"

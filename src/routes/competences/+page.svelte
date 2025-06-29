@@ -10,6 +10,7 @@
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import MainPageContainer from "$lib/components/MainPageContainer.svelte";
   import TopBar from "$lib/components/TopBar.svelte";
+  import { siteName } from "$lib/config";
   import {
     competences,
     sortCompetences,
@@ -51,7 +52,7 @@
     {/if}
   {/if}
 
-  <h1>{`${CONFIG["site-name"]} - Body`}</h1>
+  <h1>{`${siteName} - Body`}</h1>
   {#if adminOrSuperuser}
     <Button
       green

@@ -2,6 +2,7 @@ import type { Payload } from "$lib/interfaces/Payload";
 import type { RequestResponse } from "$lib/interfaces/RequestResponse";
 
 import { browser } from "$app/environment";
+import { apiUri, frontendUri } from "$lib/config";
 import { buildQuery } from "$lib/utils/buildQuery";
 import { reAuth, request } from "$lib/utils/request";
 import { QueryClient } from "@tanstack/svelte-query";
@@ -21,14 +22,14 @@ async function queryFn({
     uri += `?${query}`;
   }
   return request(
-    `${CONFIG["api-uri"]}/${uri}`,
+    `${apiUri}/${uri}`,
     "GET",
     {},
     {
       401: reAuth,
       AuthenticationException: reAuth,
       RoleException: (): void => {
-        window.location.replace(CONFIG["frontend-uri"]);
+        window.location.replace(frontendUri);
       },
     },
   );
