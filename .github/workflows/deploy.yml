@@ -63,4 +63,3 @@ jobs:
           protocol: ftps
           local-dir: ./dist/
           server-dir: ${{ secrets.FTP_DIR }}
-          dry-run: true
