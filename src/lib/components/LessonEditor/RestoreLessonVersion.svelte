@@ -6,6 +6,7 @@
   import RadioGroup from "$lib/components/forms/RadioGroup.svelte";
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import Overlay from "$lib/components/Overlay.svelte";
+  import { apiUri } from "$lib/config";
   import { lessons } from "$lib/resources/lessons.svelte";
   import { compileMarkdown } from "$lib/utils/compileMarkdown";
   import { parseVersion } from "$lib/utils/parseVersion";
@@ -34,7 +35,7 @@
   );
 
   void request<Array<LessonVersion>>(
-    `${CONFIG["api-uri"]}/v1.0/lesson/${lessonId}/history`,
+    `${apiUri}/v1.0/lesson/${lessonId}/history`,
     "GET",
     {},
     {},
@@ -48,7 +49,7 @@
           resolve(body);
         })
       : request<string>(
-          `${CONFIG["api-uri"]}/v1.0/lesson/${lessonId}/history/${selectedVersion.toString()}`,
+          `${apiUri}/v1.0/lesson/${lessonId}/history/${selectedVersion.toString()}`,
           "GET",
           {},
           authFailHandler,

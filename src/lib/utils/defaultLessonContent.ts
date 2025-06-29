@@ -1,3 +1,5 @@
+import { apiUri } from "$lib/config";
+
 export const defaultName = "Nová lekce";
 
 export const defaultBody = `# Velký nadpis\n\
@@ -31,7 +33,7 @@ začít nový odstavec, musím vynechat jeden řádek. Můžu udělat kus textu 
 \n\
 Můžu do textu vložit [odkaz](http://tiny.cc/PAIN), při tisku se adresa dá do závorky za textem. Fungují i obrázky:\n\
 \n\
-![Text po najetí kurzorem](${CONFIG["api-uri"]}/v1.0/image/00000000-0000-0000-0000-000000000000)\n\
+![Text po najetí kurzorem](${apiUri}/v1.0/image/00000000-0000-0000-0000-000000000000)\n\
 \n\
 No a taky můžu dělat tabulky:\n\
 \n\

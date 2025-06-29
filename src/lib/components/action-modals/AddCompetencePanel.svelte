@@ -7,6 +7,7 @@
   import NameInput from "$lib/components/forms/NameInput.svelte";
   import NumberNameInput from "$lib/components/forms/NumberNameInput.svelte";
   import SidePanel from "$lib/components/SidePanel.svelte";
+  import { apiUri } from "$lib/config";
   import { queryClient } from "$lib/utils/queryClient";
 
   let number = $state("0");
@@ -16,7 +17,7 @@
 
   function saveCallback(): void {
     donePromise = new ActionQueue([
-      new Action(`${CONFIG["api-uri"]}/v1.0/competence`, "POST", {
+      new Action(`${apiUri}/v1.0/competence`, "POST", {
         description: encodeURIComponent(description),
         name: encodeURIComponent(name),
         number: encodeURIComponent(number),

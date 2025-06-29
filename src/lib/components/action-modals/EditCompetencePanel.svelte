@@ -9,6 +9,7 @@
   import NameInput from "$lib/components/forms/NameInput.svelte";
   import NumberNameInput from "$lib/components/forms/NumberNameInput.svelte";
   import SidePanel from "$lib/components/SidePanel.svelte";
+  import { apiUri } from "$lib/config";
   import { queryClient } from "$lib/utils/queryClient";
   import { createMutation } from "@tanstack/svelte-query";
 
@@ -53,7 +54,7 @@
     } else {
       donePromise = new ActionQueue([
         new Action(
-          `${CONFIG["api-uri"]}/v1.0/competence/${encodeURIComponent(competenceId)}`,
+          `${apiUri}/v1.0/competence/${encodeURIComponent(competenceId)}`,
           "PUT",
           { description, name, number },
         ),

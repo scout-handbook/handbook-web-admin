@@ -7,6 +7,7 @@ import {
   deserializeAction,
   serializeAction,
 } from "$lib/actions/Action";
+import { adminUri, apiUri } from "$lib/config";
 import { globalUI } from "$lib/globalUI.svelte";
 import { queryClient } from "$lib/utils/queryClient";
 import { request } from "$lib/utils/request";
@@ -57,7 +58,7 @@ export class ActionQueue {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions -- window.localStorage is not present in older browsers
     if (!this.isRetryAfterLogin && window.localStorage) {
       window.location.replace(
-        `${CONFIG["api-uri"]}/v1.0/login?return-uri=${window.location.pathname}`,
+        `${apiUri}/v1.0/login?return-uri=${window.location.pathname}`,
       );
     } else {
       globalUI.dialogMessage =
@@ -86,7 +87,7 @@ export function setupActionQueue(): void {
     .dispatch()
     .then(() => {
       void queryClient.invalidateQueries();
-      void goto(`${base}/${CONFIG["admin-uri"].split("/").slice(3).join("/")}`);
+      void goto(`${base}/${adminUri.split("/").slice(3).join("/")}`);
       globalUI.loadingIndicator = false;
       globalUI.dialogMessage = "Akce byla úspěšná";
     })
