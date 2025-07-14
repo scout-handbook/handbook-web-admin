@@ -60,7 +60,7 @@
     "@types/node": "^24.0.13",
     "@types/showdown": "^2.0.6",
     "autoprefixer": "^10.4.21",
-    "eslint": "^9.30.1",
+    "eslint": "^9.31.0",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-compat": "^6.0.2",
     "eslint-plugin-package-json": "^0.44.1",
