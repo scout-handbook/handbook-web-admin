@@ -17,7 +17,12 @@ import svelteParser from "svelte-eslint-parser";
 import tseslint from "typescript-eslint";
 
 export default tseslint.config(
-  globalIgnores([".svelte-kit/", "dist/", "package-lock.json"]),
+  globalIgnores([
+    ".svelte-kit/",
+    "dist/",
+    "package-lock.json",
+    "src/lib/font/fontello.css",
+  ]),
   packageJson.configs.recommended,
   {
     extends: [css.configs.recommended],
