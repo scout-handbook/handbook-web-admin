@@ -70,7 +70,7 @@
   {:else}
     {#each sortCompetences(competences.current) as [id, competence] (id)}
       <h3>
-        {`${competence.number.toString()}: ${competence.name}`}
+        {`${competence.number}: ${competence.name}`}
       </h3>
       {#if adminOrSuperuser}
         <div class="buttons">
