@@ -54,7 +54,7 @@
     "@sveltejs/adapter-static": "^3.0.9",
     "@sveltejs/kit": "^2.25.1",
     "@sveltejs/vite-plugin-svelte": "^6.2.0",
-    "@tanstack/eslint-plugin-query": "^5.89.0",
+    "@tanstack/eslint-plugin-query": "^5.90.1",
     "@tanstack/svelte-query": "^5.89.0",
     "@types/codemirror": "5.60.16",
     "@types/node": "^24.5.2",
