@@ -24,7 +24,7 @@
   let donePromise: Promise<void> | null = $state(null);
 
   const mutation = createMutation(() => ({
-    onMutate: async () => {
+    onMutate: async (): Promise<void> => {
       await queryClient.cancelQueries({ queryKey: ["v1.0", "competence"] });
       const cachedCompetences = queryClient.getQueryData<
         Record<string, Competence>

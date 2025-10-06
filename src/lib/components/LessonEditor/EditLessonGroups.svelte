@@ -40,10 +40,7 @@
   {#if allGroups === undefined}
     <LoadingIndicator inline />
   {:else}
-    <CheckboxGroup
-      options={sortGroups(allGroups)}
-      bind:selected={groups}
-    >
+    <CheckboxGroup options={sortGroups(allGroups)} bind:selected={groups}>
       <!-- eslint-disable-next-line @typescript-eslint/no-shadow -- Not applicable to snippets -->
       {#snippet children(id: string, group: Group)}
         <span class:public={id === "00000000-0000-0000-0000-000000000000"}

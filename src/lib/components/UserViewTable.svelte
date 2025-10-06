@@ -66,11 +66,7 @@
         </td>
         <td>
           {#if groups !== undefined}
-            {[
-              ...sortGroups(
-                filter(groups, (id) => user.groups.includes(id)),
-              ),
-            ]
+            {[...sortGroups(filter(groups, (id) => user.groups.includes(id)))]
               .map(([_, group]) => group.name)
               .join(", ")}
           {/if}

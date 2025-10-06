@@ -16,7 +16,7 @@
   let donePromise: Promise<void> | null = $state(null);
 
   const mutation = createMutation(() => ({
-    onMutate: async () => {
+    onMutate: async (): Promise<void> => {
       await queryClient.cancelQueries({ queryKey: ["v1.0", "image"] });
       const cachedImages = queryClient.getQueryData<Array<string>>([
         "v1.0",

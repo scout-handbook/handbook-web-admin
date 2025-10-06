@@ -16,9 +16,5 @@
 {#if fields === undefined || lessons === undefined}
   <LoadingIndicator />
 {:else}
-  <EditLessonPage
-    fields={fields}
-    lessonID={data.id}
-    lessons={lessons}
-  />
+  <EditLessonPage {fields} lessonID={data.id} {lessons} />
 {/if}

@@ -31,9 +31,7 @@
   {#if page.state.action?.name === "add-competence"}
     <AddCompetencePanel />
   {:else if page.state.action?.name === "change-competence"}
-    {@const competence = competences?.get(
-      page.state.action.competenceId,
-    )}
+    {@const competence = competences?.get(page.state.action.competenceId)}
     {#if competence !== undefined}
       <EditCompetencePanel
         {competence}
@@ -41,9 +39,7 @@
       />
     {/if}
   {:else if page.state.action?.name === "delete-competence"}
-    {@const competence = competences?.get(
-      page.state.action.competenceId,
-    )}
+    {@const competence = competences?.get(page.state.action.competenceId)}
     {#if competence !== undefined}
       <DeleteCompetenceDialog
         {competence}
