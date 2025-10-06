@@ -23,9 +23,9 @@
     searchName = $bindable(),
   }: Props = $props();
 
-  const accountQuery = createQuery<Loginstate>({
+  const accountQuery = createQuery<Loginstate>(() => ({
     queryKey: ["v1.0", "account"],
-  });
+  }));
   let isSuperuser = $derived($accountQuery.data?.role === "superuser");
   let adminOrSuperuser = $derived(
     $accountQuery.data?.role === "administrator" ||

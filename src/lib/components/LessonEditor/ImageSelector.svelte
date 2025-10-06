@@ -19,9 +19,9 @@
   let pageStart = $derived(perPage * (page - 1));
   let pageEnd = $derived(pageStart + perPage);
 
-  const imageQuery = createQuery<Array<string>>({
+  const imageQuery = createQuery<Array<string>>(() => ({
     queryKey: ["v1.0", "image"],
-  });
+  }));
   let totalImageCount = $derived($imageQuery.data?.length);
   let currentPageList = $derived($imageQuery.data?.slice(pageStart, pageEnd));
 </script>

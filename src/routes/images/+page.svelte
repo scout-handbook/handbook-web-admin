@@ -22,17 +22,17 @@
   let pageStart = $derived(perPage * (page - 1));
   let pageEnd = $derived(pageStart + perPage);
 
-  const accountQuery = createQuery<Loginstate>({
+  const accountQuery = createQuery<Loginstate>(() => ({
     queryKey: ["v1.0", "account"],
-  });
+  }));
   let adminOrSuperuser = $derived(
     $accountQuery.data?.role === "administrator" ||
       $accountQuery.data?.role === "superuser",
   );
 
-  const imageQuery = createQuery<Array<string>>({
+  const imageQuery = createQuery<Array<string>>(() => ({
     queryKey: ["v1.0", "image"],
-  });
+  }));
   let totalImageCount = $derived($imageQuery.data?.length);
   let currentPageList = $derived($imageQuery.data?.slice(pageStart, pageEnd));
 </script>
