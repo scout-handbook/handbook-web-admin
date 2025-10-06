@@ -4,10 +4,7 @@
   import Button from "$lib/components/Button.svelte";
   import CheckboxGroup from "$lib/components/forms/CheckboxGroup.svelte";
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
-  import {
-    competences as allCompetences,
-    sortCompetences,
-  } from "$lib/resources/competences.svelte";
+  import { competences as allCompetences } from "$lib/resources/competences.svelte";
 
   interface Props {
     competences: Array<string>;
@@ -40,10 +37,7 @@
   {#if allCompetences.current === undefined}
     <LoadingIndicator />
   {:else}
-    <CheckboxGroup
-      options={sortCompetences(allCompetences.current)}
-      bind:selected={competences}
-    >
+    <CheckboxGroup options={allCompetences.current} bind:selected={competences}>
       <!-- eslint-disable-next-line @typescript-eslint/no-shadow -- Not applicable to snippets -->
       {#snippet children(_, competence: Competence)}
         <span>

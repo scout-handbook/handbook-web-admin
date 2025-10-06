@@ -16,8 +16,8 @@
   import TopBar from "$lib/components/TopBar.svelte";
   import { siteName } from "$lib/config";
   import { competences } from "$lib/resources/competences.svelte";
-  import { fields, sortFields } from "$lib/resources/fields.svelte";
-  import { lessons, sortLessons } from "$lib/resources/lessons.svelte";
+  import { fields } from "$lib/resources/fields.svelte";
+  import { lessons } from "$lib/resources/lessons.svelte";
   import { filter } from "$lib/utils/mapUtils";
   import { createQuery } from "@tanstack/svelte-query";
 
@@ -88,10 +88,10 @@
   {#if fieldsValue === undefined || lessons.current === undefined || competences.current === undefined}
     <LoadingIndicator />
   {:else}
-    {#each sortLessons( filter(lessons.current, (lessonId) => filter( fieldsValue, (_, field) => field.lessons.includes(lessonId), ).size === 0), competences.current, ) as [lessonId, lesson] (lessonId)}
+    {#each filter(lessons.current, (lessonId) => filter( fieldsValue, (_, field) => field.lessons.includes(lessonId), ).size === 0) as [lessonId, lesson] (lessonId)}
       <LessonViewLesson id={lessonId} {lesson} />
     {/each}
-    {#each sortFields(fieldsValue, lessons.current, competences.current) as [fieldId, field] (fieldId)}
+    {#each fieldsValue as [fieldId, field] (fieldId)}
       <div>
         <h2>{field.name}</h2>
         {#if adminOrSuperuser}
@@ -133,7 +133,7 @@
         >
           Přidat lekci
         </Button>
-        {#each sortLessons( filter( lessons.current, (lessonId) => field.lessons.includes(lessonId), ), competences.current, ) as [lessonId, lesson] (lessonId)}
+        {#each filter( lessons.current, (lessonId) => field.lessons.includes(lessonId), ) as [lessonId, lesson] (lessonId)}
           <LessonViewLesson id={lessonId} {lesson} secondLevel={true} />
         {/each}
       </div>

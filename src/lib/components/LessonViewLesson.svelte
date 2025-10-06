@@ -6,10 +6,7 @@
   import { resolve } from "$app/paths";
   import Button from "$lib/components/Button.svelte";
   import { adminUri } from "$lib/config";
-  import {
-    competences,
-    sortCompetences,
-  } from "$lib/resources/competences.svelte";
+  import { competences } from "$lib/resources/competences.svelte";
   import { filter } from "$lib/utils/mapUtils";
   import { createQuery } from "@tanstack/svelte-query";
 
@@ -69,10 +66,8 @@
   Body:
   {#if competences.current !== undefined}
     {[
-      ...sortCompetences(
-        filter(competences.current, (competenceId) =>
-          lesson.competences.includes(competenceId),
-        ),
+      ...filter(competences.current, (competenceId) =>
+        lesson.competences.includes(competenceId),
       ),
     ]
       .map(([_, competence]) => competence.number)
