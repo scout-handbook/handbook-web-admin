@@ -21,9 +21,9 @@
 
   let { id, lesson, secondLevel = false }: Props = $props();
 
-  const accountQuery = createQuery<Loginstate>({
+  const accountQuery = createQuery<Loginstate>(() => ({
     queryKey: ["v1.0", "account"],
-  });
+  }));
   let adminOrSuperuser = $derived(
     $accountQuery.data?.role === "administrator" ||
       $accountQuery.data?.role === "superuser",

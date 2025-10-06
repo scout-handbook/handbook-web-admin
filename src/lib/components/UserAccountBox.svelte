@@ -4,9 +4,9 @@
   import { adminUri, apiUri, frontendUri } from "$lib/config";
   import { createQuery } from "@tanstack/svelte-query";
 
-  const accountQuery = createQuery<Loginstate>({
+  const accountQuery = createQuery<Loginstate>(() => ({
     queryKey: ["v1.0", "account"],
-  });
+  }));
   let avatar = $derived(
     $accountQuery.isSuccess
       ? `data:image/png;base64,${$accountQuery.data.avatar}`
