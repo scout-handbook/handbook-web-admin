@@ -12,7 +12,7 @@
   import MainPageContainer from "$lib/components/MainPageContainer.svelte";
   import TopBar from "$lib/components/TopBar.svelte";
   import { siteName } from "$lib/config";
-  import { groups, sortGroups } from "$lib/resources/groups.svelte";
+  import { groups } from "$lib/resources/groups.svelte";
   import { createQuery } from "@tanstack/svelte-query";
 
   const accountQuery = createQuery<Loginstate>(() => ({
@@ -60,7 +60,7 @@
   {#if groups.current === undefined}
     <LoadingIndicator />
   {:else}
-    {#each sortGroups(groups.current) as [id, group] (id)}
+    {#each groups.current as [id, group] (id)}
       <br />
       <h3 class:public={id === "00000000-0000-0000-0000-000000000000"}>
         {group.name}

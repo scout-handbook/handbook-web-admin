@@ -11,10 +11,7 @@
   import MainPageContainer from "$lib/components/MainPageContainer.svelte";
   import TopBar from "$lib/components/TopBar.svelte";
   import { siteName } from "$lib/config";
-  import {
-    competences,
-    sortCompetences,
-  } from "$lib/resources/competences.svelte";
+  import { competences } from "$lib/resources/competences.svelte";
   import { createQuery } from "@tanstack/svelte-query";
 
   const accountQuery = createQuery<Loginstate>(() => ({
@@ -68,7 +65,7 @@
   {#if competences.current === undefined}
     <LoadingIndicator />
   {:else}
-    {#each sortCompetences(competences.current) as [id, competence] (id)}
+    {#each competences.current as [id, competence] (id)}
       <h3>
         {`${competence.number}: ${competence.name}`}
       </h3>

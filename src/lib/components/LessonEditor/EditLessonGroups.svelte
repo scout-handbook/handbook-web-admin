@@ -4,10 +4,7 @@
   import Button from "$lib/components/Button.svelte";
   import CheckboxGroup from "$lib/components/forms/CheckboxGroup.svelte";
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
-  import {
-    groups as allGroups,
-    sortGroups,
-  } from "$lib/resources/groups.svelte";
+  import { groups as allGroups } from "$lib/resources/groups.svelte";
 
   interface Props {
     groups: Array<string>;
@@ -40,10 +37,7 @@
   {#if allGroups.current === undefined}
     <LoadingIndicator inline />
   {:else}
-    <CheckboxGroup
-      options={sortGroups(allGroups.current)}
-      bind:selected={groups}
-    >
+    <CheckboxGroup options={allGroups.current} bind:selected={groups}>
       <!-- eslint-disable-next-line @typescript-eslint/no-shadow -- Not applicable to snippets -->
       {#snippet children(id: string, group: Group)}
         <span class:public={id === "00000000-0000-0000-0000-000000000000"}

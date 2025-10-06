@@ -10,7 +10,7 @@
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import SidePanel from "$lib/components/SidePanel.svelte";
   import { apiUri } from "$lib/config";
-  import { groups, sortGroups } from "$lib/resources/groups.svelte";
+  import { groups } from "$lib/resources/groups.svelte";
   import { filter } from "$lib/utils/mapUtils";
   import { queryClient } from "$lib/utils/queryClient";
 
@@ -75,11 +75,9 @@
     {:else}
       <form>
         <CheckboxGroup
-          options={sortGroups(
-            filter(
-              groups.current,
-              (id) => id !== "00000000-0000-0000-0000-000000000000",
-            ),
+          options={filter(
+            groups.current,
+            (id) => id !== "00000000-0000-0000-0000-000000000000",
           )}
           bind:selected={selectedGroups}
         >
