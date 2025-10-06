@@ -26,10 +26,10 @@
   const accountQuery = createQuery<Loginstate>(() => ({
     queryKey: ["v1.0", "account"],
   }));
-  let isSuperuser = $derived($accountQuery.data?.role === "superuser");
+  let isSuperuser = $derived(accountQuery.data?.role === "superuser");
   let adminOrSuperuser = $derived(
-    $accountQuery.data?.role === "administrator" ||
-      $accountQuery.data?.role === "superuser",
+    accountQuery.data?.role === "administrator" ||
+      accountQuery.data?.role === "superuser",
   );
   let roleList = $derived(
     new SvelteMap([
