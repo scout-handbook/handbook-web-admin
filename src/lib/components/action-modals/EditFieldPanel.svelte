@@ -68,7 +68,7 @@
       ])
         .dispatch()
         .then(() => {
-          $mutation.mutate();
+          mutation.mutate();
         });
     }
   }

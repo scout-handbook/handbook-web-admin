@@ -22,7 +22,7 @@
   const accountQuery = createQuery<Loginstate>(() => ({
     queryKey: ["v1.0", "account"],
   }));
-  let isSuperuser = $derived($accountQuery.data?.role === "superuser");
+  let isSuperuser = $derived(accountQuery.data?.role === "superuser");
 
   let selectedRole = $state(user.role);
   let donePromise: Promise<void> | null = $state(null);

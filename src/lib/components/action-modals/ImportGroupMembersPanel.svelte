@@ -139,7 +139,7 @@
         ),
       ),
     ).then(() => {
-      $mutation.mutate();
+      mutation.mutate();
       step = "done";
     });
   }

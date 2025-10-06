@@ -25,8 +25,8 @@
     queryKey: ["v1.0", "account"],
   }));
   let adminOrSuperuser = $derived(
-    $accountQuery.data?.role === "administrator" ||
-      $accountQuery.data?.role === "superuser",
+    accountQuery.data?.role === "administrator" ||
+      accountQuery.data?.role === "superuser",
   );
 </script>
 

@@ -22,8 +22,8 @@
   const imageQuery = createQuery<Array<string>>(() => ({
     queryKey: ["v1.0", "image"],
   }));
-  let totalImageCount = $derived($imageQuery.data?.length);
-  let currentPageList = $derived($imageQuery.data?.slice(pageStart, pageEnd));
+  let totalImageCount = $derived(imageQuery.data?.length);
+  let currentPageList = $derived(imageQuery.data?.slice(pageStart, pageEnd));
 </script>
 
 <div class="selector" class:selector-open={imageSelectorOpen}>

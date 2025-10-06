@@ -214,7 +214,7 @@
     populateField(saveActionQueue, lessonID, field, initialField);
     populateGroups(saveActionQueue, lessonID, groups, initialGroups);
     donePromise = saveActionQueue.dispatch().then(() => {
-      $mutation.mutate();
+      mutation.mutate();
     });
   }
 
