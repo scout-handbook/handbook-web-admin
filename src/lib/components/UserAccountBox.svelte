@@ -8,11 +8,11 @@
     queryKey: ["v1.0", "account"],
   }));
   let avatar = $derived(
-    $accountQuery.isSuccess
-      ? `data:image/png;base64,${$accountQuery.data.avatar}`
+    accountQuery.isSuccess
+      ? `data:image/png;base64,${accountQuery.data.avatar}`
       : `${adminUri}/avatar.png`,
   );
-  let name = $derived($accountQuery.data?.name);
+  let name = $derived(accountQuery.data?.name);
 </script>
 
 <div class="container">
