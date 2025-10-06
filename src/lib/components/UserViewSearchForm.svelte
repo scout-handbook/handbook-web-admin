@@ -46,13 +46,13 @@
   );
 
   const groupList = $derived(
-    groups.current !== undefined
+    groups !== undefined
       ? new SvelteMap([
           ["00000000-0000-0000-0000-000000000000", "Všechny skupiny"],
           ...map(
             sortGroups(
               filter(
-                groups.current,
+                groups,
                 (groupId) => groupId !== "00000000-0000-0000-0000-000000000000",
               ),
             ),

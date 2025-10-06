@@ -67,10 +67,10 @@
   </Button>
   <br />
   Body:
-  {#if competences.current !== undefined}
+  {#if competences !== undefined}
     {[
       ...sortCompetences(
-        filter(competences.current, (competenceId) =>
+        filter(competences, (competenceId) =>
           lesson.competences.includes(competenceId),
         ),
       ),

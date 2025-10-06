@@ -31,7 +31,7 @@
   {#if page.state.action?.name === "add-competence"}
     <AddCompetencePanel />
   {:else if page.state.action?.name === "change-competence"}
-    {@const competence = competences.current?.get(
+    {@const competence = competences?.get(
       page.state.action.competenceId,
     )}
     {#if competence !== undefined}
@@ -41,7 +41,7 @@
       />
     {/if}
   {:else if page.state.action?.name === "delete-competence"}
-    {@const competence = competences.current?.get(
+    {@const competence = competences?.get(
       page.state.action.competenceId,
     )}
     {#if competence !== undefined}
@@ -65,10 +65,10 @@
     </Button>
     <br />
   {/if}
-  {#if competences.current === undefined}
+  {#if competences === undefined}
     <LoadingIndicator />
   {:else}
-    {#each sortCompetences(competences.current) as [id, competence] (id)}
+    {#each sortCompetences(competences) as [id, competence] (id)}
       <h3>
         {`${competence.number}: ${competence.name}`}
       </h3>

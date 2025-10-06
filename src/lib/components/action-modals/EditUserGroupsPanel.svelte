@@ -24,7 +24,7 @@
   let donePromise: Promise<void> | null = $state(null);
 
   let publicName = $derived(
-    groups.current?.get("00000000-0000-0000-0000-000000000000")?.name ?? "",
+    groups?.get("00000000-0000-0000-0000-000000000000")?.name ?? "",
   );
 
   function saveCallback(): void {
@@ -70,14 +70,14 @@
     </Button>
     <Button green icon="floppy" onclick={saveCallback}>Uložit</Button>
     <h1>Změnit skupiny: {user.name}</h1>
-    {#if groups.current === undefined}
+    {#if groups === undefined}
       <LoadingIndicator inline />
     {:else}
       <form>
         <CheckboxGroup
           options={sortGroups(
             filter(
-              groups.current,
+              groups,
               (id) => id !== "00000000-0000-0000-0000-000000000000",
             ),
           )}

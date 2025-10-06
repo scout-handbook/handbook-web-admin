@@ -3,22 +3,18 @@ import type { Competence } from "$lib/interfaces/Competence";
 import { queryClient } from "$lib/utils/queryClient";
 import { createQuery } from "@tanstack/svelte-query";
 import { SvelteMap } from "svelte/reactivity";
-import { derived, fromStore } from "svelte/store";
 
-export const competences = fromStore(
-  derived(
-    createQuery<Record<string, Competence>>(
-      {
-        queryKey: ["v1.0", "competence"],
-      },
-      queryClient,
-    ),
-    ({ data, isSuccess }) =>
-      isSuccess
-        ? new SvelteMap<string, Competence>(Object.entries(data))
-        : undefined,
-    undefined,
-  ),
+const competenceQuery = createQuery<Record<string, Competence>>(
+  () => ({
+    queryKey: ["v1.0", "competence"],
+  }),
+  () => queryClient,
+);
+
+export const competences = $derived(
+  competenceQuery.isSuccess
+    ? new SvelteMap<string, Competence>(Object.entries(competenceQuery.data))
+    : undefined,
 );
 
 export function competenceComparator(

@@ -29,17 +29,17 @@
   {#if page.state.action?.name === "add-group"}
     <AddGroupPanel />
   {:else if page.state.action?.name === "change-group"}
-    {@const group = groups.current?.get(page.state.action.groupId)}
+    {@const group = groups?.get(page.state.action.groupId)}
     {#if group !== undefined}
       <EditGroupPanel {group} groupId={page.state.action.groupId} />
     {/if}
   {:else if page.state.action?.name === "delete-group"}
-    {@const group = groups.current?.get(page.state.action.groupId)}
+    {@const group = groups?.get(page.state.action.groupId)}
     {#if group !== undefined}
       <DeleteGroupDialog {group} groupId={page.state.action.groupId} />
     {/if}
   {:else if page.state.action?.name === "import-group-members"}
-    {@const group = groups.current?.get(page.state.action.groupId)}
+    {@const group = groups?.get(page.state.action.groupId)}
     {#if group !== undefined}
       <ImportGroupMembersPanel {group} groupId={page.state.action.groupId} />
     {/if}
@@ -57,10 +57,10 @@
       Přidat
     </Button>
   {/if}
-  {#if groups.current === undefined}
+  {#if groups === undefined}
     <LoadingIndicator />
   {:else}
-    {#each sortGroups(groups.current) as [id, group] (id)}
+    {#each sortGroups(groups) as [id, group] (id)}
       <br />
       <h3 class:public={id === "00000000-0000-0000-0000-000000000000"}>
         {group.name}

@@ -37,11 +37,11 @@
 >
 <h1>Změnit body</h1>
 <form>
-  {#if allCompetences.current === undefined}
+  {#if allCompetences === undefined}
     <LoadingIndicator />
   {:else}
     <CheckboxGroup
-      options={sortCompetences(allCompetences.current)}
+      options={sortCompetences(allCompetences)}
       bind:selected={competences}
     >
       <!-- eslint-disable-next-line @typescript-eslint/no-shadow -- Not applicable to snippets -->

@@ -65,10 +65,10 @@
           {/if}
         </td>
         <td>
-          {#if groups.current !== undefined}
+          {#if groups !== undefined}
             {[
               ...sortGroups(
-                filter(groups.current, (id) => user.groups.includes(id)),
+                filter(groups, (id) => user.groups.includes(id)),
               ),
             ]
               .map(([_, group]) => group.name)
