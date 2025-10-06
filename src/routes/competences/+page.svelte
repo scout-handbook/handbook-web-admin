@@ -17,12 +17,12 @@
   } from "$lib/resources/competences.svelte";
   import { createQuery } from "@tanstack/svelte-query";
 
-  const accountQuery = createQuery<Loginstate>({
+  const accountQuery = createQuery<Loginstate>(() => ({
     queryKey: ["v1.0", "account"],
-  });
+  }));
   let adminOrSuperuser = $derived(
-    $accountQuery.data?.role === "administrator" ||
-      $accountQuery.data?.role === "superuser",
+    accountQuery.data?.role === "administrator" ||
+      accountQuery.data?.role === "superuser",
   );
 </script>
 
@@ -31,9 +31,7 @@
   {#if page.state.action?.name === "add-competence"}
     <AddCompetencePanel />
   {:else if page.state.action?.name === "change-competence"}
-    {@const competence = competences.current?.get(
-      page.state.action.competenceId,
-    )}
+    {@const competence = competences?.get(page.state.action.competenceId)}
     {#if competence !== undefined}
       <EditCompetencePanel
         {competence}
@@ -41,9 +39,7 @@
       />
     {/if}
   {:else if page.state.action?.name === "delete-competence"}
-    {@const competence = competences.current?.get(
-      page.state.action.competenceId,
-    )}
+    {@const competence = competences?.get(page.state.action.competenceId)}
     {#if competence !== undefined}
       <DeleteCompetenceDialog
         {competence}
@@ -65,10 +61,10 @@
     </Button>
     <br />
   {/if}
-  {#if competences.current === undefined}
+  {#if competences === undefined}
     <LoadingIndicator />
   {:else}
-    {#each sortCompetences(competences.current) as [id, competence] (id)}
+    {#each sortCompetences(competences) as [id, competence] (id)}
       <h3>
         {`${competence.number}: ${competence.name}`}
       </h3>

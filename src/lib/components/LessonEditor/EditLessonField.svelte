@@ -36,11 +36,11 @@
 >
 <h1>Změnit oblast</h1>
 <form>
-  {#if fields.current === undefined || lessons.current === undefined || competences.current === undefined}
+  {#if fields === undefined || lessons === undefined || competences === undefined}
     <LoadingIndicator />
   {:else}
     <RadioGroup
-      options={sortFields(fields.current, lessons.current, competences.current)}
+      options={sortFields(fields, lessons, competences)}
       bind:selected={field}
     >
       {#snippet nullOption()}

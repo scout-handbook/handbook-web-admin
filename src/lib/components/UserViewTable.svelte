@@ -14,12 +14,12 @@
 
   let { users }: Props = $props();
 
-  const accountQuery = createQuery<Loginstate>({
+  const accountQuery = createQuery<Loginstate>(() => ({
     queryKey: ["v1.0", "account"],
-  });
+  }));
   let adminOrSuperuser = $derived(
-    $accountQuery.data?.role === "administrator" ||
-      $accountQuery.data?.role === "superuser",
+    accountQuery.data?.role === "administrator" ||
+      accountQuery.data?.role === "superuser",
   );
 </script>
 
@@ -65,12 +65,8 @@
           {/if}
         </td>
         <td>
-          {#if groups.current !== undefined}
-            {[
-              ...sortGroups(
-                filter(groups.current, (id) => user.groups.includes(id)),
-              ),
-            ]
+          {#if groups !== undefined}
+            {[...sortGroups(filter(groups, (id) => user.groups.includes(id)))]
               .map(([_, group]) => group.name)
               .join(", ")}
           {/if}

@@ -29,12 +29,12 @@
     role: role !== "all" ? role : undefined,
   });
   let userQuery = $derived(
-    createQuery<UserListResponse>({
+    createQuery<UserListResponse>(() => ({
       queryKey: ["v1.0", "user", payload],
-    }),
+    })),
   );
-  let userListCount = $derived($userQuery.data?.count);
-  let users: Array<User> | undefined = $derived($userQuery.data?.users);
+  let userListCount = $derived(userQuery.data?.count);
+  let users: Array<User> | undefined = $derived(userQuery.data?.users);
 </script>
 
 <TopBar />

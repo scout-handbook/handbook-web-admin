@@ -13,12 +13,8 @@
   let { data }: Props = $props();
 </script>
 
-{#if fields.current === undefined || lessons.current === undefined}
+{#if fields === undefined || lessons === undefined}
   <LoadingIndicator />
 {:else}
-  <EditLessonPage
-    fields={fields.current}
-    lessonID={data.id}
-    lessons={lessons.current}
-  />
+  <EditLessonPage {fields} lessonID={data.id} {lessons} />
 {/if}

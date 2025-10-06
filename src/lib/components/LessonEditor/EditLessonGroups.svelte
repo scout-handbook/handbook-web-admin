@@ -37,13 +37,10 @@
 >
 <h1>Změnit skupiny</h1>
 <form>
-  {#if allGroups.current === undefined}
+  {#if allGroups === undefined}
     <LoadingIndicator inline />
   {:else}
-    <CheckboxGroup
-      options={sortGroups(allGroups.current)}
-      bind:selected={groups}
-    >
+    <CheckboxGroup options={sortGroups(allGroups)} bind:selected={groups}>
       <!-- eslint-disable-next-line @typescript-eslint/no-shadow -- Not applicable to snippets -->
       {#snippet children(id: string, group: Group)}
         <span class:public={id === "00000000-0000-0000-0000-000000000000"}
@@ -59,7 +56,7 @@ U každé lekce lze zvolit, kteří uživatelé ji budou moct zobrazit (resp. kt
 uživatelů). Pokud není vybrána žádná skupiny, nebude lekce pro běžné uživatele vůbec
 přístupná (pouze v administraci). Pokud je vybrána skupina "
 <span class="public">
-  {allGroups.current?.get("00000000-0000-0000-0000-000000000000")?.name ?? ""}
+  {allGroups?.get("00000000-0000-0000-0000-000000000000")?.name ?? ""}
 </span>
 ", bude lekce přístupná všem uživatelům (i nepřihlášeným návštěvníkům webu) bez ohledu
 na skupiny.

@@ -66,10 +66,10 @@
 <br />
 {#if field === null}
   <span class="anonymous">Nezařazeno</span>
-{:else if fields.current === undefined}
+{:else if fields === undefined}
   <LoadingIndicator inline />
 {:else}
-  {fields.current.get(field)?.name ?? ""}
+  {fields.get(field)?.name ?? ""}
 {/if}
 <br />
 <h1>Body</h1>
@@ -87,10 +87,10 @@
 >
   Upravit
 </Button>
-{#if allCompetences.current === undefined}
+{#if allCompetences === undefined}
   <LoadingIndicator inline />
 {:else}
-  {#each sortCompetences(filter( allCompetences.current, (competenceId) => competences.includes(competenceId), )) as [competenceId, competence] (competenceId)}
+  {#each sortCompetences(filter( allCompetences, (competenceId) => competences.includes(competenceId), )) as [competenceId, competence] (competenceId)}
     <br />
     <span class="competence-number">{competence.number}:</span>
     {competence.name}
@@ -113,10 +113,10 @@
   Upravit
 </Button>
 <br />
-{#if allGroups.current === undefined}
+{#if allGroups === undefined}
   <LoadingIndicator inline />
 {:else}
-  {#each sortGroups(filter( allGroups.current, (groupId) => groups.includes(groupId), )) as [groupId, group] (groupId)}
+  {#each sortGroups(filter( allGroups, (groupId) => groups.includes(groupId), )) as [groupId, group] (groupId)}
     {#if groupId === "00000000-0000-0000-0000-000000000000"}
       <span class="public">{group.name}</span>
       <br />

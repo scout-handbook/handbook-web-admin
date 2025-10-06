@@ -21,12 +21,12 @@
 
   let { id, lesson, secondLevel = false }: Props = $props();
 
-  const accountQuery = createQuery<Loginstate>({
+  const accountQuery = createQuery<Loginstate>(() => ({
     queryKey: ["v1.0", "account"],
-  });
+  }));
   let adminOrSuperuser = $derived(
-    $accountQuery.data?.role === "administrator" ||
-      $accountQuery.data?.role === "superuser",
+    accountQuery.data?.role === "administrator" ||
+      accountQuery.data?.role === "superuser",
   );
 </script>
 
@@ -67,10 +67,10 @@
   </Button>
   <br />
   Body:
-  {#if competences.current !== undefined}
+  {#if competences !== undefined}
     {[
       ...sortCompetences(
-        filter(competences.current, (competenceId) =>
+        filter(competences, (competenceId) =>
           lesson.competences.includes(competenceId),
         ),
       ),

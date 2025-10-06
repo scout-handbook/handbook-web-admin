@@ -5,22 +5,18 @@ import { competenceComparator } from "$lib/resources/competences.svelte";
 import { queryClient } from "$lib/utils/queryClient";
 import { createQuery } from "@tanstack/svelte-query";
 import { SvelteMap } from "svelte/reactivity";
-import { derived, fromStore } from "svelte/store";
 
-export const lessons = fromStore(
-  derived(
-    createQuery<Record<string, Lesson>>(
-      {
-        queryKey: ["v1.0", "lesson", { "override-group": true }],
-      },
-      queryClient,
-    ),
-    ({ data, isSuccess }) =>
-      isSuccess
-        ? new SvelteMap<string, Lesson>(Object.entries(data))
-        : undefined,
-    undefined,
-  ),
+const lessonQuery = createQuery<Record<string, Lesson>>(
+  () => ({
+    queryKey: ["v1.0", "lesson", { "override-group": true }],
+  }),
+  () => queryClient,
+);
+
+export const lessons = $derived(
+  lessonQuery.isSuccess
+    ? new SvelteMap<string, Lesson>(Object.entries(lessonQuery.data))
+    : undefined,
 );
 
 export function lessonComparator(

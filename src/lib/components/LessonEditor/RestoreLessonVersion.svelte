@@ -25,7 +25,7 @@
     lessonName = $bindable(),
   }: Props = $props();
 
-  let currentLessonVersion = $derived(lessons.current?.get(lessonId)?.version);
+  let currentLessonVersion = $derived(lessons?.get(lessonId)?.version);
   let versionList = $state<Array<LessonVersion> | null>(null);
   let selectedVersion = $state<number | null>(null);
   let selectedVersionName = $derived(

@@ -21,12 +21,12 @@
   import { filter } from "$lib/utils/mapUtils";
   import { createQuery } from "@tanstack/svelte-query";
 
-  const accountQuery = createQuery<Loginstate>({
+  const accountQuery = createQuery<Loginstate>(() => ({
     queryKey: ["v1.0", "account"],
-  });
+  }));
   let adminOrSuperuser = $derived(
-    $accountQuery.data?.role === "administrator" ||
-      $accountQuery.data?.role === "superuser",
+    accountQuery.data?.role === "administrator" ||
+      accountQuery.data?.role === "superuser",
   );
 </script>
 
@@ -35,17 +35,17 @@
   {#if page.state.action?.name === "add-field"}
     <AddFieldPanel />
   {:else if page.state.action?.name === "change-field"}
-    {@const field = fields.current?.get(page.state.action.fieldId)}
+    {@const field = fields?.get(page.state.action.fieldId)}
     {#if field !== undefined}
       <EditFieldPanel {field} fieldId={page.state.action.fieldId} />
     {/if}
   {:else if page.state.action?.name === "delete-field"}
-    {@const field = fields.current?.get(page.state.action.fieldId)}
+    {@const field = fields?.get(page.state.action.fieldId)}
     {#if field !== undefined}
       <DeleteFieldDialog {field} fieldId={page.state.action.fieldId} />
     {/if}
   {:else if page.state.action?.name === "delete-lesson"}
-    {@const lesson = lessons.current?.get(page.state.action.lessonId)}
+    {@const lesson = lessons?.get(page.state.action.lessonId)}
     {#if lesson !== undefined}
       <DeleteLessonDialog {lesson} lessonId={page.state.action.lessonId} />
     {/if}
@@ -84,14 +84,14 @@
       Smazané lekce
     </Button>
   {/if}
-  {@const fieldsValue = fields.current}
-  {#if fieldsValue === undefined || lessons.current === undefined || competences.current === undefined}
+  {@const fieldsValue = fields}
+  {#if fieldsValue === undefined || lessons === undefined || competences === undefined}
     <LoadingIndicator />
   {:else}
-    {#each sortLessons( filter(lessons.current, (lessonId) => filter( fieldsValue, (_, field) => field.lessons.includes(lessonId), ).size === 0), competences.current, ) as [lessonId, lesson] (lessonId)}
+    {#each sortLessons( filter(lessons, (lessonId) => filter( fieldsValue, (_, field) => field.lessons.includes(lessonId), ).size === 0), competences, ) as [lessonId, lesson] (lessonId)}
       <LessonViewLesson id={lessonId} {lesson} />
     {/each}
-    {#each sortFields(fieldsValue, lessons.current, competences.current) as [fieldId, field] (fieldId)}
+    {#each sortFields(fieldsValue, lessons, competences) as [fieldId, field] (fieldId)}
       <div>
         <h2>{field.name}</h2>
         {#if adminOrSuperuser}
@@ -133,7 +133,7 @@
         >
           Přidat lekci
         </Button>
-        {#each sortLessons( filter( lessons.current, (lessonId) => field.lessons.includes(lessonId), ), competences.current, ) as [lessonId, lesson] (lessonId)}
+        {#each sortLessons( filter( lessons, (lessonId) => field.lessons.includes(lessonId), ), competences, ) as [lessonId, lesson] (lessonId)}
           <LessonViewLesson id={lessonId} {lesson} secondLevel={true} />
         {/each}
       </div>
