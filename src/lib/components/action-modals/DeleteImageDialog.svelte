@@ -15,7 +15,7 @@
 
   let donePromise: Promise<void> | null = $state(null);
 
-  const mutation = createMutation({
+  const mutation = createMutation(() => ({
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: ["v1.0", "image"] });
       const cachedImages = queryClient.getQueryData<Array<string>>([
@@ -28,7 +28,7 @@
         queryClient.setQueryData<Array<string>>(["v1.0", "image"], newImages);
       }
     },
-  });
+  }));
 
   function confirmCallback(): void {
     donePromise = new ActionQueue([

@@ -18,7 +18,7 @@
 
   let donePromise: Promise<void> | null = $state(null);
 
-  const mutation = createMutation({
+  const mutation = createMutation(() => ({
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: ["v1.0", "group"] });
       const cachedGroups = queryClient.getQueryData<Record<string, Group>>([
@@ -33,7 +33,7 @@
         );
       }
     },
-  });
+  }));
 
   function confirmCallback(): void {
     donePromise = new ActionQueue([

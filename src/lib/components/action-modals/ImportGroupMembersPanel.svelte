@@ -32,7 +32,7 @@
   let participantList: Array<Participant> = $state([]);
   let selectedParticipants: Array<number> = $state([]);
 
-  const mutation = createMutation({
+  const mutation = createMutation(() => ({
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: ["v1.0", "group"] });
       const cachedGroups = queryClient.getQueryData<Record<string, Group>>([
@@ -48,7 +48,7 @@
         );
       }
     },
-  });
+  }));
 
   void request<Array<Event>>(
     `${apiUri}/v1.0/event`,
