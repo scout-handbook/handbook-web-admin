@@ -21,8 +21,8 @@
   let { name } = $state(group);
   let donePromise: Promise<void> | null = $state(null);
 
-  const mutation = createMutation({
-    onMutate: async () => {
+  const mutation = createMutation(() => ({
+    onMutate: async (): Promise<void> => {
       await queryClient.cancelQueries({ queryKey: ["v1.0", "group"] });
       const cachedGroups = queryClient.getQueryData<Record<string, Group>>([
         "v1.0",
@@ -37,7 +37,7 @@
         );
       }
     },
-  });
+  }));
 
   function saveCallback(): void {
     if (group.name === name) {

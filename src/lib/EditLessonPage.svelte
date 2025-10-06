@@ -52,8 +52,8 @@
   const initialField = $state.snapshot(field);
   let initialGroups: Array<string> = [];
 
-  const mutation = createMutation({
-    onMutate: async () => {
+  const mutation = createMutation(() => ({
+    onMutate: async (): Promise<void> => {
       await queryClient.cancelQueries({ queryKey: ["v1.0", "lesson"] });
       await queryClient.cancelQueries({ queryKey: ["v1.0", "field"] });
 
@@ -94,7 +94,7 @@
         );
       }
     },
-  });
+  }));
 
   const saveExceptionHandler = {
     NotLockedException: (): void => {
