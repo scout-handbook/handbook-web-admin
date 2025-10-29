@@ -3,7 +3,7 @@
   import type { LessonVersion } from "$lib/interfaces/LessonVersion";
 
   import { goto } from "$app/navigation";
-  import { base } from "$app/paths";
+  import { resolve } from "$app/paths";
   import Button from "$lib/components/Button.svelte";
   import Dialog from "$lib/components/Dialog.svelte";
   import DoubleSidePanel from "$lib/components/DoubleSidePanel.svelte";
@@ -31,8 +31,8 @@
   );
   let contentPromise = $derived(
     selectedVersion === null
-      ? new Promise((resolve) => {
-          resolve("");
+      ? new Promise((resolvePromise) => {
+          resolvePromise("");
         })
       : request<string>(
           `${apiUri}/v1.0/deleted-lesson/${selectedLesson}/history/${selectedVersion.toString()}`,
@@ -83,7 +83,9 @@
   function selectVersionCallback(): void {
     if (selectedVersion !== null) {
       void goto(
-        `${base}/lessons/${selectedLesson}/versions/${selectedVersion.toString()}/restore?name=${name}`,
+        resolve(
+          `/lessons/${selectedLesson}/versions/${selectedVersion.toString()}/restore?name=${name}`,
+        ),
       );
     }
   }

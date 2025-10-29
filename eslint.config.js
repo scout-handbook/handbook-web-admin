@@ -239,7 +239,6 @@ export default tseslint.config(
           allowTransitions: true,
         },
       ],
-      "svelte/no-navigation-without-base": "error",
       "svelte/no-target-blank": "error",
       "svelte/no-top-level-browser-globals": "error",
       "svelte/no-unused-class-name": [
