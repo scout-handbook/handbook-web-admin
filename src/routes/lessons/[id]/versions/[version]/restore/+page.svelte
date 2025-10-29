@@ -1,6 +1,6 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
-  import { base } from "$app/paths";
+  import { resolve } from "$app/paths";
   import { page } from "$app/state";
   import { Action } from "$lib/actions/Action";
   import { ActionCallback } from "$lib/actions/ActionCallback";
@@ -71,7 +71,7 @@
   <DoneDialog
     {donePromise}
     onconfirm={(): void => {
-      void goto(`${base}/lessons`);
+      void goto(resolve("/lessons"));
     }}
   >
     Lekce byla úspěšně obnovena.

@@ -3,7 +3,7 @@
   import type { Loginstate } from "$lib/interfaces/Loginstate";
 
   import { goto, pushState } from "$app/navigation";
-  import { base } from "$app/paths";
+  import { resolve } from "$app/paths";
   import Button from "$lib/components/Button.svelte";
   import { adminUri } from "$lib/config";
   import {
@@ -36,7 +36,7 @@
     cyan
     icon="pencil"
     onclick={(): void => {
-      void goto(`${base}/lessons/${id}/edit`);
+      void goto(resolve(`/lessons/${id}/edit`));
     }}
   >
     Upravit
