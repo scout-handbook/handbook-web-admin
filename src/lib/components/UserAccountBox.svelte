@@ -25,7 +25,7 @@
     {/if}
   </div>
   <div class="links">
-    <!-- eslint-disable svelte/no-navigation-without-base -- Absolute URLs -->
+    <!-- eslint-disable svelte/no-navigation-without-resolve -- Absolute URLs -->
     <a
       href={`${apiUri}/v1.0/logout?redirect-uri=${encodeURIComponent(frontendUri)}`}
     >

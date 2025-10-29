@@ -2,7 +2,7 @@
   import type { Loginstate } from "$lib/interfaces/Loginstate";
 
   import { goto, pushState } from "$app/navigation";
-  import { base } from "$app/paths";
+  import { resolve } from "$app/paths";
   import { page } from "$app/state";
   import AddFieldPanel from "$lib/components/action-modals/AddFieldPanel.svelte";
   import DeleteFieldDialog from "$lib/components/action-modals/DeleteFieldDialog.svelte";
@@ -69,7 +69,7 @@
     green
     icon="plus"
     onclick={(): void => {
-      void goto(`${base}/lessons/add`);
+      void goto(resolve("/lessons/add"));
     }}
   >
     Přidat lekci
@@ -128,7 +128,7 @@
           green
           icon="plus"
           onclick={(): void => {
-            void goto(`${base}/lessons/add?field=${fieldId}`);
+            void goto(resolve(`/lessons/add?field=${fieldId}`));
           }}
         >
           Přidat lekci
