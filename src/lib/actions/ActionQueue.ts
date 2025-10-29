@@ -1,13 +1,13 @@
 import type { SerializedAction } from "$lib/interfaces/SerializedAction";
 
 import { goto } from "$app/navigation";
-import { base } from "$app/paths";
+import { resolve } from "$app/paths";
 import {
   type Action,
   deserializeAction,
   serializeAction,
 } from "$lib/actions/Action";
-import { adminUri, apiUri } from "$lib/config";
+import { apiUri } from "$lib/config";
 import { globalUI } from "$lib/globalUI.svelte";
 import { queryClient } from "$lib/utils/queryClient";
 import { request } from "$lib/utils/request";
@@ -87,7 +87,7 @@ export function setupActionQueue(): void {
     .dispatch()
     .then(() => {
       void queryClient.invalidateQueries();
-      void goto(`${base}/${adminUri.split("/").slice(3).join("/")}`);
+      void goto(resolve("/"));
       globalUI.loadingIndicator = false;
       globalUI.dialogMessage = "Akce byla úspěšná";
     })
