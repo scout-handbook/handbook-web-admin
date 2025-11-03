@@ -4,15 +4,15 @@
   import Button from "$lib/components/Button.svelte";
   import RadioGroup from "$lib/components/forms/RadioGroup.svelte";
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
-  import { competences } from "$lib/resources/competences.svelte";
-  import { fields } from "$lib/resources/fields.svelte";
-  import { lessons } from "$lib/resources/lessons.svelte";
+  import { getResourceContext } from "$lib/resources";
 
   interface Props {
     field: string | null;
   }
 
   let { field = $bindable() }: Props = $props();
+
+  const { competences, fields, lessons } = getResourceContext();
 
   const initialField = field;
 </script>

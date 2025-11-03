@@ -5,6 +5,10 @@
   import "@fontsource/open-sans/700.css";
   import "@fontsource/open-sans/700-italic.css";
 
+  import type { Competence } from "$lib/interfaces/Competence";
+  import type { Field } from "$lib/interfaces/Field";
+  import type { Group } from "$lib/interfaces/Group";
+  import type { Lesson } from "$lib/interfaces/Lesson";
   import type { Snippet } from "svelte";
 
   import { asset } from "$app/paths";
@@ -14,11 +18,19 @@
   import Overlay from "$lib/components/Overlay.svelte";
   import { siteName } from "$lib/config";
   import { globalUI } from "$lib/globalUI.svelte";
+  import {
+    competenceComparator,
+    fieldComparator,
+    groupComparator,
+    lessonComparator,
+    setResourceContext,
+  } from "$lib/resources";
   import { checkLogin } from "$lib/utils/checkLogin";
   import { compileMarkdownSetup } from "$lib/utils/compileMarkdown";
   import { loginRefreshSetup } from "$lib/utils/loginRefresh.svelte";
   import { queryClient } from "$lib/utils/queryClient";
-  import { QueryClientProvider } from "@tanstack/svelte-query";
+  import { Resource } from "$lib/utils/Resource.svelte";
+  import { createQuery, QueryClientProvider } from "@tanstack/svelte-query";
 
   interface Props {
     children: Snippet;
@@ -30,6 +42,47 @@
   compileMarkdownSetup();
   loginRefreshSetup();
   setupActionQueue();
+
+  const competences = new Resource<Competence>(
+    createQuery<Record<string, Competence>>(
+      () => ({
+        queryKey: ["v1.0", "competence"],
+      }),
+      () => queryClient,
+    ),
+    competenceComparator,
+  );
+  const lessons = new Resource<Lesson>(
+    createQuery<Record<string, Lesson>>(
+      () => ({
+        queryKey: ["v1.0", "lesson", { "override-group": true }],
+      }),
+      () => queryClient,
+    ),
+    (a, b) => lessonComparator(a, b, competences),
+  );
+  setResourceContext({
+    competences,
+    fields: new Resource<Field>(
+      createQuery<Record<string, Field>>(
+        () => ({
+          queryKey: ["v1.0", "field", { "override-group": true }],
+        }),
+        () => queryClient,
+      ),
+      (a, b) => fieldComparator(a, b, competences, lessons),
+    ),
+    groups: new Resource<Group>(
+      createQuery<Record<string, Group>>(
+        () => ({
+          queryKey: ["v1.0", "group"],
+        }),
+        () => queryClient,
+      ),
+      groupComparator,
+    ),
+    lessons,
+  });
 </script>
 
 <svelte:head>

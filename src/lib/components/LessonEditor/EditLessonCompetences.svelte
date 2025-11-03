@@ -4,13 +4,15 @@
   import Button from "$lib/components/Button.svelte";
   import CheckboxGroup from "$lib/components/forms/CheckboxGroup.svelte";
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
-  import { competences as allCompetences } from "$lib/resources/competences.svelte";
+  import { getResourceContext } from "$lib/resources";
 
   interface Props {
     competences: Array<string>;
   }
 
   let { competences = $bindable() }: Props = $props();
+
+  const { competences: allCompetences } = getResourceContext();
 
   const initialCompetences = competences;
 </script>

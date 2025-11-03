@@ -4,7 +4,7 @@
 
   import { pushState } from "$app/navigation";
   import Button from "$lib/components/Button.svelte";
-  import { groups } from "$lib/resources/groups.svelte";
+  import { getResourceContext } from "$lib/resources";
   import { filter } from "$lib/utils/mapUtils";
   import { createQuery } from "@tanstack/svelte-query";
 
@@ -13,6 +13,8 @@
   }
 
   let { users }: Props = $props();
+
+  const { groups } = getResourceContext();
 
   const accountQuery = createQuery<Loginstate>(() => ({
     queryKey: ["v1.0", "account"],

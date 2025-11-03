@@ -1,8 +1,7 @@
 <script lang="ts">
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import EditLessonPage from "$lib/EditLessonPage.svelte";
-  import { fields } from "$lib/resources/fields.svelte";
-  import { lessons } from "$lib/resources/lessons.svelte";
+  import { getResourceContext } from "$lib/resources";
 
   import type { PageData } from "./$types";
 
@@ -11,6 +10,8 @@
   }
 
   let { data }: Props = $props();
+
+  const { fields, lessons } = getResourceContext();
 </script>
 
 {#if fields.current === undefined || lessons.current === undefined}

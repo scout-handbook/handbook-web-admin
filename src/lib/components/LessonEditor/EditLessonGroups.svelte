@@ -4,13 +4,15 @@
   import Button from "$lib/components/Button.svelte";
   import CheckboxGroup from "$lib/components/forms/CheckboxGroup.svelte";
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
-  import { groups as allGroups } from "$lib/resources/groups.svelte";
+  import { getResourceContext } from "$lib/resources";
 
   interface Props {
     groups: Array<string>;
   }
 
   let { groups = $bindable() }: Props = $props();
+
+  const { groups: allGroups } = getResourceContext();
 
   const initialGroups = groups;
 </script>
