@@ -6,7 +6,7 @@
   import { resolve } from "$app/paths";
   import Button from "$lib/components/Button.svelte";
   import { adminUri } from "$lib/config";
-  import { competences } from "$lib/resources/competences.svelte";
+  import { getResourceContext } from "$lib/resources";
   import { filter } from "$lib/utils/mapUtils";
   import { createQuery } from "@tanstack/svelte-query";
 
@@ -17,6 +17,8 @@
   }
 
   let { id, lesson, secondLevel = false }: Props = $props();
+
+  const { competences } = getResourceContext();
 
   const accountQuery = createQuery<Loginstate>(() => ({
     queryKey: ["v1.0", "account"],

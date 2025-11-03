@@ -4,7 +4,7 @@
 
   import Button from "$lib/components/Button.svelte";
   import Select from "$lib/components/forms/Select.svelte";
-  import { groups } from "$lib/resources/groups.svelte";
+  import { getResourceContext } from "$lib/resources";
   import { filter, map } from "$lib/utils/mapUtils";
   import { createQuery } from "@tanstack/svelte-query";
   import { SvelteMap } from "svelte/reactivity";
@@ -22,6 +22,8 @@
     role = $bindable(),
     searchName = $bindable(),
   }: Props = $props();
+
+  const { groups } = getResourceContext();
 
   const accountQuery = createQuery<Loginstate>(() => ({
     queryKey: ["v1.0", "account"],

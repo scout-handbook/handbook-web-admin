@@ -2,9 +2,7 @@
   import { pushState } from "$app/navigation";
   import Button from "$lib/components/Button.svelte";
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
-  import { competences as allCompetences } from "$lib/resources/competences.svelte";
-  import { fields } from "$lib/resources/fields.svelte";
-  import { groups as allGroups } from "$lib/resources/groups.svelte";
+  import { getResourceContext } from "$lib/resources";
   import { filter } from "$lib/utils/mapUtils";
 
   interface Props {
@@ -15,6 +13,12 @@
   }
 
   let { competences, field, groups, id }: Props = $props();
+
+  const {
+    competences: allCompetences,
+    fields: allFields,
+    groups: allGroups,
+  } = getResourceContext();
 </script>
 
 <Button
@@ -60,10 +64,10 @@
 <br />
 {#if field === null}
   <span class="anonymous">Nezařazeno</span>
-{:else if fields.current === undefined}
+{:else if allFields.current === undefined}
   <LoadingIndicator inline />
 {:else}
-  {fields.current.get(field)?.name ?? ""}
+  {allFields.current.get(field)?.name ?? ""}
 {/if}
 <br />
 <h1>Body</h1>

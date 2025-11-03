@@ -11,8 +11,10 @@
   import MainPageContainer from "$lib/components/MainPageContainer.svelte";
   import TopBar from "$lib/components/TopBar.svelte";
   import { siteName } from "$lib/config";
-  import { competences } from "$lib/resources/competences.svelte";
+  import { getResourceContext } from "$lib/resources";
   import { createQuery } from "@tanstack/svelte-query";
+
+  const { competences } = getResourceContext();
 
   const accountQuery = createQuery<Loginstate>(() => ({
     queryKey: ["v1.0", "account"],

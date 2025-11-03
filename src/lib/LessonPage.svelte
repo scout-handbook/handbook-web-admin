@@ -15,11 +15,11 @@
   import MainPageContainer from "$lib/components/MainPageContainer.svelte";
   import TopBar from "$lib/components/TopBar.svelte";
   import { siteName } from "$lib/config";
-  import { competences } from "$lib/resources/competences.svelte";
-  import { fields } from "$lib/resources/fields.svelte";
-  import { lessons } from "$lib/resources/lessons.svelte";
+  import { getResourceContext } from "$lib/resources";
   import { filter } from "$lib/utils/mapUtils";
   import { createQuery } from "@tanstack/svelte-query";
+
+  const { competences, fields, lessons } = getResourceContext();
 
   const accountQuery = createQuery<Loginstate>(() => ({
     queryKey: ["v1.0", "account"],
