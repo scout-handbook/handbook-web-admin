@@ -4,7 +4,7 @@
 
   import { pushState } from "$app/navigation";
   import Button from "$lib/components/Button.svelte";
-  import { groups, sortGroups } from "$lib/resources/groups.svelte";
+  import { getResourceContext } from "$lib/resources";
   import { filter } from "$lib/utils/mapUtils";
   import { createQuery } from "@tanstack/svelte-query";
 
@@ -14,12 +14,14 @@
 
   let { users }: Props = $props();
 
-  const accountQuery = createQuery<Loginstate>({
+  const { groups } = getResourceContext();
+
+  const accountQuery = createQuery<Loginstate>(() => ({
     queryKey: ["v1.0", "account"],
-  });
+  }));
   let adminOrSuperuser = $derived(
-    $accountQuery.data?.role === "administrator" ||
-      $accountQuery.data?.role === "superuser",
+    accountQuery.data?.role === "administrator" ||
+      accountQuery.data?.role === "superuser",
   );
 </script>
 
@@ -66,11 +68,7 @@
         </td>
         <td>
           {#if groups.current !== undefined}
-            {[
-              ...sortGroups(
-                filter(groups.current, (id) => user.groups.includes(id)),
-              ),
-            ]
+            {[...filter(groups.current, (id) => user.groups.includes(id))]
               .map(([_, group]) => group.name)
               .join(", ")}
           {/if}

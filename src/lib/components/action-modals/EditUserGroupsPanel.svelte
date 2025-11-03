@@ -10,7 +10,7 @@
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import SidePanel from "$lib/components/SidePanel.svelte";
   import { apiUri } from "$lib/config";
-  import { groups, sortGroups } from "$lib/resources/groups.svelte";
+  import { getResourceContext } from "$lib/resources";
   import { filter } from "$lib/utils/mapUtils";
   import { queryClient } from "$lib/utils/queryClient";
 
@@ -19,6 +19,8 @@
   }
 
   let { user }: Props = $props();
+
+  const { groups } = getResourceContext();
 
   let selectedGroups = $state(user.groups);
   let donePromise: Promise<void> | null = $state(null);
@@ -75,11 +77,9 @@
     {:else}
       <form>
         <CheckboxGroup
-          options={sortGroups(
-            filter(
-              groups.current,
-              (id) => id !== "00000000-0000-0000-0000-000000000000",
-            ),
+          options={filter(
+            groups.current,
+            (id) => id !== "00000000-0000-0000-0000-000000000000",
           )}
           bind:selected={selectedGroups}
         >

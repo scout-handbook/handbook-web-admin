@@ -23,8 +23,8 @@
   let { description, name, number } = $state(competence);
   let donePromise: Promise<void> | null = $state(null);
 
-  const mutation = createMutation({
-    onMutate: async () => {
+  const mutation = createMutation(() => ({
+    onMutate: async (): Promise<void> => {
       await queryClient.cancelQueries({ queryKey: ["v1.0", "competence"] });
       const cachedCompetences = queryClient.getQueryData<
         Record<string, Competence>
@@ -40,7 +40,7 @@
         );
       }
     },
-  });
+  }));
 
   function saveCallback(): void {
     if (
@@ -61,7 +61,7 @@
       ])
         .dispatch()
         .then(() => {
-          $mutation.mutate();
+          mutation.mutate();
         });
     }
   }
