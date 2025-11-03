@@ -4,7 +4,7 @@
 
   import Button from "$lib/components/Button.svelte";
   import Select from "$lib/components/forms/Select.svelte";
-  import { groups, sortGroups } from "$lib/resources/groups.svelte";
+  import { getResourceContext } from "$lib/resources";
   import { filter, map } from "$lib/utils/mapUtils";
   import { createQuery } from "@tanstack/svelte-query";
   import { SvelteMap } from "svelte/reactivity";
@@ -23,13 +23,15 @@
     searchName = $bindable(),
   }: Props = $props();
 
-  const accountQuery = createQuery<Loginstate>({
+  const { groups } = getResourceContext();
+
+  const accountQuery = createQuery<Loginstate>(() => ({
     queryKey: ["v1.0", "account"],
-  });
-  let isSuperuser = $derived($accountQuery.data?.role === "superuser");
+  }));
+  let isSuperuser = $derived(accountQuery.data?.role === "superuser");
   let adminOrSuperuser = $derived(
-    $accountQuery.data?.role === "administrator" ||
-      $accountQuery.data?.role === "superuser",
+    accountQuery.data?.role === "administrator" ||
+      accountQuery.data?.role === "superuser",
   );
   let roleList = $derived(
     new SvelteMap([
@@ -50,11 +52,9 @@
       ? new SvelteMap([
           ["00000000-0000-0000-0000-000000000000", "Všechny skupiny"],
           ...map(
-            sortGroups(
-              filter(
-                groups.current,
-                (groupId) => groupId !== "00000000-0000-0000-0000-000000000000",
-              ),
+            filter(
+              groups.current,
+              (groupId) => groupId !== "00000000-0000-0000-0000-000000000000",
             ),
             (id, groupValue) => [id, groupValue.name],
           ),

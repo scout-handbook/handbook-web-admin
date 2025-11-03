@@ -11,18 +11,17 @@
   import MainPageContainer from "$lib/components/MainPageContainer.svelte";
   import TopBar from "$lib/components/TopBar.svelte";
   import { siteName } from "$lib/config";
-  import {
-    competences,
-    sortCompetences,
-  } from "$lib/resources/competences.svelte";
+  import { getResourceContext } from "$lib/resources";
   import { createQuery } from "@tanstack/svelte-query";
 
-  const accountQuery = createQuery<Loginstate>({
+  const { competences } = getResourceContext();
+
+  const accountQuery = createQuery<Loginstate>(() => ({
     queryKey: ["v1.0", "account"],
-  });
+  }));
   let adminOrSuperuser = $derived(
-    $accountQuery.data?.role === "administrator" ||
-      $accountQuery.data?.role === "superuser",
+    accountQuery.data?.role === "administrator" ||
+      accountQuery.data?.role === "superuser",
   );
 </script>
 
@@ -68,7 +67,7 @@
   {#if competences.current === undefined}
     <LoadingIndicator />
   {:else}
-    {#each sortCompetences(competences.current) as [id, competence] (id)}
+    {#each competences.current as [id, competence] (id)}
       <h3>
         {`${competence.number}: ${competence.name}`}
       </h3>

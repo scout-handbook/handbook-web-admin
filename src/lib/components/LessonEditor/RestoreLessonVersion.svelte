@@ -7,7 +7,7 @@
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import Overlay from "$lib/components/Overlay.svelte";
   import { apiUri } from "$lib/config";
-  import { lessons } from "$lib/resources/lessons.svelte";
+  import { getResourceContext } from "$lib/resources";
   import { compileMarkdown } from "$lib/utils/compileMarkdown";
   import { parseVersion } from "$lib/utils/parseVersion";
   import { authFailHandler, request } from "$lib/utils/request";
@@ -24,6 +24,8 @@
     lessonId,
     lessonName = $bindable(),
   }: Props = $props();
+
+  const { lessons } = getResourceContext();
 
   let currentLessonVersion = $derived(lessons.current?.get(lessonId)?.version);
   let versionList = $state<Array<LessonVersion> | null>(null);

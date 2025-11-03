@@ -6,10 +6,7 @@
   import { resolve } from "$app/paths";
   import Button from "$lib/components/Button.svelte";
   import { adminUri } from "$lib/config";
-  import {
-    competences,
-    sortCompetences,
-  } from "$lib/resources/competences.svelte";
+  import { getResourceContext } from "$lib/resources";
   import { filter } from "$lib/utils/mapUtils";
   import { createQuery } from "@tanstack/svelte-query";
 
@@ -21,12 +18,14 @@
 
   let { id, lesson, secondLevel = false }: Props = $props();
 
-  const accountQuery = createQuery<Loginstate>({
+  const { competences } = getResourceContext();
+
+  const accountQuery = createQuery<Loginstate>(() => ({
     queryKey: ["v1.0", "account"],
-  });
+  }));
   let adminOrSuperuser = $derived(
-    $accountQuery.data?.role === "administrator" ||
-      $accountQuery.data?.role === "superuser",
+    accountQuery.data?.role === "administrator" ||
+      accountQuery.data?.role === "superuser",
   );
 </script>
 
@@ -69,10 +68,8 @@
   Body:
   {#if competences.current !== undefined}
     {[
-      ...sortCompetences(
-        filter(competences.current, (competenceId) =>
-          lesson.competences.includes(competenceId),
-        ),
+      ...filter(competences.current, (competenceId) =>
+        lesson.competences.includes(competenceId),
       ),
     ]
       .map(([_, competence]) => competence.number)

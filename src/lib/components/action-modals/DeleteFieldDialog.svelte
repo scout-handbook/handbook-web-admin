@@ -18,8 +18,8 @@
 
   let donePromise: Promise<void> | null = $state(null);
 
-  const mutation = createMutation({
-    onMutate: async () => {
+  const mutation = createMutation(() => ({
+    onMutate: async (): Promise<void> => {
       await queryClient.cancelQueries({ queryKey: ["v1.0", "field"] });
       const cachedFields = queryClient.getQueryData<Record<string, Field>>([
         "v1.0",
@@ -34,7 +34,7 @@
         );
       }
     },
-  });
+  }));
 
   function confirmCallback(): void {
     donePromise = new ActionQueue([
@@ -45,7 +45,7 @@
     ])
       .dispatch()
       .then(() => {
-        $mutation.mutate();
+        mutation.mutate();
       });
   }
 </script>
