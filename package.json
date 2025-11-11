@@ -59,7 +59,7 @@
     "@types/codemirror": "5.60.17",
     "@types/node": "^24.10.0",
     "@types/showdown": "^2.0.6",
-    "autoprefixer": "^10.4.21",
+    "autoprefixer": "^10.4.22",
     "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-compat": "^6.0.2",
