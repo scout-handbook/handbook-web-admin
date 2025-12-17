@@ -106,7 +106,6 @@ export default tseslint.config(
       "no-warning-comments": "warn",
       "object-shorthand": "error",
       "operator-assignment": "error",
-      "perfectionist/sort-svelte-attributes": "off",
       "perfectionist/sort-union-types": [
         "error",
         {
