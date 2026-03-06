@@ -53,7 +53,7 @@
     "@fontsource/open-sans": "^5.2.7",
     "@sveltejs/adapter-static": "^3.0.10",
     "@sveltejs/kit": "^2.51.0",
-    "@sveltejs/vite-plugin-svelte": "^6.2.4",
+    "@sveltejs/vite-plugin-svelte": "^7.0.0",
     "@tanstack/eslint-plugin-query": "^5.91.4",
     "@tanstack/svelte-query": "^6.0.18",
     "@types/codemirror": "5.60.17",
