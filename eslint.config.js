@@ -188,6 +188,7 @@ export default tseslint.config(
         "error",
         { functions: false },
       ],
+      "@typescript-eslint/no-useless-default-assignment": "off",
       "@typescript-eslint/no-useless-empty-export": "error",
       "@typescript-eslint/parameter-properties": "error",
       "@typescript-eslint/prefer-enum-initializers": "error",
