@@ -12,9 +12,9 @@ export function competenceComparator(
 ): number {
   const numberComparison =
     parseInt(first.number, 10) - parseInt(second.number, 10);
-  return numberComparison !== 0
-    ? numberComparison
-    : first.number.localeCompare(second.number);
+  return numberComparison === 0
+    ? first.number.localeCompare(second.number)
+    : numberComparison;
 }
 
 export function fieldComparator(

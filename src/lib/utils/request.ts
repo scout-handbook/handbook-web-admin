@@ -105,10 +105,10 @@ async function rawRequest<T extends RequestResponse>(
     }
     if (method === "GET" || method === "DELETE") {
       xhr.send();
-    } else if (payload.toString() !== "[object FormData]") {
-      xhr.send(query);
-    } else {
+    } else if (payload.toString() === "[object FormData]") {
       xhr.send(payload as unknown as string);
+    } else {
+      xhr.send(query);
     }
   });
 }
