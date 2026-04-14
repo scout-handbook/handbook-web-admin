@@ -12,7 +12,7 @@ export function populateCompetences(
   if (arrayEquals(initialCompetences, competences)) {
     return;
   }
-  const encodedID = lessonID !== null ? encodeURIComponent(lessonID) : "{id}";
+  const encodedID = lessonID === null ? "{id}" : encodeURIComponent(lessonID);
   actionQueue.actions.push(
     new Action(`${apiUri}/v1.0/lesson/${encodedID}/competence`, "PUT", {
       competence: competences.map(encodeURIComponent),
@@ -29,16 +29,16 @@ export function populateField(
   if (initialField === field) {
     return;
   }
-  const encodedID = lessonID !== null ? encodeURIComponent(lessonID) : "{id}";
+  const encodedID = lessonID === null ? "{id}" : encodeURIComponent(lessonID);
   actionQueue.actions.push(
     new Action(
       `${apiUri}/v1.0/lesson/${encodedID}/field`,
       "PUT",
-      field !== null
-        ? {
+      field === null
+        ? {}
+        : {
             field: encodeURIComponent(field),
-          }
-        : {},
+          },
     ),
   );
 }
@@ -52,7 +52,7 @@ export function populateGroups(
   if (arrayEquals(initialGroups, groups)) {
     return;
   }
-  const encodedID = lessonID !== null ? encodeURIComponent(lessonID) : "{id}";
+  const encodedID = lessonID === null ? "{id}" : encodeURIComponent(lessonID);
   actionQueue.actions.push(
     new Action(`${apiUri}/v1.0/lesson/${encodedID}/group`, "PUT", {
       group: groups.map(encodeURIComponent),
