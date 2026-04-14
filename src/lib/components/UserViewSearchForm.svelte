@@ -48,8 +48,9 @@
   );
 
   const groupList = $derived(
-    groups.current !== undefined
-      ? new SvelteMap([
+    groups.current === undefined
+      ? undefined
+      : new SvelteMap([
           ["00000000-0000-0000-0000-000000000000", "Všechny skupiny"],
           ...map(
             filter(
@@ -58,8 +59,7 @@
             ),
             (id, groupValue) => [id, groupValue.name],
           ),
-        ])
-      : undefined,
+        ]),
   );
 </script>
 
