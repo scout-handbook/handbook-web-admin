@@ -17,13 +17,13 @@ export class Resource<T> {
   ) {
     this.query = query;
     this.sorted = $derived(
-      this.query.data !== undefined
-        ? new SvelteMap(
+      this.query.data === undefined
+        ? undefined
+        : new SvelteMap(
             Object.entries(this.query.data).sort((a, b) =>
               comparator(a[1], b[1]),
             ),
-          )
-        : undefined,
+          ),
     );
   }
 }

@@ -22,11 +22,11 @@
   let group = $state("00000000-0000-0000-0000-000000000000");
 
   let payload = $derived({
-    group: group !== "00000000-0000-0000-0000-000000000000" ? group : undefined,
+    group: group === "00000000-0000-0000-0000-000000000000" ? undefined : group,
     name: searchName,
     page,
     "per-page": perPage,
-    role: role !== "all" ? role : undefined,
+    role: role === "all" ? undefined : role,
   });
   let userQuery = $derived(
     createQuery<UserListResponse>(() => ({

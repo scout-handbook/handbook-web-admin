@@ -41,7 +41,7 @@ export async function request<T extends RequestResponse>(
     return response.response;
   } else if (
     "type" in response &&
-    Object.prototype.hasOwnProperty.call(exceptionHandler, response.type)
+    Object.hasOwn(exceptionHandler, response.type)
   ) {
     const handler = exceptionHandler[response.type];
     if (handler !== undefined && handler !== null) {
@@ -51,7 +51,7 @@ export async function request<T extends RequestResponse>(
     throw new Error();
   } else if (
     response.status === 401 &&
-    Object.prototype.hasOwnProperty.call(exceptionHandler, "401") &&
+    Object.hasOwn(exceptionHandler, "401") &&
     exceptionHandler["401"] !== undefined &&
     exceptionHandler["401"] !== null
   ) {
@@ -105,10 +105,10 @@ async function rawRequest<T extends RequestResponse>(
     }
     if (method === "GET" || method === "DELETE") {
       xhr.send();
-    } else if (payload.toString() !== "[object FormData]") {
-      xhr.send(query);
-    } else {
+    } else if (payload.toString() === "[object FormData]") {
       xhr.send(payload as unknown as string);
+    } else {
+      xhr.send(query);
     }
   });
 }
