@@ -2,7 +2,6 @@
   import type { Event } from "$lib/interfaces/Event";
   import type { Group } from "$lib/interfaces/Group";
   import type { Participant } from "$lib/interfaces/Participant";
-  import type { Payload } from "$lib/interfaces/Payload";
   import type { User } from "$lib/interfaces/User";
   import type { UserListResponse } from "$lib/interfaces/UserListResponse";
 
@@ -127,7 +126,7 @@
             name:
               participantList.find((p) => p.id === participantId)?.name ??
               "Účastník",
-          } as unknown as Payload,
+          },
           authFailHandler,
         ).then(async () =>
           request(
