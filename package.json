@@ -46,7 +46,7 @@
     "not OperaMini all"
   ],
   "dependencies": {
-    "easymde": "^2.20.0",
+    "easymde": "^2.21.0",
     "showdown": "^2.1.0",
     "xss": "^1.0.15"
   },
