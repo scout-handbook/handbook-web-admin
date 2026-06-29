@@ -62,7 +62,7 @@
     "@sveltejs/kit": "^2.68.0",
     "@sveltejs/vite-plugin-svelte": "^7.1.2",
     "@tanstack/eslint-plugin-query": "^5.101.1",
-    "@tanstack/svelte-query": "^6.1.35",
+    "@tanstack/svelte-query": "^6.1.36",
     "@types/codemirror": "5.60.17",
     "@types/node": "^26.0.1",
     "@types/showdown": "^2.0.6",
