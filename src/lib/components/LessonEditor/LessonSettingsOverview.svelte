@@ -88,7 +88,7 @@
 {#if allCompetences.current === undefined}
   <LoadingIndicator inline />
 {:else}
-  {#each filter( allCompetences.current, (competenceId) => competences.includes(competenceId), ) as [competenceId, competence] (competenceId)}
+  {#each filter( allCompetences.current, (competenceId) => competences.includes(competenceId) ) as [competenceId, competence] (competenceId)}
     <br />
     <span class="competence-number">{competence.number}:</span>
     {competence.name}
@@ -114,7 +114,7 @@
 {#if allGroups.current === undefined}
   <LoadingIndicator inline />
 {:else}
-  {#each filter( allGroups.current, (groupId) => groups.includes(groupId), ) as [groupId, group] (groupId)}
+  {#each filter( allGroups.current, (groupId) => groups.includes(groupId) ) as [groupId, group] (groupId)}
     {#if groupId === "00000000-0000-0000-0000-000000000000"}
       <span class="public">{group.name}</span>
       <br />

@@ -15,8 +15,7 @@ async function queryFn({
   let uri = queryKey.filter((elem) => typeof elem === "string").join("/");
   const query = buildQuery(
     (queryKey.find((elem) => typeof elem === "object") as
-      | Payload
-      | undefined) ?? {},
+      Payload | undefined) ?? {},
   );
   if (query !== "") {
     uri += `?${query}`;

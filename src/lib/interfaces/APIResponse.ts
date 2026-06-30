@@ -10,8 +10,7 @@ export type APIErrorResponse =
   | SkautISAuthorizationExceptionResponse;
 
 export type APIResponse<T extends RequestResponse> =
-  | APIErrorResponse
-  | APISuccessResponse<T>;
+  APIErrorResponse | APISuccessResponse<T>;
 
 export interface APISuccessResponse<T extends RequestResponse> {
   response: T;
