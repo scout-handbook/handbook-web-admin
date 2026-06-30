@@ -88,7 +88,7 @@
   {#if fieldsValue === undefined || lessons.current === undefined || competences.current === undefined}
     <LoadingIndicator />
   {:else}
-    {#each filter(lessons.current, (lessonId) => filter( fieldsValue, (_, field) => field.lessons.includes(lessonId), ).size === 0) as [lessonId, lesson] (lessonId)}
+    {#each filter(lessons.current, (lessonId) => filter( fieldsValue, (_, field) => field.lessons.includes(lessonId) ).size === 0) as [lessonId, lesson] (lessonId)}
       <LessonViewLesson id={lessonId} {lesson} />
     {/each}
     {#each fieldsValue as [fieldId, field] (fieldId)}
@@ -133,7 +133,7 @@
         >
           Přidat lekci
         </Button>
-        {#each filter( lessons.current, (lessonId) => field.lessons.includes(lessonId), ) as [lessonId, lesson] (lessonId)}
+        {#each filter( lessons.current, (lessonId) => field.lessons.includes(lessonId) ) as [lessonId, lesson] (lessonId)}
           <LessonViewLesson id={lessonId} {lesson} secondLevel={true} />
         {/each}
       </div>
