@@ -35,17 +35,17 @@
   {#if page.state.action?.name === "add-field"}
     <AddFieldPanel />
   {:else if page.state.action?.name === "change-field"}
-    {@const field = fields.current?.get(page.state.action.fieldId)}
+    {const field = $derived(fields.current?.get(page.state.action.fieldId))}
     {#if field !== undefined}
       <EditFieldPanel {field} fieldId={page.state.action.fieldId} />
     {/if}
   {:else if page.state.action?.name === "delete-field"}
-    {@const field = fields.current?.get(page.state.action.fieldId)}
+    {const field = $derived(fields.current?.get(page.state.action.fieldId))}
     {#if field !== undefined}
       <DeleteFieldDialog {field} fieldId={page.state.action.fieldId} />
     {/if}
   {:else if page.state.action?.name === "delete-lesson"}
-    {@const lesson = lessons.current?.get(page.state.action.lessonId)}
+    {const lesson = $derived(lessons.current?.get(page.state.action.lessonId))}
     {#if lesson !== undefined}
       <DeleteLessonDialog {lesson} lessonId={page.state.action.lessonId} />
     {/if}
@@ -84,7 +84,7 @@
       Smazané lekce
     </Button>
   {/if}
-  {@const fieldsValue = fields.current}
+  {const fieldsValue = $derived(fields.current)}
   {#if fieldsValue === undefined || lessons.current === undefined || competences.current === undefined}
     <LoadingIndicator />
   {:else}

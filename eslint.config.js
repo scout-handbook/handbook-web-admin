@@ -252,6 +252,7 @@ export default tseslint.config(
       ],
       "svelte/derived-has-same-inputs-outputs": "error",
       "svelte/no-add-event-listener": "error",
+      "svelte/no-at-const-tags": "error",
       "svelte/no-extra-reactive-curlies": "error",
       "svelte/no-ignored-unsubscribe": "error",
       "svelte/no-inline-styles": [
