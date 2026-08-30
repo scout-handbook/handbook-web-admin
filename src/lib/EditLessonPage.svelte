@@ -17,6 +17,7 @@
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import { apiUri } from "$lib/config";
   import { globalUI } from "$lib/globalUI.svelte";
+  import { deepClone } from "$lib/utils/deepClone";
   import { afterRefreshCallback } from "$lib/utils/loginRefresh.svelte";
   import { find } from "$lib/utils/mapUtils";
   import { queryClient } from "$lib/utils/queryClient";
@@ -44,12 +45,12 @@
   let groups: Array<string> = $state([]);
 
   // svelte-ignore state_referenced_locally
-  const initialName = $state.snapshot(name);
+  const initialName = name;
   let initialBody = "";
   // svelte-ignore state_referenced_locally
-  const initialCompetences = $state.snapshot(competences);
+  const initialCompetences = deepClone(competences);
   // svelte-ignore state_referenced_locally
-  const initialField = $state.snapshot(field);
+  const initialField = field;
   let initialGroups: Array<string> = [];
 
   const mutation = createMutation(() => ({
@@ -69,7 +70,7 @@
       ]);
 
       if (cachedLessons !== undefined) {
-        const newLessons = structuredClone(cachedLessons);
+        const newLessons = deepClone(cachedLessons);
         newLessons[lessonID].name = name;
         newLessons[lessonID].competences = competences;
         queryClient.setQueryData<Record<string, Lesson>>(
@@ -78,7 +79,7 @@
         );
       }
       if (cachedFields !== undefined) {
-        const newFields = structuredClone(cachedFields);
+        const newFields = deepClone(cachedFields);
         if (initialField !== null) {
           newFields[initialField].lessons.splice(
             newFields[initialField].lessons.indexOf(lessonID),

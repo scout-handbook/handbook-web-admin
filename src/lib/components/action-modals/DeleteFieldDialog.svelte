@@ -6,6 +6,7 @@
   import Dialog from "$lib/components/Dialog.svelte";
   import DoneDialog from "$lib/components/DoneDialog.svelte";
   import { apiUri } from "$lib/config";
+  import { deepClone } from "$lib/utils/deepClone";
   import { queryClient } from "$lib/utils/queryClient";
   import { createMutation } from "@tanstack/svelte-query";
 
@@ -27,7 +28,7 @@
         { "override-group": true },
       ]);
       if (cachedFields !== undefined) {
-        const { [fieldId]: _, ...newFields } = structuredClone(cachedFields);
+        const { [fieldId]: _, ...newFields } = deepClone(cachedFields);
         queryClient.setQueryData<Record<string, Field>>(
           ["v1.0", "field", { "override-group": true }],
           newFields,

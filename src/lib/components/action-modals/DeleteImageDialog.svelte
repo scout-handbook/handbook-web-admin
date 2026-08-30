@@ -4,6 +4,7 @@
   import Dialog from "$lib/components/Dialog.svelte";
   import DoneDialog from "$lib/components/DoneDialog.svelte";
   import { apiUri } from "$lib/config";
+  import { deepClone } from "$lib/utils/deepClone";
   import { queryClient } from "$lib/utils/queryClient";
   import { createMutation } from "@tanstack/svelte-query";
 
@@ -23,7 +24,7 @@
         "image",
       ]);
       if (cachedImages !== undefined) {
-        const newImages = structuredClone(cachedImages);
+        const newImages = deepClone(cachedImages);
         newImages.splice(newImages.indexOf(imageId), 1);
         queryClient.setQueryData<Array<string>>(["v1.0", "image"], newImages);
       }

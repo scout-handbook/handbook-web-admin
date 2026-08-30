@@ -7,7 +7,7 @@ import { htmlToPhp } from "./rollup-plugin-html-to-php";
 
 export default defineConfig({
   build: {
-    target: "es2017",
+    target: "es2021",
   },
   plugins: [sveltekit(), htmlToPhp("dist"), htaccess(options)],
 });

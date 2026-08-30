@@ -51,7 +51,7 @@
     },
   ).then((response) => {
     for (const key in response) {
-      if (!Object.hasOwn(response, key)) {
+      if (!Object.prototype.hasOwnProperty.call(response, key)) {
         continue;
       }
       lessonList.set(key, response[key]);

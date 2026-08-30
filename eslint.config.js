@@ -105,6 +105,23 @@ export default tseslint.config(
       "no-octal-escape": "error",
       "no-param-reassign": "error",
       "no-promise-executor-return": "error",
+      "no-restricted-globals": [
+        "error",
+        {
+          message:
+            "structuredClone needs Chrome 98 / Safari 15.4, above this app's ES2017 floor. Use deepClone from $lib/utils/deepClone.",
+          name: "structuredClone",
+        },
+      ],
+      "no-restricted-syntax": [
+        "error",
+        {
+          message:
+            "$state.snapshot needs Chrome 98 / Safari 15.4 - Svelte documents it as an exception to its Baseline 2020 support. Use deepClone from $lib/utils/deepClone, or read the value directly if it is a primitive.",
+          selector:
+            "CallExpression[callee.type='MemberExpression'][callee.object.name='$state'][callee.property.name='snapshot']",
+        },
+      ],
       "no-return-assign": "error",
       "no-self-compare": "error",
       "no-sequences": "error",
@@ -151,7 +168,6 @@ export default tseslint.config(
       ],
       "prefer-const": "error",
       "prefer-exponentiation-operator": "error",
-      "prefer-object-has-own": "error",
       "prefer-object-spread": "error",
       "prefer-regex-literals": "error",
       "prefer-rest-params": "error",

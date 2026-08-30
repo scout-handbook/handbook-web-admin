@@ -12,6 +12,7 @@
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import SidePanel from "$lib/components/SidePanel.svelte";
   import { apiUri } from "$lib/config";
+  import { deepClone } from "$lib/utils/deepClone";
   import { queryClient } from "$lib/utils/queryClient";
   import { authFailHandler, reAuth, request } from "$lib/utils/request";
   import { createMutation } from "@tanstack/svelte-query";
@@ -39,7 +40,7 @@
         "group",
       ]);
       if (cachedGroups !== undefined) {
-        const newGroups = structuredClone(cachedGroups);
+        const newGroups = deepClone(cachedGroups);
         newGroups[groupId].count += selectedParticipants.length;
         queryClient.setQueryData<Record<string, Group>>(
           ["v1.0", "group"],
