@@ -114,13 +114,15 @@
     border: none;
   }
 
+  /* stylelint-disable-next-line selector-class-pattern -- CodeMirror's own
+     class name, set by EasyMDE */
   :global(.CodeMirror) {
     bottom: 0;
     left: 0;
-    padding-top: 0;
-    position: absolute;
     right: 0;
     top: 50px;
+    padding-top: 0;
+    position: absolute;
   }
 
   div {

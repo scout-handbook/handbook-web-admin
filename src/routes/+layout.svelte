@@ -131,8 +131,8 @@
   :global(body) {
     color: var(--background);
     font-family: "Open Sans", sans-serif;
-    font-feature-settings: "liga" 1; /* stylelint-disable-line plugin/no-unsupported-browser-features */
-    font-kerning: normal; /* stylelint-disable-line plugin/no-unsupported-browser-features */
+    font-feature-settings: "liga" 1;
+    font-kerning: normal;
     font-size: 16px;
     height: 100%;
     line-height: 160%;
