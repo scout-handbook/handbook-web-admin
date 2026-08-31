@@ -24,9 +24,9 @@
   .main-page-container {
     bottom: 0;
     left: 0;
-    overflow-y: auto;
-    position: absolute;
     right: 0;
     top: 81px;
+    overflow-y: auto;
+    position: absolute;
   }
 </style>

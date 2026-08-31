@@ -45,7 +45,7 @@
     font-weight: bold;
     height: 52px;
     margin-left: -5px;
-    padding: 26px 0 2px 0;
+    padding: 26px 0 2px;
     text-align: center;
     text-decoration: none;
     transition:

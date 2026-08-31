@@ -125,15 +125,15 @@
     border: none;
     cursor: pointer;
     bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
     height: fit-content;
     width: fit-content;
-    left: 0;
     padding: 0;
     margin: auto;
     max-height: 100%;
     position: fixed;
-    right: 0;
-    top: 0;
     z-index: 9;
   }
 

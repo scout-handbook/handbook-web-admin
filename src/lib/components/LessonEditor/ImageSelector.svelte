@@ -76,12 +76,12 @@
   .scroller {
     bottom: 0;
     left: 0;
+    right: 0;
+    top: 0;
     overflow-y: auto;
     padding-bottom: 30px;
     padding-top: 76px;
     position: absolute;
-    right: 0;
-    top: 0;
   }
 
   .selector {
