@@ -42,8 +42,7 @@
     "prepare": "svelte-kit sync"
   },
   "browserslist": [
-    "defaults",
-    "not OperaMini all"
+    "baseline 2020"
   ],
   "dependencies": {
     "easymde": "^2.21.0",
