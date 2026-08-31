@@ -8,6 +8,7 @@
   import NameInput from "$lib/components/forms/NameInput.svelte";
   import SidePanel from "$lib/components/SidePanel.svelte";
   import { apiUri } from "$lib/config";
+  import { deepClone } from "$lib/utils/deepClone";
   import { queryClient } from "$lib/utils/queryClient";
   import { createMutation } from "@tanstack/svelte-query";
 
@@ -29,7 +30,7 @@
         "group",
       ]);
       if (cachedGroups !== undefined) {
-        const newGroups = structuredClone(cachedGroups);
+        const newGroups = deepClone(cachedGroups);
         newGroups[groupId].name = name;
         queryClient.setQueryData<Record<string, Group>>(
           ["v1.0", "group"],

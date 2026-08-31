@@ -10,6 +10,7 @@
   import NumberNameInput from "$lib/components/forms/NumberNameInput.svelte";
   import SidePanel from "$lib/components/SidePanel.svelte";
   import { apiUri } from "$lib/config";
+  import { deepClone } from "$lib/utils/deepClone";
   import { queryClient } from "$lib/utils/queryClient";
   import { createMutation } from "@tanstack/svelte-query";
 
@@ -30,7 +31,7 @@
         Record<string, Competence>
       >(["v1.0", "competence"]);
       if (cachedCompetences !== undefined) {
-        const newCompetences = structuredClone(cachedCompetences);
+        const newCompetences = deepClone(cachedCompetences);
         newCompetences[competenceId].number = number;
         newCompetences[competenceId].name = name;
         newCompetences[competenceId].description = description;

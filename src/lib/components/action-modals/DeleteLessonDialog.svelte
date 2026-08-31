@@ -10,6 +10,7 @@
   import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
   import Overlay from "$lib/components/Overlay.svelte";
   import { apiUri } from "$lib/config";
+  import { deepClone } from "$lib/utils/deepClone";
   import { queryClient } from "$lib/utils/queryClient";
   import { reAuth, request } from "$lib/utils/request";
   import { createMutation } from "@tanstack/svelte-query";
@@ -53,14 +54,14 @@
       ]);
 
       if (cachedLessons !== undefined) {
-        const { [lessonId]: _, ...newLessons } = structuredClone(cachedLessons);
+        const { [lessonId]: _, ...newLessons } = deepClone(cachedLessons);
         queryClient.setQueryData<Record<string, Lesson>>(
           ["v1.0", "lesson", { "override-group": true }],
           newLessons,
         );
       }
       if (cachedFields !== undefined) {
-        const newFields = structuredClone(cachedFields);
+        const newFields = deepClone(cachedFields);
         for (const fieldId in newFields) {
           if (newFields[fieldId].lessons.includes(lessonId)) {
             newFields[fieldId].lessons.splice(

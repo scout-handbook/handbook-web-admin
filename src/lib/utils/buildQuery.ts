@@ -3,7 +3,7 @@ import type { Payload } from "$lib/interfaces/Payload";
 export function buildQuery(searchParams: Payload): string {
   const pairs: Array<string> = [];
   for (const key in searchParams) {
-    if (!Object.hasOwn(searchParams, key)) {
+    if (!Object.prototype.hasOwnProperty.call(searchParams, key)) {
       continue;
     }
     const value = searchParams[key];

@@ -6,6 +6,7 @@
   import Dialog from "$lib/components/Dialog.svelte";
   import DoneDialog from "$lib/components/DoneDialog.svelte";
   import { apiUri } from "$lib/config";
+  import { deepClone } from "$lib/utils/deepClone";
   import { queryClient } from "$lib/utils/queryClient";
   import { createMutation } from "@tanstack/svelte-query";
 
@@ -26,7 +27,7 @@
         "group",
       ]);
       if (cachedGroups !== undefined) {
-        const { [groupId]: _, ...newGroups } = structuredClone(cachedGroups);
+        const { [groupId]: _, ...newGroups } = deepClone(cachedGroups);
         queryClient.setQueryData<Record<string, Group>>(
           ["v1.0", "group"],
           newGroups,

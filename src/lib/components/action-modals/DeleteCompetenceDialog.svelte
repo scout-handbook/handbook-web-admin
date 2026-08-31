@@ -7,6 +7,7 @@
   import Dialog from "$lib/components/Dialog.svelte";
   import DoneDialog from "$lib/components/DoneDialog.svelte";
   import { apiUri } from "$lib/config";
+  import { deepClone } from "$lib/utils/deepClone";
   import { queryClient } from "$lib/utils/queryClient";
   import { createMutation } from "@tanstack/svelte-query";
 
@@ -35,7 +36,7 @@
 
       if (cachedCompetences !== undefined) {
         const { [competenceId]: _, ...newCompetences } =
-          structuredClone(cachedCompetences);
+          deepClone(cachedCompetences);
         queryClient.setQueryData<Record<string, Competence>>(
           ["v1.0", "competence"],
           newCompetences,
@@ -43,7 +44,7 @@
       }
 
       if (cachedLessons !== undefined) {
-        const newLessons = structuredClone(cachedLessons);
+        const newLessons = deepClone(cachedLessons);
         for (const lessonId in newLessons) {
           if (newLessons[lessonId].competences.includes(competenceId)) {
             newLessons[lessonId].competences.splice(

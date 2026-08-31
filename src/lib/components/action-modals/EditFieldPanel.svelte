@@ -11,6 +11,7 @@
   import SidePanel from "$lib/components/SidePanel.svelte";
   import SidePanelImageSelector from "$lib/components/SidePanelImageSelector.svelte";
   import { apiUri } from "$lib/config";
+  import { deepClone } from "$lib/utils/deepClone";
   import { queryClient } from "$lib/utils/queryClient";
   import { createMutation } from "@tanstack/svelte-query";
 
@@ -35,7 +36,7 @@
         { "override-group": true },
       ]);
       if (cachedFields !== undefined) {
-        const newFields = structuredClone(cachedFields);
+        const newFields = deepClone(cachedFields);
         newFields[fieldId].name = name;
         newFields[fieldId].description = description;
         newFields[fieldId].image = image;
