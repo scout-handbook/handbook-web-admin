@@ -4,11 +4,6 @@ export default {
   plugins: ["stylelint-no-unsupported-browser-features"],
   rules: {
     "color-function-notation": "legacy",
-    "plugin/no-unsupported-browser-features": [
-      true,
-      {
-        severity: "warning",
-      },
-    ],
+    "plugin/no-unsupported-browser-features": true,
   },
 };
