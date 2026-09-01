@@ -69,12 +69,16 @@
     border-color: var(--accent-color);
   }
 
-  input:checked + span {
+  /*
+   * `+ span` would compile to a `:where()` selector, which needs Chrome 88
+   * while the floor is Chrome 87. The input keeps the scoping class.
+   */
+  input:checked + :global(span) {
     background-color: var(--background-darkest);
     border-color: var(--accent-color);
   }
 
-  input:checked + span::before {
+  input:checked + :global(span)::before {
     border-color: var(--accent-color);
   }
 </style>
