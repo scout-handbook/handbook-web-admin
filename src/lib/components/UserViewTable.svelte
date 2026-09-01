@@ -113,8 +113,12 @@
     padding: 15px 20px;
   }
 
-  td + td,
-  th + th {
+  /*
+   * `td + td` would compile to a `:where()` selector, which needs Chrome 88
+   * while the floor is Chrome 87. This form scopes to a single selector part.
+   */
+  td:not(:first-child),
+  th:not(:first-child) {
     padding-left: 50px;
   }
 </style>
