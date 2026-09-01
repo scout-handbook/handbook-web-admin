@@ -43,7 +43,8 @@
     "lint:svelte:svelte-check": "FORCE_COLOR=1 svelte-check",
     "lint:ts": "run-p -c --aggregate-output lint:ts:*",
     "lint:ts:typecheck": "tsc --noEmit",
-    "prepare": "svelte-kit sync"
+    "prepare": "svelte-kit sync",
+    "start": "vite"
   },
   "browserslist": [
     "baseline 2020"
