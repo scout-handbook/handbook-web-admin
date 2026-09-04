@@ -25,6 +25,12 @@ export default tseslint.config(
   ]),
   packageJson.configs.recommended,
   {
+    linterOptions: {
+      reportUnusedDisableDirectives: "error",
+      reportUnusedInlineConfigs: "error",
+    },
+  },
+  {
     extends: [css.configs.recommended],
     files: ["**/*.css"],
     language: "css/css",
@@ -57,6 +63,7 @@ export default tseslint.config(
       "prefer-arrow-functions": preferArrowFunctions,
     },
     rules: {
+      "@tanstack/query/no-rest-destructuring": "error",
       "array-callback-return": "error",
       "arrow-body-style": ["error", "as-needed"],
       "block-scoped-var": "error",
@@ -71,7 +78,6 @@ export default tseslint.config(
       "default-case": "error",
       "default-case-last": "error",
       eqeqeq: "error",
-      "eslint-comments/no-unused-disable": "error",
       "eslint-comments/require-description": [
         "error",
         {
@@ -266,6 +272,7 @@ export default tseslint.config(
       ],
       "svelte/derived-has-same-inputs-outputs": "error",
       "svelte/no-add-event-listener": "error",
+      "svelte/no-at-debug-tags": "error",
       "svelte/no-bind-value-on-checkable-inputs": "error",
       "svelte/no-conflicting-module-names": "error",
       "svelte/no-extra-reactive-curlies": "error",
@@ -276,6 +283,7 @@ export default tseslint.config(
           allowTransitions: true,
         },
       ],
+      "svelte/no-inspect": "error",
       "svelte/no-target-blank": "error",
       "svelte/no-top-level-browser-globals": "error",
       "svelte/no-unused-class-name": [
