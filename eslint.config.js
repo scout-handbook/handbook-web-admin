@@ -64,7 +64,7 @@ export default tseslint.config(
       "capitalized-comments": [
         "error",
         "always",
-        { ignorePattern: "svelte-ignore" },
+        { ignoreConsecutiveComments: true, ignorePattern: "svelte-ignore" },
       ],
       "consistent-return": "error",
       "consistent-this": "error",
@@ -172,6 +172,7 @@ export default tseslint.config(
       "prefer-template": "error",
       radix: "error",
       "require-atomic-updates": "error",
+      "require-unicode-regexp": "error",
       strict: ["error", "never"],
     },
   },

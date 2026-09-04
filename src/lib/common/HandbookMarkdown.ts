@@ -48,7 +48,7 @@ function getArgumentString(
       argumentString = line.substring(start + 1, stop);
     }
   }
-  argumentString = argumentString.replace(/ /g, "");
+  argumentString = argumentString.replace(/ /gu, "");
   return [argumentString, next];
 }
 
