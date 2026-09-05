@@ -65,17 +65,6 @@
     step = "event-selection";
   });
 
-  function setdiff(a: Array<Participant>, b: Array<User>): Array<Participant> {
-    const bArr = b.map((x): number => x.id);
-    const result = [];
-    for (const aItem of a) {
-      if (!bArr.includes(aItem.id)) {
-        result.push(aItem);
-      }
-    }
-    return result;
-  }
-
   function getParticipantList(): void {
     if (selectedEvent === null) {
       return;
@@ -142,6 +131,17 @@
       mutation.mutate();
       step = "done";
     });
+  }
+
+  function setdiff(a: Array<Participant>, b: Array<User>): Array<Participant> {
+    const bArr = b.map((x): number => x.id);
+    const result = [];
+    for (const aItem of a) {
+      if (!bArr.includes(aItem.id)) {
+        result.push(aItem);
+      }
+    }
+    return result;
   }
 </script>
 
