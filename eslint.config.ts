@@ -11,12 +11,12 @@ import perfectionist from "eslint-plugin-perfectionist";
 import preferArrowFunctions from "eslint-plugin-prefer-arrow-functions";
 import prettierRecommended from "eslint-plugin-prettier/recommended";
 import svelte from "eslint-plugin-svelte";
-import { globalIgnores } from "eslint/config";
+import { defineConfig, globalIgnores } from "eslint/config";
 import globals from "globals";
 import svelteParser from "svelte-eslint-parser";
 import tseslint from "typescript-eslint";
 
-export default tseslint.config(
+export default defineConfig(
   globalIgnores([
     ".svelte-kit/",
     "dist/",
@@ -191,7 +191,14 @@ export default tseslint.config(
     languageOptions: {
       parserOptions: {
         extraFileExtensions: [".svelte"],
-        projectService: true,
+        projectService: {
+          allowDefaultProject: [
+            "eslint.config.ts",
+            "postcss.config.ts",
+            "prettier.config.ts",
+            "stylelint.config.ts",
+          ],
+        },
       },
     },
     rules: {
