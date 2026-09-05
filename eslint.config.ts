@@ -194,6 +194,7 @@ export default defineConfig(
         projectService: {
           allowDefaultProject: [
             "eslint.config.ts",
+            "postcss.config.ts",
             "prettier.config.ts",
             "stylelint.config.ts",
           ],
