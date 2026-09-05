@@ -191,7 +191,9 @@ export default tseslint.config(
     languageOptions: {
       parserOptions: {
         extraFileExtensions: [".svelte"],
-        projectService: true,
+        projectService: {
+          allowDefaultProject: ["prettier.config.ts", "stylelint.config.ts"],
+        },
       },
     },
     rules: {
