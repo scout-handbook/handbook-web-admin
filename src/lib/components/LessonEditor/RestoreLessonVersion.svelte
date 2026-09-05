@@ -11,6 +11,7 @@
   import { compileMarkdown } from "$lib/utils/compileMarkdown";
   import { parseVersion } from "$lib/utils/parseVersion";
   import { authFailHandler, request } from "$lib/utils/request";
+  import { untrack } from "svelte";
   import { SvelteMap } from "svelte/reactivity";
 
   interface Props {
@@ -36,11 +37,13 @@
       : (versionList.find((x) => x.version === selectedVersion)?.name ?? ""),
   );
 
-  void request<Array<LessonVersion>>(
-    `${apiUri}/v1.0/lesson/${lessonId}/history`,
-    "GET",
-    {},
-    {},
+  void untrack(async () =>
+    request<Array<LessonVersion>>(
+      `${apiUri}/v1.0/lesson/${lessonId}/history`,
+      "GET",
+      {},
+      {},
+    ),
   ).then((response) => {
     versionList = response;
   });

@@ -13,6 +13,7 @@
   import { getResourceContext } from "$lib/resources";
   import { filter } from "$lib/utils/mapUtils";
   import { queryClient } from "$lib/utils/queryClient";
+  import { untrack } from "svelte";
 
   interface Props {
     user: User;
@@ -22,7 +23,7 @@
 
   const { groups } = getResourceContext();
 
-  let selectedGroups = $state(user.groups);
+  let selectedGroups = $state(untrack(() => user.groups));
   let donePromise: Promise<void> | null = $state(null);
 
   let publicName = $derived(

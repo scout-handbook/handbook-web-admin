@@ -16,6 +16,7 @@
   import { apiUri } from "$lib/config";
   import { queryClient } from "$lib/utils/queryClient";
   import { authFailHandler, request } from "$lib/utils/request";
+  import { untrack } from "svelte";
 
   import type { PageData } from "./$types";
 
@@ -32,11 +33,13 @@
   let field: string | null = $state(null);
   let groups: Array<string> = $state([]);
 
-  const bodyPromise = request<string>(
-    `${apiUri}/v1.0/deleted-lesson/${data.id}/history/${data.version}`,
-    "GET",
-    {},
-    authFailHandler,
+  const bodyPromise = untrack(async () =>
+    request<string>(
+      `${apiUri}/v1.0/deleted-lesson/${data.id}/history/${data.version}`,
+      "GET",
+      {},
+      authFailHandler,
+    ),
   ).then((response) => {
     body = response;
   });

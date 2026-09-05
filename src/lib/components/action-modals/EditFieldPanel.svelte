@@ -14,6 +14,7 @@
   import { deepClone } from "$lib/utils/deepClone";
   import { queryClient } from "$lib/utils/queryClient";
   import { createMutation } from "@tanstack/svelte-query";
+  import { untrack } from "svelte";
 
   interface Props {
     field: Field;
@@ -22,7 +23,7 @@
 
   let { field, fieldId }: Props = $props();
 
-  let { description, icon, image, name } = $state(field);
+  let { description, icon, image, name } = $state(untrack(() => field));
   let imageSelectorOpen = $state(false);
   let iconSelectorOpen = $state(false);
   let donePromise: Promise<void> | null = $state(null);

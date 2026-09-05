@@ -13,6 +13,7 @@
   import { deepClone } from "$lib/utils/deepClone";
   import { queryClient } from "$lib/utils/queryClient";
   import { createMutation } from "@tanstack/svelte-query";
+  import { untrack } from "svelte";
 
   interface Props {
     competence: Competence;
@@ -21,7 +22,7 @@
 
   let { competence, competenceId }: Props = $props();
 
-  let { description, name, number } = $state(competence);
+  let { description, name, number } = $state(untrack(() => competence));
   let donePromise: Promise<void> | null = $state(null);
 
   const mutation = createMutation(() => ({

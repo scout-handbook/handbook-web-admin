@@ -14,6 +14,7 @@
   import { queryClient } from "$lib/utils/queryClient";
   import { reAuth, request } from "$lib/utils/request";
   import { createMutation } from "@tanstack/svelte-query";
+  import { untrack } from "svelte";
 
   interface Props {
     lesson: Lesson;
@@ -24,16 +25,18 @@
 
   let lockedError: string | null = $state(null);
   let expiredError = $state(false);
-  const mutexPromise = request(
-    `${apiUri}/v1.0/mutex/${encodeURIComponent(lessonId)}`,
-    "POST",
-    {},
-    {
-      AuthenticationException: reAuth,
-      LockedException: (response: LockedExceptionResponse): void => {
-        lockedError = response.holder;
+  const mutexPromise = untrack(async () =>
+    request(
+      `${apiUri}/v1.0/mutex/${encodeURIComponent(lessonId)}`,
+      "POST",
+      {},
+      {
+        AuthenticationException: reAuth,
+        LockedException: (response: LockedExceptionResponse): void => {
+          lockedError = response.holder;
+        },
       },
-    },
+    ),
   );
   let donePromise: Promise<void> | null = $state(null);
 

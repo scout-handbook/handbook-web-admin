@@ -11,6 +11,7 @@
   import { deepClone } from "$lib/utils/deepClone";
   import { queryClient } from "$lib/utils/queryClient";
   import { createMutation } from "@tanstack/svelte-query";
+  import { untrack } from "svelte";
 
   interface Props {
     group: Group;
@@ -19,7 +20,7 @@
 
   let { group, groupId }: Props = $props();
 
-  let { name } = $state(group);
+  let { name } = $state(untrack(() => group));
   let donePromise: Promise<void> | null = $state(null);
 
   const mutation = createMutation(() => ({
