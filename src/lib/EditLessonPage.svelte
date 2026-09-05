@@ -188,6 +188,11 @@
     ]).dispatch();
   }
 
+  function discard(): void {
+    destroyMutex();
+    history.back();
+  }
+
   function save(): void {
     const saveActionQueue = new ActionQueue([]);
     if (initialName !== name || initialBody !== body) {
@@ -217,11 +222,6 @@
     donePromise = saveActionQueue.dispatch().then(() => {
       mutation.mutate();
     });
-  }
-
-  function discard(): void {
-    destroyMutex();
-    history.back();
   }
 </script>
 

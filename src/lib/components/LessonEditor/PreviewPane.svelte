@@ -10,14 +10,14 @@
 
   let html = $state("");
 
+  function onChange(): void {
+    refreshPreview();
+  }
+
   function refreshPreview(): void {
     void compileMarkdown(body).then((compiled) => {
       html = compiled;
     });
-  }
-
-  function onChange(): void {
-    refreshPreview();
   }
 
   $effect(() => {
