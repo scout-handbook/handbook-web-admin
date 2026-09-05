@@ -11,6 +11,7 @@
   import { apiUri } from "$lib/config";
   import { queryClient } from "$lib/utils/queryClient";
   import { createQuery } from "@tanstack/svelte-query";
+  import { untrack } from "svelte";
   import { SvelteMap } from "svelte/reactivity";
 
   interface Props {
@@ -24,7 +25,7 @@
   }));
   let isSuperuser = $derived(accountQuery.data?.role === "superuser");
 
-  let selectedRole = $state(user.role);
+  let selectedRole = $state(untrack(() => user.role));
   let donePromise: Promise<void> | null = $state(null);
   let roleList = $derived(
     new SvelteMap([

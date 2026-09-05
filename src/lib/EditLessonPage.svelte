@@ -23,7 +23,7 @@
   import { queryClient } from "$lib/utils/queryClient";
   import { reAuth, request } from "$lib/utils/request";
   import { createMutation } from "@tanstack/svelte-query";
-  import { onDestroy, onMount } from "svelte";
+  import { onDestroy, onMount, untrack } from "svelte";
 
   interface Props {
     fields: SvelteMap<string, Field>;
@@ -34,23 +34,23 @@
   let { fields, lessonID, lessons }: Props = $props();
 
   let donePromise: Promise<void> | null = $state(null);
-  let name = $state(lessons.get(lessonID)?.name ?? "");
+  let name = $state(untrack(() => lessons.get(lessonID)?.name ?? ""));
   let body = $state("");
   let competences: Array<string> = $state(
-    lessons.get(lessonID)?.competences ?? [],
+    untrack(() => lessons.get(lessonID)?.competences ?? []),
   );
   let field: string | null = $state(
-    find(fields, (item) => item.lessons.includes(lessonID))?.[0] ?? null,
+    untrack(
+      () =>
+        find(fields, (item) => item.lessons.includes(lessonID))?.[0] ?? null,
+    ),
   );
   let groups: Array<string> = $state([]);
 
-  // svelte-ignore state_referenced_locally
-  const initialName = name;
+  const initialName = untrack(() => name);
   let initialBody = "";
-  // svelte-ignore state_referenced_locally
-  const initialCompetences = deepClone(competences);
-  // svelte-ignore state_referenced_locally
-  const initialField = field;
+  const initialCompetences = untrack(() => deepClone(competences));
+  const initialField = untrack(() => field);
   let initialGroups: Array<string> = [];
 
   const mutation = createMutation(() => ({
@@ -114,46 +114,48 @@
     }
   }
 
-  const lessonDataPromise = Promise.all([
-    request(
-      `${apiUri}/v1.0/mutex/${encodeURIComponent(lessonID)}`,
-      "POST",
-      {},
-      {
-        AuthenticationException: reAuth,
-        LockedException: (response: LockedExceptionResponse): void => {
-          history.back();
-          globalUI.dialogMessage = `Nelze upravovat lekci, protože ji právě upravuje ${response.holder}.`;
+  const lessonDataPromise = untrack(async () =>
+    Promise.all([
+      request(
+        `${apiUri}/v1.0/mutex/${encodeURIComponent(lessonID)}`,
+        "POST",
+        {},
+        {
+          AuthenticationException: reAuth,
+          LockedException: (response: LockedExceptionResponse): void => {
+            history.back();
+            globalUI.dialogMessage = `Nelze upravovat lekci, protože ji právě upravuje ${response.holder}.`;
+          },
         },
-      },
-    ).then(() => {
-      window.onbeforeunload = (): void => {
-        sendBeacon(lessonID);
-      };
-    }),
-    request<Array<string>>(
-      `${apiUri}/v1.0/lesson/${encodeURIComponent(lessonID)}/group`,
-      "GET",
-      {},
-      {
-        AuthenticationException: reAuth,
-      },
-    ).then((response) => {
-      groups = response;
-      initialGroups = groups;
-    }),
-    request<string>(
-      `${apiUri}/v1.0/lesson/${encodeURIComponent(lessonID)}`,
-      "GET",
-      {},
-      {
-        AuthenticationException: reAuth,
-      },
-    ).then((response) => {
-      body = response;
-      initialBody = body;
-    }),
-  ]);
+      ).then(() => {
+        window.onbeforeunload = (): void => {
+          sendBeacon(lessonID);
+        };
+      }),
+      request<Array<string>>(
+        `${apiUri}/v1.0/lesson/${encodeURIComponent(lessonID)}/group`,
+        "GET",
+        {},
+        {
+          AuthenticationException: reAuth,
+        },
+      ).then((response) => {
+        groups = response;
+        initialGroups = groups;
+      }),
+      request<string>(
+        `${apiUri}/v1.0/lesson/${encodeURIComponent(lessonID)}`,
+        "GET",
+        {},
+        {
+          AuthenticationException: reAuth,
+        },
+      ).then((response) => {
+        body = response;
+        initialBody = body;
+      }),
+    ]),
+  );
 
   function lessonEditMutexExtend(id: string): void {
     void new ActionQueue([
