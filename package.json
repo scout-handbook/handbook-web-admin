@@ -70,7 +70,7 @@
     "@types/codemirror": "5.60.18",
     "@types/node": "^26.4.1",
     "@types/showdown": "^2.0.6",
-    "autoprefixer": "^10.5.4",
+    "autoprefixer": "^10.5.5",
     "doiuse": "^6.0.6",
     "es-check": "^9.6.4",
     "eslint": "^10.9.1",
