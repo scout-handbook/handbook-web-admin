@@ -86,7 +86,7 @@
     "npm-run-all2": "^9.0.3",
     "postcss": "^8.5.28",
     "postcss-custom-properties": "^15.0.4",
-    "postcss-overflow-shorthand": "^7.0.0",
+    "postcss-overflow-shorthand": "^7.0.1",
     "prettier": "^3.9.9",
     "prettier-plugin-svelte": "^4.1.1",
     "rimraf": "^6.1.3",
