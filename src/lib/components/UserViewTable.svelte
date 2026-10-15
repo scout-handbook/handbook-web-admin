@@ -1,12 +1,13 @@
 <script lang="ts">
-  import type { Loginstate } from "$lib/interfaces/Loginstate";
-  import type { User } from "$lib/interfaces/User";
-
-  import { pushState } from "$app/navigation";
-  import Button from "$lib/components/Button.svelte";
-  import { getResourceContext } from "$lib/resources";
-  import { filter } from "$lib/utils/mapUtils";
+  import { goto } from "$app/navigation";
   import { createQuery } from "@tanstack/svelte-query";
+
+  import type { Loginstate } from "#lib/interfaces/Loginstate.js";
+  import type { User } from "#lib/interfaces/User.js";
+
+  import Button from "#lib/components/Button.svelte";
+  import { getResourceContext } from "#lib/resources.js";
+  import { filter } from "#lib/utils/mapUtils.js";
 
   interface Props {
     users: Array<User>;
@@ -53,10 +54,13 @@
               cyan
               icon="pencil"
               onclick={(): void => {
-                pushState("", {
-                  action: {
-                    name: "change-user-role",
-                    user,
+                void goto("", {
+                  shallow: true,
+                  state: {
+                    action: {
+                      name: "change-user-role",
+                      user,
+                    },
                   },
                 });
               }}
@@ -79,10 +83,13 @@
             cyan
             icon="pencil"
             onclick={(): void => {
-              pushState("", {
-                action: {
-                  name: "change-user-groups",
-                  user,
+              void goto("", {
+                shallow: true,
+                state: {
+                  action: {
+                    name: "change-user-groups",
+                    user,
+                  },
                 },
               });
             }}

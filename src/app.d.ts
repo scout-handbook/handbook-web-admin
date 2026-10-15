@@ -1,4 +1,4 @@
-import type { User } from "$lib/interfaces/User";
+import type { User } from "#lib/interfaces/User.js";
 
 export type Action =
   | {

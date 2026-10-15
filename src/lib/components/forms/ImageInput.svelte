@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Button from "$lib/components/Button.svelte";
-  import { apiUri } from "$lib/config";
+  import Button from "#lib/components/Button.svelte";
+  import { apiUri } from "#lib/config.js";
 
   interface Props {
     name: string;

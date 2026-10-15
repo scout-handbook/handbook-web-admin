@@ -1,7 +1,7 @@
-import type { ActionQueue } from "$lib/actions/ActionQueue";
+import type { ActionQueue } from "#lib/actions/ActionQueue.js";
 
-import { Action } from "$lib/actions/Action";
-import { apiUri } from "$lib/config";
+import { Action } from "#lib/actions/Action.js";
+import { apiUri } from "#lib/config.js";
 
 export function populateCompetences(
   actionQueue: ActionQueue,

@@ -1,15 +1,16 @@
 <script lang="ts">
-  import type { Competence } from "$lib/interfaces/Competence";
-  import type { Lesson } from "$lib/interfaces/Lesson";
-
-  import { Action } from "$lib/actions/Action";
-  import { ActionQueue } from "$lib/actions/ActionQueue";
-  import Dialog from "$lib/components/Dialog.svelte";
-  import DoneDialog from "$lib/components/DoneDialog.svelte";
-  import { apiUri } from "$lib/config";
-  import { deepClone } from "$lib/utils/deepClone";
-  import { queryClient } from "$lib/utils/queryClient";
   import { createMutation } from "@tanstack/svelte-query";
+
+  import type { Competence } from "#lib/interfaces/Competence.js";
+  import type { Lesson } from "#lib/interfaces/Lesson.js";
+
+  import { Action } from "#lib/actions/Action.js";
+  import { ActionQueue } from "#lib/actions/ActionQueue.js";
+  import Dialog from "#lib/components/Dialog.svelte";
+  import DoneDialog from "#lib/components/DoneDialog.svelte";
+  import { apiUri } from "#lib/config.js";
+  import { deepClone } from "#lib/utils/deepClone.js";
+  import { queryClient } from "#lib/utils/queryClient.js";
 
   interface Props {
     competence: Competence;

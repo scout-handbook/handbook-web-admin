@@ -1,14 +1,14 @@
 <script lang="ts">
-  import { Action } from "$lib/actions/Action";
-  import { ActionQueue } from "$lib/actions/ActionQueue";
-  import Button from "$lib/components/Button.svelte";
-  import DoneDialog from "$lib/components/DoneDialog.svelte";
-  import DescriptionInput from "$lib/components/forms/DescriptionInput.svelte";
-  import NameInput from "$lib/components/forms/NameInput.svelte";
-  import NumberNameInput from "$lib/components/forms/NumberNameInput.svelte";
-  import SidePanel from "$lib/components/SidePanel.svelte";
-  import { apiUri } from "$lib/config";
-  import { queryClient } from "$lib/utils/queryClient";
+  import { Action } from "#lib/actions/Action.js";
+  import { ActionQueue } from "#lib/actions/ActionQueue.js";
+  import Button from "#lib/components/Button.svelte";
+  import DoneDialog from "#lib/components/DoneDialog.svelte";
+  import DescriptionInput from "#lib/components/forms/DescriptionInput.svelte";
+  import NameInput from "#lib/components/forms/NameInput.svelte";
+  import NumberNameInput from "#lib/components/forms/NumberNameInput.svelte";
+  import SidePanel from "#lib/components/SidePanel.svelte";
+  import { apiUri } from "#lib/config.js";
+  import { queryClient } from "#lib/utils/queryClient.js";
 
   let number = $state("0");
   let name = $state("Nový bod");

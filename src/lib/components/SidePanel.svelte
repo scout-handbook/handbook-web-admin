@@ -1,8 +1,9 @@
 <script lang="ts">
   import type { Snippet } from "svelte";
 
-  import Overlay from "$lib/components/Overlay.svelte";
   import { fly } from "svelte/transition";
+
+  import Overlay from "#lib/components/Overlay.svelte";
 
   interface Props {
     children: Snippet;

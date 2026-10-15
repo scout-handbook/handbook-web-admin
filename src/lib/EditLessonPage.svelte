@@ -1,29 +1,31 @@
 <script lang="ts">
-  import type { LockedExceptionResponse } from "$lib/interfaces/APIResponse";
-  import type { Field } from "$lib/interfaces/Field";
-  import type { Lesson } from "$lib/interfaces/Lesson";
   import type { SvelteMap } from "svelte/reactivity";
 
-  import { Action } from "$lib/actions/Action";
-  import { ActionCallback } from "$lib/actions/ActionCallback";
-  import { ActionQueue } from "$lib/actions/ActionQueue";
+  import { createMutation } from "@tanstack/svelte-query";
+  import { onDestroy, onMount, untrack } from "svelte";
+
+  import type { LockedExceptionResponse } from "#lib/interfaces/APIResponse.js";
+  import type { Field } from "#lib/interfaces/Field.js";
+  import type { Lesson } from "#lib/interfaces/Lesson.js";
+
+  import { Action } from "#lib/actions/Action.js";
+  import { ActionCallback } from "#lib/actions/ActionCallback.js";
+  import { ActionQueue } from "#lib/actions/ActionQueue.js";
   import {
     populateCompetences,
     populateField,
     populateGroups,
-  } from "$lib/actions/populateLessonActionQueue";
-  import DoneDialog from "$lib/components/DoneDialog.svelte";
-  import LessonEditor from "$lib/components/LessonEditor.svelte";
-  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
-  import { apiUri } from "$lib/config";
-  import { globalUI } from "$lib/globalUI.svelte";
-  import { deepClone } from "$lib/utils/deepClone";
-  import { afterRefreshCallback } from "$lib/utils/loginRefresh.svelte";
-  import { find } from "$lib/utils/mapUtils";
-  import { queryClient } from "$lib/utils/queryClient";
-  import { reAuth, request } from "$lib/utils/request";
-  import { createMutation } from "@tanstack/svelte-query";
-  import { onDestroy, onMount, untrack } from "svelte";
+  } from "#lib/actions/populateLessonActionQueue.js";
+  import DoneDialog from "#lib/components/DoneDialog.svelte";
+  import LessonEditor from "#lib/components/LessonEditor.svelte";
+  import LoadingIndicator from "#lib/components/LoadingIndicator.svelte";
+  import { apiUri } from "#lib/config.js";
+  import { globalUI } from "#lib/globalUI.svelte.js";
+  import { deepClone } from "#lib/utils/deepClone.js";
+  import { afterRefreshCallback } from "#lib/utils/loginRefresh.svelte.js";
+  import { find } from "#lib/utils/mapUtils.js";
+  import { queryClient } from "#lib/utils/queryClient.js";
+  import { reAuth, request } from "#lib/utils/request.js";
 
   interface Props {
     fields: SvelteMap<string, Field>;

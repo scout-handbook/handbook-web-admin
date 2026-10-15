@@ -1,10 +1,10 @@
-import type { Competence } from "$lib/interfaces/Competence";
-import type { Field } from "$lib/interfaces/Field";
-import type { Group } from "$lib/interfaces/Group";
-import type { Lesson } from "$lib/interfaces/Lesson";
-import type { Resource } from "$lib/utils/Resource.svelte";
-
 import { createContext } from "svelte";
+
+import type { Competence } from "#lib/interfaces/Competence.js";
+import type { Field } from "#lib/interfaces/Field.js";
+import type { Group } from "#lib/interfaces/Group.js";
+import type { Lesson } from "#lib/interfaces/Lesson.js";
+import type { Resource } from "#lib/utils/Resource.svelte.js";
 
 export function competenceComparator(
   first: Competence,

@@ -1,18 +1,19 @@
 <script lang="ts">
-  import type { Loginstate } from "$lib/interfaces/Loginstate";
-  import type { User } from "$lib/interfaces/User";
-
-  import { Action } from "$lib/actions/Action";
-  import { ActionQueue } from "$lib/actions/ActionQueue";
-  import Button from "$lib/components/Button.svelte";
-  import DoneDialog from "$lib/components/DoneDialog.svelte";
-  import RadioGroup from "$lib/components/forms/RadioGroup.svelte";
-  import SidePanel from "$lib/components/SidePanel.svelte";
-  import { apiUri } from "$lib/config";
-  import { queryClient } from "$lib/utils/queryClient";
   import { createQuery } from "@tanstack/svelte-query";
   import { untrack } from "svelte";
   import { SvelteMap } from "svelte/reactivity";
+
+  import type { Loginstate } from "#lib/interfaces/Loginstate.js";
+  import type { User } from "#lib/interfaces/User.js";
+
+  import { Action } from "#lib/actions/Action.js";
+  import { ActionQueue } from "#lib/actions/ActionQueue.js";
+  import Button from "#lib/components/Button.svelte";
+  import DoneDialog from "#lib/components/DoneDialog.svelte";
+  import RadioGroup from "#lib/components/forms/RadioGroup.svelte";
+  import SidePanel from "#lib/components/SidePanel.svelte";
+  import { apiUri } from "#lib/config.js";
+  import { queryClient } from "#lib/utils/queryClient.js";
 
   interface Props {
     user: User;

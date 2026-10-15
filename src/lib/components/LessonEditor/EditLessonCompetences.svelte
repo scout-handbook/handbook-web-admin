@@ -1,10 +1,10 @@
 <script lang="ts">
-  import type { Competence } from "$lib/interfaces/Competence";
+  import type { Competence } from "#lib/interfaces/Competence.js";
 
-  import Button from "$lib/components/Button.svelte";
-  import CheckboxGroup from "$lib/components/forms/CheckboxGroup.svelte";
-  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
-  import { getResourceContext } from "$lib/resources";
+  import Button from "#lib/components/Button.svelte";
+  import CheckboxGroup from "#lib/components/forms/CheckboxGroup.svelte";
+  import LoadingIndicator from "#lib/components/LoadingIndicator.svelte";
+  import { getResourceContext } from "#lib/resources.js";
 
   interface Props {
     competences: Array<string>;

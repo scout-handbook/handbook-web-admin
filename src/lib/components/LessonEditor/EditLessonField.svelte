@@ -1,10 +1,10 @@
 <script lang="ts">
-  import type { Field } from "$lib/interfaces/Field";
+  import type { Field } from "#lib/interfaces/Field.js";
 
-  import Button from "$lib/components/Button.svelte";
-  import RadioGroup from "$lib/components/forms/RadioGroup.svelte";
-  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
-  import { getResourceContext } from "$lib/resources";
+  import Button from "#lib/components/Button.svelte";
+  import RadioGroup from "#lib/components/forms/RadioGroup.svelte";
+  import LoadingIndicator from "#lib/components/LoadingIndicator.svelte";
+  import { getResourceContext } from "#lib/resources.js";
 
   interface Props {
     field: string | null;

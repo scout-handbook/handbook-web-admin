@@ -1,19 +1,20 @@
 <script lang="ts">
-  import type { Loginstate } from "$lib/interfaces/Loginstate";
-
-  import { pushState } from "$app/navigation";
+  import { goto } from "$app/navigation";
   import { page } from "$app/state";
-  import AddGroupPanel from "$lib/components/action-modals/AddGroupPanel.svelte";
-  import DeleteGroupDialog from "$lib/components/action-modals/DeleteGroupDialog.svelte";
-  import EditGroupPanel from "$lib/components/action-modals/EditGroupPanel.svelte";
-  import ImportGroupMembersPanel from "$lib/components/action-modals/ImportGroupMembersPanel.svelte";
-  import Button from "$lib/components/Button.svelte";
-  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
-  import MainPageContainer from "$lib/components/MainPageContainer.svelte";
-  import TopBar from "$lib/components/TopBar.svelte";
-  import { siteName } from "$lib/config";
-  import { getResourceContext } from "$lib/resources";
   import { createQuery } from "@tanstack/svelte-query";
+
+  import type { Loginstate } from "#lib/interfaces/Loginstate.js";
+
+  import AddGroupPanel from "#lib/components/action-modals/AddGroupPanel.svelte";
+  import DeleteGroupDialog from "#lib/components/action-modals/DeleteGroupDialog.svelte";
+  import EditGroupPanel from "#lib/components/action-modals/EditGroupPanel.svelte";
+  import ImportGroupMembersPanel from "#lib/components/action-modals/ImportGroupMembersPanel.svelte";
+  import Button from "#lib/components/Button.svelte";
+  import LoadingIndicator from "#lib/components/LoadingIndicator.svelte";
+  import MainPageContainer from "#lib/components/MainPageContainer.svelte";
+  import TopBar from "#lib/components/TopBar.svelte";
+  import { siteName } from "#lib/config.js";
+  import { getResourceContext } from "#lib/resources.js";
 
   const { groups } = getResourceContext();
 
@@ -53,7 +54,10 @@
       green
       icon="plus"
       onclick={(): void => {
-        pushState("", { action: { name: "add-group" } });
+        void goto("", {
+          shallow: true,
+          state: { action: { name: "add-group" } },
+        });
       }}
     >
       Přidat
@@ -72,10 +76,13 @@
           cyan
           icon="pencil"
           onclick={(): void => {
-            pushState("", {
-              action: {
-                groupId: id,
-                name: "change-group",
+            void goto("", {
+              shallow: true,
+              state: {
+                action: {
+                  groupId: id,
+                  name: "change-group",
+                },
               },
             });
           }}
@@ -86,10 +93,13 @@
           <Button
             icon="trash-empty"
             onclick={(): void => {
-              pushState("", {
-                action: {
-                  groupId: id,
-                  name: "delete-group",
+              void goto("", {
+                shallow: true,
+                state: {
+                  action: {
+                    groupId: id,
+                    name: "delete-group",
+                  },
                 },
               });
             }}
@@ -100,10 +110,13 @@
           <Button
             icon="user-plus"
             onclick={(): void => {
-              pushState("", {
-                action: {
-                  groupId: id,
-                  name: "import-group-members",
+              void goto("", {
+                shallow: true,
+                state: {
+                  action: {
+                    groupId: id,
+                    name: "import-group-members",
+                  },
                 },
               });
             }}

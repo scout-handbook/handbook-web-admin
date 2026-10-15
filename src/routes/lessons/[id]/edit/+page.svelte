@@ -1,7 +1,7 @@
 <script lang="ts">
-  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
-  import EditLessonPage from "$lib/EditLessonPage.svelte";
-  import { getResourceContext } from "$lib/resources";
+  import LoadingIndicator from "#lib/components/LoadingIndicator.svelte";
+  import EditLessonPage from "#lib/EditLessonPage.svelte";
+  import { getResourceContext } from "#lib/resources.js";
 
   import type { PageData } from "./$types";
 

@@ -1,17 +1,18 @@
 <script lang="ts">
-  import type { Group } from "$lib/interfaces/Group";
-
-  import { Action } from "$lib/actions/Action";
-  import { ActionQueue } from "$lib/actions/ActionQueue";
-  import Button from "$lib/components/Button.svelte";
-  import DoneDialog from "$lib/components/DoneDialog.svelte";
-  import NameInput from "$lib/components/forms/NameInput.svelte";
-  import SidePanel from "$lib/components/SidePanel.svelte";
-  import { apiUri } from "$lib/config";
-  import { deepClone } from "$lib/utils/deepClone";
-  import { queryClient } from "$lib/utils/queryClient";
   import { createMutation } from "@tanstack/svelte-query";
   import { untrack } from "svelte";
+
+  import type { Group } from "#lib/interfaces/Group.js";
+
+  import { Action } from "#lib/actions/Action.js";
+  import { ActionQueue } from "#lib/actions/ActionQueue.js";
+  import Button from "#lib/components/Button.svelte";
+  import DoneDialog from "#lib/components/DoneDialog.svelte";
+  import NameInput from "#lib/components/forms/NameInput.svelte";
+  import SidePanel from "#lib/components/SidePanel.svelte";
+  import { apiUri } from "#lib/config.js";
+  import { deepClone } from "#lib/utils/deepClone.js";
+  import { queryClient } from "#lib/utils/queryClient.js";
 
   interface Props {
     group: Group;

@@ -1,22 +1,23 @@
 <script lang="ts">
-  import type { Event } from "$lib/interfaces/Event";
-  import type { Group } from "$lib/interfaces/Group";
-  import type { Participant } from "$lib/interfaces/Participant";
-  import type { User } from "$lib/interfaces/User";
-  import type { UserListResponse } from "$lib/interfaces/UserListResponse";
-
-  import Button from "$lib/components/Button.svelte";
-  import Dialog from "$lib/components/Dialog.svelte";
-  import CheckboxGroup from "$lib/components/forms/CheckboxGroup.svelte";
-  import RadioGroup from "$lib/components/forms/RadioGroup.svelte";
-  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
-  import SidePanel from "$lib/components/SidePanel.svelte";
-  import { apiUri } from "$lib/config";
-  import { deepClone } from "$lib/utils/deepClone";
-  import { queryClient } from "$lib/utils/queryClient";
-  import { authFailHandler, reAuth, request } from "$lib/utils/request";
   import { createMutation } from "@tanstack/svelte-query";
   import { SvelteMap } from "svelte/reactivity";
+
+  import type { Event } from "#lib/interfaces/Event.js";
+  import type { Group } from "#lib/interfaces/Group.js";
+  import type { Participant } from "#lib/interfaces/Participant.js";
+  import type { User } from "#lib/interfaces/User.js";
+  import type { UserListResponse } from "#lib/interfaces/UserListResponse.js";
+
+  import Button from "#lib/components/Button.svelte";
+  import Dialog from "#lib/components/Dialog.svelte";
+  import CheckboxGroup from "#lib/components/forms/CheckboxGroup.svelte";
+  import RadioGroup from "#lib/components/forms/RadioGroup.svelte";
+  import LoadingIndicator from "#lib/components/LoadingIndicator.svelte";
+  import SidePanel from "#lib/components/SidePanel.svelte";
+  import { apiUri } from "#lib/config.js";
+  import { deepClone } from "#lib/utils/deepClone.js";
+  import { queryClient } from "#lib/utils/queryClient.js";
+  import { authFailHandler, reAuth, request } from "#lib/utils/request.js";
 
   interface Props {
     group: Group;

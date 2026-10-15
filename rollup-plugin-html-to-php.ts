@@ -1,22 +1,29 @@
 import type { Plugin } from "vite";
 
-import { existsSync, readdirSync, renameSync } from "fs";
+import { existsSync } from "fs";
+import { readdir, rename } from "fs/promises";
 import { join } from "path";
 
 export function htmlToPhp(outputDir: string): Plugin {
   return {
-    closeBundle: (): void => {
-      const htmlFiles = (
-        existsSync(outputDir)
-          ? (readdirSync(outputDir, { recursive: true }) as Array<string>)
-          : []
-      ).filter((filename) => filename.endsWith(".html"));
-      for (const file of htmlFiles) {
-        renameSync(
-          join(outputDir, file),
-          join(outputDir, file.replace(/\.html$/u, ".php")),
+    // SvelteKit writes prerendered HTML in a post buildApp hook, after closeBundle has already run.
+    buildApp: {
+      handler: async (): Promise<void> => {
+        const htmlFiles = (
+          existsSync(outputDir)
+            ? await readdir(outputDir, { recursive: true })
+            : []
+        ).filter((filename) => filename.endsWith(".html"));
+        await Promise.all(
+          htmlFiles.map(async (file) =>
+            rename(
+              join(outputDir, file),
+              join(outputDir, file.replace(/\.html$/u, ".php")),
+            ),
+          ),
         );
-      }
+      },
+      order: "post",
     },
     name: "html-to-php",
   };

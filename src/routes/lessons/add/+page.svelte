@@ -1,18 +1,19 @@
 <script lang="ts">
   import { page } from "$app/state";
-  import { Action } from "$lib/actions/Action";
-  import { ActionCallback } from "$lib/actions/ActionCallback";
-  import { ActionQueue } from "$lib/actions/ActionQueue";
+
+  import { Action } from "#lib/actions/Action.js";
+  import { ActionCallback } from "#lib/actions/ActionCallback.js";
+  import { ActionQueue } from "#lib/actions/ActionQueue.js";
   import {
     populateCompetences,
     populateField,
     populateGroups,
-  } from "$lib/actions/populateLessonActionQueue";
-  import DoneDialog from "$lib/components/DoneDialog.svelte";
-  import LessonEditor from "$lib/components/LessonEditor.svelte";
-  import { apiUri } from "$lib/config";
-  import { defaultBody, defaultName } from "$lib/utils/defaultLessonContent";
-  import { queryClient } from "$lib/utils/queryClient";
+  } from "#lib/actions/populateLessonActionQueue.js";
+  import DoneDialog from "#lib/components/DoneDialog.svelte";
+  import LessonEditor from "#lib/components/LessonEditor.svelte";
+  import { apiUri } from "#lib/config.js";
+  import { defaultBody, defaultName } from "#lib/utils/defaultLessonContent.js";
+  import { queryClient } from "#lib/utils/queryClient.js";
 
   let donePromise: Promise<void> | null = $state(null);
   let name = $state(defaultName);

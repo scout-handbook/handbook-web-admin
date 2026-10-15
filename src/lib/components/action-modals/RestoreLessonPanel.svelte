@@ -1,21 +1,22 @@
 <script lang="ts">
-  import type { DeletedLesson } from "$lib/interfaces/DeletedLesson";
-  import type { LessonVersion } from "$lib/interfaces/LessonVersion";
-
   import { goto } from "$app/navigation";
   import { resolve } from "$app/paths";
-  import Button from "$lib/components/Button.svelte";
-  import Dialog from "$lib/components/Dialog.svelte";
-  import DoubleSidePanel from "$lib/components/DoubleSidePanel.svelte";
-  import RadioGroup from "$lib/components/forms/RadioGroup.svelte";
-  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
-  import Overlay from "$lib/components/Overlay.svelte";
-  import SidePanel from "$lib/components/SidePanel.svelte";
-  import { apiUri } from "$lib/config";
-  import { compileMarkdown } from "$lib/utils/compileMarkdown";
-  import { parseVersion } from "$lib/utils/parseVersion";
-  import { authFailHandler, reAuth, request } from "$lib/utils/request";
   import { SvelteMap } from "svelte/reactivity";
+
+  import type { DeletedLesson } from "#lib/interfaces/DeletedLesson.js";
+  import type { LessonVersion } from "#lib/interfaces/LessonVersion.js";
+
+  import Button from "#lib/components/Button.svelte";
+  import Dialog from "#lib/components/Dialog.svelte";
+  import DoubleSidePanel from "#lib/components/DoubleSidePanel.svelte";
+  import RadioGroup from "#lib/components/forms/RadioGroup.svelte";
+  import LoadingIndicator from "#lib/components/LoadingIndicator.svelte";
+  import Overlay from "#lib/components/Overlay.svelte";
+  import SidePanel from "#lib/components/SidePanel.svelte";
+  import { apiUri } from "#lib/config.js";
+  import { compileMarkdown } from "#lib/utils/compileMarkdown.js";
+  import { parseVersion } from "#lib/utils/parseVersion.js";
+  import { authFailHandler, reAuth, request } from "#lib/utils/request.js";
 
   let error = $state("");
   let step = $state("lesson-selection-loading");
@@ -84,7 +85,7 @@
     if (selectedVersion !== null) {
       void goto(
         resolve(
-          `/lessons/${selectedLesson}/versions/${selectedVersion.toString()}/restore?name=${name}`,
+          `lessons/${selectedLesson}/versions/${selectedVersion.toString()}/restore?name=${name}`,
         ),
       );
     }

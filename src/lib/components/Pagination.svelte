@@ -1,5 +1,5 @@
 <script lang="ts">
-  import PaginationButton from "$lib/components/PaginationButton.svelte";
+  import PaginationButton from "#lib/components/PaginationButton.svelte";
 
   interface Props {
     current: number;

@@ -1,5 +1,5 @@
-import { apiUri } from "$lib/config";
-import { reAuth, request } from "$lib/utils/request";
+import { apiUri } from "#lib/config.js";
+import { reAuth, request } from "#lib/utils/request.js";
 
 export const afterRefreshCallback: { value: (() => void) | null } = $state({
   value: null,

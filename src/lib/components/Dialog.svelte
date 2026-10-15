@@ -1,8 +1,8 @@
 <script lang="ts">
   import type { Snippet } from "svelte";
 
-  import Button from "$lib/components/Button.svelte";
-  import Overlay from "$lib/components/Overlay.svelte";
+  import Button from "#lib/components/Button.svelte";
+  import Overlay from "#lib/components/Overlay.svelte";
 
   interface Props {
     children: Snippet;

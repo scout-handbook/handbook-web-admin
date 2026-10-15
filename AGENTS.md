@@ -16,7 +16,7 @@ Web administration interface for the Skaut (Scout) handbook. A SvelteKit single-
 
 There is no test suite. Correctness is enforced by the linters, type checker and compatibility checks. Always run `npm run lint` before considering a change complete.
 
-Browser target is `es2021` / `baseline 2020` (browserslist) — the `check:*` scripts enforce this, so avoid newer JS/CSS features.
+Browser target is `es2021` / `baseline 2022` (browserslist) — the `check:*` scripts enforce this, so avoid newer JS/CSS features. The browserslist is Baseline 2022 rather than Svelte's documented Baseline 2020 because SvelteKit 3's client runtime (via `devalue`) uses `Object.hasOwn` (ES2022, Safari 15.4), so `check:js-compat` ignores `ObjectHasOwn`. It also ignores `Uint8ArrayFromBase64` / `Uint8ArrayToBase64`, which `devalue` only uses behind feature detection. The build target stays `es2021` so that no other ES2022 features slip in unchecked. Full ES2022 would need Baseline 2023 (class static blocks need Safari 16.4). SvelteKit doesn't document a browser floor yet: https://github.com/sveltejs/kit/issues/17454.
 
 ## Architecture
 
@@ -25,7 +25,7 @@ The app is built with `@sveltejs/adapter-static` into `dist/`, then post-process
 - `rollup-plugin-html-to-php.ts` renames every emitted `.html` to `.php` so the host can inject runtime config.
 - `rollup-plugin-htaccess` writes an `.htaccess` (see `rollup-plugin-htaccess.config.ts`).
 
-Runtime config is **not** baked in at build time. `src/lib/config.ts` reads it from `document.documentElement.dataset.config` (a JSON blob the PHP host sets): `admin-uri`, `api-uri`, `frontend-uri`, `site-name`. The base path defaults to `/admin` (`VITE_BASEPATH`, in `svelte.config.js`). A strict CSP is configured there too.
+Runtime config is **not** baked in at build time. `src/lib/config.ts` reads it from `document.documentElement.dataset.config` (a JSON blob the PHP host sets): `admin-uri`, `api-uri`, `frontend-uri`, `site-name`. The base path defaults to `/admin` (`VITE_BASEPATH`, in the `sveltekit()` plugin options in `vite.config.ts`). A strict CSP is configured there too.
 
 ### Data layer
 - **`@tanstack/svelte-query`** is the data-fetching backbone. `src/lib/utils/queryClient.ts` defines the global `queryClient`; query keys are arrays that get joined into a URL path plus an optional payload object turned into a query string.
@@ -49,4 +49,4 @@ Lessons are Markdown. Compilation uses `showdown` with `xss` sanitization (`src/
 
 ## Conventions
 - ESLint config (`eslint.config.js`) is strict and includes `perfectionist` (enforced import/member sorting — run `lint:eslint` to auto-surface), `prefer-arrow-functions`, and type-aware rules. Prettier + Stylelint are wired through ESLint too.
-- Path alias `$lib` → `src/lib` (SvelteKit standard).
+- Path alias `#lib` → `src/lib` (subpath import in `package.json` `imports`; imports need explicit file extensions).

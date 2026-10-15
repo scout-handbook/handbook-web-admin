@@ -1,10 +1,10 @@
-import type { ActionQueue } from "$lib/actions/ActionQueue";
-import type { ExceptionHandler } from "$lib/interfaces/ExceptionHandler";
-import type { Payload } from "$lib/interfaces/Payload";
-import type { RequestResponse } from "$lib/interfaces/RequestResponse";
-import type { SerializedAction } from "$lib/interfaces/SerializedAction";
+import type { ActionQueue } from "#lib/actions/ActionQueue.js";
+import type { ExceptionHandler } from "#lib/interfaces/ExceptionHandler.js";
+import type { Payload } from "#lib/interfaces/Payload.js";
+import type { RequestResponse } from "#lib/interfaces/RequestResponse.js";
+import type { SerializedAction } from "#lib/interfaces/SerializedAction.js";
 
-import { ActionCallback } from "$lib/actions/ActionCallback";
+import { ActionCallback } from "#lib/actions/ActionCallback.js";
 
 export class Action {
   public callbacks: Array<ActionCallback>;

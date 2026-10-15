@@ -1,23 +1,24 @@
 <script lang="ts">
-  import type { Loginstate } from "$lib/interfaces/Loginstate";
-
-  import { goto, pushState } from "$app/navigation";
+  import { goto } from "$app/navigation";
   import { resolve } from "$app/paths";
   import { page } from "$app/state";
-  import AddFieldPanel from "$lib/components/action-modals/AddFieldPanel.svelte";
-  import DeleteFieldDialog from "$lib/components/action-modals/DeleteFieldDialog.svelte";
-  import DeleteLessonDialog from "$lib/components/action-modals/DeleteLessonDialog.svelte";
-  import EditFieldPanel from "$lib/components/action-modals/EditFieldPanel.svelte";
-  import RestoreLessonPanel from "$lib/components/action-modals/RestoreLessonPanel.svelte";
-  import Button from "$lib/components/Button.svelte";
-  import LessonViewLesson from "$lib/components/LessonViewLesson.svelte";
-  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
-  import MainPageContainer from "$lib/components/MainPageContainer.svelte";
-  import TopBar from "$lib/components/TopBar.svelte";
-  import { siteName } from "$lib/config";
-  import { getResourceContext } from "$lib/resources";
-  import { filter } from "$lib/utils/mapUtils";
   import { createQuery } from "@tanstack/svelte-query";
+
+  import type { Loginstate } from "#lib/interfaces/Loginstate.js";
+
+  import AddFieldPanel from "#lib/components/action-modals/AddFieldPanel.svelte";
+  import DeleteFieldDialog from "#lib/components/action-modals/DeleteFieldDialog.svelte";
+  import DeleteLessonDialog from "#lib/components/action-modals/DeleteLessonDialog.svelte";
+  import EditFieldPanel from "#lib/components/action-modals/EditFieldPanel.svelte";
+  import RestoreLessonPanel from "#lib/components/action-modals/RestoreLessonPanel.svelte";
+  import Button from "#lib/components/Button.svelte";
+  import LessonViewLesson from "#lib/components/LessonViewLesson.svelte";
+  import LoadingIndicator from "#lib/components/LoadingIndicator.svelte";
+  import MainPageContainer from "#lib/components/MainPageContainer.svelte";
+  import TopBar from "#lib/components/TopBar.svelte";
+  import { siteName } from "#lib/config.js";
+  import { getResourceContext } from "#lib/resources.js";
+  import { filter } from "#lib/utils/mapUtils.js";
 
   const { competences, fields, lessons } = getResourceContext();
 
@@ -59,7 +60,10 @@
       green
       icon="plus"
       onclick={(): void => {
-        pushState("", { action: { name: "add-field" } });
+        void goto("", {
+          shallow: true,
+          state: { action: { name: "add-field" } },
+        });
       }}
     >
       Přidat oblast
@@ -69,7 +73,7 @@
     green
     icon="plus"
     onclick={(): void => {
-      void goto(resolve("/lessons/add"));
+      void goto(resolve("lessons/add"));
     }}
   >
     Přidat lekci
@@ -78,7 +82,10 @@
     <Button
       icon="history"
       onclick={(): void => {
-        pushState("", { action: { name: "restore-lesson" } });
+        void goto("", {
+          shallow: true,
+          state: { action: { name: "restore-lesson" } },
+        });
       }}
     >
       Smazané lekce
@@ -99,10 +106,13 @@
             cyan
             icon="pencil"
             onclick={(): void => {
-              pushState("", {
-                action: {
-                  fieldId,
-                  name: "change-field",
+              void goto("", {
+                shallow: true,
+                state: {
+                  action: {
+                    fieldId,
+                    name: "change-field",
+                  },
                 },
               });
             }}
@@ -112,10 +122,13 @@
           <Button
             icon="trash-empty"
             onclick={(): void => {
-              pushState("", {
-                action: {
-                  fieldId,
-                  name: "delete-field",
+              void goto("", {
+                shallow: true,
+                state: {
+                  action: {
+                    fieldId,
+                    name: "delete-field",
+                  },
                 },
               });
             }}
@@ -128,7 +141,7 @@
           green
           icon="plus"
           onclick={(): void => {
-            void goto(resolve(`/lessons/add?field=${fieldId}`));
+            void goto(resolve(`lessons/add?field=${fieldId}`));
           }}
         >
           Přidat lekci

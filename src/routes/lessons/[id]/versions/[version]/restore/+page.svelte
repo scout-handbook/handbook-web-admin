@@ -2,21 +2,22 @@
   import { goto } from "$app/navigation";
   import { resolve } from "$app/paths";
   import { page } from "$app/state";
-  import { Action } from "$lib/actions/Action";
-  import { ActionCallback } from "$lib/actions/ActionCallback";
-  import { ActionQueue } from "$lib/actions/ActionQueue";
+  import { untrack } from "svelte";
+
+  import { Action } from "#lib/actions/Action.js";
+  import { ActionCallback } from "#lib/actions/ActionCallback.js";
+  import { ActionQueue } from "#lib/actions/ActionQueue.js";
   import {
     populateCompetences,
     populateField,
     populateGroups,
-  } from "$lib/actions/populateLessonActionQueue";
-  import DoneDialog from "$lib/components/DoneDialog.svelte";
-  import LessonEditor from "$lib/components/LessonEditor.svelte";
-  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
-  import { apiUri } from "$lib/config";
-  import { queryClient } from "$lib/utils/queryClient";
-  import { authFailHandler, request } from "$lib/utils/request";
-  import { untrack } from "svelte";
+  } from "#lib/actions/populateLessonActionQueue.js";
+  import DoneDialog from "#lib/components/DoneDialog.svelte";
+  import LessonEditor from "#lib/components/LessonEditor.svelte";
+  import LoadingIndicator from "#lib/components/LoadingIndicator.svelte";
+  import { apiUri } from "#lib/config.js";
+  import { queryClient } from "#lib/utils/queryClient.js";
+  import { authFailHandler, request } from "#lib/utils/request.js";
 
   import type { PageData } from "./$types";
 
@@ -74,7 +75,7 @@
   <DoneDialog
     {donePromise}
     onconfirm={(): void => {
-      void goto(resolve("/lessons"));
+      void goto(resolve("lessons"));
     }}
   >
     Lekce byla úspěšně obnovena.

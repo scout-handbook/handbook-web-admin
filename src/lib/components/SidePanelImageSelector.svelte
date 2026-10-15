@@ -1,11 +1,12 @@
 <script lang="ts">
-  import Button from "$lib/components/Button.svelte";
-  import DoubleSidePanel from "$lib/components/DoubleSidePanel.svelte";
-  import ImageGridCell from "$lib/components/ImageGridCell.svelte";
-  import ImageThumbnail from "$lib/components/ImageThumbnail.svelte";
-  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
-  import Pagination from "$lib/components/Pagination.svelte";
   import { createQuery } from "@tanstack/svelte-query";
+
+  import Button from "#lib/components/Button.svelte";
+  import DoubleSidePanel from "#lib/components/DoubleSidePanel.svelte";
+  import ImageGridCell from "#lib/components/ImageGridCell.svelte";
+  import ImageThumbnail from "#lib/components/ImageThumbnail.svelte";
+  import LoadingIndicator from "#lib/components/LoadingIndicator.svelte";
+  import Pagination from "#lib/components/Pagination.svelte";
 
   interface Props {
     oncancel(this: void): void;

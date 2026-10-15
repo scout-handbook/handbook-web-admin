@@ -1,5 +1,5 @@
-import type { ActionCallback } from "$lib/actions/ActionCallback";
-import type { Payload } from "$lib/interfaces/Payload";
+import type { ActionCallback } from "#lib/actions/ActionCallback.js";
+import type { Payload } from "#lib/interfaces/Payload.js";
 
 export interface SerializedAction {
   callbacks: Array<ActionCallback>;

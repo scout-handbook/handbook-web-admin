@@ -1,14 +1,15 @@
 <script lang="ts">
   import { page } from "$app/state";
-  import Dialog from "$lib/components/Dialog.svelte";
-  import EditorHeader from "$lib/components/LessonEditor/EditorHeader.svelte";
-  import EditorPane from "$lib/components/LessonEditor/EditorPane.svelte";
-  import ImageSelector from "$lib/components/LessonEditor/ImageSelector.svelte";
-  import LessonSettingsPanel from "$lib/components/LessonEditor/LessonSettingsPanel.svelte";
-  import PreviewPane from "$lib/components/LessonEditor/PreviewPane.svelte";
-  import { apiUri } from "$lib/config";
-  import { reAuthSuspended } from "$lib/reAuthSuspension.svelte";
   import { onDestroy, onMount } from "svelte";
+
+  import Dialog from "#lib/components/Dialog.svelte";
+  import EditorHeader from "#lib/components/LessonEditor/EditorHeader.svelte";
+  import EditorPane from "#lib/components/LessonEditor/EditorPane.svelte";
+  import ImageSelector from "#lib/components/LessonEditor/ImageSelector.svelte";
+  import LessonSettingsPanel from "#lib/components/LessonEditor/LessonSettingsPanel.svelte";
+  import PreviewPane from "#lib/components/LessonEditor/PreviewPane.svelte";
+  import { apiUri } from "#lib/config.js";
+  import { reAuthSuspended } from "#lib/reAuthSuspension.svelte.js";
 
   interface Props {
     body: string;

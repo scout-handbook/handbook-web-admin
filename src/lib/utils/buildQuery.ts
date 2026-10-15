@@ -1,4 +1,4 @@
-import type { Payload } from "$lib/interfaces/Payload";
+import type { Payload } from "#lib/interfaces/Payload.js";
 
 export function buildQuery(searchParams: Payload): string {
   const pairs: Array<string> = [];

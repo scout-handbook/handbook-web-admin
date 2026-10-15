@@ -1,9 +1,11 @@
-import type { WorkerPayload } from "$lib/common/WorkerPayload";
-
-import { xssOptions } from "$lib/common/xssOptions";
 import showdown from "showdown";
-import "$lib/common/HandbookMarkdown";
 import { filterXSS } from "xss";
+
+import type { WorkerPayload } from "#lib/common/WorkerPayload.js";
+
+import "#lib/common/HandbookMarkdown.js";
+import { xssOptions } from "#lib/common/xssOptions.js";
+import MarkdownCompilationWorker from "#lib/markdown-compilation-worker.ts?worker";
 
 let converter: showdown.Converter | null = null;
 let worker: Worker | null = null;
@@ -40,9 +42,7 @@ export async function compileMarkdown(markdown: string): Promise<string> {
 export function compileMarkdownSetup(): void {
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions -- Worker isn't present in older browsers
   if (Worker) {
-    worker = new Worker(
-      new URL("$lib/markdown-compilation-worker.ts", import.meta.url),
-    );
+    worker = new MarkdownCompilationWorker();
     worker.onmessage = (payload): void => {
       if (worker === null) {
         return;

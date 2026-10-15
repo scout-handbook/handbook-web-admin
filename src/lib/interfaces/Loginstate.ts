@@ -1,4 +1,4 @@
-import type { Role } from "$lib/interfaces/Role";
+import type { Role } from "#lib/interfaces/Role.js";
 
 export interface Loginstate {
   avatar: string;

@@ -1,7 +1,7 @@
-import type { Loginstate } from "$lib/interfaces/Loginstate";
+import type { Loginstate } from "#lib/interfaces/Loginstate.js";
 
-import { apiUri, frontendUri } from "$lib/config";
-import { request } from "$lib/utils/request";
+import { apiUri, frontendUri } from "#lib/config.js";
+import { request } from "#lib/utils/request.js";
 
 export function checkLogin(): void {
   void request<Loginstate>(

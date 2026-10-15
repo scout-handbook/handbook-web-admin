@@ -1,36 +1,38 @@
 <script lang="ts">
-  import "$lib/font/fontello.css";
+  import "#lib/font/fontello.css";
   import "@fontsource/open-sans/400.css";
   import "@fontsource/open-sans/400-italic.css";
   import "@fontsource/open-sans/700.css";
   import "@fontsource/open-sans/700-italic.css";
 
-  import type { Competence } from "$lib/interfaces/Competence";
-  import type { Field } from "$lib/interfaces/Field";
-  import type { Group } from "$lib/interfaces/Group";
-  import type { Lesson } from "$lib/interfaces/Lesson";
   import type { Snippet } from "svelte";
 
   import { asset } from "$app/paths";
-  import { setupActionQueue } from "$lib/actions/ActionQueue";
-  import Dialog from "$lib/components/Dialog.svelte";
-  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
-  import Overlay from "$lib/components/Overlay.svelte";
-  import { siteName } from "$lib/config";
-  import { globalUI } from "$lib/globalUI.svelte";
+  import { createQuery, QueryClientProvider } from "@tanstack/svelte-query";
+
+  import type { Competence } from "#lib/interfaces/Competence.js";
+  import type { Field } from "#lib/interfaces/Field.js";
+  import type { Group } from "#lib/interfaces/Group.js";
+  import type { Lesson } from "#lib/interfaces/Lesson.js";
+
+  import { setupActionQueue } from "#lib/actions/ActionQueue.js";
+  import Dialog from "#lib/components/Dialog.svelte";
+  import LoadingIndicator from "#lib/components/LoadingIndicator.svelte";
+  import Overlay from "#lib/components/Overlay.svelte";
+  import { siteName } from "#lib/config.js";
+  import { globalUI } from "#lib/globalUI.svelte.js";
   import {
     competenceComparator,
     fieldComparator,
     groupComparator,
     lessonComparator,
     setResourceContext,
-  } from "$lib/resources";
-  import { checkLogin } from "$lib/utils/checkLogin";
-  import { compileMarkdownSetup } from "$lib/utils/compileMarkdown";
-  import { loginRefreshSetup } from "$lib/utils/loginRefresh.svelte";
-  import { queryClient } from "$lib/utils/queryClient";
-  import { Resource } from "$lib/utils/Resource.svelte";
-  import { createQuery, QueryClientProvider } from "@tanstack/svelte-query";
+  } from "#lib/resources.js";
+  import { checkLogin } from "#lib/utils/checkLogin.js";
+  import { compileMarkdownSetup } from "#lib/utils/compileMarkdown.js";
+  import { loginRefreshSetup } from "#lib/utils/loginRefresh.svelte.js";
+  import { queryClient } from "#lib/utils/queryClient.js";
+  import { Resource } from "#lib/utils/Resource.svelte.js";
 
   interface Props {
     children: Snippet;
@@ -88,25 +90,25 @@
 <svelte:head>
   <title>{siteName}</title>
   <link
-    href={asset("/apple-touch-icon.png")}
+    href={asset("apple-touch-icon.png")}
     rel="apple-touch-icon"
     sizes="180x180"
   />
   <link
-    href={asset("/favicon-32x32.png")}
+    href={asset("favicon-32x32.png")}
     rel="icon"
     sizes="32x32"
     type="image/png"
   />
   <link
-    href={asset("/favicon-16x16.png")}
+    href={asset("favicon-16x16.png")}
     rel="icon"
     sizes="16x16"
     type="image/png"
   />
-  <link href={asset("/safari-pinned-tab.svg")} rel="mask-icon" />
-  <link href={asset("/favicon.ico")} rel="shortcut icon" />
-  <meta name="msapplication-config" content={asset("/browserconfig.xml")} />
+  <link href={asset("safari-pinned-tab.svg")} rel="mask-icon" />
+  <link href={asset("favicon.ico")} rel="shortcut icon" />
+  <meta name="msapplication-config" content={asset("browserconfig.xml")} />
 </svelte:head>
 
 <QueryClientProvider client={queryClient}>

@@ -1,11 +1,12 @@
-import type { Payload } from "$lib/interfaces/Payload";
-import type { RequestResponse } from "$lib/interfaces/RequestResponse";
-
-import { browser } from "$app/environment";
-import { apiUri, frontendUri } from "$lib/config";
-import { buildQuery } from "$lib/utils/buildQuery";
-import { reAuth, request } from "$lib/utils/request";
+import { browser } from "$app/env";
 import { QueryClient } from "@tanstack/svelte-query";
+
+import type { Payload } from "#lib/interfaces/Payload.js";
+import type { RequestResponse } from "#lib/interfaces/RequestResponse.js";
+
+import { apiUri, frontendUri } from "#lib/config.js";
+import { buildQuery } from "#lib/utils/buildQuery.js";
+import { reAuth, request } from "#lib/utils/request.js";
 
 async function queryFn({
   queryKey,
