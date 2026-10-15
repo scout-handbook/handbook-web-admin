@@ -1,18 +1,19 @@
 <script lang="ts">
-  import type { LessonVersion } from "$lib/interfaces/LessonVersion";
-
-  import Button from "$lib/components/Button.svelte";
-  import DoubleSidePanel from "$lib/components/DoubleSidePanel.svelte";
-  import RadioGroup from "$lib/components/forms/RadioGroup.svelte";
-  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
-  import Overlay from "$lib/components/Overlay.svelte";
-  import { apiUri } from "$lib/config";
-  import { getResourceContext } from "$lib/resources";
-  import { compileMarkdown } from "$lib/utils/compileMarkdown";
-  import { parseVersion } from "$lib/utils/parseVersion";
-  import { authFailHandler, request } from "$lib/utils/request";
   import { untrack } from "svelte";
   import { SvelteMap } from "svelte/reactivity";
+
+  import type { LessonVersion } from "#lib/interfaces/LessonVersion.js";
+
+  import Button from "#lib/components/Button.svelte";
+  import DoubleSidePanel from "#lib/components/DoubleSidePanel.svelte";
+  import RadioGroup from "#lib/components/forms/RadioGroup.svelte";
+  import LoadingIndicator from "#lib/components/LoadingIndicator.svelte";
+  import Overlay from "#lib/components/Overlay.svelte";
+  import { apiUri } from "#lib/config.js";
+  import { getResourceContext } from "#lib/resources.js";
+  import { compileMarkdown } from "#lib/utils/compileMarkdown.js";
+  import { parseVersion } from "#lib/utils/parseVersion.js";
+  import { authFailHandler, request } from "#lib/utils/request.js";
 
   interface Props {
     body: string;

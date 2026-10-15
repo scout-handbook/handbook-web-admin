@@ -1,20 +1,21 @@
 <script lang="ts">
-  import type { LockedExceptionResponse } from "$lib/interfaces/APIResponse";
-  import type { Field } from "$lib/interfaces/Field";
-  import type { Lesson } from "$lib/interfaces/Lesson";
-
-  import { Action } from "$lib/actions/Action";
-  import { ActionQueue } from "$lib/actions/ActionQueue";
-  import Dialog from "$lib/components/Dialog.svelte";
-  import DoneDialog from "$lib/components/DoneDialog.svelte";
-  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
-  import Overlay from "$lib/components/Overlay.svelte";
-  import { apiUri } from "$lib/config";
-  import { deepClone } from "$lib/utils/deepClone";
-  import { queryClient } from "$lib/utils/queryClient";
-  import { reAuth, request } from "$lib/utils/request";
   import { createMutation } from "@tanstack/svelte-query";
   import { untrack } from "svelte";
+
+  import type { LockedExceptionResponse } from "#lib/interfaces/APIResponse.js";
+  import type { Field } from "#lib/interfaces/Field.js";
+  import type { Lesson } from "#lib/interfaces/Lesson.js";
+
+  import { Action } from "#lib/actions/Action.js";
+  import { ActionQueue } from "#lib/actions/ActionQueue.js";
+  import Dialog from "#lib/components/Dialog.svelte";
+  import DoneDialog from "#lib/components/DoneDialog.svelte";
+  import LoadingIndicator from "#lib/components/LoadingIndicator.svelte";
+  import Overlay from "#lib/components/Overlay.svelte";
+  import { apiUri } from "#lib/config.js";
+  import { deepClone } from "#lib/utils/deepClone.js";
+  import { queryClient } from "#lib/utils/queryClient.js";
+  import { reAuth, request } from "#lib/utils/request.js";
 
   interface Props {
     lesson: Lesson;

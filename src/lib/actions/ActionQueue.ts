@@ -1,16 +1,17 @@
-import type { SerializedAction } from "$lib/interfaces/SerializedAction";
-
 import { goto } from "$app/navigation";
 import { resolve } from "$app/paths";
+
+import type { SerializedAction } from "#lib/interfaces/SerializedAction.js";
+
 import {
   type Action,
   deserializeAction,
   serializeAction,
-} from "$lib/actions/Action";
-import { apiUri } from "$lib/config";
-import { globalUI } from "$lib/globalUI.svelte";
-import { queryClient } from "$lib/utils/queryClient";
-import { request } from "$lib/utils/request";
+} from "#lib/actions/Action.js";
+import { apiUri } from "#lib/config.js";
+import { globalUI } from "#lib/globalUI.svelte.js";
+import { queryClient } from "#lib/utils/queryClient.js";
+import { request } from "#lib/utils/request.js";
 
 export class ActionQueue {
   public actions: Array<Action>;

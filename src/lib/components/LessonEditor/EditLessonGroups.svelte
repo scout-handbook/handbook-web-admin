@@ -1,10 +1,10 @@
 <script lang="ts">
-  import type { Group } from "$lib/interfaces/Group";
+  import type { Group } from "#lib/interfaces/Group.js";
 
-  import Button from "$lib/components/Button.svelte";
-  import CheckboxGroup from "$lib/components/forms/CheckboxGroup.svelte";
-  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
-  import { getResourceContext } from "$lib/resources";
+  import Button from "#lib/components/Button.svelte";
+  import CheckboxGroup from "#lib/components/forms/CheckboxGroup.svelte";
+  import LoadingIndicator from "#lib/components/LoadingIndicator.svelte";
+  import { getResourceContext } from "#lib/resources.js";
 
   interface Props {
     groups: Array<string>;

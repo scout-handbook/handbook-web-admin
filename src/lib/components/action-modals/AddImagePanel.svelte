@@ -1,13 +1,13 @@
 <script lang="ts">
-  import Button from "$lib/components/Button.svelte";
-  import Dialog from "$lib/components/Dialog.svelte";
-  import FileInput from "$lib/components/forms/FileInput.svelte";
-  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
-  import Overlay from "$lib/components/Overlay.svelte";
-  import SidePanel from "$lib/components/SidePanel.svelte";
-  import { apiUri } from "$lib/config";
-  import { queryClient } from "$lib/utils/queryClient";
-  import { authFailHandler, request } from "$lib/utils/request";
+  import Button from "#lib/components/Button.svelte";
+  import Dialog from "#lib/components/Dialog.svelte";
+  import FileInput from "#lib/components/forms/FileInput.svelte";
+  import LoadingIndicator from "#lib/components/LoadingIndicator.svelte";
+  import Overlay from "#lib/components/Overlay.svelte";
+  import SidePanel from "#lib/components/SidePanel.svelte";
+  import { apiUri } from "#lib/config.js";
+  import { queryClient } from "#lib/utils/queryClient.js";
+  import { authFailHandler, request } from "#lib/utils/request.js";
 
   let stage: "done" | "error" | "select" | "upload" = $state("select");
   let files: FileList | undefined = $state();

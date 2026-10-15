@@ -1,4 +1,4 @@
-import { apiUri } from "$lib/config";
+import { apiUri } from "#lib/config.js";
 
 export const defaultName = "Nová lekce";
 

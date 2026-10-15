@@ -1,13 +1,14 @@
 <script lang="ts">
-  import type { Loginstate } from "$lib/interfaces/Loginstate";
-  import type { Role } from "$lib/interfaces/Role";
-
-  import Button from "$lib/components/Button.svelte";
-  import Select from "$lib/components/forms/Select.svelte";
-  import { getResourceContext } from "$lib/resources";
-  import { filter, map } from "$lib/utils/mapUtils";
   import { createQuery } from "@tanstack/svelte-query";
   import { SvelteMap } from "svelte/reactivity";
+
+  import type { Loginstate } from "#lib/interfaces/Loginstate.js";
+  import type { Role } from "#lib/interfaces/Role.js";
+
+  import Button from "#lib/components/Button.svelte";
+  import Select from "#lib/components/forms/Select.svelte";
+  import { getResourceContext } from "#lib/resources.js";
+  import { filter, map } from "#lib/utils/mapUtils.js";
 
   interface Props {
     group: string;

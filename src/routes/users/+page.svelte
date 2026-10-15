@@ -1,19 +1,20 @@
 <script lang="ts">
-  import type { Role } from "$lib/interfaces/Role";
-  import type { User } from "$lib/interfaces/User";
-  import type { UserListResponse } from "$lib/interfaces/UserListResponse";
-
   import { page as kitPage } from "$app/state";
-  import EditUserGroupsPanel from "$lib/components/action-modals/EditUserGroupsPanel.svelte";
-  import EditUserRolePanel from "$lib/components/action-modals/EditUserRolePanel.svelte";
-  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
-  import MainPageContainer from "$lib/components/MainPageContainer.svelte";
-  import Pagination from "$lib/components/Pagination.svelte";
-  import TopBar from "$lib/components/TopBar.svelte";
-  import UserViewSearchForm from "$lib/components/UserViewSearchForm.svelte";
-  import UserViewTable from "$lib/components/UserViewTable.svelte";
-  import { siteName } from "$lib/config";
   import { createQuery } from "@tanstack/svelte-query";
+
+  import type { Role } from "#lib/interfaces/Role.js";
+  import type { User } from "#lib/interfaces/User.js";
+  import type { UserListResponse } from "#lib/interfaces/UserListResponse.js";
+
+  import EditUserGroupsPanel from "#lib/components/action-modals/EditUserGroupsPanel.svelte";
+  import EditUserRolePanel from "#lib/components/action-modals/EditUserRolePanel.svelte";
+  import LoadingIndicator from "#lib/components/LoadingIndicator.svelte";
+  import MainPageContainer from "#lib/components/MainPageContainer.svelte";
+  import Pagination from "#lib/components/Pagination.svelte";
+  import TopBar from "#lib/components/TopBar.svelte";
+  import UserViewSearchForm from "#lib/components/UserViewSearchForm.svelte";
+  import UserViewTable from "#lib/components/UserViewTable.svelte";
+  import { siteName } from "#lib/config.js";
 
   let page = $state(1);
   const perPage = 25;

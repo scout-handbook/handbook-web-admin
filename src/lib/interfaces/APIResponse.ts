@@ -1,4 +1,4 @@
-import type { RequestResponse } from "$lib/interfaces/RequestResponse";
+import type { RequestResponse } from "#lib/interfaces/RequestResponse.js";
 
 export type APIErrorResponse =
   | AuthenticationExceptionResponse

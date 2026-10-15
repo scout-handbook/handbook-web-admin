@@ -1,19 +1,20 @@
 <script lang="ts">
-  import type { Group } from "$lib/interfaces/Group";
-  import type { User } from "$lib/interfaces/User";
-
-  import { Action } from "$lib/actions/Action";
-  import { ActionQueue } from "$lib/actions/ActionQueue";
-  import Button from "$lib/components/Button.svelte";
-  import DoneDialog from "$lib/components/DoneDialog.svelte";
-  import CheckboxGroup from "$lib/components/forms/CheckboxGroup.svelte";
-  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
-  import SidePanel from "$lib/components/SidePanel.svelte";
-  import { apiUri } from "$lib/config";
-  import { getResourceContext } from "$lib/resources";
-  import { filter } from "$lib/utils/mapUtils";
-  import { queryClient } from "$lib/utils/queryClient";
   import { untrack } from "svelte";
+
+  import type { Group } from "#lib/interfaces/Group.js";
+  import type { User } from "#lib/interfaces/User.js";
+
+  import { Action } from "#lib/actions/Action.js";
+  import { ActionQueue } from "#lib/actions/ActionQueue.js";
+  import Button from "#lib/components/Button.svelte";
+  import DoneDialog from "#lib/components/DoneDialog.svelte";
+  import CheckboxGroup from "#lib/components/forms/CheckboxGroup.svelte";
+  import LoadingIndicator from "#lib/components/LoadingIndicator.svelte";
+  import SidePanel from "#lib/components/SidePanel.svelte";
+  import { apiUri } from "#lib/config.js";
+  import { getResourceContext } from "#lib/resources.js";
+  import { filter } from "#lib/utils/mapUtils.js";
+  import { queryClient } from "#lib/utils/queryClient.js";
 
   interface Props {
     user: User;

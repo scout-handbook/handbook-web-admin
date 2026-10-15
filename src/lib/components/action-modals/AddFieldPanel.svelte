@@ -1,15 +1,15 @@
 <script lang="ts">
-  import { Action } from "$lib/actions/Action";
-  import { ActionQueue } from "$lib/actions/ActionQueue";
-  import Button from "$lib/components/Button.svelte";
-  import DoneDialog from "$lib/components/DoneDialog.svelte";
-  import DescriptionInput from "$lib/components/forms/DescriptionInput.svelte";
-  import ImageInput from "$lib/components/forms/ImageInput.svelte";
-  import NameInput from "$lib/components/forms/NameInput.svelte";
-  import SidePanel from "$lib/components/SidePanel.svelte";
-  import SidePanelImageSelector from "$lib/components/SidePanelImageSelector.svelte";
-  import { apiUri } from "$lib/config";
-  import { queryClient } from "$lib/utils/queryClient";
+  import { Action } from "#lib/actions/Action.js";
+  import { ActionQueue } from "#lib/actions/ActionQueue.js";
+  import Button from "#lib/components/Button.svelte";
+  import DoneDialog from "#lib/components/DoneDialog.svelte";
+  import DescriptionInput from "#lib/components/forms/DescriptionInput.svelte";
+  import ImageInput from "#lib/components/forms/ImageInput.svelte";
+  import NameInput from "#lib/components/forms/NameInput.svelte";
+  import SidePanel from "#lib/components/SidePanel.svelte";
+  import SidePanelImageSelector from "#lib/components/SidePanelImageSelector.svelte";
+  import { apiUri } from "#lib/config.js";
+  import { queryClient } from "#lib/utils/queryClient.js";
 
   interface Props {
     description?: string;

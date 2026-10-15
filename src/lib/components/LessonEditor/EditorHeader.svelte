@@ -1,6 +1,7 @@
 <script lang="ts">
-  import { pushState } from "$app/navigation";
-  import Button from "$lib/components/Button.svelte";
+  import { goto } from "$app/navigation";
+
+  import Button from "#lib/components/Button.svelte";
 
   interface Props {
     name: string;
@@ -22,10 +23,13 @@
     <Button
       icon="cog"
       onclick={(): void => {
-        pushState("", {
-          action: {
-            name: null,
-            view: "lesson-settings",
+        void goto("", {
+          shallow: true,
+          state: {
+            action: {
+              name: null,
+              view: "lesson-settings",
+            },
           },
         });
       }}

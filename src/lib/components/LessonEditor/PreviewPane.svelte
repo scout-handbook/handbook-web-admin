@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { compileMarkdown } from "$lib/utils/compileMarkdown";
+  import { compileMarkdown } from "#lib/utils/compileMarkdown.js";
 
   interface Props {
     body: string;

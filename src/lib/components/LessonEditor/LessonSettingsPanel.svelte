@@ -1,11 +1,12 @@
 <script lang="ts">
   import { page } from "$app/state";
-  import EditLessonCompetences from "$lib/components/LessonEditor/EditLessonCompetences.svelte";
-  import EditLessonField from "$lib/components/LessonEditor/EditLessonField.svelte";
-  import EditLessonGroups from "$lib/components/LessonEditor/EditLessonGroups.svelte";
-  import LessonSettingsOverview from "$lib/components/LessonEditor/LessonSettingsOverview.svelte";
-  import RestoreLessonVersion from "$lib/components/LessonEditor/RestoreLessonVersion.svelte";
-  import SidePanel from "$lib/components/SidePanel.svelte";
+
+  import EditLessonCompetences from "#lib/components/LessonEditor/EditLessonCompetences.svelte";
+  import EditLessonField from "#lib/components/LessonEditor/EditLessonField.svelte";
+  import EditLessonGroups from "#lib/components/LessonEditor/EditLessonGroups.svelte";
+  import LessonSettingsOverview from "#lib/components/LessonEditor/LessonSettingsOverview.svelte";
+  import RestoreLessonVersion from "#lib/components/LessonEditor/RestoreLessonVersion.svelte";
+  import SidePanel from "#lib/components/SidePanel.svelte";
 
   interface Props {
     body: string;

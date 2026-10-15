@@ -1,14 +1,15 @@
 <script lang="ts">
-  import type { Lesson } from "$lib/interfaces/Lesson";
-  import type { Loginstate } from "$lib/interfaces/Loginstate";
-
-  import { goto, pushState } from "$app/navigation";
+  import { goto } from "$app/navigation";
   import { resolve } from "$app/paths";
-  import Button from "$lib/components/Button.svelte";
-  import { adminUri } from "$lib/config";
-  import { getResourceContext } from "$lib/resources";
-  import { filter } from "$lib/utils/mapUtils";
   import { createQuery } from "@tanstack/svelte-query";
+
+  import type { Lesson } from "#lib/interfaces/Lesson.js";
+  import type { Loginstate } from "#lib/interfaces/Loginstate.js";
+
+  import Button from "#lib/components/Button.svelte";
+  import { adminUri } from "#lib/config.js";
+  import { getResourceContext } from "#lib/resources.js";
+  import { filter } from "#lib/utils/mapUtils.js";
 
   interface Props {
     id: string;
@@ -35,7 +36,7 @@
     cyan
     icon="pencil"
     onclick={(): void => {
-      void goto(resolve(`/lessons/${id}/edit`));
+      void goto(resolve(`lessons/${id}/edit`));
     }}
   >
     Upravit
@@ -44,10 +45,13 @@
     <Button
       icon="trash-empty"
       onclick={(): void => {
-        pushState("", {
-          action: {
-            lessonId: id,
-            name: "delete-lesson",
+        void goto("", {
+          shallow: true,
+          state: {
+            action: {
+              lessonId: id,
+              name: "delete-lesson",
+            },
           },
         });
       }}

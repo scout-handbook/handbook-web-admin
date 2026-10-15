@@ -1,9 +1,10 @@
 <script lang="ts">
-  import { pushState } from "$app/navigation";
-  import Button from "$lib/components/Button.svelte";
-  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
-  import { getResourceContext } from "$lib/resources";
-  import { filter } from "$lib/utils/mapUtils";
+  import { goto } from "$app/navigation";
+
+  import Button from "#lib/components/Button.svelte";
+  import LoadingIndicator from "#lib/components/LoadingIndicator.svelte";
+  import { getResourceContext } from "#lib/resources.js";
+  import { filter } from "#lib/utils/mapUtils.js";
 
   interface Props {
     competences: Array<string>;
@@ -34,10 +35,13 @@
   <Button
     icon="history"
     onclick={(): void => {
-      pushState("", {
-        action: {
-          name: "restore-version",
-          view: "lesson-settings",
+      void goto("", {
+        shallow: true,
+        state: {
+          action: {
+            name: "restore-version",
+            view: "lesson-settings",
+          },
         },
       });
     }}
@@ -51,10 +55,13 @@
   cyan
   icon="pencil"
   onclick={(): void => {
-    pushState("", {
-      action: {
-        name: "change-lesson-field",
-        view: "lesson-settings",
+    void goto("", {
+      shallow: true,
+      state: {
+        action: {
+          name: "change-lesson-field",
+          view: "lesson-settings",
+        },
       },
     });
   }}
@@ -75,10 +82,13 @@
   cyan
   icon="pencil"
   onclick={(): void => {
-    pushState("", {
-      action: {
-        name: "change-lesson-competences",
-        view: "lesson-settings",
+    void goto("", {
+      shallow: true,
+      state: {
+        action: {
+          name: "change-lesson-competences",
+          view: "lesson-settings",
+        },
       },
     });
   }}
@@ -100,10 +110,13 @@
   cyan
   icon="pencil"
   onclick={(): void => {
-    pushState("", {
-      action: {
-        name: "change-lesson-groups",
-        view: "lesson-settings",
+    void goto("", {
+      shallow: true,
+      state: {
+        action: {
+          name: "change-lesson-groups",
+          view: "lesson-settings",
+        },
       },
     });
   }}

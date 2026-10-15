@@ -1,7 +1,8 @@
 <script lang="ts">
   import { resolve } from "$app/paths";
   import { page } from "$app/state";
-  import UserAccountBox from "$lib/components/UserAccountBox.svelte";
+
+  import UserAccountBox from "#lib/components/UserAccountBox.svelte";
 
   const {
     route: { id: routeId },
@@ -12,22 +13,21 @@
   <UserAccountBox />
   <a
     class:active-tab={routeId === "/" || routeId === "/lessons"}
-    href={resolve("/lessons")}>Lekce</a
+    href={resolve("lessons")}>Lekce</a
   >
-  <a
-    class:active-tab={routeId === "/competences"}
-    href={resolve("/competences")}>Body</a
+  <a class:active-tab={routeId === "/competences"} href={resolve("competences")}
+    >Body</a
   >
-  <a class:active-tab={routeId === "/images"} href={resolve("/images")}
+  <a class:active-tab={routeId === "/images"} href={resolve("images")}
     >Obrázky</a
   >
-  <a class:active-tab={routeId === "/users"} href={resolve("/users")}
+  <a class:active-tab={routeId === "/users"} href={resolve("users")}
     >Uživatelé</a
   >
   <a
     class="groups"
     class:active-tab={routeId === "/groups"}
-    href={resolve("/groups")}
+    href={resolve("groups")}
   >
     Uživatelské skupiny
   </a>

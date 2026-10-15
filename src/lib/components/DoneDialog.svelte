@@ -1,9 +1,9 @@
 <script lang="ts">
   import type { Snippet } from "svelte";
 
-  import Dialog from "$lib/components/Dialog.svelte";
-  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
-  import Overlay from "$lib/components/Overlay.svelte";
+  import Dialog from "#lib/components/Dialog.svelte";
+  import LoadingIndicator from "#lib/components/LoadingIndicator.svelte";
+  import Overlay from "#lib/components/Overlay.svelte";
 
   interface Props {
     children: Snippet;

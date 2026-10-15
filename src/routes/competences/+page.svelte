@@ -1,18 +1,19 @@
 <script lang="ts">
-  import type { Loginstate } from "$lib/interfaces/Loginstate";
-
-  import { pushState } from "$app/navigation";
+  import { goto } from "$app/navigation";
   import { page } from "$app/state";
-  import AddCompetencePanel from "$lib/components/action-modals/AddCompetencePanel.svelte";
-  import DeleteCompetenceDialog from "$lib/components/action-modals/DeleteCompetenceDialog.svelte";
-  import EditCompetencePanel from "$lib/components/action-modals/EditCompetencePanel.svelte";
-  import Button from "$lib/components/Button.svelte";
-  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
-  import MainPageContainer from "$lib/components/MainPageContainer.svelte";
-  import TopBar from "$lib/components/TopBar.svelte";
-  import { siteName } from "$lib/config";
-  import { getResourceContext } from "$lib/resources";
   import { createQuery } from "@tanstack/svelte-query";
+
+  import type { Loginstate } from "#lib/interfaces/Loginstate.js";
+
+  import AddCompetencePanel from "#lib/components/action-modals/AddCompetencePanel.svelte";
+  import DeleteCompetenceDialog from "#lib/components/action-modals/DeleteCompetenceDialog.svelte";
+  import EditCompetencePanel from "#lib/components/action-modals/EditCompetencePanel.svelte";
+  import Button from "#lib/components/Button.svelte";
+  import LoadingIndicator from "#lib/components/LoadingIndicator.svelte";
+  import MainPageContainer from "#lib/components/MainPageContainer.svelte";
+  import TopBar from "#lib/components/TopBar.svelte";
+  import { siteName } from "#lib/config.js";
+  import { getResourceContext } from "#lib/resources.js";
 
   const { competences } = getResourceContext();
 
@@ -57,7 +58,10 @@
       green
       icon="plus"
       onclick={(): void => {
-        pushState("", { action: { name: "add-competence" } });
+        void goto("", {
+          shallow: true,
+          state: { action: { name: "add-competence" } },
+        });
       }}
     >
       Přidat
@@ -77,10 +81,13 @@
             cyan
             icon="pencil"
             onclick={(): void => {
-              pushState("", {
-                action: {
-                  competenceId: id,
-                  name: "change-competence",
+              void goto("", {
+                shallow: true,
+                state: {
+                  action: {
+                    competenceId: id,
+                    name: "change-competence",
+                  },
                 },
               });
             }}
@@ -90,10 +97,13 @@
           <Button
             icon="trash-empty"
             onclick={(): void => {
-              pushState("", {
-                action: {
-                  competenceId: id,
-                  name: "delete-competence",
+              void goto("", {
+                shallow: true,
+                state: {
+                  action: {
+                    competenceId: id,
+                    name: "delete-competence",
+                  },
                 },
               });
             }}

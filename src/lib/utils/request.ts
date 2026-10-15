@@ -1,15 +1,15 @@
 import type {
   APIResponse,
   APISuccessResponse,
-} from "$lib/interfaces/APIResponse";
-import type { ExceptionHandler } from "$lib/interfaces/ExceptionHandler";
-import type { Payload } from "$lib/interfaces/Payload";
-import type { RequestResponse } from "$lib/interfaces/RequestResponse";
+} from "#lib/interfaces/APIResponse.js";
+import type { ExceptionHandler } from "#lib/interfaces/ExceptionHandler.js";
+import type { Payload } from "#lib/interfaces/Payload.js";
+import type { RequestResponse } from "#lib/interfaces/RequestResponse.js";
 
-import { apiUri } from "$lib/config";
-import { globalUI } from "$lib/globalUI.svelte";
-import { reAuthSuspended } from "$lib/reAuthSuspension.svelte";
-import { buildQuery } from "$lib/utils/buildQuery";
+import { apiUri } from "#lib/config.js";
+import { globalUI } from "#lib/globalUI.svelte.js";
+import { reAuthSuspended } from "#lib/reAuthSuspension.svelte.js";
+import { buildQuery } from "#lib/utils/buildQuery.js";
 
 export function reAuth(): void {
   if (!reAuthSuspended.value) {

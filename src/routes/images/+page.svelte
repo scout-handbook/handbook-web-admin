@@ -1,20 +1,21 @@
 <script lang="ts">
-  import type { Loginstate } from "$lib/interfaces/Loginstate";
-
-  import { pushState } from "$app/navigation";
+  import { goto } from "$app/navigation";
   import { page as kitPage } from "$app/state";
-  import AddImagePanel from "$lib/components/action-modals/AddImagePanel.svelte";
-  import DeleteImageDialog from "$lib/components/action-modals/DeleteImageDialog.svelte";
-  import Button from "$lib/components/Button.svelte";
-  import ImageGridCell from "$lib/components/ImageGridCell.svelte";
-  import ImageThumbnail from "$lib/components/ImageThumbnail.svelte";
-  import LoadingIndicator from "$lib/components/LoadingIndicator.svelte";
-  import MainPageContainer from "$lib/components/MainPageContainer.svelte";
-  import Overlay from "$lib/components/Overlay.svelte";
-  import Pagination from "$lib/components/Pagination.svelte";
-  import TopBar from "$lib/components/TopBar.svelte";
-  import { apiUri, siteName } from "$lib/config";
   import { createQuery } from "@tanstack/svelte-query";
+
+  import type { Loginstate } from "#lib/interfaces/Loginstate.js";
+
+  import AddImagePanel from "#lib/components/action-modals/AddImagePanel.svelte";
+  import DeleteImageDialog from "#lib/components/action-modals/DeleteImageDialog.svelte";
+  import Button from "#lib/components/Button.svelte";
+  import ImageGridCell from "#lib/components/ImageGridCell.svelte";
+  import ImageThumbnail from "#lib/components/ImageThumbnail.svelte";
+  import LoadingIndicator from "#lib/components/LoadingIndicator.svelte";
+  import MainPageContainer from "#lib/components/MainPageContainer.svelte";
+  import Overlay from "#lib/components/Overlay.svelte";
+  import Pagination from "#lib/components/Pagination.svelte";
+  import TopBar from "#lib/components/TopBar.svelte";
+  import { apiUri, siteName } from "#lib/config.js";
 
   let openImage: string | null = $state(null);
   let page = $state(1);
@@ -68,7 +69,10 @@
     green
     icon="plus"
     onclick={(): void => {
-      pushState("", { action: { name: "add-image" } });
+      void goto("", {
+        shallow: true,
+        state: { action: { name: "add-image" } },
+      });
     }}
   >
     Nahrát
@@ -90,10 +94,13 @@
             <Button
               icon="trash-empty"
               onclick={(): void => {
-                pushState("", {
-                  action: {
-                    imageId: image,
-                    name: "delete-image",
+                void goto("", {
+                  shallow: true,
+                  state: {
+                    action: {
+                      imageId: image,
+                      name: "delete-image",
+                    },
                   },
                 });
               }}

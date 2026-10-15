@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { apiUri } from "$lib/config";
+  import { apiUri } from "#lib/config.js";
 
   interface Props {
     id: string;
