@@ -33,7 +33,7 @@
     "postbuild": "node scripts/fix-overflow-shorthand.js",
     "check": "FORCE_COLOR=1 run-p -c --aggregate-output check:*",
     "check:css-compat": "node scripts/check-css-compat.js",
-    "check:js-compat": "es-check es2021 --module --checkFeatures 'dist/**/*.js'",
+    "check:js-compat": "es-check es2021 --module --checkFeatures --ignore ObjectHasOwn,Uint8ArrayFromBase64,Uint8ArrayToBase64 'dist/**/*.js'",
     "clean": "rimraf dist/*",
     "lint": "FORCE_COLOR=1 run-p -c --aggregate-output lint:*",
     "lint:css": "FORCE_COLOR=1 run-p -c --aggregate-output lint:css:*",
@@ -47,7 +47,7 @@
     "start": "vite"
   },
   "browserslist": [
-    "baseline 2020"
+    "baseline 2022"
   ],
   "dependencies": {
     "easymde": "^2.21.0",

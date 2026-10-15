@@ -16,7 +16,7 @@ Web administration interface for the Skaut (Scout) handbook. A SvelteKit single-
 
 There is no test suite. Correctness is enforced by the linters, type checker and compatibility checks. Always run `npm run lint` before considering a change complete.
 
-Browser target is `es2021` / `baseline 2020` (browserslist) — the `check:*` scripts enforce this, so avoid newer JS/CSS features.
+Browser target is `es2021` / `baseline 2022` (browserslist) — the `check:*` scripts enforce this, so avoid newer JS/CSS features. The browserslist is Baseline 2022 rather than Svelte's documented Baseline 2020 because SvelteKit 3's client runtime (via `devalue`) uses `Object.hasOwn` (ES2022, Safari 15.4), so `check:js-compat` ignores `ObjectHasOwn`. It also ignores `Uint8ArrayFromBase64` / `Uint8ArrayToBase64`, which `devalue` only uses behind feature detection. The build target stays `es2021` so that no other ES2022 features slip in unchecked. Full ES2022 would need Baseline 2023 (class static blocks need Safari 16.4). SvelteKit doesn't document a browser floor yet: https://github.com/sveltejs/kit/issues/17454.
 
 ## Architecture
 
