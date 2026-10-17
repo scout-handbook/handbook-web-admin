@@ -124,7 +124,7 @@
     <h1>Obnovit smazanou lekci</h1>
     {#if step === "lesson-selection-loading"}
       <LoadingIndicator />
-    {:else if step === "lesson-selection"}
+    {:else}
       <form>
         <RadioGroup options={lessonList} bind:selected={selectedLesson}>
           {#snippet option(_, lesson: DeletedLesson)}
@@ -155,7 +155,7 @@
       <h1>Obnovit smazanou lekci</h1>
       {#if step === "version-selection-loading"}
         <LoadingIndicator />
-      {:else if step === "version-selection"}
+      {:else}
         <form>
           <RadioGroup
             options={new SvelteMap(
