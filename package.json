@@ -51,6 +51,10 @@
   ],
   "dependencies": {
     "easymde": "^2.21.0",
+    "prosemirror-example-setup": "^1.2.1",
+    "prosemirror-markdown": "^1.10.1",
+    "prosemirror-state": "^1.4.2",
+    "prosemirror-view": "^1.30.2",
     "showdown": "^2.1.0",
     "xss": "^1.0.17"
   },
