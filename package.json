@@ -68,7 +68,7 @@
     "@tanstack/eslint-plugin-query": "^5.105.0",
     "@tanstack/svelte-query": "^6.3.6",
     "@types/codemirror": "5.60.18",
-    "@types/node": "^26.6.5",
+    "@types/node": "^26.6.6",
     "@types/showdown": "^2.0.6",
     "autoprefixer": "^10.6.2",
     "doiuse": "^6.0.6",
