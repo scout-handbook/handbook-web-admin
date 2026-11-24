@@ -13,17 +13,22 @@
   <UserAccountBox />
   <a
     class:active-tab={routeId === "/" || routeId === "/lessons"}
-    href={resolve("lessons")}>Lekce</a
+    href={resolve("lessons")}
   >
-  <a class:active-tab={routeId === "/competences"} href={resolve("competences")}
-    >Body</a
+    Lekce
+  </a>
+  <a
+    class:active-tab={routeId === "/competences"}
+    href={resolve("competences")}
   >
-  <a class:active-tab={routeId === "/images"} href={resolve("images")}
-    >Obrázky</a
-  >
-  <a class:active-tab={routeId === "/users"} href={resolve("users")}
-    >Uživatelé</a
-  >
+    Body
+  </a>
+  <a class:active-tab={routeId === "/images"} href={resolve("images")}>
+    Obrázky
+  </a>
+  <a class:active-tab={routeId === "/users"} href={resolve("users")}>
+    Uživatelé
+  </a>
   <a
     class="groups"
     class:active-tab={routeId === "/groups"}

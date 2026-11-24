@@ -78,8 +78,10 @@
       onclick={(): void => {
         history.back();
       }}
-      yellow>Zrušit</Button
+      yellow
     >
+      Zrušit
+    </Button>
     <Button green icon="floppy" onclick={saveCallback}>Uložit</Button>
     <h1>Přidat oblast</h1>
     <form>

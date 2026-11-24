@@ -15,46 +15,58 @@
       <PaginationButton
         onclick={(): void => {
           current = 1;
-        }}>1</PaginationButton
+        }}
       >
+        1
+      </PaginationButton>
       ...
     {/if}
     {#if current > 2}
       <PaginationButton
         onclick={(): void => {
           current -= 2;
-        }}>{current - 2}</PaginationButton
+        }}
       >
+        {current - 2}
+      </PaginationButton>
     {/if}
     {#if current > 1}
       <PaginationButton
         onclick={(): void => {
           current -= 1;
-        }}>{current - 1}</PaginationButton
+        }}
       >
+        {current - 1}
+      </PaginationButton>
     {/if}
     <PaginationButton active>{current}</PaginationButton>
     {#if current < total}
       <PaginationButton
         onclick={(): void => {
           current += 1;
-        }}>{current + 1}</PaginationButton
+        }}
       >
+        {current + 1}
+      </PaginationButton>
     {/if}
     {#if current < total - 1}
       <PaginationButton
         onclick={(): void => {
           current += 2;
-        }}>{current + 2}</PaginationButton
+        }}
       >
+        {current + 2}
+      </PaginationButton>
     {/if}
     {#if current < total - 2}
       ...
       <PaginationButton
         onclick={(): void => {
           current = total;
-        }}>{total}</PaginationButton
+        }}
       >
+        {total}
+      </PaginationButton>
     {/if}
   </div>
 {/if}
