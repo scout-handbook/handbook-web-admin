@@ -32,8 +32,10 @@
   icon="floppy"
   onclick={(): void => {
     history.back();
-  }}>Uložit</Button
+  }}
 >
+  Uložit
+</Button>
 <h1>Změnit body</h1>
 <form>
   {#if allCompetences.current === undefined}

@@ -32,8 +32,10 @@
   icon="floppy"
   onclick={(): void => {
     history.back();
-  }}>Uložit</Button
+  }}
 >
+  Uložit
+</Button>
 <h1>Změnit skupiny</h1>
 <form>
   {#if allGroups.current === undefined}
@@ -42,9 +44,9 @@
     <CheckboxGroup options={allGroups.current} bind:selected={groups}>
       <!-- eslint-disable-next-line @typescript-eslint/no-shadow -- Not applicable to snippets -->
       {#snippet children(id: string, group: Group)}
-        <span class:public={id === "00000000-0000-0000-0000-000000000000"}
-          >{group.name}</span
-        >
+        <span class:public={id === "00000000-0000-0000-0000-000000000000"}>
+          {group.name}
+        </span>
       {/snippet}
     </CheckboxGroup>
   {/if}

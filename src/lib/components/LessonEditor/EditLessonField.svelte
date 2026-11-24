@@ -32,8 +32,10 @@
   icon="floppy"
   onclick={(): void => {
     history.back();
-  }}>Uložit</Button
+  }}
 >
+  Uložit
+</Button>
 <h1>Změnit oblast</h1>
 <form>
   {#if fields.current === undefined || lessons.current === undefined || competences.current === undefined}

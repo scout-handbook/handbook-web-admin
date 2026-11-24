@@ -108,8 +108,10 @@
       onclick={(): void => {
         history.back();
       }}
-      yellow>Zrušit</Button
+      yellow
     >
+      Zrušit
+    </Button>
     <Button
       green
       icon="fast-fw"
@@ -148,9 +150,9 @@
         Zrušit
       </Button>
       {#if selectedVersion !== null}
-        <Button green icon="history" onclick={selectVersionCallback}
-          >Obnovit</Button
-        >
+        <Button green icon="history" onclick={selectVersionCallback}>
+          Obnovit
+        </Button>
       {/if}
       <h1>Obnovit smazanou lekci</h1>
       {#if step === "version-selection-loading"}
